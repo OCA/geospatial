@@ -22,18 +22,18 @@ exp_logger = logging.getLogger('GeoEngine expression')
 
 class Geom(fields._column):
     """This class add a new type of columns to ORM it enable POSTGIS geometry type support"""
-    
+
 
     def load_geo(self, wkb):
         """This function is used to load geo into browse record
             after read was done"""
         return wkb and wkbloads(wkb.decode('hex')) or False
-        
-    
+
+
     def set_geo(self, value):
         """This function is use to transform data in order to be
             compatible with the create function, it is also use in expression.py
-            in order to represent value it wont be use a we are not going to use it. 
+            in order to represent value it wont be use a we are not going to use it.
             As this function does not received contect direct create will not work"""
         if not value:
             return None
@@ -41,8 +41,8 @@ class Geom(fields._column):
         if res.is_empty:
             return None
         return res.wkt
-        
-    
+
+
 
     _type = None
     _classic_read = False
@@ -65,8 +65,8 @@ class Geom(fields._column):
         self._srid = srid
         self._gist_index = gist_index
         self._symbol_set  = (u' ST_GeomFromText(%s,'+unicode(self._srid)+')', self.set_geo)
-        
-        
+
+
     def entry_to_shape(self, value, same_type=False):
         """Transform input into an object"""
         shape_to_return = convert.value_to_shape(value)
@@ -127,7 +127,7 @@ class Geom(fields._column):
             cursor.commit()
 
         return True
-    
+
     def update_geo_column(self, cursor, col_name, geo_column, table, model):
         """Update a columns of type the geom does not do a lot of stuff yet"""
         print cursor.mogrify("SELECT srid, type, coord_dimension FROM geometry_columns WHERE f_table_name = %s"
@@ -191,8 +191,8 @@ class Geom(fields._column):
                          'srid': self._srid,
                          'id': res_id})
         return []
-        
-        
+
+
     def get(self, cr, obj, ids, name, uid=False, context=None, values=None):
         if context is None:
             context = {}

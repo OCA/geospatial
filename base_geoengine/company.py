@@ -8,7 +8,7 @@ from osv import fields, osv
 from tools.translate import _
 import geo_model
 class ResCompany(geo_model.GeoModel):
-    """override company to add default projection yet still text"""
+    """Override company to show basic GeoEngine data"""
     _name = "res.company"
     _inherit = "res.company"
     _columns = {
@@ -17,6 +17,7 @@ class ResCompany(geo_model.GeoModel):
                                              size=16, required=False, readonly=True),
         'comp_location' : fields.geo_point('Coordinate'),
 
-    }    
+    }
+        
     _defaults = {'geoengine_base_info': lambda *a: 'NOT IMPLEMENTED YET'}
 ResCompany()
