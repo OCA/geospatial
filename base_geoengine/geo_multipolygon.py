@@ -13,5 +13,5 @@ class GeoMultiPolygon(geo_field.Geom):
     def __init__(self, string, dim=2, srid=900913 , gist_index=True, **args):
         res = super(GeoMultiPolygon, self).__init__(string, "MULTIPOLYGON", **args)
         return res
-        
+
 fields.geo_multi_polygon = GeoMultiPolygon
