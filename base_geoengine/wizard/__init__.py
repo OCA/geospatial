@@ -3,4 +3,3 @@
 #
 #    Author Nicolas Bessi. Copyright Camptocamp SA
 ##############################################################################
-from . import initialize_db
