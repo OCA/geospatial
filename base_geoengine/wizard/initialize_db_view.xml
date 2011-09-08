@@ -1,0 +1,41 @@
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="geoengine_init_postgis_form_view">
+            <field name="name">geoengine.postgis.initializer</field>
+            <field name="model">geoengine.postgis.initializer</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="postgis_file" colspan="4"/>
+                    <newline/>
+                    <field name="spatial_ref_sys" colspan="4"/>
+                    <separator string="" colspan="4"/>
+                    <group>
+                        <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                        <button icon="gtk-ok" name="init_postgis" string="Initialize PostGIS"
+                            type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="geoengine_action_init_postgis" model="ir.actions.act_window">
+            <field name="name">Initialize PostGIS</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">geoengine.postgis.initializer</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="geoengine_init_postgis_form_view"/>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem name="Initialize PostGIS" id="geoengine_menu_init_postgis"
+            parent="geoengine_base_menu" action="geoengine_action_init_postgis"/>
+
+        <record id="geo_engine_postgis_configuration_todo" model="ir.actions.todo">
+            <field name="action_id" ref="geoengine_action_init_postgis"/>
+            <field name="category_id" ref="geo_engine_postgis_configuration_categ"/>
+            <field name="sequence">3</field>
+        </record>
+    </data>
+</openerp>
