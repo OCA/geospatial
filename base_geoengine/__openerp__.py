@@ -1,26 +1,22 @@
-#-*- coding: utf-8 -*-
+# -*- encoding: utf-8 -*-
 ##############################################################################
 #
-# Copyright (c) 2010 Camptocamp SA (http://www.camptocamp.com) 
-# @autor Nicolas Bessi (nbessi)
-# All Right Reserved
-#
+#    Author Nicolas Bessi. Copyright Camptocamp SA
 ##############################################################################
 {
-    'name': 'Geo spatial support for OpenERP',
+    'name': 'Geospatial support for OpenERP',
     'version': '0.1',
     'category': 'GeoBI',
     'description': """
-        Geo spatial support based on postgis
-        projection is set on company
+        Geospatial support based on PostGIS
         add the ability of server to server geojson
+        to do geo CRUD and view definition
     """,
     'author': 'Camptocamp',
     'website': 'http://openerp.camptocamp.com',
     'depends': ['base'],
     'init_xml': [],
     'update_xml': ['company_view.xml',
-                   'wizard/initialize_db_view.xml',
                    'geo_ir/ir_model_view.xml'],
     'demo_xml': [],
     'installable': True,

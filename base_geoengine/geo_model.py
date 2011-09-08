@@ -15,19 +15,19 @@ from . import  geo_db
 class GeoModel(orm.orm):
     #Array of ash that define layer and data to use
     _georepr = []
-    
-    
+
+
     def _auto_init(self, cursor, context=None):
-        ## We do this because actually creation of fields in DB is not actually 
+        ## We do this because actually creation of fields in DB is not actually
         ## delegated to the field it self but to the ORM _auto_init function
         """Initialize the columns in dB and Create the GIST index
         only create and update supported"""
         columns = {}
         geo_columns = {}
         tmp = {}
-        geo_db.init_postgis(cursor)        
+        geo_db.init_postgis(cursor)
         for kol in self._columns:
-            tmp[kol] = self._columns[kol] 
+            tmp[kol] = self._columns[kol]
             k_obj = self._columns[kol]
             if k_obj._type.startswith('geo_'):
                 geo_columns[kol] = self._columns[kol]
@@ -48,15 +48,15 @@ class GeoModel(orm.orm):
         for kol in geo_columns:
             geo_columns[kol].manage_db_column(cursor,
                                               kol,
-                                              geo_columns[kol], 
+                                              geo_columns[kol],
                                               self._table,
                                               self._name)
 
         self._columns = tmp
         self._field_create(cursor, context)
         return res
-        
-        
+
+
 #    def to_geojson(self, cursor, uid, ids, geom_fields=[], fields=[], context=None):
 #        """Convert Browse record instance passed in id into geojson collection and layer definition
 #        geom_field retraint the geo columns to be used
@@ -76,7 +76,7 @@ class GeoModel(orm.orm):
 #        for geom_field in geom_fields:
 #            if self._columns[geom_field]._type != 'geom':
 #                raise Exception('Invalid colum to be query to json %s', kol)
-#        supported_fields = []    
+#        supported_fields = []
 #        for f in fields:
 #            if self._columns[f]._type not in ('char', 'float', 'integer', 'text', 'boolean', 'selection', 'many2one'):
 #                print 'Json serialization not supported for relation '+f+self._columns[f]._type
@@ -109,13 +109,13 @@ class GeoModel(orm.orm):
 #        base_dict['geojson'] = base_feat_dict
 #        res = json.dumps(base_dict,indent=4)
 #        return res
-#        
+#
 #    def from_geojson(self, cursor, uid, ids, geom_field, fields=None, collection='', context=None):
 #        print 'not implemented'
 
     def fields_view_get(self, cursor, user, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
         """Return information about the available fields of the class if view type == 'map' return geographical columns
-        available"""
+        available  WORK IN PROGESS"""
         is_map = False
         field_obj = self.pool.get('ir.model.fields')
         if view_type == "map":
@@ -135,5 +135,3 @@ class GeoModel(orm.orm):
                                                     'views': {}
                 }
         return res
-            
-                
