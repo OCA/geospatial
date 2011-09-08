@@ -5,6 +5,7 @@
 ##############################################################################
 import geo_model
 import wizard
+from . import geo_view
 from . import geo_helper
 from . import geo_ir
 from . import geo_db
