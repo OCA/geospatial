@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+        <record model="ir.ui.view" id="geo_conf_panel">
+            <field name="name">res.company.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Spacial Settings">
+                        <group  string="Project data" colspan="4">
+                            <field name="geoengine_base_info" colspan="4" nolabel="1"/>
+                            <newline/>
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    
+    <record id="geo_engine_postgis_configuration_categ" model="ir.actions.todo.category">
+        <field name="name">GeoEngine</field>
+        <field name="sequence">5</field>
+    </record>  
+      
+    <menuitem name="GeoEngine" id="geoengine_base_menu"/>
+    </data>
+
+</openerp>
+
