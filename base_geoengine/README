@@ -1,0 +1,17 @@
+###Requirement###
+System:
+PostGIS http://postgis.refractions.net/
+Geos    http://trac.osgeo.org/geos/
+
+Python:
+Shapely http://pypi.python.org/pypi/Shapely
+geojson http://pypi.python.org/pypi/geojson/1.0
+
+###Setup###
+With PostGIS installed
+With Postgres user run create_postgis_template.sh available in base_geoengine module. It will create a PostGIS template.
+PostGIS package on some distributions (windows) provide with this template.
+
+###Module installation###
+If template installed simply create a database then install the module. (Depends on server branch of the project; merge pending)
+If not create a database without the module, PostGISify the database manually (http://postgis.refractions.net/docs/ch02.html) then install the module
