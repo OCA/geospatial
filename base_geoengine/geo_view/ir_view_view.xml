@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="geoengine_view_form">
+            <field name="name">geoengine.view.form</field>
+            <field name="model">ir.ui.view</field>
+            <field name="inherit_id" ref="base.view_view_form"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="GeoEngine Data">
+                    <separator string="Vector (Active layers)" colspan="4"/>
+                    <field name="vector_layer_ids" colspan="4" nolabel="1"/>
+                    <separator string="Raster (Background layers)" colspan="4"/>
+                    <field name="raster_layer_ids" colspan="4" nolabel="1"/>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+    </data>
+</openerp>
