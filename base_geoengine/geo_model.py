@@ -55,83 +55,47 @@ class GeoModel(orm.orm):
         self._columns = tmp
         self._field_create(cursor, context)
         return res
-
-
-#    def to_geojson(self, cursor, uid, ids, geom_fields=[], fields=[], context=None):
-#        """Convert Browse record instance passed in id into geojson collection and layer definition
-#        geom_field retraint the geo columns to be used
-#        fields restraint attribute field to be used.
-#        Actually only 'char', 'float', 'integer', 'text', 'boolean', 'selection', geom
-#        columns can be jsonized"""
-#        context = context or {}
-#        indicator_fields = list(set([x['variable'] for x in self._georepr]))
-#        if not geom_fields :
-#            geom_fields = list(set([x['geometry'] for x in self._georepr]))
-#        base_dict = {'geojson': {}, 'layers': self._georepr}
-#        base_feat_dict = {'type': 'FeatureCollection', 'features': []}
-#        if not fields:
-#            fields = self._columns.keys()
-#        if not isinstance(ids, list):
-#            ids = [ids]
-#        for geom_field in geom_fields:
-#            if self._columns[geom_field]._type != 'geom':
-#                raise Exception('Invalid colum to be query to json %s', kol)
-#        supported_fields = []
-#        for f in fields:
-#            if self._columns[f]._type not in ('char', 'float', 'integer', 'text', 'boolean', 'selection', 'many2one'):
-#                print 'Json serialization not supported for relation '+f+self._columns[f]._type
-#            else:
-#                supported_fields.append(f)
-#        for br_inst in self.browse(cursor, uid, ids, context):
-#            for geom_field in geom_fields:
-#                cursor.execute('select ST_AsGeoJSON(%s) from %s where id = %s'%(geom_field, self._table, br_inst.id))
-#                res = cursor.fetchone()
-#                if not res:
-#                    continue
-#                if not res[0]:
-#                    continue
-#                feature_dict = {'geometry': False, 'properties':{}}
-#                geojsonstring = res[0]
-#                geom = json.loads(geojsonstring)
-#                feature_dict['properties']['id'] = br_inst.id
-#                feature_dict['geometry'] = geom
-#                for fi in supported_fields:
-#                    val = br_inst[fi]
-#                    ##if fields is in indicator we want to keep even if false
-#                    if  val or fi in indicator_fields:
-#                        if fi in ('active',):
-#                            continue
-#                        if self._columns[fi]._type == "many2one" :
-#                            feature_dict['properties'][fi] = val and val.name or False
-#                        else:
-#                            feature_dict['properties'][fi] = val
-#                base_feat_dict['features'].append(feature_dict)
-#        base_dict['geojson'] = base_feat_dict
-#        res = json.dumps(base_dict,indent=4)
-#        return res
-#
-#    def from_geojson(self, cursor, uid, ids, geom_field, fields=None, collection='', context=None):
-#        print 'not implemented'
-
-    def fields_view_get(self, cursor, user, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+ 
+    def fields_get(self, cursor, uid, fields=None, context=None):
+        """Add geo_type definition for geo fields"""
+        res = super(GeoModel, self).fields_get(cursor, uid, fields=fields, context=context)
+        for field in res:
+            if field in self._columns:
+                col = self._columns[field]
+                if col._type.startswith('geo_'):
+                    res[field]['geo_type'] = {'type': col._geo_type, 
+                                              'dim': col._dim,
+                                              'srid':col._srid}
+        return res
+        
+    def fields_view_get(self, cursor, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
         """Return information about the available fields of the class if view type == 'map' return geographical columns
         available  WORK IN PROGESS"""
-        is_map = False
+        raster_obj = self.pool.get('geoengine.raster.layer')
+        vector_obj = self.pool.get('geoengine.vector.layer')
         field_obj = self.pool.get('ir.model.fields')
+        def set_field_real_name(in_tuple):
+            if not in_tuple:
+                return in_tuple
+            name = field_obj.read(cursor, uid, in_tuple[0], ['name'])['name']
+            out = (in_tuple[0], name, in_tuple[1])
+            return out
+        is_map = False
         if view_type == "map":
             is_map = True
-        view_type = 'form'
-        res = super(GeoModel, self).fields_view_get(cursor, user, view_id, view_type, context, toolbar, submenu)
+        view_type = 'form' ## we use the form defined in arch in order to get attribute and tooltip view
+        res = super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type, context, toolbar, submenu)
         if is_map :
-            geo_field_ids = field_obj.search(cursor, user, [('ttype','=', 'geo_'), ('model', '=', self._name)])
-            if not geo_field_ids:
-                return res
-            for geo_field in field_obj.browse(cursor, user, geo_field_ids):
-                res['fields'][geo_field.name] = {
-                                                    'type': geo_field._geo_type,
-                                                    'selectable': geo_field.selectable,
-                                                    'select': 2,
-                                                    'string': geo_field.field_description,
-                                                    'views': {}
-                }
+            view = self.pool.get('ir.ui.view').browse(cursor, uid, view_id)
+            res['background'] = []
+            res['actives'] = []
+            for layer in view.raster_layer_ids:
+                layer_dict = raster_obj.read(cursor, uid, layer.id, context)
+                res['background'].append(layer_dict)
+            for layer in view.vector_layer_ids:
+                layer_dict = vector_obj.read(cursor, uid, layer.id, context)
+                layer_dict['attribute_field_id'] = set_field_real_name(layer_dict['attribute_field_id'])
+                layer_dict['geo_field_id'] = set_field_real_name(layer_dict['geo_field_id'])
+                res['actives'].append(layer_dict)
+
         return res
