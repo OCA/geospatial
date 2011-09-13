@@ -20,7 +20,7 @@ class IrUIView(osv.osv):
             tmp.append(GEO_VIEW)
             tmp.sort()
             self._columns['type'].selection = tuple(set(tmp))
-            
+
     _columns = {'raster_layer_ids': fields.one2many('geoengine.raster.layer',
                                                     'view_id',
                                                     'Raster layers',
@@ -30,3 +30,6 @@ class IrUIView(osv.osv):
                                                     'view_id',
                                                     'Vector layers',
                                                     required=True)}
+
+
+IrUIView()
