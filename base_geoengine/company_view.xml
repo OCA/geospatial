@@ -18,14 +18,8 @@
                 </notebook>
             </field>
         </record>
-    
-    <record id="geo_engine_postgis_configuration_categ" model="ir.actions.todo.category">
-        <field name="name">GeoEngine</field>
-        <field name="sequence">5</field>
-    </record>  
       
     <menuitem name="GeoEngine" id="geoengine_base_menu"/>
     </data>
-
 </openerp>
 

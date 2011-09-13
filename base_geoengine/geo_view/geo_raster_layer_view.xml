@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="geo_raster_view_form">
+            <field name="name">geoengine.raster.layer.form</field>
+            <field name="model">geoengine.raster.layer</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="General">
+                        <field name="name" colspan="4"/>
+                        <field name="view_id"/>
+                        <field name="raster_type"/>
+                        <field name="sequence"/>
+                        <field name="overlay"/>
+                        <field name="url" colspan="4" widget="url"
+                            attrs="{'invisible': [('raster_type', '!=', 'd_vms')]}"/>
+                    </group>
+                    <group string="Google layer data"
+                        attrs="{'invisible': [('raster_type', '!=', 'google')]}"
+                        colspan="4">
+                        <field name="google_type"/>
+                    </group>
+                    <group string="OpenERP layer data (Not implemented)"
+                        attrs="{'invisible': [('raster_type', '!=', 'openerp')]}"
+                        colspan="4">
+                        <field name="field_id"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="geo_raster_view_tree">
+            <field name="name">geoengine.raster.layer.tree</field>
+            <field name="model">geoengine.raster.layer</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name" select="1"/>
+                    <field name="raster_type" select="1"/>
+                    <field name="sequence"/>
+                    <field name="overlay" select="1"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="geo_engine_view_rater_action" model="ir.actions.act_window">
+            <field name="name">Raster Layer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">geoengine.raster.layer</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="geo_raster_view_tree"/>
+        </record>
+
+        <menuitem name="GeoEngine Raster Layer Management" id="geoengine_raster_layer_menu"
+            parent="geoengine_base_view_menu" action="geo_engine_view_rater_action"/>
+    </data>
+</openerp>
