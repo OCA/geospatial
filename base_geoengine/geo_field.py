@@ -184,7 +184,7 @@ class Geom(fields._column):
         else:
             mode_to_use = 'null'
         sql += mode[mode_to_use]
-        exp_logger.info(cr.mogrify(sql, {'wkt': wkt,
+        exp_logger.debug(cr.mogrify(sql, {'wkt': wkt,
                                          'srid': self._srid,
                                          'id': res_id}))
         cr.execute(sql, {'wkt': wkt,
