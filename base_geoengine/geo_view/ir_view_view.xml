@@ -8,14 +8,30 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <notebook position="inside">
-                    <page string="GeoEngine Data">
-                    <separator string="Vector (Active layers)" colspan="4"/>
-                    <field name="vector_layer_ids" colspan="4" nolabel="1"/>
-                    <separator string="Raster (Background layers)" colspan="4"/>
-                    <field name="raster_layer_ids" colspan="4" nolabel="1"/>
+                    <page string="GeoEngine Data"
+                        attrs="{'invisible': [('type', '!=', 'geo_map_view')]}">
+                        <separator string="Vector (Active layers)" colspan="4"/>
+                        <field name="vector_layer_ids" colspan="4" nolabel="1"/>
+                        <separator string="Raster (Background layers)" colspan="4"/>
+                        <field name="raster_layer_ids" colspan="4" nolabel="1"/>
                     </page>
                 </notebook>
             </field>
         </record>
+        <menuitem name="GeoEngine View/Layer Management" id="geoengine_base_view_menu"
+            parent="geoengine_base_menu"/>
+
+        <record id="geo_engine_view_action" model="ir.actions.act_window">
+            <field name="name">Views</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ir.ui.view</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="base.view_view_tree"/>
+            <field name="search_view_id" ref="base.action_view_search"/>
+            <field name="domain">[('type', '=', 'geo_map_view')]</field>
+        </record>
+
+        <menuitem name="GeoEngine View Management" id="geoengine_view_menu"
+            parent="geoengine_base_view_menu" action="geo_engine_view_action"/>
     </data>
 </openerp>
