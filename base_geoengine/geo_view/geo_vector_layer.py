@@ -6,7 +6,7 @@
 from osv import fields, osv
 
 SUPPORTED_ATT = ['float', 'integer','integer_big', 'related',
-                 'function', 'date', 'datetime', 'char', 'text']
+                 'function', 'date', 'datetime', 'char', 'text', 'selection']
 
 class GeoVectorLayer(osv.osv):
     _name = 'geoengine.vector.layer'
