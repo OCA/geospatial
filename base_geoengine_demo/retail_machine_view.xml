@@ -30,7 +30,7 @@
             </field>
         </record>
 
-        <record id="geo_engine_view_retail_machine_action" model="ir.actions.act_window">
+        <record id="geoengine_view_retail_machine_action" model="ir.actions.act_window">
             <field name="name">Retail Machines</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">geoengine.demo.automatic.retailing.machine</field>
@@ -38,9 +38,15 @@
             <field name="view_id" ref="geo_retail_machine_view_tree"/>
         </record>
 
-
         <menuitem name="GeoEngine Demo" id="geoengine_demo_menu"/>
-        <menuitem name="Retail machine" id="geoengine_retail_machine_menu"
-            action="geo_engine_view_retail_machine_action" parent="geoengine_demo_menu"/>
+        
+        <menuitem name="GeoEngine Retail Machine Sample" 
+            id="geoengine_demo_retail_menu" parent="geoengine_demo_menu"/>
+            
+        <menuitem name="Retail Machine" id="geoengine_retail_machine_menu"
+            action="geoengine_view_retail_machine_action" parent="geoengine_demo_retail_menu"/>
+            
+        <menuitem name="ZIP" id="zip_retail_machine" 
+            parent="geoengine_demo_retail_menu" action="better_zip.action_zip_tree"/>
     </data>
 </openerp>
