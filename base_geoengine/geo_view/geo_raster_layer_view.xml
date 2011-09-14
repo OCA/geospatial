@@ -14,7 +14,7 @@
                         <field name="sequence"/>
                         <field name="overlay"/>
                         <field name="url" colspan="4" widget="url"
-                            attrs="{'invisible': [('raster_type', '!=', 'd_vms')]}"/>
+                            attrs="{'invisible': [('raster_type', '!=', 'd_wms')]}"/>
                     </group>
                     <group string="Google layer data"
                         attrs="{'invisible': [('raster_type', '!=', 'google')]}"
