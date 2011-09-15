@@ -22,9 +22,9 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree>
-                    <field name="name"/>
-                    <field name="total_sales" />
-                    <field name="money_level" />
+                    <field name="name" select="1"/>
+                    <field name="total_sales" select="1"/>
+                    <field name="money_level" select="1"/>
                     <field name="state"/>
                 </tree>
             </field>
