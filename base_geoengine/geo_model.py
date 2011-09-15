@@ -96,11 +96,12 @@ class GeoModel(orm.orm):
             res['geoengine_layers'] = {}
             res['geoengine_layers']['backgrounds'] = []
             res['geoengine_layers']['actives'] = []
+            # TODO find why context in read does not work with webclient
             for layer in view.raster_layer_ids:
-                layer_dict = raster_obj.read(cursor, uid, layer.id, context)
+                layer_dict = raster_obj.read(cursor, uid, layer.id)
                 res['geoengine_layers']['backgrounds'].append(layer_dict)
             for layer in view.vector_layer_ids:
-                layer_dict = vector_obj.read(cursor, uid, layer.id, context)
+                layer_dict = vector_obj.read(cursor, uid, layer.id)
                 layer_dict['attribute_field_id'] = set_field_real_name(layer_dict.get('attribute_field_id', False))
                 layer_dict['geo_field_id'] = set_field_real_name(layer_dict.get('geo_field_id', False))
                 res['geoengine_layers']['actives'].append(layer_dict)
