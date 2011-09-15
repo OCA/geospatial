@@ -100,7 +100,7 @@ class NPA(geo_model.GeoModel):
         b = self.create(cursor, uid, {'name':'1100', 'city': 'lausanne', 'the_geom': a.the_geom})
         b = self.browse(cursor, uid, b)
         #self.unlink(cursor, uid, [b.id])
-        view_id = self.pool.get('ir.ui.view').search(cursor, uid,[('model', '=', 'res.better.zip'), ('type', '=', 'geo_map_view')])[0]
+        view_id = self.pool.get('ir.ui.view').search(cursor, uid,[('model', '=', 'res.better.zip'), ('type', '=', 'geoengine')])[0]
         import pprint; pprint.pprint(self.fields_view_get(cursor, uid, view_id=view_id, view_type='map', context=None, toolbar=False, submenu=False))
         return True
 NPA()

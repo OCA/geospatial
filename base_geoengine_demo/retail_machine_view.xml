@@ -34,6 +34,7 @@
             <field name="name">Retail Machines</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">geoengine.demo.automatic.retailing.machine</field>
+            <field name="view_mode">tree,form,geoengine</field>
             <field name="view_type">form</field>
             <field name="view_id" ref="geo_retail_machine_view_tree"/>
         </record>
@@ -46,7 +47,15 @@
         <menuitem name="Retail Machine" id="geoengine_retail_machine_menu"
             action="geoengine_view_retail_machine_action" parent="geoengine_demo_retail_menu"/>
             
+        <record id="action_zip_tree" model="ir.actions.act_window">
+            <field name="name">ZIP Management</field>
+            <field name="res_model">res.better.zip</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,geoengine</field>
+            <field ref="better_zip.better_zip_tree" name="view_id"/>
+        </record>
+            
         <menuitem name="ZIP" id="zip_retail_machine" 
-            parent="geoengine_demo_retail_menu" action="better_zip.action_zip_tree"/>
+            parent="geoengine_demo_retail_menu" action="action_zip_tree"/>
     </data>
 </openerp>
