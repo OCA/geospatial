@@ -41,7 +41,7 @@ class GeoVectorLayer(osv.osv):
                                                         ('model', '=', 'view_id.model')],
                                                 required=True),
                 'view_id' : fields.many2one('ir.ui.view', 'Related View',
-                                            domain=[('type', '=', 'geo_map_view')],
+                                            domain=[('type', '=', 'geoengine')],
                                             required=True),
                 'sequence': fields.integer('layer priority lower on top'),
 }

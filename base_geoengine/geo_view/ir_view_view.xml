@@ -9,7 +9,7 @@
             <field name="arch" type="xml">
                 <notebook position="inside">
                     <page string="GeoEngine Data"
-                        attrs="{'invisible': [('type', '!=', 'geo_map_view')]}">
+                        attrs="{'invisible': [('type', '!=', 'geoengine')]}">
                         <separator string="Vector (Active layers)" colspan="4"/>
                         <field name="vector_layer_ids" colspan="4" nolabel="1"/>
                         <separator string="Raster (Background layers)" colspan="4"/>
@@ -28,7 +28,7 @@
             <field name="view_type">form</field>
             <field name="view_id" ref="base.view_view_tree"/>
             <field name="search_view_id" ref="base.action_view_search"/>
-            <field name="domain">[('type', '=', 'geo_map_view')]</field>
+            <field name="domain">[('type', '=', 'geoengine')]</field>
         </record>
 
         <menuitem name="GeoEngine View Management" id="geoengine_view_menu"

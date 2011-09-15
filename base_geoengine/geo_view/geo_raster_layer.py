@@ -30,7 +30,7 @@ class GeoRasterLayer(osv.osv):
                                             domain=[('ttype', 'ilike', 'geo_'),
                                                     ('model', '=', 'view_id.model')]),
                 'view_id' : fields.many2one('ir.ui.view', 'Related View',
-                                             domain=[('type', '=', 'geo_map_view')],
+                                             domain=[('type', '=', 'geoengine')],
                                              required=True)}
 # TODO Write data check consraints
 GeoRasterLayer()

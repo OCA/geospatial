@@ -6,7 +6,7 @@
 from osv import fields, osv
 
 
-GEO_VIEW = ('geo_map_view', 'GeoEngine')
+GEO_VIEW = ('geoengine', 'GeoEngine')
 
 class IrUIView(osv.osv):
     _inherit = 'ir.ui.view'
