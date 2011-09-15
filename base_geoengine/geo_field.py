@@ -4,7 +4,6 @@
 #    Author Nicolas Bessi. Copyright Camptocamp SA
 ##############################################################################
 import json
-import pprint
 import logging
 
 from shapely.wkb import dumps as wkbdumps, loads as  wkbloads
