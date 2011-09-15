@@ -81,11 +81,8 @@ class GeoModel(orm.orm):
             out = (in_tuple[0], name, in_tuple[1])
             return out
         is_map = False
-        if view_type == "map":
-            is_map = True
-        view_type = 'form' ## we use the form defined in arch in order to get attribute and tooltip view
-        res = super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type, context, toolbar, submenu)
-        if is_map :
+        if view_type == "geoengine":
+            res = super(GeoModel, self).fields_view_get(cursor, uid, view_id, 'form', context, toolbar, submenu)
             view = self.pool.get('ir.ui.view').browse(cursor, uid, view_id)
             res['background'] = []
             res['actives'] = []
@@ -97,5 +94,6 @@ class GeoModel(orm.orm):
                 layer_dict['attribute_field_id'] = set_field_real_name(layer_dict['attribute_field_id'])
                 layer_dict['geo_field_id'] = set_field_real_name(layer_dict['geo_field_id'])
                 res['actives'].append(layer_dict)
-
+        else:
+            return super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type, context, toolbar, submenu) 
         return res
