@@ -101,8 +101,8 @@ class GeoModel(orm.orm):
                 res['background'].append(layer_dict)
             for layer in view.vector_layer_ids:
                 layer_dict = vector_obj.read(cursor, uid, layer.id, context)
-                layer_dict['attribute_field_id'] = set_field_real_name(layer_dict['attribute_field_id'])
-                layer_dict['geo_field_id'] = set_field_real_name(layer_dict['geo_field_id'])
+                layer_dict['attribute_field_id'] = set_field_real_name(layer_dict.get('attribute_field_id', False))
+                layer_dict['geo_field_id'] = set_field_real_name(layer_dict.get('geo_field_id', False))
                 res['actives'].append(layer_dict)
         else:
             return super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type, context, toolbar, submenu)
