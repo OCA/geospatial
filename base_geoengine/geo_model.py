@@ -4,7 +4,6 @@
 #    Author Nicolas Bessi. Copyright Camptocamp SA
 ##############################################################################
 import json
-import pprint
 
 from osv import fields, osv, orm
 from tools.translate import _
@@ -55,7 +54,7 @@ class GeoModel(orm.orm):
         self._columns = tmp
         self._field_create(cursor, context)
         return res
- 
+
     def fields_get(self, cursor, uid, fields=None, context=None):
         """Add geo_type definition for geo fields"""
         res = super(GeoModel, self).fields_get(cursor, uid, fields=fields, context=context)
@@ -63,14 +62,16 @@ class GeoModel(orm.orm):
             if field in self._columns:
                 col = self._columns[field]
                 if col._type.startswith('geo_'):
-                    res[field]['geo_type'] = {'type': col._geo_type, 
+                    res[field]['geo_type'] = {'type': col._geo_type,
                                               'dim': col._dim,
                                               'srid':col._srid}
         return res
-        
-    def fields_view_get(self, cursor, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
-        """Return information about the available fields of the class if view type == 'map' return geographical columns
-        available  WORK IN PROGESS"""
+
+    def fields_view_get(self, cursor, uid, view_id=None, view_type='form',
+                        context=None, toolbar=False, submenu=False):
+        """Return information about the available fields of the class.
+           If view type == 'map' return geographical columns available"""
+        view_obj = self.pool.get('ir.ui.view')
         raster_obj = self.pool.get('geoengine.raster.layer')
         vector_obj = self.pool.get('geoengine.vector.layer')
         field_obj = self.pool.get('ir.model.fields')
@@ -82,8 +83,17 @@ class GeoModel(orm.orm):
             return out
         is_map = False
         if view_type == "geoengine":
-            res = super(GeoModel, self).fields_view_get(cursor, uid, view_id, 'form', context, toolbar, submenu)
-            view = self.pool.get('ir.ui.view').browse(cursor, uid, view_id)
+            res = super(GeoModel, self).fields_view_get(cursor, uid, view_id,
+                                                        'form', context, toolbar, submenu)
+            if not view_id:
+                geo_view_id = view_obj.search(cursor, uid,
+                                              [('model', '=', self._name), ('type', '=', 'geoengine')])
+                if not geo_view_id:
+                    raise osv.except_osv(_('No GeoEngine view defined for the model %s') % (model,),
+                                         _('Please create a view or modifiy action view mode'))
+                view = view_obj.browse(cursor, uid, geo_view_id[0])
+            else:
+                view = view_obj.browse(cursor, uid, view_id)
             res['background'] = []
             res['actives'] = []
             for layer in view.raster_layer_ids:
@@ -95,5 +105,5 @@ class GeoModel(orm.orm):
                 layer_dict['geo_field_id'] = set_field_real_name(layer_dict['geo_field_id'])
                 res['actives'].append(layer_dict)
         else:
-            return super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type, context, toolbar, submenu) 
+            return super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type, context, toolbar, submenu)
         return res
