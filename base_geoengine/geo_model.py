@@ -81,7 +81,6 @@ class GeoModel(orm.orm):
             name = field_obj.read(cursor, uid, in_tuple[0], ['name'])['name']
             out = (in_tuple[0], name, in_tuple[1])
             return out
-        is_map = False
         if view_type == "geoengine":
             res = super(GeoModel, self).fields_view_get(cursor, uid, view_id,
                                                         'form', context, toolbar, submenu)
@@ -94,16 +93,17 @@ class GeoModel(orm.orm):
                 view = view_obj.browse(cursor, uid, geo_view_id[0])
             else:
                 view = view_obj.browse(cursor, uid, view_id)
-            res['background'] = []
-            res['actives'] = []
+            res['geoengine_layers'] = {}
+            res['geoengine_layers']['backgrounds'] = []
+            res['geoengine_layers']['actives'] = []
             for layer in view.raster_layer_ids:
                 layer_dict = raster_obj.read(cursor, uid, layer.id, context)
-                res['background'].append(layer_dict)
+                res['geoengine_layers']['backgrounds'].append(layer_dict)
             for layer in view.vector_layer_ids:
                 layer_dict = vector_obj.read(cursor, uid, layer.id, context)
                 layer_dict['attribute_field_id'] = set_field_real_name(layer_dict.get('attribute_field_id', False))
                 layer_dict['geo_field_id'] = set_field_real_name(layer_dict.get('geo_field_id', False))
-                res['actives'].append(layer_dict)
+                res['geoengine_layers']['actives'].append(layer_dict)
         else:
             return super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type, context, toolbar, submenu)
         return res
