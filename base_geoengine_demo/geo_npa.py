@@ -13,7 +13,6 @@ from shapely.geometry import asShape
 import geojson
 
 from base_geoengine import geo_model
-import pprint
 
 class NPA(geo_model.GeoModel):
     """GEO OSV SAMPLE"""
@@ -102,5 +101,6 @@ class NPA(geo_model.GeoModel):
         #self.unlink(cursor, uid, [b.id])
         view_id = self.pool.get('ir.ui.view').search(cursor, uid,[('model', '=', 'res.better.zip'), ('type', '=', 'geoengine')])[0]
         import pprint; pprint.pprint(self.fields_view_get(cursor, uid, view_id=view_id, view_type='geoengine', context=None, toolbar=False, submenu=False))
+        import pprint; pprint.pprint(self.fields_view_get(cursor, uid, view_id=False, view_type='geoengine', context=None, toolbar=False, submenu=False))
         return True
 NPA()
