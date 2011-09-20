@@ -18,7 +18,7 @@ class GeoRasterLayer(osv.osv):
                                                  string="Raster layer type",
                                                  required=True),
                 'name': fields.char('Layer Name', size=256, translate=True, required=True),
-                'url': fields.text('Service URL'),
+                'url': fields.char('Service URL', size=1024),
                 'google_type':  fields.selection([('G_NORMAL_MAP', 'Google normal map'),
                                                   ('G_SATELLITE_MAP', 'Google staellite map'),
                                                   ('G_HYBRID_MAP', 'Google Hybrid map'),
