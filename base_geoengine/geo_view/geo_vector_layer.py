@@ -13,9 +13,10 @@ class GeoVectorLayer(osv.osv):
 
 
     _columns = {'geo_repr': fields.selection([('basic', 'Basic'),
-                                              ('choropleth', 'Choropleth'),
+                                              # Actually we have to think if we should separate it for colored
+                                              #('choropleth', 'Choropleth'),
                                               ('proportion', 'Proportional Symbol'),
-                                              ('colored', 'Colored range')],
+                                              ('colored', 'Colored range/Choropleth')],
                                              string="Representation mode",
                                              required=True),
                 'classification': fields.selection([('unique', 'Unique value'),
@@ -33,12 +34,10 @@ class GeoVectorLayer(osv.osv):
                 'nb_class': fields.integer('Number of class'),
                 'attribute_field_id': fields.many2one('ir.model.fields',
                                                       'attribute field',
-                                                      domain=[('ttype', 'in', SUPPORTED_ATT),
-                                                              ('model', '=', 'view_id.model')]),
+                                                      domain=[('ttype', 'in', SUPPORTED_ATT)]),
                 'geo_field_id': fields.many2one('ir.model.fields',
                                                 'Geo field',
-                                                domain=[('ttype', 'ilike', 'geo_'),
-                                                        ('model', '=', 'view_id.model')],
+                                                domain=[('ttype', 'ilike', 'geo_')],
                                                 required=True),
                 'view_id' : fields.many2one('ir.ui.view', 'Related View',
                                             domain=[('type', '=', 'geoengine')],
