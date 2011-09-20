@@ -88,7 +88,7 @@ class GeoModel(orm.orm):
                 geo_view_id = view_obj.search(cursor, uid,
                                               [('model', '=', self._name), ('type', '=', 'geoengine')])
                 if not geo_view_id:
-                    raise osv.except_osv(_('No GeoEngine view defined for the model %s') % (model,),
+                    raise osv.except_osv(_('No GeoEngine view defined for the model %s') % (self._name,),
                                          _('Please create a view or modifiy action view mode'))
                 view = view_obj.browse(cursor, uid, geo_view_id[0])
             else:
