@@ -82,8 +82,6 @@ class GeoModel(orm.orm):
             out = (in_tuple[0], name, in_tuple[1])
             return out
         if view_type == "geoengine":
-            res = super(GeoModel, self).fields_view_get(cursor, uid, view_id,
-                                                        'form', context, toolbar, submenu)
             if not view_id:
                 geo_view_id = view_obj.search(cursor, uid,
                                               [('model', '=', self._name), ('type', '=', 'geoengine')])
@@ -93,6 +91,8 @@ class GeoModel(orm.orm):
                 view = view_obj.browse(cursor, uid, geo_view_id[0])
             else:
                 view = view_obj.browse(cursor, uid, view_id)
+            res = super(GeoModel, self).fields_view_get(cursor, uid, view.id,
+                                                        'form', context, toolbar, submenu)
             res['geoengine_layers'] = {}
             res['geoengine_layers']['backgrounds'] = []
             res['geoengine_layers']['actives'] = []
@@ -108,3 +108,10 @@ class GeoModel(orm.orm):
         else:
             return super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type, context, toolbar, submenu)
         return res
+
+
+    def geo_search(self, cursor, uid, domain=[], geo_domain=[], offset=0, limit=None, order=None, context=None):
+        # First we do a standard search in order to apply security rules
+        # and do a search on standard attributes
+        #Limit and offset are managed after, we may loose a lot of performance here
+        return geo_operators.geo_search(self, cursor, uid, domain, geo_domain, offset, limit, order, context)
