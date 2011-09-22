@@ -10,6 +10,7 @@ from tools.translate import _
 from . import geo_field
 from . import  geo_db
 
+DEFAULT_EXTENT = '-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898'
 
 class GeoModel(orm.orm):
     #Array of ash that define layer and data to use
@@ -45,12 +46,8 @@ class GeoModel(orm.orm):
                                   ' You can also use script create_postgis_template.sh'
                                   ' available in module'))
         for kol in geo_columns:
-            geo_columns[kol].manage_db_column(cursor,
-                                              kol,
-                                              geo_columns[kol],
-                                              self._table,
-                                              self._name)
-
+            geo_columns[kol].manage_db_column(cursor, kol, geo_columns[kol],
+                                              self._table, self._name)
         self._columns = tmp
         self._field_create(cursor, context)
         return res
@@ -83,8 +80,10 @@ class GeoModel(orm.orm):
             return out
         if view_type == "geoengine":
             if not view_id:
-                geo_view_id = view_obj.search(cursor, uid,
-                                              [('model', '=', self._name), ('type', '=', 'geoengine')])
+                geo_view_id = view_obj.search(cursor,
+                                              uid,
+                                              [('model', '=', self._name),
+                                               ('type', '=', 'geoengine')])
                 if not geo_view_id:
                     raise osv.except_osv(_('No GeoEngine view defined for the model %s') % (self._name,),
                                          _('Please create a view or modifiy action view mode'))
@@ -96,6 +95,8 @@ class GeoModel(orm.orm):
             res['geoengine_layers'] = {}
             res['geoengine_layers']['backgrounds'] = []
             res['geoengine_layers']['actives'] = []
+            default_extent = (view.default_extent or DEFAULT_EXTENT).split(',')
+            res['geoengine_layers']['default_extent'] = [float(x) for x in default_extent]
             # TODO find why context in read does not work with webclient
             for layer in view.raster_layer_ids:
                 layer_dict = raster_obj.read(cursor, uid, layer.id)
@@ -105,13 +106,19 @@ class GeoModel(orm.orm):
                 layer_dict['attribute_field_id'] = set_field_real_name(layer_dict.get('attribute_field_id', False))
                 layer_dict['geo_field_id'] = set_field_real_name(layer_dict.get('geo_field_id', False))
                 res['geoengine_layers']['actives'].append(layer_dict)
+                # adding geo column desc
+                geo_f_name = layer_dict['geo_field_id'][1]
+                res['fields'].update(self.fields_get(cursor, uid, [geo_f_name]))
         else:
-            return super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type, context, toolbar, submenu)
+            return super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type,
+                                                         context, toolbar, submenu)
         return res
 
 
-    def geo_search(self, cursor, uid, domain=[], geo_domain=[], offset=0, limit=None, order=None, context=None):
+    def geo_search(self, cursor, uid, domain=[], geo_domain=[], offset=0,
+                   limit=None, order=None, context=None):
         # First we do a standard search in order to apply security rules
         # and do a search on standard attributes
         #Limit and offset are managed after, we may loose a lot of performance here
-        return geo_operators.geo_search(self, cursor, uid, domain, geo_domain, offset, limit, order, context)
+        return geo_operators.geo_search(self, cursor, uid, domain, geo_domain,
+                                        offset, limit, order, context)
