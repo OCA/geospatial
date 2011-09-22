@@ -43,7 +43,7 @@ class GeoVectorLayer(osv.osv):
                                             domain=[('type', '=', 'geoengine')],
                                             required=True),
                 'sequence': fields.integer('layer priority lower on top'),
-}
+                'readonly': fields.boolean('Layer is read only')}
     # TODO Write data check consraints
     _defaults = {'nb_class': lambda *a: 1,
                  'begin_color': lambda *a: '#FF680A',
