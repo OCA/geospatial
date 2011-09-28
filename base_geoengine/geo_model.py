@@ -12,11 +12,13 @@ from . import  geo_db
 
 DEFAULT_EXTENT = '-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898'
 
-class GeoModel(orm.orm):
+class GeoModel(orm.BaseModel):
     #Array of ash that define layer and data to use
     _georepr = []
-
-
+    _name = None
+    _register = False # not visible in ORM registry, meant to be python-inherited only
+    _transient = False # True in a TransientModel
+    
     def _auto_init(self, cursor, context=None):
         ## We do this because actually creation of fields in DB is not actually
         ## delegated to the field it self but to the ORM _auto_init function
@@ -52,9 +54,9 @@ class GeoModel(orm.orm):
         self._field_create(cursor, context)
         return res
 
-    def fields_get(self, cursor, uid, fields=None, context=None):
+    def fields_get(self, cursor, uid, allfields=None, context=None):
         """Add geo_type definition for geo fields"""
-        res = super(GeoModel, self).fields_get(cursor, uid, fields=fields, context=context)
+        res = super(GeoModel, self).fields_get(cursor, uid, allfields=allfields, context=context)
         for field in res:
             if field in self._columns:
                 col = self._columns[field]
