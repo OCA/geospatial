@@ -49,7 +49,7 @@ class NPA(geo_model.GeoModel):
     _inherit = "res.better.zip"
     _name = "res.better.zip"
     _columns = {
-        'the_geom' : fields.geo_multi_polygon('NPA Shape'),
+        'the_geom' : fields.geo_polygon('NPA Shape'),
         'total_sales': fields.function(
                                  _get_ZIP_total_sales,
                                  method=True, string='Spatial! Total Sales',
