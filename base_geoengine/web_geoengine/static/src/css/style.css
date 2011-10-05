@@ -1,0 +1,155 @@
+/* OpenLayers Style */
+div.olMap {
+    z-index: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+    cursor: default;
+}
+div.olMapViewport {
+    text-align: left;
+}
+div.olLayerDiv {
+   -moz-user-select: none;
+   -khtml-user-select: none;
+}
+.olControlAttribution {
+    font-size: smaller;
+    right: 5px;
+    bottom: 5px;
+    position: absolute;
+    display: block;
+}
+.olHandlerBoxZoomBox {
+    border: 2px solid red;
+    position: absolute;
+    background-color: white;
+    opacity: 0.50;
+    font-size: 1px;
+    filter: alpha(opacity=50);
+}
+.olImageLoadError {
+    background-color: pink;
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* IE */
+}
+.olControlLayerSwitcher {
+    position: absolute;
+    top: 25px;
+    right: 0px;
+    width: 20em;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-bottom: 3px;
+    font-size: smaller;
+    color: white;
+    background-color: transparent;
+}
+
+.olControlLayerSwitcher .layersDiv {
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-right: 75px;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+}
+.olControlLayerSwitcher .layersDiv .baseLbl,
+.olControlLayerSwitcher .layersDiv .dataLbl {
+    margin-top: 3px;
+    margin-left: 3px;
+    margin-bottom: 3px;
+}
+.olControlLayerSwitcher .layersDiv .baseLayersDiv,
+.olControlLayerSwitcher .layersDiv .dataLayersDiv {
+    padding-left: 10px;
+}
+.olControlLayerSwitcher .maximizeDiv,
+.olControlLayerSwitcher .minimizeDiv {
+    top: 5px;
+    right: 0px;
+    cursor: pointer;
+}
+
+
+
+/* Tool panel */
+
+.olControlEditingToolbar {
+    margin: 5px 5px 0 0;
+}
+.olControlEditingToolbar div {
+	background-image: url(../images/editing_tool_bar.png);
+    background-repeat: no-repeat;
+    margin: 0 0 5px 5px;
+    width: 24px;
+    height: 22px;
+    cursor: pointer
+}
+/* positions */
+.olControlEditingToolbar {
+    top: 15px;
+    left: 60px;
+}
+/* layouts */
+.olControlEditingToolbar div {
+    float: right;
+}
+/* individual controls */
+.olControlEditingToolbar .olControlNavigationItemInactive {
+    background-position: -103px -1px;
+}
+.olControlEditingToolbar .olControlNavigationItemActive  {
+    background-position: -103px -24px;
+}
+.olControlEditingToolbar .olControlDrawFeaturePathItemInactive {
+    background-position: -51px -1px;
+}
+.olControlEditingToolbar .olControlDrawFeaturePathItemActive {
+    background-position: -51px -24px;
+}
+.olControlEditingToolbar .olControlDrawFeaturePolygonItemInactive{
+    background-position: -26px -1px;
+}
+.olControlEditingToolbar .olControlDrawFeaturePolygonItemActive {
+    background-position: -26px -24px;
+}
+
+
+/* Page styles */
+#the_map {
+	width: 100%;
+	height: 100%;
+}
+.map_overlay {
+    position: absolute;
+	display: none;
+	background: white;
+    opacity: 0.9;
+	border: 2px solid black;
+	z-index: 3000;
+	padding: 5px 0;
+}
+#map_infobox {
+	bottom: 10px;
+	left: 10px;
+	width: 200px;
+	height: 150px;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+#map_info {
+	overflow-x: hidden;
+	overflow-y: auto;
+	padding: 10px;
+	height: 130px;
+}
+#map_measurementbox {
+	top: 18px;
+	left: 160px;
+	padding: 2px 5px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
