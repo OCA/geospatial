@@ -1,0 +1,12 @@
+<template>
+    <br />
+    <div t-name="GeoengineView" t-att-id="elem_id"
+         style="height:500px;position:relative;">
+        <div id="the_map"></div>
+        <div id="map_infobox" class="map_overlay">
+            <div id="map_info"></div>
+        </div>
+        <div id="map_measurementbox" class="map_overlay">
+        </div>
+    </div>
+</template>
