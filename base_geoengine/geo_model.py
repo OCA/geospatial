@@ -9,6 +9,8 @@ from osv import fields, osv, orm
 from tools.translate import _
 from . import geo_field
 from . import  geo_db
+from . import geo_operators
+
 
 DEFAULT_EXTENT = '-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898'
 
@@ -122,5 +124,5 @@ class GeoModel(orm.BaseModel):
         # First we do a standard search in order to apply security rules
         # and do a search on standard attributes
         #Limit and offset are managed after, we may loose a lot of performance here
-        return geo_operators.geo_search(self, cursor, uid, domain, geo_domain,
-                                        offset, limit, order, context)
+        return geo_operators.geo_search(self, cursor, uid, domain=domain, geo_domain=geo_domain,
+                                        offset=offset, limit=limit, order=order, context=context)
