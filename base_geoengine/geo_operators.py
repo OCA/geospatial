@@ -86,7 +86,7 @@ def geo_search(model, cursor, uid, domain=[], geo_domain=[], offset=0, limit=Non
     else:
         where_statement = u''
     sql= 'SELECT "%s".id FROM ' % model._table + from_clause + where_statement + order_by or '' + limit_str or '' + offset_str or ''
-    
+    print cursor.mogrify(sql, where_clause_params)
     logger.debug(cursor.mogrify(sql, where_clause_params))
     cursor.execute(sql, where_clause_params)
     res = cursor.fetchall()
