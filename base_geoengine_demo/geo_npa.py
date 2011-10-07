@@ -103,5 +103,9 @@ class NPA(geo_model.GeoModel):
         view_id = self.pool.get('ir.ui.view').search(cursor, uid,[('model', '=', 'res.better.zip'), ('type', '=', 'geoengine')])[0]
         import pprint; pprint.pprint(self.fields_view_get(cursor, uid, view_id=view_id, view_type='geoengine', context=None, toolbar=False, submenu=False))
         import pprint; pprint.pprint(self.fields_view_get(cursor, uid, view_id=False, view_type='geoengine', context=None, toolbar=False, submenu=False))
+        print self.geo_search(cursor, uid, domain=[('name', 'ilike', 'Lausanne')], geo_domain=[('the_geom', 'geo_greater', Polygon([(3, 0), (4, 1), (4, 0)]))])
+        print self.geo_search(cursor, uid, domain=[('name', 'ilike', 'Lausanne')], geo_domain=[('the_geom', 'geo_greater', 0)])
+        print self.geo_search(cursor, uid, domain=[('name', 'ilike', 'Lausanne')], geo_domain=[('the_geom', 'geo_intersect', {'geoengine.demo.automatic.retailing.machine.the_point': []})])
+        print self.geo_search(cursor, uid, domain=[('name', 'ilike', 'Lausanne')], geo_domain=[('the_geom', 'geo_intersect', {'geoengine.demo.automatic.retailing.machine.the_point': [('name','!=','Vallorbe')]})])
         return True
 NPA()
