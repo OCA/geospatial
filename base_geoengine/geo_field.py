@@ -15,6 +15,7 @@ from osv import fields, osv, orm
 from tools.translate import _
 import pooler
 from geo_helper import geo_convertion_helper as convert
+import geo_operators
 
 logger = logging.getLogger('GeoEngine database structure')
 exp_logger = logging.getLogger('GeoEngine expression')
@@ -64,6 +65,7 @@ class Geom(fields._column):
         self._srid = srid
         self._gist_index = gist_index
         self._symbol_set  = (u' ST_GeomFromText(%s,'+unicode(self._srid)+')', self.set_geo)
+        self._geo_operator = geo_operators.GeoOperator(self)
 
 
     def entry_to_shape(self, value, same_type=False):
