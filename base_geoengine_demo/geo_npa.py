@@ -25,18 +25,17 @@ class NPA(geo_model.GeoModel):
         if not isinstance(ids, list):
             ids = [ids]
         inv_obj = self.pool.get('account.invoice')
-        for zip_id in ids :
-            cursor.execute(("select geoengine_demo_automatic_retailing_machine.id from"
-                            " geoengine_demo_automatic_retailing_machine, res_better_zip"
-                            " where res_better_zip.id = %s and"
-                            " st_intersects(res_better_zip.the_geom, geoengine_demo_automatic_retailing_machine.the_point)"),
-                            (zip_id,))
-            res = cursor.fetchall()
+        mach_obj = self.pool.get('geoengine.demo.automatic.retailing.machine')
+        for zip_id in ids:
+            res = mach_obj.geo_search(cursor,
+                                      uid,
+                                      domain=[],
+                                      geo_domain=[('the_point', 'geo_intersect', {'res.better.zip.the_geom': [('id', '=', zip_id)]})])
+
             if res:
-                mach_ids = [x[0] for x in res]
                 cursor.execute("SELECT sum(total_sales) from"
                                " geoengine_demo_automatic_retailing_machine where id in %s;",
-                               (tuple(mach_ids),))
+                               (tuple(res),))
                 res = cursor.fetchone()
                 if res :
                     to_return[zip_id] = res[0] or 0.0
