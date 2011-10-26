@@ -52,7 +52,7 @@
             <field name="view_id" ref="geo_raster_view_tree"/>
         </record>
 
-        <menuitem name="GeoEngine Raster Layer Management" id="geoengine_raster_layer_menu"
+        <menuitem name="Raster Layer Management" id="geoengine_raster_layer_menu"
             parent="geoengine_base_view_menu" action="geo_engine_view_rater_action"/>
     </data>
 </openerp>
