@@ -19,7 +19,7 @@
                 </notebook>
             </field>
         </record>
-        <menuitem name="GeoEngine View/Layer Management" id="geoengine_base_view_menu"
+        <menuitem name="Configuration" id="geoengine_base_view_menu"
             parent="geoengine_base_menu"/>
 
         <record id="geo_engine_view_action" model="ir.actions.act_window">
@@ -32,7 +32,7 @@
             <field name="domain">[('type', '=', 'geoengine')]</field>
         </record>
 
-        <menuitem name="GeoEngine View Management" id="geoengine_view_menu"
+        <menuitem name="View Management" id="geoengine_view_menu"
             parent="geoengine_base_view_menu" action="geo_engine_view_action"/>
     </data>
 </openerp>
