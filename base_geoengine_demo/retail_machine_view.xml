@@ -41,7 +41,7 @@
 
         <menuitem name="GeoEngine Demo" id="geoengine_demo_menu"/>
 
-        <menuitem name="GeoEngine Retail Machine Sample" id="geoengine_demo_retail_menu"
+        <menuitem name="GeoEngine Samples" id="geoengine_demo_retail_menu"
             parent="geoengine_demo_menu"/>
 
         <menuitem name="Retail Machine" id="geoengine_retail_machine_menu"
