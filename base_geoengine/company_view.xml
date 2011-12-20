@@ -19,7 +19,7 @@
             </field>
         </record>
       
-    <menuitem name="GeoEngine" id="geoengine_base_menu"/>
+    <menuitem name="GeoEngine" id="geoengine_base_menu" web_icon="images/map.png"/>
     </data>
 </openerp>
 
