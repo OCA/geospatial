@@ -9,7 +9,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <notebook position="inside">
-                    <page string="Spacial Settings">
+                    <page string="GeoEngine Backend">
                         <group  string="Project data" colspan="4">
                             <field name="geoengine_base_info" colspan="4" nolabel="1"/>
                             <newline/>
@@ -19,7 +19,7 @@
             </field>
         </record>
       
-    <menuitem name="GeoEngine" id="geoengine_base_menu" web_icon="images/map.png" web_icon_hover="images/map.png"/>
+    <menuitem name="GeoEngine Backend" id="geoengine_base_menu" web_icon="images/map.png" web_icon_hover="images/map-hover.png"/>
     </data>
 </openerp>
 
