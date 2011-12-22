@@ -1,7 +1,11 @@
 <template>
-    <br />
     <div t-name="GeoengineView" t-att-id="elem_id"
          style="height:500px;position:relative;">
+         <br />
+         <div  t-name="t-limit" t-att-id="limit_elem_id" style="position:relative;">limit: <select id="query_limit"><option value="80">80</option>
+                                                                                                   <option value="300">300</option>
+                                                                                                   <option value="500">500</option>
+                                                                                                   <option value="0">unlimited</option></select></div>
         <div id="the_map"></div>
         <div id="map_infobox" class="map_overlay">
             <div id="map_info"></div>
