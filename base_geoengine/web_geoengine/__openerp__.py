@@ -20,5 +20,8 @@
     "css": [
         "static/src/css/style.css",
         ],
+    'qweb' : [
+        "static/src/xml/*.xml",
+    ],
     "active": True
 }

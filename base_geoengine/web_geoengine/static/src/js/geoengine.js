@@ -63,7 +63,8 @@ openerp.web_geoengine = function (openerp) {
                         new OpenLayers.Layer.OSM(
                             l.name,
                             'http://tile.openstreetmap.org/${z}/${x}/${y}.png', {
-                                attribution: "<a href='http://www.openstreetmap.org' target='_blank'>CC BY-SA OpenStreetMap</a>",
+                                attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>\
+                                              using <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> raster",
                                 buffer: 1,
                                 transitionEffect: 'resize'
                             }));
@@ -77,7 +78,8 @@ openerp.web_geoengine = function (openerp) {
                     out.push(
                         new OpenLayers.Layer.Google(
                             l.name,
-                            {type: glayers[l.google_type]}
+                            {type: glayers[l.google_type],
+                            attribution: "<a href='http://www.camptocamp.com' style='position:relative;left:-270px;color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>"}
                         ));
                     break;
             }
@@ -109,7 +111,10 @@ openerp.web_geoengine = function (openerp) {
                     {selectedFeatures:[]}, {})
             ];
         },
-
+        limit: function(){
+            var menu = document.getElementById('query_limit');
+            return  parseInt(menu.options[menu.selectedIndex].value) || 80;
+        }, 
         start: function() {
             return this.rpc("/web/view/load", {
                 "model": this.model,
@@ -125,15 +130,14 @@ openerp.web_geoengine = function (openerp) {
         do_show: function () {
             if (this.dataset.ids.length) {
                 var self = this;
-                this.dataset.read_ids(this.dataset.ids, _.keys(self.fields_view.fields), self.do_load_vector_data);
+                self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}, self.do_load_vector_data);
             }
             this.$element.show();
         },
 
         do_search: function(domains, contexts, groupbys) {
             var self = this;
-            console.log(domains)
-            self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domains, 'limit':self.limit, 'offset':self.offset}, self.do_load_vector_data);
+            self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domains, 'limit':self.limit(), 'offset':self.offset}, self.do_load_vector_data);
         },
 
         /** 
@@ -385,11 +389,13 @@ openerp.web_geoengine = function (openerp) {
             map.addControls(this.selectFeatureControls);
             map.zoomToMaxExtent();
             var self = this;
-            if (this.dataset.ids.length) {
-                this.dataset.read_ids(this.dataset.ids, _.keys(self.fields_view.fields), self.do_load_vector_data);
-            } else {
-                this.dataset.read_slice(_.keys(this.fields_view.fields), {}, this.do_load_vector_data);
-            }
+            // if (this.dataset.ids.length) {
+            //     this.dataset.read_ids(this.dataset.ids, _.keys(self.fields_view.fields), self.do_load_vector_data);
+            // } else {
+            //     this.dataset.read_slice(_.keys(this.fields_view.fields), {}, this.do_load_vector_data);
+            // }
+            self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}, self.do_load_vector_data);
+            
         }
 
     });
