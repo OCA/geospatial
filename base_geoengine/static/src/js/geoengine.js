@@ -1,10 +1,10 @@
 /*---------------------------------------------------------
- * OpenERP web_geoengine
- * Author B.Binet. Copyright Camptocamp SA
+ * OpenERP base_geoengine
+ * Author B.Binet Copyright Camptocamp SA
+ * Contributor N. Bessi Copyright Camptocamp SA
  *---------------------------------------------------------*/
 
-openerp.web_geoengine = function (openerp) {
-
+openerp.base_geoengine = function (openerp) {
     //var map, layer, vectorLayers = [];
     //TODO: remove this DEBUG
     map = null;
@@ -87,10 +87,10 @@ openerp.web_geoengine = function (openerp) {
         return out;
     };
 
-    var QWeb = openerp.web.qweb;
-    QWeb.add_template('/web_geoengine/static/src/xml/web_geoengine.xml');
-    openerp.web.views.add('geoengine', 'openerp.web_geoengine.GeoengineView');
-    openerp.web_geoengine.GeoengineView = openerp.web.View.extend({
+    QWeb = openerp.web.qweb
+    QWeb.add_template('/base_geoengine/static/src/xml/geoengine.xml');
+    openerp.web.views.add('geoengine', 'openerp.base_geoengine.GeoengineView');
+    openerp.base_geoengine.GeoengineView = openerp.web.View.extend({
 
         init: function (parent, dataset, view_id, options) {
             this._super(parent);
@@ -113,7 +113,11 @@ openerp.web_geoengine = function (openerp) {
         },
         limit: function(){
             var menu = document.getElementById('query_limit');
-            return  parseInt(menu.options[menu.selectedIndex].value) || 80;
+            var limit = parseInt(menu.options[menu.selectedIndex].value)
+            if (limit > 0){
+                return limit
+                } 
+            else {return -1}
         }, 
         start: function() {
             return this.rpc("/web/view/load", {
@@ -128,16 +132,17 @@ openerp.web_geoengine = function (openerp) {
         },
 
         do_show: function () {
+
             if (this.dataset.ids.length) {
                 var self = this;
-                self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}, self.do_load_vector_data);
+                self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
             }
             this.$element.show();
         },
 
         do_search: function(domains, contexts, groupbys) {
             var self = this;
-            self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domains, 'limit':self.limit(), 'offset':self.offset}, self.do_load_vector_data);
+            self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
         },
 
         /** 
@@ -256,7 +261,7 @@ openerp.web_geoengine = function (openerp) {
                 }
             }
             // define the nb different colors
-            var colors = openerp.web_geoengine.utils.color.generateDistinctColors(nb);
+            var colors = openerp.base_geoengine.utils.color.generateDistinctColors(nb);
             // associate colors with values
             l = 0;
             for (var key in distinct) {
@@ -301,7 +306,6 @@ openerp.web_geoengine = function (openerp) {
 
         do_load_vector_data: function(data) {
             var self = this;
-
             _.each(this.selectFeatureControls, function(ctrl) {
                 ctrl.deactivate();
                 // setLayer a fake layer to avoid js error on unselectAll
@@ -394,14 +398,14 @@ openerp.web_geoengine = function (openerp) {
             // } else {
             //     this.dataset.read_slice(_.keys(this.fields_view.fields), {}, this.do_load_vector_data);
             // }
-            self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}, self.do_load_vector_data);
+            self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
             
         }
 
     });
     // here you may tweak globals object, if any, and play with on_* or do_* callbacks on them
 
-    openerp.web_geoengine.utils = {
+    openerp.base_geoengine.utils = {
 
         color: {
 
@@ -468,7 +472,7 @@ openerp.web_geoengine = function (openerp) {
             * nb - {integer} number of distinct colors to generate (max 768)
             */
             generateDistinctColors: function(nb) {
-                var palette = openerp.web_geoengine.utils.color.colorPalette;
+                var palette = openerp.base_geoengine.utils.color.colorPalette;
                 // use the static palette is few colors else dynamically generate a new
                 // palette
                 if (nb <= palette.length) {
@@ -598,5 +602,5 @@ OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
     },
     CLASS_NAME: "OpenLayers.Control.ToolPanel"
 });
-
+//openerp.base_geoengine(openerp)
 // vim:et fdc=0 fdl=0:
