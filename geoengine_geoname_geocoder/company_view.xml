@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="geo_conf_panel_geocoding">
+            <field name="name">res.company.geocoding.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base_geoengine.geo_conf_panel"/>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <field name="geoengine_base_info" position="after">
+                    <field name="enable_geocoding"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
+
