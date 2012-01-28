@@ -8,7 +8,7 @@
             <field name="inherit_id" ref="base.view_company_form"/>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <notebook position="inside">
+                <notebook position="inside" groups="group_geoengine_admin">
                     <page string="GeoEngine Backend">
                         <group  string="Project data" colspan="4">
                             <field name="geoengine_base_info" colspan="4" nolabel="1"/>
@@ -19,7 +19,7 @@
             </field>
         </record>
       
-    <menuitem name="GeoEngine Backend" id="geoengine_base_menu" web_icon="images/map.png" web_icon_hover="images/map-hover.png"/>
+    <menuitem name="GeoEngine Backend" id="geoengine_base_menu" web_icon="images/map.png" groups="group_geoengine_admin" web_icon_hover="images/map-hover.png"/>
     </data>
 </openerp>
 
