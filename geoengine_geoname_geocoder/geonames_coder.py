@@ -68,8 +68,9 @@ class ResPartnerAddress(osv.osv):
         if not isinstance(ids, list):
             ids = [ids]
         for add in self.browse(cursor, uid, ids, context):
+            logger.info('geolocalize %s' % (add.name,))
             if add.country_id.code and (add.city or add.zip):
-                filters[u'countryCode'] = add.country_id.code.encode('utf-8')
+                filters[u'country'] = add.country_id.code.encode('utf-8')
                 if add.city:
                     filters[u'placename'] = add.city.encode('utf-8')
                 if add.zip:

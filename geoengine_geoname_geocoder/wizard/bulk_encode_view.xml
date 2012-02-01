@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="geonames_geocoder_wizard" model="ir.ui.view">
+            <field name="name">geoengine.geoname.encoder</field>
+            <field name="model">geoengine.geoname.encoder</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Encode addresses from geonames">
+                    <separator string="This wizard Geolocalize you addresses when possible. Look at log for details" colspan="4"/>
+                    <field name="encode_all" filename="name"/>
+                    <field name="add_to_encode" colspan="4" attrs="{'invisible': [('encode_all', '=', True)]}"/>
+                    <newline/>
+                    <group colspan="4" col="6">
+                        <label string=" " colspan="2"/>
+                        <button icon="gtk-cancel" special="cancel" string="Cancel"/>
+                        <button icon="gtk-ok" name="encode" string="Encode addresses" type="object"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_geonames_geocoder_wizard" model="ir.actions.act_window">
+            <field name="name">Geolocalize addresses</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">geoengine.geoname.encoder</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="geonames_geocoder_wizard"/>
+        </record>
+
+        <menuitem
+            name="Localize addresses from GeoNames"
+            id="actiongeonames_geocoder_wizard_menu"
+            parent="base_geoengine.geoengine_base_menu"
+            action="action_geonames_geocoder_wizard"
+            groups="base_geoengine.group_geoengine_admin"
+            />
+
+    </data>
+</openerp>

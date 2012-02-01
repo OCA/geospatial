@@ -5,3 +5,4 @@
 ##############################################################################
 from . import geonames_coder
 import company
+import wizard
