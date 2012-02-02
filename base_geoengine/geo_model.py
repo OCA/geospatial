@@ -64,7 +64,7 @@ class GeoModel(orm.BaseModel):
             if field in self._columns:
                 col = self._columns[field]
                 if col._type.startswith('geo_'):
-                    if isinstance(col, fields.function):
+                    if isinstance(col, (fields.function, fields.related)):
                         res[field]['geo_type'] = {'type': col._type,
                                                   'dim': col.dim or 2,
                                                   'srid': col.srid or 900913}
