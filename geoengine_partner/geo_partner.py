@@ -38,7 +38,7 @@ class ResPartner(geo_model.GeoModel):
     _columns = {'geo_point' : fields.geo_function(_get_point, 
                                                   string='Partner coordinates',
                                                   type='geo_point',
-                                                  srid=900913, # optional arg
-                                                  dim=2)} # optional arg
+                                                  srid=900913, # mandatory arg
+                                                  dim=2)} # mandatory arg
 ResPartner()
 
