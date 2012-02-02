@@ -50,8 +50,9 @@ class GeoModel(orm.BaseModel):
                                   ' You can also use script create_postgis_template.sh'
                                   ' available in module'))
         for kol in geo_columns:
-            geo_columns[kol].manage_db_column(cursor, kol, geo_columns[kol],
-                                              self._table, self._name)
+            if not isinstance(geo_columns[kol], fields.function):
+                geo_columns[kol].manage_db_column(cursor, kol, geo_columns[kol],
+                                                  self._table, self._name)
         self._columns = tmp
         self._field_create(cursor, context)
         return res
@@ -63,9 +64,14 @@ class GeoModel(orm.BaseModel):
             if field in self._columns:
                 col = self._columns[field]
                 if col._type.startswith('geo_'):
-                    res[field]['geo_type'] = {'type': col._geo_type,
-                                              'dim': col._dim,
-                                              'srid':col._srid}
+                    if isinstance(col, fields.function):
+                        res[field]['geo_type'] = {'type': col._type,
+                                                  'dim': col.dim or 2,
+                                                  'srid': col.srid or 900913}
+                    else:
+                        res[field]['geo_type'] = {'type': col._geo_type,
+                                                  'dim': col._dim,
+                                                  'srid':col._srid}
         return res
 
     def fields_view_get(self, cursor, uid, view_id=None, view_type='form',
