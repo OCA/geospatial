@@ -210,18 +210,29 @@ class Geom(fields._column):
             else:
                 res[read['id']] = False
         return res
-        
+
+
+#We may use monkey patching but we do not want to break normal function field
+def postprocess(self, cr, uid, obj, field, value=None, context=None):
+    if context is None:
+        context = {}
+    result = value
+    field_type = obj._columns[field]._type
+    if field_type.startswith('geo_'):
+        res = geojson.dumps(value)
+    else:
+        res =  super(GeoFunction, self).postprocess(cr, uid, obj, field, value, context)
+    return res 
+           
 class GeoFunction(fields.function):
-    #We may use monkey patching but we do not want to break normal function field
-    def postprocess(self, cr, uid, obj, field, value=None, context=None):
-        if context is None:
-            context = {}
-        result = value
-        field_type = obj._columns[field]._type
-        if field_type.startswith('geo_'):
-            res = geojson.dumps(value)
-        else:
-            res =  super(GeoFunction, self).postprocess(cr, uid, obj, field, value, context)
-        return res
-        
+    #shell class
+    pass
+
+GeoFunction.postprocess = postprocess
 fields.geo_function = GeoFunction
+
+class GeoRelated(fields.related):
+    #shell class
+    pass
+GeoRelated.postprocess = postprocess        
+fields.geo_related = GeoRelated
