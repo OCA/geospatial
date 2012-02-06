@@ -14,6 +14,7 @@
  'website': 'http://openerp.camptocamp.com',
  'depends': ['base', 'base_geoengine'],
  'installable': True,
+ 'application': True,
  'active': False,
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
