@@ -38,12 +38,27 @@ openerp.base_geoengine = function (openerp) {
         */
     var formatHTML = function(a) {
         var str = [];
+        var oid = ''
         for (var key in a) {
             if (a.hasOwnProperty(key)) {
-                str.push('<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +a[key]);
+                var val = a[key];
+                if (val == false){
+                    continue;
+                }
+                var label = ''
+                if (val instanceof Array){
+                    str.push('<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val[1])
+                } else {
+                    label = '<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val;
+                     if (key == 'id'){
+                        oid = label;
+                    } else {
+                        str.push(label);
+                    }
+                }
             }
         }
-        str.sort();
+        str.unshift(oid)
         return str.join('<br />');
     };
 
