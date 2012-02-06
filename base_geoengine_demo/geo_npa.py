@@ -17,8 +17,7 @@ from base_geoengine import geo_model
 class NPA(geo_model.GeoModel):
     """GEO OSV SAMPLE"""
     def _get_ZIP_total_sales(self, cursor, uid, ids, name, args, context=None):
-        """Return the total of the invoiced sales for this npa
-        TODO CREATE AND USE GEO search ORM"""
+        """Return the total of the invoiced sales for this npa"""
         to_return = {}
         if not ids:
             return {}
@@ -30,7 +29,7 @@ class NPA(geo_model.GeoModel):
             res = mach_obj.geo_search(cursor,
                                       uid,
                                       domain=[],
-                                      geo_domain=[('the_point', 'geo_intersect', {'res.better.zip.the_geom': [('id', '=', zip_id)]})])
+                                      geo_domain=[('the_point', 'geo_intersect', {'dummy.zip.the_geom': [('id', '=', zip_id)]})])
 
             if res:
                 cursor.execute("SELECT sum(total_sales) from"
@@ -45,16 +44,27 @@ class NPA(geo_model.GeoModel):
                 to_return[zip_id] = 0.0
         return  to_return
 
-    _inherit = "res.better.zip"
-    _name = "res.better.zip"
+    _name = "dummy.zip"
     _columns = {
+        'priority':fields.integer('Priority'),
+        'name':fields.char('ZIP', size=64, required=True),
+        'city':fields.char('City', size=64, required=True),
         'the_geom' : fields.geo_multi_polygon('NPA Shape'),
         'total_sales': fields.function(
                                  _get_ZIP_total_sales,
                                  method=True, string='Spatial! Total Sales',
-                                 type='float',
-        ),
+                                 type='float'),
     }
+    
+    _defaults = {
+        'priority':lambda *x:100
+    }
+    
+    def name_get(self, cursor, uid, ids, context=None) :
+        res = []
+        for r in self.browse(cursor, uid, ids) :
+            res.append((r.id, u"%s %s" %(r.name, r.city)))
+        return res
 
     def test_func(self, cursor, uid, ids):
         """Test function only use for devel. TO DELETE"""
@@ -99,7 +109,7 @@ class NPA(geo_model.GeoModel):
         b = self.create(cursor, uid, {'name':'1100', 'city': 'lausanne', 'the_geom': a.the_geom})
         b = self.browse(cursor, uid, b)
         #self.unlink(cursor, uid, [b.id])
-        view_id = self.pool.get('ir.ui.view').search(cursor, uid,[('model', '=', 'res.better.zip'), ('type', '=', 'geoengine')])[0]
+        view_id = self.pool.get('ir.ui.view').search(cursor, uid,[('model', '=', 'dummy.zip'), ('type', '=', 'geoengine')])[0]
         import pprint; pprint.pprint(self.fields_view_get(cursor, uid, view_id=view_id, view_type='geoengine', context=None, toolbar=False, submenu=False))
         import pprint; pprint.pprint(self.fields_view_get(cursor, uid, view_id=False, view_type='geoengine', context=None, toolbar=False, submenu=False))
         print self.geo_search(cursor, uid, domain=[('name', 'ilike', 'Lausanne')], geo_domain=[('the_geom', 'geo_greater', Polygon([(3, 0), (4, 1), (4, 0)]))])
