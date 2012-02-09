@@ -16,5 +16,6 @@
  'installable': True,
  'application': True,
  'active': False,
+ #'icon': '/base_geoengine/static/src/img/knowledge.png'
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
