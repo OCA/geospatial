@@ -103,6 +103,6 @@ class ResPartnerAddress(osv.osv):
         res = super(ResPartnerAddress, self).create(cursor, uid, vals, context=None)
         do_geocode = self._can_geocode(cursor, uid, context=context)
         if do_geocode:
-            self.geocode_from_geonames(cursor, uid, res, context)
+            self.geocode_from_geonames(cursor, uid, res, context=context)
         return res
 ResPartnerAddress()
