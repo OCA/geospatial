@@ -34,5 +34,5 @@
  'qweb' : ["static/src/xml/*.xml"],
  'installable': True,
  'active': False,
-}
+ 'icon': '/base_geoengine/static/src/images/map_icon.png'}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
