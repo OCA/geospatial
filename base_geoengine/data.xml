@@ -1,0 +1,11 @@
+<openerp>
+    <data>
+        <record id="group_geoengine_admin" model="res.groups">
+            <field name="name">Geoengine admin</field>
+        </record>
+        
+        <record id="group_geoengine_user" model="res.groups">
+            <field name="name">Geoengine user</field>
+        </record>
+    </data>
+</openerp>
