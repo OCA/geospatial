@@ -39,13 +39,15 @@
             <field name="view_id" ref="geo_retail_machine_view_tree"/>
         </record>
 
-        <menuitem name="GeoEngine Demo" id="geoengine_demo_menu" web_icon="images/map.png" web_icon_hover="images/map-hover.png"/>
+        <menuitem name="GeoEngine Demo" id="geoengine_demo_menu" groups="base_geoengine.group_geoengine_user" web_icon="images/map.png" web_icon_hover="images/map-hover.png" />
 
         <menuitem name="GeoEngine Samples" id="geoengine_demo_retail_menu"
-            parent="geoengine_demo_menu"/>
+            parent="geoengine_demo_menu"
+            groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
 
         <menuitem name="Retail Machine" id="geoengine_retail_machine_menu"
-            action="geoengine_view_retail_machine_action" parent="geoengine_demo_retail_menu"/>
+            action="geoengine_view_retail_machine_action" parent="geoengine_demo_retail_menu"
+            groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
 
         <record id="action_zip_tree" model="ir.actions.act_window">
             <field name="name">ZIP Management</field>
@@ -56,7 +58,8 @@
         </record>
 
         <menuitem name="ZIP" id="zip_retail_machine" parent="geoengine_demo_retail_menu"
-            action="action_zip_tree"/>
+            action="action_zip_tree"
+            groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
 
 
         <!-- GeoEngine views -->
