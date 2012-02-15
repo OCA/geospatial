@@ -6,6 +6,9 @@
 """Helper to setup Postgis"""
 import addons
 import pooler
+import logging
+
+logger = logging.getLogger('report_webkit')
 
 def init_postgis(cursor):
     ## Create language may fail and it can be normal
