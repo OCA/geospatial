@@ -20,7 +20,8 @@
             </field>
         </record>
         <menuitem name="Configuration" id="geoengine_base_view_menu"
-            parent="geoengine_base_menu"/>
+            parent="geoengine_base_menu"
+            groups="group_geoengine_admin" />
 
         <record id="geo_engine_view_action" model="ir.actions.act_window">
             <field name="name">Views</field>
@@ -33,6 +34,7 @@
         </record>
 
         <menuitem name="View Management" id="geoengine_view_menu"
-            parent="geoengine_base_view_menu" action="geo_engine_view_action"/>
+            parent="geoengine_base_view_menu" action="geo_engine_view_action"
+            groups="group_geoengine_admin"/>
     </data>
 </openerp>
