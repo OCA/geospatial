@@ -320,6 +320,9 @@ openerp.base_geoengine = function (openerp) {
         },
 
         do_load_vector_data: function(data) {
+            if(!map){
+                return;
+            }
             var self = this;
             _.each(this.selectFeatureControls, function(ctrl) {
                 ctrl.deactivate();
@@ -334,7 +337,6 @@ openerp.base_geoengine = function (openerp) {
 
             this.vectorLayers = this.createVectorLayers(data);
             map.addLayers(this.vectorLayers);
-
             _.each(this.selectFeatureControls, function(ctrl) {
                 ctrl.setLayer(self.vectorLayers);
                 ctrl.activate();
