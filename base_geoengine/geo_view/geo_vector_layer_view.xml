@@ -67,6 +67,7 @@
         </record>
 
         <menuitem name="Vector Layer Management" id="geoengine_vector_layer_menu"
-            parent="geoengine_base_view_menu" action="geo_engine_view_raster_action"/>
+            parent="geoengine_base_view_menu" action="geo_engine_view_raster_action"
+            groups="group_geoengine_admin"/>
     </data>
 </openerp>
