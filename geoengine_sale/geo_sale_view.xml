@@ -34,7 +34,7 @@
             <field name="model">sale.order</field>
         </record>
         
-        <record id="geoengine_vector_layer_sale_order" model="geoengine.vector.layer">
+        <record id="geoengine_vector_layer_sales_order" model="geoengine.vector.layer">
             <field name="geo_field_id"
                    ref="geoengine_partner.field_res_partner_address_geo_point"/>
             <field name="name">Sale order proportional</field>
@@ -47,7 +47,7 @@
             <field name="begin_color">#4B69FD</field>
         </record>
         
-        <record id="geoengine_vector_layer_sale_order" model="geoengine.raster.layer">
+        <record id="geoengine_raster_layer_sales_order" model="geoengine.raster.layer">
             <field name="raster_type">google</field>
             <field name="google_type">G_HYBRID_MAP</field>
             <field name="name">Sale Order background</field>
