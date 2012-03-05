@@ -3,6 +3,7 @@
 #
 #    Author Nicolas Bessi. Copyright Camptocamp SA
 ##############################################################################
+"""The GeoEngine module"""
 import geo_model
 import wizard
 from . import geo_operators
