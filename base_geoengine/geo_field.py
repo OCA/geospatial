@@ -96,9 +96,9 @@ class Geom(fields._column):
     def manage_db_column(self, cursor, col_name, geo_columns, table, model):
         """In charge of managing geom column type"""
         # we check if columns exists
-        print cursor.mogrify("SELECT id from ir_model_fields where model = %s"
-                       " and name = %s",
-                       (model, col_name))
+        logger.debug(cursor.mogrify("SELECT id from ir_model_fields where model = %s"
+                     " and name = %s",
+                     (model, col_name)))
         cursor.execute("SELECT id from ir_model_fields where model = %s"
                        " and name = %s",
                        (model, col_name))
@@ -131,9 +131,9 @@ class Geom(fields._column):
 
     def update_geo_column(self, cursor, col_name, geo_column, table, model):
         """Update a columns of type the geom does not do a lot of stuff yet"""
-        print cursor.mogrify("SELECT srid, type, coord_dimension FROM geometry_columns WHERE f_table_name = %s"
-                       " AND f_geometry_column = %s",
-                       (table, col_name))
+        print logger.debug(cursor.mogrify("SELECT srid, type, coord_dimension FROM geometry_columns WHERE f_table_name = %s"
+                           " AND f_geometry_column = %s",
+                           (table, col_name)))
         cursor.execute("SELECT srid, type, coord_dimension FROM geometry_columns WHERE f_table_name = %s"
                        " AND f_geometry_column = %s",
                        (table, col_name))
