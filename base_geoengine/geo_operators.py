@@ -15,6 +15,7 @@ logger = logging.getLogger('GeoEngine sql debug')
 # TODO Refactor geo_search and dry up the get_**_sql code
 
 def _get_geo_func(model, domain):
+    """Map operator to function we do not want to override __getattr__"""
     current_field = model._columns[domain[0]]
     current_operator = current_field._geo_operator
     attr = "get_%s_sql" % (domain[1],)
@@ -24,6 +25,19 @@ def _get_geo_func(model, domain):
     return func
 
 def geo_search(model, cursor, uid, domain=[], geo_domain=[], offset=0, limit=None, order=None, context=None):
+    """Do a geo serach it allows direct domain:
+    geo_search(r, uid, domaine=[('name', 'ilike', 'toto']), geo_domain=[('the_point', 'geo_intersect', myshaply_obj or mywkt or mygeojson)]
+    
+    we can also support indirect geo_domain (‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] })
+    
+    The supported operators are :
+     * geo_greater
+     * geo_lesser
+     * geo_equal
+     * geo_touch
+     * geo_within
+     * geo_intersect
+    """
     context = context or {}
     model.pool.get('ir.model.access').check(cursor, uid, model._name, 'read')
     query = model._where_calc(cursor, uid, domain, active_test=True, context=context)
@@ -50,7 +64,7 @@ def geo_search(model, cursor, uid, domain=[], geo_domain=[], offset=0, limit=Non
         # We start computing geo spation SQL
         if isinstance(domain, (list, tuple)):
             if isinstance(domain[2], dict):
-                # We are having indirect geo_operator like (‘geom’, ‘geo_...’, {‘res.zip.poly’: [‘ids’, ‘in’, [1,2,3]] })
+                # We are having indirect geo_operator like (‘geom’, ‘geo_...’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] })
                 ref_search = domain[2]
                 rel_where_statement = []
                 for key in ref_search:
