@@ -29,7 +29,7 @@ class GeoModel(orm.BaseModel):
         columns = {}
         geo_columns = {}
         tmp = {}
-        geo_db.init_postgis(cursor)
+        #geo_db.init_postgis(cursor)
         for kol in self._columns:
             tmp[kol] = self._columns[kol]
             k_obj = self._columns[kol]
