@@ -25,10 +25,10 @@ def _get_geo_func(model, domain):
     return func
 
 def geo_search(model, cursor, uid, domain=[], geo_domain=[], offset=0, limit=None, order=None, context=None):
-    """Do a geo serach it allows direct domain:
+    """Perform a geo search it allows direct domain:
     geo_search(r, uid, domaine=[('name', 'ilike', 'toto']), geo_domain=[('the_point', 'geo_intersect', myshaply_obj or mywkt or mygeojson)]
     
-    we can also support indirect geo_domain (‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] })
+    We can also support indirect geo_domain (‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] })
     
     The supported operators are :
      * geo_greater
@@ -114,7 +114,7 @@ class GeoOperator(object):
         self.geo_field = geo_field
         
     def get_rel_field(self, rel_col, rel_model):
-        """Retriev the expression to use in PostGIS statement for a spatial
+        """Retrieves the expression to use in PostGIS statement for a spatial
            rel search"""
         try:
             rel_model._columns[rel_col]
@@ -147,17 +147,17 @@ class GeoOperator(object):
 
     ## Area comparison #############        
     def get_geo_greater_sql(self, table, col, value, rel_col=None, rel_model=None):
-        "return raw sql for geo_greater operator"
+        "Returns raw sql for geo_greater operator"
         return self._get_direct_como_op_sql(table, col, value, rel_col=rel_col, rel_model=rel_model, op='>')
     
     def get_geo_lesser_sql(self, table, col, value, rel_col=None, rel_model=None):
-        "return raw sql for geo_lesser operator"
+        "Returns raw sql for geo_lesser operator"
         return self._get_direct_como_op_sql(table, col, value, rel_col=rel_col, rel_model=rel_model, op='>')
         
     ## Equality comparison #############        
 
     def get_geo_equal_sql(self, table, col, value, rel_col=None, rel_model=None):
-        "return raw sql for geo_equal operator"
+        "Returns raw sql for geo_equal operator"
         if rel_col and rel_model:
            compare_to = self.get_rel_field(rel_col, rel_model)
         else:
@@ -168,14 +168,14 @@ class GeoOperator(object):
     ## PostGis spatial comparison ###########    
         
     def get_geo_intersect_sql(self, table, col, value, rel_col=None, rel_model=None):
-        "return raw sql for geo_intersec operator"
+        "Returns raw sql for geo_intersec operator"
         return self._get_postgis_comp_sql(table, col, value, rel_col= rel_col, rel_model= rel_model, op='ST_Intersects')
         
     def get_geo_touch_sql(self, table, col, value, rel_col=None, rel_model=None):
-        "return raw sql for geo_touch operator"
+        "Returns raw sql for geo_touch operator"
         return self._get_postgis_comp_sql(table, col, value, rel_col= rel_col, rel_model= rel_model, op='ST_Touches')
         
     def get_geo_within_sql(self, table, col, value, rel_col=None, rel_model=None):
-        "return raw sql for geo_within operator"
+        "Returns raw sql for geo_within operator"
         return self._get_postgis_comp_sql(table, col, value, rel_col= rel_col, rel_model= rel_model, op='ST_Within')
 
