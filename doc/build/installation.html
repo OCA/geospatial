@@ -27,7 +27,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="OpenERP GeoEngine 0.3 documentation" href="index.html" />
     <link rel="next" title="Postgisify an exisiting database" href="postgisify.html" />
-    <link rel="prev" title="Prerequisite" href="prerequisite.html" /> 
+    <link rel="prev" title="Prerequisites" href="prerequisite.html" /> 
   </head>
   <body>
     <div class="related">
@@ -37,10 +37,13 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="postgisify.html" title="Postgisify an exisiting database"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="prerequisite.html" title="Prerequisite"
+          <a href="prerequisite.html" title="Prerequisites"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">OpenERP GeoEngine 0.3 documentation</a> &raquo;</li> 
       </ul>
@@ -55,15 +58,15 @@
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="postgis-database-template">
 <h2>PostGIS database template<a class="headerlink" href="#postgis-database-template" title="Permalink to this headline">¶</a></h2>
-<p>In order to create database from OpenERP client you have to create a PostGis database template.
-Under windows this template is allready available in installer.</p>
-<p>On other <a href="#id1"><span class="problematic" id="id2">*</span></a>NIX system you simply have to launch the create_postgis_template.sh script available in the base_geoengine module in scripts folder.
+<p>In order to create databases from the OpenERP client, you have to create a PostGis database template.
+Under windows, this template is already available in installer.</p>
+<p>On other <a href="#id1"><span class="problematic" id="id2">*</span></a>NIX, system you simply have to launch the create_postgis_template.sh script available in the base_geoengine module in the scripts folder.
 This should be done by a PostgreSQL superuser.</p>
-<p>In order to test the succes:</p>
+<p>In order to test the success:</p>
 <div class="highlight-python"><pre>psql -l
-template_postgis                | owner                               | UTF8     | en_US.UTF-8 | en_US.UTF-8 |</pre>
+template_postgis | owner | UTF8 | en_US.UTF-8 | en_US.UTF-8 |</pre>
 </div>
-<p>If you want to install geoengine on an exisiting database please refere to the Postgisify section.</p>
+<p>If you want to install GeoEngine on an exisiting database, please refer to the Postgisify section.</p>
 </div>
 <div class="section" id="openerp">
 <h2>OpenERP<a class="headerlink" href="#openerp" title="Permalink to this headline">¶</a></h2>
@@ -75,8 +78,8 @@ template_postgis                | owner                               | UTF8    
 <div class="highlight-python"><div class="highlight"><pre><span class="n">db_template</span> <span class="o">=</span> <span class="n">template_postgis</span>
 </pre></div>
 </div>
-<p>Do not forget do add GeoEngine modules to your addons path.</p>
-<p>Then install (eventually update module list) the base GeoEngine module form OpenERP client.</p>
+<p>Do not forget to add the GeoEngine modules to your addons path.</p>
+<p>Then install (eventually update module list) the base GeoEngine module form the OpenERP client.</p>
 </div>
 </div>
 
@@ -97,7 +100,7 @@ template_postgis                | owner                               | UTF8    
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="prerequisite.html"
-                        title="previous chapter">Prerequisite</a></p>
+                        title="previous chapter">Prerequisites</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="postgisify.html"
                         title="next chapter">Postgisify an exisiting database</a></p>
@@ -130,10 +133,13 @@ template_postgis                | owner                               | UTF8    
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
           <a href="postgisify.html" title="Postgisify an exisiting database"
              >next</a> |</li>
         <li class="right" >
-          <a href="prerequisite.html" title="Prerequisite"
+          <a href="prerequisite.html" title="Prerequisites"
              >previous</a> |</li>
         <li><a href="index.html">OpenERP GeoEngine 0.3 documentation</a> &raquo;</li> 
       </ul>

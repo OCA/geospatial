@@ -26,6 +26,7 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="OpenERP GeoEngine 0.3 documentation" href="index.html" />
+    <link rel="next" title="API" href="api_doc.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
   </head>
   <body>
@@ -35,6 +36,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_doc.html" title="API"
+             accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="installation.html" title="Installation"
              accesskey="P">previous</a> |</li>
@@ -49,11 +56,11 @@
             
   <div class="section" id="postgisify-an-exisiting-database">
 <h1>Postgisify an exisiting database<a class="headerlink" href="#postgisify-an-exisiting-database" title="Permalink to this headline">¶</a></h1>
-<p>If you want to install the Geoengine on an existing database you have to run the sql commands available in base_geoengine module under the postgis_sql folder using a PostgreSQL super user:</p>
+<p>If you want to install the GeoEngine on an existing database, you have to run the sql commands available in the  base_geoengine module under the postgis_sql folder using a PostgreSQL super user:</p>
 <div class="highlight-python"><pre>psql -U superuser my database -f postgis.sql
 psql -U superuser my database -f spatial_ref_sys.sql</pre>
 </div>
-<p>In order to test if installation is sucessful log into you databse and:</p>
+<p>In order to test if the installation is sucessfull log into you database and:</p>
 <div class="highlight-python"><pre>SELECT * from GEOMETRY_COLUMNS;
 SELECT * from spatial_ref_sys;</pre>
 </div>
@@ -68,6 +75,9 @@ SELECT * from spatial_ref_sys;</pre>
   <h4>Previous topic</h4>
   <p class="topless"><a href="installation.html"
                         title="previous chapter">Installation</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="api_doc.html"
+                        title="next chapter">API</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/postgisify.txt"
@@ -96,6 +106,12 @@ SELECT * from spatial_ref_sys;</pre>
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="api_doc.html" title="API"
+             >next</a> |</li>
         <li class="right" >
           <a href="installation.html" title="Installation"
              >previous</a> |</li>

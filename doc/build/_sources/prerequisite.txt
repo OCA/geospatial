@@ -1,5 +1,5 @@
 =================
-Prerequisite
+Prerequisites
 =================
 ***************
 Python
@@ -16,7 +16,7 @@ Shapely:
 
  pip install Shapely==1.2.13
     
-For Mac user do not forget following directive:
+For Mac user: do not forget the following directive:
 
 ::
 
@@ -27,4 +27,4 @@ For Mac user do not forget following directive:
 PostGIS 1.5
 ***************
 
-Please refer to `PostGIS installation directive <http://postgis.refractions.net/docs/>`_ or look to your OS package system.
+Please refer to `PostGIS installation directive <http://postgis.refractions.net/docs/>`_ or to your OS package system.

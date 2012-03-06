@@ -2,12 +2,12 @@
 Postgisify an exisiting database
 *********************************
 
-If you want to install the Geoengine on an existing database you have to run the sql commands available in base_geoengine module under the postgis_sql folder using a PostgreSQL super user::
+If you want to install the GeoEngine on an existing database, you have to run the sql commands available in the  base_geoengine module under the postgis_sql folder using a PostgreSQL super user::
 
  psql -U superuser my database -f postgis.sql
  psql -U superuser my database -f spatial_ref_sys.sql
  
-In order to test if installation is sucessful log into you databse and::
+In order to test if the installation is sucessfull log into you database and::
 
  SELECT * from GEOMETRY_COLUMNS;
  SELECT * from spatial_ref_sys;

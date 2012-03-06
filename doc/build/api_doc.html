@@ -57,7 +57,7 @@
 <dl class="class">
 <dt id="base_geoengine.geo_field.Geom">
 <em class="property">class </em><tt class="descclassname">base_geoengine.geo_field.</tt><tt class="descname">Geom</tt><big>(</big><em>string</em>, <em>geo_type</em>, <em>dim=2</em>, <em>srid=900913</em>, <em>gist_index=True</em>, <em>**args</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_field.Geom" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class add a new type of columns to ORM it enable POSTGIS geometry type support</p>
+<dd><p>This class adds a new type of columns to ORM. It enable POSTGIS geometry type support.</p>
 <dl class="method">
 <dt id="base_geoengine.geo_field.Geom.create_geo_column">
 <tt class="descname">create_geo_column</tt><big>(</big><em>cursor</em>, <em>col_name</em>, <em>geo_column</em>, <em>table</em>, <em>model</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_field.Geom.create_geo_column" title="Permalink to this definition">¶</a></dt>
@@ -73,7 +73,7 @@
 <dl class="method">
 <dt id="base_geoengine.geo_field.Geom.load_geo">
 <tt class="descname">load_geo</tt><big>(</big><em>wkb</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_field.Geom.load_geo" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function is used to load geo into browse record
+<dd><p>This function is used to load geometry into browse record
 after read was done</p>
 </dd></dl>
 
@@ -86,24 +86,23 @@ after read was done</p>
 <dl class="method">
 <dt id="base_geoengine.geo_field.Geom.set">
 <tt class="descname">set</tt><big>(</big><em>cr</em>, <em>obj</em>, <em>res_id</em>, <em>name</em>, <em>value</em>, <em>user=None</em>, <em>context=None</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_field.Geom.set" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function use to write and create value into database
-value can be geojson, wkt, shapely geomerty object
-if geo_direct_write in context you can pass diretly WKT</p>
+<dd><p>This function used to write and create value into database
+value can be geojson, wkt, shapely geomerty object.
+If geo_direct_write in context you can pass diretly WKT</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="base_geoengine.geo_field.Geom.set_geo">
 <tt class="descname">set_geo</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_field.Geom.set_geo" title="Permalink to this definition">¶</a></dt>
-<dd><p>This function is use to transform data in order to be
-compatible with the create function, it is also use in expression.py
-in order to represent value it wont be use a we are not going to use it.
-As this function does not received contect direct create will not work</p>
+<dd><p>This function is used to transform data in order to be
+compatible with the create function. It is also use in expression.py
+in order to represent value.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="base_geoengine.geo_field.Geom.update_geo_column">
 <tt class="descname">update_geo_column</tt><big>(</big><em>cursor</em>, <em>col_name</em>, <em>geo_column</em>, <em>table</em>, <em>model</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_field.Geom.update_geo_column" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update a columns of type the geom does not do a lot of stuff yet</p>
+<dd><p>Update a column of type the geom does. !! not do a lot of test yet</p>
 </dd></dl>
 
 </dd></dl>
@@ -111,37 +110,37 @@ As this function does not received contect direct create will not work</p>
 <span class="target" id="module-base_geoengine.geo_point"></span><dl class="class">
 <dt id="base_geoengine.geo_point.GeoPoint">
 <em class="property">class </em><tt class="descclassname">base_geoengine.geo_point.</tt><tt class="descname">GeoPoint</tt><big>(</big><em>string</em>, <em>dim=2</em>, <em>srid=900913</em>, <em>gist_index=True</em>, <em>**args</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_point.GeoPoint" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class add a new type of columns to ORM it enable POSTGIS geometry type support</p>
+<dd><p>This class adds a new type of columns to ORM. It enables POSTGIS geometry type support</p>
 </dd></dl>
 
 <span class="target" id="module-base_geoengine.geo_line"></span><dl class="class">
 <dt id="base_geoengine.geo_line.GeoLine">
 <em class="property">class </em><tt class="descclassname">base_geoengine.geo_line.</tt><tt class="descname">GeoLine</tt><big>(</big><em>string</em>, <em>dim=2</em>, <em>srid=900913</em>, <em>gist_index=True</em>, <em>**args</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_line.GeoLine" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class add a new type of columns to ORM it enable POSTGIS geometry type support</p>
+<dd><p>This class adds a new type of columns to ORM. It enables POSTGIS geometry type support</p>
 </dd></dl>
 
 <span class="target" id="module-base_geoengine.geo_multiline"></span><dl class="class">
 <dt id="base_geoengine.geo_multiline.GeoMultiLine">
 <em class="property">class </em><tt class="descclassname">base_geoengine.geo_multiline.</tt><tt class="descname">GeoMultiLine</tt><big>(</big><em>string</em>, <em>dim=2</em>, <em>srid=900913</em>, <em>gist_index=True</em>, <em>**args</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_multiline.GeoMultiLine" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class add a new type of columns to ORM it enable POSTGIS geometry type support</p>
+<dd><p>This class adds a new type of columns to ORM. It enables POSTGIS geometry type support</p>
 </dd></dl>
 
 <span class="target" id="module-base_geoengine.geo_polygon"></span><dl class="class">
 <dt id="base_geoengine.geo_polygon.GeoPolygon">
 <em class="property">class </em><tt class="descclassname">base_geoengine.geo_polygon.</tt><tt class="descname">GeoPolygon</tt><big>(</big><em>string</em>, <em>dim=2</em>, <em>srid=900913</em>, <em>gist_index=True</em>, <em>**args</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_polygon.GeoPolygon" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class add a new type of columns to ORM it enable POSTGIS geometry type support</p>
+<dd><p>This class adds a new type of columns to ORM. It enables POSTGIS geometry type support</p>
 </dd></dl>
 
 <span class="target" id="module-base_geoengine.geo_multipolygon"></span><dl class="class">
 <dt id="base_geoengine.geo_multipolygon.GeoMultiPolygon">
 <em class="property">class </em><tt class="descclassname">base_geoengine.geo_multipolygon.</tt><tt class="descname">GeoMultiPolygon</tt><big>(</big><em>string</em>, <em>dim=2</em>, <em>srid=900913</em>, <em>gist_index=True</em>, <em>**args</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_multipolygon.GeoMultiPolygon" title="Permalink to this definition">¶</a></dt>
-<dd><p>This class add a new type of columns to ORM it enable POSTGIS geometry type support</p>
+<dd><p>This class adds a new type of columns to ORM. It enables POSTGIS geometry type support</p>
 </dd></dl>
 
 </div>
 <div class="section" id="module-base_geoengine.geo_view">
 <span id="view-management"></span><h2>View Management<a class="headerlink" href="#module-base_geoengine.geo_view" title="Permalink to this headline">¶</a></h2>
-<p>Module that manage map view and vector/raster layer</p>
+<p>Module that manages map view and vector/raster layer</p>
 <span class="target" id="module-base_geoengine.geo_view.geo_raster_layer"></span><span class="target" id="module-base_geoengine.geo_view.geo_vector_layer"></span><span class="target" id="module-base_geoengine.geo_view.ir_view"></span></div>
 <div class="section" id="geo-orm-model">
 <h2>GEO ORM MODEL<a class="headerlink" href="#geo-orm-model" title="Permalink to this headline">¶</a></h2>
@@ -157,16 +156,16 @@ As this function does not received contect direct create will not work</p>
 <dl class="method">
 <dt id="base_geoengine.geo_model.GeoModel.fields_view_get">
 <tt class="descname">fields_view_get</tt><big>(</big><em>cursor</em>, <em>uid</em>, <em>view_id=None</em>, <em>view_type='form'</em>, <em>context=None</em>, <em>toolbar=False</em>, <em>submenu=False</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_model.GeoModel.fields_view_get" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return information about the available fields of the class.
-If view type == &#8216;map&#8217; return geographical columns available</p>
+<dd><p>Returns information about the available fields of the class.
+If view type == &#8216;map&#8217; returns geographical columns available</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="base_geoengine.geo_model.GeoModel.geo_search">
 <tt class="descname">geo_search</tt><big>(</big><em>cursor</em>, <em>uid</em>, <em>domain=</em><span class="optional">[</span><span class="optional">]</span>, <em>geo_domain=</em><span class="optional">[</span><span class="optional">]</span>, <em>offset=0</em>, <em>limit=None</em>, <em>order=None</em>, <em>context=None</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_model.GeoModel.geo_search" title="Permalink to this definition">¶</a></dt>
-<dd><p>Do a geo serach it allows direct domain:
-geo_search(r, uid, domaine=[(&#8216;name&#8217;, &#8216;ilike&#8217;, &#8216;toto&#8217;]), geo_domain=[(&#8216;the_point&#8217;, &#8216;geo_intersect&#8217;, myshaply_obj or mywkt or mygeojson)]</p>
-<p>we can also support indirect geo_domain (‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] })</p>
+<dd><p>Perform a geo search it allows direct domain:
+geo_search(r, uid, domaine=[(&#8216;name&#8217;, &#8216;ilike&#8217;, &#8216;toto&#8217;]), geo_domain=[(&#8216;the_point&#8217;, &#8216;geo_intersect&#8217;, myshaply_obj or mywkt or mygeojson)].</p>
+<p>We can also support indirect geo_domain (‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] }).</p>
 <dl class="docutils">
 <dt>The supported operators are :</dt>
 <dd><ul class="first last simple">
@@ -189,9 +188,9 @@ geo_search(r, uid, domaine=[(&#8216;name&#8217;, &#8216;ilike&#8217;, &#8216;tot
 <dl class="function">
 <dt id="base_geoengine.geo_operators.geo_search">
 <tt class="descclassname">base_geoengine.geo_operators.</tt><tt class="descname">geo_search</tt><big>(</big><em>model</em>, <em>cursor</em>, <em>uid</em>, <em>domain=</em><span class="optional">[</span><span class="optional">]</span>, <em>geo_domain=</em><span class="optional">[</span><span class="optional">]</span>, <em>offset=0</em>, <em>limit=None</em>, <em>order=None</em>, <em>context=None</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_operators.geo_search" title="Permalink to this definition">¶</a></dt>
-<dd><p>Do a geo serach it allows direct domain:
+<dd><p>Perform a geo search it allows direct domain:
 geo_search(r, uid, domaine=[(&#8216;name&#8217;, &#8216;ilike&#8217;, &#8216;toto&#8217;]), geo_domain=[(&#8216;the_point&#8217;, &#8216;geo_intersect&#8217;, myshaply_obj or mywkt or mygeojson)]</p>
-<p>we can also support indirect geo_domain (‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] })</p>
+<p>We can also support indirect geo_domain (‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] })</p>
 <dl class="docutils">
 <dt>The supported operators are :</dt>
 <dd><ul class="first last simple">
@@ -212,43 +211,43 @@ geo_search(r, uid, domaine=[(&#8216;name&#8217;, &#8216;ilike&#8217;, &#8216;tot
 <dd><dl class="method">
 <dt id="base_geoengine.geo_operators.GeoOperator.get_geo_equal_sql">
 <tt class="descname">get_geo_equal_sql</tt><big>(</big><em>table</em>, <em>col</em>, <em>value</em>, <em>rel_col=None</em>, <em>rel_model=None</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_operators.GeoOperator.get_geo_equal_sql" title="Permalink to this definition">¶</a></dt>
-<dd><p>return raw sql for geo_equal operator</p>
+<dd><p>Returns raw sql for geo_equal operator</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="base_geoengine.geo_operators.GeoOperator.get_geo_greater_sql">
 <tt class="descname">get_geo_greater_sql</tt><big>(</big><em>table</em>, <em>col</em>, <em>value</em>, <em>rel_col=None</em>, <em>rel_model=None</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_operators.GeoOperator.get_geo_greater_sql" title="Permalink to this definition">¶</a></dt>
-<dd><p>return raw sql for geo_greater operator</p>
+<dd><p>Returns raw sql for geo_greater operator</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="base_geoengine.geo_operators.GeoOperator.get_geo_intersect_sql">
 <tt class="descname">get_geo_intersect_sql</tt><big>(</big><em>table</em>, <em>col</em>, <em>value</em>, <em>rel_col=None</em>, <em>rel_model=None</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_operators.GeoOperator.get_geo_intersect_sql" title="Permalink to this definition">¶</a></dt>
-<dd><p>return raw sql for geo_intersec operator</p>
+<dd><p>Returns raw sql for geo_intersec operator</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="base_geoengine.geo_operators.GeoOperator.get_geo_lesser_sql">
 <tt class="descname">get_geo_lesser_sql</tt><big>(</big><em>table</em>, <em>col</em>, <em>value</em>, <em>rel_col=None</em>, <em>rel_model=None</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_operators.GeoOperator.get_geo_lesser_sql" title="Permalink to this definition">¶</a></dt>
-<dd><p>return raw sql for geo_lesser operator</p>
+<dd><p>Returns raw sql for geo_lesser operator</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="base_geoengine.geo_operators.GeoOperator.get_geo_touch_sql">
 <tt class="descname">get_geo_touch_sql</tt><big>(</big><em>table</em>, <em>col</em>, <em>value</em>, <em>rel_col=None</em>, <em>rel_model=None</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_operators.GeoOperator.get_geo_touch_sql" title="Permalink to this definition">¶</a></dt>
-<dd><p>return raw sql for geo_touch operator</p>
+<dd><p>Returns raw sql for geo_touch operator</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="base_geoengine.geo_operators.GeoOperator.get_geo_within_sql">
 <tt class="descname">get_geo_within_sql</tt><big>(</big><em>table</em>, <em>col</em>, <em>value</em>, <em>rel_col=None</em>, <em>rel_model=None</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_operators.GeoOperator.get_geo_within_sql" title="Permalink to this definition">¶</a></dt>
-<dd><p>return raw sql for geo_within operator</p>
+<dd><p>Returns raw sql for geo_within operator</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="base_geoengine.geo_operators.GeoOperator.get_rel_field">
 <tt class="descname">get_rel_field</tt><big>(</big><em>rel_col</em>, <em>rel_model</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_operators.GeoOperator.get_rel_field" title="Permalink to this definition">¶</a></dt>
-<dd><p>Retriev the expression to use in PostGIS statement for a spatial
+<dd><p>Retrieves the expression to use in PostGIS statement for a spatial
 rel search</p>
 </dd></dl>
 
@@ -260,7 +259,7 @@ rel search</p>
 <dl class="function">
 <dt id="base_geoengine.geo_helper.geo_convertion_helper.value_to_shape">
 <tt class="descclassname">base_geoengine.geo_helper.geo_convertion_helper.</tt><tt class="descname">value_to_shape</tt><big>(</big><em>value</em><big>)</big><a class="headerlink" href="#base_geoengine.geo_helper.geo_convertion_helper.value_to_shape" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform input into an object</p>
+<dd><p>Transforms input into a Shapely object.</p>
 </dd></dl>
 
 </div>
