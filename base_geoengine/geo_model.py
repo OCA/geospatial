@@ -76,8 +76,8 @@ class GeoModel(orm.BaseModel):
 
     def fields_view_get(self, cursor, uid, view_id=None, view_type='form',
                         context=None, toolbar=False, submenu=False):
-        """Return information about the available fields of the class.
-           If view type == 'map' return geographical columns available"""
+        """Returns information about the available fields of the class.
+           If view type == 'map' returns geographical columns available"""
         view_obj = self.pool.get('ir.ui.view')
         raster_obj = self.pool.get('geoengine.raster.layer')
         vector_obj = self.pool.get('geoengine.vector.layer')
@@ -127,10 +127,10 @@ class GeoModel(orm.BaseModel):
 
     def geo_search(self, cursor, uid, domain=[], geo_domain=[], offset=0,
                    limit=None, order=None, context=None):
-        """Do a geo serach it allows direct domain:
-           geo_search(r, uid, domaine=[('name', 'ilike', 'toto']), geo_domain=[('the_point', 'geo_intersect', myshaply_obj or mywkt or mygeojson)]
+        """Perform a geo search it allows direct domain:
+           geo_search(r, uid, domaine=[('name', 'ilike', 'toto']), geo_domain=[('the_point', 'geo_intersect', myshaply_obj or mywkt or mygeojson)].
 
-           we can also support indirect geo_domain (‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] })
+           We can also support indirect geo_domain (‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] }).
 
            The supported operators are :
             * geo_greater

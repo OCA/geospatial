@@ -21,20 +21,19 @@ logger = logging.getLogger('GeoEngine database structure')
 exp_logger = logging.getLogger('GeoEngine expression')
 
 class Geom(fields._column):
-    """This class add a new type of columns to ORM it enable POSTGIS geometry type support"""
+    """This class adds a new type of columns to ORM. It enable POSTGIS geometry type support."""
 
 
     def load_geo(self, wkb):
-        """This function is used to load geo into browse record
+        """This function is used to load geometry into browse record
             after read was done"""
         return wkb and wkbloads(wkb.decode('hex')) or False
 
 
     def set_geo(self, value):
-        """This function is use to transform data in order to be
-            compatible with the create function, it is also use in expression.py
-            in order to represent value it wont be use a we are not going to use it.
-            As this function does not received contect direct create will not work"""
+        """This function is used to transform data in order to be
+            compatible with the create function. It is also use in expression.py
+            in order to represent value."""
         if not value:
             return None
         res = self.entry_to_shape(value, same_type=True)
@@ -130,7 +129,7 @@ class Geom(fields._column):
         return True
 
     def update_geo_column(self, cursor, col_name, geo_column, table, model):
-        """Update a columns of type the geom does not do a lot of stuff yet"""
+        """Update a column of type the geom does. !! not do a lot of test yet"""
         print logger.debug(cursor.mogrify("SELECT srid, type, coord_dimension FROM geometry_columns WHERE f_table_name = %s"
                            " AND f_geometry_column = %s",
                            (table, col_name)))
@@ -160,9 +159,9 @@ class Geom(fields._column):
 
 
     def set(self, cr, obj, res_id, name, value, user=None, context=None):
-        """ Function use to write and create value into database
-            value can be geojson, wkt, shapely geomerty object
-            if geo_direct_write in context you can pass diretly WKT"""
+        """This function used to write and create value into database
+            value can be geojson, wkt, shapely geomerty object.
+            If geo_direct_write in context you can pass diretly WKT"""
         # TO IMPROVE on writing multiple ids with same values
         # we are going to create an new shape for each ids
         # lets hope gc will be effctive else we will have to do some

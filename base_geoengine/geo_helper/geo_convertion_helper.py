@@ -9,7 +9,7 @@ from shapely.geometry import asShape
 import geojson
 
 def value_to_shape(value):
-    """Transform input into an object"""
+    """Transforms input into a Shapely object."""
     shape_to_return = False
     if not value:
         return wktloads('GEOMETRYCOLLECTION EMPTY')
