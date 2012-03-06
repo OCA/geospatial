@@ -8,7 +8,7 @@ from osv import fields, osv, orm
 from . import geo_field
 
 class GeoLine(geo_field.Geom):
-    """This class add a new type of columns to ORM it enable POSTGIS geometry type support"""
+    """This class adds a new type of columns to ORM. It enables POSTGIS geometry type support"""
     _type = 'geo_line'
 
     def __init__(self, string, dim=2, srid=900913 , gist_index=True, **args):
