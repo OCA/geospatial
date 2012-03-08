@@ -1,0 +1,152 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; OpenERP GeoEngine 0.3 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="OpenERP GeoEngine 0.3 documentation" href="index.html" />
+    <link rel="next" title="Postgisify an exisiting database" href="postgisify.html" />
+    <link rel="prev" title="Prerequisites" href="prerequisite.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="postgisify.html" title="Postgisify an exisiting database"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="prerequisite.html" title="Prerequisites"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">OpenERP GeoEngine 0.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="postgis-database-template">
+<h2>PostGIS database template<a class="headerlink" href="#postgis-database-template" title="Permalink to this headline">¶</a></h2>
+<p>In order to create databases from the OpenERP client, you have to create a PostGis database template.
+Under windows, this template is already available in installer.</p>
+<p>On other <a href="#id1"><span class="problematic" id="id2">*</span></a>NIX, system you simply have to launch the create_postgis_template.sh script available in the base_geoengine module in the scripts folder.
+This should be done by a PostgreSQL superuser.</p>
+<p>In order to test the success:</p>
+<div class="highlight-python"><pre>psql -l
+template_postgis | owner | UTF8 | en_US.UTF-8 | en_US.UTF-8 |</pre>
+</div>
+<p>If you want to install GeoEngine on an exisiting database, please refer to the Postgisify section.</p>
+</div>
+<div class="section" id="openerp">
+<h2>OpenERP<a class="headerlink" href="#openerp" title="Permalink to this headline">¶</a></h2>
+<p>Add the template as an argument to OpenERP server:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="o">--</span><span class="n">db</span><span class="o">-</span><span class="n">template</span><span class="o">=</span><span class="n">template_postgis</span>
+</pre></div>
+</div>
+<p>or in config file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">db_template</span> <span class="o">=</span> <span class="n">template_postgis</span>
+</pre></div>
+</div>
+<p>Do not forget to add the GeoEngine modules to your addons path.</p>
+<p>Then install (eventually update module list) the base GeoEngine module form the OpenERP client.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#postgis-database-template">PostGIS database template</a></li>
+<li><a class="reference internal" href="#openerp">OpenERP</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="prerequisite.html"
+                        title="previous chapter">Prerequisites</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="postgisify.html"
+                        title="next chapter">Postgisify an exisiting database</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/installation.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="postgisify.html" title="Postgisify an exisiting database"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="prerequisite.html" title="Prerequisites"
+             >previous</a> |</li>
+        <li><a href="index.html">OpenERP GeoEngine 0.3 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Camptocamp, Nicolas Bessi.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.2.
+    </div>
+  </body>
+</html>
