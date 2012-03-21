@@ -33,6 +33,5 @@ class GeoRasterLayer(osv.osv):
                                              domain=[('type', '=', 'geoengine')],
                                              required=True)}
 # TODO Write data check consraints
-GeoRasterLayer()
 
-_defaults = {'sequence': lambda *a: 6}
+    _defaults = {'sequence': lambda *a: 6}
