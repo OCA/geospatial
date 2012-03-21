@@ -4,11 +4,11 @@
 #    Author Nicolas Bessi. Copyright Camptocamp SA
 ##############################################################################
 
-from osv import fields, osv, orm
+from osv import fields
 from . import geo_field
 
 class GeoPoint(geo_field.Geom):
-    """This class adds a new type of columns to ORM. It enables POSTGIS geometry type support"""
+    """New type of column in the  ORM for POSTGIS geometry Point type"""
     _type = 'geo_point'
     def __init__(self, string, dim=2, srid=900913 , gist_index=True, **args):
         res = super(GeoPoint, self).__init__(string, "POINT", **args)
