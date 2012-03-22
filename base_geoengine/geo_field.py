@@ -20,19 +20,18 @@ logger = logging.getLogger('geoengine.database.structure')
 exp_logger = logging.getLogger('geoengine.expression')
 
 class Geom(fields._column):
-    """This class adds a new type of columns to ORM. It enable POSTGIS geometry type support."""
+    """New type of column in the  ORM for POSTGIS geometry type"""
 
 
     def load_geo(self, wkb):
-        """This function is used to load geometry into browse record
-            after read was done"""
+        """Load geometry into browse record after read was done"""
         return wkb and wkbloads(wkb.decode('hex')) or False
 
 
     def set_geo(self, value):
-        """This function is used to transform data in order to be
-            compatible with the create function. It is also use in expression.py
-            in order to represent value."""
+        """Transform data to a format compatible with the create function.
+
+        It is also use in expression.py in order to represent value."""
         if not value:
             return None
         res = self.entry_to_shape(value, same_type=True)
@@ -158,13 +157,14 @@ class Geom(fields._column):
 
 
     def set(self, cr, obj, res_id, name, value, user=None, context=None):
-        """This function used to write and create value into database
-            value can be geojson, wkt, shapely geomerty object.
-            If geo_direct_write in context you can pass diretly WKT"""
+        """Write and create value into database
+
+        value can be geojson, wkt, shapely geomerty object.
+        If geo_direct_write in context you can pass diretly WKT"""
         # TO IMPROVE on writing multiple ids with same values
         # we are going to create an new shape for each ids
         # lets hope gc will be effctive else we will have to do some
-        # perfo improvment by using copy or weakref lib.
+        # perfo improvement by using copy or weakref lib.
         context = context or {}
         wkt = None
         sql = 'update %s set %s =' % (obj._table, name)
