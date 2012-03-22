@@ -43,7 +43,7 @@
                 </tree>
             </field>
         </record>
-        
+
         <record id="geo_engine_view_rater_action" model="ir.actions.act_window">
             <field name="name">Raster Layer</field>
             <field name="type">ir.actions.act_window</field>
