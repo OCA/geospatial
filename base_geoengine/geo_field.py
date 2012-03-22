@@ -67,20 +67,23 @@ class Geom(fields._column):
 
     def entry_to_shape(self, value, same_type=False):
         """Transform input into an object"""
-        shape_to_return = convert.value_to_shape(value)
-        if shape_to_return.is_empty:
-            return shape_to_return
-        if same_type:
-            if shape_to_return.geom_type.lower() != self._geo_type.lower():
-                raise Exception(_('Geo Value %s must be of the same'
-                    'type %s as fields') % (shape_to_return.geom_type.lower(), self._geo_type.lower()))
-        return shape_to_return
+        shape = convert.value_to_shape(value)
+        if same_type and not shape.is_empty:
+            if shape.geom_type.lower() != self._geo_type.lower():
+                msg = _('Geo Value %s must be of the same type %s as fields')
+                # XXX: Exception or TypeError ?
+                raise Exception( msg % (shape.geom_type.lower(),
+                                        self._geo_type.lower()))
+        return shape
+
+    def _postgis_index_name(self, table, col_name):
+        return %s_%s_gist_index % (table, col_name)
 
     def _create_index(self, cursor, table, col_name):
         if self._gist_index:
             try:
                 cursor.execute("CREATE INDEX %s ON %s USING GIST ( %s )" %
-                               (table + '_' + col_name + '_gist_index',
+                               (self._postgis_index_name(table, col_name),
                                 table,
                                 col_name))
             except Exception:
@@ -148,7 +151,7 @@ class Geom(fields._column):
                             "We can not change dimention %s to %s" % (check_data[2], geo_column._dim))
         if self._gist_index:
             cursor.execute("SELECT indexname FROM pg_indexes WHERE indexname = %s",
-                           (table + '_' + col_name + '_gist_index',))
+                           (self._postgis_index_name(table, col_name),)
             index = cursor.fetchone()
             if cursor:
                 return True
