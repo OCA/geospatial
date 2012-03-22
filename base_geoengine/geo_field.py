@@ -83,7 +83,7 @@ class Geom(fields._column):
                                (table + '_' + col_name + '_gist_index',
                                 table,
                                 col_name))
-            except Exception, exc:
+            except Exception:
                 cursor.rollback()
                 logger.exception('Cannot create gist index for col %s table %s:',
                                  col_name, table)
@@ -117,7 +117,7 @@ class Geom(fields._column):
                             geo_column._geo_type,
                             geo_column._dim))
             self._create_index(cursor, table, col_name)
-        except Exception, exc:
+        except Exception:
             cursor.rollback()
             logger.exception('Cannot create column %s table %s:',
                              col_name, table)
