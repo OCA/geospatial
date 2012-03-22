@@ -96,12 +96,10 @@ class Geom(fields._column):
     def manage_db_column(self, cursor, col_name, geo_columns, table, model):
         """In charge of managing geom column type"""
         # we check if columns exists
-        logger.debug(cursor.mogrify("SELECT id from ir_model_fields where model = %s"
-                     " and name = %s",
-                     (model, col_name)))
-        cursor.execute("SELECT id from ir_model_fields where model = %s"
-                       " and name = %s",
-                       (model, col_name))
+        query = ("SELECT id FROM ir_model_fields "
+                 "WHERE model = %s AND name = %s")
+        logger.debug(cursor.mogrify(query, (model, col_name)))
+        cursor.execute(query, (model, col_name))
         field_exist = cursor.fetchone()
         if field_exist:
             self.update_geo_column(cursor, col_name, geo_columns, table, model)
@@ -131,12 +129,12 @@ class Geom(fields._column):
 
     def update_geo_column(self, cursor, col_name, geo_column, table, model):
         """Update a column of type the geom does. !! not do a lot of test yet"""
-        print logger.debug(cursor.mogrify("SELECT srid, type, coord_dimension FROM geometry_columns WHERE f_table_name = %s"
-                           " AND f_geometry_column = %s",
-                           (table, col_name)))
-        cursor.execute("SELECT srid, type, coord_dimension FROM geometry_columns WHERE f_table_name = %s"
-                       " AND f_geometry_column = %s",
-                       (table, col_name))
+        query = ("SELECT srid, type, coord_dimension "
+                 "FROM geometry_columns "
+                 "WHERE f_table_name = %s "
+                 "AND f_geometry_column = %s")
+        logger.debug(cursor.mogrify(query, (table, col_name)))
+        cursor.execute(query, (table, col_name))
         check_data = cursor.fetchone()
         if not check_data:
             raise Exception("geometry_columns table seems to be corrupted. SRID check is not possible")
@@ -170,9 +168,9 @@ class Geom(fields._column):
         # perfo improvement by using copy or weakref lib.
         context = context or {}
         wkt = None
-        sql = 'update %s set %s =' % (obj._table, name)
-        mode = {'not_null':" ST_GeomFromText(%(wkt)s, %(srid)s) where id=%(id)s",
-                'null': ' NULL where id=%(id)s'}
+        sql = 'UPDATE %s SET %s =' % (obj._table, name)
+        mode = {'not_null':" ST_GeomFromText(%(wkt)s, %(srid)s) WHERE id=%(id)s",
+                'null': ' NULL WHERE id=%(id)s'}
         if value:
             mode_to_use = 'not_null'
             if context.get('geo_direct_write'):
