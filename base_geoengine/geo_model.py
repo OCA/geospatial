@@ -40,7 +40,7 @@ class GeoModel(orm.BaseModel):
         self._columns = columns
         res = super(GeoModel, self)._auto_init(cursor, context)
         if geo_columns:
-            cursor.execute("SELECT tablename from pg_tables where tablename='spatial_ref_sys';")
+            cursor.execute("SELECT tablename FROM pg_tables WHERE tablename='spatial_ref_sys';")
             check = cursor.fetchone()
             if not check:
                 raise Exception(_('Can not install GeoEngine PostGIS does not seems'
