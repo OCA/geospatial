@@ -20,7 +20,7 @@ class GeoModel(orm.BaseModel):
     _name = None
     _register = False # not visible in ORM registry, meant to be python-inherited only
     _transient = False # True in a TransientModel
-    
+
     def _auto_init(self, cursor, context=None):
         ## We do this because actually creation of fields in DB is not actually
         ## delegated to the field it self but to the ORM _auto_init function

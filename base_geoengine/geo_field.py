@@ -78,7 +78,7 @@ class Geom(fields._column):
 
     def _create_index(self, cursor, table, col_name):
         if self._gist_index:
-            try :
+            try:
                 cursor.execute("CREATE INDEX %s ON %s USING GIST ( %s )" %
                                (table + '_' + col_name + '_gist_index',
                                 table,
@@ -109,7 +109,7 @@ class Geom(fields._column):
 
     def create_geo_column(self, cursor, col_name, geo_column, table, model):
         """Create a columns of type the geom"""
-        try :
+        try:
             cursor.execute("SELECT AddGeometryColumn( %s, %s, %s, %s, %s)",
                            (table,
                             col_name,
@@ -135,7 +135,7 @@ class Geom(fields._column):
                        " AND f_geometry_column = %s",
                        (table, col_name))
         check_data = cursor.fetchone()
-        if not check_data :
+        if not check_data:
             raise Exception("geometry_columns table seems to be corrupted. SRID check is not possible")
         if check_data[0] != geo_column._srid:
             raise Exception("Reprojection of column is not implemented"
@@ -232,5 +232,5 @@ fields.geo_function = GeoFunction
 class GeoRelated(fields.related):
     #shell class
     pass
-GeoRelated.postprocess = postprocess        
+GeoRelated.postprocess = postprocess
 fields.geo_related = GeoRelated
