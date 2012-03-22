@@ -152,9 +152,10 @@ class GeoOperator(object):
 
     def get_geo_lesser_sql(self, table, col, value, rel_col=None, rel_model=None):
         "Returns raw sql for geo_lesser operator"
-        return self._get_direct_como_op_sql(table, col, value, rel_col=rel_col, rel_model=rel_model, op='>')
-        
-    ## Equality comparison #############        
+        return self._get_direct_como_op_sql(table, col, value,
+                                            rel_col, rel_model, op='<')
+
+    ## Equality comparison #############
 
     def get_geo_equal_sql(self, table, col, value, rel_col=None, rel_model=None):
         "Returns raw sql for geo_equal operator"
