@@ -3,9 +3,6 @@
 #
 #    Author Nicolas Bessi. Copyright Camptocamp SA
 ##############################################################################
-from shapely.wkb import dumps as wkbdumps, loads as  wkbloads
-from shapely.wkt import dumps as wktdumps, loads as  wktloads
-from shapely.geometry import asShape
 import logging
 
 UNION_MAPPING = {'|': 'OR', '&':'AND'}
