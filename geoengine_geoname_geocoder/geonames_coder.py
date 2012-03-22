@@ -68,7 +68,7 @@ class ResPartnerAddress(osv.osv):
         if not isinstance(ids, list):
             ids = [ids]
         for add in self.browse(cursor, uid, ids, context):
-            logger.info('geolocalize %s' % (add.name,))
+            logger.info('geolocalize %s', add.name)
             if add.country_id.code and (add.city or add.zip):
                 filters[u'country'] = add.country_id.code.encode('utf-8')
                 if add.city:
@@ -87,7 +87,7 @@ class ResPartnerAddress(osv.osv):
                            "  where id = %s")
                     cursor.execute(sql, (srid, add.id))
                 except Exception, exc:
-                    logger.error(exc)
+                    logger.exception('error while updating geocodes')
                     if strict:
                         raise except_osv(_('Geoencoding fails'), str(exc))
         return ids
