@@ -128,7 +128,9 @@ class GeoModel(orm.BaseModel):
     def geo_search(self, cursor, uid, domain=[], geo_domain=[], offset=0,
                    limit=None, order=None, context=None):
         """Perform a geo search it allows direct domain:
-           geo_search(r, uid, domaine=[('name', 'ilike', 'toto']), geo_domain=[('the_point', 'geo_intersect', myshaply_obj or mywkt or mygeojson)].
+           geo_search(r, uid,
+                      domaine=[('name', 'ilike', 'toto']),
+                      geo_domain=[('the_point', 'geo_intersect', myshaply_obj or mywkt or mygeojson)])
 
            We can also support indirect geo_domain (‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] }).
 
