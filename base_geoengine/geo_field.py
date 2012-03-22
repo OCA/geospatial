@@ -202,7 +202,9 @@ class Geom(fields._column):
             values = {}
 
         res = {}
-        for read in obj.pool.get(obj._name)._read_flat(cr, uid, ids, [name], context=context, load='_classic_write'):
+        for read in obj.pool.get(obj._name)._read_flat(cr, uid, ids, [name],
+                                                       context=context,
+                                                       load='_classic_write'):
             if read[name]:
                 res[read['id']] = geojson.dumps(read[name])
             else:
