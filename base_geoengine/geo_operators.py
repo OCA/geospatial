@@ -164,10 +164,10 @@ class GeoOperator(object):
         else:
             base = self.geo_field.entry_to_shape(value, same_type=False)
             compare_to = "ST_GeomFromText('%s')" %(base.wkt,)
-        return " %.%s = %s" %(table, col, compare_to)
-        
-    ## PostGis spatial comparison ###########    
-        
+        return " %s.%s = %s" % (table, col, compare_to)
+
+    ## PostGis spatial comparison ###########
+
     def get_geo_intersect_sql(self, table, col, value, rel_col=None, rel_model=None):
         "Returns raw sql for geo_intersec operator"
         return self._get_postgis_comp_sql(table, col, value,
