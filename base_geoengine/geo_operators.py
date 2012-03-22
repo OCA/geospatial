@@ -10,7 +10,7 @@ import logging
 
 UNION_MAPPING = {'|': 'OR', '&':'AND'}
 
-logger = logging.getLogger('GeoEngine sql debug')
+logger = logging.getLogger('geoengine.sql.debug')
 
 # TODO Refactor geo_search and dry up the get_**_sql code
 
