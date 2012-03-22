@@ -84,7 +84,7 @@ class ResPartnerAddress(osv.osv):
                     # We use postgres to do projection in order not to install GDAL dependences
                     sql = ("UPDATE res_partner_address"
                            "  SET geo_point = ST_Transform(st_SetSRID(geo_point, 4326), %s)"
-                           "  where id = %s")
+                           "  WHERE id = %s")
                     cursor.execute(sql, (srid, add.id))
                 except Exception, exc:
                     logger.exception('error while updating geocodes')
