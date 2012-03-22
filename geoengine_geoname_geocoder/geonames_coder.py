@@ -29,8 +29,8 @@ class ResPartnerAddress(osv.osv):
         return usr.browse(cursor, uid, uid, context).company_id.enable_geocoding
     
     def _get_point_from_reply(self, answer):
-        """Parse geoname answer code inpired by geopy library"""
-        
+        """Parse geoname answer code inspired by geopy library"""
+
         def get_first_text(node, tag_names, strip=None):
             """Get the text value of the first child of ``node`` with tag
             ``tag_name``. The text is stripped using the value of ``strip``."""
@@ -60,7 +60,8 @@ class ResPartnerAddress(osv.osv):
         return parse_code(codes[0])
         
 
-    
+
+
     def geocode_from_geonames(self, cursor, uid, ids, srid='900913', strict=True, context=None):
         context = context or {}
         base_url = u'http://ws.geonames.org/postalCodeSearch?'
