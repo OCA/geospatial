@@ -17,8 +17,8 @@ import pooler
 from geo_helper import geo_convertion_helper as convert
 import geo_operators
 
-logger = logging.getLogger('GeoEngine database structure')
-exp_logger = logging.getLogger('GeoEngine expression')
+logger = logging.getLogger('geoengine.database.structure')
+exp_logger = logging.getLogger('geoengine.expression')
 
 class Geom(fields._column):
     """This class adds a new type of columns to ORM. It enable POSTGIS geometry type support."""
@@ -87,8 +87,8 @@ class Geom(fields._column):
                                 col_name))
             except Exception, exc:
                 cursor.rollback()
-                logger.error('Can not create gist index for col %s table %s:'
-                             ' error:%s' %(col_name, table, exc))
+                logger.exception('Cannot create gist index for col %s table %s:',
+                                 col_name, table)
             finally:
                 cursor.commit()
 
@@ -121,8 +121,8 @@ class Geom(fields._column):
             self._create_index(cursor, table, col_name)
         except Exception, exc:
             cursor.rollback()
-            logger.error('Can not create column %s table %s:'
-                         ' error:%s' %(col_name, table, exc))
+            logger.exception('Cannot create column %s table %s:',
+                             col_name, table)
         finally:
             cursor.commit()
 
