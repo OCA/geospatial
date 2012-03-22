@@ -30,6 +30,6 @@ def value_to_shape(value):
         else:
             shape_to_return = wktloads(getattr(value, 'wkt'))
     else:
-        raise TypeError(('Write/create/search geo type must be wkt/geojson'
-                         ' string or must respond to wkt'))
+        raise TypeError('Write/create/search geo type must be wkt/geojson '
+                        'string or must respond to wkt')
     return shape_to_return
