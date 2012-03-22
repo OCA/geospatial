@@ -22,12 +22,12 @@ class ResPartnerAddress(osv.osv):
     """Auto gheo coding of addresses"""
     _name = "res.partner.address"
     _inherit = "res.partner.address"
-    
-    
+
+
     def _can_geocode(self, cursor, uid, context):
         usr = self.pool.get('res.users')
         return usr.browse(cursor, uid, uid, context).company_id.enable_geocoding
-    
+
     def _get_point_from_reply(self, answer):
         """Parse geoname answer code inspired by geopy library"""
 
@@ -49,7 +49,7 @@ class ResPartnerAddress(osv.osv):
             latitude = latitude and float(latitude)
             longitude = longitude and float(longitude)
             return Point(longitude, latitude)
-            
+
         res = answer.read()
         if not isinstance(res, basestring):
             return False
@@ -58,7 +58,6 @@ class ResPartnerAddress(osv.osv):
         if len(codes) < 1:
             return False
         return parse_code(codes[0])
-        
 
 
 
@@ -92,18 +91,19 @@ class ResPartnerAddress(osv.osv):
                     if strict:
                         raise except_osv(_('Geoencoding fails'), str(exc))
         return ids
-        
+
     def write(self, cursor, uid, ids, vals, context=None):
         res = super(ResPartnerAddress, self).write(cursor, uid, ids, vals, context=None)
         do_geocode = self._can_geocode(cursor, uid, context)
         if do_geocode and "country_id" in vals or 'city' in vals or 'zip' in vals:
             self.geocode_from_geonames(cursor, uid, ids, context=context)
         return res
-        
+
     def create(self, cursor, uid, vals, context=None):
         res = super(ResPartnerAddress, self).create(cursor, uid, vals, context=None)
         do_geocode = self._can_geocode(cursor, uid, context=context)
         if do_geocode:
             self.geocode_from_geonames(cursor, uid, res, context=context)
         return res
+    
 ResPartnerAddress()
