@@ -20,7 +20,7 @@ class GeoModel(orm.BaseModel):
     _name = None
     _register = False # not visible in ORM registry, meant to be python-inherited only
     _transient = False # True in a TransientModel
-    
+
     def _auto_init(self, cursor, context=None):
         ## We do this because actually creation of fields in DB is not actually
         ## delegated to the field it self but to the ORM _auto_init function
@@ -40,7 +40,7 @@ class GeoModel(orm.BaseModel):
         self._columns = columns
         res = super(GeoModel, self)._auto_init(cursor, context)
         if geo_columns:
-            cursor.execute("SELECT tablename from pg_tables where tablename='spatial_ref_sys';")
+            cursor.execute("SELECT tablename FROM pg_tables WHERE tablename='spatial_ref_sys';")
             check = cursor.fetchone()
             if not check:
                 raise Exception(_('Can not install GeoEngine PostGIS does not seems'
@@ -128,7 +128,9 @@ class GeoModel(orm.BaseModel):
     def geo_search(self, cursor, uid, domain=[], geo_domain=[], offset=0,
                    limit=None, order=None, context=None):
         """Perform a geo search it allows direct domain:
-           geo_search(r, uid, domaine=[('name', 'ilike', 'toto']), geo_domain=[('the_point', 'geo_intersect', myshaply_obj or mywkt or mygeojson)].
+           geo_search(r, uid,
+                      domaine=[('name', 'ilike', 'toto']),
+                      geo_domain=[('the_point', 'geo_intersect', myshaply_obj or mywkt or mygeojson)])
 
            We can also support indirect geo_domain (‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] }).
 

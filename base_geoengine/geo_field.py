@@ -6,8 +6,7 @@
 import json
 import logging
 
-from shapely.wkb import dumps as wkbdumps, loads as  wkbloads
-from shapely.wkt import dumps as wktdumps, loads as  wktloads
+from shapely.wkb import loads as  wkbloads
 from shapely.geometry import asShape
 import geojson
 
@@ -17,23 +16,22 @@ import pooler
 from geo_helper import geo_convertion_helper as convert
 import geo_operators
 
-logger = logging.getLogger('GeoEngine database structure')
-exp_logger = logging.getLogger('GeoEngine expression')
+logger = logging.getLogger('geoengine.database.structure')
+exp_logger = logging.getLogger('geoengine.expression')
 
 class Geom(fields._column):
-    """This class adds a new type of columns to ORM. It enable POSTGIS geometry type support."""
+    """New type of column in the  ORM for POSTGIS geometry type"""
 
 
     def load_geo(self, wkb):
-        """This function is used to load geometry into browse record
-            after read was done"""
+        """Load geometry into browse record after read was done"""
         return wkb and wkbloads(wkb.decode('hex')) or False
 
 
     def set_geo(self, value):
-        """This function is used to transform data in order to be
-            compatible with the create function. It is also use in expression.py
-            in order to represent value."""
+        """Transform data to a format compatible with the create function.
+
+        It is also use in expression.py in order to represent value."""
         if not value:
             return None
         res = self.entry_to_shape(value, same_type=True)
@@ -69,38 +67,39 @@ class Geom(fields._column):
 
     def entry_to_shape(self, value, same_type=False):
         """Transform input into an object"""
-        shape_to_return = convert.value_to_shape(value)
-        if shape_to_return.is_empty:
-            return shape_to_return
-        if same_type:
-            if shape_to_return.geom_type.lower() != self._geo_type.lower():
-                raise Exception(_('Geo Value %s must be of the same'
-                    'type %s as fields') % (shape_to_return.geom_type.lower(), self._geo_type.lower()))
-        return shape_to_return
+        shape = convert.value_to_shape(value)
+        if same_type and not shape.is_empty:
+            if shape.geom_type.lower() != self._geo_type.lower():
+                msg = _('Geo Value %s must be of the same type %s as fields')
+                # XXX: Exception or TypeError ?
+                raise Exception( msg % (shape.geom_type.lower(),
+                                        self._geo_type.lower()))
+        return shape
+
+    def _postgis_index_name(self, table, col_name):
+        return "%s_%s_gist_index" % (table, col_name)
 
     def _create_index(self, cursor, table, col_name):
         if self._gist_index:
-            try :
+            try:
                 cursor.execute("CREATE INDEX %s ON %s USING GIST ( %s )" %
-                               (table + '_' + col_name + '_gist_index',
+                               (self._postgis_index_name(table, col_name),
                                 table,
                                 col_name))
-            except Exception, exc:
+            except Exception:
                 cursor.rollback()
-                logger.error('Can not create gist index for col %s table %s:'
-                             ' error:%s' %(col_name, table, exc))
+                logger.exception('Cannot create gist index for col %s table %s:',
+                                 col_name, table)
             finally:
                 cursor.commit()
 
     def manage_db_column(self, cursor, col_name, geo_columns, table, model):
         """In charge of managing geom column type"""
         # we check if columns exists
-        logger.debug(cursor.mogrify("SELECT id from ir_model_fields where model = %s"
-                     " and name = %s",
-                     (model, col_name)))
-        cursor.execute("SELECT id from ir_model_fields where model = %s"
-                       " and name = %s",
-                       (model, col_name))
+        query = ("SELECT id FROM ir_model_fields "
+                 "WHERE model = %s AND name = %s")
+        logger.debug(cursor.mogrify(query, (model, col_name)))
+        cursor.execute(query, (model, col_name))
         field_exist = cursor.fetchone()
         if field_exist:
             self.update_geo_column(cursor, col_name, geo_columns, table, model)
@@ -111,7 +110,7 @@ class Geom(fields._column):
 
     def create_geo_column(self, cursor, col_name, geo_column, table, model):
         """Create a columns of type the geom"""
-        try :
+        try:
             cursor.execute("SELECT AddGeometryColumn( %s, %s, %s, %s, %s)",
                            (table,
                             col_name,
@@ -119,10 +118,10 @@ class Geom(fields._column):
                             geo_column._geo_type,
                             geo_column._dim))
             self._create_index(cursor, table, col_name)
-        except Exception, exc:
+        except Exception:
             cursor.rollback()
-            logger.error('Can not create column %s table %s:'
-                         ' error:%s' %(col_name, table, exc))
+            logger.exception('Cannot create column %s table %s:',
+                             col_name, table)
         finally:
             cursor.commit()
 
@@ -130,14 +129,14 @@ class Geom(fields._column):
 
     def update_geo_column(self, cursor, col_name, geo_column, table, model):
         """Update a column of type the geom does. !! not do a lot of test yet"""
-        print logger.debug(cursor.mogrify("SELECT srid, type, coord_dimension FROM geometry_columns WHERE f_table_name = %s"
-                           " AND f_geometry_column = %s",
-                           (table, col_name)))
-        cursor.execute("SELECT srid, type, coord_dimension FROM geometry_columns WHERE f_table_name = %s"
-                       " AND f_geometry_column = %s",
-                       (table, col_name))
+        query = ("SELECT srid, type, coord_dimension "
+                 "FROM geometry_columns "
+                 "WHERE f_table_name = %s "
+                 "AND f_geometry_column = %s")
+        logger.debug(cursor.mogrify(query, (table, col_name)))
+        cursor.execute(query, (table, col_name))
         check_data = cursor.fetchone()
-        if not check_data :
+        if not check_data:
             raise Exception("geometry_columns table seems to be corrupted. SRID check is not possible")
         if check_data[0] != geo_column._srid:
             raise Exception("Reprojection of column is not implemented"
@@ -150,27 +149,28 @@ class Geom(fields._column):
                             "We can not change dimention %s to %s" % (check_data[2], geo_column._dim))
         if self._gist_index:
             cursor.execute("SELECT indexname FROM pg_indexes WHERE indexname = %s",
-                           (table + '_' + col_name + '_gist_index',))
+                           (self._postgis_index_name(table, col_name),))
             index = cursor.fetchone()
-            if cursor:
+            if index:
                 return True
             self._create_index(cursor, table, col_name)
         return True
 
 
     def set(self, cr, obj, res_id, name, value, user=None, context=None):
-        """This function used to write and create value into database
-            value can be geojson, wkt, shapely geomerty object.
-            If geo_direct_write in context you can pass diretly WKT"""
+        """Write and create value into database
+
+        value can be geojson, wkt, shapely geomerty object.
+        If geo_direct_write in context you can pass diretly WKT"""
         # TO IMPROVE on writing multiple ids with same values
         # we are going to create an new shape for each ids
         # lets hope gc will be effctive else we will have to do some
-        # perfo improvment by using copy or weakref lib.
+        # perfo improvement by using copy or weakref lib.
         context = context or {}
         wkt = None
-        sql = 'update %s set %s =' % (obj._table, name)
-        mode = {'not_null':" ST_GeomFromText(%(wkt)s, %(srid)s) where id=%(id)s",
-                'null': ' NULL where id=%(id)s'}
+        sql = 'UPDATE %s SET %s =' % (obj._table, name)
+        mode = {'not_null':" ST_GeomFromText(%(wkt)s, %(srid)s) WHERE id=%(id)s",
+                'null': ' NULL WHERE id=%(id)s'}
         if value:
             mode_to_use = 'not_null'
             if context.get('geo_direct_write'):
@@ -203,7 +203,9 @@ class Geom(fields._column):
             values = {}
 
         res = {}
-        for read in obj.pool.get(obj._name)._read_flat(cr, uid, ids, [name], context=context, load='_classic_write'):
+        for read in obj.pool.get(obj._name)._read_flat(cr, uid, ids, [name],
+                                                       context=context,
+                                                       load='_classic_write'):
             if read[name]:
                 res[read['id']] = geojson.dumps(read[name])
             else:
@@ -215,7 +217,6 @@ class Geom(fields._column):
 def postprocess(self, cr, uid, obj, field, value=None, context=None):
     if context is None:
         context = {}
-    result = value
     field_type = obj._columns[field]._type
     if field_type.startswith('geo_'):
         res = geojson.dumps(value)
@@ -233,5 +234,5 @@ fields.geo_function = GeoFunction
 class GeoRelated(fields.related):
     #shell class
     pass
-GeoRelated.postprocess = postprocess        
+GeoRelated.postprocess = postprocess
 fields.geo_related = GeoRelated
