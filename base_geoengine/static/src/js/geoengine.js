@@ -407,6 +407,7 @@ openerp.base_geoengine = function (openerp) {
                     new OpenLayers.Control.ToolPanel()
                 ]
             });
+            $('div#the_map').animate({height: $(window).height()-300+'px'})
             map.addControls(this.selectFeatureControls);
             map.zoomToMaxExtent();
             var self = this;
