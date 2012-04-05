@@ -94,7 +94,7 @@ openerp.base_geoengine = function (openerp) {
                         new OpenLayers.Layer.Google(
                             l.name,
                             {type: glayers[l.google_type],
-                            attribution: "<a href='http://www.camptocamp.com' style='position:relative;left:-270px;color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>"}
+                            attribution: "<a href='http://www.camptocamp.com' style='position:relative;left:-470px;color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>"}
                         ));
                     break;
             }
