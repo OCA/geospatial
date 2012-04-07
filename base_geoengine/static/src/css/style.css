@@ -81,7 +81,7 @@ div.olLayerDiv {
     margin: 5px 5px 0 0;
 }
 .olControlEditingToolbar div {
-	background-image: url(../images/editing_tool_bar.png);
+        background-image: url(../images/editing_tool_bar.png);
     background-repeat: no-repeat;
     margin: 0 0 5px 5px;
     width: 24px;
@@ -120,38 +120,38 @@ div.olLayerDiv {
 
 /* Page styles */
 #the_map {
-	width: 100%;
-	height: 100%;
+        width: 100%;
+        height: 100%;
 }
 .map_overlay {
     position: absolute;
-	display: none;
-	background: white;
+        display: none;
+        background: white;
     opacity: 0.9;
-	border: 2px solid black;
-	z-index: 3000;
-	padding: 5px 0;
+        border: 2px solid black;
+        z-index: 3000;
+        padding: 5px 0;
 }
 #map_infobox {
-	bottom: 10px;
-	left: 10px;
-	width: 200px;
-	height: 150px;
-	-moz-border-radius: 6px;
-	-webkit-border-radius: 6px;
+        bottom: 10px;
+        left: 10px;
+        width: 200px;
+        height: 150px;
+        -moz-border-radius: 6px;
+        -webkit-border-radius: 6px;
 }
 #map_info {
-	overflow-x: hidden;
-	overflow-y: auto;
-	padding: 10px;
-	height: 130px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 10px;
+        height: 130px;
 }
 #map_measurementbox {
-	top: 18px;
-	left: 160px;
-	padding: 2px 5px;
-	-moz-border-radius: 3px;
-	-webkit-border-radius: 3px;
+        top: 18px;
+        left: 160px;
+        padding: 2px 5px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
 }
 
 /* Button style */
