@@ -10,7 +10,7 @@
             <field name="arch" type="xml">
                 <notebook position="inside">
                     <page string="GeoEngine Backend">
-                        <group  string="Project data" colspan="4" groups="group_geoengine_admin">
+                        <group  string="Project data" colspan="4" groups="base_geoengine.group_geoengine_admin">
                             <field name="geoengine_base_info" colspan="4" nolabel="1"/>
                             <newline/>
                         </group>
