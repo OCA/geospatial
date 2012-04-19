@@ -6,5 +6,6 @@
 # All Right Reserved
 #
 ##############################################################################
+from __future__ import absolute_import 
 from . import geo_npa
 from . import retail_machine
