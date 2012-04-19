@@ -3,6 +3,7 @@
 #
 #    Author Nicolas Bessi. Copyright Camptocamp SA
 ##############################################################################
+from __future__ import absolute_import 
 from . import geonames_coder
-import company
-import wizard
+from . import company
+from . import  wizard
