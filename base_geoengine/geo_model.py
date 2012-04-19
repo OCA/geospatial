@@ -3,6 +3,7 @@
 #
 #    Author Nicolas Bessi. Copyright Camptocamp SA
 ##############################################################################
+from __future__ import absolute_import 
 import json
 
 from osv import fields, osv, orm
