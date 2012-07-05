@@ -19,6 +19,7 @@ class GeoModel(orm.BaseModel):
     #Array of ash that define layer and data to use
     _georepr = []
     _name = None
+    _auto = True
     _register = False # not visible in ORM registry, meant to be python-inherited only
     _transient = False # True in a TransientModel
 
