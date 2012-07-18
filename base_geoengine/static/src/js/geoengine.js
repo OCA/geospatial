@@ -84,6 +84,22 @@ openerp.base_geoengine = function (openerp) {
                                 transitionEffect: 'resize'
                             }));
                     break;
+                case "mapbox":
+                    out.push(
+                        new OpenLayers.Layer.XYZ(l.name, [
+                            "http://a.tiles.mapbox.com/v3/" + l.mapbox_type + "/${z}/${x}/${y}.png",
+                            "http://b.tiles.mapbox.com/v3/" + l.mapbox_type + "/${z}/${x}/${y}.png",
+                            "http://c.tiles.mapbox.com/v3/" + l.mapbox_type + "/${z}/${x}/${y}.png",
+                            "http://d.tiles.mapbox.com/v3/" + l.mapbox_type + "/${z}/${x}/${y}.png"
+                        ], {
+                            sphericalMercator: true,
+                            wrapDateLine: true,
+                            numZoomLevels: 17,
+                            attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>\
+                                      using <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> raster"
+                        })
+                    );
+                    break;
                 case "google":
                     var glayers = {
                         "G_PHYSICAL_MAP": google.maps.MapTypeId.TERRAIN,
