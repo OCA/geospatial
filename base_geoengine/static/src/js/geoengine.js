@@ -349,18 +349,21 @@ openerp.base_geoengine = function (openerp) {
             });
 
             // zoom to data extent
-            var bbox = this.vectorLayers[0].getDataExtent().scale(1.1);
-            if (bbox.getWidth() * bbox.getHeight() !== 0) {
-                map.zoomToExtent(bbox);
-            } else {
-                map.setCenter(bbox.getCenterLonLat(), 15);
+            var data_extent = this.vectorLayers[0].getDataExtent();
+            if (data_extent) {
+                var bbox = data_extent.scale(1.1);
+                if (bbox.getWidth() * bbox.getHeight() !== 0) {
+                    map.zoomToExtent(bbox);
+                } else {
+                    map.setCenter(bbox.getCenterLonLat(), 15);
+                }
+                var ids = []
+                // Javascript expert please improve this code
+                for (var i=0, len=data.length; i<len; ++i) {
+                    ids.push(data[i]['id'])
+                }
+                self.dataset.ids = ids
             }
-            ids = []
-            // Javascript expert please improve this code
-            for ( var i=0, len=data.length; i<len; ++i ){
-              ids.push(data[i]['id'])
-            }
-            self.dataset.ids = ids
         },
 
         on_loaded: function(data) {
