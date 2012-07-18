@@ -12,7 +12,7 @@ class GeoRasterLayer(osv.osv):
 
 
     _columns = {'raster_type':  fields.selection([('google', 'Google'),
-                                                  ('osm', 'Open Street MAP'),
+                                                  ('osm', 'OpenStreetMap'),
                                                   ('d_wms', 'Distant WMS'),
                                                   ('openerp', 'OpenERP -- not implemented')],
                                                  string="Raster layer type",
