@@ -13,6 +13,7 @@ class GeoRasterLayer(osv.osv):
 
     _columns = {'raster_type':  fields.selection([('google', 'Google'),
                                                   ('osm', 'OpenStreetMap'),
+                                                  ('mapbox', 'MapBox'),
                                                   ('d_wms', 'Distant WMS'),
                                                   ('openerp', 'OpenERP -- not implemented')],
                                                  string="Raster layer type",
@@ -24,6 +25,9 @@ class GeoRasterLayer(osv.osv):
                                                   ('G_HYBRID_MAP', 'Google Hybrid map'),
                                                   ('G_PHYSICAL_MAP', 'Google Physical map')],
                                                  string="Google raster layer type"),
+                'mapbox_type':  fields.selection([('mapbox.mapbox-streets', 'Streets'), 
+                                                  ('mapbox.mapbox-light', 'Light')],
+                                                 string="Mapbox raster layer type"),
                 'sequence': fields.integer('layer priority lower on top'),
                 'overlay' : fields.boolean('Is overlay layer?'),
                 'field_id': fields.many2one('ir.model.fields', 'OpenERP layer field to use',
