@@ -21,6 +21,11 @@
                         colspan="4">
                         <field name="google_type"/>
                     </group>
+                    <group string="MapBox layer data"
+                        attrs="{'invisible': [('raster_type', '!=', 'mapbox')]}"
+                        colspan="4">
+                        <field name="mapbox_type"/>
+                    </group>
                     <group string="OpenERP layer data (Not implemented)"
                         attrs="{'invisible': [('raster_type', '!=', 'openerp')]}"
                         colspan="4">
