@@ -2,6 +2,7 @@
  * OpenERP base_geoengine
  * Author B.Binet Copyright Camptocamp SA
  * Contributor N. Bessi Copyright Camptocamp SA
+ * License in __openerp__.py at root level of the module
  *---------------------------------------------------------*/
 
 openerp.base_geoengine = function (openerp) {
