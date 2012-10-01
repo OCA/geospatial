@@ -39,16 +39,16 @@ openerp.base_geoengine = function (openerp) {
         */
     var formatHTML = function(a) {
         var str = [];
-        var oid = ''
+        var oid = '';
         for (var key in a) {
             if (a.hasOwnProperty(key)) {
                 var val = a[key];
                 if (val == false){
                     continue;
                 }
-                var label = ''
+                var label = '';
                 if (val instanceof Array){
-                    str.push('<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val[1])
+                    str.push('<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val[1]);
                 } else {
                     label = '<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val;
                      if (key == 'id'){
@@ -59,7 +59,7 @@ openerp.base_geoengine = function (openerp) {
                 }
             }
         }
-        str.unshift(oid)
+        str.unshift(oid);
         return str.join('<br />');
     };
 
@@ -119,7 +119,7 @@ openerp.base_geoengine = function (openerp) {
         return out;
     };
 
-    QWeb = openerp.web.qweb
+    QWeb = openerp.web.qweb;
     QWeb.add_template('/base_geoengine/static/src/xml/geoengine.xml');
     openerp.web.views.add('geoengine', 'openerp.base_geoengine.GeoengineView');
     openerp.base_geoengine.GeoengineView = openerp.web.View.extend({
@@ -145,11 +145,11 @@ openerp.base_geoengine = function (openerp) {
         },
         limit: function(){
             var menu = document.getElementById('query_limit');
-            var limit = parseInt(menu.options[menu.selectedIndex].value)
+            var limit = parseInt(menu.options[menu.selectedIndex].value);
             if (limit > 0){
-                return limit
-                } 
-            else {return -1}
+                return limit;
+                }
+            else {return -1;}
         }, 
         start: function() {
             return this.rpc("/web/view/load", {
@@ -374,12 +374,12 @@ openerp.base_geoengine = function (openerp) {
                 } else {
                     map.setCenter(bbox.getCenterLonLat(), 15);
                 }
-                var ids = []
+                var ids = [];
                 // Javascript expert please improve this code
                 for (var i=0, len=data.length; i<len; ++i) {
-                    ids.push(data[i]['id'])
+                    ids.push(data[i]['id']);
                 }
-                self.dataset.ids = ids
+                self.dataset.ids = ids;
             }
         },
 
@@ -427,7 +427,7 @@ openerp.base_geoengine = function (openerp) {
                     new OpenLayers.Control.ToolPanel()
                 ]
             });
-            $('div#the_map').animate({height: $(window).height()-300+'px'})
+            $('div#the_map').animate({height: $(window).height()-300+'px'});
             map.addControls(this.selectFeatureControls);
             map.zoomToMaxExtent();
             var self = this;
@@ -437,7 +437,6 @@ openerp.base_geoengine = function (openerp) {
             //     this.dataset.read_slice(_.keys(this.fields_view.fields), {}, this.do_load_vector_data);
             // }
             self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
-            
         }
 
     });
@@ -498,9 +497,9 @@ openerp.base_geoengine = function (openerp) {
             rgbToHex: function(r, g, b) {
                 var colorBase10 = (r + 256 * g + 256 * 256 * b).toString(16);
                 while (colorBase10.length < 6) {
-                    colorBase10 = '0' + colorBase10
+                    colorBase10 = '0' + colorBase10;
                 }
-                return colorBase10
+                return colorBase10;
             },
 
             /** 
@@ -573,7 +572,7 @@ OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
                     fillOpacity: 0.3
                 }
             }})]);
-        
+
         var styleMap = new OpenLayers.StyleMap({"default": style});
 
         this.displayClass = 'olControlEditingToolbar';
