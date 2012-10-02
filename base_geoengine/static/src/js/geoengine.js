@@ -540,6 +540,94 @@ openerp.base_geoengine = function (openerp) {
             }
         }
     };
+
+    openerp.base_geoengine.FieldGeoPointXY = openerp.web.form.Field.extend({
+        template: 'FieldGeoPointXY',
+
+        start: function() {
+            this._super.apply(this, arguments);
+            var $input = this.$element.find('input');
+            $input.eq(0).change(this.on_ui_change);
+            $input.eq(1).change(this.on_ui_change);
+            this.setupFocus($input);
+        },
+        get_coords: function() {
+            /* Get coordinates and check it has the right format
+             *
+             * @return [x, y]
+             */
+            var $input = this.$element.find('input');
+            var x = openerp.web.parse_value($input.eq(0).val(), {type: 'float'});
+            var y = openerp.web.parse_value($input.eq(1).val(), {type: 'float'});
+            return [x, y];
+        },
+        make_GeoJSON: function(coords){
+            return {"type": "Point", "coordinates": coords};
+        },
+        set_value: function(value) {
+            this._super.apply(this, arguments);
+            var self = this;
+            var $input = this.$element.find('input');
+
+            if (value) {
+                var geo_obj = JSON.parse(value);
+                $input.eq(0).val(geo_obj.coordinates[0]);
+                $input.eq(1).val(geo_obj.coordinates[1]);
+            } else {
+                $input.eq(0).val('');
+                $input.eq(1).val('');
+            }
+        },
+        set_value_from_ui: function() {
+            var coords = this.get_coords();
+            if (coords[0] && coords[1]) {
+                var json = this.make_GeoJSON(coords);
+                this.value = JSON.stringify(json);
+            } else {
+                this.value = false
+            }
+
+            this._super();
+        },
+        validate: function() {
+            this.invalid = false;
+            try {
+                // get coords to check if floats
+                var coords = this.get_coords();
+                // dumbly parse a json text made from a json
+                // in order to test the whole process
+                // var json = this.make_GeoJSON(coords);
+                // var str_json = JSON.stringify(json)
+                // var geo_point = JSON.parse(str_json);
+
+                // make sure the two coordinates are set or None
+                this.invalid = (this.required &&
+                  (coords[0] === 0 ||
+                   coords[1] === 0 )
+                  || coords[0] === false && coords[1] !== false
+                  || coords[1] === false && coords[0] !== false);
+            } catch(e) {
+                this.invalid = true;
+            }
+        }
+    });
+    openerp.web.form.widgets.add('geo_point_xy', 'openerp.base_geoengine.FieldGeoPointXY');
+
+    openerp.base_geoengine.FieldGeoPointXYReadonly = openerp.base_geoengine.FieldGeoPointXY.extend({
+        template: 'FieldGeoPointXY.readonly',
+
+        set_value: function (value) {
+            this._super.apply(this, arguments);
+            var show_value = ''
+            if (value) {
+                var geo_obj = JSON.parse(value);
+                show_value = "(" + geo_obj.coordinates[0] + ", " + geo_obj.coordinates[1] + ")";
+            }
+            this.$element.find('div').text(show_value);
+            return show_value;
+        }
+    });
+    openerp.web.page.readonly.add('geo_point_xy', 'openerp.base_geoengine.FieldGeoPointXYReadonly');
 };
 
 OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
