@@ -566,7 +566,6 @@ openerp.base_geoengine = function (openerp) {
         },
         set_value: function(value) {
             this._super.apply(this, arguments);
-            var self = this;
             var $input = this.$element.find('input');
 
             if (value) {
@@ -584,7 +583,7 @@ openerp.base_geoengine = function (openerp) {
                 var json = this.make_GeoJSON(coords);
                 this.value = JSON.stringify(json);
             } else {
-                this.value = false
+                this.value = false;
             }
 
             this._super();
@@ -594,18 +593,12 @@ openerp.base_geoengine = function (openerp) {
             try {
                 // get coords to check if floats
                 var coords = this.get_coords();
-                // dumbly parse a json text made from a json
-                // in order to test the whole process
-                // var json = this.make_GeoJSON(coords);
-                // var str_json = JSON.stringify(json)
-                // var geo_point = JSON.parse(str_json);
 
                 // make sure the two coordinates are set or None
                 this.invalid = (this.required &&
-                  (coords[0] === 0 ||
-                   coords[1] === 0 )
-                  || coords[0] === false && coords[1] !== false
-                  || coords[1] === false && coords[0] !== false);
+                  (coords[0] === 0 || coords[1] === 0 ) ||
+                   coords[0] === false && coords[1] !== false ||
+                   coords[0] !== false && coords[1] === false);
             } catch(e) {
                 this.invalid = true;
             }
@@ -618,7 +611,7 @@ openerp.base_geoengine = function (openerp) {
 
         set_value: function (value) {
             this._super.apply(this, arguments);
-            var show_value = ''
+            var show_value = '';
             if (value) {
                 var geo_obj = JSON.parse(value);
                 show_value = "(" + geo_obj.coordinates[0] + ", " + geo_obj.coordinates[1] + ")";
