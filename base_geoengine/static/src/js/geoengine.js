@@ -635,7 +635,7 @@ openerp.base_geoengine = function (openerp) {
             this.setupFocus($input);
         },
         get_coords: function() {
-            /* Get coordinates and check it has the right format
+            /* Get coordinates in the input fields
              *
              * @return [[x1, y1],[x2, y2]]
              */
@@ -645,12 +645,7 @@ openerp.base_geoengine = function (openerp) {
             var x2 = openerp.web.parse_value($input.eq(2).val(), {type: 'float'});
             var y2 = openerp.web.parse_value($input.eq(3).val(), {type: 'float'});
 
-            var minx = Math.min(x1,x2);
-            var maxx = Math.max(x1,x2);
-            var miny = Math.min(y1,y2);
-            var maxy = Math.max(y1,y2);
-
-            return [[minx, miny], [maxx, maxy]];
+            return [[x1, y1], [x2, y2]];
         },
         make_GeoJSON: function(coords){
             var p1 = coords[0];
@@ -678,9 +673,31 @@ openerp.base_geoengine = function (openerp) {
                 $input.eq(3).val('');
             }
         },
+        correct_bounds: function(coords) {
+            /* Reverse bounds if the upper right
+             * point is smaller than bottom left
+             *
+             * @return [[x1, y1],[x2, y2]]
+             */
+            var x1 = coords[0][0],
+                y1 = coords[0][1],
+                x2 = coords[1][0],
+                y2 = coords[1][1];
+
+            var minx = Math.min(x1, x2);
+            var maxx = Math.max(x1, x2);
+
+            var miny = Math.min(y1, y2);
+            var maxy = Math.max(y1, y2);
+
+            return [[minx, miny], [maxx, maxy]];
+        },
         set_value_from_ui: function() {
             var coords = this.get_coords();
             if (this.all_are_set(coords)) {
+
+                coords = this.correct_bounds(coords);
+
                 var json = this.make_GeoJSON(coords);
                 this.value = JSON.stringify(json);
             } else {
@@ -690,12 +707,12 @@ openerp.base_geoengine = function (openerp) {
             this._super();
         },
         all_are_set: function(coords) {
-           return (coords[0][0] !== false && coords[0][1] !== false
-                    && coords[1][0] !== false && coords[1][1] !== false)
+           return (coords[0][0] !== false && coords[0][1] !== false &&
+                   coords[1][0] !== false && coords[1][1] !== false);
         },
         none_are_set: function(coords) {
-           return (coords[0][0] === false && coords[0][1] === false
-                    && coords[1][0] === false && coords[1][1] === false)
+           return (coords[0][0] === false && coords[0][1] === false &&
+                   coords[1][0] === false && coords[1][1] === false);
         },
         validate: function() {
             this.invalid = false;
@@ -705,9 +722,9 @@ openerp.base_geoengine = function (openerp) {
 
                 // make sure all the coordinates are set
                 // if not None or if required
-                this.invalid = (this.required
-                        || !this.none_are_set(coords))
-                        && !this.all_are_set(coords);
+                this.invalid = (this.required ||
+                        !this.none_are_set(coords)) &&
+                        !this.all_are_set(coords);
             } catch(e) {
                 this.invalid = true;
             }
