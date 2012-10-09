@@ -618,7 +618,9 @@ openerp.base_geoengine = function (openerp) {
             }
             this.$element.find('div').text(show_value);
             return show_value;
-        }
+        },
+
+        validate: function (value) {}
     });
     openerp.web.page.readonly.add('geo_point_xy', 'openerp.base_geoengine.FieldGeoPointXYReadonly');
 
@@ -745,7 +747,9 @@ openerp.base_geoengine = function (openerp) {
             }
             this.$element.find('div').text(show_value);
             return show_value;
-        }
+        },
+
+        validate: function (value) {}
     });
     openerp.web.page.readonly.add('geo_rect', 'openerp.base_geoengine.FieldGeoRectReadonly');
 };
