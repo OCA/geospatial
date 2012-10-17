@@ -546,19 +546,17 @@ openerp.base_geoengine = function (openerp) {
 
         start: function() {
             this._super.apply(this, arguments);
-            var $input = this.$element.find('input');
-            $input.eq(0).change(this.on_ui_change);
-            $input.eq(1).change(this.on_ui_change);
-            this.setupFocus($input);
+            this.$input = this.$element.find('input');
+            this.$input.change(this.on_ui_change);
+            this.setupFocus(this.$input);
         },
         get_coords: function() {
             /* Get coordinates and check it has the right format
              *
              * @return [x, y]
              */
-            var $input = this.$element.find('input');
-            var x = openerp.web.parse_value($input.eq(0).val(), {type: 'float'});
-            var y = openerp.web.parse_value($input.eq(1).val(), {type: 'float'});
+            var x = openerp.web.parse_value(this.$input.eq(0).val(), {type: 'float'});
+            var y = openerp.web.parse_value(this.$input.eq(1).val(), {type: 'float'});
             return [x, y];
         },
         make_GeoJSON: function(coords){
@@ -566,15 +564,13 @@ openerp.base_geoengine = function (openerp) {
         },
         set_value: function(value) {
             this._super.apply(this, arguments);
-            var $input = this.$element.find('input');
 
             if (value) {
                 var geo_obj = JSON.parse(value);
-                $input.eq(0).val(geo_obj.coordinates[0]);
-                $input.eq(1).val(geo_obj.coordinates[1]);
+                this.$input.eq(0).val(geo_obj.coordinates[0]);
+                this.$input.eq(1).val(geo_obj.coordinates[1]);
             } else {
-                $input.eq(0).val('');
-                $input.eq(1).val('');
+                this.$input.val('');
             }
         },
         set_value_from_ui: function() {
@@ -602,6 +598,13 @@ openerp.base_geoengine = function (openerp) {
             } catch(e) {
                 this.invalid = true;
             }
+        },
+        update_dom: function() {
+            this._super.apply(this, arguments);
+            this.set_readonly(this.readonly);
+        },
+        set_readonly: function(readonly) {
+            this.$input.prop('readonly', this.readonly);
         }
     });
     openerp.web.form.widgets.add('geo_point_xy', 'openerp.base_geoengine.FieldGeoPointXY');
@@ -619,8 +622,9 @@ openerp.base_geoengine = function (openerp) {
             this.$element.find('div').text(show_value);
             return show_value;
         },
-
-        validate: function (value) {}
+        validate: function() {
+            this.invalid = false;
+        }
     });
     openerp.web.page.readonly.add('geo_point_xy', 'openerp.base_geoengine.FieldGeoPointXYReadonly');
 
@@ -629,23 +633,19 @@ openerp.base_geoengine = function (openerp) {
 
         start: function() {
             this._super.apply(this, arguments);
-            var $input = this.$element.find('input');
-            $input.eq(0).change(this.on_ui_change);
-            $input.eq(1).change(this.on_ui_change);
-            $input.eq(2).change(this.on_ui_change);
-            $input.eq(3).change(this.on_ui_change);
-            this.setupFocus($input);
+            this.$input = this.$element.find('input');
+            this.$input.change(this.on_ui_change);
+            this.setupFocus(this.$input);
         },
         get_coords: function() {
             /* Get coordinates in the input fields
              *
              * @return [[x1, y1],[x2, y2]]
              */
-            var $input = this.$element.find('input');
-            var x1 = openerp.web.parse_value($input.eq(0).val(), {type: 'float'});
-            var y1 = openerp.web.parse_value($input.eq(1).val(), {type: 'float'});
-            var x2 = openerp.web.parse_value($input.eq(2).val(), {type: 'float'});
-            var y2 = openerp.web.parse_value($input.eq(3).val(), {type: 'float'});
+            var x1 = openerp.web.parse_value(this.$input.eq(0).val(), {type: 'float'});
+            var y1 = openerp.web.parse_value(this.$input.eq(1).val(), {type: 'float'});
+            var x2 = openerp.web.parse_value(this.$input.eq(2).val(), {type: 'float'});
+            var y2 = openerp.web.parse_value(this.$input.eq(3).val(), {type: 'float'});
 
             return [[x1, y1], [x2, y2]];
         },
@@ -660,19 +660,15 @@ openerp.base_geoengine = function (openerp) {
         },
         set_value: function(value) {
             this._super.apply(this, arguments);
-            var $input = this.$element.find('input');
 
             if (value) {
                 var geo_obj = JSON.parse(value);
-                $input.eq(0).val(geo_obj.coordinates[0][0][0]);
-                $input.eq(1).val(geo_obj.coordinates[0][0][1]);
-                $input.eq(2).val(geo_obj.coordinates[0][2][0]);
-                $input.eq(3).val(geo_obj.coordinates[0][2][1]);
+                this.$input.eq(0).val(geo_obj.coordinates[0][0][0]);
+                this.$input.eq(1).val(geo_obj.coordinates[0][0][1]);
+                this.$input.eq(2).val(geo_obj.coordinates[0][2][0]);
+                this.$input.eq(3).val(geo_obj.coordinates[0][2][1]);
             } else {
-                $input.eq(0).val('');
-                $input.eq(1).val('');
-                $input.eq(2).val('');
-                $input.eq(3).val('');
+                this.$input.val('');
             }
         },
         correct_bounds: function(coords) {
@@ -730,6 +726,13 @@ openerp.base_geoengine = function (openerp) {
             } catch(e) {
                 this.invalid = true;
             }
+        },
+        update_dom: function() {
+            this._super.apply(this, arguments);
+            this.set_readonly(this.readonly);
+        },
+        set_readonly: function(readonly) {
+            this.$input.prop('readonly', this.readonly);
         }
     });
     openerp.web.form.widgets.add('geo_rect', 'openerp.base_geoengine.FieldGeoRect');
@@ -739,7 +742,7 @@ openerp.base_geoengine = function (openerp) {
 
         set_value: function (value) {
             this._super.apply(this, arguments);
-            var show_value = ''
+            var show_value = '';
             if (value) {
                 var geo_obj = JSON.parse(value);
                 show_value = "(" + geo_obj.coordinates[0][0][0] + ", " + geo_obj.coordinates[0][0][1] + "), " +
@@ -748,8 +751,9 @@ openerp.base_geoengine = function (openerp) {
             this.$element.find('div').text(show_value);
             return show_value;
         },
-
-        validate: function (value) {}
+        validate: function() {
+            this.invalid = false;
+        }
     });
     openerp.web.page.readonly.add('geo_rect', 'openerp.base_geoengine.FieldGeoRectReadonly');
 };
