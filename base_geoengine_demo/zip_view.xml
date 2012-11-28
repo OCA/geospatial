@@ -10,7 +10,7 @@
                     <field name="name" select="1"/>
                     <field name="city" select="1"/>
                     <field name="priority" />
-                    <field name="the_geom" colspan="4" widget="text"/>
+                    <field name="the_geom" colspan="4" widget="geo_edit_map"/>
                     <field name="total_sales"/>
                 </form>
             </field>
@@ -28,7 +28,7 @@
                 </tree>
             </field>
         </record>
-        
+
         <record id="action_zip_tree" model="ir.actions.act_window">
             <field name="name">ZIP Management</field>
             <field name="res_model">dummy.zip</field>
@@ -39,11 +39,11 @@
           <!-- GeoEngine views -->
         <record id="ir_ui_view_resbetterzipgeoview0" model="ir.ui.view">
             <field name="name">dummy.zip.geo_view</field>
-            <field name="arch"><![CDATA[ 
+            <field name="arch"><![CDATA[
                 <form >
                     <field name="name"/>
                     <field name="city"/>
-                    <field name="total_sales"/>                    
+                    <field name="total_sales"/>
                 </form>]]></field>
             <field eval="16" name="priority"/>
             <field name="type">geoengine</field>
@@ -95,4 +95,3 @@
         </record>
     </data>
 </openerp>
-
