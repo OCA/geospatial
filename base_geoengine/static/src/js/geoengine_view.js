@@ -541,11 +541,12 @@ openerp.base_geoengine = function (openerp) {
         template: 'FieldGeoEnginEditMap',
         load_google: function(){},
         init: function (view, node) {
-              this._super(view, node);
-              this.map_div = this.element_id;
-              this.geo_type = null;
-              this.map = null;
-              this.default_extent = null
+            this._super(view, node);
+            debugger;
+            this.map_div = this.element_id;
+            this.geo_type = null;
+            this.map = null;
+            this.default_extent = null
          },
 
          create_edit_layers: function(self, field_infos) {
@@ -581,10 +582,7 @@ openerp.base_geoengine = function (openerp) {
                                         (self.readonly) ? self.set_readonly(true) : self.set_readonly(false);
                                         self.set_value('dummy');});
 
-
-             // this.map.zoomToMaxExtent();
-
-             this._super.apply(this, arguments);
+             //this._super.apply(this, arguments);
 
          },
          set_value: function(value) {
@@ -621,6 +619,9 @@ openerp.base_geoengine = function (openerp) {
             } catch(e) {
                 this.invalid = true;
             }
+        },
+        update_dom: function() {
+            this.$element.toggle(!this.invisible);
         },
 
     });
