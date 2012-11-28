@@ -40,7 +40,7 @@ class GeoRasterLayer(osv.osv):
                                                   ('G_HYBRID_MAP', 'Google Hybrid map'),
                                                   ('G_PHYSICAL_MAP', 'Google Physical map')],
                                                  string="Google raster layer type"),
-                'mapbox_type':  fields.selection([('mapbox.mapbox-streets', 'Streets'), 
+                'mapbox_type':  fields.selection([('mapbox.mapbox-streets', 'Streets'),
                                                   ('mapbox.mapbox-light', 'Light')],
                                                  string="Mapbox raster layer type"),
                 'sequence': fields.integer('layer priority lower on top'),
@@ -50,7 +50,8 @@ class GeoRasterLayer(osv.osv):
                                                     ('model', '=', 'view_id.model')]),
                 'view_id' : fields.many2one('ir.ui.view', 'Related View',
                                              domain=[('type', '=', 'geoengine')],
-                                             required=True)}
+                                             required=True),
+                'use_to_edit': fields.boolean('Use to edit')}
 # TODO Write data check consraints
 
     _defaults = {'sequence': lambda *a: 6}
