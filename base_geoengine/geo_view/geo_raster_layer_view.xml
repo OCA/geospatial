@@ -13,6 +13,7 @@
                         <field name="raster_type"/>
                         <field name="sequence"/>
                         <field name="overlay"/>
+                        <field name="use_to_edit"/>
                         <field name="url" colspan="4" widget="url"
                             attrs="{'invisible': [('raster_type', '!=', 'd_wms')]}"/>
                     </group>
