@@ -29,7 +29,7 @@
  'author': 'Camptocamp',
  'license': 'AGPL-3',
  'website': 'http://openerp.camptocamp.com',
- 'depends': ['base'],
+ 'depends': ['base', 'web'],
  'init_xml': [],
  'update_xml': ['data.xml',
                 'company_view.xml',
@@ -46,11 +46,11 @@
         "static/src/js/mapfish/GeoStat.js",
         "static/src/js/mapfish/GeoStat/ProportionalSymbol.js",
         "static/src/js/mapfish/GeoStat/Choropleth.js",
-        "static/src/js/geoengine.js"],
+        "static/src/js/geoengine_view.js",
+        "static/src/js/geoengine_edit_widget.js"],
  'css': ["static/src/css/style.css",],
  'qweb' : ["static/src/xml/*.xml"],
  'installable': True,
  'active': False,
  'icon': '/base_geoengine/static/src/images/map_icon.png'}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
