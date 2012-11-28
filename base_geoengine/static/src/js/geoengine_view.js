@@ -10,7 +10,6 @@ openerp.base_geoengine = function (openerp) {
     //TODO: remove this DEBUG
     map = null;
     layer = null;
-
     /* CONSTANTS */
     var DEFAULT_BEGIN_COLOR = "#FFFFFF";
     var DEFAULT_END_COLOR = "#000000";
@@ -23,17 +22,17 @@ openerp.base_geoengine = function (openerp) {
             strokeColor: "#333333",
             strokeOpacity: 0.8,
             cursor: "pointer",
-            strokeWidth: 1,
+            strokeWidth: 1
         }, OpenLayers.Feature.Vector.style['default']);
     var STYLE_SELECT = {
         fillColor: "#ffcc66",
         strokeColor: "#ff9933"
     };
 
-    /** 
+    /**
         * Method: formatHTML
         * formats attributes into a string
-        * 
+        *
         * Parameters:
         * a - {Object}
         */
@@ -63,14 +62,14 @@ openerp.base_geoengine = function (openerp) {
         return str.join('<br />');
     };
 
-    /** 
+    /**
         * Method: createBackgroundLayers
         * creates background layers from config
-        * 
+        *
         * Parameters:
         * bg_layers - {Array} the background layers array of config objects
         */
-    var createBackgroundLayers = function(bg_layers) {
+    openerp.base_geoengine.createBackgroundLayers = function(bg_layers) {
         var out = [];
         _.each(bg_layers, function (l) {
             switch (l.raster_type) {
@@ -138,7 +137,7 @@ openerp.base_geoengine = function (openerp) {
             // with no feature selected
             this.selectFeatureControls = [
                 new OpenLayers.Control.SelectFeature(
-                {selectedFeatures:[]}, {hover: true, highlightOnly: true}), 
+                {selectedFeatures:[]}, {hover: true, highlightOnly: true}),
                 new OpenLayers.Control.SelectFeature(
                     {selectedFeatures:[]}, {})
             ];
@@ -150,7 +149,7 @@ openerp.base_geoengine = function (openerp) {
                 return limit;
                 }
             else {return -1;}
-        }, 
+        },
         start: function() {
             return this.rpc("/web/view/load", {
                 "model": this.model,
@@ -177,7 +176,7 @@ openerp.base_geoengine = function (openerp) {
             self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
         },
 
-        /** 
+        /**
             * Method: createVectorLayer
             *
             * Parameters:
@@ -192,7 +191,7 @@ openerp.base_geoengine = function (openerp) {
             var vl = new OpenLayers.Layer.Vector(cfg.name, {
                 styleMap: new OpenLayers.StyleMap({
                     'default': OpenLayers.Util.applyDefaults({
-                        fillColor: cfg.begin_color,
+                        fillColor: cfg.begin_color
                     }, STYLE_DEFAULT),
                     'select': STYLE_SELECT
                 }),
@@ -306,12 +305,12 @@ openerp.base_geoengine = function (openerp) {
             return new OpenLayers.StyleMap({
                 'default': new OpenLayers.Style(
                     OpenLayers.Util.applyDefaults({
-                        fillColor: "${color}",
+                        fillColor: "${color}"
                     }, STYLE_DEFAULT),
                     {
                         context: {
                             color: function(f) {
-                                return (f.attributes.hasOwnProperty(v) && distinct.hasOwnProperty(f.attributes[v])) ? 
+                                return (f.attributes.hasOwnProperty(v) && distinct.hasOwnProperty(f.attributes[v])) ?
                                     '#'+distinct[f.attributes[v]] : "#ffffff";
                             }
                         }
@@ -320,10 +319,10 @@ openerp.base_geoengine = function (openerp) {
             });
         },
 
-        /** 
+        /**
             * Method: createVectorLayers
             * creates vector layers from config and populates them with features
-            * 
+            *
             * Parameters:
             * data - {Array} the vector data to be added on the vector layer
             */
@@ -415,7 +414,7 @@ openerp.base_geoengine = function (openerp) {
             //TODO: copy this mapbox dark theme in the addons
             OpenLayers.ImgPath = "http://js.mapbox.com/theme/dark/";
             map = new OpenLayers.Map('the_map', {
-                layers: createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
+                layers: openerp.base_geoengine.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
                 displayProjection: new OpenLayers.Projection("EPSG:4326"),
                 theme: null,
                 controls: [
@@ -431,11 +430,6 @@ openerp.base_geoengine = function (openerp) {
             map.addControls(this.selectFeatureControls);
             map.zoomToMaxExtent();
             var self = this;
-            // if (this.dataset.ids.length) {
-            //     this.dataset.read_ids(this.dataset.ids, _.keys(self.fields_view.fields), self.do_load_vector_data);
-            // } else {
-            //     this.dataset.read_slice(_.keys(this.fields_view.fields), {}, this.do_load_vector_data);
-            // }
             self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
         }
 
@@ -502,7 +496,7 @@ openerp.base_geoengine = function (openerp) {
                 return colorBase10;
             },
 
-            /** 
+            /**
             * Method: generateDistinctColors
             *
             * Parameters:
@@ -540,6 +534,78 @@ openerp.base_geoengine = function (openerp) {
             }
         }
     };
+
+    //------------ EDIT WIDGET ----------------------------------------------
+
+    openerp.base_geoengine.FieldGeoEnginEditMap = openerp.web.form.Field.extend({
+        template: 'FieldGeoEnginEditMap',
+        load_google: function(){},
+        init: function (view, node) {
+              this._super(view, node);
+              this.map_div = this.element_id;
+              this.geo_type = null;
+              this.map = null;
+              this.default_extent = null
+         },
+
+         create_edit_layers: function(self, field_infos) {
+             var vl = new OpenLayers.Layer.Vector(self.name); //options Fred todos
+             var rl = openerp.base_geoengine.createBackgroundLayers([field_infos.edit_raster]);
+             rl.isBaseLayer = true;
+             return [rl, vl];
+         },
+         start: function() {
+             this.load_google();
+             self = this;
+             var rdataset = new openerp.web.DataSetStatic(self, self.view.model, self.build_context());
+             rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0)
+                .then(function(result) {var box = result.default_extent.split(',');
+                                        box = _.map(box, function(input){return parseFloat(input);});
+                                        this.default_extend = new OpenLayers.Bounds(box[0], box[1], box[2], box[3]);
+                                        var layers = self.create_edit_layers(self, result);
+                                        self.geo_type = result.geo_type;
+                                        self.map = new OpenLayers.Map(self.map_div,
+                                                                      { displayProjection: new OpenLayers.Projection("EPSG:4326"),
+                                                                        theme: null,
+                                                                        layers: layers[0],
+                                                                        controls: [
+                                                                            new OpenLayers.Control.KeyboardDefaults(),
+                                                                            new OpenLayers.Control.ZoomBox(),
+                                                                            new OpenLayers.Control.Attribution(),
+                                                                            new OpenLayers.Control.PanZoomBar(),
+                                                                            new OpenLayers.Control.ToolPanel()
+                                                                        ]
+                                                                      });
+                                        self.map.addLayer(layers[1]);
+                                        self.map.zoomToExtent(this.default_extend);
+                                        self.set_value('dummy');});
+
+
+             // this.map.zoomToMaxExtent();
+
+             this._super.apply(this, arguments);
+
+         },
+         set_value: function(value) {
+             if (value != 'dummy'){
+                 this.value = value;
+             };
+             if (this.map) {
+                 var vl = this.map.getLayersByName(this.name)[0];
+                 vl.destroyFeatures();
+                 if (this.value){
+                     var geom = new OpenLayers.Format.GeoJSON().read(this.value, 'Geometry');
+                     var feature = new OpenLayers.Feature.Vector(geom);
+                     vl.addFeatures([feature]);
+                     this.map.zoomToExtent(vl.getDataExtent());
+                 } else {
+                     self.map.zoomToExtent(this.default_extend);
+                 }
+             }
+             return value;
+         },
+    });
+    openerp.web.form.widgets.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEnginEditMap');
 
     openerp.base_geoengine.FieldGeoPointXY = openerp.web.form.Field.extend({
         template: 'FieldGeoPointXY',
@@ -592,9 +658,9 @@ openerp.base_geoengine = function (openerp) {
 
                 // make sure the two coordinates are set or None
                 this.invalid = (this.required &&
-                  (coords[0] === 0 || coords[1] === 0 ) ||
-                   coords[0] === false && coords[1] !== false ||
-                   coords[0] !== false && coords[1] === false);
+                                (coords[0] === 0 || coords[1] === 0 ) ||
+                                coords[0] === false && coords[1] !== false ||
+                                coords[0] !== false && coords[1] === false);
             } catch(e) {
                 this.invalid = true;
             }
@@ -678,9 +744,9 @@ openerp.base_geoengine = function (openerp) {
              * @return [[x1, y1],[x2, y2]]
              */
             var x1 = coords[0][0],
-                y1 = coords[0][1],
-                x2 = coords[1][0],
-                y2 = coords[1][1];
+            y1 = coords[0][1],
+            x2 = coords[1][0],
+            y2 = coords[1][1];
 
             var minx = Math.min(x1, x2);
             var maxx = Math.max(x1, x2);
@@ -705,12 +771,12 @@ openerp.base_geoengine = function (openerp) {
             this._super();
         },
         all_are_set: function(coords) {
-           return (coords[0][0] !== false && coords[0][1] !== false &&
-                   coords[1][0] !== false && coords[1][1] !== false);
+            return (coords[0][0] !== false && coords[0][1] !== false &&
+                    coords[1][0] !== false && coords[1][1] !== false);
         },
         none_are_set: function(coords) {
-           return (coords[0][0] === false && coords[0][1] === false &&
-                   coords[1][0] === false && coords[1][1] === false);
+            return (coords[0][0] === false && coords[0][1] === false &&
+                    coords[1][0] === false && coords[1][1] === false);
         },
         validate: function() {
             this.invalid = false;
@@ -721,8 +787,8 @@ openerp.base_geoengine = function (openerp) {
                 // make sure all the coordinates are set
                 // if not None or if required
                 this.invalid = (this.required ||
-                        !this.none_are_set(coords)) &&
-                        !this.all_are_set(coords);
+                                !this.none_are_set(coords)) &&
+                    !this.all_are_set(coords);
             } catch(e) {
                 this.invalid = true;
             }
@@ -746,7 +812,7 @@ openerp.base_geoengine = function (openerp) {
             if (value) {
                 var geo_obj = JSON.parse(value);
                 show_value = "(" + geo_obj.coordinates[0][0][0] + ", " + geo_obj.coordinates[0][0][1] + "), " +
-                             "(" + geo_obj.coordinates[0][2][0] + ", " + geo_obj.coordinates[0][2][1] + ")";
+                    "(" + geo_obj.coordinates[0][2][0] + ", " + geo_obj.coordinates[0][2][1] + ")";
             }
             this.$element.find('div').text(show_value);
             return show_value;
@@ -756,8 +822,11 @@ openerp.base_geoengine = function (openerp) {
         }
     });
     openerp.web.page.readonly.add('geo_rect', 'openerp.base_geoengine.FieldGeoRectReadonly');
-};
 
+
+   //-------------------------------------------------------------------------
+
+};
 OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
     initialize: function(options) {
         OpenLayers.Control.Panel.prototype.initialize.apply(this, [options]);
