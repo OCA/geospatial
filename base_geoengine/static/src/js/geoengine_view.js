@@ -188,7 +188,7 @@ openerp.base_geoengine = function (openerp) {
             var features = [];
             var geostat = null;
             var geojson = new OpenLayers.Format.GeoJSON();
-            var vl = new OpenLayers.Layer.Vector(cfg.name, {
+            var vl = new OpenLayers.Layer.Vector(cfg.name, { // Fred should manage projection here
                 styleMap: new OpenLayers.StyleMap({
                     'default': OpenLayers.Util.applyDefaults({
                         fillColor: cfg.begin_color
@@ -415,7 +415,7 @@ openerp.base_geoengine = function (openerp) {
             OpenLayers.ImgPath = "http://js.mapbox.com/theme/dark/";
             map = new OpenLayers.Map('the_map', {
                 layers: openerp.base_geoengine.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
-                displayProjection: new OpenLayers.Projection("EPSG:4326"),
+                displayProjection: new OpenLayers.Projection("EPSG:4326"), // Fred should manage projection here
                 theme: null,
                 controls: [
                     new OpenLayers.Control.KeyboardDefaults(),
@@ -565,7 +565,7 @@ openerp.base_geoengine = function (openerp) {
                                         var layers = self.create_edit_layers(self, result);
                                         self.geo_type = result.geo_type;
                                         self.map = new OpenLayers.Map(self.map_div,
-                                                                      { displayProjection: new OpenLayers.Projection("EPSG:4326"),
+                                                                      { displayProjection: new OpenLayers.Projection("EPSG:4326"),// Fred should manage projection here
                                                                         theme: null,
                                                                         layers: layers[0],
                                                                         controls: [
@@ -578,6 +578,7 @@ openerp.base_geoengine = function (openerp) {
                                                                       });
                                         self.map.addLayer(layers[1]);
                                         self.map.zoomToExtent(this.default_extend);
+                                        (self.readonly) ? self.set_readonly(true) : self.set_readonly(false);
                                         self.set_value('dummy');});
 
 
@@ -604,7 +605,27 @@ openerp.base_geoengine = function (openerp) {
              }
              return value;
          },
+        set_value_from_ui: function() {
+            self.set_value('dummy');
+        },
+
+        set_readonly: function(readonly) {
+            //Fred hide edit tools
+        },
+
+        validate: function() {
+            this.invalid = false;
+            try {
+                var vl = this.map.getLayersByName(this.name)[0];
+                this.invalid = (this.required && jQuery.isEmptyObject(vl.features));
+            } catch(e) {
+                this.invalid = true;
+            }
+        },
+
     });
+
+
     openerp.web.form.widgets.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEnginEditMap');
 
     openerp.base_geoengine.FieldGeoPointXY = openerp.web.form.Field.extend({
