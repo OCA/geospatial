@@ -171,3 +171,9 @@ div.olLayerDiv {
 .oe_vm_switch_geoengine {
     background-position: 0px -0px;
 }
+
+/* Edit Widget */
+.field_geo_edit_map {
+    width: 100%;
+    height: 500px;
+}
