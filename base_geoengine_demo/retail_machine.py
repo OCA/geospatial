@@ -27,7 +27,7 @@ class RetailMachine(geo_model.GeoModel):
 
     _name = "geoengine.demo.automatic.retailing.machine"
     _columns = {'the_point' : fields.geo_point('Coordinate'),
-                'the_line' : fields.geo_point('Power supply line'),
+                'the_line' : fields.geo_line('Power supply line'),
                 'total_sales': fields.float('Total sale'),
                 'money_level': fields.char('Money level', size=32),
                 'state': fields.selection([('hs', 'HS'), ('ok', 'OK')],'State'),
