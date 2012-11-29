@@ -3,9 +3,10 @@
  * Author B.Binet Copyright Camptocamp SA
  * Contributor N. Bessi Copyright Camptocamp SA
  * License in __openerp__.py at root level of the module
- *---------------------------------------------------------*/
+ *---------------------------------------------------------
+*/
 
-openerp.base_geoengine = function (openerp) {
+openerp.base_geoengine = function(openerp) {
     //var map, layer, vectorLayers = [];
     //TODO: remove this DEBUG
     map = null;
@@ -30,27 +31,27 @@ openerp.base_geoengine = function (openerp) {
     };
 
     /**
-        * Method: formatHTML
-        * formats attributes into a string
-        *
-        * Parameters:
-        * a - {Object}
-        */
+     * Method: formatHTML
+     * formats attributes into a string
+     *
+     * Parameters:
+     * a - {Object}
+     */
     var formatHTML = function(a) {
         var str = [];
         var oid = '';
         for (var key in a) {
             if (a.hasOwnProperty(key)) {
                 var val = a[key];
-                if (val == false){
+                if (val == false) {
                     continue;
                 }
                 var label = '';
-                if (val instanceof Array){
+                if (val instanceof Array) {
                     str.push('<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val[1]);
                 } else {
                     label = '<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val;
-                     if (key == 'id'){
+                     if (key == 'id') {
                         oid = label;
                     } else {
                         str.push(label);
@@ -63,15 +64,15 @@ openerp.base_geoengine = function (openerp) {
     };
 
     /**
-        * Method: createBackgroundLayers
-        * creates background layers from config
-        *
-        * Parameters:
-        * bg_layers - {Array} the background layers array of config objects
-        */
+     * Method: createBackgroundLayers
+     * creates background layers from config
+     *
+     * Parameters:
+     * bg_layers - {Array} the background layers array of config objects
+     */
     openerp.base_geoengine.createBackgroundLayers = function(bg_layers) {
         var out = [];
-        _.each(bg_layers, function (l) {
+        _.each(bg_layers, function(l) {
             switch (l.raster_type) {
                 case "osm":
                     out.push(
@@ -123,7 +124,7 @@ openerp.base_geoengine = function (openerp) {
     openerp.web.views.add('geoengine', 'openerp.base_geoengine.GeoengineView');
     openerp.base_geoengine.GeoengineView = openerp.web.View.extend({
 
-        init: function (parent, dataset, view_id, options) {
+        init: function(parent, dataset, view_id, options) {
             this._super(parent);
             this.set_default_options(options);
             this.view_manager = parent;
@@ -159,11 +160,11 @@ openerp.base_geoengine = function (openerp) {
             }, this.on_loaded);
         },
 
-        do_hide: function () {
+        do_hide: function() {
             this.$element.hide();
         },
 
-        do_show: function () {
+        do_show: function() {
             if (this.dataset.ids.length) {
                 var self = this;
                 self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
@@ -177,12 +178,12 @@ openerp.base_geoengine = function (openerp) {
         },
 
         /**
-            * Method: createVectorLayer
-            *
-            * Parameters:
-            * cfg - {Object} config object specific to the vector layer
-            * data - {Array(features)}
-            */
+         * Method: createVectorLayer
+         *
+         * Parameters:
+         * cfg - {Object} config object specific to the vector layer
+         * data - {Array(features)}
+         */
         createVectorLayer: function(cfg, data) {
             var self = this;
             var features = [];
@@ -336,7 +337,7 @@ openerp.base_geoengine = function (openerp) {
         },
 
         do_load_vector_data: function(data) {
-            if(!map){
+            if (!map) {
                 return;
             }
             var self = this;
@@ -396,7 +397,7 @@ openerp.base_geoengine = function (openerp) {
             var backgrounds = data.geoengine_layers.backgrounds;
             for (var i=0,len=backgrounds.length; i<len; i++) {
                 var l = backgrounds[i];
-                if(l.raster_type == 'google') {
+                if (l.raster_type == 'google') {
                     google = true;
                     break;
                 }
@@ -467,7 +468,7 @@ openerp.base_geoengine = function (openerp) {
                 var q = v * (1 - f * s);
                 var t = v * (1 - (1 - f) * s);
 
-                switch(i % 6){
+                switch(i % 6) {
                     case 0: r = v, g = t, b = p; break;
                     case 1: r = q, g = v, b = p; break;
                     case 2: r = p, g = v, b = t; break;
@@ -540,7 +541,7 @@ openerp.base_geoengine = function (openerp) {
     openerp.base_geoengine.FieldGeoEnginEditMap = openerp.web.form.Field.extend({
         template: 'FieldGeoEnginEditMap',
 
-        init: function (view, node) {
+        init: function(view, node) {
             this._super(view, node);
             this.geo_type = null;
             this.map = null;
@@ -574,13 +575,13 @@ openerp.base_geoengine = function (openerp) {
          },
 
          set_value: function(value) {
-             if (value != 'dummy'){
+             if (value != 'dummy') {
                  this.value = value;
              };
              if (this.map) {
                  var vl = this.map.getLayersByName(this.name)[0];
                  vl.destroyFeatures();
-                 if (this.value){
+                 if (this.value) {
                      var geom = new OpenLayers.Format.GeoJSON().read(this.value, 'Geometry');
                      var feature = new OpenLayers.Feature.Vector(geom);
                      vl.addFeatures([feature]);
@@ -614,6 +615,15 @@ openerp.base_geoengine = function (openerp) {
     });
     openerp.web.form.widgets.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEnginEditMap');
 
+    openerp.base_geoengine.FieldGeoEnginEditMapReadonly = openerp.base_geoengine.FieldGeoEnginEditMap.extend({
+        init: function(view, node) {
+            this._super(view, node);
+	    this.readonly = true;
+         }
+    });
+    openerp.web.page.readonly.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEnginEditMapReadonly');
+
+    //-----------------------------------------------------------------------
     openerp.base_geoengine.FieldGeoPointXY = openerp.web.form.Field.extend({
         template: 'FieldGeoPointXY',
 
@@ -632,7 +642,7 @@ openerp.base_geoengine = function (openerp) {
             var y = openerp.web.parse_value(this.$input.eq(1).val(), {type: 'float'});
             return [x, y];
         },
-        make_GeoJSON: function(coords){
+        make_GeoJSON: function(coords) {
             return {"type": "Point", "coordinates": coords};
         },
         set_value: function(value) {
@@ -685,7 +695,7 @@ openerp.base_geoengine = function (openerp) {
     openerp.base_geoengine.FieldGeoPointXYReadonly = openerp.base_geoengine.FieldGeoPointXY.extend({
         template: 'FieldGeoPointXY.readonly',
 
-        set_value: function (value) {
+        set_value: function(value) {
             this._super.apply(this, arguments);
             var show_value = '';
             if (value) {
@@ -722,7 +732,7 @@ openerp.base_geoengine = function (openerp) {
 
             return [[x1, y1], [x2, y2]];
         },
-        make_GeoJSON: function(coords){
+        make_GeoJSON: function(coords) {
             var p1 = coords[0];
             var p2 = [coords[0][0], coords[1][1]];
             var p3 = coords[1];
@@ -813,7 +823,7 @@ openerp.base_geoengine = function (openerp) {
     openerp.base_geoengine.FieldGeoRectReadonly = openerp.base_geoengine.FieldGeoRect.extend({
         template: 'FieldGeoRect.readonly',
 
-        set_value: function (value) {
+        set_value: function(value) {
             this._super.apply(this, arguments);
             var show_value = '';
             if (value) {
@@ -921,7 +931,7 @@ OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
         var measure = event.measure;
         var element = document.getElementById('map_measurementbox');
         var out = "";
-        if(order == 1) {
+        if (order == 1) {
             out += '<span style="font-weight: bold">measure</span>: ' + measure.toFixed(1) + " " + units;
         } else {
             out += '<span style="font-weight: bold">measure</span>: ' + measure.toFixed(1) + " square " + units;
