@@ -118,7 +118,7 @@ openerp.base_geoengine = function (openerp) {
         return out;
     };
 
-    QWeb = openerp.web.qweb;
+    var QWeb = openerp.web.qweb;
     QWeb.add_template('/base_geoengine/static/src/xml/geoengine.xml');
     openerp.web.views.add('geoengine', 'openerp.base_geoengine.GeoengineView');
     openerp.base_geoengine.GeoengineView = openerp.web.View.extend({
@@ -142,13 +142,14 @@ openerp.base_geoengine = function (openerp) {
                     {selectedFeatures:[]}, {})
             ];
         },
-        limit: function(){
+        limit: function() {
             var menu = document.getElementById('query_limit');
             var limit = parseInt(menu.options[menu.selectedIndex].value);
-            if (limit > 0){
+            if (limit > 0) {
                 return limit;
-                }
-            else {return -1;}
+            } else {
+                return -1;
+            }
         },
         start: function() {
             return this.rpc("/web/view/load", {
@@ -163,7 +164,6 @@ openerp.base_geoengine = function (openerp) {
         },
 
         do_show: function () {
-
             if (this.dataset.ids.length) {
                 var self = this;
                 self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
@@ -539,7 +539,7 @@ openerp.base_geoengine = function (openerp) {
 
     openerp.base_geoengine.FieldGeoEnginEditMap = openerp.web.form.Field.extend({
         template: 'FieldGeoEnginEditMap',
-        load_google: function(){},
+
         init: function (view, node) {
             this._super(view, node);
             this.geo_type = null;
@@ -553,8 +553,8 @@ openerp.base_geoengine = function (openerp) {
              rl.isBaseLayer = true;
              return [rl, vl];
          },
+
          start: function() {
-             this.load_google();
              var self = this;
              var rdataset = new openerp.web.DataSetStatic(self, self.view.model, self.build_context());
              rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0).then(function(result) {
@@ -610,11 +610,8 @@ openerp.base_geoengine = function (openerp) {
         },
         update_dom: function() {
             this.$element.toggle(!this.invisible);
-        },
-
+        }
     });
-
-
     openerp.web.form.widgets.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEnginEditMap');
 
     openerp.base_geoengine.FieldGeoPointXY = openerp.web.form.Field.extend({
