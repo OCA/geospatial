@@ -10,7 +10,11 @@
                     <field name="name" select="1"/>
                     <field name="city" select="1"/>
                     <field name="priority" />
-                    <field name="the_geom" colspan="4" widget="geo_edit_map"/>
+                    <notebook colspan="4">
+                      <page string="Geometry">
+                        <field name="the_geom" colspan="4" widget="geo_edit_map"/>
+                      </page>
+                    </notebook>
                     <field name="total_sales"/>
                 </form>
             </field>
