@@ -542,8 +542,6 @@ openerp.base_geoengine = function (openerp) {
         load_google: function(){},
         init: function (view, node) {
             this._super(view, node);
-            debugger;
-            this.map_div = this.element_id;
             this.geo_type = null;
             this.map = null;
             this.default_extent = null
@@ -557,34 +555,24 @@ openerp.base_geoengine = function (openerp) {
          },
          start: function() {
              this.load_google();
-             self = this;
+             var self = this;
              var rdataset = new openerp.web.DataSetStatic(self, self.view.model, self.build_context());
-             rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0)
-                .then(function(result) {var box = result.default_extent.split(',');
-                                        box = _.map(box, function(input){return parseFloat(input);});
-                                        this.default_extend = new OpenLayers.Bounds(box[0], box[1], box[2], box[3]);
-                                        var layers = self.create_edit_layers(self, result);
-                                        self.geo_type = result.geo_type;
-                                        self.map = new OpenLayers.Map(self.map_div,
-                                                                      { displayProjection: new OpenLayers.Projection("EPSG:4326"),// Fred should manage projection here
-                                                                        theme: null,
-                                                                        layers: layers[0],
-                                                                        controls: [
-                                                                            new OpenLayers.Control.KeyboardDefaults(),
-                                                                            new OpenLayers.Control.ZoomBox(),
-                                                                            new OpenLayers.Control.Attribution(),
-                                                                            new OpenLayers.Control.PanZoomBar(),
-                                                                            new OpenLayers.Control.ToolPanel()
-                                                                        ]
-                                                                      });
-                                        self.map.addLayer(layers[1]);
-                                        self.map.zoomToExtent(this.default_extend);
-                                        (self.readonly) ? self.set_readonly(true) : self.set_readonly(false);
-                                        self.set_value('dummy');});
-
+             rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0).then(function(result) {
+                 self.default_extend = OpenLayers.Bounds.fromString(result.default_extent);
+                 var layers = self.create_edit_layers(self, result);
+                 self.geo_type = result.geo_type;
+                 self.map = new OpenLayers.Map(self.element_id,{
+                     theme: null,
+                     layers: layers[0]
+                 });
+                 self.map.addLayer(layers[1]);
+                 self.map.zoomToExtent(this.default_extend);
+                 self.set_readonly(self.readonly);
+                 self.set_value('dummy');
+             });
              //this._super.apply(this, arguments);
-
          },
+
          set_value: function(value) {
              if (value != 'dummy'){
                  this.value = value;
@@ -598,7 +586,7 @@ openerp.base_geoengine = function (openerp) {
                      vl.addFeatures([feature]);
                      this.map.zoomToExtent(vl.getDataExtent());
                  } else {
-                     self.map.zoomToExtent(this.default_extend);
+                     this.map.zoomToExtent(this.default_extend);
                  }
              }
              return value;
