@@ -3,9 +3,10 @@
  * Author B.Binet Copyright Camptocamp SA
  * Contributor N. Bessi Copyright Camptocamp SA
  * License in __openerp__.py at root level of the module
- *---------------------------------------------------------*/
+ *---------------------------------------------------------
+*/
 
-openerp.base_geoengine = function (openerp) {
+openerp.base_geoengine = function(openerp) {
     //var map, layer, vectorLayers = [];
     //TODO: remove this DEBUG
     map = null;
@@ -30,27 +31,27 @@ openerp.base_geoengine = function (openerp) {
     };
 
     /**
-        * Method: formatHTML
-        * formats attributes into a string
-        *
-        * Parameters:
-        * a - {Object}
-        */
+     * Method: formatHTML
+     * formats attributes into a string
+     *
+     * Parameters:
+     * a - {Object}
+     */
     var formatHTML = function(a) {
         var str = [];
         var oid = '';
         for (var key in a) {
             if (a.hasOwnProperty(key)) {
                 var val = a[key];
-                if (val == false){
+                if (val == false) {
                     continue;
                 }
                 var label = '';
-                if (val instanceof Array){
+                if (val instanceof Array) {
                     str.push('<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val[1]);
                 } else {
                     label = '<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val;
-                     if (key == 'id'){
+                     if (key == 'id') {
                         oid = label;
                     } else {
                         str.push(label);
@@ -63,15 +64,15 @@ openerp.base_geoengine = function (openerp) {
     };
 
     /**
-        * Method: createBackgroundLayers
-        * creates background layers from config
-        *
-        * Parameters:
-        * bg_layers - {Array} the background layers array of config objects
-        */
+     * Method: createBackgroundLayers
+     * creates background layers from config
+     *
+     * Parameters:
+     * bg_layers - {Array} the background layers array of config objects
+     */
     openerp.base_geoengine.createBackgroundLayers = function(bg_layers) {
         var out = [];
-        _.each(bg_layers, function (l) {
+        _.each(bg_layers, function(l) {
             switch (l.raster_type) {
                 case "osm":
                     out.push(
@@ -118,12 +119,12 @@ openerp.base_geoengine = function (openerp) {
         return out;
     };
 
-    QWeb = openerp.web.qweb;
+    var QWeb = openerp.web.qweb;
     QWeb.add_template('/base_geoengine/static/src/xml/geoengine.xml');
     openerp.web.views.add('geoengine', 'openerp.base_geoengine.GeoengineView');
     openerp.base_geoengine.GeoengineView = openerp.web.View.extend({
 
-        init: function (parent, dataset, view_id, options) {
+        init: function(parent, dataset, view_id, options) {
             this._super(parent);
             this.set_default_options(options);
             this.view_manager = parent;
@@ -142,13 +143,14 @@ openerp.base_geoengine = function (openerp) {
                     {selectedFeatures:[]}, {})
             ];
         },
-        limit: function(){
+        limit: function() {
             var menu = document.getElementById('query_limit');
             var limit = parseInt(menu.options[menu.selectedIndex].value);
-            if (limit > 0){
+            if (limit > 0) {
                 return limit;
-                }
-            else {return -1;}
+            } else {
+                return -1;
+            }
         },
         start: function() {
             return this.rpc("/web/view/load", {
@@ -158,12 +160,11 @@ openerp.base_geoengine = function (openerp) {
             }, this.on_loaded);
         },
 
-        do_hide: function () {
+        do_hide: function() {
             this.$element.hide();
         },
 
-        do_show: function () {
-
+        do_show: function() {
             if (this.dataset.ids.length) {
                 var self = this;
                 self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
@@ -177,12 +178,12 @@ openerp.base_geoengine = function (openerp) {
         },
 
         /**
-            * Method: createVectorLayer
-            *
-            * Parameters:
-            * cfg - {Object} config object specific to the vector layer
-            * data - {Array(features)}
-            */
+         * Method: createVectorLayer
+         *
+         * Parameters:
+         * cfg - {Object} config object specific to the vector layer
+         * data - {Array(features)}
+         */
         createVectorLayer: function(cfg, data) {
             var self = this;
             var features = [];
@@ -336,7 +337,7 @@ openerp.base_geoengine = function (openerp) {
         },
 
         do_load_vector_data: function(data) {
-            if(!map){
+            if (!map) {
                 return;
             }
             var self = this;
@@ -396,7 +397,7 @@ openerp.base_geoengine = function (openerp) {
             var backgrounds = data.geoengine_layers.backgrounds;
             for (var i=0,len=backgrounds.length; i<len; i++) {
                 var l = backgrounds[i];
-                if(l.raster_type == 'google') {
+                if (l.raster_type == 'google') {
                     google = true;
                     break;
                 }
@@ -467,7 +468,7 @@ openerp.base_geoengine = function (openerp) {
                 var q = v * (1 - f * s);
                 var t = v * (1 - (1 - f) * s);
 
-                switch(i % 6){
+                switch(i % 6) {
                     case 0: r = v, g = t, b = p; break;
                     case 1: r = q, g = v, b = p; break;
                     case 2: r = p, g = v, b = t; break;
@@ -539,96 +540,118 @@ openerp.base_geoengine = function (openerp) {
 
     openerp.base_geoengine.FieldGeoEnginEditMap = openerp.web.form.Field.extend({
         template: 'FieldGeoEnginEditMap',
-        load_google: function(){},
-        init: function (view, node) {
-            this._super(view, node);
-            debugger;
-            this.map_div = this.element_id;
-            this.geo_type = null;
-            this.map = null;
-            this.default_extent = null
-         },
 
-         create_edit_layers: function(self, field_infos) {
-             var vl = new OpenLayers.Layer.Vector(self.name); //options Fred todos
-             var rl = openerp.base_geoengine.createBackgroundLayers([field_infos.edit_raster]);
-             rl.isBaseLayer = true;
-             return [rl, vl];
-         },
-         start: function() {
-             this.load_google();
-             self = this;
-             var rdataset = new openerp.web.DataSetStatic(self, self.view.model, self.build_context());
-             rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0)
-                .then(function(result) {var box = result.default_extent.split(',');
-                                        box = _.map(box, function(input){return parseFloat(input);});
-                                        this.default_extend = new OpenLayers.Bounds(box[0], box[1], box[2], box[3]);
-                                        var layers = self.create_edit_layers(self, result);
-                                        self.geo_type = result.geo_type;
-                                        self.map = new OpenLayers.Map(self.map_div,
-                                                                      { displayProjection: new OpenLayers.Projection("EPSG:4326"),// Fred should manage projection here
-                                                                        theme: null,
-                                                                        layers: layers[0],
-                                                                        controls: [
-                                                                            new OpenLayers.Control.KeyboardDefaults(),
-                                                                            new OpenLayers.Control.ZoomBox(),
-                                                                            new OpenLayers.Control.Attribution(),
-                                                                            new OpenLayers.Control.PanZoomBar(),
-                                                                            new OpenLayers.Control.ToolPanel()
-                                                                        ]
-                                                                      });
-                                        self.map.addLayer(layers[1]);
-                                        self.map.zoomToExtent(this.default_extend);
-                                        (self.readonly) ? self.set_readonly(true) : self.set_readonly(false);
-                                        self.set_value('dummy');});
+        //geo_type: null,
+        map: null,
 
-             //this._super.apply(this, arguments);
+        modify_control: null,
+        default_extent: null,
 
-         },
-         set_value: function(value) {
-             if (value != 'dummy'){
-                 this.value = value;
-             };
-             if (this.map) {
-                 var vl = this.map.getLayersByName(this.name)[0];
-                 vl.destroyFeatures();
-                 if (this.value){
-                     var geom = new OpenLayers.Format.GeoJSON().read(this.value, 'Geometry');
-                     var feature = new OpenLayers.Feature.Vector(geom);
-                     vl.addFeatures([feature]);
-                     this.map.zoomToExtent(vl.getDataExtent());
-                 } else {
-                     self.map.zoomToExtent(this.default_extend);
-                 }
-             }
-             return value;
-         },
-        set_value_from_ui: function() {
-            self.set_value('dummy');
+        create_edit_layers: function(self, field_infos) {
+            var vl = new OpenLayers.Layer.Vector(self.name, {
+                eventListeners : {
+                    featuremodified: function(event) {
+                        this._geometry = event.feature.geometry;
+                        this.on_ui_change();
+                    },
+                    featureadded: function(event) {
+                        // FIXME:
+                        if (this.geo_type == 'MULTIPOLYGON' && event.feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Polygon') {
+                            this._geometry = new OpenLayers.Geometry.MultiPolygon(event.feature.geometry);
+                        } else {
+                            this._geometry = event.feature.geometry;
+                        }
+                        this.on_ui_change();
+                    },
+                    scope: this
+                }
+            });
+            var rl = openerp.base_geoengine.createBackgroundLayers([field_infos.edit_raster]);
+            rl.isBaseLayer = true;
+            return [rl, vl];
         },
 
-        set_readonly: function(readonly) {
-            //Fred hide edit tools
+        start: function() {
+            this._super.apply(this, arguments);
+            var self = this;
+            var rdataset = new openerp.web.DataSetStatic(self, self.view.model, self.build_context());
+            rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0).then(function(result) {
+                self.default_extend = OpenLayers.Bounds.fromString(result.default_extent);
+                var layers = self.create_edit_layers(self, result);
+                self.geo_type = result.geo_type;
+                self.map = new OpenLayers.Map(self.element_id,{
+                    theme: null,
+                    layers: layers[0]
+                });
+                self.map.addLayer(layers[1]);
+                self.modify_control = new OpenLayers.Control.ModifyFeature(layers[1]);
+                self.map.addControl(self.modify_control);
+
+                var handler = null;
+                if (self.geo_type == 'POLYGON' || self.geo_type == 'MULTIPOLYGON') {
+                    handler = OpenLayers.Handler.Polygon
+                } else {
+                    debugger;
+                }
+                self.draw_control = new OpenLayers.Control.DrawFeature(layers[1], handler);
+                self.map.addControl(self.draw_control);
+
+                self.map.zoomToExtent(this.default_extend);
+            });
+        },
+
+        set_value: function(value) {
+            this._super.apply(this, arguments);
+            if (this.map) {
+                var vl = this.map.getLayersByName(this.name)[0];
+                vl.destroyFeatures();
+                if (this.value) {
+                    var features = new OpenLayers.Format.GeoJSON().read(this.value);
+                    vl.addFeatures(features, {silent: true});
+                    this.map.zoomToExtent(vl.getDataExtent());
+                } else {
+                    this.map.zoomToExtent(this.default_extend);
+                }
+            }
+        },
+
+        set_value_from_ui: function() {
+            this.value = new OpenLayers.Format.GeoJSON().write(this._geometry);
+            this._super();
         },
 
         validate: function() {
+            // FIXME
             this.invalid = false;
-            try {
-                var vl = this.map.getLayersByName(this.name)[0];
-                this.invalid = (this.required && jQuery.isEmptyObject(vl.features));
-            } catch(e) {
-                this.invalid = true;
-            }
         },
+
+        // validate: function() {
+        //     this.invalid = false;
+        //     try {
+        //         var vl = this.map.getLayersByName(this.name)[0];
+        //         this.invalid = (this.required && jQuery.isEmptyObject(vl.features));
+        //     } catch(e) {
+        //         this.invalid = true;
+        //     }
+        // },
         update_dom: function() {
+            this._super.apply(this, arguments);
+            this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
+            this.readonly ? this.modify_control.deactivate() : this.modify_control.activate();
             this.$element.toggle(!this.invisible);
-        },
-
+        }
     });
-
-
     openerp.web.form.widgets.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEnginEditMap');
 
+    openerp.base_geoengine.FieldGeoEnginEditMapReadonly = openerp.base_geoengine.FieldGeoEnginEditMap.extend({
+        init: function(view, node) {
+            this._super(view, node);
+            this.readonly = true;
+         }
+    });
+    openerp.web.page.readonly.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEnginEditMapReadonly');
+
+    //-----------------------------------------------------------------------
     openerp.base_geoengine.FieldGeoPointXY = openerp.web.form.Field.extend({
         template: 'FieldGeoPointXY',
 
@@ -647,7 +670,7 @@ openerp.base_geoengine = function (openerp) {
             var y = openerp.web.parse_value(this.$input.eq(1).val(), {type: 'float'});
             return [x, y];
         },
-        make_GeoJSON: function(coords){
+        make_GeoJSON: function(coords) {
             return {"type": "Point", "coordinates": coords};
         },
         set_value: function(value) {
@@ -700,7 +723,7 @@ openerp.base_geoengine = function (openerp) {
     openerp.base_geoengine.FieldGeoPointXYReadonly = openerp.base_geoengine.FieldGeoPointXY.extend({
         template: 'FieldGeoPointXY.readonly',
 
-        set_value: function (value) {
+        set_value: function(value) {
             this._super.apply(this, arguments);
             var show_value = '';
             if (value) {
@@ -737,7 +760,7 @@ openerp.base_geoengine = function (openerp) {
 
             return [[x1, y1], [x2, y2]];
         },
-        make_GeoJSON: function(coords){
+        make_GeoJSON: function(coords) {
             var p1 = coords[0];
             var p2 = [coords[0][0], coords[1][1]];
             var p3 = coords[1];
@@ -828,7 +851,7 @@ openerp.base_geoengine = function (openerp) {
     openerp.base_geoengine.FieldGeoRectReadonly = openerp.base_geoengine.FieldGeoRect.extend({
         template: 'FieldGeoRect.readonly',
 
-        set_value: function (value) {
+        set_value: function(value) {
             this._super.apply(this, arguments);
             var show_value = '';
             if (value) {
@@ -936,7 +959,7 @@ OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
         var measure = event.measure;
         var element = document.getElementById('map_measurementbox');
         var out = "";
-        if(order == 1) {
+        if (order == 1) {
             out += '<span style="font-weight: bold">measure</span>: ' + measure.toFixed(1) + " " + units;
         } else {
             out += '<span style="font-weight: bold">measure</span>: ' + measure.toFixed(1) + " square " + units;

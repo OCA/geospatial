@@ -27,7 +27,7 @@ GEO_TYPES = [('geo_polygon','geo_polygon'),
              ('geo_multi_polygon', 'geo_multi_polygon'),
              ('geo_point', 'geo_point'),
              ('geo_multi_point', 'geo_multi_point'),
-             ('geo_line', 'geo_multi_point'),
+             ('geo_line', 'geo_line'),
              ('geo_multi_line', 'geo_multi_line')]
 
 POSTGIS_GEO_TYPES = [('POINT', 'POINT'),
