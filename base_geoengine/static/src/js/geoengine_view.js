@@ -541,59 +541,83 @@ openerp.base_geoengine = function(openerp) {
     openerp.base_geoengine.FieldGeoEnginEditMap = openerp.web.form.Field.extend({
         template: 'FieldGeoEnginEditMap',
 
-        init: function(view, node) {
-            this._super(view, node);
-            this.geo_type = null;
-            this.map = null;
-            this.default_extent = null
-         },
+        geo_type: null,
+        map: null,
+        default_extent: null,
 
-         create_edit_layers: function(self, field_infos) {
-             var vl = new OpenLayers.Layer.Vector(self.name); //options Fred todos
-             var rl = openerp.base_geoengine.createBackgroundLayers([field_infos.edit_raster]);
-             rl.isBaseLayer = true;
-             return [rl, vl];
-         },
+        modify_control: null,
+        draw_control: null,
 
-         start: function() {
-             var self = this;
-             var rdataset = new openerp.web.DataSetStatic(self, self.view.model, self.build_context());
-             rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0).then(function(result) {
-                 self.default_extend = OpenLayers.Bounds.fromString(result.default_extent);
-                 var layers = self.create_edit_layers(self, result);
-                 self.geo_type = result.geo_type;
-                 self.map = new OpenLayers.Map(self.element_id,{
-                     theme: null,
-                     layers: layers[0]
-                 });
-                 self.map.addLayer(layers[1]);
-                 self.map.zoomToExtent(this.default_extend);
-                 self.set_readonly(self.readonly);
-                 self.set_value('dummy');
-             });
-             //this._super.apply(this, arguments);
-         },
+        create_edit_layers: function(self, field_infos) {
+            var vl = new OpenLayers.Layer.Vector(self.name, {
+                eventListeners : {
+                    featuremodified: function(event) {
+                        this._geometry = event.feature.geometry;
+                        this.on_ui_change();
+                    },
+                    featureadded: function(event) {
+                        // FIXME: simple to multi
+                        if (this.geo_type == 'MULTIPOLYGON' && event.feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Polygon') {
+                            this._geometry = new OpenLayers.Geometry.MultiPolygon(event.feature.geometry);
+                        } else {
+                            this._geometry = event.feature.geometry;
+                        }
+                        this.on_ui_change();
+                    },
+                    scope: this
+                }
+            });
+            var rl = openerp.base_geoengine.createBackgroundLayers([field_infos.edit_raster]);
+            rl.isBaseLayer = true;
+            return [rl, vl];
+        },
 
-         set_value: function(value) {
-             if (value != 'dummy') {
-                 this.value = value;
-             };
-             if (this.map) {
-                 var vl = this.map.getLayersByName(this.name)[0];
-                 vl.destroyFeatures();
-                 if (this.value) {
-                     var geom = new OpenLayers.Format.GeoJSON().read(this.value, 'Geometry');
-                     var feature = new OpenLayers.Feature.Vector(geom);
-                     vl.addFeatures([feature]);
-                     this.map.zoomToExtent(vl.getDataExtent());
-                 } else {
-                     this.map.zoomToExtent(this.default_extend);
-                 }
-             }
-             return value;
-         },
-        set_value_from_ui: function() {
-            self.set_value('dummy');
+        start: function() {
+            this._super.apply(this, arguments);
+            var self = this;
+            var rdataset = new openerp.web.DataSetStatic(self, self.view.model, self.build_context());
+            rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0).then(function(result) {
+                self.default_extend = OpenLayers.Bounds.fromString(result.default_extent);
+                var layers = self.create_edit_layers(self, result);
+                self.geo_type = result.geo_type;
+                self.map = new OpenLayers.Map(self.element_id,{
+                    theme: null,
+                    layers: layers[0]
+                });
+                self.map.addLayer(layers[1]);
+                self.modify_control = new OpenLayers.Control.ModifyFeature(layers[1]);
+                self.map.addControl(self.modify_control);
+
+                var handler = null;
+                if (self.geo_type == 'POLYGON' || self.geo_type == 'MULTIPOLYGON') {
+                    handler = OpenLayers.Handler.Polygon
+                } else if (self.geo_type == 'LINESTRING' || self.geo_type == 'MULTILINESTRING') {
+                    handler = OpenLayers.Handler.Path
+                } else if (self.geo_type == 'POINT' || self.geo_type == 'MULTIPOINT') {
+                    handler = OpenLayers.Handler.Point
+                } else {
+                    // FIXME: unsupported geo type
+                }
+                self.draw_control = new OpenLayers.Control.DrawFeature(layers[1], handler);
+                self.map.addControl(self.draw_control);
+
+                self.map.zoomToExtent(this.default_extend);
+            });
+        },
+
+        set_value: function(value) {
+            this._super.apply(this, arguments);
+            if (this.map) {
+                var vl = this.map.getLayersByName(this.name)[0];
+                vl.destroyFeatures();
+                if (this.value) {
+                    var features = new OpenLayers.Format.GeoJSON().read(this.value);
+                    vl.addFeatures(features, {silent: true});
+                    this.map.zoomToExtent(vl.getDataExtent());
+                } else {
+                    this.map.zoomToExtent(this.default_extend);
+                }
+            }
         },
 
         set_readonly: function(readonly) {
@@ -610,6 +634,13 @@ openerp.base_geoengine = function(openerp) {
             }
         },
         update_dom: function() {
+            this._super.apply(this, arguments);
+            if (this.readonly) {
+                this.modify_control.deactivate();
+            } else {
+                this.modify_control.activate();
+                this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
+            }
             this.$element.toggle(!this.invisible);
         }
     });
