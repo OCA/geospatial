@@ -541,11 +541,12 @@ openerp.base_geoengine = function(openerp) {
     openerp.base_geoengine.FieldGeoEnginEditMap = openerp.web.form.Field.extend({
         template: 'FieldGeoEnginEditMap',
 
-        //geo_type: null,
+        geo_type: null,
         map: null,
+        default_extent: null,
 
         modify_control: null,
-        default_extent: null,
+        draw_control: null,
 
         create_edit_layers: function(self, field_infos) {
             var vl = new OpenLayers.Layer.Vector(self.name, {
@@ -555,7 +556,7 @@ openerp.base_geoengine = function(openerp) {
                         this.on_ui_change();
                     },
                     featureadded: function(event) {
-                        // FIXME:
+                        // FIXME: simple to multi
                         if (this.geo_type == 'MULTIPOLYGON' && event.feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Polygon') {
                             this._geometry = new OpenLayers.Geometry.MultiPolygon(event.feature.geometry);
                         } else {
@@ -590,8 +591,12 @@ openerp.base_geoengine = function(openerp) {
                 var handler = null;
                 if (self.geo_type == 'POLYGON' || self.geo_type == 'MULTIPOLYGON') {
                     handler = OpenLayers.Handler.Polygon
+                } else if (self.geo_type == 'LINESTRING' || self.geo_type == 'MULTILINESTRING') {
+                    handler = OpenLayers.Handler.Path
+                } else if (self.geo_type == 'POINT' || self.geo_type == 'MULTIPOINT') {
+                    handler = OpenLayers.Handler.Point
                 } else {
-                    debugger;
+                    // FIXME: unsupported geo type
                 }
                 self.draw_control = new OpenLayers.Control.DrawFeature(layers[1], handler);
                 self.map.addControl(self.draw_control);
@@ -636,8 +641,12 @@ openerp.base_geoengine = function(openerp) {
         // },
         update_dom: function() {
             this._super.apply(this, arguments);
-            this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
-            this.readonly ? this.modify_control.deactivate() : this.modify_control.activate();
+            if (this.readonly) {
+                this.modify_control.deactivate();
+            } else {
+                this.modify_control.activate();
+                this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
+            }
             this.$element.toggle(!this.invisible);
         }
     });
