@@ -27,6 +27,12 @@
                         colspan="4">
                         <field name="mapbox_type"/>
                     </group>
+                    <group string="swisstopo layer data"
+                        attrs="{'invisible': [('raster_type', '!=', 'swisstopo')]}"
+                        colspan="4">
+                        <field name="swisstopo_type"/>
+                        <field name="swisstopo_time"/>
+                    </group>
                     <group string="OpenERP layer data (Not implemented)"
                         attrs="{'invisible': [('raster_type', '!=', 'openerp')]}"
                         colspan="4">
