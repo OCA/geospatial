@@ -210,7 +210,7 @@ openerp.base_geoengine = function(openerp) {
             var features = [];
             var geostat = null;
             var geojson = new OpenLayers.Format.GeoJSON();
-            var vl = new OpenLayers.Layer.Vector(cfg.name, { // Fred should manage projection here
+            var vl = new OpenLayers.Layer.Vector(cfg.name, {
                 styleMap: new OpenLayers.StyleMap({
                     'default': OpenLayers.Util.applyDefaults({
                         fillColor: cfg.begin_color
@@ -607,6 +607,9 @@ openerp.base_geoengine = function(openerp) {
                 });
                 self.map.addLayer(layers[1]);
                 self.modify_control = new OpenLayers.Control.ModifyFeature(layers[1]);
+                if (self.geo_type == 'POINT' || self.geo_type == 'MULTIPOINT') {
+                    self.modify_control.mode = OpenLayers.Control.ModifyFeature.DRAG;
+                }
                 self.map.addControl(self.modify_control);
 
                 var handler = null;
@@ -625,7 +628,7 @@ openerp.base_geoengine = function(openerp) {
                 self.default_extend = OpenLayers.Bounds.fromString(result.default_extent).transform('EPSG:900913', self.map.getProjection());
                 self.format = new OpenLayers.Format.GeoJSON({
                     internalProjection: self.map.getProjection(),
-                    externalProjection: 'EPSG:900913' // FIXME
+                    externalProjection: 'EPSG:900913' // FIXME: get projection from layer
                 });
             });
         },
