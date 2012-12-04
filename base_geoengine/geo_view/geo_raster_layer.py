@@ -30,6 +30,7 @@ class GeoRasterLayer(osv.osv):
                                                   ('osm', 'OpenStreetMap'),
                                                   ('mapbox', 'MapBox'),
                                                   ('d_wms', 'Distant WMS'),
+                                                  ('swisstopo', 'swisstopo'),
                                                   ('openerp', 'OpenERP -- not implemented')],
                                                  string="Raster layer type",
                                                  required=True),
@@ -43,6 +44,10 @@ class GeoRasterLayer(osv.osv):
                 'mapbox_type':  fields.selection([('mapbox.mapbox-streets', 'Streets'),
                                                   ('mapbox.mapbox-light', 'Light')],
                                                  string="Mapbox raster layer type"),
+                'swisstopo_type':  fields.selection([('ch.swisstopo.pixelkarte-farbe', 'Color map'),
+                                                     ('ch.swisstopo.swissimage', 'Aerial imagery')],
+                                                    string="Swisstopo raster layer type"),
+                'swisstopo_time':  fields.char('Release date', size=256), # FIXME: required=True
                 'sequence': fields.integer('layer priority lower on top'),
                 'overlay' : fields.boolean('Is overlay layer?'),
                 'field_id': fields.many2one('ir.model.fields', 'OpenERP layer field to use',
