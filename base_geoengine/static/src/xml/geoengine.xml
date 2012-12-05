@@ -90,7 +90,7 @@
   </t>
 
 
-<t t-name="FieldGeoEnginEditMap">
+<t t-name="FieldGeoEngineEditMap">
   <div t-att-id="widget.element_id" t-attf-class="field_#{widget.type}" border="1"/>
 </t>
 
