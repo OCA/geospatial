@@ -99,7 +99,7 @@ class GeoModel(orm.BaseModel):
                                        ('type', '=', 'geoengine')])
         if not geo_view_id:
             raise osv.except_osv(_('No GeoEngine view defined for the model %s') % (self._name,),
-                                 _('Please create a view or modifiy action view mode'))
+                                 _('Please create a view or modify view mode'))
         return view_obj.browse(cursor, uid, geo_view_id[0])
 
     def fields_view_get(self, cursor, uid, view_id=None, view_type='form',
@@ -150,12 +150,16 @@ class GeoModel(orm.BaseModel):
         raster_obj = self.pool.get('geoengine.raster.layer')
 
         if not getattr(self._columns.get(column), '_geo_type', False):
-            raise ValueError(_("%s column does not existe or is not a geo field") % (column,))
+            raise ValueError(_("%s column does not exists or is not a geo field") % (column,))
         view = self._get_geo_view(cursor, uid)
-        raster_id = raster_obj.search(cursor, uid, [('view_id', '=', view.id),
-                                                    ('use_to_edit', '=', True)])
+        raster_id = raster_obj.search(cursor, uid,
+                                      [('view_id', '=', view.id),
+                                       ('use_to_edit', '=', True)],
+                                      context=context)
         if not raster_id:
-            raster_id =  raster_obj.search(cursor, uid, [('view_id', '=', view.id)])
+            raster_id =  raster_obj.search(cursor, uid,
+                                           [('view_id', '=', view.id)],
+                                           context=context)
         if not raster_id:
             raise osv.except_osv(_('Configuration Error'),
                                  _('No raster layer for view %s') %(view.name,))
