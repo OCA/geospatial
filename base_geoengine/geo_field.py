@@ -148,7 +148,6 @@ class Geom(fields._column):
                  "FROM geometry_columns "
                  "WHERE f_table_name = %s "
                  "AND f_geometry_column = %s")
-        logger.debug(cursor.mogrify(query, (table, col_name)))
         cursor.execute(query, (table, col_name))
         check_data = cursor.fetchone()
         if not check_data:
