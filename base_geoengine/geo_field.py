@@ -237,8 +237,8 @@ def postprocess(self, cr, uid, obj, field, value=None, context=None):
         res = geojson.dumps(value)
     else:
         res =  super(GeoFunction, self).postprocess(cr, uid, obj, field, value, context)
-    return res 
-           
+    return res
+
 class GeoFunction(fields.function):
     #shell class
     pass
