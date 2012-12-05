@@ -47,7 +47,7 @@ class GeoRasterLayer(osv.osv):
                 'swisstopo_type':  fields.selection([('ch.swisstopo.pixelkarte-farbe', 'Color map'),
                                                      ('ch.swisstopo.swissimage', 'Aerial imagery')],
                                                     string="Swisstopo raster layer type"),
-                'swisstopo_time':  fields.char('Release date', size=256), # FIXME: required=True
+                'swisstopo_time':  fields.char('Release date', size=256),
                 'sequence': fields.integer('layer priority lower on top'),
                 'overlay' : fields.boolean('Is overlay layer?'),
                 'field_id': fields.many2one('ir.model.fields', 'OpenERP layer field to use',
