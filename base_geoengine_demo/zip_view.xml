@@ -90,10 +90,10 @@
             <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
             <field eval="0" name="overlay"/>
         </record>
-        <record id="geoengine_raster_layer_googletest0" model="geoengine.raster.layer">
-            <field name="raster_type">google</field>
-            <field name="google_type">G_HYBRID_MAP</field>
-            <field name="name">ZIP Google</field>
+        <record id="geoengine_raster_layer_mapbox0" model="geoengine.raster.layer">
+            <field name="raster_type">mapbox</field>
+            <field name="mapbox_type">mapbox.mapbox-light</field>
+            <field name="name">ZIP Mapbox Light</field>
             <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
             <field eval="1" name="overlay"/>
         </record>
