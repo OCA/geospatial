@@ -559,8 +559,8 @@ openerp.base_geoengine = function(openerp) {
 
     //------------ EDIT WIDGET ----------------------------------------------
 
-    openerp.base_geoengine.FieldGeoEnginEditMap = openerp.web.form.Field.extend({
-        template: 'FieldGeoEnginEditMap',
+    openerp.base_geoengine.FieldGeoEngineEditMap = openerp.web.form.Field.extend({
+        template: 'FieldGeoEngineEditMap',
 
         geo_type: null,
         map: null,
@@ -677,15 +677,15 @@ openerp.base_geoengine = function(openerp) {
             this.$element.toggle(!this.invisible);
         }
     });
-    openerp.web.form.widgets.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEnginEditMap');
+    openerp.web.form.widgets.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEngineEditMap');
 
-    openerp.base_geoengine.FieldGeoEnginEditMapReadonly = openerp.base_geoengine.FieldGeoEnginEditMap.extend({
+    openerp.base_geoengine.FieldGeoEngineEditMapReadonly = openerp.base_geoengine.FieldGeoEngineEditMap.extend({
         init: function(view, node) {
             this._super(view, node);
             this.readonly = true;
          }
     });
-    openerp.web.page.readonly.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEnginEditMapReadonly');
+    openerp.web.page.readonly.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEngineEditMapReadonly');
 
     //-----------------------------------------------------------------------
     openerp.base_geoengine.FieldGeoPointXY = openerp.web.form.Field.extend({
