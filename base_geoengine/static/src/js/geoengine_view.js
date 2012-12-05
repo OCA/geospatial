@@ -632,7 +632,7 @@ openerp.base_geoengine = function(openerp) {
                // self.map.zoomToExtent(self.default_extend);
                 self.format = new OpenLayers.Format.GeoJSON({
                     internalProjection: self.map.getProjection(),
-                    externalProjection: 'EPSG:900913' // FIXME: get projection from layer
+                    externalProjection: 'EPSG:' + result.srid
                 });
                 self.set_value(self.value);
                 self.update_dom();
