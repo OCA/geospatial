@@ -8,9 +8,16 @@
             <field name="arch" type="xml">
                 <form>
                     <field name="name" colspan="4"/>
-                    <field name="total_sales"/>
-                    <field name="money_level"/>
-                    <field name="the_point" colspan="4" widget="text"/>
+                    <notebook colspan="4">
+                      <page string="Geometry">
+                        <field name="the_point" widget="geo_edit_map"/>
+                        <field name="the_line" widget="geo_edit_map"/>
+                      </page>
+                      <page string="attributes">
+                        <field name="total_sales"/>
+                        <field name="money_level"/>
+                      </page>
+                    </notebook>
                     <field name="state"/>
                 </form>
             </field>
@@ -65,7 +72,7 @@
         <!-- GeoEngine views -->
         <record id="ir_ui_view_retailmachineview0" model="ir.ui.view">
             <field name="name">Retail machine view</field>
-            <field name="arch"><![CDATA[ 
+            <field name="arch"><![CDATA[
 <form>
     <field name="name" select="1"/>
     <field name="total_sales" select="1"/>

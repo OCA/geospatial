@@ -30,6 +30,7 @@ class GeoRasterLayer(osv.osv):
                                                   ('osm', 'OpenStreetMap'),
                                                   ('mapbox', 'MapBox'),
                                                   ('d_wms', 'Distant WMS'),
+                                                  ('swisstopo', 'swisstopo'),
                                                   ('openerp', 'OpenERP -- not implemented')],
                                                  string="Raster layer type",
                                                  required=True),
@@ -40,9 +41,13 @@ class GeoRasterLayer(osv.osv):
                                                   ('G_HYBRID_MAP', 'Google Hybrid map'),
                                                   ('G_PHYSICAL_MAP', 'Google Physical map')],
                                                  string="Google raster layer type"),
-                'mapbox_type':  fields.selection([('mapbox.mapbox-streets', 'Streets'), 
+                'mapbox_type':  fields.selection([('mapbox.mapbox-streets', 'Streets'),
                                                   ('mapbox.mapbox-light', 'Light')],
                                                  string="Mapbox raster layer type"),
+                'swisstopo_type':  fields.selection([('ch.swisstopo.pixelkarte-farbe', 'Color map'),
+                                                     ('ch.swisstopo.swissimage', 'Aerial imagery')],
+                                                    string="Swisstopo raster layer type"),
+                'swisstopo_time':  fields.char('Release date', size=256), # FIXME: required=True
                 'sequence': fields.integer('layer priority lower on top'),
                 'overlay' : fields.boolean('Is overlay layer?'),
                 'field_id': fields.many2one('ir.model.fields', 'OpenERP layer field to use',
@@ -50,7 +55,8 @@ class GeoRasterLayer(osv.osv):
                                                     ('model', '=', 'view_id.model')]),
                 'view_id' : fields.many2one('ir.ui.view', 'Related View',
                                              domain=[('type', '=', 'geoengine')],
-                                             required=True)}
+                                             required=True),
+                'use_to_edit': fields.boolean('Use to edit')}
 # TODO Write data check consraints
 
     _defaults = {'sequence': lambda *a: 6}

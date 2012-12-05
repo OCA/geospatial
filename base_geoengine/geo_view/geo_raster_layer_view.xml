@@ -13,6 +13,7 @@
                         <field name="raster_type"/>
                         <field name="sequence"/>
                         <field name="overlay"/>
+                        <field name="use_to_edit"/>
                         <field name="url" colspan="4" widget="url"
                             attrs="{'invisible': [('raster_type', '!=', 'd_wms')]}"/>
                     </group>
@@ -25,6 +26,12 @@
                         attrs="{'invisible': [('raster_type', '!=', 'mapbox')]}"
                         colspan="4">
                         <field name="mapbox_type"/>
+                    </group>
+                    <group string="swisstopo layer data"
+                        attrs="{'invisible': [('raster_type', '!=', 'swisstopo')]}"
+                        colspan="4">
+                        <field name="swisstopo_type"/>
+                        <field name="swisstopo_time"/>
                     </group>
                     <group string="OpenERP layer data (Not implemented)"
                         attrs="{'invisible': [('raster_type', '!=', 'openerp')]}"
