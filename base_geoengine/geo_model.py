@@ -165,6 +165,7 @@ class GeoModel(orm.BaseModel):
                                  _('No raster layer for view %s') %(view.name,))
         res['edit_raster'] = raster_obj.read(cursor, uid, raster_id[0], context=context)
         res['geo_type'] = self._columns[column]._geo_type
+        res['srid'] = self._columns[column]._srid
         res['default_extent'] = view.default_extent
         return res
 
