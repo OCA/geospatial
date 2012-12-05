@@ -91,7 +91,7 @@
 
 
 <t t-name="FieldGeoEnginEditMap">
-  <div t-att-id="widget.element_id"  t-attf-class="field_#{widget.type}" data-toto="toto" border="1"/>
+  <div t-att-id="widget.element_id" t-attf-class="field_#{widget.type}" border="1"/>
 </t>
 
 </template>
