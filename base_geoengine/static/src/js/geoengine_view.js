@@ -596,12 +596,15 @@ openerp.base_geoengine = function(openerp) {
 
         start: function() {
             this._super.apply(this, arguments);
+            if (this.map) {
+                return;
+            }
             var self = this;
             var rdataset = new openerp.web.DataSetStatic(self, self.view.model, self.build_context());
             rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0).then(function(result) {
                 var layers = self.create_edit_layers(self, result);
                 self.geo_type = result.geo_type;
-                self.map = new OpenLayers.Map(self.element_id,{
+                self.map = new OpenLayers.Map({
                     theme: null,
                     layers: layers[0]
                 });
@@ -614,11 +617,11 @@ openerp.base_geoengine = function(openerp) {
 
                 var handler = null;
                 if (self.geo_type == 'POLYGON' || self.geo_type == 'MULTIPOLYGON') {
-                    handler = OpenLayers.Handler.Polygon
+                    handler = OpenLayers.Handler.Polygon;
                 } else if (self.geo_type == 'LINESTRING' || self.geo_type == 'MULTILINESTRING') {
-                    handler = OpenLayers.Handler.Path
+                    handler = OpenLayers.Handler.Path;
                 } else if (self.geo_type == 'POINT' || self.geo_type == 'MULTIPOINT') {
-                    handler = OpenLayers.Handler.Point
+                    handler = OpenLayers.Handler.Point;
                 } else {
                     // FIXME: unsupported geo type
                 }
@@ -626,10 +629,13 @@ openerp.base_geoengine = function(openerp) {
                 self.map.addControl(self.draw_control);
 
                 self.default_extend = OpenLayers.Bounds.fromString(result.default_extent).transform('EPSG:900913', self.map.getProjection());
+               // self.map.zoomToExtent(self.default_extend);
                 self.format = new OpenLayers.Format.GeoJSON({
                     internalProjection: self.map.getProjection(),
                     externalProjection: 'EPSG:900913' // FIXME: get projection from layer
                 });
+                self.set_value(self.value);
+                self.update_dom();
             });
         },
 
@@ -659,11 +665,14 @@ openerp.base_geoengine = function(openerp) {
 
         update_dom: function() {
             this._super.apply(this, arguments);
-            if (this.readonly) {
-                this.modify_control.deactivate();
-            } else {
-                this.modify_control.activate();
-                this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
+            if (this.map) {
+                this.map.render(this.element_id);
+                if (this.readonly) {
+                    this.modify_control.deactivate();
+                } else {
+                    this.modify_control.activate();
+                    this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
+                }
             }
             this.$element.toggle(!this.invisible);
         }
