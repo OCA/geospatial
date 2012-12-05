@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from __future__ import absolute_import 
+from __future__ import absolute_import
 from osv import fields
 from . import geo_field
 
@@ -27,7 +27,8 @@ class GeoPolygon(geo_field.Geom):
     _type = 'geo_polygon'
 
     def __init__(self, string, dim=2, srid=900913 , gist_index=True, **args):
-        res = super(GeoPolygon, self).__init__(string, "POLYGON", **args)
+        res = super(GeoPolygon, self).__init__(string, "POLYGON",
+                                               dim=dim, srid=srid, gist_index=gist_index, **args)
         return res
 
 fields.geo_polygon = GeoPolygon
