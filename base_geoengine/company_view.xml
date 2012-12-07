@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <openerp>
     <data>
-        
+
         <record model="ir.ui.view" id="geo_conf_panel">
             <field name="name">res.company.form.inherit</field>
             <field name="model">res.company</field>
@@ -18,8 +18,8 @@
                 </notebook>
             </field>
         </record>
-      
-    <menuitem name="GeoEngine Backend" id="geoengine_base_menu" web_icon="images/map.png" groups="group_geoengine_admin" web_icon_hover="images/map-hover.png"/>
+
+        <menuitem name="GeoEngine Backend" id="geoengine_base_menu" web_icon="images/map.png" groups="group_geoengine_admin" web_icon_hover="images/map-hover.png"/>
     </data>
 </openerp>
 
