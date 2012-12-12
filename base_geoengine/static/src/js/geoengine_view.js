@@ -566,7 +566,7 @@ openerp.base_geoengine = function(openerp) {
         map: null,
         default_extent: null,
         format: null,
-
+        force_readonly: null,
         modify_control: null,
         draw_control: null,
 
@@ -673,7 +673,7 @@ openerp.base_geoengine = function(openerp) {
             this._super.apply(this, arguments);
             if (this.map) {
                 this.map.render(this.element_id);
-                if (this.readonly) {
+                if (this.readonly || this.force_readonly) {
                     this.modify_control.deactivate();
                 } else {
                     this.modify_control.activate();
@@ -688,7 +688,7 @@ openerp.base_geoengine = function(openerp) {
     openerp.base_geoengine.FieldGeoEngineEditMapReadonly = openerp.base_geoengine.FieldGeoEngineEditMap.extend({
         init: function(view, node) {
             this._super(view, node);
-	    this.readonly = true;
+            this.force_readonly = true;
          }
     });
     openerp.web.page.readonly.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEngineEditMapReadonly');
