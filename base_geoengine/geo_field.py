@@ -148,7 +148,6 @@ class Geom(fields._column):
                  "FROM geometry_columns "
                  "WHERE f_table_name = %s "
                  "AND f_geometry_column = %s")
-        logger.debug(cursor.mogrify(query, (table, col_name)))
         cursor.execute(query, (table, col_name))
         check_data = cursor.fetchone()
         if not check_data:
@@ -237,8 +236,8 @@ def postprocess(self, cr, uid, obj, field, value=None, context=None):
         res = geojson.dumps(value)
     else:
         res =  super(GeoFunction, self).postprocess(cr, uid, obj, field, value, context)
-    return res 
-           
+    return res
+
 class GeoFunction(fields.function):
     #shell class
     pass

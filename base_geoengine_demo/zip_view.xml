@@ -10,7 +10,11 @@
                     <field name="name" select="1"/>
                     <field name="city" select="1"/>
                     <field name="priority" />
-                    <field name="the_geom" colspan="4" widget="text"/>
+                    <notebook colspan="4">
+                      <page string="Geometry">
+                        <field name="the_geom" colspan="4" widget="geo_edit_map"/>
+                      </page>
+                    </notebook>
                     <field name="total_sales"/>
                 </form>
             </field>
@@ -28,7 +32,7 @@
                 </tree>
             </field>
         </record>
-        
+
         <record id="action_zip_tree" model="ir.actions.act_window">
             <field name="name">ZIP Management</field>
             <field name="res_model">dummy.zip</field>
@@ -39,11 +43,11 @@
           <!-- GeoEngine views -->
         <record id="ir_ui_view_resbetterzipgeoview0" model="ir.ui.view">
             <field name="name">dummy.zip.geo_view</field>
-            <field name="arch"><![CDATA[ 
+            <field name="arch"><![CDATA[
                 <form >
                     <field name="name"/>
                     <field name="city"/>
-                    <field name="total_sales"/>                    
+                    <field name="total_sales"/>
                 </form>]]></field>
             <field eval="16" name="priority"/>
             <field name="type">geoengine</field>
@@ -86,13 +90,12 @@
             <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
             <field eval="0" name="overlay"/>
         </record>
-        <record id="geoengine_raster_layer_googletest0" model="geoengine.raster.layer">
-            <field name="raster_type">google</field>
-            <field name="google_type">G_HYBRID_MAP</field>
-            <field name="name">ZIP Google</field>
+        <record id="geoengine_raster_layer_mapbox0" model="geoengine.raster.layer">
+            <field name="raster_type">mapbox</field>
+            <field name="mapbox_type">mapbox.mapbox-light</field>
+            <field name="name">ZIP Mapbox Light</field>
             <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
             <field eval="1" name="overlay"/>
         </record>
     </data>
 </openerp>
-

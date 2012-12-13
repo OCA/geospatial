@@ -8,9 +8,16 @@
             <field name="arch" type="xml">
                 <form>
                     <field name="name" colspan="4"/>
-                    <field name="total_sales"/>
-                    <field name="money_level"/>
-                    <field name="the_point" colspan="4" widget="text"/>
+                    <notebook colspan="4">
+                      <page string="Geometry">
+                        <field name="the_point" widget="geo_edit_map"/>
+                        <field name="the_line" widget="geo_edit_map"/>
+                      </page>
+                      <page string="attributes">
+                        <field name="total_sales"/>
+                        <field name="money_level"/>
+                      </page>
+                    </notebook>
                     <field name="state"/>
                 </form>
             </field>
@@ -65,7 +72,7 @@
         <!-- GeoEngine views -->
         <record id="ir_ui_view_retailmachineview0" model="ir.ui.view">
             <field name="name">Retail machine view</field>
-            <field name="arch"><![CDATA[ 
+            <field name="arch"><![CDATA[
 <form>
     <field name="name" select="1"/>
     <field name="total_sales" select="1"/>
@@ -158,10 +165,10 @@ AABJRU5ErkJggg==
                 ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_total_sales"/>
             <field name="begin_color">#4B69FD</field>
         </record>
-        <record id="geoengine_raster_layer_retailmachinegoogle0" model="geoengine.raster.layer">
-            <field name="raster_type">google</field>
-            <field name="google_type">G_SATELLITE_MAP</field>
-            <field name="name">Retail Machine Google</field>
+        <record id="geoengine_raster_layer_retailmachinemapbox" model="geoengine.raster.layer">
+            <field name="raster_type">mapbox</field>
+            <field name="mapbox_type">mapbox.mapbox-streets</field>
+            <field name="name">Retail Machine Mapbox</field>
             <field name="view_id" ref="ir_ui_view_retailmachineview0"/>
             <field eval="0" name="overlay"/>
         </record>

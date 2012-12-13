@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from __future__ import absolute_import 
+from __future__ import absolute_import
 import json
 
 from osv import fields, osv, orm
@@ -91,6 +91,17 @@ class GeoModel(orm.BaseModel):
                                                   'srid':col._srid}
         return res
 
+    def _get_geo_view(self, cursor, uid):
+        view_obj = self.pool.get('ir.ui.view')
+        geo_view_id = view_obj.search(cursor,
+                                      uid,
+                                      [('model', '=', self._name),
+                                       ('type', '=', 'geoengine')])
+        if not geo_view_id:
+            raise osv.except_osv(_('No GeoEngine view defined for the model %s') % (self._name,),
+                                 _('Please create a view or modify view mode'))
+        return view_obj.browse(cursor, uid, geo_view_id[0])
+
     def fields_view_get(self, cursor, uid, view_id=None, view_type='form',
                         context=None, toolbar=False, submenu=False):
         """Returns information about the available fields of the class.
@@ -107,14 +118,7 @@ class GeoModel(orm.BaseModel):
             return out
         if view_type == "geoengine":
             if not view_id:
-                geo_view_id = view_obj.search(cursor,
-                                              uid,
-                                              [('model', '=', self._name),
-                                               ('type', '=', 'geoengine')])
-                if not geo_view_id:
-                    raise osv.except_osv(_('No GeoEngine view defined for the model %s') % (self._name,),
-                                         _('Please create a view or modifiy action view mode'))
-                view = view_obj.browse(cursor, uid, geo_view_id[0])
+                view = self._get_geo_view(cursor, uid)
             else:
                 view = view_obj.browse(cursor, uid, view_id)
             res = super(GeoModel, self).fields_view_get(cursor, uid, view.id,
@@ -139,6 +143,30 @@ class GeoModel(orm.BaseModel):
         else:
             return super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type,
                                                          context, toolbar, submenu)
+        return res
+
+    def get_edit_info_for_geo_column(self, cursor, uid, column, context=None):
+        res = {}
+        raster_obj = self.pool.get('geoengine.raster.layer')
+
+        if not getattr(self._columns.get(column), '_geo_type', False):
+            raise ValueError(_("%s column does not exists or is not a geo field") % (column,))
+        view = self._get_geo_view(cursor, uid)
+        raster_id = raster_obj.search(cursor, uid,
+                                      [('view_id', '=', view.id),
+                                       ('use_to_edit', '=', True)],
+                                      context=context)
+        if not raster_id:
+            raster_id =  raster_obj.search(cursor, uid,
+                                           [('view_id', '=', view.id)],
+                                           context=context)
+        if not raster_id:
+            raise osv.except_osv(_('Configuration Error'),
+                                 _('No raster layer for view %s') %(view.name,))
+        res['edit_raster'] = raster_obj.read(cursor, uid, raster_id[0], context=context)
+        res['geo_type'] = self._columns[column]._geo_type
+        res['srid'] = self._columns[column]._srid
+        res['default_extent'] = view.default_extent
         return res
 
 
