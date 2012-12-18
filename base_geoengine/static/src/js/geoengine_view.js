@@ -600,7 +600,10 @@ openerp.base_geoengine = function(openerp) {
                 return;
             }
             var self = this;
-            var rdataset = new openerp.web.DataSetStatic(self, self.view.model, self.build_context());
+            // We blacklist all other fields in order to avoid calling get_value inside the build_context on field widget which aren't started yet
+            var blacklist = this.view.fields_order.slice();
+            delete blacklist[this.name];
+            var rdataset = new openerp.web.DataSetStatic(self, self.view.model, self.build_context(blacklist));
             rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0).then(function(result) {
                 var layers = self.create_edit_layers(self, result);
                 self.geo_type = result.geo_type;
