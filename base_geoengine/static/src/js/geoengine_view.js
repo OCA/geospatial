@@ -594,12 +594,49 @@ openerp.base_geoengine = function(openerp) {
             return [rl, vl];
         },
 
+        find_parent_tabs: function() {
+            var obj_id = this.element_id;
+            var current_obj = $('#' + obj_id);
+            var results = new Array();
+            while (current_obj.length != 0) {
+                class_name = current_obj.attr('class');
+                if (class_name && class_name.match(/ui-tabs-panel/) !== null) {
+                    results.push(current_obj);
+                }
+                current_obj = current_obj.parent();
+            }
+            return results;
+        },
+
+        add_tab_listener: function() {
+
+            var self = this;
+            var parent_tabs = this.find_parent_tabs();
+            self.parent_tabs = parent_tabs;
+            for (var i = 0; i < parent_tabs.length; i++) {
+                tab = parent_tabs[i];
+                tab.parent().bind('tabsshow', function(event, ui) {
+                    var ui_id = ui.tab.href.match(/notebook-.*/)[0];
+                    // update the render only if the ui_id match with one of the parent_tab id
+                    for (var i = 0; i < self.parent_tabs.length; i++) {
+                        tab_id = self.parent_tabs[i][0].id;
+                        if (ui_id == tab_id){
+                            self.render_map(self);
+                            return;
+                        }
+                    }
+                });
+            }
+        },
+
         start: function() {
             this._super.apply(this, arguments);
             if (this.map) {
                 return;
             }
             var self = this;
+            // add a listener on parent tab if it exists in order to refresh geoengine view
+            self.add_tab_listener();
             // We blacklist all other fields in order to avoid calling get_value inside the build_context on field widget which aren't started yet
             var blacklist = this.view.fields_order.slice();
             delete blacklist[this.name];
@@ -666,16 +703,23 @@ openerp.base_geoengine = function(openerp) {
             this.invalid = false;
         },
 
+        render_map: function(self) {
+            if (self.map) {
+                self.map.render(self.element_id);
+                if (self.readonly || self.force_readonly) {
+                    self.modify_control.deactivate();
+                } else {
+                    self.modify_control.activate();
+                    self.value === false ? self.draw_control.activate() : self.draw_control.deactivate();
+                }
+            }
+        },
+
         update_dom: function() {
             this._super.apply(this, arguments);
+            var self = this
             if (this.map) {
-                this.map.render(this.element_id);
-                if (this.readonly || this.force_readonly) {
-                    this.modify_control.deactivate();
-                } else {
-                    this.modify_control.activate();
-                    this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
-                }
+                this.render_map(self);
             }
             this.$element.toggle(!this.invisible);
         }
