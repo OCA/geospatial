@@ -22,16 +22,15 @@
  'version': '0.1',
  'category': 'GeoBI',
  'description': """Add geo_point on partner and addresses
- point on partner is function field that return geo point of 
+ point on partner is function field that return geo point of
  """,
  'update_xml': ['geo_sale_view.xml'],
  'author': 'Camptocamp',
  'license': 'AGPL-3',
  'website': 'http://openerp.camptocamp.com',
  'depends': ['base', 'geoengine_partner', 'sale'],
- 'installable': True,
+ 'installable': False,
  'application': True,
  'active': False,
  'icon': '/base_geoengine/static/src/images/map_icon.png'}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
-
