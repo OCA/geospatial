@@ -4,9 +4,8 @@
         <record model="ir.ui.view" id="geo_retail_machine_view_form">
             <field name="name">geoengine.demo.retail.machine.form</field>
             <field name="model">geoengine.demo.automatic.retailing.machine</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form>
+                <form string="Retail Machine">
                     <field name="name" colspan="4"/>
                     <notebook colspan="4">
                       <page string="Geometry">
@@ -26,9 +25,8 @@
         <record model="ir.ui.view" id="geo_retail_machine_view_tree">
             <field name="name">geoengine.demo.retail.machine.form</field>
             <field name="model">geoengine.demo.automatic.retailing.machine</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree string="Retail Machine">
                     <field name="name" select="1"/>
                     <field name="total_sales" select="1"/>
                     <field name="money_level" select="1"/>
@@ -73,7 +71,7 @@
         <record id="ir_ui_view_retailmachineview0" model="ir.ui.view">
             <field name="name">Retail machine view</field>
             <field name="arch"><![CDATA[
-<form>
+<form string="Retail Machine">
     <field name="name" select="1"/>
     <field name="total_sales" select="1"/>
     <field name="money_level" />
