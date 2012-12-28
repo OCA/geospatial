@@ -4,9 +4,8 @@
         <record model="ir.ui.view" id="dummy_zip_form">
             <field name="name">dummy.zip.form</field>
             <field name="model">dummy.zip</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form>
+                <form string="Dummy">
                     <field name="name" select="1"/>
                     <field name="city" select="1"/>
                     <field name="priority" />
@@ -22,9 +21,8 @@
         <record model="ir.ui.view" id="dummy_zip_tree">
             <field name="name">dummy.zip.form</field>
             <field name="model">dummy.zip</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree string="Dummy">
                     <field name="name" select="1"/>
                     <field name="city" select="1"/>
                     <field name="priority" />
@@ -44,7 +42,7 @@
         <record id="ir_ui_view_resbetterzipgeoview0" model="ir.ui.view">
             <field name="name">dummy.zip.geo_view</field>
             <field name="arch"><![CDATA[
-                <form >
+                <form string="Better Zip">
                     <field name="name"/>
                     <field name="city"/>
                     <field name="total_sales"/>
