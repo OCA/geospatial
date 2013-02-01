@@ -167,7 +167,7 @@ AABJRU5ErkJggg==
         </record>
         <record id="geoengine_raster_layer_retailmachinemapbox" model="geoengine.raster.layer">
             <field name="raster_type">mapbox</field>
-            <field name="mapbox_type">mapbox.mapbox-streets</field>
+            <field name="mapbox_id">camptocamp.map-ok288g0c</field>
             <field name="name">Retail Machine Mapbox</field>
             <field name="view_id" ref="ir_ui_view_retailmachineview0"/>
             <field eval="0" name="overlay"/>
