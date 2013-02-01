@@ -88,10 +88,10 @@ openerp.base_geoengine = function(openerp) {
                 case "mapbox":
                     out.push(
                         new OpenLayers.Layer.XYZ(l.name, [
-                            "http://a.tiles.mapbox.com/v3/" + l.mapbox_type + "/${z}/${x}/${y}.png",
-                            "http://b.tiles.mapbox.com/v3/" + l.mapbox_type + "/${z}/${x}/${y}.png",
-                            "http://c.tiles.mapbox.com/v3/" + l.mapbox_type + "/${z}/${x}/${y}.png",
-                            "http://d.tiles.mapbox.com/v3/" + l.mapbox_type + "/${z}/${x}/${y}.png"
+                            "http://a.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
+                            "http://b.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
+                            "http://c.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
+                            "http://d.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png"
                         ], {
                             sphericalMercator: true,
                             wrapDateLine: true,
@@ -576,6 +576,24 @@ openerp.base_geoengine = function(openerp) {
 
         create_edit_layers: function(self, field_infos) {
             var vl = new OpenLayers.Layer.Vector(self.name, {
+		styleMap: new OpenLayers.StyleMap({
+		    'default': new OpenLayers.Style({
+			fillColor: '#ee9900',
+			fillOpacity: 0.7,
+			strokeColor: '#ee9900',
+			strokeOpacity: 1,
+			strokeWidth: 3,
+			pointRadius: 6
+		    }),
+		    'select': new OpenLayers.Style({
+			fillColor: 'red',
+			strokeColor: 'red'
+		    }),
+		    'temporary': new OpenLayers.Style({
+			fillColor: 'blue',
+			strokeColor: 'blue'
+		    })
+		}),
                 eventListeners : {
                     featuremodified: function(event) {
                         this._geometry = event.feature.geometry;
