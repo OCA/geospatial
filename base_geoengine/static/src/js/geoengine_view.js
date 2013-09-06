@@ -578,9 +578,11 @@ openerp.base_geoengine = function(openerp) {
             var vl = new OpenLayers.Layer.Vector(self.name, {
 		styleMap: new OpenLayers.StyleMap({
 		    'default': new OpenLayers.Style({
-			fillColor: '#ee9900',
+			fillColor: '#ff0000',
+//			fillColor: '#ee9900', 
 			fillOpacity: 0.7,
-			strokeColor: '#ee9900',
+			strokeColor: '#ff0000',
+//			strokeColor: '#ee9900', 
 			strokeOpacity: 1,
 			strokeWidth: 3,
 			pointRadius: 6
@@ -689,6 +691,8 @@ openerp.base_geoengine = function(openerp) {
                 }
                 self.draw_control = new OpenLayers.Control.DrawFeature(layers[1], handler);
                 self.map.addControl(self.draw_control);
+
+		self.map.addControl(new OpenLayers.Control.MousePosition({numDigits: 1}));
 
                 self.default_extend = OpenLayers.Bounds.fromString(result.default_extent).transform('EPSG:900913', self.map.getProjection());
                // self.map.zoomToExtent(self.default_extend);

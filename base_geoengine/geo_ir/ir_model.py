@@ -19,7 +19,7 @@
 #
 ##############################################################################
 from osv import fields, osv
-import base
+from openerp.addons import base
 if 'geoengine' not in base.ir.ir_actions.VIEW_TYPES:
     base.ir.ir_actions.VIEW_TYPES.append(('geoengine', 'Geoengine'))
 
