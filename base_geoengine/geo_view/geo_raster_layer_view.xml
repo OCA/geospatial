@@ -4,9 +4,8 @@
         <record model="ir.ui.view" id="geo_raster_view_form">
             <field name="name">geoengine.raster.layer.form</field>
             <field name="model">geoengine.raster.layer</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form>
+                <form string="Raster Layer View">
                     <group string="General">
                         <field name="name" colspan="4"/>
                         <field name="view_id"/>
@@ -45,9 +44,8 @@
         <record model="ir.ui.view" id="geo_raster_view_tree">
             <field name="name">geoengine.raster.layer.tree</field>
             <field name="model">geoengine.raster.layer</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree string="Raster">
                     <field name="name" select="1"/>
                     <field name="raster_type" select="1"/>
                     <field name="sequence"/>
