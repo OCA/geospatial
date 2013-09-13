@@ -52,7 +52,7 @@
         "static/src/js/geoengine_edit_widget.js"],
  'css': ["static/src/css/style.css",],
  'qweb' : ["static/src/xml/*.xml"],
- 'installable': False,
+ 'installable': True,
  'active': False,
  'icon': '/base_geoengine/static/src/images/map_icon.png'}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
