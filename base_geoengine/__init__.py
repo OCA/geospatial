@@ -21,7 +21,7 @@
 """The GeoEngine module"""
 from __future__ import absolute_import
 from . import geo_model
-import wizard
+from . import wizard
 from . import geo_operators
 from . import geo_view
 from . import geo_helper

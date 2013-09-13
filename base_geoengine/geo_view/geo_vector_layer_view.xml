@@ -4,9 +4,8 @@
         <record model="ir.ui.view" id="geo_vector_view_form">
             <field name="name">geoengine.vector.layer.form</field>
             <field name="model">geoengine.vector.layer</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form>
+                <form string="Vector">
                     <group string="General">
                         <field name="name" colspan="4"/>
                         <field name="view_id"/>
@@ -45,9 +44,8 @@
         <record model="ir.ui.view" id="geo_vector_view_tree">
             <field name="name">geoengine.vector.layer.tree</field>
             <field name="model">geoengine.vector.layer</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree string="Vector">
                     <field name="name" select="1"/>
                     <field name="geo_repr" select="1"/>
                     <field name="classification" select="1"/>

@@ -36,7 +36,7 @@
  'license': 'AGPL-3',
  'website': 'http://openerp.camptocamp.com',
  'depends': ['base', 'sale', 'geoengine_partner'],
- 'installable': False,
+ 'installable': True,
  'active': False,
  'icon': '/base_geoengine/static/src/images/map_icon.png'}
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
