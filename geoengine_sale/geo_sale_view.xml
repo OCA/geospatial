@@ -22,15 +22,15 @@
         <!-- GeoEngine views -->
         <record id="ir_ui_view_geo_sale_order" model="ir.ui.view">
             <field name="name">Sale Order view</field>
-            <field name="arch"><![CDATA[ 
-<form>
-    <field name="name" select="1"/>
-    <field name="partner_id"/>
-    <field name="state"/>
-    <field name="amount_total"/>
-</form>]]></field>
+            <field name="arch" type="xml">
+                <geoengine version="7.0">
+                    <field name="name" select="1"/>
+                    <field name="partner_id"/>
+                    <field name="state"/>
+                    <field name="amount_total"/>
+                </geoengine>
+            </field>
             <field eval="16" name="priority"/>
-            <field name="type">geoengine</field>
             <field name="model">sale.order</field>
         </record>
         
