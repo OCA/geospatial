@@ -22,15 +22,15 @@
         <!-- GeoEngine views -->
         <record id="ir_ui_view_geo_partner_add" model="ir.ui.view">
             <field name="name">Address view</field>
-            <field name="arch"><![CDATA[ 
-<form>
-    <field name="name" select="1"/>
-    <field name="zip"/>
-    <field name="city"/>
-    <field name="country_id"/>
-</form>]]></field>
+            <field name="arch" type="xml">
+                <geoengine version="7.0">
+                    <field name="name" select="1"/>
+                    <field name="zip"/>
+                    <field name="city"/>
+                    <field name="country_id"/>
+                </geoengine>
+            </field>
             <field eval="16" name="priority"/>
-            <field name="type">geoengine</field>
             <field name="model">res.partner.address</field>
         </record>
         
@@ -89,15 +89,15 @@
        
         <record id="ir_ui_view_geo_partner" model="ir.ui.view">
             <field name="name">Partner view</field>
-            <field name="arch"><![CDATA[ 
-<form>
-    <field name="name" select="1"/>
-    <field name="title" />
-    <field name="function"/>
-    <field name="website"/>
-</form>]]></field>
+            <field name="arch" type="xml">
+                <geoengine version="7.0">
+                    <field name="name" select="1"/>
+                    <field name="title" />
+                    <field name="function"/>
+                    <field name="website"/>
+                </geoengine>
+            </field>
             <field eval="16" name="priority"/>
-            <field name="type">geoengine</field>
             <field name="model">res.partner</field>
         </record>
         
