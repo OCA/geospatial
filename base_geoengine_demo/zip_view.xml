@@ -41,14 +41,14 @@
           <!-- GeoEngine views -->
         <record id="ir_ui_view_resbetterzipgeoview0" model="ir.ui.view">
             <field name="name">dummy.zip.geo_view</field>
-            <field name="arch"><![CDATA[
-                <form string="Better Zip">
+            <field name="arch" type="xml">
+                <geoengine version="7.0">
                     <field name="name"/>
                     <field name="city"/>
                     <field name="total_sales"/>
-                </form>]]></field>
+                </geoengine>
+            </field>
             <field eval="16" name="priority"/>
-            <field name="type">geoengine</field>
             <field name="model">dummy.zip</field>
         </record>
         <record id="geoengine_vector_layer_basictest0" model="geoengine.vector.layer">
