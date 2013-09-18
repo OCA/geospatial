@@ -195,21 +195,8 @@ a.olControlZoomOut {
 }
 
 /* Button style */
-.oe_vm_switch_geoengine{
-  background: url("/base_geoengine/static/src/images/geoengine_switch.png");
-  overflow: hidden;
-  width: 22px;
-  height: 21px;
-  border: medium none;
-  color: transparent;
-  padding-bottom: 6px;
-}
-.oe_vm_switch_geoengine[disabled="disabled"] {
-    background-position: 0px -21px;
-}
-
-.oe_vm_switch_geoengine {
-    background-position: 0px -0px;
+.openerp .oe_view_manager .oe_view_manager_switch .oe_vm_switch_geoengine:after {
+    content: "2";
 }
 
 /* Edit Widget */
