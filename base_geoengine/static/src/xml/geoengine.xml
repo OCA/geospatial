@@ -36,7 +36,7 @@
   <t t-name="FieldGeoPointXY.readonly">
     <div
         t-att-id="widget.element_id"
-        t-attf-class="field_#{widget.type} #{_(['geo_point_xy']).contains(widget.type) ? 'oe-number' : ''}">
+        t-attf-class="field_#{widget.widget} #{_(['geo_point_xy']).contains(widget.type) ? 'oe-number' : ''}">
     </div>
   </t>
 
@@ -85,13 +85,13 @@
   <t t-name="FieldGeoRect.readonly">
     <div
         t-att-id="widget.element_id"
-        t-attf-class="field_#{widget.type} #{_(['geo_point_xy']).contains(widget.type) ? 'oe-number' : ''}">
+        t-attf-class="field_#{widget.widget} #{_(['geo_point_xy']).contains(widget.type) ? 'oe-number' : ''}">
     </div>
   </t>
 
 
 <t t-name="FieldGeoEngineEditMap">
-  <div t-att-id="widget.element_id" t-attf-class="field_#{widget.type}" border="1"/>
+  <div t-att-id="widget.element_id" t-attf-class="field_#{widget.widget}" border="1"/>
 </t>
 
 </template>
