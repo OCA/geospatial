@@ -182,7 +182,7 @@ openerp.base_geoengine = function(openerp) {
         },
 
         do_hide: function() {
-            this.$element.hide();
+            this.$el.hide();
         },
 
         do_show: function() {
@@ -190,7 +190,7 @@ openerp.base_geoengine = function(openerp) {
                 var self = this;
                 self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
             }
-            this.$element.show();
+            this.$el.show();
         },
 
         do_search: function(domains, contexts, groupbys) {
@@ -412,7 +412,7 @@ openerp.base_geoengine = function(openerp) {
             _.each(data.geoengine_layers.actives, function(item) {
                 self.geometry_columns[item.geo_field_id[1]] = true;
             });
-            this.$element.html(QWeb.render("GeoengineView", {"fields_view": this.fields_view, 'elem_id': this.elem_id}));
+            this.$el.html(QWeb.render("GeoengineView", {"fields_view": this.fields_view, 'elem_id': this.elem_id}));
 
             var google = false;
             var backgrounds = data.geoengine_layers.backgrounds;
@@ -667,9 +667,9 @@ openerp.base_geoengine = function(openerp) {
         },
 
         update_dom: function() {
-            this._super.apply(this, arguments);
+            //this._super.apply(this, arguments);
             if (this.map) {
-                this.map.render(this.element_id);
+                this.map.render(this.id_for_label);
                 if (this.readonly || this.force_readonly) {
                     this.modify_control.deactivate();
                 } else {
@@ -677,7 +677,7 @@ openerp.base_geoengine = function(openerp) {
                     this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
                 }
             }
-            this.$element.toggle(!this.invisible);
+            this.$el.toggle(!this.invisible);
         }
     });
     openerp.web.form.widgets.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEngineEditMap');
@@ -696,7 +696,7 @@ openerp.base_geoengine = function(openerp) {
 
         start: function() {
             this._super.apply(this, arguments);
-            this.$input = this.$element.find('input');
+            this.$input = this.$el.find('input');
             this.$input.change(this.on_ui_change);
             this.setupFocus(this.$input);
         },
@@ -769,7 +769,7 @@ openerp.base_geoengine = function(openerp) {
                 var geo_obj = JSON.parse(value);
                 show_value = "(" + geo_obj.coordinates[0] + ", " + geo_obj.coordinates[1] + ")";
             }
-            this.$element.find('div').text(show_value);
+            this.$el.find('div').text(show_value);
             return show_value;
         },
         validate: function() {
@@ -783,7 +783,7 @@ openerp.base_geoengine = function(openerp) {
 
         start: function() {
             this._super.apply(this, arguments);
-            this.$input = this.$element.find('input');
+            this.$input = this.$el.find('input');
             this.$input.change(this.on_ui_change);
             this.setupFocus(this.$input);
         },
@@ -898,7 +898,7 @@ openerp.base_geoengine = function(openerp) {
                 show_value = "(" + geo_obj.coordinates[0][0][0] + ", " + geo_obj.coordinates[0][0][1] + "), " +
                     "(" + geo_obj.coordinates[0][2][0] + ", " + geo_obj.coordinates[0][2][1] + ")";
             }
-            this.$element.find('div').text(show_value);
+            this.$el.find('div').text(show_value);
             return show_value;
         },
         validate: function() {
