@@ -221,5 +221,6 @@ a.olControlZoomOut {
 
 .olControlMousePosition {
     background-color: white;
-    right: 0;
+    left: 0;
+    bottom: 0;
 }
