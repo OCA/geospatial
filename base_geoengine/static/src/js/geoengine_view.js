@@ -637,13 +637,14 @@ openerp.base_geoengine = function(openerp) {
                     internalProjection: self.map.getProjection(),
                     externalProjection: 'EPSG:' + result.srid
                 });
-                self.set_value(self.value);
                 self.update_dom();
+                self.set_value(self.value);
             });
         },
 
         set_value: function(value) {
             this._super.apply(this, arguments);
+            this.value = value;
             if (this.map) {
                 var vl = this.map.getLayersByName(this.name)[0];
                 vl.destroyFeatures();
