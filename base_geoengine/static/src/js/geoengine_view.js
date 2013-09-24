@@ -646,7 +646,7 @@ openerp.base_geoengine = function(openerp) {
         set_value: function(value) {
             this._super.apply(this, arguments);
             this.value = value;
-            if (this.map) {
+            if (this.map && this.view.get("actual_mode") !== "edit") {
                 var vl = this.map.getLayersByName(this.name)[0];
                 vl.destroyFeatures();
                 if (this.value) {
@@ -659,9 +659,8 @@ openerp.base_geoengine = function(openerp) {
             }
         },
 
-        set_value_from_ui: function() {
-            this.value = this.format.write(this._geometry);
-            this._super();
+        on_ui_change: function() {
+            this.set_value(this.format.write(this._geometry));
         },
 
         validate: function() {
@@ -734,7 +733,7 @@ openerp.base_geoengine = function(openerp) {
                 this.$input.val('');
             }
         },
-        set_value_from_ui: function() {
+        on_ui_change: function() {
             var coords = this.get_coords();
             if (coords[0] && coords[1]) {
                 var json = this.make_GeoJSON(coords);
@@ -743,7 +742,6 @@ openerp.base_geoengine = function(openerp) {
                 this.value = false;
             }
 
-            this._super();
         },
         validate: function() {
             this.invalid = false;
@@ -851,7 +849,7 @@ openerp.base_geoengine = function(openerp) {
 
             return [[minx, miny], [maxx, maxy]];
         },
-        set_value_from_ui: function() {
+        on_ui_change: function() {
             var coords = this.get_coords();
             if (this.all_are_set(coords)) {
 
@@ -862,8 +860,6 @@ openerp.base_geoengine = function(openerp) {
             } else {
                 this.value = false;
             }
-
-            this._super();
         },
         all_are_set: function(coords) {
             return (coords[0][0] !== false && coords[0][1] !== false &&
