@@ -599,6 +599,7 @@ openerp.base_geoengine = function(openerp) {
             if (this.map) {
                 return;
             }
+            this.view.on("change:actual_mode", this, this.on_mode_change);
             var self = this;
             // We blacklist all other fields in order to avoid calling get_value inside the build_context on field widget which aren't started yet
             var blacklist = this.view.fields_order.slice();
@@ -637,7 +638,7 @@ openerp.base_geoengine = function(openerp) {
                     internalProjection: self.map.getProjection(),
                     externalProjection: 'EPSG:' + result.srid
                 });
-                self.update_dom();
+                self.on_mode_change();
                 self.set_value(self.value);
             });
         },
@@ -667,15 +668,18 @@ openerp.base_geoengine = function(openerp) {
             this.invalid = false;
         },
 
-        update_dom: function() {
-            //this._super.apply(this, arguments);
+        on_mode_change: function() {
             if (this.map) {
                 this.map.render(this.id_for_label);
-                if (this.readonly || this.force_readonly) {
+                var actual_mode = this.view.get("actual_mode");
+                if (actual_mode == "view") {
                     this.modify_control.deactivate();
-                } else {
+                } else if(actual_mode == "create" || !this.value) {
                     this.modify_control.activate();
-                    this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
+                    this.draw_control.activate();
+                } else if(actual_mode == "edit") {
+                    this.modify_control.activate();
+                    this.draw_control.deactivate();
                 }
             }
             this.$el.toggle(!this.invisible);
