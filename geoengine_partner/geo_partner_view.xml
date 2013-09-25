@@ -2,6 +2,7 @@
 <openerp>
     <data>
         <!-- addresses -->
+        <!--
         <record id="base.action_partner_address_form" model="ir.actions.act_window">
             <field name="view_mode">tree,form,geoengine,kanban</field>
         </record>
@@ -12,13 +13,16 @@
             <field name="type">form</field>
             <field name="inherit_id" ref="base.view_partner_address_form1"/>
             <field name="arch" type="xml">
-                <field name="email" position="after">
-                    <field name="geo_point" colspan="4" widget="text"
-                           groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
-                </field>
+                <form string="Address Form">
+                    <field name="email" position="after">
+                        <field name="geo_point" colspan="4" widget="text"
+                               groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
+                    </field>
+                </form>
             </field>
         </record>
         
+        -->
         <!-- GeoEngine views -->
         <record id="ir_ui_view_geo_partner_add" model="ir.ui.view">
             <field name="name">Address view</field>
@@ -31,12 +35,12 @@
                 </geoengine>
             </field>
             <field eval="16" name="priority"/>
-            <field name="model">res.partner.address</field>
+            <field name="model">res.partner</field>
         </record>
         
         <record id="geoengine_vector_layer_res_partner_address" model="geoengine.vector.layer">
             <field name="geo_field_id"
-                ref="geoengine_partner.field_res_partner_address_geo_point"/>
+                ref="geoengine_partner.field_res_partner_geo_point"/>
             <field name="name">Address location</field>
             <field eval="6" name="sequence"/>
             <field name="view_id" ref="ir_ui_view_geo_partner_add"/>
@@ -76,13 +80,14 @@
         <record model="ir.ui.view" id="geo_partner_view_form">
             <field name="name">geo_partner_form</field>
             <field name="model">res.partner</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="arch" type="xml">
-                <field name="comment" position="after">
-                    <field name="geo_point" colspan="4" widget="text"
-                           groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
-                </field>
+                <notebook>
+                    <page string="Geoengine Map">
+                        <field name="geo_point" widget="geo_edit_map"
+                               groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
+                    </page>
+                </notebook>
             </field>
         </record>
         
