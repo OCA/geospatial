@@ -8,7 +8,7 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <notebook position="inside">
-                    <page string="GeoEngine Data"
+                    <page string="GeoEngine Data" col="4"
                         attrs="{'invisible': [('type', '!=', 'geoengine')]}">
                         <field name="default_extent" colspan="4"/>
                         <separator string="Vector (Active layers)" colspan="4"/>
