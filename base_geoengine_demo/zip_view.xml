@@ -90,7 +90,7 @@
         </record>
         <record id="geoengine_raster_layer_mapbox0" model="geoengine.raster.layer">
             <field name="raster_type">mapbox</field>
-            <field name="mapbox_type">mapbox.mapbox-light</field>
+            <field name="mapbox_id">camptocamp.map-qrf4x</field>
             <field name="name">ZIP Mapbox Light</field>
             <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
             <field eval="1" name="overlay"/>
