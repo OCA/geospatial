@@ -24,7 +24,7 @@
                     <group string="MapBox layer data"
                         attrs="{'invisible': [('raster_type', '!=', 'mapbox')]}"
                         colspan="4">
-                        <field name="mapbox_type" attrs="{'required': [('raster_type', '=', 'mapbox')]}"/>
+                        <field name="mapbox_id" attrs="{'required': [('raster_type', '=', 'mapbox')]}"/>
                     </group>
                     <group string="swisstopo layer data"
                         attrs="{'invisible': [('raster_type', '!=', 'swisstopo')]}"
