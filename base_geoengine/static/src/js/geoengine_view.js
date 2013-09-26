@@ -88,10 +88,10 @@ openerp.base_geoengine = function(openerp) {
                 case "mapbox":
                     out.push(
                         new OpenLayers.Layer.XYZ(l.name, [
-                            "http://a.tiles.mapbox.com/v3/" + l.mapbox_type + "/${z}/${x}/${y}.png",
-                            "http://b.tiles.mapbox.com/v3/" + l.mapbox_type + "/${z}/${x}/${y}.png",
-                            "http://c.tiles.mapbox.com/v3/" + l.mapbox_type + "/${z}/${x}/${y}.png",
-                            "http://d.tiles.mapbox.com/v3/" + l.mapbox_type + "/${z}/${x}/${y}.png"
+                            "http://a.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
+                            "http://b.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
+                            "http://c.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
+                            "http://d.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png"
                         ], {
                             sphericalMercator: true,
                             wrapDateLine: true,
@@ -102,6 +102,10 @@ openerp.base_geoengine = function(openerp) {
                     );
                     break;
                 case "swisstopo":
+                    var resolutions = [4000, 3750, 3500, 3250, 3000, 2750, 2500, 2250, 2000, 1750, 1500, 1250, 1000, 750, 650, 500, 250, 100, 50, 20, 10, 5, 2.5];
+                    if (l.swisstopo_type == 'ch.swisstopo.swissimage') {
+                        resolutions.push(2, 1.5, 1, 0.5);
+                    }
                     out.push(
                         new OpenLayers.Layer.WMTS({
                             name: l.name,
@@ -110,7 +114,7 @@ openerp.base_geoengine = function(openerp) {
                             url: ['https://wmts0.geo.admin.ch/', 'https://wmts1.geo.admin.ch/', 'https://wmts2.geo.admin.ch/'],
                             projection: 'EPSG:21781',
                             units: 'm',
-                            resolutions: [4000, 3750, 3500, 3250, 3000, 2750, 2500, 2250, 2000, 1750, 1500, 1250, 1000, 750, 650, 500, 250, 100, 50, 20, 10, 5 ,2.5, 2, 1.5, 1, 0.5],
+                            resolutions: resolutions,
                             maxExtent: [420000, 30000, 900000, 350000],
                             requestEncoding: 'REST',
                             matrixSet: '21781',
@@ -572,6 +576,24 @@ openerp.base_geoengine = function(openerp) {
 
         create_edit_layers: function(self, field_infos) {
             var vl = new OpenLayers.Layer.Vector(self.name, {
+		styleMap: new OpenLayers.StyleMap({
+		    'default': new OpenLayers.Style({
+			fillColor: '#ee9900',
+			fillOpacity: 0.7,
+			strokeColor: '#ee9900',
+			strokeOpacity: 1,
+			strokeWidth: 3,
+			pointRadius: 6
+		    }),
+		    'select': new OpenLayers.Style({
+			fillColor: 'red',
+			strokeColor: 'red'
+		    }),
+		    'temporary': new OpenLayers.Style({
+			fillColor: 'blue',
+			strokeColor: 'blue'
+		    })
+		}),
                 eventListeners : {
                     featuremodified: function(event) {
                         this._geometry = event.feature.geometry;
@@ -594,6 +616,41 @@ openerp.base_geoengine = function(openerp) {
             return [rl, vl];
         },
 
+        find_parent_tabs: function() {
+            var obj_id = this.element_id;
+            var current_obj = $('#' + obj_id);
+            var results = new Array();
+            while (current_obj.length != 0) {
+                class_name = current_obj.attr('class');
+                if (class_name && class_name.match(/ui-tabs-panel/) !== null) {
+                    results.push(current_obj);
+                }
+                current_obj = current_obj.parent();
+            }
+            return results;
+        },
+
+        add_tab_listener: function() {
+
+            var self = this;
+            var parent_tabs = this.find_parent_tabs();
+            self.parent_tabs = parent_tabs;
+            for (var i = 0; i < parent_tabs.length; i++) {
+                tab = parent_tabs[i];
+                tab.parent().bind('tabsshow', function(event, ui) {
+                    var ui_id = ui.tab.href.match(/notebook-.*/)[0];
+                    // update the render only if the ui_id match with one of the parent_tab id
+                    for (var i = 0; i < self.parent_tabs.length; i++) {
+                        tab_id = self.parent_tabs[i][0].id;
+                        if (ui_id == tab_id){
+                            self.render_map(self);
+                            return;
+                        }
+                    }
+                });
+            }
+        },
+
         start: function() {
             this._super.apply(this, arguments);
             if (this.map) {
@@ -601,6 +658,8 @@ openerp.base_geoengine = function(openerp) {
             }
             this.view.on("change:actual_mode", this, this.on_mode_change);
             var self = this;
+            // add a listener on parent tab if it exists in order to refresh geoengine view
+            self.add_tab_listener();
             // We blacklist all other fields in order to avoid calling get_value inside the build_context on field widget which aren't started yet
             var blacklist = this.view.fields_order.slice();
             delete blacklist[this.name];
