@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name': 'Geo spatial support for OpenERP',
+{'name': 'Geo spatial support Demo',
  'version': '0.1',
  'category': 'GeoBI',
  'description': """
