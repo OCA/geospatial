@@ -728,7 +728,7 @@ openerp.base_geoengine = function(openerp) {
 
         on_mode_change: function() {
             if (this.map) {
-                this.map.render(this.id_for_label);
+                this.map.render(this.name);
                 var actual_mode = this.view.get("actual_mode");
                 if (actual_mode == "view") {
                     this.modify_control.deactivate();
