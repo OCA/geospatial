@@ -2,10 +2,10 @@
 <openerp>
     <data>
         <!-- sale order -->
-        <record id="sale.action_order_form" model="ir.actions.act_window">
+        <record id="sale.action_orders" model="ir.actions.act_window">
             <field name="view_mode">tree,form,calendar,graph,geoengine</field>
         </record>
-        
+
         <record model="ir.ui.view" id="geo_sale_order_view_form">
             <field name="name">geo_sale_order_form</field>
             <field name="model">sale.order</field>
@@ -18,7 +18,7 @@
                 </field>
             </field>
         </record>
-        
+
         <!-- GeoEngine views -->
         <record id="ir_ui_view_geo_sale_order" model="ir.ui.view">
             <field name="name">Sale Order view</field>
@@ -33,10 +33,10 @@
             <field eval="16" name="priority"/>
             <field name="model">sale.order</field>
         </record>
-        
+
         <record id="geoengine_vector_layer_sales_order" model="geoengine.vector.layer">
             <field name="geo_field_id"
-                   ref="geoengine_partner.field_res_partner_address_geo_point"/>
+                   ref="geoengine_partner.field_res_partner_geo_point"/>
             <field name="name">Sale order proportional</field>
             <field eval="6" name="sequence"/>
             <field name="view_id" ref="ir_ui_view_geo_sale_order"/>
@@ -46,7 +46,7 @@
             <field name="classification">quantile</field>
             <field name="begin_color">#4B69FD</field>
         </record>
-        
+
         <record id="geoengine_raster_layer_sales_order" model="geoengine.raster.layer">
             <field name="raster_type">google</field>
             <field name="google_type">G_HYBRID_MAP</field>
