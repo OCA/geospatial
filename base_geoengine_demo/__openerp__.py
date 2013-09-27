@@ -35,7 +35,7 @@
                 'data/npa_geom.xml',
                 'security/ir.model.access.csv'],
  'demo_xml': [],
- 'installable': True,
+ 'installable': False,
  'active': False,
  'application': True,
  'icon': '/base_geoengine/static/src/images/map_icon.png'}
