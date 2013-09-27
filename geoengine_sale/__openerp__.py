@@ -29,7 +29,7 @@
  'license': 'AGPL-3',
  'website': 'http://openerp.camptocamp.com',
  'depends': ['base', 'geoengine_partner', 'sale'],
- 'installable': True,
+ 'installable': False,
  'application': True,
  'active': False,
  'icon': '/base_geoengine/static/src/images/map_icon.png'}
