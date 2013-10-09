@@ -4,9 +4,8 @@
         <record model="ir.ui.view" id="geo_retail_machine_view_form">
             <field name="name">geoengine.demo.retail.machine.form</field>
             <field name="model">geoengine.demo.automatic.retailing.machine</field>
-            <field name="type">form</field>
             <field name="arch" type="xml">
-                <form>
+                <form string="Retail Machine">
                     <field name="name" colspan="4"/>
                     <notebook colspan="4">
                       <page string="Geometry">
@@ -26,9 +25,8 @@
         <record model="ir.ui.view" id="geo_retail_machine_view_tree">
             <field name="name">geoengine.demo.retail.machine.form</field>
             <field name="model">geoengine.demo.automatic.retailing.machine</field>
-            <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree>
+                <tree string="Retail Machine">
                     <field name="name" select="1"/>
                     <field name="total_sales" select="1"/>
                     <field name="money_level" select="1"/>
@@ -72,15 +70,15 @@
         <!-- GeoEngine views -->
         <record id="ir_ui_view_retailmachineview0" model="ir.ui.view">
             <field name="name">Retail machine view</field>
-            <field name="arch"><![CDATA[
-<form>
-    <field name="name" select="1"/>
-    <field name="total_sales" select="1"/>
-    <field name="money_level" />
-    <field name="state"/>
-</form>]]></field>
+            <field name="arch" type="xml">
+                <geoengine version="7.0">
+                    <field name="name" select="1"/>
+                    <field name="total_sales" select="1"/>
+                    <field name="money_level" />
+                    <field name="state"/>
+                </geoengine>
+            </field>
             <field eval="16" name="priority"/>
-            <field name="type">geoengine</field>
             <field name="model">geoengine.demo.automatic.retailing.machine</field>
         </record>
         <record id="geoengine_vector_layer_retailmachinebasicpoint0" model="geoengine.vector.layer">
@@ -167,7 +165,7 @@ AABJRU5ErkJggg==
         </record>
         <record id="geoengine_raster_layer_retailmachinemapbox" model="geoengine.raster.layer">
             <field name="raster_type">mapbox</field>
-            <field name="mapbox_type">mapbox.mapbox-streets</field>
+            <field name="mapbox_id">camptocamp.map-ok288g0c</field>
             <field name="name">Retail Machine Mapbox</field>
             <field name="view_id" ref="ir_ui_view_retailmachineview0"/>
             <field eval="0" name="overlay"/>
