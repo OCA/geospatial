@@ -18,7 +18,7 @@ Various background sources are available:
 
  - Mapbox,
  - OpenStreetMap,
- - SwissTopo
+ - SwissTopo,
  - Any WMS sources.
 
 Data layers can also easily be configured using any geometry columns of your system.
