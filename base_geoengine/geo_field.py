@@ -92,7 +92,11 @@ class Geom(fields._column):
         return shape
 
     def _postgis_index_name(self, table, col_name):
+<<<<<<< a204fc3cd918c16f00ae65ca838bd7508c1ecdbd
         return %s_%s_gist_index % (table, col_name)
+=======
+        return "%s_%s_gist_index" % (table, col_name)
+>>>>>>> Revert "Rename all addons to xxx_unported to be travis compliant"
 
     def _create_index(self, cursor, table, col_name):
         if self._gist_index:
@@ -163,9 +167,15 @@ class Geom(fields._column):
                             "We can not change dimention %s to %s" % (check_data[2], geo_column._dim))
         if self._gist_index:
             cursor.execute("SELECT indexname FROM pg_indexes WHERE indexname = %s",
+<<<<<<< a204fc3cd918c16f00ae65ca838bd7508c1ecdbd
                            (self._postgis_index_name(table, col_name),)
             index = cursor.fetchone()
             if cursor:
+=======
+                           (self._postgis_index_name(table, col_name),))
+            index = cursor.fetchone()
+            if index:
+>>>>>>> Revert "Rename all addons to xxx_unported to be travis compliant"
                 return True
             self._create_index(cursor, table, col_name)
         return True
@@ -231,7 +241,10 @@ class Geom(fields._column):
 def postprocess(self, cr, uid, obj, field, value=None, context=None):
     if context is None:
         context = {}
+<<<<<<< a204fc3cd918c16f00ae65ca838bd7508c1ecdbd
     result = value
+=======
+>>>>>>> Revert "Rename all addons to xxx_unported to be travis compliant"
     field_type = obj._columns[field]._type
     if field_type.startswith('geo_'):
         res = geojson.dumps(value)

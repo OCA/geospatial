@@ -724,12 +724,15 @@ openerp.base_geoengine = function(openerp) {
 
         validate: function() {
             this.invalid = false;
+<<<<<<< a204fc3cd918c16f00ae65ca838bd7508c1ecdbd
             try {
                 var vl = this.map.getLayersByName(this.name)[0];
                 this.invalid = (this.required && jQuery.isEmptyObject(vl.features));
             } catch(e) {
                 this.invalid = true;
             }
+=======
+>>>>>>> Revert "Rename all addons to xxx_unported to be travis compliant"
         },
 
         on_mode_change: function() {
