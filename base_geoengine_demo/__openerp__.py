@@ -24,19 +24,17 @@
  'description': """
      Geo spatial sample module for geospatial use
  """,
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'website': 'http://openerp.camptocamp.com',
  'depends': ['base_geoengine'],
- 'init_xml': [],
- 'update_xml': ['zip_view.xml',
-                'retail_machine_view.xml',
-                'data/retail_machine_geom.xml',
-                'data/npa_geom.xml',
-                'security/ir.model.access.csv'],
+ 'data': ['zip_view.xml',
+          'retail_machine_view.xml',
+          'data/retail_machine_geom.xml',
+          'data/npa_geom.xml',
+          'security/ir.model.access.csv'],
  'demo_xml': [],
- 'installable': False,
+ 'installable': True,
  'active': False,
  'application': True,
  'icon': '/base_geoengine/static/src/images/map_icon.png'}
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
