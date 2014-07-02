@@ -32,8 +32,17 @@ def value_to_shape(value):
         if '{' in value:
             geo_dict = geojson.loads(value)
             shape_to_return = asShape(geo_dict)
+<<<<<<< a204fc3cd918c16f00ae65ca838bd7508c1ecdbd
         else:
             shape_to_return = wkt.loads(value)
+=======
+        elif value:
+            # if value is empty sting we return False to be orm coherent,
+            #may be we should return an empty shapely
+            shape_to_return = wkt.loads(value)
+        else:
+            return False
+>>>>>>> Revert "Rename all addons to xxx_unported to be travis compliant"
     elif hasattr(value, 'wkt'):
         #Nasty but did not find equivalent of base string for shapely
         if 'shapely.geometry' in str(type(value)):
