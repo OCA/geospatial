@@ -21,7 +21,6 @@
 import json
 import logging
 
-
 try:
     from shapely.wkb import loads as  wkbloads
     from shapely.geometry import asShape
