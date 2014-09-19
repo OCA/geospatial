@@ -18,9 +18,15 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from shapely import wkt
-from shapely.geometry import asShape
-import geojson
+import logging
+
+try:
+    from shapely import wkt
+    from shapely.geometry import asShape
+    import geojson
+except ImportError:
+    logger = logging.getLogger(__name__)
+    logger.warning('Shapely or geojson are not available in the sys path')
 
 def value_to_shape(value):
     """Transforms input into a Shapely object"""
