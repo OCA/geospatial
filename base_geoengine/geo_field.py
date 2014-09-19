@@ -21,9 +21,14 @@
 import json
 import logging
 
-from shapely.wkb import loads as  wkbloads
-from shapely.geometry import asShape
-import geojson
+
+try:
+    from shapely.wkb import loads as  wkbloads
+    from shapely.geometry import asShape
+    import geojson
+except ImportError:
+    logger = logging.getLogger(__name__)
+    logger.warning('Shapely or geojson are not available in the sys path')
 
 from osv import fields, osv, orm
 from tools.translate import _
