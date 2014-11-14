@@ -23,6 +23,7 @@ from osv import fields, osv
 
 GEO_VIEW = ('geoengine', 'GeoEngine')
 
+
 class IrUIView(osv.osv):
     _inherit = 'ir.ui.view'
 
@@ -45,7 +46,8 @@ class IrUIView(osv.osv):
                                                     'view_id',
                                                     'Vector layers',
                                                     required=True),
-                'default_extent':fields.char('Default map extent in 900913', size=128)}
+                'default_extent': fields.char('Default map extent in 900913', size=128)}
 
-    _defaults = {'default_extent': lambda *a: '-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898'}
+    _defaults = {'default_extent': lambda *a:
+                 '-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898'}
 IrUIView()

@@ -21,10 +21,8 @@
 from osv import fields, osv
 
 
-
 class GeoRasterLayer(osv.osv):
     _name = 'geoengine.raster.layer'
-
 
     _columns = {'raster_type':  fields.selection([('google', 'Google'),
                                                   ('osm', 'OpenStreetMap'),
@@ -37,8 +35,10 @@ class GeoRasterLayer(osv.osv):
                 'name': fields.char('Layer Name', size=256, translate=True, required=True),
                 'url': fields.char('Service URL', size=1024),
                 'google_type':  fields.selection([('G_NORMAL_MAP', 'Google normal map'),
-                                                  ('G_SATELLITE_MAP', 'Google staellite map'),
-                                                  ('G_HYBRID_MAP', 'Google Hybrid map'),
+                                                  ('G_SATELLITE_MAP',
+                                                   'Google staellite map'),
+                                                  ('G_HYBRID_MAP',
+                                                   'Google Hybrid map'),
                                                   ('G_PHYSICAL_MAP', 'Google Physical map')],
                                                  string="Google raster layer type"),
                 'mapbox_id':  fields.char("Mapbox ID", size=256),
@@ -47,13 +47,13 @@ class GeoRasterLayer(osv.osv):
                                                     string="Swisstopo raster layer type"),
                 'swisstopo_time':  fields.char('Release date', size=256),
                 'sequence': fields.integer('layer priority lower on top'),
-                'overlay' : fields.boolean('Is overlay layer?'),
+                'overlay': fields.boolean('Is overlay layer?'),
                 'field_id': fields.many2one('ir.model.fields', 'OpenERP layer field to use',
                                             domain=[('ttype', 'ilike', 'geo_'),
                                                     ('model', '=', 'view_id.model')]),
-                'view_id' : fields.many2one('ir.ui.view', 'Related View',
-                                             domain=[('type', '=', 'geoengine')],
-                                             required=True),
+                'view_id': fields.many2one('ir.ui.view', 'Related View',
+                                           domain=[('type', '=', 'geoengine')],
+                                           required=True),
                 'use_to_edit': fields.boolean('Use to edit')}
 # TODO Write data check consraints
 

@@ -50,8 +50,8 @@
         "static/src/js/mapfish/GeoStat/Choropleth.js",
         "static/src/js/geoengine_view.js",
         "static/src/js/geoengine_edit_widget.js"],
- 'css': ["static/src/css/style.css",],
- 'qweb' : ["static/src/xml/*.xml"],
+ 'css': ["static/src/css/style.css", ],
+ 'qweb': ["static/src/xml/*.xml"],
  'installable': False,
  'active': False,
  'icon': '/base_geoengine/static/src/images/map_icon.png'}

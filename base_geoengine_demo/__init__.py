@@ -18,6 +18,6 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from __future__ import absolute_import 
+from __future__ import absolute_import
 from . import geo_npa
 from . import retail_machine

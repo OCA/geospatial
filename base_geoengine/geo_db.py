@@ -25,20 +25,24 @@ import logging
 
 logger = logging.getLogger('geoengine.sql')
 
+
 def init_postgis(cursor):
-    ## Create language may fail and it can be normal
-    cursor.execute("SELECT tablename from pg_tables where tablename='spatial_ref_sys';")
+    # Create language may fail and it can be normal
+    cursor.execute(
+        "SELECT tablename from pg_tables where tablename='spatial_ref_sys';")
     check = cursor.fetchone()
     if check:
         return {}
     db, pool = pooler.get_db_and_pool(cursor.dbname)
     mycursor = db.cursor()
-    p = addons.get_module_resource('base_geoengine', 'postgis_sql','postgis.sql')
+    p = addons.get_module_resource(
+        'base_geoengine', 'postgis_sql', 'postgis.sql')
     postgis_sql = open(p).read()
-    p = addons.get_module_resource('base_geoengine', 'postgis_sql','spatial_ref_sys.sql')
+    p = addons.get_module_resource(
+        'base_geoengine', 'postgis_sql', 'spatial_ref_sys.sql')
     spatial_ref_sys_sql = open(p).read()
     try:
-        mycursor.execute('CREATE LANGUAGE plpgsql');
+        mycursor.execute('CREATE LANGUAGE plpgsql')
         mycursor.commit()
     except Exception, exc:
         mycursor.rollback()
