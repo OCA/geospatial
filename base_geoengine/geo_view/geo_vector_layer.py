@@ -20,25 +20,26 @@
 ##############################################################################
 from osv import fields, osv
 
-SUPPORTED_ATT = ['float', 'integer','integer_big', 'related',
+SUPPORTED_ATT = ['float', 'integer', 'integer_big', 'related',
                  'function', 'date', 'datetime', 'char', 'text', 'selection']
+
 
 class GeoVectorLayer(osv.osv):
     _name = 'geoengine.vector.layer'
 
-
     _columns = {'geo_repr': fields.selection([('basic', 'Basic'),
                                               # Actually we have to think if we should separate it for colored
                                               #('choropleth', 'Choropleth'),
-                                              ('proportion', 'Proportional Symbol'),
+                                              ('proportion',
+                                               'Proportional Symbol'),
                                               ('colored', 'Colored range/Choropleth')],
                                              string="Representation mode",
                                              required=True),
                 'classification': fields.selection([('unique', 'Unique value'),
                                                     ('interval', 'Interval'),
                                                     ('quantile', 'Quantile')],
-                                             string="Classification mode",
-                                             required=False),
+                                                   string="Classification mode",
+                                                   required=False),
                 'name': fields.char('Layer Name', size=256, translate=True, required=True),
                 'symbol_url': fields.text('Symbol URL'),
                 'symbol_binary': fields.binary('Binary Symbol'),
@@ -52,11 +53,13 @@ class GeoVectorLayer(osv.osv):
                                                       domain=[('ttype', 'in', SUPPORTED_ATT)]),
                 'geo_field_id': fields.many2one('ir.model.fields',
                                                 'Geo field',
-                                                domain=[('ttype', 'ilike', 'geo_')],
+                                                domain=[
+                                                    ('ttype', 'ilike', 'geo_')],
                                                 required=True),
-                'view_id' : fields.many2one('ir.ui.view', 'Related View',
-                                            domain=[('type', '=', 'geoengine')],
-                                            required=True),
+                'view_id': fields.many2one('ir.ui.view', 'Related View',
+                                           domain=[
+                                               ('type', '=', 'geoengine')],
+                                           required=True),
                 'sequence': fields.integer('layer priority lower on top'),
                 'readonly': fields.boolean('Layer is read only')}
     # TODO Write data check consraints

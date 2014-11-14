@@ -35,4 +35,3 @@ from . import geo_multiline
 from . import geo_polygon
 from . import geo_multipolygon
 from . import company
-

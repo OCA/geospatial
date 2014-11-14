@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-#TODO create a base Geocoder module
+# TODO create a base Geocoder module
 from urllib import urlencode
 from urllib2 import urlopen
 import xml.dom.minidom
@@ -26,18 +26,19 @@ import logging
 
 from shapely.geometry import Point
 
-from osv import fields, osv
+from osv import osv
 from openerp.osv.osv import except_osv
 from tools.translate import _
 
 
 logger = logging.getLogger('GeoNames address encoding')
 
+
 class ResPartner(osv.osv):
+
     """Auto geo coding of addresses"""
     _name = "res.partner"
     _inherit = "res.partner"
-
 
     def _can_geocode(self, cursor, uid, context):
         usr = self.pool.get('res.users')
@@ -74,8 +75,6 @@ class ResPartner(osv.osv):
             return False
         return parse_code(codes[0])
 
-
-
     def geocode_from_geonames(self, cursor, uid, ids, srid='900913', strict=True, context=None):
         context = context or {}
         base_url = u'http://ws.geonames.org/postalCodeSearch?'
@@ -96,7 +95,8 @@ class ResPartner(osv.osv):
                     answer = urlopen(url)
                     data = {'geo_point': self._get_point_from_reply(answer)}
                     add.write(data)
-                    # We use postgres to do projection in order not to install GDAL dependences
+                    # We use postgres to do projection in order not to install
+                    # GDAL dependences
                     sql = ("UPDATE res_partner"
                            "  SET geo_point = ST_Transform(st_SetSRID(geo_point, 4326), %s)"
                            "  WHERE id = %s")
@@ -108,7 +108,8 @@ class ResPartner(osv.osv):
         return ids
 
     def write(self, cursor, uid, ids, vals, context=None):
-        res = super(ResPartner, self).write(cursor, uid, ids, vals, context=None)
+        res = super(ResPartner, self).write(
+            cursor, uid, ids, vals, context=None)
         do_geocode = self._can_geocode(cursor, uid, context)
         if do_geocode and "country_id" in vals or 'city' in vals or 'zip' in vals:
             self.geocode_from_geonames(cursor, uid, ids, context=context)
@@ -120,5 +121,5 @@ class ResPartner(osv.osv):
         if do_geocode:
             self.geocode_from_geonames(cursor, uid, res, context=context)
         return res
-    
+
 ResPartner()
