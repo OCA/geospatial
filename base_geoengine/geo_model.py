@@ -21,7 +21,8 @@
 from __future__ import absolute_import
 import json
 
-from osv import fields, osv, orm
+from openerp.osv import fields, osv, orm
+from openerp.osv import setup_modifiers
 from tools.translate import _
 from . import geo_field
 from . import  geo_db
@@ -121,8 +122,8 @@ class GeoModel(orm.BaseModel):
                 view = self._get_geo_view(cursor, uid)
             else:
                 view = view_obj.browse(cursor, uid, view_id)
-            res = super(GeoModel, self).fields_view_get(cursor, uid, view.id,
-                                                        'form', context, toolbar, submenu)
+            res = super(GeoModel, self).fields_view_get(cursor, uid, view_id=view_id, view_type=view_type,
+                                                        context=context, toolbar=toolbar, submenu=submenu)
             res['geoengine_layers'] = {}
             res['geoengine_layers']['backgrounds'] = []
             res['geoengine_layers']['actives'] = []
@@ -142,7 +143,7 @@ class GeoModel(orm.BaseModel):
                 res['fields'].update(self.fields_get(cursor, uid, [geo_f_name]))
         else:
             return super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type,
-                                                         context, toolbar, submenu)
+                                                         context, toolbar)
         return res
 
     def get_edit_info_for_geo_column(self, cursor, uid, column, context=None):
