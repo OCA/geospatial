@@ -111,7 +111,7 @@ openerp.base_geoengine = function(openerp) {
                             name: l.name,
                             layer: l.swisstopo_type,
                             formatSuffix: 'jpeg',
-                            url: ['https://wmts0.geo.admin.ch/', 'https://wmts1.geo.admin.ch/', 'https://wmts2.geo.admin.ch/'],
+                            url: ['https://wmts5.geo.admin.ch/', 'https://wmts6.geo.admin.ch/', 'https://wmts7.geo.admin.ch/'],
                             projection: 'EPSG:21781',
                             units: 'm',
                             resolutions: resolutions,
