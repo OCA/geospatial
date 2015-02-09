@@ -698,6 +698,8 @@ openerp.base_geoengine = function(openerp) {
                 });
                 self.set_value(self.value);
                 self.update_dom();
+
+                $(document).trigger('FieldGeoEngineEditMap:ready', [self.map]);
             });
         },
 
