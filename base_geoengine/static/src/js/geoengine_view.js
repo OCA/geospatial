@@ -690,7 +690,7 @@ openerp.base_geoengine = function(openerp) {
         set_value: function(value) {
             this._super.apply(this, arguments);
             this.value = value;
-            if (this.map && this.view.get("actual_mode") !== "edit") {
+            if (this.map) {
                 var vl = this.map.getLayersByName(this.name)[0];
                 vl.destroyFeatures();
                 if (this.value) {
@@ -727,14 +727,14 @@ openerp.base_geoengine = function(openerp) {
         },
 
         on_mode_change: function() {
-        	this.render_map(this);
+            this.render_map(this);
             this.$el.toggle(!this.invisible);
         },
         
         render_map: function(self) {
             if (self.map) {
                 self.map.render(self.name);
-                if (self.readonly || self.force_readonly) {
+                if (this.get("effective_readonly") || self.force_readonly) {
                     self.modify_control.deactivate();
                 } else {
                     self.modify_control.activate();
@@ -748,11 +748,11 @@ openerp.base_geoengine = function(openerp) {
 
     openerp.base_geoengine.FieldGeoEngineEditMapReadonly = openerp.base_geoengine.FieldGeoEngineEditMap.extend({
         init: function(view, node) {
+        	this.force_readonly = true;
             this._super(view, node);
-            this.force_readonly = true;
          }
     });
-    openerp.web.form.widgets.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEngineEditMapReadonly');
+    openerp.web.form.widgets.add('geo_edit_map_readonly', 'openerp.base_geoengine.FieldGeoEngineEditMapReadonly');
 
     //-----------------------------------------------------------------------
     openerp.base_geoengine.FieldGeoPointXY = openerp.web.form.AbstractField.extend({
