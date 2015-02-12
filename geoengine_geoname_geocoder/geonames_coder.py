@@ -79,6 +79,15 @@ class ResPartner(osv.osv):
     def geocode_from_geonames(self, cursor, uid, ids, srid='900913', strict=True, context=None):
         context = context or {}
         base_url = u'http://ws.geonames.org/postalCodeSearch?'
+        config_parameter_obj = self.pool.get('ir.config_parameter')
+        username = config_parameter_obj.get_param(
+            cursor, uid, 'geoengine_geonames_username')
+        if not username:
+            raise except_osv(_('A username is required to access '
+                               'http://ws.geonames.org/ \n'
+                               'Please provides a valid one by setting a '
+                               'value in System Paramter for the key '
+                               '"geoengine_geonames_username"'))
         filters = {}
         if not isinstance(ids, list):
             ids = [ids]
@@ -86,6 +95,7 @@ class ResPartner(osv.osv):
             logger.info('geolocalize %s', add.name)
             if add.country_id.code and (add.city or add.zip):
                 filters[u'country'] = add.country_id.code.encode('utf-8')
+                filters[u'username'] = username.encode('utf-8')
                 if add.city:
                     filters[u'placename'] = add.city.encode('utf-8')
                 if add.zip:
