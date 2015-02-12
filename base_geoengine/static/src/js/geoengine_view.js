@@ -697,8 +697,9 @@ openerp.base_geoengine = function(openerp) {
                     internalProjection: self.map.getProjection(),
                     externalProjection: 'EPSG:' + result.srid
                 });
-                self.on_mode_change();
                 self.set_value(self.value);
+                self.render_map(self);
+                $(document).trigger('FieldGeoEngineEditMap:ready', [self.map]);
             });
         },
 
@@ -736,22 +737,23 @@ openerp.base_geoengine = function(openerp) {
         },
 
         on_mode_change: function() {
-            if (this.map) {
-                this.map.render(this.name);
-                var actual_mode = this.view.get("actual_mode");
-                if (actual_mode == "view") {
-                    this.modify_control.deactivate();
-                } else if(actual_mode == "create" || !this.value) {
-                    this.modify_control.activate();
-                    this.draw_control.activate();
-                } else if(actual_mode == "edit") {
-                    this.modify_control.activate();
-                    this.draw_control.deactivate();
+        	this.render_map(this);
+            this.$el.toggle(!this.invisible);
+        },
+        
+        render_map: function(self) {
+            if (self.map) {
+                self.map.render(self.name);
+                if (self.readonly || self.force_readonly) {
+                    self.modify_control.deactivate();
+                } else {
+                    self.modify_control.activate();
+                    self.value === false ? self.draw_control.activate() : self.draw_control.deactivate();
                 }
             }
-            this.$el.toggle(!this.invisible);
-        }
+        },
     });
+
     openerp.web.form.widgets.add('geo_edit_map', 'openerp.base_geoengine.FieldGeoEngineEditMap');
 
     openerp.base_geoengine.FieldGeoEngineEditMapReadonly = openerp.base_geoengine.FieldGeoEngineEditMap.extend({
