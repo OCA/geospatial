@@ -145,7 +145,6 @@ openerp.base_geoengine = function(openerp) {
     };
 
     var QWeb = openerp.web.qweb;
-    QWeb.add_template('/base_geoengine/static/src/xml/geoengine.xml');
     openerp.web.views.add('geoengine', 'openerp.base_geoengine.GeoengineView');
     openerp.base_geoengine.GeoengineView = openerp.web.View.extend({
 
@@ -169,32 +168,37 @@ openerp.base_geoengine = function(openerp) {
             ];
         },
         limit: function() {
+            return false;
             var menu = document.getElementById('query_limit');
             var limit = parseInt(menu.options[menu.selectedIndex].value);
             if (limit > 0) {
                 return limit;
             } else {
-                return -1;
+                return false;
             }
         },
-        start: function() {
-            return this.rpc("/web/view/load", {
-                "model": this.model,
-                "view_id": this.view_id,
-                "view_type": "geoengine"
-            }, this.on_loaded);
-        },
-
-        do_hide: function() {
-            this.$el.hide();
-        },
-
-        do_show: function() {
-            if (this.dataset.ids.length) {
-                var self = this;
-                self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
+        load_view: function(context) {
+            var self = this;
+            var view_loaded_def;
+            if (this.embedded_view) {
+                view_loaded_def = $.Deferred();
+                $.async_when().done(function() {
+                    view_loaded_def.resolve(self.embedded_view);
+                });
+            } else {
+                view_loaded_def = openerp.web.fields_view_get({
+                    model: this.dataset._model,
+                    view_id: this.view_id,
+                    view_type: 'geoengine',
+                    context: this.dataset.get_context(),
+                });
             }
-            this.$el.show();
+            return this.alive(view_loaded_def).then(function(r) {
+                self.fields_view = r;
+                return $.when(self.view_loading(r)).then(function() {
+                    self.trigger('view_loaded', r);
+                });
+            });
         },
 
         do_search: function(domains, contexts, groupbys) {
@@ -408,7 +412,7 @@ openerp.base_geoengine = function(openerp) {
             }
         },
 
-        on_loaded: function(data) {
+        view_loading: function(data) {
             console.log("GeoengineView.on_loaded: function(data): arguments=");
             console.log(data);
             var self = this;
@@ -455,8 +459,7 @@ openerp.base_geoengine = function(openerp) {
             $('div#the_map').animate({height: $(window).height()-300+'px'});
             map.addControls(this.selectFeatureControls);
             map.zoomToMaxExtent();
-            var self = this;
-            self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':self.domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
+            this.do_search(self.domains, null, self.offet);
         }
 
     });
@@ -576,24 +579,24 @@ openerp.base_geoengine = function(openerp) {
 
         create_edit_layers: function(self, field_infos) {
             var vl = new OpenLayers.Layer.Vector(self.name, {
-		styleMap: new OpenLayers.StyleMap({
-		    'default': new OpenLayers.Style({
-			fillColor: '#ee9900',
-			fillOpacity: 0.7,
-			strokeColor: '#ee9900',
-			strokeOpacity: 1,
-			strokeWidth: 3,
-			pointRadius: 6
-		    }),
-		    'select': new OpenLayers.Style({
-			fillColor: 'red',
-			strokeColor: 'red'
-		    }),
-		    'temporary': new OpenLayers.Style({
-			fillColor: 'blue',
-			strokeColor: 'blue'
-		    })
-		}),
+                styleMap: new OpenLayers.StyleMap({
+                    'default': new OpenLayers.Style({
+                    fillColor: '#ee9900',
+                    fillOpacity: 0.7,
+                    strokeColor: '#ee9900',
+                    strokeOpacity: 1,
+                    strokeWidth: 3,
+                    pointRadius: 6
+                    }),
+                    'select': new OpenLayers.Style({
+                    fillColor: 'red',
+                    strokeColor: 'red'
+                    }),
+                    'temporary': new OpenLayers.Style({
+                    fillColor: 'blue',
+                    strokeColor: 'blue'
+                    })
+                }),
                 eventListeners : {
                     featuremodified: function(event) {
                         this._geometry = event.feature.geometry;
@@ -616,39 +619,20 @@ openerp.base_geoengine = function(openerp) {
             return [rl, vl];
         },
 
-        find_parent_tabs: function() {
-            var obj_id = this.element_id;
-            var current_obj = $('#' + obj_id);
-            var results = new Array();
-            while (current_obj.length != 0) {
-                class_name = current_obj.attr('class');
-                if (class_name && class_name.match(/ui-tabs-panel/) !== null) {
-                    results.push(current_obj);
-                }
-                current_obj = current_obj.parent();
-            }
-            return results;
-        },
-
         add_tab_listener: function() {
-
+            var tab = this.$el.closest('.ui-tabs-panel');
             var self = this;
-            var parent_tabs = this.find_parent_tabs();
-            self.parent_tabs = parent_tabs;
-            for (var i = 0; i < parent_tabs.length; i++) {
-                tab = parent_tabs[i];
-                tab.parent().bind('tabsshow', function(event, ui) {
-                    var ui_id = ui.tab.href.match(/notebook-.*/)[0];
-                    // update the render only if the ui_id match with one of the parent_tab id
-                    for (var i = 0; i < self.parent_tabs.length; i++) {
-                        tab_id = self.parent_tabs[i][0].id;
-                        if (ui_id == tab_id){
-                            self.render_map(self);
-                            return;
-                        }
-                    }
-                });
-            }
+            tab.parent().on( "tabsactivate", function(event, ui) {
+                if (! _.isObject(ui.newPanel)) {
+                    return;
+                }
+                geo_tab_id = self.$el.parent().get(0).id;
+                active_tab_id = ui.newPanel.get(0).id;
+                if (_.isEqual(geo_tab_id, active_tab_id)) {
+                      self.map.render(self.name);
+                      return;
+                }
+            });
         },
 
         start: function() {
@@ -717,6 +701,12 @@ openerp.base_geoengine = function(openerp) {
                     this.map.zoomToExtent(this.default_extend);
                 }
             }
+        },
+
+        render_value: function() {
+        	if(this.map){
+        		this.map.render(this.name);
+        	}
         },
 
         on_ui_change: function() {
