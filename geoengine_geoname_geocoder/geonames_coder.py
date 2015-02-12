@@ -33,11 +33,16 @@ from tools.translate import _
 
 logger = logging.getLogger('GeoNames address encoding')
 
+
 class ResPartner(osv.osv):
     """Auto geo coding of addresses"""
     _name = "res.partner"
     _inherit = "res.partner"
 
+    _columns = {
+        'geo_point': fields.geo_point(
+            'Addresses coordinate', readonly=True)
+    }
 
     def _can_geocode(self, cursor, uid, context):
         usr = self.pool.get('res.users')
