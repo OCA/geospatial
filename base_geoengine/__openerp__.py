@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {'name': 'Geospatial support for OpenERP',
- 'version': '0.1',
+ 'version': '0.2',
  'category': 'GeoBI',
  'description': """
      Geospatial support based on PostGIS
