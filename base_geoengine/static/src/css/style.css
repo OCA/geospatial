@@ -218,3 +218,9 @@ a.olControlZoomOut {
     width: 100%;
     height: 500px;
 }
+
+.olControlMousePosition {
+    background-color: white;
+    left: 0;
+    bottom: 0;
+}
