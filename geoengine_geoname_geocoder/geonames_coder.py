@@ -84,7 +84,7 @@ class ResPartner(osv.osv):
     def geocode_from_geonames(self, cursor, uid, ids, srid='900913', strict=True, context=None):
         context = context or {}
         base_url = u'http://ws.geonames.org/postalCodeSearch?'
-        config_parameter_obj = self.pool.get('ir.config_parameter')
+        config_parameter_obj = self.pool['ir.config_parameter']
         username = config_parameter_obj.get_param(
             cursor, uid, 'geoengine_geonames_username')
         if not username:
