@@ -576,24 +576,24 @@ openerp.base_geoengine = function(openerp) {
 
         create_edit_layers: function(self, field_infos) {
             var vl = new OpenLayers.Layer.Vector(self.name, {
-		styleMap: new OpenLayers.StyleMap({
-		    'default': new OpenLayers.Style({
-			fillColor: '#ee9900',
-			fillOpacity: 0.7,
-			strokeColor: '#ee9900',
-			strokeOpacity: 1,
-			strokeWidth: 3,
-			pointRadius: 6
-		    }),
-		    'select': new OpenLayers.Style({
-			fillColor: 'red',
-			strokeColor: 'red'
-		    }),
-		    'temporary': new OpenLayers.Style({
-			fillColor: 'blue',
-			strokeColor: 'blue'
-		    })
-		}),
+                styleMap: new OpenLayers.StyleMap({
+                    'default': new OpenLayers.Style({
+                        fillColor: '#ee9900',
+                        fillOpacity: 0.7,
+                        strokeColor: '#ee9900',
+                        strokeOpacity: 1,
+                        strokeWidth: 3,
+                        pointRadius: 6
+                    }),
+                    'select': new OpenLayers.Style({
+                        fillColor: 'red',
+                        strokeColor: 'red'
+                    }),
+                    'temporary': new OpenLayers.Style({
+                        fillColor: 'blue',
+                        strokeColor: 'blue'
+                    })
+                }),
                 eventListeners : {
                     featuremodified: function(event) {
                         this._geometry = event.feature.geometry;
