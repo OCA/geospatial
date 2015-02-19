@@ -690,8 +690,8 @@ openerp.base_geoengine = function(openerp) {
                 self.draw_control = new OpenLayers.Control.DrawFeature(layers[1], handler);
                 self.map.addControl(self.draw_control);
 
-                self.default_extend = OpenLayers.Bounds.fromString(result.default_extent).transform('EPSG:900913', self.map.getProjection());
-               // self.map.zoomToExtent(self.default_extend);
+                self.default_extent = OpenLayers.Bounds.fromString(result.default_extent).transform('EPSG:900913', self.map.getProjection());
+               // self.map.zoomToExtent(self.default_extent);
                 self.format = new OpenLayers.Format.GeoJSON({
                     internalProjection: self.map.getProjection(),
                     externalProjection: 'EPSG:' + result.srid
@@ -713,7 +713,7 @@ openerp.base_geoengine = function(openerp) {
                     vl.addFeatures(features, {silent: true});
                     this.map.zoomToExtent(vl.getDataExtent());
                 } else {
-                    this.map.zoomToExtent(this.default_extend);
+                    this.map.zoomToExtent(this.default_extent);
                 }
             }
         },
