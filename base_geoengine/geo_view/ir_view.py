@@ -18,12 +18,13 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields, osv
+from openerp.osv import fields, orm
 
 
 GEO_VIEW = ('geoengine', 'GeoEngine')
 
-class IrUIView(osv.osv):
+
+class IrUIView(orm.Model):
     _inherit = 'ir.ui.view'
 
     def __init__(self, pool, cursor):
@@ -45,7 +46,10 @@ class IrUIView(osv.osv):
                                                     'view_id',
                                                     'Vector layers',
                                                     required=True),
-                'default_extent':fields.char('Default map extent in 900913', size=128)}
+                'default_extent': fields.char(
+                    'Default map extent in 900913', size=128)}
 
-    _defaults = {'default_extent': lambda *a: '-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898'}
-IrUIView()
+    _defaults = {
+        'default_extent':
+            lambda *a: '-123164.85222423, 5574694.9538936,' +
+            ' 1578017.6490538, 6186191.1800898'}
