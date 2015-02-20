@@ -28,8 +28,7 @@ class GeoPoint(geo_field.Geom):
     _type = 'geo_point'
 
     def __init__(self, string, dim=2, srid=900913, gist_index=True, **args):
-        res = super(GeoPoint, self).__init__(
+        super(GeoPoint, self).__init__(
             string, "POINT", dim=dim, srid=srid, gist_index=gist_index, **args)
-        return res
 
 fields.geo_point = GeoPoint

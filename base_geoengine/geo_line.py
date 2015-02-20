@@ -27,9 +27,8 @@ class GeoLine(geo_field.Geom):
     _type = 'geo_line'
 
     def __init__(self, string, dim=2, srid=900913, gist_index=True, **args):
-        res = super(GeoLine, self).__init__(
+        super(GeoLine, self).__init__(
             string, "LINESTRING", dim=dim, srid=srid, gist_index=gist_index,
             **args)
-        return res
 
 fields.geo_line = GeoLine

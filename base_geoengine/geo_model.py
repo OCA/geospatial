@@ -170,7 +170,7 @@ class GeoModel(orm.BaseModel):
         res['default_extent'] = view.default_extent
         return res
 
-    def geo_search(self, cursor, uid, domain=[], geo_domain=[], offset=0,
+    def geo_search(self, cursor, uid, domain=None, geo_domain=None, offset=0,
                    limit=None, order=None, context=None):
         """Perform a geo search it allows direct domain:
            geo_search(r, uid,
@@ -192,6 +192,8 @@ class GeoModel(orm.BaseModel):
         # and do a search on standard attributes
         # Limit and offset are managed after, we may loose a lot of performance
         # here
+        domain = domain or []
+        geo_domain = geo_domain or []
         return geo_operators.geo_search(
             self, cursor, uid, domain=domain, geo_domain=geo_domain,
             offset=offset, limit=limit, order=order, context=context)

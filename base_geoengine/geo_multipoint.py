@@ -27,9 +27,8 @@ class GeoMultiPoint(geo_field.Geom):
     _type = 'geo_multi_point'
 
     def __init__(self, string, dim=2, srid=900913, gist_index=True, **args):
-        res = super(GeoMultiPoint, self).__init__(
+        super(GeoMultiPoint, self).__init__(
             string, "MULTIPOINT", dim=dim, srid=srid, gist_index=gist_index,
             **args)
-        return res
 
 fields.geo_multi_point = GeoMultiPoint
