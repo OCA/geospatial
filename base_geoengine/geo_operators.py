@@ -39,7 +39,7 @@ def _get_geo_func(model, domain):
     return func
 
 
-def geo_search(model, cursor, uid, domain=[], geo_domain=[], offset=0,
+def geo_search(model, cursor, uid, domain=None, geo_domain=None, offset=0,
                limit=None, order=None, context=None):
     """Perform a geo search it allows direct domain:
     geo_search(
@@ -59,6 +59,8 @@ def geo_search(model, cursor, uid, domain=[], geo_domain=[], offset=0,
      * geo_within
      * geo_intersect
     """
+    domain = domain or []
+    geo_domain = geo_domain or []
     context = context or {}
     model.pool.get('ir.model.access').check(cursor, uid, model._name, 'read')
     query = model._where_calc(
