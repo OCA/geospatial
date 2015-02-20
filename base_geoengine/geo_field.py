@@ -30,8 +30,8 @@ except ImportError:
 from openerp.osv import fields
 from openerp.tools.translate import _
 
-from geo_helper import geo_convertion_helper as convert
-import geo_operators
+from .geo_helper import geo_convertion_helper as convert
+from. import geo_operators
 
 logger = logging.getLogger('geoengine.database.structure')
 exp_logger = logging.getLogger('geoengine.expression')
