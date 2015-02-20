@@ -18,29 +18,29 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from __future__ import absolute_import
-import json
 
-from osv import fields, osv, orm
-from tools.translate import _
-from . import geo_field
-from . import  geo_db
+from openerp.osv import fields, osv, orm
+from openerp.tools.translate import _
+from . import geo_db
 from . import geo_operators
 
 
-DEFAULT_EXTENT = '-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898'
+DEFAULT_EXTENT = '-123164.85222423, 5574694.9538936, ' + \
+    '1578017.6490538, 6186191.1800898'
+
 
 class GeoModel(orm.BaseModel):
-    #Array of ash that define layer and data to use
+    # Array of ash that define layer and data to use
     _georepr = []
     _name = None
     _auto = True
-    _register = False # not visible in ORM registry, meant to be python-inherited only
-    _transient = False # True in a TransientModel
+    # not visible in ORM registry, meant to be python-inherited only
+    _register = False
+    _transient = False  # True in a TransientModel
 
     def _auto_init(self, cursor, context=None):
-        ## We do this because actually creation of fields in DB is not actually
-        ## delegated to the field it self but to the ORM _auto_init function
+        # We do this because actually creation of fields in DB is not actually
+        # delegated to the field it self but to the ORM _auto_init function
         """Initialize the columns in dB and Create the GIST index
         only create and update supported"""
         columns = {}
@@ -59,15 +59,16 @@ class GeoModel(orm.BaseModel):
             geo_db.init_postgis(cursor)
         for kol in geo_columns:
             if not isinstance(geo_columns[kol], fields.function):
-                geo_columns[kol].manage_db_column(cursor, kol, geo_columns[kol],
-                                                  self._table, self._name)
+                geo_columns[kol].manage_db_column(
+                    cursor, kol, geo_columns[kol], self._table, self._name)
         self._columns = tmp
         self._field_create(cursor, context)
         return res
 
     def fields_get(self, cursor, uid, allfields=None, context=None):
         """Add geo_type definition for geo fields"""
-        res = super(GeoModel, self).fields_get(cursor, uid, allfields=allfields, context=context)
+        res = super(GeoModel, self).fields_get(
+            cursor, uid, allfields=allfields, context=context)
         for field in res:
             if field in self._columns:
                 col = self._columns[field]
@@ -79,7 +80,7 @@ class GeoModel(orm.BaseModel):
                     else:
                         res[field]['geo_type'] = {'type': col._geo_type,
                                                   'dim': col._dim,
-                                                  'srid':col._srid}
+                                                  'srid': col._srid}
         return res
 
     def _get_geo_view(self, cursor, uid):
@@ -89,8 +90,9 @@ class GeoModel(orm.BaseModel):
                                       [('model', '=', self._name),
                                        ('type', '=', 'geoengine')])
         if not geo_view_id:
-            raise osv.except_osv(_('No GeoEngine view defined for the model %s') % (self._name,),
-                                 _('Please create a view or modify view mode'))
+            raise osv.except_osv(
+                _('No GeoEngine view defined for the model %s') % self._name,
+                _('Please create a view or modify view mode'))
         return view_obj.browse(cursor, uid, geo_view_id[0])
 
     def fields_view_get(self, cursor, uid, view_id=None, view_type='form',
@@ -101,6 +103,7 @@ class GeoModel(orm.BaseModel):
         raster_obj = self.pool.get('geoengine.raster.layer')
         vector_obj = self.pool.get('geoengine.vector.layer')
         field_obj = self.pool.get('ir.model.fields')
+
         def set_field_real_name(in_tuple):
             if not in_tuple:
                 return in_tuple
@@ -112,28 +115,32 @@ class GeoModel(orm.BaseModel):
                 view = self._get_geo_view(cursor, uid)
             else:
                 view = view_obj.browse(cursor, uid, view_id)
-            res = super(GeoModel, self).fields_view_get(cursor, uid, view.id,
-                                                        'form', context, toolbar, submenu)
+            res = super(GeoModel, self).fields_view_get(
+                cursor, uid, view.id, 'form', context, toolbar, submenu)
             res['geoengine_layers'] = {}
             res['geoengine_layers']['backgrounds'] = []
             res['geoengine_layers']['actives'] = []
             default_extent = (view.default_extent or DEFAULT_EXTENT).split(',')
-            res['geoengine_layers']['default_extent'] = [float(x) for x in default_extent]
+            res['geoengine_layers']['default_extent'] = [
+                float(x) for x in default_extent]
             # TODO find why context in read does not work with webclient
             for layer in view.raster_layer_ids:
                 layer_dict = raster_obj.read(cursor, uid, layer.id)
                 res['geoengine_layers']['backgrounds'].append(layer_dict)
             for layer in view.vector_layer_ids:
                 layer_dict = vector_obj.read(cursor, uid, layer.id)
-                layer_dict['attribute_field_id'] = set_field_real_name(layer_dict.get('attribute_field_id', False))
-                layer_dict['geo_field_id'] = set_field_real_name(layer_dict.get('geo_field_id', False))
+                layer_dict['attribute_field_id'] = set_field_real_name(
+                    layer_dict.get('attribute_field_id', False))
+                layer_dict['geo_field_id'] = set_field_real_name(
+                    layer_dict.get('geo_field_id', False))
                 res['geoengine_layers']['actives'].append(layer_dict)
                 # adding geo column desc
                 geo_f_name = layer_dict['geo_field_id'][1]
-                res['fields'].update(self.fields_get(cursor, uid, [geo_f_name]))
+                res['fields'].update(
+                    self.fields_get(cursor, uid, [geo_f_name]))
         else:
-            return super(GeoModel, self).fields_view_get(cursor, uid, view_id, view_type,
-                                                         context, toolbar, submenu)
+            return super(GeoModel, self).fields_view_get(
+                cursor, uid, view_id, view_type, context, toolbar, submenu)
         return res
 
     def get_edit_info_for_geo_column(self, cursor, uid, column, context=None):
@@ -141,34 +148,38 @@ class GeoModel(orm.BaseModel):
         raster_obj = self.pool.get('geoengine.raster.layer')
 
         if not getattr(self._columns.get(column), '_geo_type', False):
-            raise ValueError(_("%s column does not exists or is not a geo field") % (column,))
+            raise ValueError(
+                _("%s column does not exists or is not a geo field") % column)
         view = self._get_geo_view(cursor, uid)
         raster_id = raster_obj.search(cursor, uid,
                                       [('view_id', '=', view.id),
                                        ('use_to_edit', '=', True)],
                                       context=context)
         if not raster_id:
-            raster_id =  raster_obj.search(cursor, uid,
-                                           [('view_id', '=', view.id)],
-                                           context=context)
+            raster_id = raster_obj.search(cursor, uid,
+                                          [('view_id', '=', view.id)],
+                                          context=context)
         if not raster_id:
-            raise osv.except_osv(_('Configuration Error'),
-                                 _('No raster layer for view %s') %(view.name,))
-        res['edit_raster'] = raster_obj.read(cursor, uid, raster_id[0], context=context)
+            raise osv.except_osv(
+                _('Configuration Error'),
+                _('No raster layer for view %s') % (view.name,))
+        res['edit_raster'] = raster_obj.read(
+            cursor, uid, raster_id[0], context=context)
         res['geo_type'] = self._columns[column]._geo_type
         res['srid'] = self._columns[column]._srid
         res['default_extent'] = view.default_extent
         return res
 
-
     def geo_search(self, cursor, uid, domain=[], geo_domain=[], offset=0,
                    limit=None, order=None, context=None):
         """Perform a geo search it allows direct domain:
            geo_search(r, uid,
-                      domaine=[('name', 'ilike', 'toto']),
-                      geo_domain=[('the_point', 'geo_intersect', myshaply_obj or mywkt or mygeojson)])
+            domaine=[('name', 'ilike', 'toto']),
+            geo_domain=[('the_point', 'geo_intersect',
+                         myshaply_obj or mywkt or mygeojson)])
 
-           We can also support indirect geo_domain (‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] }).
+           We can also support indirect geo_domain (
+              ‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] })
 
            The supported operators are :
             * geo_greater
@@ -179,6 +190,8 @@ class GeoModel(orm.BaseModel):
             * geo_intersect"""
         # First we do a standard search in order to apply security rules
         # and do a search on standard attributes
-        #Limit and offset are managed after, we may loose a lot of performance here
-        return geo_operators.geo_search(self, cursor, uid, domain=domain, geo_domain=geo_domain,
-                                        offset=offset, limit=limit, order=order, context=context)
+        # Limit and offset are managed after, we may loose a lot of performance
+        # here
+        return geo_operators.geo_search(
+            self, cursor, uid, domain=domain, geo_domain=geo_domain,
+            offset=offset, limit=limit, order=order, context=context)

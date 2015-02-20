@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa
 #
 # OpenERP GeoEngine documentation build configuration file, created by
 # sphinx-quickstart on Mon Mar  5 09:15:25 2012.

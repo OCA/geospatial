@@ -18,34 +18,32 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import json
 import logging
 
 try:
-    from shapely.wkb import loads as  wkbloads
-    from shapely.geometry import asShape
+    from shapely.wkb import loads as wkbloads
     import geojson
 except ImportError:
     logger = logging.getLogger(__name__)
     logger.warning('Shapely or geojson are not available in the sys path')
 
-from osv import fields, osv, orm
-from tools.translate import _
-import pooler
+from openerp.osv import fields
+from openerp.tools.translate import _
+
 from geo_helper import geo_convertion_helper as convert
 import geo_operators
 
 logger = logging.getLogger('geoengine.database.structure')
 exp_logger = logging.getLogger('geoengine.expression')
 
-class Geom(fields._column):
-    """New type of column in the  ORM for POSTGIS geometry type"""
 
+class Geom(fields._column):
+
+    """New type of column in the  ORM for POSTGIS geometry type"""
 
     def load_geo(self, wkb):
         """Load geometry into browse record after read was done"""
         return wkb and wkbloads(wkb.decode('hex')) or False
-
 
     def set_geo(self, value):
         """Transform data to a format compatible with the create function.
@@ -58,31 +56,29 @@ class Geom(fields._column):
             return None
         return res.wkt
 
-
-
     _type = None
     _classic_read = False
     _classic_write = True
     _symbol_c = u' %s'
-    #Due to the conception of the orm we have to set symbol set as an instance variable
-    # instead of a class variable
-    #_symbol_set = (' ST_GeomFromText(%s)', set_geo)
+    # Due to the conception of the orm we have to set symbol set as an instance
+    # variable instead of a class variable_symbol_set = (' ST_GeomFromText(%s)'
+    # , set_geo)
     _symbol_get = load_geo
     _fnct_inv = True
 
-
-    def __init__(self, string, geo_type, dim=2, srid=900913 , gist_index=True, **args):
+    def __init__(self, string, geo_type, dim=2, srid=900913, gist_index=True,
+                 **args):
         fields._column.__init__(self, string, **args)
-        #geometry type of postgis point, multipolygon, etc...
+        # geometry type of postgis point, multipolygon, etc...
         self._geo_type = geo_type
-        #2d, 3d, 4d, given by an int
+        # 2d, 3d, 4d, given by an int
         self._dim = dim
-        #EPSG projection id
+        # EPSG projection id
         self._srid = srid
         self._gist_index = gist_index
-        self._symbol_set  = (u' ST_GeomFromText(%s,'+unicode(self._srid)+')', self.set_geo)
+        self._symbol_set = (
+            u' ST_GeomFromText(%s,' + unicode(self._srid) + ')', self.set_geo)
         self._geo_operator = geo_operators.GeoOperator(self)
-
 
     def entry_to_shape(self, value, same_type=False):
         """Transform input into an object"""
@@ -91,16 +87,12 @@ class Geom(fields._column):
             if shape.geom_type.lower() != self._geo_type.lower():
                 msg = _('Geo Value %s must be of the same type %s as fields')
                 # XXX: Exception or TypeError ?
-                raise Exception( msg % (shape.geom_type.lower(),
-                                        self._geo_type.lower()))
+                raise Exception(msg % (shape.geom_type.lower(),
+                                       self._geo_type.lower()))
         return shape
 
     def _postgis_index_name(self, table, col_name):
-<<<<<<< a204fc3cd918c16f00ae65ca838bd7508c1ecdbd
-        return %s_%s_gist_index % (table, col_name)
-=======
         return "%s_%s_gist_index" % (table, col_name)
->>>>>>> Revert "Rename all addons to xxx_unported to be travis compliant"
 
     def _create_index(self, cursor, table, col_name):
         if self._gist_index:
@@ -111,8 +103,9 @@ class Geom(fields._column):
                                 col_name))
             except Exception:
                 cursor.rollback()
-                logger.exception('Cannot create gist index for col %s table %s:',
-                                 col_name, table)
+                logger.exception(
+                    'Cannot create gist index for col %s table %s:',
+                    col_name, table)
             finally:
                 cursor.commit()
 
@@ -129,7 +122,6 @@ class Geom(fields._column):
         else:
             self.create_geo_column(cursor, col_name, geo_columns, table, model)
         return True
-
 
     def create_geo_column(self, cursor, col_name, geo_column, table, model):
         """Create a columns of type the geom"""
@@ -151,7 +143,8 @@ class Geom(fields._column):
         return True
 
     def update_geo_column(self, cursor, col_name, geo_column, table, model):
-        """Update a column of type the geom does. !! not do a lot of test yet"""
+        """Update a column of type the geom does. !! not do a lot of test yet
+        """
         query = ("SELECT srid, type, coord_dimension "
                  "FROM geometry_columns "
                  "WHERE f_table_name = %s "
@@ -159,17 +152,26 @@ class Geom(fields._column):
         cursor.execute(query, (table, col_name))
         check_data = cursor.fetchone()
         if not check_data:
-            raise Exception("geometry_columns table seems to be corrupted. SRID check is not possible")
+            raise Exception(
+                "geometry_columns table seems to be corrupted. "
+                "SRID check is not possible")
         if check_data[0] != geo_column._srid:
-            raise Exception("Reprojection of column is not implemented"
-                            "We can not change srid %s to %s" % (geo_column._srid, check_data[0]))
+            raise Exception(
+                "Reprojection of column is not implemented"
+                "We can not change srid %s to %s" % (
+                    geo_column._srid, check_data[0]))
         if check_data[1] != geo_column._geo_type:
-            raise Exception("Geo type modification is not implemented"
-                            "We can not change type %s to %s" % (check_data[1], geo_column._type))
+            raise Exception(
+                "Geo type modification is not implemented"
+                "We can not change type %s to %s" % (
+                    check_data[1], geo_column._type))
         if check_data[2] != geo_column._dim:
-            raise Exception("Geo dimention modification is not implemented"
-                            "We can not change dimention %s to %s" % (check_data[2], geo_column._dim))
+            raise Exception(
+                "Geo dimention modification is not implemented"
+                "We can not change dimention %s to %s" % (
+                    check_data[2], geo_column._dim))
         if self._gist_index:
+<<<<<<< 04e81062e262c02272333555a7bdfc9acc8aa69d
             cursor.execute("SELECT indexname FROM pg_indexes WHERE indexname = %s",
 <<<<<<< a204fc3cd918c16f00ae65ca838bd7508c1ecdbd
                            (self._postgis_index_name(table, col_name),)
@@ -177,13 +179,17 @@ class Geom(fields._column):
             if cursor:
 =======
                            (self._postgis_index_name(table, col_name),))
+=======
+            cursor.execute(
+                "SELECT indexname FROM pg_indexes WHERE indexname = %s",
+                (self._postgis_index_name(table, col_name),))
+>>>>>>> [PEP8] base_geoengine
             index = cursor.fetchone()
             if index:
 >>>>>>> Revert "Rename all addons to xxx_unported to be travis compliant"
                 return True
             self._create_index(cursor, table, col_name)
         return True
-
 
     def set(self, cr, obj, res_id, name, value, user=None, context=None):
         """Write and create value into database
@@ -197,8 +203,9 @@ class Geom(fields._column):
         context = context or {}
         wkt = None
         sql = 'UPDATE %s SET %s =' % (obj._table, name)
-        mode = {'not_null':" ST_GeomFromText(%(wkt)s, %(srid)s) WHERE id=%(id)s",
-                'null': ' NULL WHERE id=%(id)s'}
+        mode = {
+            'not_null': " ST_GeomFromText(%(wkt)s, %(srid)s) WHERE id=%(id)s",
+            'null': ' NULL WHERE id=%(id)s'}
         if value:
             mode_to_use = 'not_null'
             if context.get('geo_direct_write'):
@@ -213,13 +220,12 @@ class Geom(fields._column):
             mode_to_use = 'null'
         sql += mode[mode_to_use]
         exp_logger.debug(cr.mogrify(sql, {'wkt': wkt,
-                                         'srid': self._srid,
-                                         'id': res_id}))
+                                          'srid': self._srid,
+                                          'id': res_id}))
         cr.execute(sql, {'wkt': wkt,
                          'srid': self._srid,
                          'id': res_id})
         return []
-
 
     def get(self, cr, obj, ids, name, uid=False, context=None, values=None):
         if context is None:
@@ -241,7 +247,7 @@ class Geom(fields._column):
         return res
 
 
-#We may use monkey patching but we do not want to break normal function field
+# We may use monkey patching but we do not want to break normal function field
 def postprocess(self, cr, uid, obj, field, value=None, context=None):
     if context is None:
         context = {}
@@ -253,18 +259,21 @@ def postprocess(self, cr, uid, obj, field, value=None, context=None):
     if field_type.startswith('geo_'):
         res = geojson.dumps(value)
     else:
-        res =  super(GeoFunction, self).postprocess(cr, uid, obj, field, value, context)
+        res = super(GeoFunction, self).postprocess(
+            cr, uid, obj, field, value, context)
     return res
 
+
 class GeoFunction(fields.function):
-    #shell class
+    # shell class
     pass
 
 GeoFunction.postprocess = postprocess
 fields.geo_function = GeoFunction
 
+
 class GeoRelated(fields.related):
-    #shell class
+    # shell class
     pass
 GeoRelated.postprocess = postprocess
 fields.geo_related = GeoRelated
