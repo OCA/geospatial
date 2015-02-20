@@ -19,6 +19,6 @@
 #
 ##############################################################################
 from __future__ import absolute_import 
-from . import geonames_coder
-from . import company
-from . import  wizard
+from . import res_partner
+from . import res_company
+from . import wizard
