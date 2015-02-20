@@ -19,7 +19,6 @@ install:
   - sudo apt-get -q -y install postgis
 
 script:
-  - travis_run_flake8
   - travis_run_tests
 
 after_success:
