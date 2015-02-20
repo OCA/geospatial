@@ -18,17 +18,18 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from __future__ import absolute_import
-from osv import fields
+from openerp.osv import fields
 from . import geo_field
+
 
 class GeoMultiLine(geo_field.Geom):
     """New type of column in the  ORM for POSTGIS geometry MultiLine type"""
     _type = 'geo_multi_line'
 
-    def __init__(self, string, dim=2, srid=900913 , gist_index=True, **args):
-        res = super(GeoMultiLine, self).__init__(string, "MULTILINESTRING", dim=dim,
-                                                 srid=srid, gist_index=gist_index, **args)
+    def __init__(self, string, dim=2, srid=900913, gist_index=True, **args):
+        res = super(GeoMultiLine, self).__init__(
+            string, "MULTILINESTRING", dim=dim, srid=srid,
+            gist_index=gist_index, **args)
         return res
 
 fields.geo_multi_line = GeoMultiLine
