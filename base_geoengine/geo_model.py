@@ -46,7 +46,6 @@ class GeoModel(orm.BaseModel):
         columns = {}
         geo_columns = {}
         tmp = {}
-        #geo_db.init_postgis(cursor)
         for kol in self._columns:
             tmp[kol] = self._columns[kol]
             k_obj = self._columns[kol]
@@ -57,15 +56,7 @@ class GeoModel(orm.BaseModel):
         self._columns = columns
         res = super(GeoModel, self)._auto_init(cursor, context)
         if geo_columns:
-            cursor.execute("SELECT tablename FROM pg_tables WHERE tablename='spatial_ref_sys';")
-            check = cursor.fetchone()
-            if not check:
-                raise Exception(_('Can not install GeoEngine PostGIS does not seems'
-                                  ' to be installed or spatial_sys_ref table not initialized'
-                                  ' Please go to http://postgis.refractions.net/docs/ch02.html'
-                                  ' for more information.'
-                                  ' You can also use script create_postgis_template.sh'
-                                  ' available in module'))
+            geo_db.init_postgis(cursor)
         for kol in geo_columns:
             if not isinstance(geo_columns[kol], fields.function):
                 geo_columns[kol].manage_db_column(cursor, kol, geo_columns[kol],
