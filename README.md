@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/OCA/geospatial.svg?branch=8.0)](https://travis-ci.org/OCA/geospatial)
+[![Coverage Status](https://coveralls.io/repos/OCA/geospatial/badge.png?branch=8.0)](https://coveralls.io/r/OCA/geospatial?branch=8.0)
 Geospatial Addons for Odoo/OpenERP
 ==================================
 
@@ -40,3 +42,14 @@ Extending
 ---------
 
 A geospatial API is provided, to add your own functionalites at your convenience
+
+
+Requirements
+------------
+
+* System:
+    * **PostGIS** http://postgis.refractions.net/
+
+* Python:
+    * **Shapely** http://pypi.python.org/pypi/Shapely
+    * **geojson** http://pypi.python.org/pypi/geojson
