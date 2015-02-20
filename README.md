@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/OCA/geospatial.svg?branch=7.0)](https://travis-ci.org/OCA/geospatial)
+[![Coverage Status](https://coveralls.io/repos/OCA/geospatial/badge.png?branch=7.0)](https://coveralls.io/r/OCA/geospatial?branch=7.0)
 Geospatial Addons for Odoo/OpenERP
 ==================================
 
