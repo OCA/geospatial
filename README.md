@@ -49,9 +49,9 @@ Requirements
 ------------
 
 * System:
-    **PostGIS** http://postgis.refractions.net/
+  *  **PostGIS** http://postgis.refractions.net/
 
 * Python:
-    **Shapely** http://pypi.python.org/pypi/Shapely
+  *  **Shapely** http://pypi.python.org/pypi/Shapely
 
-    **geojson** http://pypi.python.org/pypi/geojson
+  *  **geojson** http://pypi.python.org/pypi/geojson
