@@ -25,7 +25,7 @@
  point on partner is function field that return geo point of
  """,
  'update_xml': ['geo_partner_view.xml'],
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'website': 'http://openerp.camptocamp.com',
  'depends': ['base', 'base_geoengine'],
