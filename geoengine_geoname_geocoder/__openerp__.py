@@ -32,7 +32,7 @@
  We use postgis to do the reprojection in order to avoid gdal python deps.
  """,
  'update_xml': ['company_view.xml', 'wizard/bulk_encode_view.xml'],
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'website': 'http://openerp.camptocamp.com',
  'depends': ['base', 'sale', 'geoengine_partner'],
