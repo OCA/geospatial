@@ -26,7 +26,7 @@
      add the ability of server to server geojson
      to do geo CRUD and view definition
  """,
- 'author': 'Camptocamp',
+ 'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'website': 'http://openerp.camptocamp.com',
  'depends': ['base', 'web'],
