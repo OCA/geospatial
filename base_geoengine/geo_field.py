@@ -171,22 +171,10 @@ class Geom(fields._column):
                 "We can not change dimention %s to %s" % (
                     check_data[2], geo_column._dim))
         if self._gist_index:
-<<<<<<< 04e81062e262c02272333555a7bdfc9acc8aa69d
             cursor.execute("SELECT indexname FROM pg_indexes WHERE indexname = %s",
-<<<<<<< a204fc3cd918c16f00ae65ca838bd7508c1ecdbd
                            (self._postgis_index_name(table, col_name),)
             index = cursor.fetchone()
-            if cursor:
-=======
-                           (self._postgis_index_name(table, col_name),))
-=======
-            cursor.execute(
-                "SELECT indexname FROM pg_indexes WHERE indexname = %s",
-                (self._postgis_index_name(table, col_name),))
->>>>>>> [PEP8] base_geoengine
-            index = cursor.fetchone()
             if index:
->>>>>>> Revert "Rename all addons to xxx_unported to be travis compliant"
                 return True
             self._create_index(cursor, table, col_name)
         return True
@@ -251,10 +239,6 @@ class Geom(fields._column):
 def postprocess(self, cr, uid, obj, field, value=None, context=None):
     if context is None:
         context = {}
-<<<<<<< a204fc3cd918c16f00ae65ca838bd7508c1ecdbd
-    result = value
-=======
->>>>>>> Revert "Rename all addons to xxx_unported to be travis compliant"
     field_type = obj._columns[field]._type
     if field_type.startswith('geo_'):
         res = geojson.dumps(value)
