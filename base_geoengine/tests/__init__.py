@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-##############################################################################
 #
-#    Author: Nicolas Bessi
-#    Copyright 2011-2012 Camptocamp SA
+#
+#    Authors: Laurent Mignon
+#    Copyright (c) 2015 Acsone SA/NV (http://www.acsone.eu)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -17,15 +17,12 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##############################################################################
+#
 
-from osv import fields, osv
-from tools.translate import _
+from . import geoengine_test
+fast_suite = [
+]
 
-class ResCompany(osv.osv):
-    """Override company to activate deactivate GeoNames geocoding"""
-    _name = "res.company"
-    _inherit = "res.company"
-    _columns = {'enable_geocoding' : fields.boolean('Enable Addresse Geocoding')}
-    _defaults = {'enable_geocoding': True}
-ResCompany()
+checks = [
+    geoengine_test,
+]

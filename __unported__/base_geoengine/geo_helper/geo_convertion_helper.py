@@ -18,9 +18,16 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from shapely import wkt
-from shapely.geometry import asShape
-import geojson
+import logging
+
+try:
+    from shapely import wkt
+    from shapely.geometry import asShape
+    import geojson
+except ImportError:
+    logger = logging.getLogger(__name__)
+    logger.warning('Shapely or geojson are not available in the sys path')
+
 
 def value_to_shape(value):
     """Transforms input into a Shapely object"""
@@ -34,12 +41,12 @@ def value_to_shape(value):
             shape_to_return = asShape(geo_dict)
         elif value:
             # if value is empty sting we return False to be orm coherent,
-            #may be we should return an empty shapely
+            # may be we should return an empty shapely
             shape_to_return = wkt.loads(value)
         else:
             return False
     elif hasattr(value, 'wkt'):
-        #Nasty but did not find equivalent of base string for shapely
+        # Nasty but did not find equivalent of base string for shapely
         if 'shapely.geometry' in str(type(value)):
             shape_to_return = value
         else:
