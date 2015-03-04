@@ -27,11 +27,7 @@ GEO_TYPES = [('geo_polygon', 'geo_polygon'),
              ('geo_multi_polygon', 'geo_multi_polygon'),
              ('geo_point', 'geo_point'),
              ('geo_multi_point', 'geo_multi_point'),
-<<<<<<< a204fc3cd918c16f00ae65ca838bd7508c1ecdbd
-             ('geo_line', 'geo_multi_point'),
-=======
              ('geo_line', 'geo_line'),
->>>>>>> Revert "Rename all addons to xxx_unported to be travis compliant"
              ('geo_multi_line', 'geo_multi_line')]
 
 POSTGIS_GEO_TYPES = [('POINT', 'POINT'),
