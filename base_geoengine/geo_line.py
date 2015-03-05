@@ -25,10 +25,11 @@ from . import geo_field
 class GeoLine(geo_field.Geom):
     """New type of column in the  ORM for POSTGIS geometry Line type"""
     _type = 'geo_line'
+    _geo_type = 'LINESTRING'
 
     def __init__(self, string, dim=2, srid=900913, gist_index=True, **args):
         super(GeoLine, self).__init__(
-            string, "LINESTRING", dim=dim, srid=srid, gist_index=gist_index,
+            string, dim=dim, srid=srid, gist_index=gist_index,
             **args)
 
 fields.geo_line = GeoLine
