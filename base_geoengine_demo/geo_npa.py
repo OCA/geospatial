@@ -18,31 +18,38 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields
+from openerp import fields, api
 
 from openerp.addons.base_geoengine import geo_model
+from openerp.addons.base_geoengine import fields as geo_fields
 
 
 class NPA(geo_model.GeoModel):
 
     """GEO OSV SAMPLE"""
 
-    def _get_ZIP_total_sales(self, cursor, uid, ids, name, args, context=None):
+    _name = "dummy.zip"
+
+    priority = fields.Integer('Priority', default=100)
+    name = fields.Char('ZIP', size=64, required=True)
+    city = fields.Char('City', size=64, required=True)
+    the_geom = geo_fields.GeoMultiPolygon('NPA Shape')
+    total_sales = fields.Float(
+        compute='_get_ZIP_total_sales', string='Spatial! Total Sales')
+
+    @api.multi
+    def _get_ZIP_total_sales(self):
         """Return the total of the invoiced sales for this npa"""
-        to_return = {}
-        if not ids:
-            return {}
-        if not isinstance(ids, list):
-            ids = [ids]
-        mach_obj = self.pool['geoengine.demo.automatic.retailing.machine']
-        for zip_id in ids:
+        mach_obj = self.env['geoengine.demo.automatic.retailing.machine']
+        for rec in self:
             res = mach_obj.geo_search(
-                cursor, uid, domain=[],
+                domain=[],
                 geo_domain=[
                     ('the_point',
                      'geo_intersect',
-                     {'dummy.zip.the_geom': [('id', '=', zip_id)]})])
+                     {'dummy.zip.the_geom': [('id', '=', rec.id)]})])
 
+            cursor = self.env.cr
             if res:
                 cursor.execute("SELECT sum(total_sales) from"
                                " geoengine_demo_automatic_retailing_machine "
@@ -50,28 +57,11 @@ class NPA(geo_model.GeoModel):
                                (tuple(res),))
                 res = cursor.fetchone()
                 if res:
-                    to_return[zip_id] = res[0] or 0.0
+                    rec.total_sales = res[0] or 0.0
                 else:
-                    to_return[zip_id] = 0.0
+                    rec.total_sales = 0.0
             else:
-                to_return[zip_id] = 0.0
-        return to_return
-
-    _name = "dummy.zip"
-    _columns = {
-        'priority': fields.integer('Priority'),
-        'name': fields.char('ZIP', size=64, required=True),
-        'city': fields.char('City', size=64, required=True),
-        'the_geom': fields.geo_multi_polygon('NPA Shape'),
-        'total_sales': fields.function(
-            _get_ZIP_total_sales,
-            method=True, string='Spatial! Total Sales',
-            type='float'),
-    }
-
-    _defaults = {
-        'priority': lambda *x: 100
-    }
+                rec.total_sales = 0.0
 
     def name_get(self, cursor, uid, ids, context=None):
         res = []
