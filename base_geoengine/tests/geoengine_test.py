@@ -18,6 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
+import logging
 import openerp.tests.common as common
 from shapely.wkt import loads as wktloads
 from shapely.geometry import Polygon, MultiPolygon
@@ -30,8 +31,10 @@ import mock
 import simplejson
 from cStringIO import StringIO
 
+_logger = logging.getLogger(__name__)
 
-class geoengine_test(common.TransactionCase):
+
+class TestGeoengine(common.TransactionCase):
 
     def setUp(self):
         common.TransactionCase.setUp(self)
@@ -93,6 +96,7 @@ class geoengine_test(common.TransactionCase):
         self.assertEqual(expected_result, pprint_value.getvalue())
 
     def test_field(self):
+        _logger.info("Tests fields")
         cr = self.cr
         uid = 1
         dummy = self.test_model.browse(cr, uid, self.dummy_id)
@@ -116,10 +120,12 @@ class geoengine_test(common.TransactionCase):
             dummy.the_geom.wkt)
 
     def test_view(self):
+        _logger.info("Tests view")
         self._compare_view('geoengine', GEO_VIEW)
         self._compare_view('form', FORM_VIEW)
 
     def test_search(self):
+        _logger.info("Tests search")
         cr, uid = self.cr, 1
         ids = self.test_model.geo_search(
             cr, uid, domain=[],

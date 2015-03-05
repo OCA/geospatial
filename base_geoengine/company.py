@@ -19,21 +19,17 @@
 #
 ##############################################################################
 
-from openerp.osv import fields
+from openerp import fields
 from . import geo_model
+from . import fields as geo_fields
 
 
 class ResCompany(geo_model.GeoModel):
     """Override company to show basic GeoEngine data"""
     _name = "res.company"
     _inherit = "res.company"
-    _columns = {
-        # show the default
-        'geoengine_base_info':
-            fields.text('General informations about GeoEngine',
-                        size=16, required=False, readonly=True),
-        'comp_location':
-            fields.geo_point('Coordinate'),
-    }
 
-    _defaults = {'geoengine_base_info': lambda *a: 'NOT IMPLEMENTED YET'}
+    geoengine_base_info = fields.Text(
+        'General informations about GeoEngine', size=16, required=False,
+        readonly=True, default='NOT IMPLEMENTED YET')
+    comp_location = geo_fields.GeoPoint('Coordinate')

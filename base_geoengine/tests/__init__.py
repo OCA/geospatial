@@ -20,9 +20,3 @@
 #
 
 from . import geoengine_test
-fast_suite = [
-]
-
-checks = [
-    geoengine_test,
-]

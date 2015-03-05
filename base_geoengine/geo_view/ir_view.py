@@ -18,14 +18,14 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, orm
+from openerp import fields, models
 from openerp import api
 
 
 GEO_VIEW = ('geoengine', 'GeoEngine')
 
 
-class IrUIView(orm.Model):
+class IrUIView(models.Model):
     _inherit = 'ir.ui.view'
 
     @api.model
@@ -40,19 +40,13 @@ class IrUIView(orm.Model):
             cls._fields['type'].selection = tuple(set(tmp))
         super(IrUIView, self)._setup_fields()
 
-    _columns = {'raster_layer_ids': fields.one2many('geoengine.raster.layer',
-                                                    'view_id',
-                                                    'Raster layers',
-                                                    required=False),
+    raster_layer_ids = fields.One2many(
+        'geoengine.raster.layer', 'view_id', 'Raster layers', required=False)
 
-                'vector_layer_ids': fields.one2many('geoengine.vector.layer',
-                                                    'view_id',
-                                                    'Vector layers',
-                                                    required=True),
-                'default_extent': fields.char(
-                    'Default map extent in 900913', size=128)}
+    vector_layer_ids = fields.One2many(
+        'geoengine.vector.layer', 'view_id', 'Vector layers', required=True)
 
-    _defaults = {
-        'default_extent':
-            lambda *a: '-123164.85222423, 5574694.9538936,' +
-            ' 1578017.6490538, 6186191.1800898'}
+    default_extent = fields.Char(
+        'Default map extent in 900913', size=128,
+        default='-123164.85222423, 5574694.9538936, 1578017.6490538,'
+        ' 6186191.1800898')

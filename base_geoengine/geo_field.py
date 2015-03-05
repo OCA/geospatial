@@ -66,11 +66,12 @@ class Geom(fields._column):
     _symbol_get = load_geo
     _fnct_inv = True
 
-    def __init__(self, string, geo_type, dim=2, srid=900913, gist_index=True,
+    # geometry type of postgis point, multipolygon, etc...
+    _geo_type = None
+
+    def __init__(self, string, dim=2, srid=900913, gist_index=True,
                  **args):
         fields._column.__init__(self, string, **args)
-        # geometry type of postgis point, multipolygon, etc...
-        self._geo_type = geo_type
         # 2d, 3d, 4d, given by an int
         self._dim = dim
         # EPSG projection id
@@ -108,20 +109,6 @@ class Geom(fields._column):
                     col_name, table)
             finally:
                 cursor.commit()
-
-    def manage_db_column(self, cursor, col_name, geo_columns, table, model):
-        """In charge of managing geom column type"""
-        # we check if columns exists
-        query = ("SELECT id FROM ir_model_fields "
-                 "WHERE model = %s AND name = %s")
-        logger.debug(cursor.mogrify(query, (model, col_name)))
-        cursor.execute(query, (model, col_name))
-        field_exist = cursor.fetchone()
-        if field_exist:
-            self.update_geo_column(cursor, col_name, geo_columns, table, model)
-        else:
-            self.create_geo_column(cursor, col_name, geo_columns, table, model)
-        return True
 
     def create_geo_column(self, cursor, col_name, geo_column, table, model):
         """Create a columns of type the geom"""

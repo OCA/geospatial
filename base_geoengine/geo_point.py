@@ -26,9 +26,10 @@ from . import geo_field
 class GeoPoint(geo_field.Geom):
     """New type of column in the  ORM for POSTGIS geometry Point type"""
     _type = 'geo_point'
+    _geo_type = 'POINT'
 
     def __init__(self, string, dim=2, srid=900913, gist_index=True, **args):
         super(GeoPoint, self).__init__(
-            string, "POINT", dim=dim, srid=srid, gist_index=gist_index, **args)
+            string, dim=dim, srid=srid, gist_index=gist_index, **args)
 
 fields.geo_point = GeoPoint

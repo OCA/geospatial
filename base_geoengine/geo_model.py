@@ -19,17 +19,19 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, osv, orm
+from openerp import models
+from openerp.osv import fields, osv
 from openerp.tools.translate import _
 from . import geo_db
 from . import geo_operators
+from . import fields as geo_fields
 
 
 DEFAULT_EXTENT = '-123164.85222423, 5574694.9538936, ' + \
     '1578017.6490538, 6186191.1800898'
 
 
-class GeoModel(orm.BaseModel):
+class GeoModel(models.BaseModel):
     # Array of ash that define layer and data to use
     _georepr = []
     _name = None
@@ -57,10 +59,13 @@ class GeoModel(orm.BaseModel):
         res = super(GeoModel, self)._auto_init(cursor, context)
         if geo_columns:
             geo_db.init_postgis(cursor)
+        column_data = self._select_column_data(cursor)
         for kol in geo_columns:
             if not isinstance(geo_columns[kol], fields.function):
-                geo_columns[kol].manage_db_column(
-                    cursor, kol, geo_columns[kol], self._table, self._name)
+                fct = geo_columns[kol].create_geo_column
+                if kol in column_data:
+                    fct = geo_columns[kol].update_geo_column
+                fct(cursor, kol, geo_columns[kol], self._table, self._name)
         self._columns = tmp
         self._field_create(cursor, context)
         return res
@@ -147,7 +152,8 @@ class GeoModel(orm.BaseModel):
         res = {}
         raster_obj = self.pool.get('geoengine.raster.layer')
 
-        if not getattr(self._columns.get(column), '_geo_type', False):
+        field = self._fields.get(column)
+        if field and not isinstance(field, geo_fields.GeoField):
             raise ValueError(
                 _("%s column does not exists or is not a geo field") % column)
         view = self._get_geo_view(cursor, uid)
@@ -165,8 +171,8 @@ class GeoModel(orm.BaseModel):
                 _('No raster layer for view %s') % (view.name,))
         res['edit_raster'] = raster_obj.read(
             cursor, uid, raster_id[0], context=context)
-        res['geo_type'] = self._columns[column]._geo_type
-        res['srid'] = self._columns[column]._srid
+        res['geo_type'] = field.column._geo_type
+        res['srid'] = field.column._srid
         res['default_extent'] = view.default_extent
         return res
 
