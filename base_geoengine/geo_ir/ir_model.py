@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, orm
+from openerp import fields, models
 from openerp.addons import base
 if 'geoengine' not in base.ir.ir_actions.VIEW_TYPES:
     base.ir.ir_actions.VIEW_TYPES.append(('geoengine', 'Geoengine'))
@@ -38,7 +38,7 @@ POSTGIS_GEO_TYPES = [('POINT', 'POINT'),
                      ('MULTIPOLYGON', 'MULTIPOLYGON')]
 
 
-class IrModelField(orm.Model):
+class IrModelField(models.Model):
     _inherit = 'ir.model.fields'
 
     def _get_fields_type(self, cr, uid, context=None):
@@ -48,13 +48,11 @@ class IrModelField(orm.Model):
         to_return.sort()
         return to_return
 
-    _columns = {'srid': fields.integer('srid', required=False),
-                'geo_type': fields.selection(
-                    POSTGIS_GEO_TYPES, string="PostGIs type"),
-                'dim': fields.selection(
-                    [(2, '2'), (3, '3'), (4, '4')], string="PostGIs type"),
-                'gist_index': fields.boolean('Create gist index'),
-                'ttype': fields.selection(_get_fields_type,
-                                          'Field Type',
-                                          size=64,
-                                          required=True)}
+    srid = fields.Integer('srid', required=False)
+    geo_type = fields.Selection(
+        POSTGIS_GEO_TYPES, string="PostGIs type")
+    dim = fields.Selection(
+        [(2, '2'), (3, '3'), (4, '4')], string="PostGIs type")
+    gist_index = fields.Boolean('Create gist index')
+    ttype = fields.Selection(
+        '_get_fields_type', 'Field Type', size=64, required=True)

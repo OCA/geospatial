@@ -42,4 +42,4 @@
  'qweb': ["static/src/xml/geoengine.xml"],
  'installable': True,
  'active': False,
- 'icon': '/base_geoengine/static/src/images/map_icon.png'}
+ }
