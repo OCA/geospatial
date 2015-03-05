@@ -19,19 +19,13 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class ResCompany(orm.Model):
+class ResCompany(models.Model):
     """Override company to activate deactivate GeoNames geocoding"""
 
-    _name = "res.company"
     _inherit = "res.company"
 
-    _columns = {
-        'enable_geocoding': fields.boolean('Enable Addresse Geocoding')
-    }
-
-    _defaults = {
-        'enable_geocoding': True
-    }
+    enable_geocoding = fields.Boolean(
+        'Enable Addresse Geocoding', default=True)

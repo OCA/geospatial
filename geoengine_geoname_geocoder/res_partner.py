@@ -24,31 +24,26 @@ from urllib2 import urlopen
 import xml.dom.minidom
 import logging
 
-from shapely.geometry import Point
-
-from openerp.osv import fields, orm
-from openerp.osv.osv import except_osv
+from openerp import api
 from openerp.tools.translate import _
+from openerp.exceptions import ValidationError
+from openerp.exceptions import except_orm
 
+from openerp.addons.base_geoengine import geo_model, fields
 
 logger = logging.getLogger('GeoNames address encoding')
 
 
-class ResPartner(orm.Model):
+class ResPartner(geo_model.GeoModel):
     """Auto geo coding of addresses"""
-
-    _name = "res.partner"
     _inherit = "res.partner"
 
-    _columns = {
-        'geo_point': fields.geo_point(
-            'Addresses coordinate', readonly=True)
-    }
+    geo_point = fields.GeoPoint(
+        'Addresses coordinate', readonly=True)
 
-    def _can_geocode(self, cursor, uid, context):
-        usr = self.pool['res.users']
-        return usr.browse(
-            cursor, uid, uid, context).company_id.enable_geocoding
+    def _can_geocode(self):
+        usr = self.env['res.users']
+        return usr.browse(self.env.uid).company_id.enable_geocoding
 
     def _get_point_from_reply(self, answer):
         """Parse geoname answer code inspired by geopy library"""
@@ -70,7 +65,7 @@ class ResPartner(orm.Model):
             longitude = get_first_text(code, 'lng') or None
             latitude = latitude and float(latitude)
             longitude = longitude and float(longitude)
-            return Point(longitude, latitude)
+            return latitude, longitude
 
         res = answer.read()
         if not isinstance(res, basestring):
@@ -79,25 +74,26 @@ class ResPartner(orm.Model):
         codes = doc.getElementsByTagName('code')
         if len(codes) < 1:
             return False
-        return parse_code(codes[0])
+        latitude, longitude = parse_code(codes[0])
+        return fields.GeoPoint.from_latlon(self.env.cr, latitude, longitude)
 
-    def geocode_from_geonames(self, cursor, uid, ids, srid='900913',
+    @api.multi
+    def geocode_from_geonames(self, srid='900913',
                               strict=True, context=None):
         context = context or {}
         base_url = u'http://ws.geonames.org/postalCodeSearch?'
-        config_parameter_obj = self.pool['ir.config_parameter']
+        config_parameter_obj = self.env['ir.config_parameter']
         username = config_parameter_obj.get_param(
-            cursor, uid, 'geoengine_geonames_username')
+            'geoengine_geonames_username')
         if not username:
-            raise except_osv(_('A username is required to access '
-                               'http://ws.geonames.org/ \n'
-                               'Please provides a valid one by setting a '
-                               'value in System Paramter for the key '
-                               '"geoengine_geonames_username"'))
+            raise ValidationError(
+                _('A username is required to access '
+                  'http://ws.geonames.org/ \n'
+                  'Please provides a valid one by setting a '
+                  'value in System Paramter for the key '
+                  '"geoengine_geonames_username"'))
         filters = {}
-        if not isinstance(ids, list):
-            ids = [ids]
-        for add in self.browse(cursor, uid, ids, context):
+        for add in self:
             logger.info('geolocalize %s', add.name)
             if add.country_id.code and (add.city or add.zip):
                 filters[u'country'] = add.country_id.code.encode('utf-8')
@@ -110,37 +106,28 @@ class ResPartner(orm.Model):
                 try:
                     url = base_url + urlencode(filters)
                     answer = urlopen(url)
-                    data = {'geo_point': self._get_point_from_reply(answer)}
-                    add.write(data)
-                    # We use postgres to do projection in order not to install
-                    # GDAL dependences
-                    sql = """
-            UPDATE
-                res_partner
-            SET
-                geo_point = ST_Transform(st_SetSRID(geo_point, 4326), %s)
-            WHERE id = %s"""
-                    cursor.execute(sql, (srid, add.id))
-                except Exception as exc:
+                    add.geo_point = self._get_point_from_reply(answer)
+                except Exception, exc:
                     logger.exception('error while updating geocodes')
                     if strict:
-                        raise except_osv(_('Geoencoding fails'), str(exc))
-        return ids
+                        raise except_orm(_('Geoencoding fails'), str(exc))
 
-    def write(self, cursor, uid, ids, vals, context=None):
-        res = super(ResPartner, self).write(
-            cursor, uid, ids, vals, context=None)
-        do_geocode = self._can_geocode(cursor, uid, context)
+    @api.multi
+    def write(self, vals):
+        res = super(ResPartner, self).write(vals)
+        do_geocode = self._can_geocode()
         if do_geocode \
             and "country_id" in vals \
             or 'city' in vals \
                 or 'zip' in vals:
-            self.geocode_from_geonames(cursor, uid, ids, context=context)
+            self.geocode_from_geonames()
         return res
 
-    def create(self, cursor, uid, vals, context=None):
-        res = super(ResPartner, self).create(cursor, uid, vals, context=None)
-        do_geocode = self._can_geocode(cursor, uid, context=context)
+    @api.model
+    @api.returns('self', lambda value: value.id)
+    def create(self, vals):
+        res = super(ResPartner, self).create(vals)
+        do_geocode = self._can_geocode()
         if do_geocode:
-            self.geocode_from_geonames(cursor, uid, res, context=context)
+            res.geocode_from_geonames()
         return res
