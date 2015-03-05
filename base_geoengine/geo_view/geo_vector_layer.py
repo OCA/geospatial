@@ -18,51 +18,47 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 SUPPORTED_ATT = ['float', 'integer', 'integer_big', 'related',
                  'function', 'date', 'datetime', 'char', 'text', 'selection']
 
 
-class GeoVectorLayer(orm.Model):
+class GeoVectorLayer(models.Model):
     _name = 'geoengine.vector.layer'
 
-    _columns = {
-        'geo_repr': fields.selection(
-            [('basic', 'Basic'),
-             # Actually we have to think if we should separate it for colored
-             # ('choropleth', 'Choropleth'),
-             ('proportion', 'Proportional Symbol'),
-             ('colored', 'Colored range/Choropleth')],
-            string="Representation mode",
-            required=True),
-        'classification': fields.selection(
-            [('unique', 'Unique value'),
-             ('interval', 'Interval'),
-             ('quantile', 'Quantile')],
-            string="Classification mode",
-            required=False),
-        'name': fields.char(
-            'Layer Name', size=256, translate=True, required=True),
-        'symbol_url': fields.text('Symbol URL'),
-        'symbol_binary': fields.binary('Binary Symbol'),
-        'begin_color': fields.char(
-            'Begin color class', size=64, required=False, help='hex value'),
-        'end_color': fields.char(
-            'End color class', size=64, required=False, help='hex value'),
-        'nb_class': fields.integer('Number of class'),
-        'attribute_field_id': fields.many2one(
-            'ir.model.fields', 'attribute field',
-            domain=[('ttype', 'in', SUPPORTED_ATT)]),
-        'geo_field_id': fields.many2one(
-            'ir.model.fields', 'Geo field',
-            domain=[('ttype', 'ilike', 'geo_')], required=True),
-        'view_id': fields.many2one(
-            'ir.ui.view', 'Related View', domain=[('type', '=', 'geoengine')],
-            required=True),
-        'sequence': fields.integer('layer priority lower on top'),
-        'readonly': fields.boolean('Layer is read only')}
-    # TODO Write data check consraints
-    _defaults = {'nb_class': lambda *a: 1,
-                 'begin_color': lambda *a: '#FF680A',
-                 'sequence': lambda *a: 6}
+    geo_repr = fields.Selection(
+        [('basic', 'Basic'),
+         # Actually we have to think if we should separate it for colored
+         # ('choropleth', 'Choropleth'),
+         ('proportion', 'Proportional Symbol'),
+         ('colored', 'Colored range/Choropleth')],
+        string="Representation mode",
+        required=True)
+    classification = fields.Selection(
+        [('unique', 'Unique value'),
+         ('interval', 'Interval'),
+         ('quantile', 'Quantile')],
+        string="Classification mode",
+        required=False)
+    name = fields.Char(
+        'Layer Name', size=256, translate=True, required=True)
+    symbol_url = fields.Text('Symbol URL')
+    symbol_binary = fields.Binary('Binary Symbol')
+    begin_color = fields.Char(
+        'Begin color class', size=64, required=False, help='hex value')
+    end_color = fields.Char(
+        'End color class', size=64, required=False, help='hex value',
+        defautl='#FF680A')
+    nb_class = fields.Integer('Number of class', default=1)
+    attribute_field_id = fields.Many2one(
+        'ir.model.fields', 'attribute field',
+        domain=[('ttype', 'in', SUPPORTED_ATT)])
+    geo_field_id = fields.Many2one(
+        'ir.model.fields', 'Geo field',
+        domain=[('ttype', 'ilike', 'geo_')], required=True)
+    view_id = fields.Many2one(
+        'ir.ui.view', 'Related View', domain=[('type', '=', 'geoengine')],
+        required=True)
+    sequence = fields.Integer('layer priority lower on top', default=6)
+    readonly = fields.Boolean('Layer is read only')
