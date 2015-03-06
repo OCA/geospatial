@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-#TODO create a base Geocoder module
+# TODO create a base Geocoder module
 from urllib import urlencode
 from urllib2 import urlopen
 import xml.dom.minidom
@@ -26,22 +26,29 @@ import logging
 
 from shapely.geometry import Point
 
-from osv import fields, osv
+from openerp.osv import fields, orm
 from openerp.osv.osv import except_osv
 from tools.translate import _
 
 
 logger = logging.getLogger('GeoNames address encoding')
 
-class ResPartner(osv.osv):
+
+class ResPartner(orm.Model):
     """Auto geo coding of addresses"""
+
     _name = "res.partner"
     _inherit = "res.partner"
 
+    _columns = {
+        'geo_point': fields.geo_point(
+            'Addresses coordinate', readonly=True)
+    }
 
     def _can_geocode(self, cursor, uid, context):
-        usr = self.pool.get('res.users')
-        return usr.browse(cursor, uid, uid, context).company_id.enable_geocoding
+        usr = self.pool['res.users']
+        return usr.browse(
+            cursor, uid, uid, context).company_id.enable_geocoding
 
     def _get_point_from_reply(self, answer):
         """Parse geoname answer code inspired by geopy library"""
@@ -74,11 +81,19 @@ class ResPartner(osv.osv):
             return False
         return parse_code(codes[0])
 
-
-
-    def geocode_from_geonames(self, cursor, uid, ids, srid='900913', strict=True, context=None):
+    def geocode_from_geonames(self, cursor, uid, ids, srid='900913',
+                              strict=True, context=None):
         context = context or {}
         base_url = u'http://ws.geonames.org/postalCodeSearch?'
+        config_parameter_obj = self.pool['ir.config_parameter']
+        username = config_parameter_obj.get_param(
+            cursor, uid, 'geoengine_geonames_username')
+        if not username:
+            raise except_osv(_('A username is required to access '
+                               'http://ws.geonames.org/ \n'
+                               'Please provides a valid one by setting a '
+                               'value in System Paramter for the key '
+                               '"geoengine_geonames_username"'))
         filters = {}
         if not isinstance(ids, list):
             ids = [ids]
@@ -86,6 +101,7 @@ class ResPartner(osv.osv):
             logger.info('geolocalize %s', add.name)
             if add.country_id.code and (add.city or add.zip):
                 filters[u'country'] = add.country_id.code.encode('utf-8')
+                filters[u'username'] = username.encode('utf-8')
                 if add.city:
                     filters[u'placename'] = add.city.encode('utf-8')
                 if add.zip:
@@ -96,21 +112,29 @@ class ResPartner(osv.osv):
                     answer = urlopen(url)
                     data = {'geo_point': self._get_point_from_reply(answer)}
                     add.write(data)
-                    # We use postgres to do projection in order not to install GDAL dependences
-                    sql = ("UPDATE res_partner"
-                           "  SET geo_point = ST_Transform(st_SetSRID(geo_point, 4326), %s)"
-                           "  WHERE id = %s")
+                    # We use postgres to do projection in order not to install
+                    # GDAL dependences
+                    sql = """"
+            UPDATE
+                res_partner
+            SET
+                geo_point = ST_Transform(st_SetSRID(geo_point, 4326), %s)
+            WHERE id = %s"""
                     cursor.execute(sql, (srid, add.id))
-                except Exception, exc:
+                except Exception as exc:
                     logger.exception('error while updating geocodes')
                     if strict:
                         raise except_osv(_('Geoencoding fails'), str(exc))
         return ids
 
     def write(self, cursor, uid, ids, vals, context=None):
-        res = super(ResPartner, self).write(cursor, uid, ids, vals, context=None)
+        res = super(ResPartner, self).write(
+            cursor, uid, ids, vals, context=None)
         do_geocode = self._can_geocode(cursor, uid, context)
-        if do_geocode and "country_id" in vals or 'city' in vals or 'zip' in vals:
+        if do_geocode \
+            and "country_id" in vals \
+            or 'city' in vals \
+                or 'zip' in vals:
             self.geocode_from_geonames(cursor, uid, ids, context=context)
         return res
 
@@ -120,5 +144,3 @@ class ResPartner(osv.osv):
         if do_geocode:
             self.geocode_from_geonames(cursor, uid, res, context=context)
         return res
-    
-ResPartner()

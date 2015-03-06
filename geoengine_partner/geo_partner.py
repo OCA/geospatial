@@ -19,11 +19,15 @@
 #
 ##############################################################################
 
-from osv import fields
+from openerp.osv import fields
 from base_geoengine import geo_model
+
 
 class ResPartner(geo_model.GeoModel):
     """Add geo_point to partner using a function filed"""
     _name = "res.partner"
     _inherit = "res.partner"
-    _columns = {'geo_point' : fields.geo_point('Addresses coordinate')}
+
+    _columns = {
+        'geo_point': fields.geo_point('Addresses coordinate')
+    }

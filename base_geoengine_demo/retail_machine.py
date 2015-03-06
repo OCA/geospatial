@@ -18,18 +18,19 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-from osv import fields, osv
+from openerp.osv import fields
 
 from base_geoengine import geo_model
+
 
 class RetailMachine(geo_model.GeoModel):
     """GEO OSV SAMPLE"""
 
     _name = "geoengine.demo.automatic.retailing.machine"
-    _columns = {'the_point' : fields.geo_point('Coordinate'),
-                'the_line' : fields.geo_line('Power supply line'),
+    _columns = {'the_point': fields.geo_point('Coordinate'),
+                'the_line': fields.geo_line('Power supply line'),
                 'total_sales': fields.float('Total sale'),
                 'money_level': fields.char('Money level', size=32),
-                'state': fields.selection([('hs', 'HS'), ('ok', 'OK')],'State'),
+                'state': fields.selection([('hs', 'HS'),
+                                           ('ok', 'OK')], 'State'),
                 'name': fields.char('Serial number', size=64, required=True)}
-RetailMachine()
