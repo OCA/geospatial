@@ -19,6 +19,7 @@
 #
 ##############################################################################
 from openerp.osv import fields, orm
+from openerp import api
 
 
 GEO_VIEW = ('geoengine', 'GeoEngine')
@@ -27,15 +28,17 @@ GEO_VIEW = ('geoengine', 'GeoEngine')
 class IrUIView(orm.Model):
     _inherit = 'ir.ui.view'
 
-    def __init__(self, pool, cursor):
-        """Hack due to the lack of selection fields inheritance mechanism."""
-        super(IrUIView, self).__init__(pool, cursor)
-        type_selection = self._columns['type'].selection
+    @api.model
+    def _setup_fields(self):
+        """Hack due since the field 'type' is not defined with the new api.
+        """
+        cls = type(self)
+        type_selection = cls._fields['type'].selection
         if GEO_VIEW not in type_selection:
             tmp = list(type_selection)
             tmp.append(GEO_VIEW)
-            tmp.sort()
-            self._columns['type'].selection = tuple(set(tmp))
+            cls._fields['type'].selection = tuple(set(tmp))
+        super(IrUIView, self)._setup_fields()
 
     _columns = {'raster_layer_ids': fields.one2many('geoengine.raster.layer',
                                                     'view_id',
