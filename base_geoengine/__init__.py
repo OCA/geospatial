@@ -32,4 +32,5 @@ from . import geo_line
 from . import geo_multiline
 from . import geo_polygon
 from . import geo_multipolygon
+from . import fields
 from . import company
