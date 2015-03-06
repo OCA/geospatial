@@ -2,6 +2,7 @@
  * OpenERP base_geoengine
  * Author B.Binet Copyright Camptocamp SA
  * Contributor N. Bessi Copyright Camptocamp SA
+ * Contributor Laurent Mignon 2015 Acsone SA/NV
  * License in __openerp__.py at root level of the module
  *---------------------------------------------------------
 */
@@ -421,23 +422,6 @@ openerp.base_geoengine = function(openerp) {
                 self.geometry_columns[item.geo_field_id[1]] = true;
             });
             this.$el.html(QWeb.render("GeoengineView", {"fields_view": this.fields_view, 'elem_id': this.elem_id}));
-
-            var google = false;
-            var backgrounds = data.geoengine_layers.backgrounds;
-            for (var i=0,len=backgrounds.length; i<len; i++) {
-                var l = backgrounds[i];
-                if (l.raster_type == 'google') {
-                    google = true;
-                    break;
-                }
-            }
-            if (google) {
-                window.ginit = this.on_ready;
-                $.getScript('http://maps.googleapis.com/maps/api/js?v=3.5&sensor=false&callback=ginit');
-            }
-            else {
-                //this.on_ready();
-            }
         },
 
         render_map: function() {
@@ -637,7 +621,7 @@ openerp.base_geoengine = function(openerp) {
                 geo_tab_id = self.$el.parent().get(0).id;
                 active_tab_id = ui.newPanel.get(0).id;
                 if (_.isEqual(geo_tab_id, active_tab_id)) {
-                      self.map.render(self.name);
+                      self.render_map();
                       return;
                 }
             });
@@ -657,41 +641,13 @@ openerp.base_geoengine = function(openerp) {
             delete blacklist[this.name];
             var rdataset = new openerp.web.DataSetStatic(self, self.view.model, self.build_context(blacklist));
             rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0).then(function(result) {
-                var layers = self.create_edit_layers(self, result);
+                self.layers = self.create_edit_layers(self, result);
                 self.geo_type = result.geo_type;
-                self.map = new OpenLayers.Map({
-                    theme: null,
-                    layers: layers[0]
-                });
-                self.map.addLayer(layers[1]);
-                self.modify_control = new OpenLayers.Control.ModifyFeature(layers[1]);
-                if (self.geo_type == 'POINT' || self.geo_type == 'MULTIPOINT') {
-                    self.modify_control.mode = OpenLayers.Control.ModifyFeature.DRAG;
+                self.default_extent = result.default_extent;
+                self.srid = result.srid;
+                if (self.$el.is(':visible')){
+                    self.render_map();
                 }
-                self.map.addControl(self.modify_control);
-
-                var handler = null;
-                if (self.geo_type == 'POLYGON' || self.geo_type == 'MULTIPOLYGON') {
-                    handler = OpenLayers.Handler.Polygon;
-                } else if (self.geo_type == 'LINESTRING' || self.geo_type == 'MULTILINESTRING') {
-                    handler = OpenLayers.Handler.Path;
-                } else if (self.geo_type == 'POINT' || self.geo_type == 'MULTIPOINT') {
-                    handler = OpenLayers.Handler.Point;
-                } else {
-                    // FIXME: unsupported geo type
-                }
-                self.draw_control = new OpenLayers.Control.DrawFeature(layers[1], handler);
-                self.map.addControl(self.draw_control);
-
-                self.default_extend = OpenLayers.Bounds.fromString(result.default_extent).transform('EPSG:900913', self.map.getProjection());
-               // self.map.zoomToExtent(self.default_extend);
-                self.format = new OpenLayers.Format.GeoJSON({
-                    internalProjection: self.map.getProjection(),
-                    externalProjection: 'EPSG:' + result.srid
-                });
-                self.set_value(self.value);
-                self.render_map(self);
-                $(document).trigger('FieldGeoEngineEditMap:ready', [self.map]);
             });
         },
 
@@ -711,12 +667,6 @@ openerp.base_geoengine = function(openerp) {
             }
         },
 
-        render_value: function() {
-        	if(this.map){
-        		this.map.render(this.name);
-        	}
-        },
-
         on_ui_change: function() {
             this.set_value(this.format.write(this._geometry));
         },
@@ -732,19 +682,51 @@ openerp.base_geoengine = function(openerp) {
         },
 
         on_mode_change: function() {
-            this.render_map(this);
+            this.render_map();
             this.$el.toggle(!this.invisible);
         },
-        
-        render_map: function(self) {
-            if (self.map) {
-                self.map.render(self.name);
-                if (this.get("effective_readonly") || self.force_readonly) {
-                    self.modify_control.deactivate();
-                } else {
-                    self.modify_control.activate();
-                    self.value === false ? self.draw_control.activate() : self.draw_control.deactivate();
+
+        render_map: function() {
+            if (_.isNull(this.map)){
+                this.map = new OpenLayers.Map({
+                    theme: null,
+                    layers: this.layers[0]
+                });
+                this.map.addLayer(this.layers[1]);
+                this.modify_control = new OpenLayers.Control.ModifyFeature(this.layers[1]);
+                if (this.geo_type == 'POINT' || this.geo_type == 'MULTIPOINT') {
+                    this.modify_control.mode = OpenLayers.Control.ModifyFeature.DRAG;
                 }
+                this.map.addControl(this.modify_control);
+
+                var handler = null;
+                if (this.geo_type == 'POLYGON' || this.geo_type == 'MULTIPOLYGON') {
+                    handler = OpenLayers.Handler.Polygon;
+                } else if (this.geo_type == 'LINESTRING' || this.geo_type == 'MULTILINESTRING') {
+                    handler = OpenLayers.Handler.Path;
+                } else if (this.geo_type == 'POINT' || this.geo_type == 'MULTIPOINT') {
+                    handler = OpenLayers.Handler.Point;
+                } else {
+                    // FIXME: unsupported geo type
+                }
+                this.draw_control = new OpenLayers.Control.DrawFeature(this.layers[1], handler);
+                this.map.addControl(this.draw_control);
+
+                this.default_extend = OpenLayers.Bounds.fromString(this.default_extent).transform('EPSG:900913', this.map.getProjection());
+                this.map.zoomToExtent(this.default_extend);
+                this.format = new OpenLayers.Format.GeoJSON({
+                    internalProjection: this.map.getProjection(),
+                    externalProjection: 'EPSG:' + this.srid
+                });
+                this.map.render(this.name);
+                $(document).trigger('FieldGeoEngineEditMap:ready', [this.map]);
+                this.set_value(this.value);
+            }
+            if (this.get("effective_readonly") || this.force_readonly) {
+                this.modify_control.deactivate();
+            } else {
+                this.modify_control.activate();
+                this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
             }
         },
     });
@@ -1074,5 +1056,3 @@ OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
     },
     CLASS_NAME: "OpenLayers.Control.ToolPanel"
 });
-//openerp.base_geoengine(openerp)
-// vim:et fdc=0 fdl=0:

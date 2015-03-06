@@ -14,6 +14,8 @@
                 <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat/Choropleth.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/geoengine_view.js"></script>
 
+                <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+
                 <link rel="stylesheet" href="/base_geoengine/static/src/css/style.css"/>
              </xpath>
         </template>
