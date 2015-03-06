@@ -20,7 +20,7 @@
 ##############################################################################
 from openerp.osv import fields
 
-from base_geoengine import geo_model
+from openerp.addons.base_geoengine import geo_model
 
 
 class RetailMachine(geo_model.GeoModel):
