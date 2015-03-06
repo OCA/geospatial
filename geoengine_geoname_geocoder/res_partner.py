@@ -28,7 +28,7 @@ from shapely.geometry import Point
 
 from openerp.osv import fields, orm
 from openerp.osv.osv import except_osv
-from tools.translate import _
+from openerp.tools.translate import _
 
 
 logger = logging.getLogger('GeoNames address encoding')
@@ -114,7 +114,7 @@ class ResPartner(orm.Model):
                     add.write(data)
                     # We use postgres to do projection in order not to install
                     # GDAL dependences
-                    sql = """"
+                    sql = """
             UPDATE
                 res_partner
             SET
