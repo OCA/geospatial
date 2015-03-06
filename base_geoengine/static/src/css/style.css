@@ -5,6 +5,13 @@ div.olMap {
     margin: 0 !important;
     cursor: default;
 }
+
+.olMap svg{
+    width: initial;
+    height: initial;
+    
+}
+
 div.olMapViewport {
     text-align: left;
 }
