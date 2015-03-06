@@ -436,32 +436,40 @@ openerp.base_geoengine = function(openerp) {
                 $.getScript('http://maps.googleapis.com/maps/api/js?v=3.5&sensor=false&callback=ginit');
             }
             else {
-                this.on_ready();
+                //this.on_ready();
             }
         },
 
-        on_ready: function() {
+        render_map: function() {
             //TODO: copy this mapbox dark theme in the addons
-            OpenLayers.ImgPath = "http://js.mapbox.com/theme/dark/";
-            map = new OpenLayers.Map('the_map', {
-                layers: openerp.base_geoengine.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
-                displayProjection: new OpenLayers.Projection("EPSG:4326"), // Fred should manage projection here
-                theme: null,
-                controls: [
-                    new OpenLayers.Control.KeyboardDefaults(),
-                    new OpenLayers.Control.ZoomBox(),
-                    new OpenLayers.Control.Attribution(),
-                    new OpenLayers.Control.LayerSwitcher({roundedCornerColor: 'black'}),
-                    new OpenLayers.Control.PanZoomBar(),
-                    new OpenLayers.Control.ToolPanel()
-                ]
-            });
-            $('div#the_map').animate({height: $(window).height()-300+'px'});
-            map.addControls(this.selectFeatureControls);
-            map.zoomToMaxExtent();
-            this.do_search(self.domains, null, self.offet);
-        }
+            if (_.isUndefined(this.map)){
+                OpenLayers.ImgPath = "http://js.mapbox.com/theme/dark/";
+                map = new OpenLayers.Map('the_map', {
+                    layers: openerp.base_geoengine.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
+                    displayProjection: new OpenLayers.Projection("EPSG:4326"), // Fred should manage projection here
+                    theme: null,
+                    controls: [
+                        new OpenLayers.Control.KeyboardDefaults(),
+                        new OpenLayers.Control.ZoomBox(),
+                        new OpenLayers.Control.Attribution(),
+                        new OpenLayers.Control.LayerSwitcher({roundedCornerColor: 'black'}),
+                        new OpenLayers.Control.PanZoomBar(),
+                        new OpenLayers.Control.ToolPanel()
+                    ]
+                });
+                $('div#the_map').animate({height: $(window).height()-300+'px'});
+                map.addControls(this.selectFeatureControls);
+                map.zoomToMaxExtent();
+                this.map = map;
+                this.do_search(self.domains, null, self.offet);
+            }
+        },
 
+        do_show: function () {
+            this._super();
+            this.render_map();
+        },
+    
     });
     // here you may tweak globals object, if any, and play with on_* or do_* callbacks on them
 
