@@ -37,4 +37,4 @@
  'installable': True,
  'active': False,
  'application': True,
- 'icon': '/base_geoengine/static/src/images/map_icon.png'}
+ }
