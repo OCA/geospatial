@@ -42,4 +42,5 @@
  'qweb': ["static/src/xml/geoengine.xml"],
  'installable': True,
  'active': False,
+ 'pre_init_hook': 'init_postgis',
  }
