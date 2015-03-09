@@ -22,7 +22,6 @@
 from openerp import models
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
-from . import geo_db
 from . import geo_operators
 from . import fields as geo_fields
 
@@ -57,8 +56,6 @@ class GeoModel(models.BaseModel):
                 columns[kol] = self._columns[kol]
         self._columns = columns
         res = super(GeoModel, self)._auto_init(cursor, context)
-        if geo_columns:
-            geo_db.init_postgis(cursor)
         column_data = self._select_column_data(cursor)
         for kol in geo_columns:
             if not isinstance(geo_columns[kol], fields.function):
