@@ -19,18 +19,18 @@
 #
 ##############################################################################
 """Helper to setup Postgis"""
-from openerp.osv import osv
-from openerp.tools.translate import _
+from openerp.exceptions import MissingError
+from openerp.tools import ustr
 
 import logging
 
 logger = logging.getLogger('geoengine.sql')
 
 
-def init_postgis(cursor):
+def init_postgis(cr):
     """ Initialize postgis
     """
-    cursor.execute("""
+    cr.execute("""
         SELECT
             tablename
         FROM
@@ -38,16 +38,16 @@ def init_postgis(cursor):
         WHERE
             tablename='spatial_ref_sys';
     """)
-    check = cursor.fetchone()
+    check = cr.fetchone()
     if check:
         return {}
     try:
-        cursor.execute("""
+        cr.execute("""
         CREATE EXTENSION postgis;
         CREATE EXTENSION postgis_topology;
     """)
-    except Exception, exc:
-        raise osv.except_osv(
-            _('Error, Can not initialize spatial postgis function.'
-              ' Database user may have to be superuser and postgres/postgis '
-              'extentions and dev header have to be installed'), str(exc))
+    except Exception as exc:
+        raise MissingError(
+            'Error, Can not initialize spatial postgis function.'
+            ' Database user may have to be superuser and postgres/postgis '
+            'extentions and dev header have to be installed', ustr(exc))
