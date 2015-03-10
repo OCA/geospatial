@@ -107,6 +107,7 @@ class Geom(fields._column):
                 logger.exception(
                     'Cannot create gist index for col %s table %s:',
                     col_name, table)
+                raise
             finally:
                 cursor.commit()
 
@@ -124,6 +125,7 @@ class Geom(fields._column):
             cursor.rollback()
             logger.exception('Cannot create column %s table %s:',
                              col_name, table)
+            raise
         finally:
             cursor.commit()
 
