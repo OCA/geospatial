@@ -131,7 +131,7 @@ class Geom(fields._column):
         return True
 
     def update_geo_column(self, cursor, col_name, geo_column, table, model):
-        """Update a column of type the geom does. !! not do a lot of test yet
+        """Update the column type in the database.
         """
         query = ("""SELECT srid, type, coord_dimension
                  FROM geometry_columns
