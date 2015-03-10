@@ -140,21 +140,21 @@ class Geom(fields._column):
         cursor.execute(query, (table, col_name))
         check_data = cursor.fetchone()
         if not check_data:
-            raise Exception(
+            raise TypeError(
                 "geometry_columns table seems to be corrupted. "
                 "SRID check is not possible")
         if check_data[0] != geo_column._srid:
-            raise Exception(
+            raise TypeError(
                 "Reprojection of column is not implemented"
                 "We can not change srid %s to %s" % (
                     geo_column._srid, check_data[0]))
         if check_data[1] != geo_column._geo_type:
-            raise Exception(
+            raise TypeError(
                 "Geo type modification is not implemented"
                 "We can not change type %s to %s" % (
                     check_data[1], geo_column._type))
         if check_data[2] != geo_column._dim:
-            raise Exception(
+            raise TypeError(
                 "Geo dimention modification is not implemented"
                 "We can not change dimention %s to %s" % (
                     check_data[2], geo_column._dim))
