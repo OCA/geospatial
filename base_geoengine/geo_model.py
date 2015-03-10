@@ -31,6 +31,9 @@ DEFAULT_EXTENT = '-123164.85222423, 5574694.9538936, ' \
 
 
 class GeoModel(models.BaseModel):
+    """Base class for all models defining geo fields.
+    """
+
     # Array of ash that define layer and data to use
     _georepr = []
     _name = None
@@ -40,10 +43,13 @@ class GeoModel(models.BaseModel):
     _transient = False  # True in a TransientModel
 
     def _auto_init(self, cursor, context=None):
-        # We do this because actually creation of fields in DB is not actually
-        # delegated to the field it self but to the ORM _auto_init function
         """Initialize the columns in dB and Create the GIST index
-        only create and update supported"""
+        only create and update supported
+
+        We override the base methid  because creation of fields in DB is not
+        actually delegated to the field it self but to the ORM _auto_init
+        function
+        """
         columns = {}
         geo_columns = {}
         tmp = {}
