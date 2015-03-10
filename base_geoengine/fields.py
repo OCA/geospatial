@@ -14,6 +14,11 @@ from operator import attrgetter
 
 
 class GeoField(Field):
+    """ The field descriptor contains the field definition common to all
+    specialized fields for geolocalization. Subclasses must define a type
+    and a geo_type. The type is the name of the corresponding column type,
+    the geo_type is the name of the corresponding type in the GIS system.
+    """
 
     geo_type = None
     dim = 2
@@ -38,26 +43,31 @@ class GeoField(Field):
 
 
 class GeoLine(GeoField):
+    """Field for POSTGIS geometry Line type"""
     type = 'geo_line'
     geo_type = 'LINESTRING'
 
 
 class GeoMultiLine(GeoField):
+    """Field for POSTGIS geometry MultiLine type"""
     type = 'geo_multi_line'
     geo_type = 'MULTILINESTRING'
 
 
 class GeoMultiPoint(GeoField):
+    """Field for POSTGIS geometry MultiPoint type"""
     type = 'geo_multi_point'
     geo_type = 'MULTIPOINT'
 
 
 class GeoMultiPolygon(GeoField):
+    """Field for POSTGIS geometry MultiPolygon type"""
     type = 'geo_multi_polygon'
     geo_type = 'MULTIPOLYGON'
 
 
 class GeoPoint(GeoField):
+    """Field for POSTGIS geometry Point type"""
     type = 'geo_point'
     geo_type = 'POINT'
 
@@ -78,5 +88,6 @@ class GeoPoint(GeoField):
 
 
 class GeoPolygon(GeoField):
+    """Field for POSTGIS geometry Polygon type"""
     type = 'geo_polygon'
     geo_type = 'POLYGON'
