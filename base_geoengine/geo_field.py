@@ -87,8 +87,7 @@ class Geom(fields._column):
         if same_type and not shape.is_empty:
             if shape.geom_type.lower() != self._geo_type.lower():
                 msg = _('Geo Value %s must be of the same type %s as fields')
-                # XXX: Exception or TypeError ?
-                raise Exception(msg % (shape.geom_type.lower(),
+                raise TypeError(msg % (shape.geom_type.lower(),
                                        self._geo_type.lower()))
         return shape
 
