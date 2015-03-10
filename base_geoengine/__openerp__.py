@@ -31,13 +31,12 @@
  'init_xml': [],
  'data': [
      'data.xml',
-     'company_view.xml',
+     'views/base_geoengine_view.xml',
      'geo_ir/ir_model_view.xml',
      'geo_view/ir_view_view.xml',
      'geo_view/geo_raster_layer_view.xml',
      'geo_view/geo_vector_layer_view.xml',
      'security/ir.model.access.csv',
-     'views/base_geoengine_view.xml'
  ],
  'qweb': ["static/src/xml/geoengine.xml"],
  'installable': True,
