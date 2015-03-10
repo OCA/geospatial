@@ -29,6 +29,9 @@ logger = logging.getLogger('geoengine.sql')
 
 def init_postgis(cr):
     """ Initialize postgis
+    Add PostGIS support to the database. PostGIS is a spatial database
+    extender for PostgreSQL object-relational database. It adds support for
+    geographic objects allowing location queries to be run in SQL.
     """
     cr.execute("""
         SELECT
@@ -48,6 +51,6 @@ def init_postgis(cr):
     """)
     except Exception as exc:
         raise MissingError(
-            'Error, Can not initialize spatial postgis function.'
-            ' Database user may have to be superuser and postgres/postgis '
+            'Error, Can not initialize spatial postgis function. '
+            'Database user may have to be superuser and postgres/postgis '
             'extentions and dev header have to be installed', ustr(exc))
