@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="geoengine_partner.geo_partner_view_form">
+            <field name="name">geo_partner_form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base_geolocalize.view_crm_partner_geo_form"/>
+            <field name="arch" type="xml">
+                <field name="date_localization" position="after">
+                    <field name="geo_point" widget="geo_edit_map"
+                           groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>
