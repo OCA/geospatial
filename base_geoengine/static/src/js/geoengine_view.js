@@ -617,7 +617,7 @@ openerp.base_geoengine = function(openerp) {
                 if (! _.isObject(ui.newPanel)) {
                     return;
                 }
-                geo_tab_id = self.$el.parent().get(0).id;
+                geo_tab_id = self.$el.closest('.oe_notebook_page').get(0).id;
                 active_tab_id = ui.newPanel.get(0).id;
                 if (_.isEqual(geo_tab_id, active_tab_id)) {
                       self.render_map();
