@@ -28,11 +28,14 @@ Credits
 Contributors
 ------------
 
-* Nicolas Bessi <nicolas.bessi@camptocamp.com>
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
+* Frederic Junod <frederic.junod@camptocamp.com>
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Laurent Mignon <laurent.mignon@acsone.eu>
-* ...
+* Nicolas Bessi <nicolas.bessi@camptocamp.com>
+* Sandy Carter <sandy.carter@savoirfairelinux.com>
+* Vincent Renaville <vincent.renaville@camptocamp.com>
+* Yannick Vaucher <yannick.vaucher@camptocamp.com>
 
 Maintainer
 ----------
