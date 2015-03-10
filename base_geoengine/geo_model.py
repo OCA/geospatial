@@ -20,7 +20,8 @@
 ##############################################################################
 
 from openerp import models
-from openerp.osv import fields, osv
+from openerp.exceptions import except_orm, MissingError
+from openerp.osv import fields
 from openerp.tools.translate import _
 from . import geo_operators
 from . import fields as geo_fields
@@ -98,7 +99,7 @@ class GeoModel(models.BaseModel):
                                       [('model', '=', self._name),
                                        ('type', '=', 'geoengine')])
         if not geo_view_id:
-            raise osv.except_osv(
+            raise except_orm(
                 _('No GeoEngine view defined for the model %s') % self._name,
                 _('Please create a view or modify view mode'))
         return view_obj.browse(cursor, uid, geo_view_id[0])
@@ -169,7 +170,7 @@ class GeoModel(models.BaseModel):
                                           [('view_id', '=', view.id)],
                                           context=context)
         if not raster_id:
-            raise osv.except_osv(
+            raise MissingError(
                 _('Configuration Error'),
                 _('No raster layer for view %s') % (view.name,))
         res['edit_raster'] = raster_obj.read(
