@@ -21,24 +21,24 @@
 {'name': 'Geospatial support for OpenERP',
  'version': '0.2',
  'category': 'GeoBI',
- 'description': """
-     Geospatial support based on PostGIS
-     add the ability of server to server geojson
-     to do geo CRUD and view definition
- """,
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'website': 'http://openerp.camptocamp.com',
- 'depends': ['base', 'web'],
+ 'depends': [
+     'base',
+     'web'
+ ],
  'init_xml': [],
- 'data': ['data.xml',
-          'company_view.xml',
-          'geo_ir/ir_model_view.xml',
-          'geo_view/ir_view_view.xml',
-          'geo_view/geo_raster_layer_view.xml',
-          'geo_view/geo_vector_layer_view.xml',
-          'security/ir.model.access.csv',
-          'views/base_geoengine_view.xml'],
+ 'data': [
+     'data.xml',
+     'company_view.xml',
+     'geo_ir/ir_model_view.xml',
+     'geo_view/ir_view_view.xml',
+     'geo_view/geo_raster_layer_view.xml',
+     'geo_view/geo_vector_layer_view.xml',
+     'security/ir.model.access.csv',
+     'views/base_geoengine_view.xml'
+ ],
  'qweb': ["static/src/xml/geoengine.xml"],
  'installable': True,
  'active': False,
