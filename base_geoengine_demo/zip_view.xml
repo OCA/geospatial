@@ -81,7 +81,7 @@
             <field name="attribute_field_id" ref="base_geoengine_demo.field_dummy_zip_total_sales"/>
             <field name="begin_color">#FF680A</field>
             <field name="end_color">#00680A</field>
-        </record >
+        </record>
         <record id="geoengine_raster_layer_test0" model="geoengine.raster.layer">
             <field name="raster_type">osm</field>
             <field name="name">ZIP OSM</field>
