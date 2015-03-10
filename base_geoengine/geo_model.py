@@ -26,7 +26,7 @@ from . import geo_operators
 from . import fields as geo_fields
 
 
-DEFAULT_EXTENT = '-123164.85222423, 5574694.9538936, ' + \
+DEFAULT_EXTENT = '-123164.85222423, 5574694.9538936, ' \
     '1578017.6490538, 6186191.1800898'
 
 
