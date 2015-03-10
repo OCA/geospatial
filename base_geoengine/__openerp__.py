@@ -30,7 +30,7 @@
  ],
  'init_xml': [],
  'data': [
-     'data.xml',
+     'security/data.xml',
      'views/base_geoengine_view.xml',
      'geo_ir/ir_model_view.xml',
      'geo_view/ir_view_view.xml',
