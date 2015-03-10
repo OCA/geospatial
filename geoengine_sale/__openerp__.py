@@ -21,14 +21,17 @@
 {'name': 'Geospatial support for sales',
  'version': '0.1',
  'category': 'GeoBI',
- 'description': """Add geo_point on partner and addresses
- point on partner is function field that return geo point of
- """,
- 'update_xml': ['geo_sale_view.xml'],
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'website': 'http://openerp.camptocamp.com',
- 'depends': ['base', 'geoengine_partner', 'sale'],
+ 'depends': [
+     'base',
+     'geoengine_partner',
+     'sale'
+ ],
+ 'data': [
+     'geo_sale_view.xml'
+ ],
  'installable': True,
  'application': True,
  'active': False,
