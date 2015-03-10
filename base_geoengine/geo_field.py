@@ -133,10 +133,10 @@ class Geom(fields._column):
     def update_geo_column(self, cursor, col_name, geo_column, table, model):
         """Update a column of type the geom does. !! not do a lot of test yet
         """
-        query = ("SELECT srid, type, coord_dimension "
-                 "FROM geometry_columns "
-                 "WHERE f_table_name = %s "
-                 "AND f_geometry_column = %s")
+        query = ("""SELECT srid, type, coord_dimension
+                 FROM geometry_columns
+                 WHERE f_table_name = %s
+                 AND f_geometry_column = %s""")
         cursor.execute(query, (table, col_name))
         check_data = cursor.fetchone()
         if not check_data:
