@@ -21,19 +21,19 @@
 {'name': 'Geo spatial support Demo',
  'version': '0.1',
  'category': 'GeoBI',
- 'description': """
-     Geo spatial sample module for geospatial use
- """,
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'website': 'http://openerp.camptocamp.com',
- 'depends': ['base_geoengine'],
- 'data': ['zip_view.xml',
-          'retail_machine_view.xml',
-          'data/retail_machine_geom.xml',
-          'data/npa_geom.xml',
-          'security/ir.model.access.csv'],
- 'demo_xml': [],
+ 'depends': [
+     'base_geoengine'
+ ],
+ 'data': [
+     'zip_view.xml',
+     'retail_machine_view.xml',
+     'data/retail_machine_geom.xml',
+     'data/npa_geom.xml',
+     'security/ir.model.access.csv'
+ ],
  'installable': True,
  'active': False,
  'application': True,
