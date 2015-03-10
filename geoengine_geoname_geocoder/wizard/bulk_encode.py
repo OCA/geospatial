@@ -19,16 +19,15 @@
 #
 ##############################################################################
 
-from openerp.osv import fields, orm
+from openerp import fields, models
 
 
-class BlukGeoNameEncoder(orm.TransientModel):
+class BlukGeoNameEncoder(models.TransientModel):
     _name = "geoengine.geoname.encoder"
 
-    _columns = {
-        'add_to_encode': fields.many2many('res.partner',
-                                          string='Addresses to encode'),
-        'encode_all': fields.boolean('Encode all addresses')}
+    add_to_encode = fields.Many2many('res.partner',
+                                     string='Addresses to encode')
+    encode_all = fields.Boolean('Encode all addresses')
 
     def encode(self, cursor, uid, wiz_id, context=None):
         add_obj = self.pool['res.partner']
