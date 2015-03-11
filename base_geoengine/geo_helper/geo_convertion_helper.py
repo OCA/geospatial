@@ -23,6 +23,7 @@ import logging
 try:
     from shapely import wkt
     from shapely.geometry import asShape
+    from shapely.geometry.base import BaseGeometry
     import geojson
 except ImportError:
     logger = logging.getLogger(__name__)
@@ -46,8 +47,7 @@ def value_to_shape(value):
         else:
             return False
     elif hasattr(value, 'wkt'):
-        # Nasty but did not find equivalent of base string for shapely
-        if 'shapely.geometry' in str(type(value)):
+        if isinstance(value, BaseGeometry):
             shape_to_return = value
         else:
             shape_to_return = wkt.loads(value.wkt)
