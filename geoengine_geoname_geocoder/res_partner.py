@@ -116,10 +116,8 @@ class ResPartner(geo_model.GeoModel):
     def write(self, vals):
         res = super(ResPartner, self).write(vals)
         do_geocode = self._can_geocode()
-        if do_geocode \
-            and "country_id" in vals \
-            or 'city' in vals \
-                or 'zip' in vals:
+        if do_geocode and \
+                set(('country_id', 'city', 'zip')).intersection(vals):
             self.geocode_from_geonames()
         return res
 
