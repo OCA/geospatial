@@ -114,7 +114,7 @@ class ResPartner(orm.Model):
                     add.write(data)
                     # We use postgres to do projection in order not to install
                     # GDAL dependences
-                    sql = """"
+                    sql = """
             UPDATE
                 res_partner
             SET
