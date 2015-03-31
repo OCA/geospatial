@@ -29,6 +29,7 @@ class ResPartner(geo_model.GeoModel):
     """Add geo_point to partner using a function field"""
     _inherit = "res.partner"
 
+    @api.one
     @api.depends('partner_latitude', 'partner_longitude')
     def _get_geo_point(self):
         if not self.partner_latitude or not self.partner_longitude:
