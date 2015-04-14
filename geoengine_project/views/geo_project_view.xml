@@ -67,8 +67,7 @@
 
         <record id="geoengine_raster_layer_project_project"
             model="geoengine.raster.layer">
-            <field name="raster_type">google</field>
-            <field name="google_type">G_HYBRID_MAP</field>
+            <field name="raster_type">osm</field>
             <field name="name">Project background</field>
             <field name="view_id" ref="ir_ui_view_geo_project_project" />
             <field eval="0" name="overlay" />
