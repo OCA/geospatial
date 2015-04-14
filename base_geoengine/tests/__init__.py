@@ -19,4 +19,4 @@
 #
 #
 
-from . import geoengine_test
+from . import test_geoengine
