@@ -114,15 +114,24 @@ MULTIPOLYGON_1 = """
                      726304.138055426 5873041.11333845,
                      726469.938970306 5873145.03456248)))"""
 
+
 GEO_VIEW = """{
     "arch": "dummy_arch",
     "field_parent": false,
     "fields": {
         "name": {
+            "company_dependent": false,
+            "depends": [],
+            "groups": false,
+            "manual": false,
+            "readonly": false,
             "required": true,
-            "selectable": true,
+            "searchable": true,
             "size": 64,
+            "sortable": true,
+            "store": true,
             "string": "ZIP",
+            "translate": false,
             "type": "char",
             "views": {}
         }
@@ -148,20 +157,36 @@ FORM_VIEW = """{
     "field_parent": false,
     "fields": {
         "name": {
+            "company_dependent": false,
+            "depends": [],
+            "groups": false,
+            "manual": false,
+            "readonly": false,
             "required": true,
-            "selectable": true,
+            "searchable": true,
             "size": 64,
+            "sortable": true,
+            "store": true,
             "string": "ZIP",
+            "translate": false,
             "type": "char",
             "views": {}
         },
         "the_geom": {
+            "company_dependent": false,
+            "depends": [],
             "geo_type": {
                 "dim": 2,
                 "srid": 900913,
                 "type": "MULTIPOLYGON"
             },
-            "selectable": true,
+            "groups": false,
+            "manual": false,
+            "readonly": false,
+            "required": false,
+            "searchable": true,
+            "sortable": true,
+            "store": true,
             "string": "NPA Shape",
             "type": "geo_multi_polygon",
             "views": {}

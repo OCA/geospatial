@@ -157,7 +157,7 @@ class GeoModel(models.BaseModel):
         raster_obj = self.pool.get('geoengine.raster.layer')
 
         field = self._fields.get(column)
-        if field and not isinstance(field, geo_fields.GeoField):
+        if not field or not isinstance(field, geo_fields.GeoField):
             raise ValueError(
                 _("%s column does not exists or is not a geo field") % column)
         view = self._get_geo_view(cursor, uid)
@@ -170,9 +170,7 @@ class GeoModel(models.BaseModel):
                                           [('view_id', '=', view.id)],
                                           context=context)
         if not raster_id:
-            raise MissingError(
-                _('Configuration Error'),
-                _('No raster layer for view %s') % (view.name,))
+            raise MissingError(_('No raster layer for view %s') % (view.name,))
         res['edit_raster'] = raster_obj.read(
             cursor, uid, raster_id[0], context=context)
         res['geo_type'] = field.column._geo_type
