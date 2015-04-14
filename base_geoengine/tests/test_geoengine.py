@@ -24,6 +24,7 @@ from shapely.wkt import loads as wktloads
 from shapely.geometry import Polygon, MultiPolygon
 import geojson
 from openerp.osv import fields
+from openerp.tools import SUPERUSER_ID
 from openerp.addons.base_geoengine.geo_model import GeoModel
 from .data import MULTIPOLYGON_1, GEO_VIEW, FORM_VIEW
 from openerp.modules.registry import RegistryManager
@@ -49,7 +50,12 @@ class TestGeoengine(common.TransactionCase):
 
         # mock commit since it"s called in the _auto_init method
         self.cr.commit = mock.MagicMock()
-        self.test_model = DummyModel.create_instance(pool, self.cr)
+        self.test_model = DummyModel._build_model(pool, self.cr)
+        self.test_model._prepare_setup(self.cr, SUPERUSER_ID)
+        self.test_model._setup_base(self.cr, SUPERUSER_ID, partial=False)
+        self.test_model._setup_fields(self.cr, SUPERUSER_ID)
+        self.test_model._setup_complete(self.cr, SUPERUSER_ID)
+
         self.test_model._auto_init(self.cr, {'module': __name__})
 
         # create a view for our test.dummy model
