@@ -18,19 +18,25 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 #
-import logging
-import openerp.tests.common as common
-from shapely.wkt import loads as wktloads
-from shapely.geometry import Polygon, MultiPolygon
-import geojson
-from openerp.osv import fields
-from openerp.tools import SUPERUSER_ID
-from openerp.addons.base_geoengine.geo_model import GeoModel
-from .data import MULTIPOLYGON_1, GEO_VIEW, FORM_VIEW
-from openerp.modules.registry import RegistryManager
 import mock
 import simplejson
 from cStringIO import StringIO
+import logging
+from shapely.wkt import loads as wktloads
+from shapely.geometry import Polygon, MultiPolygon
+import geojson
+
+import openerp.tests.common as common
+from openerp import fields
+from openerp.osv import fields as old_fields
+from openerp.tools import SUPERUSER_ID
+from openerp.modules.registry import RegistryManager
+from openerp.exceptions import MissingError
+
+from openerp.addons.base_geoengine.geo_model import GeoModel
+from openerp.addons.base_geoengine import fields as geo_fields
+from .data import MULTIPOLYGON_1, GEO_VIEW, FORM_VIEW
+from .data import EXPECTED_GEO_COLUMN_MULTIPOLYGON
 
 _logger = logging.getLogger(__name__)
 
@@ -39,24 +45,26 @@ class TestGeoengine(common.TransactionCase):
 
     def setUp(self):
         common.TransactionCase.setUp(self)
-        pool = RegistryManager.get(common.DB)
 
         class DummyModel(GeoModel):
             _name = 'test.dummy'
             _columns = {
-                'name': fields.char('ZIP', size=64, required=True),
-                'the_geom': fields.geo_multi_polygon('NPA Shape'),
+                'name': old_fields.char('ZIP', size=64, required=True),
+                'the_geom': old_fields.geo_multi_polygon('NPA Shape'),
                 }
+
+        class DummyModelRelated(GeoModel):
+            _name = 'test.dummy.related'
+
+            dummy_test_id = fields.Many2one(
+                String='dummy_test', comodel_name='test.dummy')
+            the_geom_related = geo_fields.GeoMultiPolygon(
+                'related', related='dummy_test_id.the_geom')
 
         # mock commit since it"s called in the _auto_init method
         self.cr.commit = mock.MagicMock()
-        self.test_model = DummyModel._build_model(pool, self.cr)
-        self.test_model._prepare_setup(self.cr, SUPERUSER_ID)
-        self.test_model._setup_base(self.cr, SUPERUSER_ID, partial=False)
-        self.test_model._setup_fields(self.cr, SUPERUSER_ID)
-        self.test_model._setup_complete(self.cr, SUPERUSER_ID)
-
-        self.test_model._auto_init(self.cr, {'module': __name__})
+        self.test_model = self._init_test_model(DummyModel)
+        self.test_model_related = self._init_test_model(DummyModelRelated)
 
         # create a view for our test.dummy model
         self.registry('ir.ui.view').create(
@@ -89,6 +97,26 @@ class TestGeoengine(common.TransactionCase):
             self.cr, 1,
             {'name': 'test dummy',
              'the_geom': wktloads(MULTIPOLYGON_1)})
+
+        self.registry('ir.ui.view').create(
+            self.cr, 1, {
+                'model':  self.test_model_related._name,
+                'name': 'test.dummy.related.geo_view',
+                'arch': """<?xml version="1.0"?>
+                    <geoengine  version="7.0">
+                        <field name="dummy_test_id"/>
+                    </geoengine> """
+                })
+
+    def _init_test_model(self, cls):
+        pool = RegistryManager.get(common.DB)
+        inst = cls._build_model(pool, self.cr)
+        inst._prepare_setup(self.cr, SUPERUSER_ID)
+        inst._setup_base(self.cr, SUPERUSER_ID, partial=False)
+        inst._setup_fields(self.cr, SUPERUSER_ID)
+        inst._setup_complete(self.cr, SUPERUSER_ID)
+        inst._auto_init(self.cr, {'module': __name__})
+        return inst
 
     def _compare_view(self, view_type, expected_result):
         cr, uid = self.cr, 1
@@ -148,3 +176,54 @@ class TestGeoengine(common.TransactionCase):
                  'geo_lesser',
                  Polygon([(3, 0), (4, 1), (4, 0)]))])
         self.assertListEqual([], ids)
+
+    def test_get_edit_info_for_geo_column(self):
+        cr, uid = self.cr, SUPERUSER_ID
+        context = self.registry['res.users'].context_get(cr, uid)
+        # the field doesn't exists
+        with self.assertRaises(ValueError):
+            self.test_model.get_edit_info_for_geo_column(
+                cr, uid, 'not_exist', context=context)
+        # no raster layer is defined
+        with self.assertRaises(MissingError):
+            self.test_model.get_edit_info_for_geo_column(
+                cr, uid, 'the_geom', context=context)
+        # define a raster layer
+        raster_obj = self.env['geoengine.raster.layer']
+        vals = {
+            "raster_type": "osm",
+            "name": "test dummy OSM",
+            "overlay": 0,
+            "view_id": self.test_model._get_geo_view(cr, uid).id
+        }
+        raster_obj.create(vals)
+        res = self.test_model.get_edit_info_for_geo_column(
+            cr, uid, 'the_geom', context=context)
+        expect = EXPECTED_GEO_COLUMN_MULTIPOLYGON
+        g = 'geo_type'
+        s = 'srid'
+        de = 'default_extent'
+        self.assertEqual(
+            res[g], expect[g], 'Should be the same geo_type')
+        self.assertEqual(
+            res[s], expect[s], 'Should be the same srid')
+        self.assertEqual(
+            res[de], expect[de], 'Should be the same default_extend')
+
+        # With the new API, non stored field doesn't have an associated column
+        # definition
+        vals = {
+            "raster_type": "osm",
+            "name": "test dummy related OSM",
+            "overlay": 0,
+            "view_id": self.test_model_related._get_geo_view(cr, uid).id
+        }
+        raster_obj.create(vals)
+        res = self.test_model_related.get_edit_info_for_geo_column(
+            cr, uid, 'the_geom_related', context=context)
+        self.assertEqual(
+            res[g], expect[g], 'Should be the same geo_type')
+        self.assertEqual(
+            res[s], expect[s], 'Should be the same srid')
+        self.assertEqual(
+            res[de], expect[de], 'Should be the same default_extend')

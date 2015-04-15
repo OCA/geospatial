@@ -154,7 +154,7 @@ class GeoModel(models.BaseModel):
 
     def get_edit_info_for_geo_column(self, cursor, uid, column, context=None):
         res = {}
-        raster_obj = self.pool.get('geoengine.raster.layer')
+        raster_obj = self.pool['geoengine.raster.layer']
 
         field = self._fields.get(column)
         if not field or not isinstance(field, geo_fields.GeoField):
@@ -173,8 +173,8 @@ class GeoModel(models.BaseModel):
             raise MissingError(_('No raster layer for view %s') % (view.name,))
         res['edit_raster'] = raster_obj.read(
             cursor, uid, raster_id[0], context=context)
-        res['geo_type'] = field.column._geo_type
-        res['srid'] = field.column._srid
+        res['geo_type'] = field.geo_type
+        res['srid'] = field.srid
         res['default_extent'] = view.default_extent
         return res
 
