@@ -34,6 +34,8 @@ Contributors
 ------------
 
 * Alexandre Fayolle <alexandre.fayolle@camptocamp.com>
+* Bruno Binet <bruno.binet@camptocamp>
+* Frédéric Junod <frederic.junod@camptocamp.com>
 * Guewen Baconnier <guewen.baconnier@camptocamp.com>
 * Jordi Riera <jordi.riera@savoirfairelinux.com>
 * Laurent Mignon <laurent.mignon@acsone.eu>
