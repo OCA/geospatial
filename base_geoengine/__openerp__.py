@@ -21,7 +21,7 @@
 {'name': 'Geospatial support for OpenERP',
  'version': '0.2',
  'category': 'GeoBI',
- 'author': "Camptocamp,Odoo Community Association (OCA)",
+ 'author': "Camptocamp,ACSONE SA/NV,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
  'website': 'http://openerp.camptocamp.com',
  'depends': [
