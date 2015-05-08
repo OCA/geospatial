@@ -48,11 +48,24 @@ class IrModelField(models.Model):
         to_return.sort()
         return to_return
 
-    srid = fields.Integer('srid', required=False)
+    srid = fields.Integer(
+        'srid',
+        required=False
+    )
     geo_type = fields.Selection(
-        POSTGIS_GEO_TYPES, string="PostGIs type")
+        POSTGIS_GEO_TYPES,
+        string="PostGIs type"
+    )
     dim = fields.Selection(
-        [(2, '2'), (3, '3'), (4, '4')], string="PostGIs type")
-    gist_index = fields.Boolean('Create gist index')
+        [(2, '2'), (3, '3'), (4, '4')],
+        string="PostGIs type"
+    )
+    gist_index = fields.Boolean(
+        'Create gist index'
+    )
     ttype = fields.Selection(
-        '_get_fields_type', 'Field Type', size=64, required=True)
+        '_get_fields_type',
+        'Field Type',
+        size=64,
+        required=True
+    )
