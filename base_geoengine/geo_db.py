@@ -50,10 +50,11 @@ def init_postgis(cr):
     """)
     except Exception:
         raise MissingError(
-            "Error, Can not initialize spatial postgis function. "
+            "Error, can not automatically initialize spatial postgis support. "
             "Database user may have to be superuser and postgres/postgis "
-            "extentions and dev header have to be installed"
+            "extentions with their devel header have to be installed. "
             "If you do not want Odoo to connect with a super user "
+            "you can manually prepare your database. To do this"
             "open a client to your database using a super user and run: \n"
             "CREATE EXTENSION postgis;\n"
             "CREATE EXTENSION postgis_topology;\n"
