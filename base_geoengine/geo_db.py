@@ -20,7 +20,6 @@
 ##############################################################################
 """Helper to setup Postgis"""
 from openerp.exceptions import MissingError
-from openerp.tools import ustr
 
 import logging
 
@@ -49,8 +48,13 @@ def init_postgis(cr):
         CREATE EXTENSION postgis;
         CREATE EXTENSION postgis_topology;
     """)
-    except Exception as exc:
+    except Exception:
         raise MissingError(
-            'Error, Can not initialize spatial postgis function. '
-            'Database user may have to be superuser and postgres/postgis '
-            'extentions and dev header have to be installed', ustr(exc))
+            "Error, Can not initialize spatial postgis function. "
+            "Database user may have to be superuser and postgres/postgis "
+            "extentions and dev header have to be installed"
+            "If you do not want Odoo to connect with a super user "
+            "open a client to your database using a super user and run: \n"
+            "CREATE EXTENSION postgis;\n"
+            "CREATE EXTENSION postgis_topology;\n"
+        )
