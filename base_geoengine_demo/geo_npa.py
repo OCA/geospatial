@@ -35,7 +35,10 @@ class NPA(geo_model.GeoModel):
     city = fields.Char('City', size=64, required=True)
     the_geom = geo_fields.GeoMultiPolygon('NPA Shape')
     total_sales = fields.Float(
-        compute='_get_ZIP_total_sales', string='Spatial! Total Sales')
+        compute='_get_ZIP_total_sales',
+        string='Spatial! Total Sales',
+        store=True,
+    )
 
     @api.multi
     def _get_ZIP_total_sales(self):
