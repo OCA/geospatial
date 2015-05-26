@@ -6,8 +6,8 @@
             <field name="model">dummy.zip</field>
             <field name="arch" type="xml">
                 <form string="Dummy">
-                    <field name="name" select="1"/>
-                    <field name="city" select="1"/>
+                    <field name="name"/>
+                    <field name="city"/>
                     <field name="priority" />
                     <notebook colspan="4">
                       <page string="Geometry">
@@ -23,8 +23,8 @@
             <field name="model">dummy.zip</field>
             <field name="arch" type="xml">
                 <tree string="Dummy">
-                    <field name="name" select="1"/>
-                    <field name="city" select="1"/>
+                    <field name="name"/>
+                    <field name="city"/>
                     <field name="priority"/>
                     <field name="total_sales"/>
                 </tree>
