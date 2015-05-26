@@ -31,7 +31,7 @@ class RetailMachine(geo_model.GeoModel):
 
     the_point = geo_fields.GeoPoint('Coordinate')
     the_line = geo_fields.GeoLine('Power supply line', index=True)
-    total_sales = fields.Float('Total sale', select=True)
+    total_sales = fields.Float('Total sale', index=True)
     money_level = fields.Char('Money level', size=32, index=True)
     state = fields.Selection([('hs', 'HS'),
                               ('ok', 'OK')],
