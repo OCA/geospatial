@@ -302,6 +302,9 @@ openerp.base_geoengine = function(openerp) {
         },
 
         getUniqueValuesStyleMap: function(cfg, features) {
+            if (jQuery.isEmptyObject(features)) {
+                return;
+            }
             var l = features.length, f = features[0];
             var v = cfg.attribute_field_id[1];
 
