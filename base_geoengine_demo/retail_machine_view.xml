@@ -28,14 +28,27 @@
             </field>
         </record>
 
+        <record model="ir.ui.view" id="geo_retail_machine_view_search">
+            <field name="name">geoengine.demo.retail.machine.search</field>
+            <field name="model">geoengine.demo.automatic.retailing.machine</field>
+            <field name="arch" type="xml">
+                <tree string="Search Retail Machine">
+                    <field name="name"/>
+                    <field name="total_sales"/>
+                    <field name="money_level"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
         <record model="ir.ui.view" id="geo_retail_machine_view_tree">
-            <field name="name">geoengine.demo.retail.machine.form</field>
+            <field name="name">geoengine.demo.retail.machine.tree</field>
             <field name="model">geoengine.demo.automatic.retailing.machine</field>
             <field name="arch" type="xml">
                 <tree string="Retail Machine">
-                    <field name="name" select="1"/>
-                    <field name="total_sales" select="1"/>
-                    <field name="money_level" select="1"/>
+                    <field name="name"/>
+                    <field name="total_sales"/>
+                    <field name="money_level"/>
                     <field name="state"/>
                 </tree>
             </field>
