@@ -25,12 +25,21 @@
                 <tree string="Dummy">
                     <field name="name" select="1"/>
                     <field name="city" select="1"/>
-                    <field name="priority" />
+                    <field name="priority"/>
                     <field name="total_sales"/>
                 </tree>
             </field>
         </record>
-
+        <record model="ir.ui.view" id="dummy_zip_search">
+            <field name="name">dummy.zip.search</field>
+            <field name="model">dummy.zip</field>
+            <field name="arch" type="xml">
+                <search string="Search ZIP">
+                    <field name="name"/>
+                    <field name="city"/>
+                </search>
+            </field>
+        </record>
         <record id="action_zip_tree" model="ir.actions.act_window">
             <field name="name">ZIP Management</field>
             <field name="res_model">dummy.zip</field>
