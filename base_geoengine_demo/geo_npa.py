@@ -31,8 +31,8 @@ class NPA(geo_model.GeoModel):
     _name = "dummy.zip"
 
     priority = fields.Integer('Priority', default=100)
-    name = fields.Char('ZIP', size=64, required=True)
-    city = fields.Char('City', size=64, required=True)
+    name = fields.Char('ZIP', size=64, select=1, required=True)
+    city = fields.Char('City', size=64, select=1, required=True)
     the_geom = geo_fields.GeoMultiPolygon('NPA Shape')
     total_sales = fields.Float(
         compute='_get_ZIP_total_sales',
