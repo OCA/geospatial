@@ -30,9 +30,11 @@ class RetailMachine(geo_model.GeoModel):
     _name = "geoengine.demo.automatic.retailing.machine"
 
     the_point = geo_fields.GeoPoint('Coordinate')
-    the_line = geo_fields.GeoLine('Power supply line')
-    total_sales = fields.Float('Total sale')
-    money_level = fields.Char('Money level', size=32)
+    the_line = geo_fields.GeoLine('Power supply line', index=True)
+    total_sales = fields.Float('Total sale', select=True)
+    money_level = fields.Char('Money level', size=32, index=True)
     state = fields.Selection([('hs', 'HS'),
-                              ('ok', 'OK')], 'State')
+                              ('ok', 'OK')],
+                             'State',
+                             index=True)
     name = fields.Char('Serial number', size=64, required=True)
