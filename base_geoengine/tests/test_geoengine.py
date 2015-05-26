@@ -140,6 +140,7 @@ class TestGeoengine(common.TransactionCase):
         shape_b = MultiPolygon([tmp1, tmp2])
         dummy.write({'the_geom': shape_b})
         dummy.refresh()
+        self.assertIsInstance(dummy.the_geom, MultiPolygon)
         self.assertEqual(
             'MULTIPOLYGON (((0 0, 1 1, 1 0, 0 0)), ((3 0, 4 1, 4 0, 3 0)))',
             dummy.the_geom.wkt)
@@ -149,6 +150,7 @@ class TestGeoengine(common.TransactionCase):
         shape_c = MultiPolygon([tmp1, tmp2])
         dummy.write({'the_geom': geojson.dumps(shape_c)})
         dummy.refresh()
+        self.assertIsInstance(dummy.the_geom, MultiPolygon)
         self.assertEqual(
             'MULTIPOLYGON (((0 1, 1 1, 1 0, 0 1)), ((3 1, 4 1, 4 0, 3 1)))',
             dummy.the_geom.wkt)
