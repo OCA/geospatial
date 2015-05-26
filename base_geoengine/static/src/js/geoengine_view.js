@@ -455,7 +455,7 @@ openerp.base_geoengine = function(openerp) {
             this._super();
             this.render_map();
         },
-    
+
     });
     // here you may tweak globals object, if any, and play with on_* or do_* callbacks on them
 
@@ -737,7 +737,7 @@ openerp.base_geoengine = function(openerp) {
 
     openerp.base_geoengine.FieldGeoEngineEditMapReadonly = openerp.base_geoengine.FieldGeoEngineEditMap.extend({
         init: function(view, node) {
-        	this.force_readonly = true;
+            this.force_readonly = true;
             this._super(view, node);
          }
     });
