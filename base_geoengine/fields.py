@@ -59,6 +59,26 @@ class GeoField(Field):
         """Load geometry into browse record after read was done"""
         return wkbloads(wkb.decode('hex')) if wkb else False
 
+    # type = 'many2one'
+    # _slots = {
+    #     'ondelete': 'set null',         # what to do when value is deleted
+    #     'auto_join': False,             # whether joins are generated upon search
+    #     'delegate': False,              # whether self implements delegation
+    # }
+
+    # def convert_to_write(self, value, target=None, fnames=None):
+    #     import pdb;pdb.set_trace()
+    #     return value.id
+    #
+    # def convert_to_onchange(self, value):
+    #     return value.id
+    #
+    # def convert_to_export(self, value, env):
+    #     return bool(value) and value.name_get()[0][1]
+    #
+    # def convert_to_display_name(self, value, record=None):
+    #     return ustr(value.display_name)
+
 
 class GeoLine(GeoField):
     """Field for POSTGIS geometry Line type"""
