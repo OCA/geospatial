@@ -37,7 +37,6 @@ class NPA(geo_model.GeoModel):
     total_sales = fields.Float(
         compute='_get_ZIP_total_sales',
         string='Spatial! Total Sales',
-        store=True,
     )
 
     @api.multi
