@@ -19,10 +19,10 @@ install:
   - sudo apt-get -q -y install postgis
 
 before_script:
-  - wget --no-check-certificate http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5618.patch
-  - patch "${ODOO_REPO}-${VERSION}"/ 5618.patch
-  - wget--no-check-certificate http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5620.patch
-  - patch "${ODOO_REPO}-${VERSION}"/ 5620.patch
+  - if [ -n "${ODOO_REPO}" ] ; then wget --no-check-certificate http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5618.patch ; fi
+  - if [ -n "${ODOO_REPO}" ] ; then patch "${ODOO_REPO}-${VERSION}"/ 5618.patch ; fi
+  - if [ -n "${ODOO_REPO}" ] ; then wget--no-check-certificate http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5620.patch ; fi
+  - if [ -n "${ODOO_REPO}" ] ; then patch "${ODOO_REPO}-${VERSION}"/ 5620.patch ; fi
 
 script:
   - travis_run_tests
