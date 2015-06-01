@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_common" inherit_id="web.assets_common">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/OpenLayers.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/proj4js-compressed.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/EPSG21781.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/namespaces.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/Util.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/Color.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat/ProportionalSymbol.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat/Choropleth.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/geoengine_view.js"></script>
+
+                <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
+
+                <link rel="stylesheet" href="/base_geoengine/static/src/css/style.css"/>
+             </xpath>
+        </template>
+    
+        <menuitem name="GeoEngine Backend" id="geoengine_base_menu"
+                  web_icon="images/map.png" groups="group_geoengine_admin"
+                  web_icon_hover="images/map-hover.png"/>
+    </data>
+</openerp>
