@@ -14,8 +14,8 @@ virtualenv:
 
 env:
   matrix:
-  - VERSION="8.0" LINT_CHECK="1" DOCS="1"
-  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
+  - VERSION="8.0" LINT_CHECK="1"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0" DOCS="1"
   - VERSION="8.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0"
   global:
     secure: "AKUuDpv2EEkeFjhMnkwwVkBsKuW13vpl8IvNr37yqNNuoaic6UxGqy2IbY/Q2vTWAEEFIaofmvu7w2moaoqz5lN9VuLAQrFy/8lPRAcY7056+yL13CpyfNn3wChG/Mq5k5O0UKmWKsgnhBz7S1W1ZqvevlTxAQRQ0IW5clZntNE="
