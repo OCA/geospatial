@@ -22,10 +22,10 @@ import sphinx_bootstrap_theme
 sys.path.append(os.path.abspath('_themes'))
 odoo_root = os.path.join(
     '~',
-    os.environment['ODOO_REPO'].split('/')[1] + '-' + os.environment['VERSION']
+    os.environ['ODOO_REPO'].split('/')[1] + '-' + os.environ['VERSION']
 )
-sys.path.append(os.path.abspath(os.path.join(odoo_root, 'openerp')))
-sys.path.append(os.path.abspath(os.path.join(odoo_root, 'addons'))
+sys.path.append(os.path.abspath(odoo_root))
+sys.path.append(os.path.abspath(os.path.join(odoo_root, 'addons')))
 sys.path.append(os.path.abspath('../../../../geospatial/'))
 
 # -- General configuration ----------------------------------------------------
