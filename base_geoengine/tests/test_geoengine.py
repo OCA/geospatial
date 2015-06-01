@@ -127,6 +127,8 @@ class TestGeoengine(common.TransactionCase):
         value['arch'] = 'dummy_arch'
         pprint_value = StringIO()
         simplejson.dump(value, pprint_value, sort_keys=True, indent=4)
+        #  diff can be very long...Set self.maxDiff to None to see it
+        self.maxDiff = None
         self.assertEqual(expected_result, pprint_value.getvalue())
 
     def test_field(self):
