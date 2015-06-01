@@ -2,14 +2,15 @@
 Postgisify an exisiting database
 *********************************
 
-If you want to install the GeoEngine on an existing database, you have to run the sql commands available in your system postgres/postgis contrib or as last option in the base_geoengine module under the postgis_sql folder.
+If you want to install the GeoEngine on an existing database you have two options.
 
-You  using a PostgreSQL super user so you have to temporary set the owner of openerp database as super user::
+If you are using a PostgreSQL super user it should work out of the box.
+If you are using a standard user you have to connect to your database and run: ::
 
- psql -U superuser my database -f postgis.sql
- psql -U superuser my database -f spatial_ref_sys.sql
- 
+  CREATE EXTENSION postgis
+  CREATE EXTENSION postgis_topology
+
 In order to test if the installation is sucessfull log into you database and::
 
- SELECT * from GEOMETRY_COLUMNS;
- SELECT * from spatial_ref_sys;
+  SELECT * from GEOMETRY_COLUMNS;
+  SELECT * from spatial_ref_sys;
