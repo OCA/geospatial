@@ -19,9 +19,9 @@ install:
   - sudo apt-get -q -y install postgis
 
 before_script:
-  - wget http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5618.patch
+  - wget --no-check-certificate http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5618.patch
   - patch ${HOME}/odoo 5618.patch
-  - wget http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5620.patch
+  - wget--no-check-certificate http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5620.patch
   - patch ${HOME}/odoo 5620.patch
 
 script:
