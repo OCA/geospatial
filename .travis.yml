@@ -2,11 +2,13 @@ language: python
 
 python:
   - "2.7"
-
 env:
-  - VERSION="8.0" LINT_CHECK="1"
+  matrix:
+  - VERSION="8.0" LINT_CHECK="1" DOCS="1"
   - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
   - VERSION="8.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0"
+  global:
+    secure: "HLfds+sQG4JcM52D7b/sTemGvBlVNdfGc4XvJ+py2rx25F4BWojpbOYx44nSiUjBO9U6Eo5kwiK0mWEXoPGg6trQcbiur9kgHrV3+hydlUUKe2/P/mnoP2JAxtu0JBSLxNcG40FdIwEE3Sd0w/ocmxMOp3RmOOVacAY48eWYeh8="
 
 virtualenv:
   system_site_packages: true
@@ -15,11 +17,12 @@ install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
-  - pip install geojson Shapely
-  - sudo apt-get -q -y install postgis
+  - pip install geojson Shapely sphinx sphinx_bootstrap_theme sphinx-intl
 
 script:
-  - travis_run_tests
+  - if [ -z "$DOCS" ] ; then travis_run_tests; fi
+  - if [ -n "$DOCS" ] ; then ./.travis_build_doc; fi
 
 after_success:
-  coveralls
+  - if [ -z "$DOCS" ] ; then coveralls; fi
+  - if [ -n "$DOCS" ] ; then ./.travis_push_doc; fi
