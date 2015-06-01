@@ -20,9 +20,9 @@ install:
 
 before_script:
   - if [ -n "${ODOO_REPO}" ] ; then wget --no-check-certificate http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5618.patch ; fi
-  - if [ -n "${ODOO_REPO}" ] ; then patch "${ODOO_REPO}-${VERSION}"/ 5618.patch ; fi
+  - if [ -n "${ODOO_REPO}" ] ; then patch -d "${ODOO_REPO}-${VERSION}" -p1 -i ../../5618.patch ; fi
   - if [ -n "${ODOO_REPO}" ] ; then wget--no-check-certificate http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5620.patch ; fi
-  - if [ -n "${ODOO_REPO}" ] ; then patch "${ODOO_REPO}-${VERSION}"/ 5620.patch ; fi
+  - if [ -n "${ODOO_REPO}" ] ; then patch -d "${ODOO_REPO}-${VERSION}" -p1 -i ../../5620.patch ; fi
 
 script:
   - travis_run_tests
