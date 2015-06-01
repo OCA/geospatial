@@ -120,9 +120,9 @@ GEO_VIEW = """{
     "field_parent": false,
     "fields": {
         "name": {
+            "change_default": false,
             "company_dependent": false,
             "depends": [],
-            "groups": false,
             "manual": false,
             "readonly": false,
             "required": true,
@@ -157,9 +157,9 @@ FORM_VIEW = """{
     "field_parent": false,
     "fields": {
         "name": {
+            "change_default": false,
             "company_dependent": false,
             "depends": [],
-            "groups": false,
             "manual": false,
             "readonly": false,
             "required": true,
@@ -173,6 +173,7 @@ FORM_VIEW = """{
             "views": {}
         },
         "the_geom": {
+            "change_default": false,
             "company_dependent": false,
             "depends": [],
             "geo_type": {
@@ -180,7 +181,6 @@ FORM_VIEW = """{
                 "srid": 900913,
                 "type": "MULTIPOLYGON"
             },
-            "groups": false,
             "manual": false,
             "readonly": false,
             "required": false,
