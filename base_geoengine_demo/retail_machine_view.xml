@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="geo_retail_machine_view_form">
+            <field name="name">geoengine.demo.retail.machine.form</field>
+            <field name="model">geoengine.demo.automatic.retailing.machine</field>
+            <field name="arch" type="xml">
+                <form string="Retail Machine">
+                    <group>
+                        <field name="name"/>
+                    </group>
+                    <notebook>
+                        <page string="Geometry">
+                            <group col="4">
+                                <field name="the_point" widget="geo_edit_map"/>
+                                <field name="the_line" widget="geo_edit_map"/>
+                            </group>
+                        </page>
+                        <page string="attributes">
+                            <group>
+                                <field name="total_sales"/>
+                                <field name="money_level"/>
+                                <field name="state"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="geo_retail_machine_view_search">
+            <field name="name">geoengine.demo.retail.machine.search</field>
+            <field name="model">geoengine.demo.automatic.retailing.machine</field>
+            <field name="arch" type="xml">
+                <tree string="Search Retail Machine">
+                    <field name="name"/>
+                    <field name="total_sales"/>
+                    <field name="money_level"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="geo_retail_machine_view_tree">
+            <field name="name">geoengine.demo.retail.machine.tree</field>
+            <field name="model">geoengine.demo.automatic.retailing.machine</field>
+            <field name="arch" type="xml">
+                <tree string="Retail Machine">
+                    <field name="name"/>
+                    <field name="total_sales"/>
+                    <field name="money_level"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="geoengine_view_retail_machine_action" model="ir.actions.act_window">
+            <field name="name">Retail Machines</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">geoengine.demo.automatic.retailing.machine</field>
+            <field name="view_mode">tree,form,geoengine</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="geo_retail_machine_view_tree"/>
+        </record>
+        <menuitem name="GeoEngine Demo" id="geoengine_demo_menu" groups="base_geoengine.group_geoengine_user" web_icon="images/map.png" web_icon_hover="images/map-hover.png"/>
+        <menuitem name="GeoEngine Samples" id="geoengine_demo_retail_menu" parent="geoengine_demo_menu" groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
+        <menuitem name="Retail Machine" id="geoengine_retail_machine_menu" action="geoengine_view_retail_machine_action" parent="geoengine_demo_retail_menu" groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
+        <record id="action_zip_tree" model="ir.actions.act_window">
+            <field name="name">ZIP Management</field>
+            <field name="res_model">dummy.zip</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,geoengine</field>
+            <field ref="dummy_zip_tree" name="view_id"/>
+        </record>
+        <menuitem name="ZIP" id="zip_retail_machine" parent="geoengine_demo_retail_menu" action="action_zip_tree" groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
+        <!-- GeoEngine views -->
+        <record id="ir_ui_view_retailmachineview0" model="ir.ui.view">
+            <field name="name">Retail machine view</field>
+            <field name="arch" type="xml">
+                <geoengine version="7.0">
+                    <field name="name" select="1"/>
+                    <field name="total_sales" select="1"/>
+                    <field name="money_level"/>
+                    <field name="state"/>
+                </geoengine>
+            </field>
+            <field eval="16" name="priority"/>
+            <field name="model">geoengine.demo.automatic.retailing.machine</field>
+        </record>
+        <record id="geoengine_vector_layer_retailmachinebasicpoint0" model="geoengine.vector.layer">
+            <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_the_point"/>
+            <field name="name">Retail Machine Basic point</field>
+            <field eval="6" name="sequence"/>
+            <field name="view_id" ref="ir_ui_view_retailmachineview0"/>
+            <field name="geo_repr">basic</field>
+            <field eval="1" name="nb_class"/>
+            <field name="begin_color">#FF680A</field>
+            <field name="symbol_binary">iVBORw0KGgoAAAANSUhEUgAAACAAAAAfCAYAAACGVs+MAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+bWFnZVJlYWR5ccllPAAAA3VJREFUeNq8V89rE0EUfjOz6aZNpFZpqyCEIooHoVaoQkGoB3vyJB49
+iYieFERBEMRbxYP/gFcv3ntQLHqwqNR6LNUqIq0/m8S2u0l3NzszfpNsqN0e3MiuA4/Jmx3e++Z7
+3/wI01pTkvZicF+zzwvR1c35efRX0B/K7SgScUHScVZ8KR96St31pPyuEHfk6+e/xrUoYWMwQM3D
+7gvOL9lIYA8MkD1+gli+hxozM/3qw8erHtEYpp7D/MUkcXlSAFiZUEQXEfgSiwCJvp0kDh8mcWSY
+2J49xBkzAY8B5KSvdTFVAKHWJan1dVMwQy/AkCyXKZydo8bLVySXl0kqZVgizDvT0Ho0SdzEJUDA
+CaH1XgQ3YCjgnESlSmp6uqmBsFajoDWPmnOUOgX3WXoAlBoFxSLAKgWoZjDDhLXuNMsRwg/gQ4Bm
+rvldSpUBrPoXR3CvLUgka4AFi7eqqExijPlmjmFISi9VDaA9xqoCiJHqSGKsBnPDkGowNxrbiL77
+Sr1JlQG017DnCDzR1oFol6MlvKYZFlCCCsT4JG0A67CbsGEkHzSK520KAcIkp2h3oN2CfUy7BKa9
+hZ2FzWnPo7BepwB9gF7ClKYKvl2GPUgaMDEDGtusfSrr0J+g42PXVLF4Uy8vM76rj6hQmKKn0zeY
+EPOdrCgxAOvk+KazsVGlC+cf2fv3X+sOQ9uT5gDSU9q25ynh3dIxgO47t/+4GBhpxwn3Fgu6NFSi
+paUv5Ky7gXVvcvPWSBsAd92tJdF6FQeRr0KZ1+YI1mpNrq5Rpy2xCBnjcYPgWOWP6/wH/UNLzEBX
+Vy7OQIBKrEbpfVglUwCFnp44AI0jyI3KXYfb0B0KsLNtGBNW02fUFsaGuS4yZcDUPQZJY+xnpHgH
+FmQKgHMWS48xRu1H3zdThmwBxBgwJcBYNXLL5tWWMQM8LkJinDuR62ZeAhYrQVODnK1H0jQXhcwU
+gBBia35cfWClbJDgeeaADcPIfwTA8SARAKCb5Slb+M6zBLBNA62dYYSn8UdlNWdZ2QLo6+vdNibx
+LAIQF+z4tp3ftlVTBVBZqcZPJurv3x16nv+jt7fXd/FgaYQNar0QMwDw6dPSFt+svVqt+iMjw3Jh
+4X24Ui2Tldt6YR06eCDFF5Flxc+B00g8/G5xYVYF6ui+odIOzHmI8Y62428BBgDwu9RGZbaLEwAA
+AABJRU5ErkJggg==
+            </field>
+        </record>
+        <record id="geoengine_vector_layer_retailmachinebasicline0" model="geoengine.vector.layer">
+            <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_the_line"/>
+            <field name="name">Retail Machine Basic Line</field>
+            <field eval="6" name="sequence"/>
+            <field name="view_id" ref="ir_ui_view_retailmachineview0"/>
+            <field name="geo_repr">basic</field>
+            <field eval="1" name="nb_class"/>
+            <field name="begin_color">#FF680A</field>
+        </record>
+        <record id="geoengine_vector_layer_retailmachinestatecolored0" model="geoengine.vector.layer">
+            <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_the_point"/>
+            <field name="name">Retail Machine State colored</field>
+            <field name="classification">unique</field>
+            <field eval="6" name="sequence"/>
+            <field name="view_id" ref="ir_ui_view_retailmachineview0"/>
+            <field name="geo_repr">colored</field>
+            <field eval="1" name="nb_class"/>
+            <field name="attribute_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_state"/>
+            <field name="begin_color">#FF680A</field>
+        </record>
+        <record id="geoengine_vector_layer_retailmachinecoloredontotalsales0" model="geoengine.vector.layer">
+            <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_the_point"/>
+            <field name="name">Retail Machine Colored on total sales quantile</field>
+            <field name="classification">quantile</field>
+            <field eval="6" name="sequence"/>
+            <field name="view_id" ref="ir_ui_view_retailmachineview0"/>
+            <field name="geo_repr">colored</field>
+            <field eval="5" name="nb_class"/>
+            <field name="attribute_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_total_sales"/>
+            <field name="begin_color">#4B69FD</field>
+            <field name="end_color">#FF680A</field>
+        </record>
+        <record id="geoengine_vector_layer_retailmachinecoloredontotalsales1" model="geoengine.vector.layer">
+            <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_the_point"/>
+            <field name="name">Retail Machine Colored on total sales proportion</field>
+            <field name="classification">quantile</field>
+            <field eval="6" name="sequence"/>
+            <field name="view_id" ref="ir_ui_view_retailmachineview0"/>
+            <field name="geo_repr">proportion</field>
+            <field eval="1" name="nb_class"/>
+            <field name="attribute_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_total_sales"/>
+            <field name="begin_color">#4B69FD</field>
+        </record>
+        <record id="geoengine_raster_layer_retailmachinemapbox" model="geoengine.raster.layer">
+            <field name="raster_type">mapbox</field>
+            <field name="mapbox_id">camptocamp.map-ok288g0c</field>
+            <field name="name">Retail Machine Mapbox</field>
+            <field name="view_id" ref="ir_ui_view_retailmachineview0"/>
+            <field eval="0" name="overlay"/>
+        </record>
+        <record id="geoengine_raster_layer_basic0" model="geoengine.raster.layer">
+            <field name="raster_type">d_wms</field>
+            <field name="name">basic</field>
+            <field name="url">vmap0.tiles.osgeo.org/wms/vmap0</field>
+            <field name="view_id" ref="ir_ui_view_retailmachineview0"/>
+            <field eval="1" name="overlay"/>
+        </record>
+    </data>
+</openerp>

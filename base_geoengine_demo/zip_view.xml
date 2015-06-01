@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="dummy_zip_form">
+            <field name="name">dummy.zip.form</field>
+            <field name="model">dummy.zip</field>
+            <field name="arch" type="xml">
+                <form string="Dummy">
+                    <field name="name"/>
+                    <field name="city"/>
+                    <field name="priority" />
+                    <notebook colspan="4">
+                      <page string="Geometry">
+                        <field name="the_geom" colspan="4" widget="geo_edit_map"/>
+                      </page>
+                    </notebook>
+                    <field name="total_sales"/>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="dummy_zip_tree">
+            <field name="name">dummy.zip.form</field>
+            <field name="model">dummy.zip</field>
+            <field name="arch" type="xml">
+                <tree string="Dummy">
+                    <field name="name"/>
+                    <field name="city"/>
+                    <field name="priority"/>
+                    <field name="total_sales"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="dummy_zip_search">
+            <field name="name">dummy.zip.search</field>
+            <field name="model">dummy.zip</field>
+            <field name="arch" type="xml">
+                <search string="Search ZIP">
+                    <field name="name"/>
+                    <field name="city"/>
+                </search>
+            </field>
+        </record>
+        <record id="action_zip_tree" model="ir.actions.act_window">
+            <field name="name">ZIP Management</field>
+            <field name="res_model">dummy.zip</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field eval="dummy_zip_tree" name="view_id"/>
+        </record>
+          <!-- GeoEngine views -->
+        <record id="ir_ui_view_resbetterzipgeoview0" model="ir.ui.view">
+            <field name="name">dummy.zip.geo_view</field>
+            <field name="arch" type="xml">
+                <geoengine version="7.0">
+                    <field name="name"/>
+                    <field name="city"/>
+                    <field name="total_sales"/>
+                </geoengine>
+            </field>
+            <field eval="16" name="priority"/>
+            <field name="model">dummy.zip</field>
+        </record>
+        <record id="geoengine_vector_layer_basictest0" model="geoengine.vector.layer">
+            <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip_the_geom"/>
+            <field name="name">Basic ZIP</field>
+            <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
+            <field name="geo_repr">basic</field>
+            <field name="attribute_field_id" ref="field_dummy_zip_city"/>
+            <field name="begin_color">#FF680A</field>
+        </record>
+        <record id="geoengine_vector_layer_coloredrangetest0" model="geoengine.vector.layer">
+            <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip_the_geom"/>
+            <field name="name">Colored range ZIP</field>
+            <field name="classification">unique</field>
+            <field eval="6" name="sequence"/>
+            <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
+            <field name="geo_repr">colored</field>
+            <field eval="1" name="nb_class"/>
+            <field name="attribute_field_id" ref="base_geoengine_demo.field_dummy_zip_total_sales"/>
+            <field name="begin_color">#FF680A</field>
+        </record>
+        <record id="geoengine_vector_layer_coloredrangezipquantile0" model="geoengine.vector.layer">
+            <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip_the_geom"/>
+            <field name="name">Colored range ZIP quantile</field>
+            <field name="classification">interval</field>
+            <field eval="6" name="sequence"/>
+            <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
+            <field name="geo_repr">colored</field>
+            <field eval="4" name="nb_class"/>
+            <field name="attribute_field_id" ref="base_geoengine_demo.field_dummy_zip_total_sales"/>
+            <field name="begin_color">#FF680A</field>
+            <field name="end_color">#00680A</field>
+        </record>
+        <record id="geoengine_raster_layer_test0" model="geoengine.raster.layer">
+            <field name="raster_type">osm</field>
+            <field name="name">ZIP OSM</field>
+            <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
+            <field eval="0" name="overlay"/>
+        </record>
+        <record id="geoengine_raster_layer_mapbox0" model="geoengine.raster.layer">
+            <field name="raster_type">mapbox</field>
+            <field name="mapbox_id">camptocamp.map-qrf4x</field>
+            <field name="name">ZIP Mapbox Light</field>
+            <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
+            <field eval="1" name="overlay"/>
+        </record>
+    </data>
+</openerp>

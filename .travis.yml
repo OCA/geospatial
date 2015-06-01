@@ -1,0 +1,37 @@
+addons:
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+      - python-lxml # because pip installation is slow
+
+language: python
+
+python:
+  - "2.7"
+
+virtualenv:
+  system_site_packages: true
+
+env:
+  - VERSION="8.0" LINT_CHECK="1"
+  - VERSION="8.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
+  - VERSION="8.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0"
+
+install:
+  - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - travis_install_nightly
+  - pip install geojson Shapely
+  - sudo apt-get -q -y install postgis
+
+before_script:
+  - if [ -n "${ODOO_REPO}" ] ; then wget --no-check-certificate -O ${HOME}/5618.patch http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5618.patch ; fi
+  - if [ -n "${ODOO_REPO}" ] ; then IFS="/" read -a REPO <<< "${ODOO_REPO}"; patch -f -d "${HOME}/${REPO[1]}-${VERSION}" -p1 -i ${HOME}/5618.patch ; fi
+  - if [ -n "${ODOO_REPO}" ] ; then wget --no-check-certificate -O ${HOME}/5620.patch http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5620.patch ; fi
+  - if [ -n "${ODOO_REPO}" ] ; then IFS="/" read -a REPO <<< "${ODOO_REPO}"; patch -f -d "${HOME}/${REPO[1]}-${VERSION}" -p1 -i ${HOME}/5620.patch ; fi
+
+script:
+  - travis_run_tests
+
+after_success:
+  coveralls
