@@ -77,6 +77,13 @@ class ResPartner(geo_model.GeoModel):
     @api.one
     @api.depends('partner_latitude', 'partner_longitude')
     def _get_geo_point(self):
+        """
+        Set the `geo_point` of the partner depending of its `partner_latitude`
+        and its `partner_longitude`
+        **Notes**
+        If one of those parameters is not set then reset the partner's
+        geo_point and do not recompute it
+        """
         if not self.partner_latitude or not self.partner_longitude:
             self.geo_point = False
         else:
