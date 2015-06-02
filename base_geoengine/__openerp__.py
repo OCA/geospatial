@@ -38,6 +38,10 @@
      'geo_view/geo_vector_layer_view.xml',
      'security/ir.model.access.csv',
  ],
+ 'external_dependencies': {
+     'python': ['shapely',
+                'geojson'],
+  },
  'qweb': ["static/src/xml/geoengine.xml"],
  'installable': True,
  'active': False,
