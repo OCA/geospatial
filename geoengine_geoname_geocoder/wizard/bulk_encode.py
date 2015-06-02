@@ -22,7 +22,7 @@
 from openerp import fields, models
 
 
-class BlukGeoNameEncoder(models.TransientModel):
+class BulkGeoNameEncoder(models.TransientModel):
     _name = "geoengine.geoname.encoder"
 
     add_to_encode = fields.Many2many('res.partner',

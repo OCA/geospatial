@@ -27,6 +27,7 @@
  'depends': [
      'base',
      'base_geoengine'
+     
  ],
  'data': [
      'geo_partner_view.xml'
