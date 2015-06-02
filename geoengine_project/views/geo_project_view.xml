@@ -8,7 +8,6 @@
         <record model="ir.ui.view" id="geo_project_project_view_form">
             <field name="name">geo_project_project_form</field>
             <field name="model">project.project</field>
-            <field name="type">form</field>
             <field name="inherit_id" ref="project.edit_project" />
             <field name="arch" type="xml">
                 <xpath expr="//notebook"
