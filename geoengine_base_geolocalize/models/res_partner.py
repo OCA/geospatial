@@ -55,14 +55,14 @@ class ResPartner(geo_model.GeoModel):
             'country': self.country_id and self.country_id.name or '',
             'countryCodes': self.country_id and self.country_id.code or ''}
 
-        r = requests.get(url, params=pay_load)
+        request_result = requests.get(url, params=pay_load)
         try:
-            r.raise_for_status()
+            request_result.raise_for_status()
         except Exception as e:
             _logger.exception('Geocoding error')
             raise exceptions.Warning(_(
                 'Geocoding error. \n %s') % e.message)
-        vals = r.json()
+        vals = request_result.json()
         vals = vals and vals[0] or {}
         self.write({
             'partner_latitude': vals.get('lat'),
