@@ -30,7 +30,7 @@ try:
     import requests
 except ImportError:
     logger = logging.getLogger(__name__)
-    logger.warning('Shapely or geojson are not available in the sys path')
+    logger.warning('requests is not available in the sys path')
 
 _logger = logging.getLogger(__name__)
 
