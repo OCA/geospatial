@@ -29,9 +29,11 @@ sphinxodoo_addons_path = [
     os.path.abspath(os.path.join(odoo_root, 'addons')),
     os.path.abspath(os.environ['TRAVIS_BUILD_DIR']),
 ]
-
-sphinxodoo_addons = [os.listdir(os.environ['TRAVIS_BUILD_DIR'])]
-
+geo_path = os.environ['TRAVIS_BUILD_DIR']
+addons = [x for x in os.listdir(geo_path)
+          if not x.startswith('.') and os.path.isdir(os.path.join(geo_path, x))]
+sphinxodoo_addons = addons
+sys.path.append(os.environ['TRAVIS_BUILD_DIR'])
 # -- General configuration ----------------------------------------------------
 
 # If your documentation needs a minimal Sphinx version, state it here.
