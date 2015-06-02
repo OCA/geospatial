@@ -52,7 +52,7 @@ class ResPartner(geo_model.GeoModel):
             'postalCode': self.zip or '',
             'city': self.city or '',
             'state':  self.state_id and self.state_id.name or '',
-            'country': self.country_id and self.country_id.name or ''}
+            'countryCodes': self.country_id and self.country_id.code or ''}
 
         r = requests.get(url, params=pay_load)
         try:
