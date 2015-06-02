@@ -19,10 +19,20 @@
 #
 ##############################################################################
 
-from openerp import api
-
+import logging
+from openerp import api, fields
+from openerp import exceptions
+from openerp.tools.translate import _
 from openerp.addons.base_geoengine import geo_model
-from openerp.addons.base_geoengine import fields
+from openerp.addons.base_geoengine import fields as geo_fields
+
+try:
+    import requests
+except ImportError:
+    logger = logging.getLogger(__name__)
+    logger.warning('Shapely or geojson are not available in the sys path')
+
+_logger = logging.getLogger(__name__)
 
 
 class ResPartner(geo_model.GeoModel):
@@ -30,12 +40,47 @@ class ResPartner(geo_model.GeoModel):
     _inherit = "res.partner"
 
     @api.one
+    def geocode_address(self):
+        """Get the latitude and longitude by requesting "mapquestapi"
+        see http://open.mapquestapi.com/geocoding/
+        """
+        url = 'http://nominatim.openstreetmap.org/search'
+        pay_load = {
+            'limit': 1,
+            'format': 'json',
+            'street': self.street or '',
+            'postalCode': self.zip or '',
+            'city': self.city or '',
+            'state':  self.state_id and self.state_id.name or '',
+            'country': self.country_id and self.country_id.name or ''}
+
+        r = requests.get(url, params=pay_load)
+        try:
+            r.raise_for_status()
+        except Exception as e:
+            _logger.exception('Geocoding error')
+            raise exceptions.Warning(_(
+                'Geocoding error. \n %s') % e.message)
+        vals = r.json()
+        vals = vals and vals[0] or {}
+        self.write({
+            'partner_latitude': vals.get('lat'),
+            'partner_longitude': vals.get('lon'),
+            'date_localization': fields.Date.today()})
+
+    @api.one
+    def geo_localize(self):
+        self.geocode_address()
+        return True
+
+    @api.one
     @api.depends('partner_latitude', 'partner_longitude')
     def _get_geo_point(self):
         if not self.partner_latitude or not self.partner_longitude:
             self.geo_point = False
-        self.geo_point = fields.GeoPoint.from_latlon(
-            self.env.cr, self.partner_latitude, self.partner_longitude)
+        else:
+            self.geo_point = geo_fields.GeoPoint.from_latlon(
+                self.env.cr, self.partner_latitude, self.partner_longitude)
 
-    geo_point = fields.GeoPoint(
+    geo_point = geo_fields.GeoPoint(
         readonly=True, store=True, compute='_get_geo_point')
