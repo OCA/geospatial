@@ -4,13 +4,13 @@
 Geospatial support for Odoo
 ===========================
 
-Geospatial support based on PostGIS add the ability of server to server 
+Geospatial support based on PostGIS add the ability of server to server
 geojson to do geo CRUD and view definition.
 
 Installation
 ============
 
-To install this module, you need to have `PostGIS <http://postgis.net/>`_ installed. 
+To install this module, you need to have `PostGIS <http://postgis.net/>`_ installed.
 
 On Ubuntu::
 
@@ -21,6 +21,9 @@ The module also requires two additional python libs:
 * `Shapely <http://pypi.python.org/pypi/Shapely>`_
 
 * `geojson <http://pypi.python.org/pypi/geojson>`_
+
+for a complete documentation please refer to the `public documenation <http://oca.github.io/geospatial/index.html>`_
+
 
 Bug Tracker
 ===========
