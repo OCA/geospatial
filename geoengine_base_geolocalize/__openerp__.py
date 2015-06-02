@@ -29,6 +29,9 @@
      'geoengine_partner',
      'base_geolocalize',
  ],
+ 'external_dependencies': {
+     'python': ['requests'],
+  },
  'data': [
      'views/res_partner_view.xml'
  ],
