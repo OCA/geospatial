@@ -182,8 +182,8 @@ class GeoModel(models.BaseModel):
                    limit=None, order=None, context=None):
         """Perform a geo search it allows direct domain:
            geo_search(r, uid,
-            domaine=[('name', 'ilike', 'toto']),
-            geo_domain=[('the_point', 'geo_intersect',
+           domaine=[('name', 'ilike', 'toto']),
+           geo_domain=[('the_point', 'geo_intersect',
                          myshaply_obj or mywkt or mygeojson)])
 
            We can also support indirect geo_domain (
