@@ -41,7 +41,7 @@
  'external_dependencies': {
      'python': ['shapely',
                 'geojson'],
-  },
+ },
  'qweb': ["static/src/xml/geoengine.xml"],
  'installable': True,
  'active': False,
