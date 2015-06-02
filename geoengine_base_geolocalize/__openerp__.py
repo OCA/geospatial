@@ -31,7 +31,7 @@
  ],
  'external_dependencies': {
      'python': ['requests'],
-  },
+ },
  'data': [
      'views/res_partner_view.xml'
  ],
