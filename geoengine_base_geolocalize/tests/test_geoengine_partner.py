@@ -49,10 +49,10 @@ class TestGeoengineProjects(common.TransactionCase):
         partner_id.name = 'Other Partner'
         partner_id.geo_localize()
         self.assertAlmostEqual(
-            partner_id.partner_latitude, 49.95122, 5,
+            partner_id.partner_latitude, 49.95353, 5,
             'Latitude Should be equals')
         self.assertAlmostEqual(
-            partner_id.partner_longitude, 5.3872, 5,
+            partner_id.partner_longitude, 5.40539, 5,
             'Longitude Should be equals')
         domain = [('id', '=', partner_id.id)]
         partner_id.unlink()
