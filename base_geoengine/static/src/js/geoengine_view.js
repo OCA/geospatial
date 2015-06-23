@@ -430,7 +430,7 @@ openerp.base_geoengine = function(openerp) {
         render_map: function() {
             //TODO: copy this mapbox dark theme in the addons
             if (_.isUndefined(this.map)){
-                OpenLayers.ImgPath = "http://js.mapbox.com/theme/dark/";
+                OpenLayers.ImgPath = "//dr0duaxde13i9.cloudfront.net/theme/dark/";
                 map = new OpenLayers.Map('the_map', {
                     layers: openerp.base_geoengine.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
                     displayProjection: new OpenLayers.Projection("EPSG:4326"), // Fred should manage projection here
