@@ -18,18 +18,6 @@ openerp.base_geoengine = function(openerp) {
     var DEFAULT_MIN_SIZE = 5; // for prop symbols only
     var DEFAULT_MAX_SIZE = 15; // for prop symbols only
     var DEFAULT_NUM_CLASSES = 5; // for choroplets only
-    /*var STYLE_DEFAULT = OpenLayers.Util.applyDefaults({
-            fillColor: DEFAULT_BEGIN_COLOR,
-            fillOpacity: 0.8,
-            strokeColor: "#333333",
-            strokeOpacity: 0.8,
-            cursor: "pointer",
-            strokeWidth: 1
-        }, OpenLayers.Feature.Vector.style['default']);
-    var STYLE_SELECT = {
-        fillColor: "#ffcc66",
-        strokeColor: "#ff9933"
-    };*/
 
     /**
      * Method: formatHTML
@@ -151,16 +139,7 @@ openerp.base_geoengine = function(openerp) {
             this.model = this.dataset.model;
             this.view_id = view_id;
             this.geometry_columns = {};
-            this.vectorLayers = [];
             this.overlaysGroup = null;
-            // use {selectedFeatures:[]} as a hack to simulate a vector layer
-            // with no feature selected
-            this.selectFeatureControls = [
-           /*     new OpenLayers.Control.SelectFeature(
-                {selectedFeatures:[]}, {hover: true, highlightOnly: true}),
-                new OpenLayers.Control.SelectFeature(
-                    {selectedFeatures:[]}, {})*/
-            ];
         },
         limit: function() {
             return false;
@@ -213,47 +192,22 @@ openerp.base_geoengine = function(openerp) {
             var features = [];
             var geostat = null;
             var vectorSource = new ol.source.Vector({
-            }); 
-           /*new OpenLayers.Layer.Vector(cfg.name, {
-                styleMap: new OpenLayers.StyleMap({
-                    'default': OpenLayers.Util.applyDefaults({
-                        fillColor: cfg.begin_color
-                    }, STYLE_DEFAULT),
-                    'select': STYLE_SELECT
-                }),
-            rendererOptions: {
-                    zIndexing: true
-                },
-                eventListeners: {
-                    "featureselected": function(event) {
-                        $("#map_info").html(formatHTML(event.feature.attributes));
-                        $("#map_infobox").show();
-                    },
-                    "featureunselected": function() {
-                        $("#map_infobox").hide();
-                    }
-                }
-            });*/
+            });
             _.each(data, function(item) {
                 attributes = _.clone(item);
                 _.each(_.keys(self.geometry_columns), function(item) {
                     delete attributes[item];
                 });
-                vectorSource.addFeature(
-                    new ol.Feature({
-                        geometry: new ol.format.GeoJSON().readGeometry(item[cfg.geo_field_id[1]]),
-                        attributes: attributes
-                    })
-                );
+                var json_geometry = item[cfg.geo_field_id[1]];
+                if (json_geometry){
+                    vectorSource.addFeature(
+                        new ol.Feature({
+                            geometry: new ol.format.GeoJSON().readGeometry(json_geometry),
+                            attributes: attributes
+                        })
+                    );
+                }
             });
-                /*features.push(
-                        new ol.format.GeoJSON()).readFeatures();
-                        new OpenLayers.Feature.Vector(
-                    
-                    geojson.parseGeometry(
-                        OpenLayers.Format.JSON.prototype.read.call(self, item[cfg.geo_field_id[1]])),
-                        attributes));
-            });*/
             /*var indicator = cfg.attribute_field_id[1];
             switch (cfg.geo_repr) {
                 case "colored":
@@ -303,10 +257,33 @@ openerp.base_geoengine = function(openerp) {
                 geostat.setClassification();
                 geostat.applyClassification();
             }*/
-            return new ol.layer.Vector({
+            var fill = new ol.style.Fill({
+                color: cfg.begin_color
+            });
+            var stroke = new ol.style.Stroke({
+                color: '#3399CC',
+                width: 1.25
+            });
+            var styles = [
+                new ol.style.Style({
+                  image: new ol.style.Circle({
+                    fill: fill,
+                    stroke: stroke,
+                    radius: 5
+                  }),
+                  fill: fill,
+                  stroke: stroke
+                })
+            ];
+            var lv = new ol.layer.Vector({
                         source: vectorSource,
                         title: cfg.name,
+                        style: function(feature, resolution) {
+                           return styles;
+                        },
+                        opacity: 0.5,
                     });
+            return lv;
         },
 
         getUniqueValuesStyleMap: function(cfg, features) {
@@ -382,29 +359,17 @@ openerp.base_geoengine = function(openerp) {
                 return;
             }
             var self = this;
-            _.each(this.selectFeatureControls, function(ctrl) {
-                ctrl.deactivate();
-                // setLayer a fake layer to avoid js error on unselectAll
-                // use {selectedFeatures:[]} as a hack to simulate a vector
-                // layer with no feature selected
-                ctrl.setLayer({selectedFeatures:[]});
-            });
             map.removeLayer(this.overlaysGroup);
             
-            this.vectorLayers = this.createVectorLayers(data);
+            var vectorLayers = this.createVectorLayers(data);
             this.overlaysGroup = new ol.layer.Group({
                 title: 'Overlays',
-                layers: this.vectorLayers,
+                layers: vectorLayers,
             }); 
 
-            //map.addLayers(this.vectorLayers);
-            /*_.each(this.selectFeatureControls, function(ctrl) {
-                ctrl.setLayer(self.vectorLayers);
-                ctrl.activate();
-            });*/
-            _.each(this.vectorLayers, function(vlayer) {
+            _.each(vectorLayers, function(vlayer) {
                 // keep only one vector layer active at startup
-                if (vlayer != self.vectorLayers[0]) {
+                if (vlayer != vectorLayers[0]) {
                     vlayer.setVisible(false);
                 }
             });
@@ -412,7 +377,7 @@ openerp.base_geoengine = function(openerp) {
 
             // zoom to data extent
             //map.zoomTo
-            var extent = this.vectorLayers[0].getSource().getExtent();
+            var extent = vectorLayers[0].getSource().getExtent();
             if (extent) {
                 this.zoom_to_extent_ctrl.extent_ = extent;
                 this.zoom_to_extent_ctrl.changed();
@@ -433,6 +398,29 @@ openerp.base_geoengine = function(openerp) {
                 self.geometry_columns[item.geo_field_id[1]] = true;
             });
             this.$el.html(QWeb.render("GeoengineView", {"fields_view": this.fields_view, 'elem_id': this.elem_id}));
+        },
+
+        register_interaction: function(){
+            // select interaction working on "click"
+            var selectClick = new ol.interaction.Select({
+              condition: ol.events.condition.click
+            });
+            selectClick.on('select', function(e) {
+                var features = e.target.getFeatures(); 
+                if (features.getLength() > 0){
+                    var attributes = features.item(0).get('attributes');
+                    $("#map_info").html(formatHTML(attributes));
+                    $("#map_infobox").show();
+                } else {
+                    $("#map_infobox").hide();
+                }
+              });
+            // select interaction working on "pointermove"
+            var selectPointerMove = new ol.interaction.Select({
+              condition: ol.events.condition.pointerMove
+            });
+            this.map.addInteraction(selectClick);
+            this.map.addInteraction(selectPointerMove);
         },
 
         render_map: function() {
@@ -457,6 +445,7 @@ openerp.base_geoengine = function(openerp) {
                 var layerSwitcher = new ol.control.LayerSwitcher({});
                 map.addControl(layerSwitcher);
                 this.map = map;
+                this.register_interaction();
                 /*OpenLayers.ImgPath = "http://js.mapbox.com/theme/dark/";
                 map = new OpenLayers.Map('olmap', {
                     layers: openerp.base_geoengine.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
@@ -471,9 +460,7 @@ openerp.base_geoengine = function(openerp) {
                         new OpenLayers.Control.ToolPanel()
                     ]
                 });
-                map.addControls(this.selectFeatureControls);
-                map.zoomToMaxExtent();
-                this.map = map;*/
+                */
                 this.do_search(self.domains, null, self.offet);
             }
         },
