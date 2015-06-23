@@ -1,13 +1,16 @@
 <template>
-  <div t-name="GeoengineView" class="container-fluid o_geoengine_container" style="height:100%;position:relative;">
-    <div id="the_map"/>
-    <div id="map_infobox" class="map_overlay">
-      <div id="map_info_open">
-        <span class="fa fa-edit"/>
+  <div t-name="GeoengineView" t-att-id="elem_id" class="container-fluid o_geoengine_container" style="height:100%;position:relative;">
+    <br />
+    <div id="map">
+      <div id="olmap"/>
+      <div id="map_infobox" class="map_overlay">
+        <div id="map_info_open">
+          <span class="fa fa-edit"/>
+        </div>
       </div>
       <div id="map_info"/>
+      <div id="map_measurementbox" class="map_overlay"/>
     </div>
-    <div id="map_measurementbox" class="map_overlay"/>
   </div>
 
   <t t-name="FieldGeoPointXY">
