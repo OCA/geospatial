@@ -19,17 +19,17 @@
 #
 ##############################################################################
 """The GeoEngine module"""
-from . import geo_model
-from . import geo_operators
-from . import geo_view
-from . import geo_helper
-from . import geo_ir
-from . import geo_db
-from . import geo_field
-from . import geo_point
-from . import geo_multipoint
-from . import geo_line
-from . import geo_multiline
-from . import geo_polygon
-from . import geo_multipolygon
-from . import company
+import geo_model
+import geo_operators
+import geo_view
+import geo_helper
+import geo_ir
+import geo_db
+import geo_field
+import geo_point
+import geo_multipoint
+import geo_line
+import geo_multiline
+import geo_polygon
+import geo_multipolygon
+import company
