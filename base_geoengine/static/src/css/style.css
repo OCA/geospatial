@@ -1,17 +1,26 @@
 /* OpenLayers Style */
-div.olMap {
+div.olmap {
     z-index: 0;
     padding: 0 !important;
     margin: 0 !important;
     cursor: default;
 }
 
-.olMap svg{
+.olmap svg{
     width: initial;
     height: initial;
     
 }
 
+.olmap:-moz-full-screen {
+  height: 100%;
+}
+.olmap:-webkit-full-screen {
+  height: 100%;
+}
+.olmap:fullscreen {
+  height: 100%;
+}
 div.olMapViewport {
     text-align: left;
 }
