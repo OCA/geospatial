@@ -25,14 +25,14 @@ var QWeb = core.qweb;
 //var map, layer, vectorLayers = [];
 //TODO: remove this DEBUG
 var map = null;
-var layer = null;
+this.zoom_to_extent_ctrl = null;
 /* CONSTANTS */
 var DEFAULT_BEGIN_COLOR = "#FFFFFF";
 var DEFAULT_END_COLOR = "#000000";
 var DEFAULT_MIN_SIZE = 5; // for prop symbols only
 var DEFAULT_MAX_SIZE = 15; // for prop symbols only
 var DEFAULT_NUM_CLASSES = 5; // for choroplets only
-var STYLE_DEFAULT = OpenLayers.Util.applyDefaults({
+/*var STYLE_DEFAULT = OpenLayers.Util.applyDefaults({
         fillColor: DEFAULT_BEGIN_COLOR,
         fillOpacity: 0.8,
         strokeColor: "#333333",
@@ -43,7 +43,7 @@ var STYLE_DEFAULT = OpenLayers.Util.applyDefaults({
 var STYLE_SELECT = {
     fillColor: "#ffcc66",
     strokeColor: "#ff9933"
-};
+};*/
 
 /**
  * Method: formatHTML
@@ -106,14 +106,15 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         this.view_type = 'geoengine'
         this.geometry_columns = {};
         this.vectorLayers = [];
+        this.overlaysGroup = null;
 
         // use {selectedFeatures:[]} as a hack to simulate a vector layer
         // with no feature selected
         this.selectFeatureControls = [
-            new OpenLayers.Control.SelectFeature(
+            /*new OpenLayers.Control.SelectFeature(
             {selectedFeatures:[]}, {hover: true, highlightOnly: true}),
             new OpenLayers.Control.SelectFeature(
-                {selectedFeatures:[]}, {})
+                {selectedFeatures:[]}, {})*/
         ];
         this.selectFeatureControls[0].handlers.feature.stopDown = false;
         this.selectFeatureControls[1].handlers.feature.stopDown = false;
@@ -206,8 +207,9 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         var self = this;
         var features = [];
         var geostat = null;
-        var geojson = new OpenLayers.Format.GeoJSON();
-        var vl = new OpenLayers.Layer.Vector(
+        var vectorSource = new ol.source.Vector({
+        });
+        /*new OpenLayers.Layer.Vector(
             cfg.name,
             {
                 styleMap: new OpenLayers.StyleMap({
@@ -233,7 +235,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                     }
                 }
             }
-        );
+        );*/
         if (data.length == 0)
             return vl
         _.each(data, function(item) {
@@ -241,12 +243,18 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             _.each(_.keys(self.geometry_columns), function(item) {
                 delete attributes[item];
             });
-            features.push(new OpenLayers.Feature.Vector(
+            vectorSource.addFeature(
+                new ol.Feature({
+                    geometry: new ol.format.GeoJSON().readGeometry(item[cfg.geo_field_id[1]]),
+                    attributes: attributes
+                })
+            );
+            /*features.push(new OpenLayers.Feature.Vector(
                 geojson.parseGeometry(
                     OpenLayers.Format.JSON.prototype.read.call(self, item[cfg.geo_field_id[1]])),
-                    attributes));
+                    attributes)); */
         });
-        var indicator = cfg.attribute_field_id[1];
+        /*var indicator = cfg.attribute_field_id[1];
         switch (cfg.geo_repr) {
             case "basic":
                 if (!cfg.symbols) {
@@ -305,8 +313,11 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         if (geostat instanceof mapfish.GeoStat) {
             geostat.setClassification();
             geostat.applyClassification();
-        }
-        return vl;
+        }*/
+        return new ol.layer.Vector({
+            source: vectorSource,
+            title: cfg.name,
+        });
     },
 
     getUniqueValuesStyleMap: function(cfg, features) {
@@ -389,32 +400,35 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             // layer with no feature selected
             ctrl.setLayer({selectedFeatures:[]});
         });
-        _.each(this.vectorLayers, function(vlayer) {
-            vlayer.destroy();
-        });
+        map.removeLayer(this.overlaysGroup);
 
         this.vectorLayers = this.createVectorLayers(data);
-        this.map.addLayers(this.vectorLayers);
+        this.overlaysGroup = new ol.layer.Group({
+            title: 'Overlays',
+            layers: this.vectorLayers,
+        });
+
+        /*this.map.addLayers(this.vectorLayers);
         _.each(this.selectFeatureControls, function(ctrl) {
             ctrl.setLayer(self.vectorLayers);
             ctrl.activate();
-        });
+        });*/
         _.each(this.vectorLayers, function(vlayer) {
             // keep only one vector layer active at startup
             if (vlayer != self.vectorLayers[0]) {
-                vlayer.setVisibility(false);
+                vlayer.setVisible(false);
             }
         });
+        map.addLayer(this.overlaysGroup);
 
         // zoom to data extent
-        var data_extent = this.vectorLayers[0].getDataExtent();
-        if (data_extent) {
-            var bbox = data_extent.scale(1.1);
-            if (bbox.getWidth() * bbox.getHeight() !== 0) {
-                this.map.zoomToExtent(bbox);
-            } else {
-                this.map.setCenter(bbox.getCenterLonLat(), 15);
-            }
+        //map.zoomTo
+        var extent = this.vectorLayers[0].getSource().getExtent();
+        if (extent) {
+            this.zoom_to_extent_ctrl.extent_ = extent;
+            this.zoom_to_extent_ctrl.changed();
+            map.getView().fitExtent(extent, map.getSize()); 
+
             var ids = [];
             // Javascript expert please improve this code
             for (var i=0, len=data.length; i<len; ++i) {
@@ -425,8 +439,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     },
 
     view_loading: function(fv) {
-        console.log("GeoengineView.on_loaded: function(fv): arguments=");
-        console.log(fv);
         var self = this;
         this.fields_view = fv;
         _.each(fv.geoengine_layers.actives, function(item) {
@@ -436,9 +448,28 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     },
 
     render_map: function() {
-        //TODO: copy this mapbox dark theme in the addons
         if (_.isUndefined(this.map)){
-            OpenLayers.ImgPath = "//dr0duaxde13i9.cloudfront.net/theme/dark/";
+            this.zoom_to_extent_ctrl = new ol.control.ZoomToExtent();
+            map = new ol.Map({
+                layers: [new ol.layer.Group({
+                    title: 'Base maps',
+                    layers: openerp.base_geoengine.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
+                })],
+                target: 'olmap',
+                view: new ol.View({
+                    center: [0, 0],
+                    zoom: 5
+                }),
+                controls: ol.control.defaults().extend([
+                    new ol.control.FullScreen(),
+                    new ol.control.ScaleLine(),
+                    this.zoom_to_extent_ctrl
+                ]),
+            });
+            var layerSwitcher = new ol.control.LayerSwitcher({});
+            map.addControl(layerSwitcher);
+            this.map = map;
+            /*OpenLayers.ImgPath = "//dr0duaxde13i9.cloudfront.net/theme/dark/";
             this.map = new OpenLayers.Map("the_map", {
                 layers: this.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
                 displayProjection: new OpenLayers.Projection("EPSG:4326"), // Fred should manage projection here
@@ -461,7 +492,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 }
             }
             this.map.addControls(this.selectFeatureControls);
-            this.map.zoomToMaxExtent();
+            this.map.zoomToMaxExtent();*/
         }
     },
 
