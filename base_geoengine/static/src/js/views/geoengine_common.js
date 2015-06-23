@@ -59,28 +59,21 @@ var GeoengineMixin = {
                 switch (l.raster_type) {
                     case "osm":
                         out.push(
-                            new OpenLayers.Layer.OSM(
-                                l.name,
-                                'http://tile.openstreetmap.org/${z}/${x}/${y}.png', {
-                                    attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>\
-                                                  using <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> raster",
-                                    buffer: 1,
-                                    transitionEffect: 'resize'
-                                }));
+                            new ol.layer.Tile({
+                                title: l.name,
+                                visible: !l.overlay,
+                                type:'base',
+                                source: new ol.source.OSM()
+                            })
+                        );
                         break;
                     case "mapbox":
                         out.push(
-                            new OpenLayers.Layer.XYZ(l.name, [
-                                "http://a.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
-                                "http://b.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
-                                "http://c.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
-                                "http://d.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png"
-                            ], {
-                                sphericalMercator: true,
-                                wrapDateLine: true,
-                                numZoomLevels: 17,
-                                attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>\
-                                          using <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> raster"
+                            new ol.layer.Tile({
+                                title: l.name,
+                                visible: !l.overlay,
+                                type:'base',
+                                source: new ol.source.MapQuest({layer: 'sat'})
                             })
                         );
                         break;
@@ -110,7 +103,7 @@ return {
 };
 });
 
-OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
+/*OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
     initialize: function(options) {
         OpenLayers.Control.Panel.prototype.initialize.apply(this, [options]);
 
@@ -207,4 +200,4 @@ OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
     },
     CLASS_NAME: "OpenLayers.Control.ToolPanel"
 
-});
+});*/
