@@ -11,14 +11,14 @@ openerp.base_geoengine = function(openerp) {
     //var map, layer, vectorLayers = [];
     //TODO: remove this DEBUG
     map = null;
-    layer = null;
+    this.zoom_to_extent_ctrl = null;
     /* CONSTANTS */
     var DEFAULT_BEGIN_COLOR = "#FFFFFF";
     var DEFAULT_END_COLOR = "#000000";
     var DEFAULT_MIN_SIZE = 5; // for prop symbols only
     var DEFAULT_MAX_SIZE = 15; // for prop symbols only
     var DEFAULT_NUM_CLASSES = 5; // for choroplets only
-    var STYLE_DEFAULT = OpenLayers.Util.applyDefaults({
+    /*var STYLE_DEFAULT = OpenLayers.Util.applyDefaults({
             fillColor: DEFAULT_BEGIN_COLOR,
             fillOpacity: 0.8,
             strokeColor: "#333333",
@@ -29,7 +29,7 @@ openerp.base_geoengine = function(openerp) {
     var STYLE_SELECT = {
         fillColor: "#ffcc66",
         strokeColor: "#ff9933"
-    };
+    };*/
 
     /**
      * Method: formatHTML
@@ -77,30 +77,23 @@ openerp.base_geoengine = function(openerp) {
             switch (l.raster_type) {
                 case "osm":
                     out.push(
-                        new OpenLayers.Layer.OSM(
-                            l.name,
-                            'http://tile.openstreetmap.org/${z}/${x}/${y}.png', {
-                                attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>\
-                                              using <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> raster",
-                                buffer: 1,
-                                transitionEffect: 'resize'
-                            }));
+                        new ol.layer.Tile({
+                            title: l.name,
+                            visible: !l.overlay,
+                            type:'base',
+                            source: new ol.source.OSM()
+                        })
+                    );
                     break;
                 case "mapbox":
                     out.push(
-                        new OpenLayers.Layer.XYZ(l.name, [
-                            "http://a.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
-                            "http://b.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
-                            "http://c.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
-                            "http://d.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png"
-                        ], {
-                            sphericalMercator: true,
-                            wrapDateLine: true,
-                            numZoomLevels: 17,
-                            attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>\
-                                      using <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> raster"
+                        new ol.layer.Tile({
+                            title: l.name,
+                            visible: !l.overlay,
+                            type:'base',
+                            source: new ol.source.MapQuest({layer: 'sat'})
                         })
-                    );
+                     );
                     break;
                 case "swisstopo":
                     var resolutions = [4000, 3750, 3500, 3250, 3000, 2750, 2500, 2250, 2000, 1750, 1500, 1250, 1000, 750, 650, 500, 250, 100, 50, 20, 10, 5, 2.5];
@@ -159,13 +152,14 @@ openerp.base_geoengine = function(openerp) {
             this.view_id = view_id;
             this.geometry_columns = {};
             this.vectorLayers = [];
+            this.overlaysGroup = null;
             // use {selectedFeatures:[]} as a hack to simulate a vector layer
             // with no feature selected
             this.selectFeatureControls = [
-                new OpenLayers.Control.SelectFeature(
+           /*     new OpenLayers.Control.SelectFeature(
                 {selectedFeatures:[]}, {hover: true, highlightOnly: true}),
                 new OpenLayers.Control.SelectFeature(
-                    {selectedFeatures:[]}, {})
+                    {selectedFeatures:[]}, {})*/
             ];
         },
         limit: function() {
@@ -218,8 +212,9 @@ openerp.base_geoengine = function(openerp) {
             var self = this;
             var features = [];
             var geostat = null;
-            var geojson = new OpenLayers.Format.GeoJSON();
-            var vl = new OpenLayers.Layer.Vector(cfg.name, {
+            var vectorSource = new ol.source.Vector({
+            }); 
+           /*new OpenLayers.Layer.Vector(cfg.name, {
                 styleMap: new OpenLayers.StyleMap({
                     'default': OpenLayers.Util.applyDefaults({
                         fillColor: cfg.begin_color
@@ -238,18 +233,28 @@ openerp.base_geoengine = function(openerp) {
                         $("#map_infobox").hide();
                     }
                 }
-            });
+            });*/
             _.each(data, function(item) {
                 attributes = _.clone(item);
                 _.each(_.keys(self.geometry_columns), function(item) {
                     delete attributes[item];
                 });
-                features.push(new OpenLayers.Feature.Vector(
+                vectorSource.addFeature(
+                    new ol.Feature({
+                        geometry: new ol.format.GeoJSON().readGeometry(item[cfg.geo_field_id[1]]),
+                        attributes: attributes
+                    })
+                );
+            });
+                /*features.push(
+                        new ol.format.GeoJSON()).readFeatures();
+                        new OpenLayers.Feature.Vector(
+                    
                     geojson.parseGeometry(
                         OpenLayers.Format.JSON.prototype.read.call(self, item[cfg.geo_field_id[1]])),
                         attributes));
-            });
-            var indicator = cfg.attribute_field_id[1];
+            });*/
+            /*var indicator = cfg.attribute_field_id[1];
             switch (cfg.geo_repr) {
                 case "colored":
                     var begin_color = new mapfish.ColorRgb();
@@ -297,8 +302,11 @@ openerp.base_geoengine = function(openerp) {
             if (geostat instanceof mapfish.GeoStat) {
                 geostat.setClassification();
                 geostat.applyClassification();
-            }
-            return vl;
+            }*/
+            return new ol.layer.Vector({
+                        source: vectorSource,
+                        title: cfg.name,
+                    });
         },
 
         getUniqueValuesStyleMap: function(cfg, features) {
@@ -381,32 +389,34 @@ openerp.base_geoengine = function(openerp) {
                 // layer with no feature selected
                 ctrl.setLayer({selectedFeatures:[]});
             });
-            _.each(this.vectorLayers, function(vlayer) {
-                vlayer.destroy();
-            });
-
+            map.removeLayer(this.overlaysGroup);
+            
             this.vectorLayers = this.createVectorLayers(data);
-            map.addLayers(this.vectorLayers);
-            _.each(this.selectFeatureControls, function(ctrl) {
+            this.overlaysGroup = new ol.layer.Group({
+                title: 'Overlays',
+                layers: this.vectorLayers,
+            }); 
+
+            //map.addLayers(this.vectorLayers);
+            /*_.each(this.selectFeatureControls, function(ctrl) {
                 ctrl.setLayer(self.vectorLayers);
                 ctrl.activate();
-            });
+            });*/
             _.each(this.vectorLayers, function(vlayer) {
                 // keep only one vector layer active at startup
                 if (vlayer != self.vectorLayers[0]) {
-                    vlayer.setVisibility(false);
+                    vlayer.setVisible(false);
                 }
             });
+            map.addLayer(this.overlaysGroup);
 
             // zoom to data extent
-            var data_extent = this.vectorLayers[0].getDataExtent();
-            if (data_extent) {
-                var bbox = data_extent.scale(1.1);
-                if (bbox.getWidth() * bbox.getHeight() !== 0) {
-                    map.zoomToExtent(bbox);
-                } else {
-                    map.setCenter(bbox.getCenterLonLat(), 15);
-                }
+            //map.zoomTo
+            var extent = this.vectorLayers[0].getSource().getExtent();
+            if (extent) {
+                this.zoom_to_extent_ctrl.extent_ = extent;
+                this.zoom_to_extent_ctrl.changed();
+                map.getView().fitExtent(extent, map.getSize());
                 var ids = [];
                 // Javascript expert please improve this code
                 for (var i=0, len=data.length; i<len; ++i) {
@@ -417,8 +427,6 @@ openerp.base_geoengine = function(openerp) {
         },
 
         view_loading: function(data) {
-            console.log("GeoengineView.on_loaded: function(data): arguments=");
-            console.log(data);
             var self = this;
             this.fields_view = data;
             _.each(data.geoengine_layers.actives, function(item) {
@@ -428,10 +436,29 @@ openerp.base_geoengine = function(openerp) {
         },
 
         render_map: function() {
-            //TODO: copy this mapbox dark theme in the addons
             if (_.isUndefined(this.map)){
-                OpenLayers.ImgPath = "http://js.mapbox.com/theme/dark/";
-                map = new OpenLayers.Map('the_map', {
+                this.zoom_to_extent_ctrl = new ol.control.ZoomToExtent();
+                map = new ol.Map({
+                    layers: [new ol.layer.Group({
+                        title: 'Base maps',
+                        layers: openerp.base_geoengine.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
+                    })],
+                    target: 'olmap',
+                    view: new ol.View({
+                        center: [0, 0],
+                        zoom: 5
+                      }),
+                      controls: ol.control.defaults().extend([
+                        new ol.control.FullScreen(),
+                        new ol.control.ScaleLine(),
+                        this.zoom_to_extent_ctrl
+                      ]),
+                });
+                var layerSwitcher = new ol.control.LayerSwitcher({});
+                map.addControl(layerSwitcher);
+                this.map = map;
+                /*OpenLayers.ImgPath = "http://js.mapbox.com/theme/dark/";
+                map = new OpenLayers.Map('olmap', {
                     layers: openerp.base_geoengine.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
                     displayProjection: new OpenLayers.Projection("EPSG:4326"), // Fred should manage projection here
                     theme: null,
@@ -446,7 +473,7 @@ openerp.base_geoengine = function(openerp) {
                 });
                 map.addControls(this.selectFeatureControls);
                 map.zoomToMaxExtent();
-                this.map = map;
+                this.map = map;*/
                 this.do_search(self.domains, null, self.offet);
             }
         },
@@ -955,7 +982,7 @@ openerp.base_geoengine = function(openerp) {
    //-------------------------------------------------------------------------
 
 };
-OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
+/*OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
     initialize: function(options) {
         OpenLayers.Control.Panel.prototype.initialize.apply(this, [options]);
 
@@ -1051,4 +1078,4 @@ OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
         element.style.display = 'block';
     },
     CLASS_NAME: "OpenLayers.Control.ToolPanel"
-});
+});*/
