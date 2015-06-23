@@ -3,7 +3,7 @@
     <data>
         <template id="assets_backend" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
-                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/OpenLayers.js"></script>
+                <!--  script type="text/javascript" src="/base_geoengine/static/src/js/lib/OpenLayers.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/lib/proj4js-compressed.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/lib/EPSG21781.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/namespaces.js"></script>
@@ -12,13 +12,18 @@
                 <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat/ProportionalSymbol.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat/Choropleth.js"></script>
+                -->
+                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/ol-3.6.0/ol-debug.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/ol3-layerswitcher.js"></script>
+
                 <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_common.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_view.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_widgets.js"></script>
 
-                <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
-
+                <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/ol-3.6.0/ol.css"/>
+                <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/ol3-layerswitcher.css"/>
                 <link rel="stylesheet" href="/base_geoengine/static/src/css/style.css"/>
+
              </xpath>
         </template>
 
