@@ -21,9 +21,8 @@
                 <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_widgets.js"></script>
 
                 <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/ol-3.6.0/ol.css"/>
-                <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/ol3-layerswitcher.css"/>
                 <link rel="stylesheet" href="/base_geoengine/static/src/css/style.css"/>
-
+                <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/ol3-layerswitcher.css"/>
              </xpath>
         </template>
 
