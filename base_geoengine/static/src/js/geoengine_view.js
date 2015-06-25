@@ -257,6 +257,7 @@ openerp.base_geoengine = function(openerp) {
                 geostat.setClassification();
                 geostat.applyClassification();
             }*/
+            var indicator = cfg.attribute_field_id[1];
             var fill = new ol.style.Fill({
                 color: cfg.begin_color
             });
@@ -279,7 +280,8 @@ openerp.base_geoengine = function(openerp) {
                         source: vectorSource,
                         title: cfg.name,
                         style: function(feature, resolution) {
-                           return styles;
+                           //console.log(feature.get('attributes')[indicator]);
+                            return styles;
                         },
                         opacity: 0.5,
                     });
