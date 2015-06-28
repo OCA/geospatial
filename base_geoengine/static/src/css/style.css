@@ -39,7 +39,7 @@ div.olmap {
     position: absolute;
         display: none;
         background: white;
-    opacity: 0.9;
+        opacity: 0.9;
         border: 2px solid black;
         z-index: 3000;
         padding: 5px 0;
@@ -64,6 +64,12 @@ div.olmap {
         padding: 2px 5px;
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
+}
+
+#map_legend {
+        bottom: 6em;
+        right: 5em;
+        z-index: 3000;
 }
 
 /* Button style */

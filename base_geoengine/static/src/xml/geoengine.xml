@@ -5,8 +5,9 @@
           <div id="map_infobox" class="map_overlay">
               <div id="map_info"></div>
           </div>
-              <div id="map_measurementbox" class="map_overlay"/>
-          </div>
+          <div id="map_measurementbox" class="map_overlay"/>
+          <div id="map_legend" class="ol-control"/>
+        </div>
     </div>
 
   <t t-name="FieldGeoPointXY">
