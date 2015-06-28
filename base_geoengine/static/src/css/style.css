@@ -105,6 +105,12 @@ div.olClearMapItemInactive:hover {
         -webkit-border-radius: 3px;
 }
 
+#map_legend {
+        bottom: 6em;
+        right: 5em;
+        z-index: 3000;
+}
+
 /* Button style */
 .openerp .oe_view_manager .oe_view_manager_switch .oe_vm_switch_geoengine:after {
     content: "2";
