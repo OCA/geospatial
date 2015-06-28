@@ -139,10 +139,9 @@
             <field name="attribute_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_total_sales"/>
             <field name="begin_color">#4B69FD</field>
         </record>
-        <record id="geoengine_raster_layer_retailmachinemapbox" model="geoengine.raster.layer">
-            <field name="raster_type">mapbox</field>
-            <field name="mapbox_id">camptocamp.map-ok288g0c</field>
-            <field name="name">Retail Machine Mapbox</field>
+        <record id="geoengine_raster_layer_retailmachineosm" model="geoengine.raster.layer">
+            <field name="raster_type">osm</field>
+            <field name="name">Retail Machine Open Street Map</field>
             <field name="view_id" ref="ir_ui_view_retailmachineview0"/>
             <field eval="0" name="overlay"/>
         </record>
