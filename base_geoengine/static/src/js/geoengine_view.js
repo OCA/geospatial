@@ -18,6 +18,7 @@ openerp.base_geoengine = function(openerp) {
     var DEFAULT_MIN_SIZE = 5; // for prop symbols only
     var DEFAULT_MAX_SIZE = 15; // for prop symbols only
     var DEFAULT_NUM_CLASSES = 5; // for choroplets only
+    var LEGEND_MAX_ITEMS = 10;
 
     /**
      * Method: formatHTML
@@ -207,64 +208,46 @@ openerp.base_geoengine = function(openerp) {
                     );
                 }
             });
-            
             styleInfo = self.styleVectorLayer(cfg, data);
+            // init legend
+            parentContainer = self.$el.find('#map_legend');
+            var elLegend = $(styleInfo.legend || '<div/>');
+            elLegend.hide();
+            parentContainer.append(elLegend);
             var lv = new ol.layer.Vector({
-                        source: vectorSource,
-                        title: cfg.name,
-                        opacity: 0.8,
-                        style: styleInfo.style,
-                        legend: styleInfo.legend
+                source: vectorSource,
+                title: cfg.name,
+                //opacity: 0.8, //TODO configurable opacity to be applied on 
+                style: styleInfo.style
             });
             lv.on('change:visible', function(e){
-                el = self.$('#map_legend');
-                el.hide();
                 if(lv.getVisible()){
-                    el.html(lv.get('legend'))
-                    el.show();
+                    elLegend.show();
+                } else {
+                    elLegend.hide();
                 }
             });
             return lv;
         },
 
+        extractLayerValues: function(cfg, data) {
+            var values = [];
+            var indicator = cfg.attribute_field_id[1];
+            _.each(data, function(item) {
+                values.push(item[indicator]);
+            });
+            return values;
+        },
+
         styleVectorLayer: function(cfg, data) {
             var self = this;
             var indicator = cfg.attribute_field_id[1];
+            var opacity = 0.8; // TODO to be defined on cfg
+            var begin_color = chroma(cfg.begin_color || DEFAULT_BEGIN_COLOR).alpha(opacity).css();
+            var end_color = chroma(cfg.end_color || DEFAULT_END_COLOR).alpha(opacity).css();
             switch (cfg.geo_repr) {
-                case "basic":
-                    var fill = new ol.style.Fill({
-                        color: cfg.begin_color
-                    });
-                    var stroke = new ol.style.Stroke({
-                        color: '#333333',
-                        width: 1
-                    });
-                    var styles = [
-                        new ol.style.Style({
-                          image: new ol.style.Circle({
-                            fill: fill,
-                            stroke: stroke,
-                            radius: 5
-                          }),
-                          fill: fill,
-                          stroke: stroke
-                        })
-                    ];
-                    return {
-                         style : function(feature, resolution) {
-                                   //console.log(feature.get('attributes')[indicator]);
-                                    return styles;
-                         },
-                         legend : ''
-                    };
-                    break;
-                case "colored":
-                    var begin_color = cfg.begin_color || DEFAULT_BEGIN_COLOR;
-                    var end_color = cfg.end_color || DEFAULT_END_COLOR;
-                    var values = [];
-                    _.each(data, function(item) {
-                        values.push(item[indicator]);
-                    });
+                case "colored":                    
+                    var values = self.extractLayerValues(cfg, data);
                     var nb_class = cfg.nb_class || DEFAULT_NUM_CLASSES
                     var scale = chroma.scale([begin_color, end_color]);
                     var serie = new geostats(values);
@@ -280,12 +263,15 @@ openerp.base_geoengine = function(openerp) {
                             break;
                         case "interval":
                             serie.getClassEqInterval(nb_class);
+                            displayLegend = true;
                             var vals = serie.getRanges();
                             scale = scale.domain([0, vals.length], vals.length);
                             break;
                     }
-                    var colors = scale.colors(mode='hex');
-                    serie.setColors(colors);
+                    var colors = [];
+                    _.each(scale.colors(mode='hex'), function(color){
+                        colors.push(chroma(color).alpha(opacity).css());
+                    });
                     var styles_map = {};
                     _.each(colors, function(color) {
                         if (color in styles_map) {
@@ -312,24 +298,89 @@ openerp.base_geoengine = function(openerp) {
                         ];
                         styles_map[color] = styles; 
                     });
+                    var legend = null;
+                    if(vals.length <= LEGEND_MAX_ITEMS){
+                        serie.setColors(colors);
+                        legend = serie.getHtmlLegend(null, cfg.name, 1);
+                    }
                     return {
                         style : function(feature, resolution) {
                             var value = feature.get('attributes')[indicator];
                             var color_idx = self.getClass(value, vals);
                             return styles_map[colors[color_idx]];
                          }, 
-                        legend: serie.getHtmlLegend(null, cfg.name, 1)
+                        legend: legend
                     };
                     break;
                 case "proportion":
-                   /* geostat = new mapfish.GeoStat.ProportionalSymbol(map, {
-                        layer: vl,
-                        indicator: indicator,
-                        //TODO: this should not be hardcoded!
-                        minSize: cfg.min_size || DEFAULT_MIN_SIZE,
-                        maxSize: cfg.max_size || DEFAULT_MAX_SIZE,
-                        featureSelection: false
-                    });*/
+                    var values = self.extractLayerValues(cfg, data);
+                    var serie = new geostats(values);
+                    var styles_map = {};
+                    var minSize = cfg.min_size || DEFAULT_MIN_SIZE;
+                    var maxSize = cfg.max_size || DEFAULT_MAX_SIZE;
+                    var minVal = serie.min();
+                    var maxVal = serie.max();
+                    var fill = new ol.style.Fill({
+                        color: begin_color
+                    });
+                    var stroke = new ol.style.Stroke({
+                        color: '#333333',
+                        width: 1
+                    });
+                    _.each(values, function(value) {
+                        if (value in styles_map) {
+                            return;
+                        }
+                        var radius = (value - minVal) / (maxVal - minVal) *
+                            (maxSize - minSize) + minSize;
+                        var styles = [
+                            new ol.style.Style({
+                              image: new ol.style.Circle({
+                                fill: fill,
+                                stroke: stroke,
+                                radius: radius
+                              }),
+                              fill: fill,
+                              stroke: stroke
+                            })
+                        ];
+                        styles_map[value] = styles;
+                    });
+                    
+                   
+                    return {
+                         style : function(feature, resolution) {
+                             var value = feature.get('attributes')[indicator];
+                             return styles_map[value];
+                         },
+                         legend : ''
+                    };
+                    break;
+                default: // basic
+                    var fill = new ol.style.Fill({
+                        color: begin_color
+                    });
+                    var stroke = new ol.style.Stroke({
+                        color: '#333333',
+                        width: 1
+                    });
+                    var styles = [
+                        new ol.style.Style({
+                          image: new ol.style.Circle({
+                            fill: fill,
+                            stroke: stroke,
+                            radius: 5
+                          }),
+                          fill: fill,
+                          stroke: stroke
+                        })
+                    ];
+                    return {
+                         style : function(feature, resolution) {
+                              return styles;
+                         },
+                         legend : ''
+                    };
                     break;
             }
         },
