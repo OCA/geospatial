@@ -20,7 +20,7 @@
 import openerp.tests.common as common
 
 
-class TestGeoengineProjects(common.TransactionCase):
+class TestGeoenginePartner(common.TransactionCase):
 
     def setUp(self):
         common.TransactionCase.setUp(self)
