@@ -118,15 +118,25 @@ class TestGeoengine(common.TransactionCase):
         inst._auto_init(self.cr, {'module': __name__})
         return inst
 
-    def _compare_view(self, view_type, expected_result):
+    def _compare_view(self, view_type, expected_result, paths):
         cr, uid = self.cr, 1
-        value = self.test_model.fields_view_get(
+        values = self.test_model.fields_view_get(
             cr, uid, view_id=None, view_type=view_type,
             context=None, toolbar=False, submenu=False)
-        value['view_id'] = 'dummy_id'
-        value['arch'] = 'dummy_arch'
+
+        def set_value_path(origin, target, path):
+            parts = path.split(".")
+            for idx, key in enumerate(parts):
+                origin = origin[key]
+                if idx == len(parts) - 1:
+                    target[key] = origin
+                else:
+                    target = target.setdefault(key, {})
+        values_reduced = {}
+        for path in paths:
+            set_value_path(values, values_reduced, path)
         pprint_value = StringIO()
-        simplejson.dump(value, pprint_value, sort_keys=True, indent=4)
+        simplejson.dump(values_reduced, pprint_value, sort_keys=True, indent=4)
         #  diff can be very long...Set self.maxDiff to None to see it
         self.maxDiff = None
         self.assertEqual(expected_result, pprint_value.getvalue())
@@ -159,8 +169,15 @@ class TestGeoengine(common.TransactionCase):
 
     def test_view(self):
         _logger.info("Tests view")
-        self._compare_view('geoengine', GEO_VIEW)
-        self._compare_view('form', FORM_VIEW)
+        self._compare_view(
+            'geoengine', GEO_VIEW,
+            ['geoengine_layers', 'type', 'model', 'name'])
+        self._compare_view(
+            'form', FORM_VIEW,
+            ['type', 'model', 'name', 'fields.the_geom.geo_type',
+             'fields.the_geom.required', 'fields.the_geom.searchable',
+             'fields.the_geom.sortable', 'fields.the_geom.store',
+             'fields.the_geom.string', 'fields.the_geom.type'])
 
     def test_search(self):
         _logger.info("Tests search")
