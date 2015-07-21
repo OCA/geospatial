@@ -116,26 +116,6 @@ MULTIPOLYGON_1 = """
 
 
 GEO_VIEW = """{
-    "arch": "dummy_arch",
-    "field_parent": false,
-    "fields": {
-        "name": {
-            "change_default": false,
-            "company_dependent": false,
-            "depends": [],
-            "manual": false,
-            "readonly": false,
-            "required": true,
-            "searchable": true,
-            "size": 64,
-            "sortable": true,
-            "store": true,
-            "string": "ZIP",
-            "translate": false,
-            "type": "char",
-            "views": {}
-        }
-    },
     "geoengine_layers": {
         "actives": [],
         "backgrounds": [],
@@ -148,54 +128,28 @@ GEO_VIEW = """{
     },
     "model": "test.dummy",
     "name": "test.dummy.geo_view",
-    "type": "geoengine",
-    "view_id": "dummy_id"
+    "type": "geoengine"
 }"""
 
 FORM_VIEW = """{
-    "arch": "dummy_arch",
-    "field_parent": false,
     "fields": {
-        "name": {
-            "change_default": false,
-            "company_dependent": false,
-            "depends": [],
-            "manual": false,
-            "readonly": false,
-            "required": true,
-            "searchable": true,
-            "size": 64,
-            "sortable": true,
-            "store": true,
-            "string": "ZIP",
-            "translate": false,
-            "type": "char",
-            "views": {}
-        },
         "the_geom": {
-            "change_default": false,
-            "company_dependent": false,
-            "depends": [],
             "geo_type": {
                 "dim": 2,
                 "srid": 900913,
                 "type": "MULTIPOLYGON"
             },
-            "manual": false,
-            "readonly": false,
             "required": false,
             "searchable": true,
             "sortable": true,
             "store": true,
             "string": "NPA Shape",
-            "type": "geo_multi_polygon",
-            "views": {}
+            "type": "geo_multi_polygon"
         }
     },
     "model": "test.dummy",
     "name": "test.dummy.form_view",
-    "type": "form",
-    "view_id": "dummy_id"
+    "type": "form"
 }"""
 
 EXPECTED_GEO_COLUMN_MULTIPOLYGON = {
