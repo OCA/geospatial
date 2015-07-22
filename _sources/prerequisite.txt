@@ -14,7 +14,7 @@ Shapely:
 
 ::
 
- pip install Shapely
+ pip install Shapely==1.2.13
 
 For Mac user: do not forget the following directive:
 
