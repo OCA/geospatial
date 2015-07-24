@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="project.open_view_project_all" model="ir.actions.act_window">
+            <field name="view_mode">kanban,tree,form,gantt,geoengine</field>
+        </record>
+
+        <record model="ir.ui.view" id="geo_project_project_view_form">
+            <field name="name">geo_project_project_form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project" />
+            <field name="arch" type="xml">
+                <xpath expr="//notebook"
+                    position="inside">
+                    <page string="Geo Localisation"
+                        groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin">
+                        <field name="geo_point" widget="text"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- GeoEngine views -->
+        <record id="ir_ui_view_geo_project_project" model="ir.ui.view">
+            <field name="name">Project view</field>
+            <field name="model">project.project</field>
+            <field eval="16" name="priority" />
+            <field name="arch" type="xml">
+                <geoengine version="7.0">
+                    <field name="name" select="1" />
+                    <field name="partner_id" />
+                    <field name="state" />
+                </geoengine>
+            </field>
+        </record>
+
+        <record id="geoengine_vector_layer_project_project" model="geoengine.vector.layer">
+            <field name="geo_field_id"
+                ref="geoengine_partner.field_res_partner_geo_point"/>
+            <field name="name">Project location</field>
+            <field eval="6" name="sequence"/>
+            <field name="view_id" ref="ir_ui_view_geo_project_project"/>
+            <field name="geo_repr">basic</field>
+            <field eval="1" name="nb_class"/>
+            <field name="begin_color">#FF680A</field>
+            <field name="symbol_binary">iVBORw0KGgoAAAANSUhEUgAAACAAAAAfCAYAAACGVs+MAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+                bWFnZVJlYWR5ccllPAAAA3VJREFUeNq8V89rE0EUfjOz6aZNpFZpqyCEIooHoVaoQkGoB3vyJB49
+                iYieFERBEMRbxYP/gFcv3ntQLHqwqNR6LNUqIq0/m8S2u0l3NzszfpNsqN0e3MiuA4/Jmx3e++Z7
+                3/wI01pTkvZicF+zzwvR1c35efRX0B/K7SgScUHScVZ8KR96St31pPyuEHfk6+e/xrUoYWMwQM3D
+                7gvOL9lIYA8MkD1+gli+hxozM/3qw8erHtEYpp7D/MUkcXlSAFiZUEQXEfgSiwCJvp0kDh8mcWSY
+                2J49xBkzAY8B5KSvdTFVAKHWJan1dVMwQy/AkCyXKZydo8bLVySXl0kqZVgizDvT0Ho0SdzEJUDA
+                CaH1XgQ3YCjgnESlSmp6uqmBsFajoDWPmnOUOgX3WXoAlBoFxSLAKgWoZjDDhLXuNMsRwg/gQ4Bm
+                rvldSpUBrPoXR3CvLUgka4AFi7eqqExijPlmjmFISi9VDaA9xqoCiJHqSGKsBnPDkGowNxrbiL77
+                Sr1JlQG017DnCDzR1oFol6MlvKYZFlCCCsT4JG0A67CbsGEkHzSK520KAcIkp2h3oN2CfUy7BKa9
+                hZ2FzWnPo7BepwB9gF7ClKYKvl2GPUgaMDEDGtusfSrr0J+g42PXVLF4Uy8vM76rj6hQmKKn0zeY
+                EPOdrCgxAOvk+KazsVGlC+cf2fv3X+sOQ9uT5gDSU9q25ynh3dIxgO47t/+4GBhpxwn3Fgu6NFSi
+                paUv5Ky7gXVvcvPWSBsAd92tJdF6FQeRr0KZ1+YI1mpNrq5Rpy2xCBnjcYPgWOWP6/wH/UNLzEBX
+                Vy7OQIBKrEbpfVglUwCFnp44AI0jyI3KXYfb0B0KsLNtGBNW02fUFsaGuS4yZcDUPQZJY+xnpHgH
+                FmQKgHMWS48xRu1H3zdThmwBxBgwJcBYNXLL5tWWMQM8LkJinDuR62ZeAhYrQVODnK1H0jQXhcwU
+                gBBia35cfWClbJDgeeaADcPIfwTA8SARAKCb5Slb+M6zBLBNA62dYYSn8UdlNWdZ2QLo6+vdNibx
+                LAIQF+z4tp3ftlVTBVBZqcZPJurv3x16nv+jt7fXd/FgaYQNar0QMwDw6dPSFt+svVqt+iMjw3Jh
+                4X24Ui2Tldt6YR06eCDFF5Flxc+B00g8/G5xYVYF6ui+odIOzHmI8Y62428BBgDwu9RGZbaLEwAA
+                AABJRU5ErkJggg==
+            </field>
+        </record>
+
+        <record id="geoengine_raster_layer_project_project"
+            model="geoengine.raster.layer">
+            <field name="raster_type">osm</field>
+            <field name="name">Project background</field>
+            <field name="view_id" ref="ir_ui_view_geo_project_project" />
+            <field eval="0" name="overlay" />
+        </record>
+    </data>
+</openerp>
