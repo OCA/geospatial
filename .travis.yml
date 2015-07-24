@@ -11,12 +11,18 @@ env:
 virtualenv:
   system_site_packages: true
 
+sudo: false
+cache: pip
+
+addons:
+  apt:
+    packages:
+	- postgis      
 install:
   - git clone --depth=1 https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
   - pip install geojson Shapely
-  - sudo apt-get -q -y install postgis
 
 script:
   - travis_run_tests
