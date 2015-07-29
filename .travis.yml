@@ -1,3 +1,6 @@
+sudo: false
+cache: pip
+
 addons:
   apt:
     packages:
@@ -27,8 +30,6 @@ install:
   - pip install geojson Shapely sphinx sphinx_bootstrap_theme sphinx-intl odoo-sphinx-autodoc
 
 before_script:
-  - if [ -n "${ODOO_REPO}" ] ; then wget --no-check-certificate -O ${HOME}/5618.patch http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5618.patch ; fi
-  - if [ -n "${ODOO_REPO}" ] ; then IFS="/" read -a REPO <<< "${ODOO_REPO}"; patch -f -d "${HOME}/${REPO[1]}-${VERSION}" -p1 -i ${HOME}/5618.patch ; fi
   - if [ -n "${ODOO_REPO}" ] ; then wget --no-check-certificate -O ${HOME}/5620.patch http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5620.patch ; fi
   - if [ -n "${ODOO_REPO}" ] ; then IFS="/" read -a REPO <<< "${ODOO_REPO}"; patch -f -d "${HOME}/${REPO[1]}-${VERSION}" -p1 -i ${HOME}/5620.patch ; fi
 
