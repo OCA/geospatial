@@ -56,3 +56,18 @@ Requirements
   *  **Shapely** http://pypi.python.org/pypi/Shapely
 
   *  **geojson** http://pypi.python.org/pypi/geojson
+
+[//]: # (addons)
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[base_geoengine](base_geoengine/) | 0.2 | Geospatial support for OpenERP
+[base_geoengine_demo](base_geoengine_demo/) | 0.1 | Geo spatial support Demo
+[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 0.1 | Geospatial support for base_geolocalize
+[geoengine_geoname_geocoder](geoengine_geoname_geocoder/) | 0.1 | Auto Geocoding of partners
+[geoengine_partner](geoengine_partner/) | 0.1 | Geospatial support of partners
+[geoengine_project](geoengine_project/) | 0.1 | Geospatial support for projects
+[geoengine_sale](geoengine_sale/) | 0.1 | Geospatial support for sales
+
+[//]: # (end addons)
