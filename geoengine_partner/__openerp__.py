@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {'name': 'Geospatial support of partners',
- 'version': '0.1',
+ 'version': '8.0.0.1.0',
  'category': 'GeoBI',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
