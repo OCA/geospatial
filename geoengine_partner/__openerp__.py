@@ -31,7 +31,7 @@
  'data': [
      'geo_partner_view.xml'
  ],
- 'installable': True,
+ 'installable': False,
  'application': True,
  'active': False,
  }
