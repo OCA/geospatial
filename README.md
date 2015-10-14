@@ -58,4 +58,16 @@ Requirements
   *  **geojson** http://pypi.python.org/pypi/geojson
 
 [//]: # (addons)
+Unported addons
+---------------
+addon | version | summary
+--- | --- | ---
+[base_geoengine](base_geoengine/) | 8.0.0.2.0 (unported) | Geospatial support for OpenERP
+[base_geoengine_demo](base_geoengine_demo/) | 8.0.0.1.0 (unported) | Geo spatial support Demo
+[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 8.0.0.1.0 (unported) | Geospatial support for base_geolocalize
+[geoengine_geoname_geocoder](geoengine_geoname_geocoder/) | 8.0.0.1.0 (unported) | Auto Geocoding of partners
+[geoengine_partner](geoengine_partner/) | 8.0.0.1.0 (unported) | Geospatial support of partners
+[geoengine_project](geoengine_project/) | 8.0.0.1.0 (unported) | Geospatial support for projects
+[geoengine_sale](geoengine_sale/) | 8.0.0.1.0 (unported) | Geospatial support for sales
+
 [//]: # (end addons)
