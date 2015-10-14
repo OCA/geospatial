@@ -1,6 +1,6 @@
 ![Licence](https://img.shields.io/badge/licence-AGPL--3-blue.svg)
-[![Build Status](https://travis-ci.org/OCA/geospatial.svg?branch=8.0)](https://travis-ci.org/OCA/geospatial)
-[![Coverage Status](https://coveralls.io/repos/OCA/geospatial/badge.png?branch=8.0)](https://coveralls.io/r/OCA/geospatial?branch=8.0)
+[![Build Status](https://travis-ci.org/OCA/geospatial.svg?branch=9.0)](https://travis-ci.org/OCA/geospatial)
+[![Coverage Status](https://coveralls.io/repos/OCA/geospatial/badge.png?branch=9.0)](https://coveralls.io/r/OCA/geospatial?branch=9.0)
 
 Geospatial Addons for Odoo/OpenERP
 ==================================
@@ -58,16 +58,4 @@ Requirements
   *  **geojson** http://pypi.python.org/pypi/geojson
 
 [//]: # (addons)
-Available addons
-----------------
-addon | version | summary
---- | --- | ---
-[base_geoengine](base_geoengine/) | 8.0.0.2.0 | Geospatial support for OpenERP
-[base_geoengine_demo](base_geoengine_demo/) | 8.0.0.1.0 | Geo spatial support Demo
-[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 8.0.0.1.0 | Geospatial support for base_geolocalize
-[geoengine_geoname_geocoder](geoengine_geoname_geocoder/) | 8.0.0.1.0 | Auto Geocoding of partners
-[geoengine_partner](geoengine_partner/) | 8.0.0.1.0 | Geospatial support of partners
-[geoengine_project](geoengine_project/) | 8.0.0.1.0 | Geospatial support for projects
-[geoengine_sale](geoengine_sale/) | 8.0.0.1.0 | Geospatial support for sales
-
 [//]: # (end addons)
