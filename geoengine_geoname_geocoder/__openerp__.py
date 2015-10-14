@@ -33,6 +33,6 @@
      'company_view.xml',
      'wizard/bulk_encode_view.xml'
  ],
- 'installable': True,
+ 'installable': False,
  'active': False,
  }

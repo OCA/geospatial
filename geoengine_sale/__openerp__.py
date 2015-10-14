@@ -32,7 +32,7 @@
  'data': [
      'geo_sale_view.xml'
  ],
- 'installable': True,
+ 'installable': False,
  'application': True,
  'active': False,
  }
