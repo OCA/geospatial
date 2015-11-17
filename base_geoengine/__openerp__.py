@@ -2,7 +2,7 @@
 ##############################################################################
 #
 #    Author: Nicolas Bessi
-#    Copyright 2011-2012 Camptocamp SA
+#    Copyright 2011-2015 Camptocamp SA
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -18,8 +18,8 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-{'name': 'Geospatial support for OpenERP',
- 'version': '8.0.0.2.0',
+{'name': 'Geospatial support for Odoo',
+ 'version': '9.0.1.0.0',
  'category': 'GeoBI',
  'author': "Camptocamp,ACSONE SA/NV,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
@@ -43,7 +43,6 @@
                 'geojson'],
  },
  'qweb': ["static/src/xml/geoengine.xml"],
- 'installable': False,
- 'active': False,
+ 'installable': True,
  'pre_init_hook': 'init_postgis',
  }

@@ -1,0 +1,521 @@
+/*---------------------------------------------------------
+ * OpenERP base_geoengine
+ * Author B.Binet Copyright Camptocamp SA
+ * Contributor N. Bessi Copyright Camptocamp SA
+ * Contributor Laurent Mignon 2015 Acsone SA/NV
+ * Contributor Yannick Vaucher 2015 Camptocamp SA
+ * License in __openerp__.py at root level of the module
+ *---------------------------------------------------------
+*/
+
+odoo.define('base_geoengine.geoengine_widgets', function (require) {
+    //------------ EDIT WIDGET ----------------------------------------------
+
+var core = require('web.core');
+var data = require('web.data');
+var GeoengineView = require('base_geoengine.GeoengineView');
+var common = require('web.form_common');
+
+var FieldGeoEngineEditMap = common.AbstractField.extend({
+    template: 'FieldGeoEngineEditMap',
+
+    geo_type: null,
+    map: null,
+    default_extent: null,
+    format: null,
+    force_readonly: null,
+    modify_control: null,
+    draw_control: null,
+
+    create_edit_layers: function(self, field_infos) {
+        var vl = new OpenLayers.Layer.Vector(self.name, {
+            styleMap: new OpenLayers.StyleMap({
+                'default': new OpenLayers.Style({
+                fillColor: '#ee9900',
+                fillOpacity: 0.7,
+                strokeColor: '#ee9900',
+                strokeOpacity: 1,
+                strokeWidth: 3,
+                pointRadius: 6
+                }),
+                'select': new OpenLayers.Style({
+                fillColor: 'red',
+                strokeColor: 'red'
+                }),
+                'temporary': new OpenLayers.Style({
+                fillColor: 'blue',
+                strokeColor: 'blue'
+                })
+            }),
+            eventListeners : {
+                featuremodified: function(event) {
+                    this._geometry = event.feature.geometry;
+                    this.on_ui_change();
+                },
+                featureadded: function(event) {
+                    // FIXME: simple to multi
+                    if (this.geo_type == 'MULTIPOLYGON' && event.feature.geometry.CLASS_NAME == 'OpenLayers.Geometry.Polygon') {
+                        this._geometry = new OpenLayers.Geometry.MultiPolygon(event.feature.geometry);
+                    } else {
+                        this._geometry = event.feature.geometry;
+                    }
+                    this.on_ui_change();
+                },
+                scope: this
+            }
+        });
+        var rl = GeoengineView.createBackgroundLayers([field_infos.edit_raster]);
+        rl.isBaseLayer = true;
+        return [rl, vl];
+    },
+
+    add_tab_listener: function() {
+        var tab = this.$el.closest('.ui-tabs-panel');
+        var self = this;
+        tab.parent().on( "tabsactivate", function(event, ui) {
+            if (! _.isObject(ui.newPanel)) {
+                return;
+            }
+            geo_tab_id = self.$el.closest('.oe_notebook_page').get(0).id;
+            active_tab_id = ui.newPanel.get(0).id;
+            if (_.isEqual(geo_tab_id, active_tab_id)) {
+                  self.render_map();
+                  return;
+            }
+        });
+    },
+
+    start: function() {
+        this._super.apply(this, arguments);
+        if (this.map) {
+            return;
+        }
+        this.view.on("change:actual_mode", this, this.on_mode_change);
+        var self = this;
+        // add a listener on parent tab if it exists in order to refresh geoengine view
+        self.add_tab_listener();
+        // We blacklist all other fields in order to avoid calling get_value inside the build_context on field widget which aren't started yet
+        var blacklist = this.view.fields_order.slice();
+        delete blacklist[this.name];
+        var rdataset = new data.DataSetStatic(self, self.view.model, self.build_context(blacklist));
+        rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0).then(function(result) {
+            self.layers = self.create_edit_layers(self, result);
+            self.geo_type = result.geo_type;
+            self.default_extent = result.default_extent;
+            self.srid = result.srid;
+            if (self.$el.is(':visible')){
+                self.render_map();
+            }
+        });
+    },
+
+    set_value: function(value) {
+        this._super.apply(this, arguments);
+        this.value = value;
+        if (this.map) {
+            var vl = this.map.getLayersByName(this.name)[0];
+            vl.destroyFeatures();
+            if (this.value) {
+                var features = this.format.read(this.value);
+                vl.addFeatures(features, {silent: true});
+                this.map.zoomToExtent(vl.getDataExtent());
+            } else {
+                this.map.zoomToExtent(this.default_extend);
+            }
+        }
+    },
+
+    on_ui_change: function() {
+        this.set_value(this.format.write(this._geometry));
+    },
+
+    validate: function() {
+        this.invalid = false;
+    },
+
+    on_mode_change: function() {
+        this.render_map();
+        this.$el.toggle(!this.invisible);
+    },
+
+    render_map: function() {
+        if (_.isNull(this.map)){
+            this.map = new OpenLayers.Map({
+                theme: null,
+                layers: this.layers[0]
+            });
+            this.map.addLayer(this.layers[1]);
+            this.modify_control = new OpenLayers.Control.ModifyFeature(this.layers[1]);
+            if (this.geo_type == 'POINT' || this.geo_type == 'MULTIPOINT') {
+                this.modify_control.mode = OpenLayers.Control.ModifyFeature.DRAG;
+            }
+            this.map.addControl(this.modify_control);
+
+            var handler = null;
+            if (this.geo_type == 'POLYGON' || this.geo_type == 'MULTIPOLYGON') {
+                handler = OpenLayers.Handler.Polygon;
+            } else if (this.geo_type == 'LINESTRING' || this.geo_type == 'MULTILINESTRING') {
+                handler = OpenLayers.Handler.Path;
+            } else if (this.geo_type == 'POINT' || this.geo_type == 'MULTIPOINT') {
+                handler = OpenLayers.Handler.Point;
+            } else {
+                // FIXME: unsupported geo type
+            }
+            this.draw_control = new OpenLayers.Control.DrawFeature(this.layers[1], handler);
+            this.map.addControl(this.draw_control);
+
+            this.default_extend = OpenLayers.Bounds.fromString(this.default_extent).transform('EPSG:900913', this.map.getProjection());
+            this.map.zoomToExtent(this.default_extend);
+            this.format = new OpenLayers.Format.GeoJSON({
+                internalProjection: this.map.getProjection(),
+                externalProjection: 'EPSG:' + this.srid
+            });
+            this.map.render(this.name);
+            $(document).trigger('FieldGeoEngineEditMap:ready', [this.map]);
+            this.set_value(this.value);
+        }
+        if (this.get("effective_readonly") || this.force_readonly) {
+            this.modify_control.deactivate();
+        } else {
+            this.modify_control.activate();
+            this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
+        }
+    },
+});
+
+var FieldGeoEngineEditMapReadonly = FieldGeoEngineEditMap.extend({
+    init: function(view, node) {
+        this.force_readonly = true;
+        this._super(view, node);
+     }
+});
+
+//-----------------------------------------------------------------------
+var FieldGeoPointXY = common.AbstractField.extend({
+    template: 'FieldGeoPointXY',
+
+    start: function() {
+        this._super.apply(this, arguments);
+        this.$input = this.$el.find('input');
+        this.$input.change(this.on_ui_change);
+        this.setupFocus(this.$input);
+    },
+    get_coords: function() {
+        /* Get coordinates and check it has the right format
+         *
+         * @return [x, y]
+         */
+        var x = openerp.web.parse_value(this.$input.eq(0).val(), {type: 'float'});
+        var y = openerp.web.parse_value(this.$input.eq(1).val(), {type: 'float'});
+        return [x, y];
+    },
+    make_GeoJSON: function(coords) {
+        return {"type": "Point", "coordinates": coords};
+    },
+    set_value: function(value) {
+        this._super.apply(this, arguments);
+
+        if (value) {
+            var geo_obj = JSON.parse(value);
+            this.$input.eq(0).val(geo_obj.coordinates[0]);
+            this.$input.eq(1).val(geo_obj.coordinates[1]);
+        } else {
+            this.$input.val('');
+        }
+    },
+    on_ui_change: function() {
+        var coords = this.get_coords();
+        if (coords[0] && coords[1]) {
+            var json = this.make_GeoJSON(coords);
+            this.value = JSON.stringify(json);
+        } else {
+            this.value = false;
+        }
+
+    },
+    validate: function() {
+        this.invalid = false;
+        try {
+            // get coords to check if floats
+            var coords = this.get_coords();
+
+            // make sure the two coordinates are set or None
+            this.invalid = (this.required &&
+                            (coords[0] === 0 || coords[1] === 0 ) ||
+                            coords[0] === false && coords[1] !== false ||
+                            coords[0] !== false && coords[1] === false);
+        } catch(e) {
+            this.invalid = true;
+        }
+    },
+    update_dom: function() {
+        this._super.apply(this, arguments);
+        this.set_readonly(this.readonly);
+    },
+    set_readonly: function(readonly) {
+        this.$input.prop('readonly', this.readonly);
+    }
+});
+
+var FieldGeoPointXYReadonly = FieldGeoPointXY.extend({
+    template: 'FieldGeoPointXY.readonly',
+
+    set_value: function(value) {
+        this._super.apply(this, arguments);
+        var show_value = '';
+        if (value) {
+            var geo_obj = JSON.parse(value);
+            show_value = "(" + geo_obj.coordinates[0] + ", " + geo_obj.coordinates[1] + ")";
+        }
+        this.$el.find('div').text(show_value);
+        return show_value;
+    },
+    validate: function() {
+        this.invalid = false;
+    }
+});
+
+var FieldGeoRect = common.AbstractField.extend({
+    template: 'FieldGeoRect',
+
+    start: function() {
+        this._super.apply(this, arguments);
+        this.$input = this.$el.find('input');
+        this.$input.change(this.on_ui_change);
+        this.setupFocus(this.$input);
+    },
+    get_coords: function() {
+        /* Get coordinates in the input fields
+         *
+         * @return [[x1, y1],[x2, y2]]
+         */
+        var x1 = openerp.web.parse_value(this.$input.eq(0).val(), {type: 'float'});
+        var y1 = openerp.web.parse_value(this.$input.eq(1).val(), {type: 'float'});
+        var x2 = openerp.web.parse_value(this.$input.eq(2).val(), {type: 'float'});
+        var y2 = openerp.web.parse_value(this.$input.eq(3).val(), {type: 'float'});
+
+        return [[x1, y1], [x2, y2]];
+    },
+    make_GeoJSON: function(coords) {
+        var p1 = coords[0];
+        var p2 = [coords[0][0], coords[1][1]];
+        var p3 = coords[1];
+        var p4 = [coords[1][0], coords[0][1]];
+        // Create a loop in clockwise
+        var points = [[ p1, p2, p3, p4, p1 ]];
+        return {"type": "Polygon", "coordinates": points};
+    },
+    set_value: function(value) {
+        this._super.apply(this, arguments);
+
+        if (value) {
+            var geo_obj = JSON.parse(value);
+            this.$input.eq(0).val(geo_obj.coordinates[0][0][0]);
+            this.$input.eq(1).val(geo_obj.coordinates[0][0][1]);
+            this.$input.eq(2).val(geo_obj.coordinates[0][2][0]);
+            this.$input.eq(3).val(geo_obj.coordinates[0][2][1]);
+        } else {
+            this.$input.val('');
+        }
+    },
+    correct_bounds: function(coords) {
+        /* Reverse bounds if the upper right
+         * point is smaller than bottom left
+         *
+         * @return [[x1, y1],[x2, y2]]
+         */
+        var x1 = coords[0][0],
+        y1 = coords[0][1],
+        x2 = coords[1][0],
+        y2 = coords[1][1];
+
+        var minx = Math.min(x1, x2);
+        var maxx = Math.max(x1, x2);
+
+        var miny = Math.min(y1, y2);
+        var maxy = Math.max(y1, y2);
+
+        return [[minx, miny], [maxx, maxy]];
+    },
+    on_ui_change: function() {
+        var coords = this.get_coords();
+        if (this.all_are_set(coords)) {
+
+            coords = this.correct_bounds(coords);
+
+            var json = this.make_GeoJSON(coords);
+            this.value = JSON.stringify(json);
+        } else {
+            this.value = false;
+        }
+    },
+    all_are_set: function(coords) {
+        return (coords[0][0] !== false && coords[0][1] !== false &&
+                coords[1][0] !== false && coords[1][1] !== false);
+    },
+    none_are_set: function(coords) {
+        return (coords[0][0] === false && coords[0][1] === false &&
+                coords[1][0] === false && coords[1][1] === false);
+    },
+    validate: function() {
+        this.invalid = false;
+        try {
+            // get coords to check if floats
+            var coords = this.get_coords();
+
+            // make sure all the coordinates are set
+            // if not None or if required
+            this.invalid = (this.required ||
+                            !this.none_are_set(coords)) &&
+                !this.all_are_set(coords);
+        } catch(e) {
+            this.invalid = true;
+        }
+    },
+    update_dom: function() {
+        this._super.apply(this, arguments);
+        this.set_readonly(this.readonly);
+    },
+    set_readonly: function(readonly) {
+        this.$input.prop('readonly', this.readonly);
+    }
+});
+
+var FieldGeoRectReadonly = FieldGeoRect.extend({
+    template: 'FieldGeoRect.readonly',
+
+    set_value: function(value) {
+        this._super.apply(this, arguments);
+        var show_value = '';
+        if (value) {
+            var geo_obj = JSON.parse(value);
+            show_value = "(" + geo_obj.coordinates[0][0][0] + ", " + geo_obj.coordinates[0][0][1] + "), " +
+                "(" + geo_obj.coordinates[0][2][0] + ", " + geo_obj.coordinates[0][2][1] + ")";
+        }
+        this.$el.find('div').text(show_value);
+        return show_value;
+    },
+    validate: function() {
+        this.invalid = false;
+    }
+});
+
+core.form_widget_registry
+.add('geo_edit_map', FieldGeoEngineEditMap)
+.add('geo_edit_map_readonly', FieldGeoEngineEditMapReadonly)
+.add('geo_point_xy', FieldGeoPointXY)
+.add('geo_point_xy', FieldGeoPointXYReadonly)
+.add('geo_rect', FieldGeoRect)
+.add('geo_rect', FieldGeoRectReadonly);
+
+return {
+FieldGeoEngineEditMap: FieldGeoEngineEditMap,
+FieldGeoEngineEditMapReadonly: FieldGeoEngineEditMapReadonly,
+FieldGeoPointXY: FieldGeoPointXY,
+FieldGeoPointXYReadonly: FieldGeoPointXYReadonly,
+FieldGeoRect: FieldGeoRect,
+FieldGeoRectReadonly: FieldGeoRectReadonly,
+};
+
+//-------------------------------------------------------------------------
+
+});
+
+OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
+initialize: function(options) {
+    OpenLayers.Control.Panel.prototype.initialize.apply(this, [options]);
+
+    var style = new OpenLayers.Style();
+    style.addRules([
+        new OpenLayers.Rule({symbolizer: {
+            "Point": {
+                pointRadius: 4,
+                graphicName: "square",
+                fillColor: "white",
+                fillOpacity: 1,
+                strokeWidth: 1,
+                strokeOpacity: 1,
+                strokeColor: "#000000"
+            },
+            "Line": {
+                strokeWidth: 3,
+                strokeOpacity: 1,
+                strokeColor: "#000000",
+                strokeDashstyle: "dash"
+            },
+            "Polygon": {
+                strokeWidth: 2,
+                strokeOpacity: 1,
+                strokeColor: "#000000",
+                fillColor: "white",
+                fillOpacity: 0.3
+            }
+        }})]);
+
+    var styleMap = new OpenLayers.StyleMap({"default": style});
+
+    this.displayClass = 'olControlEditingToolbar';
+    var navCtrl = new OpenLayers.Control.Navigation();
+    this.defaultControl = navCtrl;
+    this.addControls([
+        new OpenLayers.Control.Measure(
+            OpenLayers.Handler.Polygon, {
+                persist: true,
+                immediate: true,
+                displayClass: "olControlDrawFeaturePolygon",
+                title: "Measure an area",
+                handlerOptions: {
+                    layerOptions: {styleMap: styleMap}
+                },
+                eventListeners: {
+                    "measure": OpenLayers.Function.bind(this.handleFullMeasurements, this),
+                    "measurepartial": OpenLayers.Function.bind(this.handlePartialMeasurements, this),
+                    "deactivate": function() {
+                        document.getElementById('map_measurementbox').style.display = 'none';
+                    }
+                }
+            }),
+        new OpenLayers.Control.Measure(
+            OpenLayers.Handler.Path, {
+                persist: true,
+                immediate: true,
+                displayClass: "olControlDrawFeaturePath",
+                title: "Measure a distance",
+                handlerOptions: {
+                    layerOptions: {styleMap: styleMap}
+                },
+                eventListeners: {
+                    "measure": OpenLayers.Function.bind(this.handleFullMeasurements, this),
+                    "measurepartial": OpenLayers.Function.bind(this.handlePartialMeasurements, this),
+                    "deactivate": function() {
+                        document.getElementById('map_measurementbox').style.display = 'none';
+                    }
+                }
+            }),
+        navCtrl
+    ]);
+},
+handlePartialMeasurements: function(event) {
+    this.handleMeasurements(event);
+},
+handleFullMeasurements: function(event) {
+    this.handleMeasurements(event);
+},
+handleMeasurements: function(event) {
+    var geometry = event.geometry;
+    var units = event.units;
+    var order = event.order;
+    var measure = event.measure;
+    var element = document.getElementById('map_measurementbox');
+    var out = "";
+    if (order == 1) {
+        out += '<span style="font-weight: bold">measure</span>: ' + measure.toFixed(1) + " " + units;
+    } else {
+        out += '<span style="font-weight: bold">measure</span>: ' + measure.toFixed(1) + " square " + units;
+    }
+    element.innerHTML = out;
+    element.style.display = 'block';
+},
+CLASS_NAME: "OpenLayers.Control.ToolPanel"
+
+});
