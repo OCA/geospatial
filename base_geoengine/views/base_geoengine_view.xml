@@ -12,7 +12,8 @@
                 <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat/ProportionalSymbol.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat/Choropleth.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/geoengine_view.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_view.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_widgets.js"></script>
 
                 <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3&amp;sensor=false"></script>
 
