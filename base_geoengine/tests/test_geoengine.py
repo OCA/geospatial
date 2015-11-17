@@ -72,7 +72,7 @@ class TestGeoengine(common.TransactionCase):
                 'model':  self.test_model._name,
                 'name': 'test.dummy.geo_view',
                 'arch': """<?xml version="1.0"?>
-                    <geoengine  version="7.0">
+                    <geoengine>
                         <field name="name"/>
                     </geoengine> """
                 })
@@ -103,7 +103,7 @@ class TestGeoengine(common.TransactionCase):
                 'model':  self.test_model_related._name,
                 'name': 'test.dummy.related.geo_view',
                 'arch': """<?xml version="1.0"?>
-                    <geoengine  version="7.0">
+                    <geoengine>
                         <field name="dummy_test_id"/>
                     </geoengine> """
                 })
