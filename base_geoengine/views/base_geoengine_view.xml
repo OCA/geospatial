@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
     <data>
-        <template id="assets_common" inherit_id="web.assets_common">
+        <template id="assets_backend" inherit_id="web.assets_backend">
             <xpath expr="." position="inside">
                 <script type="text/javascript" src="/base_geoengine/static/src/js/lib/OpenLayers.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/lib/proj4js-compressed.js"></script>
@@ -19,9 +19,9 @@
                 <link rel="stylesheet" href="/base_geoengine/static/src/css/style.css"/>
              </xpath>
         </template>
-    
+
         <menuitem name="GeoEngine Backend" id="geoengine_base_menu"
-                  web_icon="images/map.png" groups="group_geoengine_admin"
-                  web_icon_hover="images/map-hover.png"/>
+                  web_icon="base_geoengine,images/map.png" groups="group_geoengine_admin"
+                  web_icon_hover="base_geoengine,images/map-hover.png"/>
     </data>
 </openerp>
