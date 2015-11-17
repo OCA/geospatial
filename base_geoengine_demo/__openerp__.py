@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {'name': 'Geo spatial support Demo',
- 'version': '8.0.0.1.0',
+ 'version': '9.0.1.0.0',
  'category': 'GeoBI',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
@@ -34,7 +34,6 @@
      'data/npa_geom.xml',
      'security/ir.model.access.csv'
  ],
- 'installable': False,
- 'active': False,
+ 'installable': True,
  'application': True,
  }
