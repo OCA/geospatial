@@ -1,13 +1,11 @@
 <template>
-    <div t-name="GeoengineView" t-att-id="elem_id" style="height:500px;position:relative;">
-         <br />
-        <div id="the_map"></div>
-        <div id="map_infobox" class="map_overlay">
-            <div id="map_info"></div>
-        </div>
-        <div id="map_measurementbox" class="map_overlay">
-        </div>
+  <div t-name="GeoengineView" class="container-fluid o_geoengine_container" style="height:100%;position:relative;">
+    <div id="the_map"/>
+    <div id="map_infobox" class="map_overlay">
+      <div id="map_info"/>
     </div>
+    <div id="map_measurementbox" class="map_overlay"/>
+  </div>
 
   <t t-name="FieldGeoPointXY">
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
@@ -85,8 +83,8 @@
   </t>
 
 
-<t t-name="FieldGeoEngineEditMap">
-  <div t-att-id="widget.name" t-attf-class="field_#{widget.widget}" border="1"/>
-</t>
+  <t t-name="FieldGeoEngineEditMap">
+    <div t-att-id="widget.name" t-attf-class="field_#{widget.widget}" border="1"/>
+  </t>
 
 </template>
