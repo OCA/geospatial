@@ -7,16 +7,16 @@
  * License in __openerp__.py at root level of the module
  *---------------------------------------------------------
 */
-
 odoo.define('base_geoengine.geoengine_widgets', function (require) {
-    //------------ EDIT WIDGET ----------------------------------------------
 
 var core = require('web.core');
 var data = require('web.data');
 var GeoengineView = require('base_geoengine.GeoengineView');
 var common = require('web.form_common');
 
-var FieldGeoEngineEditMap = common.AbstractField.extend({
+var geoengine_common = require('base_geoengine.geoengine_common');
+
+var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.GeoengineMixin, {
     template: 'FieldGeoEngineEditMap',
 
     geo_type: null,
@@ -64,7 +64,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend({
                 scope: this
             }
         });
-        var rl = GeoengineView.createBackgroundLayers([field_infos.edit_raster]);
+        var rl = this.createBackgroundLayers([field_infos.edit_raster]);
         rl.isBaseLayer = true;
         return [rl, vl];
     },
@@ -401,121 +401,20 @@ var FieldGeoRectReadonly = FieldGeoRect.extend({
 });
 
 core.form_widget_registry
-.add('geo_edit_map', FieldGeoEngineEditMap)
-.add('geo_edit_map_readonly', FieldGeoEngineEditMapReadonly)
-.add('geo_point_xy', FieldGeoPointXY)
-.add('geo_point_xy', FieldGeoPointXYReadonly)
-.add('geo_rect', FieldGeoRect)
-.add('geo_rect', FieldGeoRectReadonly);
+    .add('geo_edit_map', FieldGeoEngineEditMap)
+    .add('geo_edit_map_readonly', FieldGeoEngineEditMapReadonly)
+    .add('geo_point_xy', FieldGeoPointXY)
+    .add('geo_point_xy', FieldGeoPointXYReadonly)
+    .add('geo_rect', FieldGeoRect)
+    .add('geo_rect', FieldGeoRectReadonly);
 
 return {
-FieldGeoEngineEditMap: FieldGeoEngineEditMap,
-FieldGeoEngineEditMapReadonly: FieldGeoEngineEditMapReadonly,
-FieldGeoPointXY: FieldGeoPointXY,
-FieldGeoPointXYReadonly: FieldGeoPointXYReadonly,
-FieldGeoRect: FieldGeoRect,
-FieldGeoRectReadonly: FieldGeoRectReadonly,
+    FieldGeoEngineEditMap: FieldGeoEngineEditMap,
+    FieldGeoEngineEditMapReadonly: FieldGeoEngineEditMapReadonly,
+    FieldGeoPointXY: FieldGeoPointXY,
+    FieldGeoPointXYReadonly: FieldGeoPointXYReadonly,
+    FieldGeoRect: FieldGeoRect,
+    FieldGeoRectReadonly: FieldGeoRectReadonly,
 };
-
-//-------------------------------------------------------------------------
-
-});
-
-OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
-initialize: function(options) {
-    OpenLayers.Control.Panel.prototype.initialize.apply(this, [options]);
-
-    var style = new OpenLayers.Style();
-    style.addRules([
-        new OpenLayers.Rule({symbolizer: {
-            "Point": {
-                pointRadius: 4,
-                graphicName: "square",
-                fillColor: "white",
-                fillOpacity: 1,
-                strokeWidth: 1,
-                strokeOpacity: 1,
-                strokeColor: "#000000"
-            },
-            "Line": {
-                strokeWidth: 3,
-                strokeOpacity: 1,
-                strokeColor: "#000000",
-                strokeDashstyle: "dash"
-            },
-            "Polygon": {
-                strokeWidth: 2,
-                strokeOpacity: 1,
-                strokeColor: "#000000",
-                fillColor: "white",
-                fillOpacity: 0.3
-            }
-        }})]);
-
-    var styleMap = new OpenLayers.StyleMap({"default": style});
-
-    this.displayClass = 'olControlEditingToolbar';
-    var navCtrl = new OpenLayers.Control.Navigation();
-    this.defaultControl = navCtrl;
-    this.addControls([
-        new OpenLayers.Control.Measure(
-            OpenLayers.Handler.Polygon, {
-                persist: true,
-                immediate: true,
-                displayClass: "olControlDrawFeaturePolygon",
-                title: "Measure an area",
-                handlerOptions: {
-                    layerOptions: {styleMap: styleMap}
-                },
-                eventListeners: {
-                    "measure": OpenLayers.Function.bind(this.handleFullMeasurements, this),
-                    "measurepartial": OpenLayers.Function.bind(this.handlePartialMeasurements, this),
-                    "deactivate": function() {
-                        document.getElementById('map_measurementbox').style.display = 'none';
-                    }
-                }
-            }),
-        new OpenLayers.Control.Measure(
-            OpenLayers.Handler.Path, {
-                persist: true,
-                immediate: true,
-                displayClass: "olControlDrawFeaturePath",
-                title: "Measure a distance",
-                handlerOptions: {
-                    layerOptions: {styleMap: styleMap}
-                },
-                eventListeners: {
-                    "measure": OpenLayers.Function.bind(this.handleFullMeasurements, this),
-                    "measurepartial": OpenLayers.Function.bind(this.handlePartialMeasurements, this),
-                    "deactivate": function() {
-                        document.getElementById('map_measurementbox').style.display = 'none';
-                    }
-                }
-            }),
-        navCtrl
-    ]);
-},
-handlePartialMeasurements: function(event) {
-    this.handleMeasurements(event);
-},
-handleFullMeasurements: function(event) {
-    this.handleMeasurements(event);
-},
-handleMeasurements: function(event) {
-    var geometry = event.geometry;
-    var units = event.units;
-    var order = event.order;
-    var measure = event.measure;
-    var element = document.getElementById('map_measurementbox');
-    var out = "";
-    if (order == 1) {
-        out += '<span style="font-weight: bold">measure</span>: ' + measure.toFixed(1) + " " + units;
-    } else {
-        out += '<span style="font-weight: bold">measure</span>: ' + measure.toFixed(1) + " square " + units;
-    }
-    element.innerHTML = out;
-    element.style.display = 'block';
-},
-CLASS_NAME: "OpenLayers.Control.ToolPanel"
 
 });
