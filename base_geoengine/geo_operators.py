@@ -66,7 +66,9 @@ def geo_search(model, cursor, uid, domain=None, geo_domain=None, offset=0,
     query = model._where_calc(
         cursor, uid, domain, active_test=True, context=context)
     model._apply_ir_rules(cursor, uid, query, 'read', context=context)
-    order_by = model._generate_order_by(order, query) or ''
+    order_by = ''
+    if order:
+        order_by = model._generate_order_by(order, query) or ''
     from_clause, where_clause, where_clause_params = query.get_sql()
     limit_str = limit and ' LIMIT %d' % limit or ''
     offset_str = offset and ' OFFSET %d' % offset or ''
