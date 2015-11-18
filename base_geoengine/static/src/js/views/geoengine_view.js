@@ -24,8 +24,8 @@ var QWeb = core.qweb;
 
 //var map, layer, vectorLayers = [];
 //TODO: remove this DEBUG
-map = null;
-layer = null;
+var map = null;
+var layer = null;
 /* CONSTANTS */
 var DEFAULT_BEGIN_COLOR = "#FFFFFF";
 var DEFAULT_END_COLOR = "#000000";
@@ -88,11 +88,12 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         this.set_default_options(options);
         this.view_manager = parent;
         this.dataset = dataset;
-        this.dataset_index = 0;
         this.model = this.dataset.model;
         this.view_id = view_id;
+        this.view_type = 'geoengine'
         this.geometry_columns = {};
         this.vectorLayers = [];
+
         // use {selectedFeatures:[]} as a hack to simulate a vector layer
         // with no feature selected
         this.selectFeatureControls = [
@@ -121,10 +122,12 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 view_loaded_def.resolve(self.embedded_view);
             });
         } else {
+            if (! this.view_type)
+                console.warn("view_type is not defined", this);
             view_loaded_def = this.dataset._model.fields_view_get({
-                view_id: this.view_id,
-                view_type: 'geoengine',
-                context: this.dataset.get_context(),
+                "view_id": this.view_id,
+                "view_type": this.view_type,
+                "context": this.dataset.get_context(),
             });
         }
         return this.alive(view_loaded_def).then(function(r) {
@@ -135,9 +138,12 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         });
     },
 
-    do_search: function(domains, contexts, groupbys) {
+    do_search: function (domain, context, _group_by) {
+        this._do_search(domain, context, _group_by);
+    },
+    _do_search: function(domain, context, _group_by) {
         var self = this;
-        self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
+        self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domain, 'limit':self.limit(), 'offset':self.offset}).then(this.do_load_vector_data);
     },
 
     /**
@@ -303,7 +309,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     },
 
     do_load_vector_data: function(data) {
-        if (!map) {
+        if (!this.map) {
             return;
         }
         var self = this;
@@ -319,7 +325,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         });
 
         this.vectorLayers = this.createVectorLayers(data);
-        map.addLayers(this.vectorLayers);
+        this.map.addLayers(this.vectorLayers);
         _.each(this.selectFeatureControls, function(ctrl) {
             ctrl.setLayer(self.vectorLayers);
             ctrl.activate();
@@ -336,9 +342,9 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         if (data_extent) {
             var bbox = data_extent.scale(1.1);
             if (bbox.getWidth() * bbox.getHeight() !== 0) {
-                map.zoomToExtent(bbox);
+                this.map.zoomToExtent(bbox);
             } else {
-                map.setCenter(bbox.getCenterLonLat(), 15);
+                this.map.setCenter(bbox.getCenterLonLat(), 15);
             }
             var ids = [];
             // Javascript expert please improve this code
@@ -349,22 +355,22 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         }
     },
 
-    view_loading: function(data) {
-        console.log("GeoengineView.on_loaded: function(data): arguments=");
-        console.log(data);
+    view_loading: function(fv) {
+        console.log("GeoengineView.on_loaded: function(fv): arguments=");
+        console.log(fv);
         var self = this;
-        this.fields_view = data;
-        _.each(data.geoengine_layers.actives, function(item) {
+        this.fields_view = fv;
+        _.each(fv.geoengine_layers.actives, function(item) {
             self.geometry_columns[item.geo_field_id[1]] = true;
         });
-        this.$el.html(QWeb.render("GeoengineView", {"fields_view": this.fields_view, 'elem_id': this.elem_id}));
+        return $.when();
     },
 
     render_map: function() {
         //TODO: copy this mapbox dark theme in the addons
         if (_.isUndefined(this.map)){
             OpenLayers.ImgPath = "//dr0duaxde13i9.cloudfront.net/theme/dark/";
-            map = new OpenLayers.Map('the_map', {
+            map = new OpenLayers.Map("the_map", {
                 layers: this.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
                 displayProjection: new OpenLayers.Projection("EPSG:4326"), // Fred should manage projection here
                 theme: null,
@@ -380,13 +386,17 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             map.addControls(this.selectFeatureControls);
             map.zoomToMaxExtent();
             this.map = map;
-            this.do_search(self.domains, null, self.offet);
         }
     },
 
     do_show: function () {
+        var self = this;
         this._super();
-        this.render_map();
+
+        // Wait for element to be rendered before adding the map
+        core.bus.on('DOM_updated', self.view_manager.is_in_DOM, function () {
+            self.render_map();
+        });
     },
 
 });
