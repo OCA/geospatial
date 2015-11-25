@@ -103,16 +103,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 {selectedFeatures:[]}, {})
         ];
     },
-    limit: function() {
-        return false;
-        //var menu = document.getElementById('query_limit');
-        //var limit = parseInt(menu.options[menu.selectedIndex].value);
-        //if (limit > 0) {
-            //return limit;
-        //} else {
-            //return false;
-        //}
-    },
     load_view: function(context) {
         var self = this;
         var view_loaded_def;
@@ -143,7 +133,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     },
     _do_search: function(domain, context, _group_by) {
         var self = this;
-        self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domain, 'limit':self.limit(), 'offset':self.offset}).then(this.do_load_vector_data);
+        self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domain}).then(this.do_load_vector_data);
     },
 
     /**
