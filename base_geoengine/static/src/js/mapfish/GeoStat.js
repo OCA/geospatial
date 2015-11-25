@@ -401,7 +401,7 @@ mapfish.GeoStat.Distribution = OpenLayers.Class({
         values.sort(function(a,b) {return a-b;});
         // We don't want more classes that elements to classify
         var maxNbBins = Math.min(nbBins, values.length - 1);
-        var binSize = Math.round(this.values.length / nbBins);
+        var binSize = Math.round(this.values.length / maxNbBins);
 
         var bounds = [];
         var binLastValPos = (binSize == 0) ? 0 : binSize;
