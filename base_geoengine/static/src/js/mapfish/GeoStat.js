@@ -399,14 +399,15 @@ mapfish.GeoStat.Distribution = OpenLayers.Class({
     classifyByQuantils: function(nbBins) {
         var values = this.values;
         values.sort(function(a,b) {return a-b;});
-        var binSize = Math.round(this.values.length / nbBins);
+        // We don't want more classes that elements to classify
+        var maxNbBins = Math.min(nbBins, values.length - 1);
+        var binSize = Math.round(this.values.length / maxNbBins);
 
         var bounds = [];
         var binLastValPos = (binSize == 0) ? 0 : binSize;
-
         if (values.length > 0) {
             bounds[0] = values[0];
-            for (i = 1; i < nbBins; i++) {
+            for (i = 1; i < maxNbBins; i++) {
                 bounds[i] = values[binLastValPos];
                 binLastValPos += binSize;
             }
