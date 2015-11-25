@@ -229,6 +229,8 @@ openerp.base_geoengine = function(openerp) {
                     }
                 }
             });
+            if (data.length == 0)
+                return vl
             _.each(data, function(item) {
                 attributes = _.clone(item);
                 _.each(_.keys(self.geometry_columns), function(item) {
