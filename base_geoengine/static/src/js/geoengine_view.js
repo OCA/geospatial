@@ -168,16 +168,6 @@ openerp.base_geoengine = function(openerp) {
                     {selectedFeatures:[]}, {})
             ];
         },
-        limit: function() {
-            return false;
-            var menu = document.getElementById('query_limit');
-            var limit = parseInt(menu.options[menu.selectedIndex].value);
-            if (limit > 0) {
-                return limit;
-            } else {
-                return false;
-            }
-        },
         load_view: function(context) {
             var self = this;
             var view_loaded_def;
@@ -204,7 +194,7 @@ openerp.base_geoengine = function(openerp) {
 
         do_search: function(domains, contexts, groupbys) {
             var self = this;
-            self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
+            self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domains}).then(self.do_load_vector_data);
         },
 
         /**
