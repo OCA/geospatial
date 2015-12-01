@@ -49,7 +49,7 @@ class GeoVectorLayer(models.Model):
         'Begin color class', size=64, required=False, help='hex value')
     end_color = fields.Char(
         'End color class', size=64, required=False, help='hex value',
-        defautl='#FF680A')
+        default='#FF680A')
     nb_class = fields.Integer('Number of class', default=1)
     attribute_field_id = fields.Many2one(
         'ir.model.fields', 'attribute field',
