@@ -70,15 +70,11 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     },
 
     add_tab_listener: function() {
-        var tab = this.$el.closest('.ui-tabs-panel');
         var self = this;
-        tab.parent().on( "tabsactivate", function(event, ui) {
-            if (! _.isObject(ui.newPanel)) {
-                return;
-            }
-            geo_tab_id = self.$el.closest('.oe_notebook_page').get(0).id;
-            active_tab_id = ui.newPanel.get(0).id;
-            if (_.isEqual(geo_tab_id, active_tab_id)) {
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+            var geo_tab_id = self.$el[0].id;
+            var active_tab = $(e.target.hash);
+            if (active_tab.find('#' + geo_tab_id).length == 1) {
                   self.render_map();
                   return;
             }
@@ -93,7 +89,9 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
         this.view.on("change:actual_mode", this, this.on_mode_change);
         var self = this;
         // add a listener on parent tab if it exists in order to refresh geoengine view
-        self.add_tab_listener();
+        core.bus.on('DOM_updated', self.view.ViewManager.is_in_DOM, function () {
+            self.add_tab_listener();
+        });
         // We blacklist all other fields in order to avoid calling get_value inside the build_context on field widget which aren't started yet
         var blacklist = this.view.fields_order.slice();
         delete blacklist[this.name];
