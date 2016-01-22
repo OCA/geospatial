@@ -52,7 +52,7 @@ var STYLE_SELECT = {
  * Parameters:
  * a - {Object}
  */
-var formatHTML = function(a) {
+var formatHTML = function(a, fields) {
     var str = [];
     var oid = '';
     for (var key in a) {
@@ -61,15 +61,28 @@ var formatHTML = function(a) {
             if (val == false) {
                 continue;
             }
-            var label = '';
-            if (val instanceof Array) {
-                str.push('<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val[1]);
-            } else {
-                label = '<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val;
-                 if (key == 'id') {
-                    oid = label;
+            var span = '';
+            if (fields.hasOwnProperty(key)) {
+                var field = fields[key];
+                var label = field.string;
+                if (field.type == 'selection') {
+                    // get display value of selection option
+                    for (var option in field.selection) {
+                        if (field.selection[option][0] == val) {
+                            val = field.selection[option][1];
+                            break;
+                        }
+                    }
+                }
+                if (val instanceof Array) {
+                    str.push('<span style="font-weight: bold">' + label + '</span>: ' +val[1]);
                 } else {
-                    str.push(label);
+                    span = '<span style="font-weight: bold">' + label + '</span>: ' +val;
+                     if (key == 'id') {
+                        oid = span;
+                    } else {
+                        str.push(span);
+                    }
                 }
             }
         }
@@ -160,7 +173,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             },
             eventListeners: {
                 "featureselected": function(event) {
-                    $("#map_info").html(formatHTML(event.feature.attributes));
+                    $("#map_info").html(formatHTML(event.feature.attributes, self.fields_view.fields));
                     $("#map_infobox").show();
                 },
                 "featureunselected": function() {
