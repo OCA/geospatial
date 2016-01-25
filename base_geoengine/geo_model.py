@@ -138,6 +138,10 @@ class GeoModel(models.BaseModel):
                 res['geoengine_layers']['backgrounds'].append(layer_dict)
             for layer in view.vector_layer_ids:
                 layer_dict = vector_obj.read(cursor, uid, layer.id)
+                # get category groups for this vector layer
+                if layer.geo_repr == 'basic':
+                    layer_dict['symbols'] = layer.symbol_ids.read(
+                        ['img', 'fieldname', 'value'])
                 layer_dict['attribute_field_id'] = set_field_real_name(
                     layer_dict.get('attribute_field_id', False))
                 layer_dict['geo_field_id'] = set_field_real_name(
