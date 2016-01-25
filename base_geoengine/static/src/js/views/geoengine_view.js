@@ -149,6 +149,46 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domain}).then(this.do_load_vector_data);
     },
 
+    createMultiSymbolStyle: function(symbols) {
+        var self = this;
+        options = {};
+        rules = [];
+        for (i in symbols) {
+
+            new_rule = new OpenLayers.Rule({
+                filter: new OpenLayers.Filter.Comparison({
+                    type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                    property: symbols[i].fieldname,
+                    value: symbols[i].value
+                }),
+                symbolizer: {
+                    externalGraphic: symbols[i].img
+                }
+            });
+            rules.push(new_rule);
+        }
+        rules.push(
+            new OpenLayers.Rule({
+                elseFilter: true,
+                symbolizer: {
+                    externalGraphic: "base_geoengine/static/img/map-marker.png"
+                }
+            })
+        )
+
+        style = new OpenLayers.Style(
+            // base options
+            {
+                graphicWidth: 24,
+                graphicHeight: 24,
+            },
+            {
+                rules: rules
+            }
+        );
+        return style;
+    },
+
     /**
      * Method: createVectorLayer
      *
@@ -161,26 +201,29 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         var features = [];
         var geostat = null;
         var geojson = new OpenLayers.Format.GeoJSON();
-        var vl = new OpenLayers.Layer.Vector(cfg.name, {
-            styleMap: new OpenLayers.StyleMap({
-                'default': OpenLayers.Util.applyDefaults({
-                    fillColor: cfg.begin_color
-                }, STYLE_DEFAULT),
-                'select': STYLE_SELECT
-            }),
-        rendererOptions: {
-                zIndexing: true
-            },
-            eventListeners: {
-                "featureselected": function(event) {
-                    $("#map_info").html(formatHTML(event.feature.attributes, self.fields_view.fields));
-                    $("#map_infobox").show();
+        var vl = new OpenLayers.Layer.Vector(
+            cfg.name,
+            {
+                styleMap: new OpenLayers.StyleMap({
+                    'default': OpenLayers.Util.applyDefaults({
+                        fillColor: cfg.begin_color
+                    }, STYLE_DEFAULT),
+                    'select': STYLE_SELECT
+                }),
+                rendererOptions: {
+                    zIndexing: true
                 },
-                "featureunselected": function() {
-                    $("#map_infobox").hide();
+                eventListeners: {
+                    "featureselected": function(event) {
+                        $("#map_info").html(formatHTML(event.feature.attributes, self.fields_view.fields));
+                        $("#map_infobox").show();
+                    },
+                    "featureunselected": function() {
+                        $("#map_infobox").hide();
+                    }
                 }
             }
-        });
+        );
         if (data.length == 0)
             return vl
         _.each(data, function(item) {
@@ -195,6 +238,17 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         });
         var indicator = cfg.attribute_field_id[1];
         switch (cfg.geo_repr) {
+            case "basic":
+                if (!cfg.symbols) {
+                    break;
+                }
+                if (cfg.symbols.length > 0) {
+                    style = this.createMultiSymbolStyle(cfg.symbols);
+                    vl.styleMap = new OpenLayers.StyleMap({
+                        'default': style,
+                    });
+                }
+                break;
             case "colored":
                 var begin_color = new mapfish.ColorRgb();
                 begin_color.setFromHex(cfg.begin_color || DEFAULT_BEGIN_COLOR);
