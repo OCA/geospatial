@@ -1,23 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Nicolas Bessi
-#    Copyright 2011-2012 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2011-2012 Nicolas Bessi (Camptocamp SA)
+# © 2016 Yannick Vaucher (Camptocamp SA)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openerp import fields, models
 
 SUPPORTED_ATT = ['float', 'integer', 'integer_big', 'related',
@@ -43,8 +27,7 @@ class GeoVectorLayer(models.Model):
         required=False)
     name = fields.Char(
         'Layer Name', size=256, translate=True, required=True)
-    symbol_url = fields.Text('Symbol URL')
-    symbol_binary = fields.Binary('Binary Symbol')
+    symbol_ids = fields.One2many('geoengine.vector.symbol', 'vector_layer_id')
     begin_color = fields.Char(
         'Begin color class', size=64, required=False, help='hex value')
     end_color = fields.Char(
