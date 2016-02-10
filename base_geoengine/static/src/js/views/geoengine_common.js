@@ -3,7 +3,7 @@
  * Author B.Binet Copyright Camptocamp SA
  * Contributor N. Bessi Copyright Camptocamp SA
  * Contributor Laurent Mignon 2015 Acsone SA/NV
- * Contributor Yannick Vaucher 2015 Camptocamp SA
+ * Contributor Yannick Vaucher 2015-2016 Camptocamp SA
  * License in __openerp__.py at root level of the module
  *---------------------------------------------------------
 */
@@ -32,72 +32,72 @@ var GeoengineMixin = {
     createBackgroundLayers: function(bg_layers) {
         var out = [];
         _.each(bg_layers, function(l) {
-            switch (l.raster_type) {
-                case "osm":
-                    out.push(
-                        new OpenLayers.Layer.OSM(
-                            l.name,
-                            'http://tile.openstreetmap.org/${z}/${x}/${y}.png', {
+            if (l.is_wmts) {
+                // http://map.lausanne.ch/tiles/1.0.0/WMTSCapabilities.xml
+                var opt = {
+                    name: l.name,
+                    url: l.url.split(','),
+                    layer: l.type,
+                    style: 'default',
+                    matrixSet: l.matrix_set,
+                    attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>\
+                              data <a href='http://map.lausanne.ch/' target='_blank'>&copy; Lausanne</a>"
+                }
+
+                if (l.format_suffix) { opt.formatSuffix = l.format_suffix; }
+                if (l.request_encoding) { opt.requestEncoding = l.request_encoding; }
+                if (l.projection) { opt.projection = l.projection; }
+                if (l.units) { opt.units = l.units; }
+                if (l.resolutions) { opt.resolutions = l.resolutions.split(','); }
+                if (l.max_extent) { opt.maxExtent = l.max_extent.split(','); }
+                if (l.server_resolutions) { opt.serverResolutions = l.server_resolutions.split(','); }
+                if (l.dimensions) { opt.dimensions = l.dimensions.split(','); }
+                if (l.params) { opt.params = JSON.parse(l.params); }
+
+                out.push(new OpenLayers.Layer.WMTS(opt));
+            } else {
+                switch (l.raster_type) {
+                    case "osm":
+                        out.push(
+                            new OpenLayers.Layer.OSM(
+                                l.name,
+                                'http://tile.openstreetmap.org/${z}/${x}/${y}.png', {
+                                    attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>\
+                                                  using <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> raster",
+                                    buffer: 1,
+                                    transitionEffect: 'resize'
+                                }));
+                        break;
+                    case "mapbox":
+                        out.push(
+                            new OpenLayers.Layer.XYZ(l.name, [
+                                "http://a.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
+                                "http://b.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
+                                "http://c.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
+                                "http://d.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png"
+                            ], {
+                                sphericalMercator: true,
+                                wrapDateLine: true,
+                                numZoomLevels: 17,
                                 attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>\
-                                              using <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> raster",
-                                buffer: 1,
-                                transitionEffect: 'resize'
-                            }));
-                    break;
-                case "mapbox":
-                    out.push(
-                        new OpenLayers.Layer.XYZ(l.name, [
-                            "http://a.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
-                            "http://b.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
-                            "http://c.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png",
-                            "http://d.tiles.mapbox.com/v3/" + l.mapbox_id + "/${z}/${x}/${y}.png"
-                        ], {
-                            sphericalMercator: true,
-                            wrapDateLine: true,
-                            numZoomLevels: 17,
-                            attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>\
-                                      using <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> raster"
-                        })
-                    );
-                    break;
-                case "swisstopo":
-                    var resolutions = [4000, 3750, 3500, 3250, 3000, 2750, 2500, 2250, 2000, 1750, 1500, 1250, 1000, 750, 650, 500, 250, 100, 50, 20, 10, 5, 2.5];
-                    if (l.swisstopo_type == 'ch.swisstopo.swissimage') {
-                        resolutions.push(2, 1.5, 1, 0.5);
-                    }
-                    out.push(
-                        new OpenLayers.Layer.WMTS({
-                            name: l.name,
-                            layer: l.swisstopo_type,
-                            formatSuffix: 'jpeg',
-                            url: ['https://wmts0.geo.admin.ch/', 'https://wmts1.geo.admin.ch/', 'https://wmts2.geo.admin.ch/'],
-                            projection: 'EPSG:21781',
-                            units: 'm',
-                            resolutions: resolutions,
-                            maxExtent: [420000, 30000, 900000, 350000],
-                            requestEncoding: 'REST',
-                            matrixSet: '21781',
-                            style: 'default',
-                            dimensions: ['TIME'],
-                            params: {time: l.swisstopo_time},
-                            attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>\
-                                      data <a href='http://www.swisstopo.admin.ch/' target='_blank'>&copy; swisstopo</a>"
-                        })
-                    );
-                    break;
-                case "google":
-                    var glayers = {
-                        "G_PHYSICAL_MAP": google.maps.MapTypeId.TERRAIN,
-                        "G_HYBRID_MAP": google.maps.MapTypeId.HYBRID,
-                        "G_SATELLITE_MAP": google.maps.MapTypeId.SATELLITE
-                    };
-                    out.push(
-                        new OpenLayers.Layer.Google(
-                            l.name,
-                            {type: glayers[l.google_type],
-                            attribution: "<a href='http://www.camptocamp.com' style='position:relative;left:-470px;color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>"}
-                        ));
-                    break;
+                                          using <a href='http://www.openstreetmap.org/' target='_blank'>OpenStreetMap</a> raster"
+                            })
+                        );
+                        break;
+                    case "google":
+                        var glayers = {
+                            "G_PHYSICAL_MAP": google.maps.MapTypeId.TERRAIN,
+                            "G_HYBRID_MAP": google.maps.MapTypeId.HYBRID,
+                            "G_SATELLITE_MAP": google.maps.MapTypeId.SATELLITE
+                        };
+                        out.push(
+                            new OpenLayers.Layer.Google(
+                                l.name,
+                                {type: glayers[l.google_type],
+                                attribution: "<a href='http://www.camptocamp.com' style='position:relative;left:-470px;color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>"}
+                            ));
+                        break;
+                }
             }
         });
         return out;

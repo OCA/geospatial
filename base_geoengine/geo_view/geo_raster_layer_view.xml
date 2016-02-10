@@ -13,28 +13,37 @@
                         <field name="sequence"/>
                         <field name="overlay"/>
                         <field name="use_to_edit" colspan="4"/>
-                        <field name="url" colspan="4" widget="url"
-                            attrs="{'invisible': [('raster_type', '!=', 'd_wms')]}"/>
+                        <field name="url" colspan="4" widget="url" attrs="{'required': [('is_wmts', '=', True)]}"/>
                     </group>
-                    <group string="Google layer data"
-                        attrs="{'invisible': [('raster_type', '!=', 'google')]}"
-                        colspan="4">
-                        <field name="google_type"/>
+                    <field name="is_wmts" invisible="1"/>
+                    <group string="WMTS options"
+                           attrs="{'invisible': [('is_wmts', '=', False)]}"
+                           colspan="4">
+                      <field name="matrix_set" attrs="{'required': [('is_wmts', '=', True)]}"/>
+                      <field name="format_suffix"/>
+                      <field name="request_encoding"/>
+                      <field name="projection"/>
+                      <field name="units"/>
+                      <field name="resolutions"/>
+                      <field name="max_extent"/>
+                      <field name="server_resolutions"/>
+                      <field name="dimensions"/>
+                      <field name="params"/>
+                    </group>
+                    <field name="has_type" invisible="1"/>
+                    <group string="Layer data"
+                           attrs="{'invisible': [('has_type', '=', False)]}"
+                           colspan="4">
+                      <field name="type_id" widget="selection" attrs="{'required': [('has_type', '=', True)]}"/>
                     </group>
                     <group string="MapBox layer data"
                         attrs="{'invisible': [('raster_type', '!=', 'mapbox')]}"
                         colspan="4">
                         <field name="mapbox_id" attrs="{'required': [('raster_type', '=', 'mapbox')]}"/>
                     </group>
-                    <group string="swisstopo layer data"
-                        attrs="{'invisible': [('raster_type', '!=', 'swisstopo')]}"
-                        colspan="4" col="4">
-                        <field name="swisstopo_type" attrs="{'required': [('raster_type', '=', 'swisstopo')]}"/>
-                        <field name="swisstopo_time" attrs="{'required': [('raster_type', '=', 'swisstopo')]}"/>
-                    </group>
-                    <group string="OpenERP layer data (Not implemented)"
-                        attrs="{'invisible': [('raster_type', '!=', 'openerp')]}"
-                        colspan="4">
+                    <group string="Odoo layer data (Not implemented)"
+                           attrs="{'invisible': [('raster_type', '!=', 'odoo')]}"
+                           colspan="4">
                         <field name="field_id"/>
                     </group>
                 </form>

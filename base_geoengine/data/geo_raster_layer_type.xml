@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Google layers -->
+  <record id="geo_layer_type_g_normal" model="geoengine.raster.layer.type">
+    <field name="service">google</field>
+    <field name="name">Google normal map</field>
+    <field name="code">G_NORMAL_MAP</field>
+  </record>
+  <record id="geo_layer_type_g_sat" model="geoengine.raster.layer.type">
+    <field name="service">google</field>
+    <field name="name">Google satellite map</field>
+    <field name="code">G_SATELLITE_MAP</field>
+  </record>
+  <record id="geo_layer_type_g_hybrid" model="geoengine.raster.layer.type">
+    <field name="service">google</field>
+    <field name="name">Google Hybrid map</field>
+    <field name="code">G_HYBRID_MAP</field>
+  </record>
+  <record id="geo_layer_type_g_physical" model="geoengine.raster.layer.type">
+    <field name="service">google</field>
+    <field name="name">Google Physical map</field>
+    <field name="code">G_PHYSICAL_MAP</field>
+  </record>
+</odoo>
+
