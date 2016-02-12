@@ -39,9 +39,12 @@ class GeoField(Field):
     """
 
     geo_type = None
-    dim = 2
-    srid = 900913
-    gist_index = True
+
+    _slots = {
+        'dim': 2,
+        'srid': 900913,
+        'gist_index': True,
+    }
 
     def convert_to_read(self, value, use_name_get=True):
         res = convert.value_to_shape(value)
