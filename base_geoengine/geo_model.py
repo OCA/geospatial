@@ -1,24 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Nicolas Bessi
-#    Copyright 2011-2012 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
-
+# © 2011-2012 Nicolas Bessi (Camptocamp SA)
+# © 2016 Yannick Vaucher (Camptocamp SA)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openerp import models
 from openerp.exceptions import except_orm, MissingError
 from openerp.osv import fields
@@ -129,9 +112,11 @@ class GeoModel(models.BaseModel):
             res['geoengine_layers'] = {}
             res['geoengine_layers']['backgrounds'] = []
             res['geoengine_layers']['actives'] = []
-            default_extent = (view.default_extent or DEFAULT_EXTENT).split(',')
-            res['geoengine_layers']['default_extent'] = [
-                float(x) for x in default_extent]
+            res['geoengine_layers']['projection'] = view.projection
+            restricted_extent = view.restricted_extent
+            res['geoengine_layers']['restricted_extent'] = restricted_extent
+            default_extent = view.default_extent or DEFAULT_EXTENT
+            res['geoengine_layers']['default_extent'] = default_extent
             # TODO find why context in read does not work with webclient
             for layer in view.raster_layer_ids:
                 layer_dict = raster_obj.read(cursor, uid, layer.id)
@@ -179,6 +164,8 @@ class GeoModel(models.BaseModel):
             cursor, uid, raster_id[0], context=context)
         res['geo_type'] = field.geo_type
         res['srid'] = field.srid
+        res['projection'] = view.projection
+        res['restricted_extent'] = view.restricted_extent
         res['default_extent'] = view.default_extent
         return res
 
