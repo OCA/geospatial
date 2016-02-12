@@ -48,9 +48,9 @@ var GeoengineMixin = {
                 if (l.request_encoding) { opt.requestEncoding = l.request_encoding; }
                 if (l.projection) { opt.projection = l.projection; }
                 if (l.units) { opt.units = l.units; }
-                if (l.resolutions) { opt.resolutions = l.resolutions.split(','); }
-                if (l.max_extent) { opt.maxExtent = l.max_extent.split(','); }
-                if (l.server_resolutions) { opt.serverResolutions = l.server_resolutions.split(','); }
+                if (l.resolutions) { opt.resolutions = l.resolutions.split(',').map(Number); }
+                if (l.max_extent) { opt.maxExtent = OpenLayers.Bounds.fromString(l.max_extent); }
+                if (l.server_resolutions) { opt.serverResolutions = l.server_resolutions.split(',').map(Number); }
                 if (l.dimensions) { opt.dimensions = l.dimensions.split(','); }
                 if (l.params) { opt.params = JSON.parse(l.params); }
 
