@@ -1,23 +1,7 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Nicolas Bessi
-#    Copyright 2011-2012 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# © 2011-2012 Nicolas Bessi (Camptocamp SA)
+# © 2016 Yannick Vaucher (Camptocamp SA)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openerp import fields, models
 from openerp import api
 
@@ -46,7 +30,12 @@ class IrUIView(models.Model):
     vector_layer_ids = fields.One2many(
         'geoengine.vector.layer', 'view_id', 'Vector layers', required=True)
 
+    projection = fields.Char(default="EPSG:900913", required=True)
     default_extent = fields.Char(
-        'Default map extent in 900913', size=128,
+        'Default map extent', size=128,
         default='-123164.85222423, 5574694.9538936, 1578017.6490538,'
-        ' 6186191.1800898')
+        ' 6186191.1800898'
+    )
+    restricted_extent = fields.Char(
+        'Restricted map extent', size=128,
+    )
