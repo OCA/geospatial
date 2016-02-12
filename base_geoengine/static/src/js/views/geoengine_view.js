@@ -3,7 +3,7 @@
  * Author B.Binet Copyright Camptocamp SA
  * Contributor N. Bessi Copyright Camptocamp SA
  * Contributor Laurent Mignon 2015 Acsone SA/NV
- * Contributor Yannick Vaucher 2015 Camptocamp SA
+ * Contributor Yannick Vaucher 2015-2016 Camptocamp SA
  * License in __openerp__.py at root level of the module
  *---------------------------------------------------------
 */
@@ -137,6 +137,10 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         }
         return this.alive(view_loaded_def).then(function(r) {
             self.fields_view = r;
+            var data = r.geoengine_layers;
+            self.projection = data.projection;
+            self.restricted_extent = data.restricted_extent;
+            self.default_extent = data.default_extent;
             return $.when(self.view_loading(r)).then(function() {
                 self.trigger('view_loaded', r);
             });
@@ -431,7 +435,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         //TODO: copy this mapbox dark theme in the addons
         if (_.isUndefined(this.map)){
             OpenLayers.ImgPath = "//dr0duaxde13i9.cloudfront.net/theme/dark/";
-            map = new OpenLayers.Map("the_map", {
+            this.map = new OpenLayers.Map("the_map", {
                 layers: this.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
                 displayProjection: new OpenLayers.Projection("EPSG:4326"), // Fred should manage projection here
                 theme: null,
@@ -444,9 +448,14 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                     new OpenLayers.Control.ToolPanel()
                 ]
             });
-            map.addControls(this.selectFeatureControls);
-            map.zoomToMaxExtent();
-            this.map = map;
+            if (this.restricted_extent) {
+                this.map.restrictedExtent = OpenLayers.Bounds.fromString(this.restricted_extent);
+                if (this.projection != this.map.getProjection()) {
+                    this.map.restrictedExtent = this.map.restrictedExtent.transform(this.projection, this.map.getProjection());
+                }
+            }
+            this.map.addControls(this.selectFeatureControls);
+            this.map.zoomToMaxExtent();
         }
     },
 
