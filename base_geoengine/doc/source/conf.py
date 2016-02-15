@@ -22,7 +22,7 @@ import sphinx_bootstrap_theme
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 
 
-odoo_root = '/home/travis/odoo-8.0'
+odoo_root = '/home/travis/odoo-' + os.environ['VERSION']
 sphinxodoo_root_path = os.path.abspath(odoo_root)
 sphinxodoo_addons_path = [
     os.path.abspath(os.path.join(odoo_root, 'openerp', 'addons')),
