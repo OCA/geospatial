@@ -29,10 +29,6 @@ install:
   - travis_install_nightly
   - pip install geojson Shapely sphinx sphinx_bootstrap_theme sphinx-intl odoo-sphinx-autodoc
 
-before_script:
-  - if [ -n "${ODOO_REPO}" ] ; then wget --no-check-certificate -O ${HOME}/5620.patch http://patch-diff.githubusercontent.com/raw/odoo/odoo/pull/5620.patch ; fi
-  - if [ -n "${ODOO_REPO}" ] ; then IFS="/" read -a REPO <<< "${ODOO_REPO}"; patch -f -d "${HOME}/${REPO[1]}-${VERSION}" -p1 -i ${HOME}/5620.patch ; fi
-
 script:
   - if [ -z "$DOCS" ] ; then travis_run_tests; fi
   - if [ -n "$DOCS" ] ; then ./.travis_build_doc; fi

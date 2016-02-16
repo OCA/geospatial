@@ -1,4 +1,5 @@
 ![Licence](https://img.shields.io/badge/licence-AGPL--3-blue.svg)
+[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/115/9.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-geospatial-115)
 [![Build Status](https://travis-ci.org/OCA/geospatial.svg?branch=9.0)](https://travis-ci.org/OCA/geospatial)
 [![Coverage Status](https://coveralls.io/repos/OCA/geospatial/badge.png?branch=9.0)](https://coveralls.io/r/OCA/geospatial?branch=9.0)
 
@@ -57,13 +58,22 @@ Requirements
 
   *  **geojson** http://pypi.python.org/pypi/geojson
 
+* Odoo patch
+
+  * In order to be able to create geometries, you will need to apply this patch on official Odoo branch (OCB is already patched): https://github.com/odoo/odoo/pull/10639
+
 [//]: # (addons)
+Available addons
+---------------
+addon | version | summary
+--- | --- | ---
+[base_geoengine](base_geoengine/) | 9.0.1.0.0 | Geospatial support for Odoo
+[base_geoengine_demo](base_geoengine_demo/) | 9.0.1.0.0 | Geo spatial support Demo
+
 Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[base_geoengine](base_geoengine/) | 8.0.0.2.0 (unported) | Geospatial support for OpenERP
-[base_geoengine_demo](base_geoengine_demo/) | 8.0.0.1.0 (unported) | Geo spatial support Demo
 [geoengine_base_geolocalize](geoengine_base_geolocalize/) | 8.0.0.1.0 (unported) | Geospatial support for base_geolocalize
 [geoengine_geoname_geocoder](geoengine_geoname_geocoder/) | 8.0.0.1.0 (unported) | Auto Geocoding of partners
 [geoengine_partner](geoengine_partner/) | 8.0.0.1.0 (unported) | Geospatial support of partners
@@ -71,3 +81,7 @@ addon | version | summary
 [geoengine_sale](geoengine_sale/) | 8.0.0.1.0 (unported) | Geospatial support for sales
 
 [//]: # (end addons)
+
+Translation Status
+------------------
+[![Transifex Status](https://www.transifex.com/projects/p/OCA-geospatial-9-0/chart/image_png)](https://www.transifex.com/projects/p/OCA-geospatial-9-0)
