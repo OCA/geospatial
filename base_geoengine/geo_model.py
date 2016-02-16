@@ -199,6 +199,7 @@ class GeoModel(models.BaseModel):
             * geo_equal
             * geo_touch
             * geo_within
+            * geo_contains
             * geo_intersect"""
         # First we do a standard search in order to apply security rules
         # and do a search on standard attributes
