@@ -57,6 +57,7 @@ def geo_search(model, cursor, uid, domain=None, geo_domain=None, offset=0,
      * geo_equal
      * geo_touch
      * geo_within
+     * geo_contains
      * geo_intersect
     """
     domain = domain or []
@@ -182,7 +183,8 @@ class GeoOperator(object):
             compare_to = self.get_rel_field(rel_col, rel_model)
         else:
             base = self.geo_field.entry_to_shape(value, same_type=False)
-            compare_to = "ST_GeomFromText('%s')" % (base.wkt,)
+            srid = self.geo_field._srid
+            compare_to = "ST_GeomFromText('%s',%s)" % (base.wkt, srid)
         return " %s(%s.%s, %s)" % (op, table, col, compare_to)
 
     def get_geo_greater_sql(self, table, col, value, rel_col=None,
@@ -238,3 +240,12 @@ class GeoOperator(object):
         return self._get_postgis_comp_sql(table, col, value,
                                           rel_col, rel_model,
                                           op='ST_Within')
+
+    def get_geo_contains_sql(self, table, col, value, rel_col=None,
+                             rel_model=None):
+        """Returns raw sql for geo_contains operator
+        (used for spatial comparison)
+        """
+        return self._get_postgis_comp_sql(table, col, value,
+                                          rel_col, rel_model,
+                                          op='ST_Contains')
