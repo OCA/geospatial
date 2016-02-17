@@ -26,6 +26,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     force_readonly: null,
     modify_control: null,
     draw_control: null,
+    tab_listener_installed: false,
 
     create_edit_layers: function(self, field_infos) {
         var vl = new OpenLayers.Layer.Vector(self.name, {
@@ -89,7 +90,10 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
         var self = this;
         // add a listener on parent tab if it exists in order to refresh geoengine view
         core.bus.on('DOM_updated', self.view.ViewManager.is_in_DOM, function () {
-            self.add_tab_listener();
+            if (!self.tab_listener_installed) {
+                self.add_tab_listener();
+                self.tab_listener_installed = true;
+            }
         });
         // We blacklist all other fields in order to avoid calling get_value inside the build_context on field widget which aren't started yet
         var blacklist = this.view.fields_order.slice();
@@ -138,7 +142,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     },
 
     render_map: function() {
-        if (_.isNull(this.map)){
+        if (!this.map) {
             map_opt = {
                 theme: null,
                 layers: this.layers[0],
