@@ -70,15 +70,14 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     },
 
     add_tab_listener: function() {
-        var self = this;
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-            var geo_tab_id = self.$el[0].id;
-            var active_tab = $(e.target.hash);
-            if (active_tab.find('#' + geo_tab_id).length == 1) {
-                  self.render_map();
-                  return;
-            }
-        });
+        tab_href = this.$el.closest('div[role="tabpanel"]')
+        if (tab_href.length == 0) {
+            return;
+        }
+        $('a[href="#' + tab_href[0].id + '"]').on('shown.bs.tab', function(e) {
+            this.render_map();
+            return;
+        }.bind(this));
     },
 
     start: function() {
