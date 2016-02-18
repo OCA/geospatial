@@ -64,7 +64,7 @@ Requirements
 
 [//]: # (addons)
 Available addons
----------------
+----------------
 addon | version | summary
 --- | --- | ---
 [base_geoengine](base_geoengine/) | 9.0.1.0.0 | Geospatial support for Odoo
