@@ -162,6 +162,22 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
             this.draw_control = new OpenLayers.Control.DrawFeature(this.layers[1], handler);
             this.map.addControl(this.draw_control);
 
+            function clearMap() {
+                var vl = this.map.getLayersByName(this.widget.name)[0];
+                vl.destroyFeatures();
+                this.widget.set_value(null);
+            }
+            this.modify_panel = new OpenLayers.Control.Panel();
+            clear_button = new OpenLayers.Control.Button({
+                displayClass: 'olClearMap',
+                type: OpenLayers.Control.TYPE_BUTTON,
+                trigger: clearMap,
+                widget: this,
+            })
+            this.modify_panel.addControls([clear_button]);
+
+            this.map.addControl(this.modify_panel);
+
             this.default_extend = OpenLayers.Bounds.fromString(this.default_extent).transform('EPSG:900913', this.map.getProjection());
             this.map.zoomToExtent(this.default_extend);
             this.format = new OpenLayers.Format.GeoJSON({
@@ -174,8 +190,10 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
         }
         if (this.get("effective_readonly") || this.force_readonly) {
             this.modify_control.deactivate();
+            this.modify_panel.deactivate();
         } else {
             this.modify_control.activate();
+            this.modify_panel.activate();
             this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
         }
     },
