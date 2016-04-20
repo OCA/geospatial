@@ -29,7 +29,7 @@ class IrUIView(models.Model):
     _inherit = 'ir.ui.view'
 
     @api.model
-    def _setup_fields(self):
+    def _setup_fields(self, partial):
         """Hack due since the field 'type' is not defined with the new api.
         """
         cls = type(self)
@@ -38,7 +38,7 @@ class IrUIView(models.Model):
             tmp = list(type_selection)
             tmp.append(GEO_VIEW)
             cls._fields['type'].selection = tuple(set(tmp))
-        super(IrUIView, self)._setup_fields()
+        super(IrUIView, self)._setup_fields(partial)
 
     raster_layer_ids = fields.One2many(
         'geoengine.raster.layer', 'view_id', 'Raster layers', required=False)
