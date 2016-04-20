@@ -113,7 +113,7 @@ class TestGeoengine(common.TransactionCase):
         inst = cls._build_model(pool, self.cr)
         inst._prepare_setup(self.cr, SUPERUSER_ID)
         inst._setup_base(self.cr, SUPERUSER_ID, partial=False)
-        inst._setup_fields(self.cr, SUPERUSER_ID)
+        inst._setup_fields(self.cr, SUPERUSER_ID, partial=False)
         inst._setup_complete(self.cr, SUPERUSER_ID)
         inst._auto_init(self.cr, {'module': __name__})
         return inst
