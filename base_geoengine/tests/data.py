@@ -1,23 +1,6 @@
 # -*- coding: utf-8 -*-
-#
-#
-#    Authors: Laurent Mignon
-#    Copyright (c) 2015 Acsone SA/NV (http://www.acsone.eu)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-#
+# © 2015 Laurent Mignon Acsone SA/NV (http://www.acsone.eu)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 MULTIPOLYGON_1 = """
      MULTIPOLYGON (((726469.938970306 5873145.03456248,
                      726520.174105436 5872946.03059195,
@@ -115,23 +98,21 @@ MULTIPOLYGON_1 = """
                      726469.938970306 5873145.03456248)))"""
 
 
-GEO_VIEW = """{
+GEO_VIEW = {
     "geoengine_layers": {
         "actives": [],
         "backgrounds": [],
-        "default_extent": [
-            -123164.85222423,
-            5574694.9538936,
-            1578017.6490538,
-            6186191.1800898
-        ]
+        "default_extent": "-123164.85222423, 5574694.9538936,"
+                          " 1578017.6490538, 6186191.1800898",
+        "projection": "EPSG:900913",
+        "restricted_extent": False
     },
     "model": "test.dummy",
     "name": "test.dummy.geo_view",
     "type": "geoengine"
-}"""
+}
 
-FORM_VIEW = """{
+FORM_VIEW = {
     "fields": {
         "the_geom": {
             "geo_type": {
@@ -139,10 +120,10 @@ FORM_VIEW = """{
                 "srid": 900913,
                 "type": "MULTIPOLYGON"
             },
-            "required": false,
-            "searchable": true,
-            "sortable": true,
-            "store": true,
+            "required": False,
+            "searchable": True,
+            "sortable": True,
+            "store": True,
             "string": "NPA Shape",
             "type": "geo_multi_polygon"
         }
@@ -150,7 +131,7 @@ FORM_VIEW = """{
     "model": "test.dummy",
     "name": "test.dummy.form_view",
     "type": "form"
-}"""
+}
 
 EXPECTED_GEO_COLUMN_MULTIPOLYGON = {
     'default_extent':

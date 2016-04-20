@@ -1,23 +1,6 @@
 # -*- coding: utf-8 -*-
-#
-#
-#    Authors: Laurent Mignon
-#    Copyright (c) 2015 Acsone SA/NV (http://www.acsone.eu)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-#
+# © 2015 Laurent Mignon Acsone SA/NV (http://www.acsone.eu)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 import mock
 import simplejson
 from cStringIO import StringIO
@@ -137,9 +120,11 @@ class TestGeoengine(common.TransactionCase):
             set_value_path(values, values_reduced, path)
         pprint_value = StringIO()
         simplejson.dump(values_reduced, pprint_value, sort_keys=True, indent=4)
+        expected_json = simplejson.dumps(
+            expected_result, sort_keys=True, indent=4)
         #  diff can be very long...Set self.maxDiff to None to see it
         self.maxDiff = None
-        self.assertEqual(expected_result, pprint_value.getvalue())
+        self.assertEqual(expected_json, pprint_value.getvalue())
 
     def test_field(self):
         _logger.info("Tests fields")
