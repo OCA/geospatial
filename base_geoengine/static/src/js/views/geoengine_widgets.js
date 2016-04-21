@@ -137,7 +137,9 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     },
 
     on_mode_change: function() {
-        this.render_map();
+        if (this.$el.is(':visible')){
+            this.render_map();
+        }
         this.$el.toggle(!this.invisible);
     },
 
