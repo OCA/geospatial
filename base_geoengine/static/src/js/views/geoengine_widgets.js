@@ -193,7 +193,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
                 internalProjection: this.map.getProjection(),
                 externalProjection: 'EPSG:' + this.srid
             });
-            this.map.render(this.name);
+            this.map.render(this.$el[0]);
             $(document).trigger('FieldGeoEngineEditMap:ready', [this.map]);
             this.set_value(this.value);
         }
