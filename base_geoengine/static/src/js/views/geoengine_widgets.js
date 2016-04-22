@@ -104,6 +104,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
             self.geo_type = result.geo_type;
             self.projection = result.projection;
             self.default_extent = result.default_extent;
+            self.default_zoom = result.default_zoom;
             self.restricted_extent = result.restricted_extent;
             self.srid = result.srid;
             if (self.$el.is(':visible')){
@@ -126,6 +127,9 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
             }
             if (zoom) {
                 this.map.zoomToExtent(extent);
+                if (this.value && this.default_zoom) {
+                    this.map.zoomTo(this.default_zoom);
+                }
             }
         }
     },
