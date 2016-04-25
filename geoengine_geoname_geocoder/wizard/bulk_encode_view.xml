@@ -24,6 +24,7 @@
         <record id="action_geonames_geocoder_wizard" model="ir.actions.act_window">
             <field name="name">Geolocalize addresses</field>
             <field name="type">ir.actions.act_window</field>
+            <field name="target">new</field>
             <field name="res_model">geoengine.geoname.encoder</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="geonames_geocoder_wizard"/>
@@ -32,7 +33,7 @@
         <menuitem
             name="Localize addresses from GeoNames"
             id="actiongeonames_geocoder_wizard_menu"
-            parent="base_geoengine.geoengine_base_menu"
+            parent="base_geoengine.geoengine_base_view_menu"
             action="action_geonames_geocoder_wizard"
             groups="base_geoengine.group_geoengine_admin"
             />
