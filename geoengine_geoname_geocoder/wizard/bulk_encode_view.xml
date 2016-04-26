@@ -9,14 +9,15 @@
             <field name="arch" type="xml">
                 <form string="Encode addresses from geonames">
                     <separator string="This wizard Geolocalize you addresses when possible. Look at log for details" colspan="4"/>
-                    <field name="encode_all" filename="name"/>
+                    <group>
+                        <field name="encode_all" filename="name"/>
+                    </group>
                     <field name="add_to_encode" colspan="4" attrs="{'invisible': [('encode_all', '=', True)]}"/>
                     <newline/>
-                    <group colspan="4" col="6">
-                        <label string=" " colspan="2"/>
+                    <footer>
                         <button icon="gtk-cancel" special="cancel" string="Cancel"/>
                         <button icon="gtk-ok" name="encode" string="Encode addresses" type="object"/>
-                    </group>
+                    </footer>
                 </form>
             </field>
         </record>
