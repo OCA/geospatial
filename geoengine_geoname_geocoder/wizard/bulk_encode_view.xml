@@ -15,8 +15,9 @@
                     <field name="add_to_encode" colspan="4" attrs="{'invisible': [('encode_all', '=', True)]}"/>
                     <newline/>
                     <footer>
-                        <button icon="gtk-cancel" special="cancel" string="Cancel"/>
-                        <button icon="gtk-ok" name="encode" string="Encode addresses" type="object"/>
+                        <button class="oe_hightlight" name="encode" string="Encode addresses" type="object"/>
+                        or
+                        <button class="oe_link" special="cancel" string="Cancel"/>
                     </footer>
                 </form>
             </field>
