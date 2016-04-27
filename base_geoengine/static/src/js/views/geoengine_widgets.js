@@ -110,7 +110,9 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
         });
     },
 
-    set_value: function(value, zoom=true) {
+    set_value: function(value, zoom) {
+        zoom = (typeof zoom === 'undefined') ? true : zoom
+
         this._super.apply(this, arguments);
         this.value = value;
         if (this.map) {
@@ -132,7 +134,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     },
 
     on_ui_change: function() {
-        this.set_value(this.format.write(this._geometry), zoom=false);
+        this.set_value(this.format.write(this._geometry), false);
     },
 
     validate: function() {
