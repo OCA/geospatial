@@ -26,6 +26,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     force_readonly: null,
     modify_control: null,
     draw_control: null,
+    tab_listener_installed: false,
 
     create_edit_layers: function(self, field_infos) {
         var vl = new OpenLayers.Layer.Vector(self.name, {
@@ -70,15 +71,14 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     },
 
     add_tab_listener: function() {
-        var self = this;
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
-            var geo_tab_id = self.$el[0].id;
-            var active_tab = $(e.target.hash);
-            if (active_tab.find('#' + geo_tab_id).length == 1) {
-                  self.render_map();
-                  return;
-            }
-        });
+        tab_href = this.$el.closest('div[role="tabpanel"]')
+        if (tab_href.length == 0) {
+            return;
+        }
+        $('a[href="#' + tab_href[0].id + '"]').on('shown.bs.tab', function(e) {
+            this.render_map();
+            return;
+        }.bind(this));
     },
 
     start: function() {
@@ -90,7 +90,10 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
         var self = this;
         // add a listener on parent tab if it exists in order to refresh geoengine view
         core.bus.on('DOM_updated', self.view.ViewManager.is_in_DOM, function () {
-            self.add_tab_listener();
+            if (!self.tab_listener_installed) {
+                self.add_tab_listener();
+                self.tab_listener_installed = true;
+            }
         });
         // We blacklist all other fields in order to avoid calling get_value inside the build_context on field widget which aren't started yet
         var blacklist = this.view.fields_order.slice();
@@ -134,12 +137,14 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     },
 
     on_mode_change: function() {
-        this.render_map();
+        if (this.$el.is(':visible')){
+            this.render_map();
+        }
         this.$el.toggle(!this.invisible);
     },
 
     render_map: function() {
-        if (_.isNull(this.map)){
+        if (!this.map) {
             map_opt = {
                 theme: null,
                 layers: this.layers[0],
@@ -190,7 +195,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
                 internalProjection: this.map.getProjection(),
                 externalProjection: 'EPSG:' + this.srid
             });
-            this.map.render(this.name);
+            this.map.render(this.$el[0]);
             $(document).trigger('FieldGeoEngineEditMap:ready', [this.map]);
             this.set_value(this.value);
         }
