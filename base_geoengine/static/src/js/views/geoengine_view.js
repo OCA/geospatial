@@ -222,7 +222,11 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 eventListeners: {
                     "featureselected": function(event) {
                         $("#map_info").html(formatHTML(event.feature.attributes, self.fields_view.fields));
+                        $("#map_infobox").off().click(function() {
+                            self.open_record(event.feature);
+                        });
                         $("#map_infobox").show();
+
                     },
                     "featureunselected": function() {
                         $("#map_infobox").hide();
@@ -467,6 +471,14 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         core.bus.on('DOM_updated', self.view_manager.is_in_DOM, function () {
             self.render_map();
         });
+    },
+    open_record: function (feature, options) {
+        oid = feature.attributes.id
+        if (this.dataset.select_id(oid)) {
+            this.do_switch_view('form', null, options); //, null, { mode: "edit" });
+        } else {
+            this.do_warn("Geoengine: could not find id#" + oid);
+        }
     },
 
 });
