@@ -2,6 +2,9 @@
   <div t-name="GeoengineView" class="container-fluid o_geoengine_container" style="height:100%;position:relative;">
     <div id="the_map"/>
     <div id="map_infobox" class="map_overlay">
+      <div id="map_info_open">
+        <span class="fa fa-edit"/>
+      </div>
       <div id="map_info"/>
     </div>
     <div id="map_measurementbox" class="map_overlay"/>

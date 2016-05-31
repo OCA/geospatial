@@ -202,12 +202,12 @@ a.olControlZoomOut {
 }
 .map_overlay {
     position: absolute;
-        display: none;
-        background: white;
+    display: none;
+    background: white;
     opacity: 0.9;
-        border: 2px solid black;
-        z-index: 3000;
-        padding: 5px 0;
+    border: 2px solid black;
+    z-index: 3000;
+    padding: 0 0 5px 0;
 }
 #map_infobox {
         bottom: 10px;
@@ -222,6 +222,12 @@ a.olControlZoomOut {
         overflow-y: auto;
         padding: 10px;
         height: 130px;
+}
+#map_info_open {
+    background-color: #337ab7;
+    vertical-align: middle;
+    text-align: center;
+    color: white;
 }
 #map_measurementbox {
         top: 18px;
