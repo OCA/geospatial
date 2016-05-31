@@ -24,14 +24,22 @@ The module also requires two additional python libs:
 
 for a complete documentation please refer to the `public documenation <http://oca.github.io/geospatial/index.html>`_
 
+Known issues / Roadmap
+======================
+
+ * Google layers have been removed as it was not working anyway.
+ * Switching from map to form view should be eased to open selected feature.
+   It should work using `do_switch_view` and this probably requires to set `self.dataset.index`
+ * A good way to open a record from map should be done with double click.
+   However selection handlers have difficulties to work nice with click events.
+
 
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/geospatial/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
-If you spotted it first, help us smashing it by providing a detailed and welcomed feedback
-`here <https://github.com/OCA/geospatial/issues/new?body=module:%20base_geoengine%0Aversion:%208.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+If you spotted it first, help us smashing it by providing a detailed and welcomed feedback.
 
 
 Credits
