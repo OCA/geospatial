@@ -1,7 +1,7 @@
 ![Licence](https://img.shields.io/badge/licence-AGPL--3-blue.svg)
 [![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/115/9.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-geospatial-115)
 [![Build Status](https://travis-ci.org/OCA/geospatial.svg?branch=9.0)](https://travis-ci.org/OCA/geospatial)
-[![Coverage Status](https://coveralls.io/repos/OCA/geospatial/badge.png?branch=9.0)](https://coveralls.io/r/OCA/geospatial?branch=9.0)
+[![Coverage Status](https://coveralls.io/repos/OCA/geospatial/badge.svg?branch=9.0)](https://coveralls.io/r/OCA/geospatial?branch=9.0)
 
 Geospatial Addons for Odoo/OpenERP
 ==================================
