@@ -452,6 +452,8 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                     new OpenLayers.Control.ToolPanel()
                 ]
             });
+            // set z-index of container to be under search view z-index of 666
+            this.map.layerContainerDiv.style.zIndex = 600;
             if (this.restricted_extent) {
                 this.map.restrictedExtent = OpenLayers.Bounds.fromString(this.restricted_extent);
                 if (this.projection != this.map.getProjection()) {
