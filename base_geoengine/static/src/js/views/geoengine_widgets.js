@@ -89,12 +89,21 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
         this.view.on("change:actual_mode", this, this.on_mode_change);
         var self = this;
         // add a listener on parent tab if it exists in order to refresh geoengine view
+        // we need to trigger it on DOM update for changes from view to edit mode
         core.bus.on('DOM_updated', self.view.ViewManager.is_in_DOM, function () {
             if (!self.tab_listener_installed) {
                 self.add_tab_listener();
                 self.tab_listener_installed = true;
             }
         });
+        // When opening a popup form DOM update isn't triggered and there is no change from view to
+        // edit mode thus we install listener anyway
+        if (this.view.ViewManager.$modal) {
+            if (!self.tab_listener_installed) {
+                self.add_tab_listener();
+                self.tab_listener_installed = true;
+            }
+        }
         // We blacklist all other fields in order to avoid calling get_value inside the build_context on field widget which aren't started yet
         var blacklist = this.view.fields_order.slice();
         delete blacklist[this.name];
