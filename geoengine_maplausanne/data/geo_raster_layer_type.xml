@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <!-- Lausanne map -->
+  <record id="geo_layer_type_lausanne_bdcad_gris" model="geoengine.raster.layer.type">
+    <field name="service">map.lausanne.ch</field>
+    <field name="name">Fond cadastral</field>
+    <field name="code">fonds_geo_osm_bdcad_gris</field>
+  </record>
+  <record id="geo_layer_type_lausanne_bdcad_couleur" model="geoengine.raster.layer.type">
+    <field name="service">map.lausanne.ch</field>
+    <field name="name">Plan ville</field>
+    <field name="code">fonds_geo_osm_bdcad_couleur</field>
+  </record>
+</odoo>
+
