@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- Swisstopo map -->
+  <record id="geo_layer_type_swisstopo_color" model="geoengine.raster.layer.type">
+    <field name="service">swisstopo</field>
+    <field name="name">Color map</field>
+    <field name="code">ch.swisstopo.pixelkarte-farbe</field>
+  </record>
+  <record id="geo_layer_type_swisstopo_aerial" model="geoengine.raster.layer.type">
+    <field name="service">swisstopo</field>
+    <field name="name">Aerial imagery</field>
+    <field name="code">ch.swisstopo.swissimage</field>
+  </record>
+</odoo>
+
