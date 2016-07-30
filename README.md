@@ -67,8 +67,10 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[base_geoengine](base_geoengine/) | 9.0.1.2.2 | Geospatial support for Odoo
+[base_geoengine](base_geoengine/) | 9.0.1.2.5 | Geospatial support for Odoo
 [base_geoengine_demo](base_geoengine_demo/) | 9.0.1.0.0 | Geo spatial support Demo
+[geoengine_maplausanne](geoengine_maplausanne/) | 9.0.1.0.0 | Geospatial - map.lausanne.ch layers
+[geoengine_swisstopo](geoengine_swisstopo/) | 9.0.1.0.0 | Geospatial - Swisstopo layers
 
 Unported addons
 ---------------
