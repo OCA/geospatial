@@ -3,13 +3,14 @@
 # * base_geoengine
 # 
 # Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 09:46+0000\n"
-"PO-Revision-Date: 2016-08-15 09:46+0000\n"
+"POT-Creation-Date: 2016-08-20 10:10+0000\n"
+"PO-Revision-Date: 2016-08-20 10:10+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>, 2016\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -101,7 +102,7 @@ msgstr "Ustvarjeno"
 #. module: base_geoengine
 #: field:ir.ui.view,default_extent:0
 msgid "Default map extent in 900913"
-msgstr ""
+msgstr "Privzeta razširitev zemljevida v 900913"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,display_name:0
@@ -112,7 +113,7 @@ msgstr "Prikazni naziv"
 #. module: base_geoengine
 #: selection:geoengine.raster.layer,raster_type:0
 msgid "Distant WMS"
-msgstr ""
+msgstr "Oddaljen WMS"
 
 #. module: base_geoengine
 #: field:geoengine.vector.layer,end_color:0
@@ -134,7 +135,7 @@ msgstr "Splošno"
 #: code:addons/base_geoengine/geo_field.py:89
 #, python-format
 msgid "Geo Value %s must be of the same type %s as fields"
-msgstr ""
+msgstr "Geo vrednost %s mora biti enakega tipa %s kot polja"
 
 #. module: base_geoengine
 #: field:geoengine.vector.layer,geo_field_id:0
@@ -214,7 +215,7 @@ msgstr "Je to prekrivna plast?"
 #. module: base_geoengine
 #: selection:ir.model.fields,geo_type:0
 msgid "LINESTRING"
-msgstr ""
+msgstr "LINESTRING"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,__last_update:0
@@ -247,17 +248,17 @@ msgstr "Plast omogoča le branje"
 #. module: base_geoengine
 #: selection:ir.model.fields,geo_type:0
 msgid "MULTILINESTRING"
-msgstr ""
+msgstr "MULTILINESTRING"
 
 #. module: base_geoengine
 #: selection:ir.model.fields,geo_type:0
 msgid "MULTIPOINT"
-msgstr ""
+msgstr "MULTIPOINT"
 
 #. module: base_geoengine
 #: selection:ir.model.fields,geo_type:0
 msgid "MULTIPOLYGON"
-msgstr ""
+msgstr "MULTIPOLYGON"
 
 #. module: base_geoengine
 #: selection:geoengine.raster.layer,raster_type:0
@@ -289,182 +290,182 @@ msgstr "Za prikaz %s ni rasterske plasti"
 #. module: base_geoengine
 #: field:geoengine.vector.layer,nb_class:0
 msgid "Number of class"
-msgstr ""
+msgstr "Število razreda"
 
 #. module: base_geoengine
 #: selection:geoengine.raster.layer,raster_type:0
 msgid "OpenERP -- not implemented"
-msgstr ""
+msgstr "OpenERP -- ni implementirano"
 
 #. module: base_geoengine
 #: view:geoengine.raster.layer:base_geoengine.geo_raster_view_form
 msgid "OpenERP layer data (Not implemented)"
-msgstr ""
+msgstr "Podatki OpenERP plasti (ni implementirano)"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,field_id:0
 msgid "OpenERP layer field to use"
-msgstr ""
+msgstr "OpenERP plast za uporabo"
 
 #. module: base_geoengine
 #: selection:geoengine.raster.layer,raster_type:0
 msgid "OpenStreetMap"
-msgstr ""
+msgstr "OpenStreetMap"
 
 #. module: base_geoengine
 #: selection:ir.model.fields,geo_type:0
 msgid "POINT"
-msgstr ""
+msgstr "POINT"
 
 #. module: base_geoengine
 #: selection:ir.model.fields,geo_type:0
 msgid "POLYGON"
-msgstr ""
+msgstr "POLYGON"
 
 #. module: base_geoengine
 #: code:addons/base_geoengine/geo_model.py:104
 #, python-format
 msgid "Please create a view or modify view mode"
-msgstr ""
+msgstr "Ustvarite ali spremenite način prikaza"
 
 #. module: base_geoengine
 #: field:ir.model.fields,dim:0 field:ir.model.fields,geo_type:0
 msgid "PostGIs type"
-msgstr ""
+msgstr "Tip PostGls"
 
 #. module: base_geoengine
 #: selection:geoengine.vector.layer,geo_repr:0
 msgid "Proportional Symbol"
-msgstr ""
+msgstr "Proporcionalni simbol"
 
 #. module: base_geoengine
 #: selection:geoengine.vector.layer,classification:0
 msgid "Quantile"
-msgstr ""
+msgstr "Kvantil"
 
 #. module: base_geoengine
 #: view:geoengine.raster.layer:base_geoengine.geo_raster_view_tree
 msgid "Raster"
-msgstr ""
+msgstr "Raster"
 
 #. module: base_geoengine
 #: view:ir.ui.view:base_geoengine.geoengine_view_form
 msgid "Raster (Background layers)"
-msgstr ""
+msgstr "Raster (plasti v ozadju)"
 
 #. module: base_geoengine
 #: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_rater_action
 msgid "Raster Layer"
-msgstr ""
+msgstr "Rasterska plast"
 
 #. module: base_geoengine
 #: model:ir.ui.menu,name:base_geoengine.geoengine_raster_layer_menu
 msgid "Raster Layer Management"
-msgstr ""
+msgstr "Upravljanje rasterskih plasti"
 
 #. module: base_geoengine
 #: view:geoengine.raster.layer:base_geoengine.geo_raster_view_form
 msgid "Raster Layer View"
-msgstr ""
+msgstr "Prikaz rasterske plasti"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,raster_type:0
 msgid "Raster layer type"
-msgstr ""
+msgstr "Tip rasterske plasti"
 
 #. module: base_geoengine
 #: field:ir.ui.view,raster_layer_ids:0
 msgid "Raster layers"
-msgstr ""
+msgstr "Rasterske plasti"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,view_id:0
 #: field:geoengine.vector.layer,view_id:0
 msgid "Related View"
-msgstr ""
+msgstr "Povezani prikaz"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,swisstopo_time:0
 msgid "Release date"
-msgstr ""
+msgstr "Datum izida"
 
 #. module: base_geoengine
 #: view:geoengine.vector.layer:base_geoengine.geo_vector_view_form
 msgid "Representation"
-msgstr ""
+msgstr "Predstavitev"
 
 #. module: base_geoengine
 #: field:geoengine.vector.layer,geo_repr:0
 msgid "Representation mode"
-msgstr ""
+msgstr "Predstavitveni način"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,url:0
 msgid "Service URL"
-msgstr ""
+msgstr "URL storitve"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,swisstopo_type:0
 msgid "Swisstopo raster layer type"
-msgstr ""
+msgstr "Swisstopo tip rasterske plasti"
 
 #. module: base_geoengine
 #: field:geoengine.vector.layer,symbol_url:0
 msgid "Symbol URL"
-msgstr ""
+msgstr "URL simbola"
 
 #. module: base_geoengine
 #: selection:geoengine.vector.layer,classification:0
 msgid "Unique value"
-msgstr ""
+msgstr "Unikatna vrednost"
 
 #. module: base_geoengine
 #. openerp-web
 #: code:addons/base_geoengine/static/src/xml/geoengine.xml:60
 #, python-format
 msgid "Up-Right"
-msgstr ""
+msgstr "Zgoraj-desno"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,use_to_edit:0
 msgid "Use to edit"
-msgstr ""
+msgstr "Uporabi za urejanje"
 
 #. module: base_geoengine
 #: view:geoengine.vector.layer:base_geoengine.geo_vector_view_form
 #: view:geoengine.vector.layer:base_geoengine.geo_vector_view_tree
 msgid "Vector"
-msgstr ""
+msgstr "Vektor"
 
 #. module: base_geoengine
 #: view:ir.ui.view:base_geoengine.geoengine_view_form
 msgid "Vector (Active layers)"
-msgstr ""
+msgstr "Vektorski (aktivne plasti)"
 
 #. module: base_geoengine
 #: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_raster_action
 msgid "Vector Layer"
-msgstr ""
+msgstr "Vektorska plast"
 
 #. module: base_geoengine
 #: model:ir.ui.menu,name:base_geoengine.geoengine_vector_layer_menu
 msgid "Vector Layer Management"
-msgstr ""
+msgstr "Upravljanje vektorskih plasti"
 
 #. module: base_geoengine
 #: field:ir.ui.view,vector_layer_ids:0
 msgid "Vector layers"
-msgstr ""
+msgstr "Vektorske plasti"
 
 #. module: base_geoengine
 #: model:ir.ui.menu,name:base_geoengine.geoengine_view_menu
 msgid "View Management"
-msgstr ""
+msgstr "Upravljanje prikazov"
 
 #. module: base_geoengine
 #: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_action
 msgid "Views"
-msgstr ""
+msgstr "Prikazi"
 
 #. module: base_geoengine
 #. openerp-web
@@ -473,7 +474,7 @@ msgstr ""
 #: code:addons/base_geoengine/static/src/xml/geoengine.xml:65
 #, python-format
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #. module: base_geoengine
 #. openerp-web
@@ -482,36 +483,36 @@ msgstr ""
 #: code:addons/base_geoengine/static/src/xml/geoengine.xml:71
 #, python-format
 msgid "Y:"
-msgstr ""
+msgstr "Y:"
 
 #. module: base_geoengine
 #: field:geoengine.vector.layer,attribute_field_id:0
 msgid "attribute field"
-msgstr ""
+msgstr "polje atributa"
 
 #. module: base_geoengine
 #: help:geoengine.vector.layer,begin_color:0
 #: help:geoengine.vector.layer,end_color:0
 msgid "hex value"
-msgstr ""
+msgstr "hex vrednost"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,sequence:0
 #: field:geoengine.vector.layer,sequence:0
 msgid "layer priority lower on top"
-msgstr ""
+msgstr "prioriteta plasti - spodnja na vrh"
 
 #. module: base_geoengine
 #: field:ir.model.fields,srid:0
 msgid "srid"
-msgstr ""
+msgstr "srid"
 
 #. module: base_geoengine
 #: selection:geoengine.raster.layer,raster_type:0
 msgid "swisstopo"
-msgstr ""
+msgstr "swisstopo"
 
 #. module: base_geoengine
 #: view:geoengine.raster.layer:base_geoengine.geo_raster_view_form
 msgid "swisstopo layer data"
-msgstr ""
+msgstr "swisstopo podatki plasti"

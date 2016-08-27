@@ -3,13 +3,14 @@
 # * base_geoengine_demo
 # 
 # Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
 # Matjaž Mozetič <m.mozetic@matmoz.si>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-15 09:46+0000\n"
-"PO-Revision-Date: 2016-08-15 09:46+0000\n"
+"POT-Creation-Date: 2016-08-20 10:10+0000\n"
+"PO-Revision-Date: 2016-08-20 10:10+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>, 2016\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -21,27 +22,27 @@ msgstr ""
 #. module: base_geoengine_demo
 #: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_basictest0
 msgid "Basic ZIP"
-msgstr ""
+msgstr "Osnovna poštna številka"
 
 #. module: base_geoengine_demo
 #: field:dummy.zip,city:0
 msgid "City"
-msgstr ""
+msgstr "Kraj"
 
 #. module: base_geoengine_demo
 #: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_coloredrangetest0
 msgid "Colored range ZIP"
-msgstr ""
+msgstr "Barvna paleta poštnih številk"
 
 #. module: base_geoengine_demo
 #: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_coloredrangezipquantile0
 msgid "Colored range ZIP quantile"
-msgstr ""
+msgstr "Barvna paleta kvantila poštnih številk"
 
 #. module: base_geoengine_demo
 #: field:geoengine.demo.automatic.retailing.machine,the_point:0
 msgid "Coordinate"
-msgstr ""
+msgstr "Koordinata"
 
 #. module: base_geoengine_demo
 #: field:dummy.zip,create_uid:0
