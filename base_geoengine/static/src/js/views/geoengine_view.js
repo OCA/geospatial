@@ -95,6 +95,20 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         this.view_type = 'geoengine'
         this.geometry_columns = {};
         this.overlaysGroup = null;
+        /* XXX
+         this.selectFeatureControls = {
+            selectHover: new OpenLayers.Control.SelectFeature(
+                {selectedFeatures:[]}, {hover: true, highlightOnly: true}),
+            select: new OpenLayers.Control.SelectFeature(
+                {selectedFeatures:[]},
+                {
+                    clickout: false, toggle: false,
+                    multiple: false,
+                    toggleKey: "ctrlKey",
+                    multipleKey: "shiftKey", box: false
+                }
+            )
+        }*/
     },
     load_view: function(context) {
         var self = this;
@@ -472,6 +486,15 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             }
             self.dataset.ids = ids;
         }
+        /* XXX
+         for(var key in this.selectFeatureControls) {
+            ctrl = this.selectFeatureControls[key];
+            ctrl.setLayer(this.vectorLayers);
+            // ensure map is define on controler and handler
+            ctrl.map = map
+            ctrl.handlers.feature.map = map
+            ctrl.activate();
+        }*/
     },
 
     view_loading: function(fv) {
@@ -530,8 +553,22 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                     this.zoom_to_extent_ctrl
                 ]),
             });
+            /* XXX
+                    new OpenLayers.Control.Button({
+                        displayClass: 'olControlSelectSimple',
+                        type: OpenLayers.Control.TYPE_BUTTON,
+                        trigger: this.enableSelectControlSimple
+                    }),
+                    new OpenLayers.Control.Button({
+                        displayClass: 'olControlSelectBox',
+                        type: OpenLayers.Control.TYPE_BUTTON,
+                        trigger: this.enableSelectControlBox
+                    })*/
             var layerSwitcher = new ol.control.LayerSwitcher({});
             map.addControl(layerSwitcher);
+            /* for(var key in this.selectFeatureControls) {
+                map.addControls(this.selectFeatureControls[key]);
+            }*/
             this.map = map;
             this.register_interaction();
         }
@@ -546,6 +583,14 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             self.render_map();
         });
     },
+    /* XXX
+    enableSelectControlBox: function() {
+        this.selectFeatureControls['select'].box = true;
+    },
+    enableSelectControlSimple: function() {
+        this.selectFeatureControls['select'].box = false;
+    },*/
+
     open_record: function (feature, options) {
 
         var attributes = feature.get('attributes');
