@@ -32,13 +32,13 @@ openerp.base_geoengine = function(openerp) {
     };
 
     /**
-     * Method: formatHTML
+     * Method: formatFeatureHTML
      * formats attributes into a string
      *
      * Parameters:
      * a - {Object}
      */
-    var formatHTML = function(a, fields) {
+    var formatFeatureHTML = function(a, fields) {
         var str = [];
         var oid = '';
         for (var key in a) {
@@ -77,6 +77,19 @@ openerp.base_geoengine = function(openerp) {
         return str.join('<br />');
     };
 
+    /**
+     * Method: formatFeatureListHTML
+     * formats attributes into a string
+     *
+     * Parameters:
+     * features - [Array]
+     */
+    var formatFeatureListHTML = function(features) {
+        var str = [];
+        // TODO
+        str = ['multiple features selected'];
+        return str.join('<br />');
+    };
     /**
      * Method: createBackgroundLayers
      * creates background layers from config
@@ -243,11 +256,28 @@ openerp.base_geoengine = function(openerp) {
                 },
                 eventListeners: {
                     "featureselected": function(event) {
-                        $("#map_info").html(formatHTML(event.feature.attributes, self.fields_view.fields));
+                        selectedFeatures = this.selectedFeatures[0].layer.selectedFeatures;
+                        if (selectedFeatures.length == 1) {
+                            $("#map_info").html(formatFeatureHTML(event.feature.attributes, self.fields_view.fields));
+                        } else {
+                            $("#map_info").html(formatFeatureListHTML(selectedFeatures));
+                        }
                         $("#map_infobox").show();
                     },
-                    "featureunselected": function() {
-                        $("#map_infobox").hide();
+                    "featureunselected": function(event) {
+                        selectedFeatures = []
+                        if (this.selectedFeatures.length == 0) {
+                            $("#map_infobox").hide();
+                            return;
+                        }
+                        selectedFeatures = this.selectedFeatures[0].layer.selectedFeatures;
+                        if (selectedFeatures.length == 0) {
+                            $("#map_infobox").hide();
+                        } else if (selectedFeatures.length == 1) {
+                            $("#map_info").html(formatFeatureHTML(event.feature.attributes, self.fields_view.fields));
+                        } else {
+                            $("#map_info").html(formatFeatureListHTML(selectedFeatures));
+                        }
                     }
                 }
             });
@@ -478,6 +508,12 @@ openerp.base_geoengine = function(openerp) {
                 }
                 map.zoomToMaxExtent();
                 this.map = map;
+                //this.map.getSelectedFeatures = function() {
+                    //function get_id(feature) {
+                        //return feature.data.id;
+                    //}
+                    //return this.selectedFeatures[0].layer.selectedFeatures;
+                //}
                 this.do_search(self.domains, null, self.offet);
             }
         },
