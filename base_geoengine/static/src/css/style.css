@@ -68,6 +68,48 @@ div.olClearMapItemInactive:hover {
 .olmap:fullscreen {
   height: 100%;
   width: 100%;
+
+.olControlSelectSimple,
+.olControlSelectBox {
+    border-radius: 4px;
+    float: right;
+    display: block;
+    margin: 1px;
+    padding: 0;
+    color: white;
+    text-align: center;
+    font-size: 18px;
+    font-family: FontAwesome, Verdana;
+    height: 22px;
+    width:22px;
+    background: #130085; /* fallback for IE - IE6 requires background shorthand*/
+    background: rgba(0, 60, 136, 0.5);
+    filter: alpha(opacity=80);
+}
+
+div.olControlSelectSimple:hover,
+div.olControlSelectBox:hover {
+    background: #130085; /* fallback for IE */
+    background: rgba(0, 60, 136, 0.7);
+    filter: alpha(opacity=100);
+}
+
+.olControlSelectSimple {
+    content: "\f245";
+}
+
+div.olControlSelectSimple:before {
+    font-family: FontAwesome, Verdana;
+    content: "\f245";
+}
+
+.olControlSelectBox {
+    content: "\f2ae";
+}
+
+div.olControlSelectBox:before {
+    font-family: FontAwesome, Verdana;
+    content: "\f2ae";
 }
 .map_overlay {
     position: absolute;
