@@ -104,6 +104,7 @@ GEO_VIEW = {
         "backgrounds": [],
         "default_extent": "-123164.85222423, 5574694.9538936,"
                           " 1578017.6490538, 6186191.1800898",
+        "default_zoom": 0,
         "projection": "EPSG:900913",
         "restricted_extent": False
     },
