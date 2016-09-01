@@ -35,13 +35,13 @@ var DEFAULT_NUM_CLASSES = 5; // for choroplets only
 var LEGEND_MAX_ITEMS = 10;
 
 /**
- * Method: formatHTML
+ * Method: formatFeatureHTML
  * formats attributes into a string
  *
  * Parameters:
  * a - {Object}
  */
-var formatHTML = function(a, fields) {
+var formatFeatureHTML = function(a, fields) {
     var str = [];
     var oid = '';
     for (var key in a) {
@@ -77,6 +77,19 @@ var formatHTML = function(a, fields) {
         }
     }
     str.unshift(oid);
+    return str.join('<br />');
+};
+/**
+ * Method: formatFeatureListHTML
+ * formats attributes into a string
+ *
+ * Parameters:
+ * features - [Array]
+ */
+var formatFeatureListHTML = function(features) {
+    var str = [];
+    // TODO
+    str = ['multiple features selected'];
     return str.join('<br />');
 };
 
@@ -514,13 +527,15 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         });
         selectClick.on('select', function(e) {
             var features = e.target.getFeatures();
-            if (features.getLength() > 0){
+            if (features.getLength() == 1){
                 var attributes = features.item(0).get('attributes');
-                $("#map_info").html(formatHTML(attributes, self.fields_view.fields));
+                $("#map_info").html(formatFeatureHTML(attributes, self.fields_view.fields));
                 $("#map_infobox").off().click(function() {
                     self.open_record(features.item(0));
                 });
                 $("#map_infobox").show();
+            } else if (features.getLength() > 1) {
+                $("#map_info").html(formatFeatureListHTML(features));
             } else {
                 $("#map_infobox").hide();
             }
