@@ -174,12 +174,19 @@ openerp.base_geoengine = function(openerp) {
             this.vectorLayers = [];
             // use {selectedFeatures:[]} as a hack to simulate a vector layer
             // with no feature selected
-            this.selectFeatureControls = [
-                new OpenLayers.Control.SelectFeature(
-                {selectedFeatures:[]}, {hover: true, highlightOnly: true}),
-                new OpenLayers.Control.SelectFeature(
-                    {selectedFeatures:[]}, {})
-            ];
+            this.selectFeatureControls = {
+                selectHover: new OpenLayers.Control.SelectFeature(
+                    {selectedFeatures:[]}, {hover: true, highlightOnly: true}),
+                select: new OpenLayers.Control.SelectFeature(
+                    {selectedFeatures:[]},
+                    {
+                        clickout: false, toggle: false,
+                        multiple: false,
+                        toggleKey: "ctrlKey",
+                        multipleKey: "shiftKey", box: false
+                    }
+                )
+            }
             this.selectFeatureControls[0].handlers.feature.stopDown = false;
             this.selectFeatureControls[1].handlers.feature.stopDown = false;
         },
@@ -381,23 +388,28 @@ openerp.base_geoengine = function(openerp) {
                 return;
             }
             var self = this;
-            _.each(this.selectFeatureControls, function(ctrl) {
+            for(var key in this.selectFeatureControls) {
+                ctrl = this.selectFeatureControls[key];
                 ctrl.deactivate();
                 // setLayer a fake layer to avoid js error on unselectAll
                 // use {selectedFeatures:[]} as a hack to simulate a vector
                 // layer with no feature selected
                 ctrl.setLayer({selectedFeatures:[]});
-            });
+            }
             _.each(this.vectorLayers, function(vlayer) {
                 vlayer.destroy();
             });
 
             this.vectorLayers = this.createVectorLayers(data);
             map.addLayers(this.vectorLayers);
-            _.each(this.selectFeatureControls, function(ctrl) {
-                ctrl.setLayer(self.vectorLayers);
+            for(var key in this.selectFeatureControls) {
+                ctrl = this.selectFeatureControls[key];
+                ctrl.setLayer(this.vectorLayers);
+                // ensure map is define on controler and handler
+                ctrl.map = map
+                ctrl.handlers.feature.map = map
                 ctrl.activate();
-            });
+            }
             _.each(this.vectorLayers, function(vlayer) {
                 // keep only one vector layer active at startup
                 if (vlayer != self.vectorLayers[0]) {
@@ -448,10 +460,22 @@ openerp.base_geoengine = function(openerp) {
                         new OpenLayers.Control.Attribution(),
                         new OpenLayers.Control.LayerSwitcher({roundedCornerColor: 'black'}),
                         new OpenLayers.Control.PanZoomBar(),
-                        new OpenLayers.Control.ToolPanel()
+                        new OpenLayers.Control.ToolPanel(),
+                        new OpenLayers.Control.Button({
+                            displayClass: 'olControlSelectSimple',
+                            type: OpenLayers.Control.TYPE_BUTTON,
+                            trigger: this.enableSelectControlSimple
+                        }),
+                        new OpenLayers.Control.Button({
+                            displayClass: 'olControlSelectBox',
+                            type: OpenLayers.Control.TYPE_BUTTON,
+                            trigger: this.enableSelectControlBox
+                        })
                     ]
                 });
-                map.addControls(this.selectFeatureControls);
+                for(var key in this.selectFeatureControls) {
+                    map.addControls(this.selectFeatureControls[key]);
+                }
                 map.zoomToMaxExtent();
                 this.map = map;
                 this.do_search(self.domains, null, self.offet);
@@ -461,6 +485,13 @@ openerp.base_geoengine = function(openerp) {
         do_show: function () {
             this._super();
             this.render_map();
+        },
+
+        enableSelectControlBox: function() {
+            this.selectFeatureControls['select'].box = true;
+        },
+        enableSelectControlSimple: function() {
+            this.selectFeatureControls['select'].box = false;
         },
 
     });
