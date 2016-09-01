@@ -113,6 +113,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
             self.geo_type = result.geo_type;
             self.projection = result.projection;
             self.default_extent = result.default_extent;
+            self.default_zoom = result.default_zoom;
             self.restricted_extent = result.restricted_extent;
             self.srid = result.srid;
             if (self.$el.is(':visible')){
@@ -121,24 +122,31 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
         });
     },
 
-    set_value: function(value) {
+    set_value: function(value, zoom) {
+        zoom = (typeof zoom === 'undefined') ? true : zoom
+
         this._super.apply(this, arguments);
         this.value = value;
         if (this.map) {
             var vl = this.map.getLayersByName(this.name)[0];
             vl.destroyFeatures();
+            var extent = this.default_extend;
             if (this.value) {
                 var features = this.format.read(this.value);
                 vl.addFeatures(features, {silent: true});
-                this.map.zoomToExtent(vl.getDataExtent());
-            } else {
-                this.map.zoomToExtent(this.default_extend);
+                extent = vl.getDataExtent();
+            }
+            if (zoom) {
+                this.map.zoomToExtent(extent);
+                if (this.value && this.default_zoom) {
+                    this.map.zoomTo(this.default_zoom);
+                }
             }
         }
     },
 
     on_ui_change: function() {
-        this.set_value(this.format.write(this._geometry));
+        this.set_value(this.format.write(this._geometry), false);
     },
 
     validate: function() {
