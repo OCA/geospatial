@@ -530,12 +530,15 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             if (features.getLength() == 1){
                 var attributes = features.item(0).get('attributes');
                 $("#map_info").html(formatFeatureHTML(attributes, self.fields_view.fields));
+                $("#map_info_filter_selection").hide();
                 $("#map_infobox").off().click(function() {
                     self.open_record(features.item(0));
                 });
                 $("#map_infobox").show();
             } else if (features.getLength() > 1) {
                 $("#map_info").html(formatFeatureListHTML(features));
+                $("#map_info_filter_selection").show();
+                $("#map_infobox").show();
             } else {
                 $("#map_infobox").hide();
             }
@@ -596,6 +599,29 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         // Wait for element to be rendered before adding the map
         core.bus.on('DOM_updated', self.view_manager.is_in_DOM, function () {
             self.render_map();
+        });
+    },
+    filter_selection: function() {
+        selectedFeatures = [];
+        for (var l in this.map.layers) {
+            var layer = this.map.layers[l];
+            if (layer.selectedFeatures && layer.selectedFeatures.length > 0) {
+                selectedFeatures = layer.selectedFeatures;
+                break;
+            }
+        }
+        selected_ids = selectedFeatures.map(function(x) {return x.data.id;});
+        selection_domain = [['id', 'in', selected_ids]];
+        searchview = this.ViewManager.searchview
+        searchview.query.add({
+            category: _t("Geo selection"),
+            values: {label: _t("Geo selection")},
+            icon: '$', // world globe in mnmlicons
+            field: {
+              get_context: function () { },
+              get_domain: function() {return selection_domain;},
+              get_groupby: function () { }
+            }
         });
     },
     /* XXX
