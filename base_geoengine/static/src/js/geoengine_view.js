@@ -8,6 +8,8 @@
 */
 
 openerp.base_geoengine = function(openerp) {
+
+    var _t = openerp.web._t;
     //var map, layer, vectorLayers = [];
     //TODO: remove this DEBUG
     map = null;
@@ -87,7 +89,7 @@ openerp.base_geoengine = function(openerp) {
     var formatFeatureListHTML = function(features) {
         var str = [];
         // TODO
-        str = ['multiple features selected'];
+        str.push('multiple features selected');
         return str.join('<br />');
     };
     /**
@@ -259,8 +261,13 @@ openerp.base_geoengine = function(openerp) {
                         selectedFeatures = this.selectedFeatures[0].layer.selectedFeatures;
                         if (selectedFeatures.length == 1) {
                             $("#map_info").html(formatFeatureHTML(event.feature.attributes, self.fields_view.fields));
+                            $("#map_info_filter_selection").hide();
                         } else {
                             $("#map_info").html(formatFeatureListHTML(selectedFeatures));
+                            $("#map_info_filter_selection").show();
+                            $("#map_info_filter_selection").off().click(function() {
+                                self.filter_selection();
+                            });
                         }
                         $("#map_infobox").show();
                     },
@@ -275,8 +282,13 @@ openerp.base_geoengine = function(openerp) {
                             $("#map_infobox").hide();
                         } else if (selectedFeatures.length == 1) {
                             $("#map_info").html(formatFeatureHTML(event.feature.attributes, self.fields_view.fields));
+                            $("#map_info_filter_selection").hide();
                         } else {
                             $("#map_info").html(formatFeatureListHTML(selectedFeatures));
+                            $("#map_info_filter_selection").show();
+                            $("#map_info_filter_selection").off().click(function() {
+                                self.filter_selection();
+                            });
                         }
                     }
                 }
@@ -508,12 +520,6 @@ openerp.base_geoengine = function(openerp) {
                 }
                 map.zoomToMaxExtent();
                 this.map = map;
-                //this.map.getSelectedFeatures = function() {
-                    //function get_id(feature) {
-                        //return feature.data.id;
-                    //}
-                    //return this.selectedFeatures[0].layer.selectedFeatures;
-                //}
                 this.do_search(self.domains, null, self.offet);
             }
         },
@@ -521,6 +527,30 @@ openerp.base_geoengine = function(openerp) {
         do_show: function () {
             this._super();
             this.render_map();
+        },
+
+        filter_selection: function() {
+            selectedFeatures = [];
+            for (var l in this.map.layers) {
+                var layer = this.map.layers[l];
+                if (layer.selectedFeatures && layer.selectedFeatures.length > 0) {
+                    selectedFeatures = layer.selectedFeatures;
+                    break;
+                }
+            }
+            selected_ids = selectedFeatures.map(function(x) {return x.data.id;});
+            selection_domain = [['id', 'in', selected_ids]];
+            searchview = this.ViewManager.searchview
+            searchview.query.add({
+                category: _t("Geo selection"),
+                values: {label: _t("Geo selection")},
+                icon: '$', // world globe in mnmlicons
+                field: {
+                  get_context: function () { },
+                  get_domain: function() {return selection_domain;},
+                  get_groupby: function () { }
+                }
+            });
         },
 
         enableSelectControlBox: function() {
