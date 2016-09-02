@@ -7,6 +7,9 @@
           <span class="fa fa-edit"/>
         </div>
         <div id="map_info"/>
+        <div id="map_info_filter_selection">
+          <span class="fa fa-filter">Filter selection</span>
+        </div>
         <div id="map_legend" class="ol-control"/>
       </div>
       <div id="map_measurementbox" class="map_overlay"/>
