@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-08-20 10:10+0000\n"
-"PO-Revision-Date: 2016-08-20 10:10+0000\n"
+"POT-Creation-Date: 2016-08-27 10:12+0000\n"
+"PO-Revision-Date: 2016-08-27 10:12+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>, 2016\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -71,23 +71,23 @@ msgstr ""
 #. module: base_geoengine_demo
 #: model:ir.ui.menu,name:base_geoengine_demo.geoengine_demo_menu
 msgid "GeoEngine Demo"
-msgstr ""
+msgstr "GeoEngine Demo"
 
 #. module: base_geoengine_demo
 #: model:ir.ui.menu,name:base_geoengine_demo.geoengine_demo_retail_menu
 msgid "GeoEngine Samples"
-msgstr ""
+msgstr "GeoEngine vzorci"
 
 #. module: base_geoengine_demo
 #: view:dummy.zip:base_geoengine_demo.dummy_zip_form
 #: view:geoengine.demo.automatic.retailing.machine:base_geoengine_demo.geo_retail_machine_view_form
 msgid "Geometry"
-msgstr ""
+msgstr "Geometrija"
 
 #. module: base_geoengine_demo
 #: selection:geoengine.demo.automatic.retailing.machine,state:0
 msgid "HS"
-msgstr ""
+msgstr "HS"
 
 #. module: base_geoengine_demo
 #: field:dummy.zip,id:0 field:geoengine.demo.automatic.retailing.machine,id:0
@@ -125,17 +125,17 @@ msgstr ""
 #. module: base_geoengine_demo
 #: selection:geoengine.demo.automatic.retailing.machine,state:0
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. module: base_geoengine_demo
 #: field:geoengine.demo.automatic.retailing.machine,the_line:0
 msgid "Power supply line"
-msgstr ""
+msgstr "Napajalna linija"
 
 #. module: base_geoengine_demo
 #: field:dummy.zip,priority:0
 msgid "Priority"
-msgstr ""
+msgstr "Prioriteta"
 
 #. module: base_geoengine_demo
 #: view:geoengine.demo.automatic.retailing.machine:base_geoengine_demo.geo_retail_machine_view_form
@@ -187,12 +187,12 @@ msgstr ""
 #. module: base_geoengine_demo
 #: view:dummy.zip:base_geoengine_demo.dummy_zip_search
 msgid "Search ZIP"
-msgstr ""
+msgstr "Iskanje poštnih številk"
 
 #. module: base_geoengine_demo
 #: field:geoengine.demo.automatic.retailing.machine,name:0
 msgid "Serial number"
-msgstr ""
+msgstr "Serijska številka"
 
 #. module: base_geoengine_demo
 #: field:dummy.zip,total_sales:0
@@ -207,18 +207,18 @@ msgstr ""
 #. module: base_geoengine_demo
 #: field:geoengine.demo.automatic.retailing.machine,total_sales:0
 msgid "Total sale"
-msgstr ""
+msgstr "Skupaj prodaja"
 
 #. module: base_geoengine_demo
 #: field:dummy.zip,name:0
 #: model:ir.ui.menu,name:base_geoengine_demo.zip_retail_machine
 msgid "ZIP"
-msgstr ""
+msgstr "PŠ"
 
 #. module: base_geoengine_demo
 #: model:ir.actions.act_window,name:base_geoengine_demo.action_zip_tree
 msgid "ZIP Management"
-msgstr ""
+msgstr "Upravljanje poštnih številk"
 
 #. module: base_geoengine_demo
 #: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_mapbox0
@@ -228,14 +228,14 @@ msgstr ""
 #. module: base_geoengine_demo
 #: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_test0
 msgid "ZIP OSM"
-msgstr ""
+msgstr "ZIP OSM"
 
 #. module: base_geoengine_demo
 #: view:geoengine.demo.automatic.retailing.machine:base_geoengine_demo.geo_retail_machine_view_form
 msgid "attributes"
-msgstr ""
+msgstr "atributi"
 
 #. module: base_geoengine_demo
 #: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_basic0
 msgid "basic"
-msgstr ""
+msgstr "osnova"
