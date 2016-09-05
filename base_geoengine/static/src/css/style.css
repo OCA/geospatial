@@ -121,6 +121,11 @@ div.olClearMapItemInactive:hover {
     text-align: center;
     color: white;
 }
+#map_info_filter_selection {
+    position: absolute;
+    top: 40px;
+}
+
 #map_measurementbox {
         top: 18px;
         left: 160px;
