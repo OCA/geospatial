@@ -88,8 +88,7 @@ var formatFeatureHTML = function(a, fields) {
  */
 var formatFeatureListHTML = function(features) {
     var str = [];
-    // TODO
-    str = ['multiple features selected'];
+    str.push(features.length + ' features selected');
     return str.join('<br />');
 };
 
