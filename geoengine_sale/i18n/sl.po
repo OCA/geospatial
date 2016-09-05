@@ -24,7 +24,7 @@ msgid "Addresses coordinate"
 msgstr "Koordinate naslovnika"
 
 #. module: geoengine_sale
-#: model:geoengine.raster.layer,name:geoengine_sale.geoengine_raster_layer_sales_order
+#: model:geoengine.raster.layer,name:geoengine_sale.geoengine_raster_layer_sales_order_osm
 msgid "Sale Order background"
 msgstr "Ozadje prodajnega naloga"
 

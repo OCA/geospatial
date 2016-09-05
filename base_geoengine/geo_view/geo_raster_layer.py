@@ -25,13 +25,14 @@ class GeoRasterLayer(models.Model):
     _name = 'geoengine.raster.layer'
 
     raster_type = fields.Selection(
-        [('google', 'Google'),
-         ('osm', 'OpenStreetMap'),
+        [('osm', 'OpenStreetMap'),
          ('mapbox', 'MapBox'),
+         # FIXME ('google', 'Google'), see OCA/geospatial#63
          ('d_wms', 'Distant WMS'),
          ('swisstopo', 'swisstopo'),
          ('openerp', 'OpenERP -- not implemented')],
         string="Raster layer type",
+        default='osm',
         required=True)
     name = fields.Char(
         'Layer Name', size=256, translate=True, required=True)

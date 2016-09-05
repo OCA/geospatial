@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {'name': 'Geospatial support for OpenERP',
- 'version': '8.0.0.2.0',
+ 'version': '8.0.0.3.0',
  'category': 'GeoBI',
  'author': "Camptocamp,ACSONE SA/NV,Odoo Community Association (OCA)",
  'license': 'AGPL-3',

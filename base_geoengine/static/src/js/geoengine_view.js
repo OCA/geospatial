@@ -38,7 +38,7 @@ openerp.base_geoengine = function(openerp) {
      * Parameters:
      * a - {Object}
      */
-    var formatHTML = function(a) {
+    var formatHTML = function(a, fields) {
         var str = [];
         var oid = '';
         for (var key in a) {
@@ -47,15 +47,28 @@ openerp.base_geoengine = function(openerp) {
                 if (val == false) {
                     continue;
                 }
-                var label = '';
-                if (val instanceof Array) {
-                    str.push('<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val[1]);
-                } else {
-                    label = '<span style="font-weight: bold">' + key.charAt(0).toUpperCase() + key.slice(1) + '</span>: ' +val;
-                     if (key == 'id') {
-                        oid = label;
+                var span = '';
+                if (fields.hasOwnProperty(key)) {
+                    var field = fields[key];
+                    var label = field.string;
+                    if (field.type == 'selection') {
+                        // get display value of selection option
+                        for (var option in field.selection) {
+                            if (field.selection[option][0] == val) {
+                                val = field.selection[option][1];
+                                break;
+                            }
+                        }
+                    }
+                    if (val instanceof Array) {
+                        str.push('<span style="font-weight: bold">' + label + '</span>: ' +val[1]);
                     } else {
-                        str.push(label);
+                        span = '<span style="font-weight: bold">' + label + '</span>: ' +val;
+                         if (key == 'id') {
+                            oid = span;
+                        } else {
+                            str.push(span);
+                        }
                     }
                 }
             }
@@ -167,16 +180,8 @@ openerp.base_geoengine = function(openerp) {
                 new OpenLayers.Control.SelectFeature(
                     {selectedFeatures:[]}, {})
             ];
-        },
-        limit: function() {
-            return false;
-            var menu = document.getElementById('query_limit');
-            var limit = parseInt(menu.options[menu.selectedIndex].value);
-            if (limit > 0) {
-                return limit;
-            } else {
-                return false;
-            }
+            this.selectFeatureControls[0].handlers.feature.stopDown = false;
+            this.selectFeatureControls[1].handlers.feature.stopDown = false;
         },
         load_view: function(context) {
             var self = this;
@@ -204,7 +209,7 @@ openerp.base_geoengine = function(openerp) {
 
         do_search: function(domains, contexts, groupbys) {
             var self = this;
-            self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domains, 'limit':self.limit(), 'offset':self.offset}).then(self.do_load_vector_data);
+            self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domains}).then(self.do_load_vector_data);
         },
 
         /**
@@ -231,7 +236,7 @@ openerp.base_geoengine = function(openerp) {
                 },
                 eventListeners: {
                     "featureselected": function(event) {
-                        $("#map_info").html(formatHTML(event.feature.attributes));
+                        $("#map_info").html(formatHTML(event.feature.attributes, self.fields_view.fields));
                         $("#map_infobox").show();
                     },
                     "featureunselected": function() {
@@ -239,6 +244,8 @@ openerp.base_geoengine = function(openerp) {
                     }
                 }
             });
+            if (data.length == 0)
+                return vl
             _.each(data, function(item) {
                 attributes = _.clone(item);
                 _.each(_.keys(self.geometry_columns), function(item) {

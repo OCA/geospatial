@@ -29,7 +29,7 @@ msgid "Partner"
 msgstr "Partner"
 
 #. module: geoengine_partner
-#: model:geoengine.raster.layer,name:geoengine_partner.geoengine_vector_layer_res_partner_google
+#: model:geoengine.raster.layer,name:geoengine_partner.geoengine_raster_layer_res_partner_osm
 msgid "Partner background"
 msgstr "Ozadje partnerja"
 
