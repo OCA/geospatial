@@ -115,13 +115,15 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             select: new OpenLayers.Control.SelectFeature(
                 {selectedFeatures:[]},
                 {
-                    clickout: false, toggle: false,
+                    // displayClass used to find it
+                    displayClass: 'olSelectFeature',
+                    clickout: true, toggle: false,
                     multiple: false,
                     toggleKey: "ctrlKey",
                     multipleKey: "shiftKey", box: false
                 }
             )
-        }*/
+        };*/
     },
     load_view: function(context) {
         var self = this;
@@ -216,7 +218,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         if (data.length == 0)
             return vl
         _.each(data, function(item) {
-            attributes = _.clone(item);
+            var attributes = _.clone(item);
             _.each(_.keys(self.geometry_columns), function(item) {
                 delete attributes[item];
             });
@@ -501,7 +503,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         }
         /* XXX
          for(var key in this.selectFeatureControls) {
-            ctrl = this.selectFeatureControls[key];
+            var ctrl = this.selectFeatureControls[key];
             ctrl.setLayer(this.vectorLayers);
             // ensure map is define on controler and handler
             ctrl.map = map
@@ -571,22 +573,20 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                     this.zoom_to_extent_ctrl
                 ]),
             });
-            /* XXX
-                    new OpenLayers.Control.Button({
-                        displayClass: 'olControlSelectSimple',
-                        type: OpenLayers.Control.TYPE_BUTTON,
-                        trigger: this.enableSelectControlSimple
-                    }),
-                    new OpenLayers.Control.Button({
-                        displayClass: 'olControlSelectBox',
-                        type: OpenLayers.Control.TYPE_BUTTON,
-                        trigger: this.enableSelectControlBox
-                    })*/
             var layerSwitcher = new ol.control.LayerSwitcher({});
             map.addControl(layerSwitcher);
-            /* for(var key in this.selectFeatureControls) {
-                map.addControls(this.selectFeatureControls[key]);
-            }*/
+            /*
+            map.addControl(this.selectFeatureControls.selectHover);
+            map.addControl(this.selectFeatureControls.select);
+            // create box handler as we want it to be activable
+            this.selectFeatureControls.select.handlers.box = new OpenLayers.Handler.Box(
+                this.selectFeatureControls.select, {done: this.selectFeatureControls.select.selectBox},
+                {boxDivClassName: "olHandlerBoxSelectFeature"}
+            );
+            this.selectFeatureControls.select.setMap(map);
+            this.selectFeatureControls.select.handlers.map = map;
+            map.addControl(new OpenLayers.Control.ToolPanel());
+            */
             this.map = map;
             this.register_interaction();
         }
@@ -602,7 +602,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         });
     },
     filter_selection: function() {
-        selectedFeatures = [];
+        var selectedFeatures = [];
         for (var l in this.map.layers) {
             var layer = this.map.layers[l];
             if (layer.selectedFeatures && layer.selectedFeatures.length > 0) {
@@ -610,9 +610,9 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 break;
             }
         }
-        selected_ids = selectedFeatures.map(function(x) {return x.data.id;});
-        selection_domain = [['id', 'in', selected_ids]];
-        searchview = this.ViewManager.searchview
+        var selected_ids = selectedFeatures.map(function(x) {return x.data.id;});
+        var selection_domain = [['id', 'in', selected_ids]];
+        var searchview = this.ViewManager.searchview
         searchview.query.add({
             category: _t("Geo selection"),
             values: {label: _t("Geo selection")},
@@ -624,13 +624,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             }
         });
     },
-    /* XXX
-    enableSelectControlBox: function() {
-        this.selectFeatureControls['select'].box = true;
-    },
-    enableSelectControlSimple: function() {
-        this.selectFeatureControls['select'].box = false;
-    },*/
 
     open_record: function (feature, options) {
 
