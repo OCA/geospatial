@@ -34,6 +34,15 @@ div.olmap {
   height: 100%;
   width: 100%;
 }
+/*XXX*/
+.olHandlerBoxSelectFeature {
+    border: 2px solid red;
+    position: absolute;
+    background-color: white;
+    opacity: 0.50;
+    font-size: 1px;
+    filter: alpha(opacity=50);
+}
 
 div.olControlPanel {
     margin: 80px 10px;
@@ -70,47 +79,16 @@ div.olClearMapItemInactive:hover {
   width: 100%;
 }
 
-.olControlSelectSimple,
-.olControlSelectBox {
-    border-radius: 4px;
-    float: right;
-    display: block;
-    margin: 1px;
-    padding: 0;
-    color: white;
-    text-align: center;
-    font-size: 18px;
-    font-family: FontAwesome, Verdana;
-    height: 22px;
-    width:22px;
-    background: #130085; /* fallback for IE - IE6 requires background shorthand*/
-    background: rgba(0, 60, 136, 0.5);
-    filter: alpha(opacity=80);
+.olControlEditingToolbar .olControlSelectBoxItemInactive {
+    background-position: 0px -1px;
 }
 
-div.olControlSelectSimple:hover,
-div.olControlSelectBox:hover {
-    background: #130085; /* fallback for IE */
-    background: rgba(0, 60, 136, 0.7);
-    filter: alpha(opacity=100);
+.olControlEditingToolbar .olControlSelectBoxItemActive {
+    background-position: 0px -24px;
 }
 
-.olControlSelectSimple {
-    content: "\f245";
-}
-
-div.olControlSelectSimple:before {
-    font-family: FontAwesome, Verdana;
-    content: "\f245";
-}
-
-.olControlSelectBox {
-    content: "\f2ae";
-}
-
-div.olControlSelectBox:before {
-    font-family: FontAwesome, Verdana;
-    content: "\f2ae";
+.olDrowBox {
+    cursor: crosshair;
 }
 .map_overlay {
     position: absolute;
