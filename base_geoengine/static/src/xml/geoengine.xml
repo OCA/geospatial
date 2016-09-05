@@ -7,8 +7,8 @@
           <span class="fa fa-edit"/>
         </div>
         <div id="map_info"/>
-        <div id="map_info_filter_selection">
-          <span class="fa fa-filter">Filter selection</span>
+        <div id="map_info_filter_selection" class="oe_button">
+          <span class="fa fa-filter"> Filter selection</span>
         </div>
         <div id="map_legend" class="ol-control"/>
       </div>
