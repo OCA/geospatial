@@ -89,8 +89,7 @@ openerp.base_geoengine = function(openerp) {
      */
     var formatFeatureListHTML = function(features) {
         var str = [];
-        // TODO
-        str.push('multiple features selected');
+        str.push(features.length + ' features selected');
         return str.join('<br />');
     };
     /**
