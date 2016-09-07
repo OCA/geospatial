@@ -1127,6 +1127,7 @@ OpenLayers.Control.ToolPanel = OpenLayers.Class(OpenLayers.Control.Panel, {
             new OpenLayers.Control.SelectBox({
                     displayClass: 'olControlSelectBox',
                     type: OpenLayers.Control.TYPE_TOOL,
+                    title: "Selection",
                 }),
             navCtrl
         ]);

@@ -171,13 +171,11 @@ a.olControlZoomOut {
 .olControlEditingToolbar .olControlDrawFeaturePolygonItemActive {
     background-position: -26px -24px;
 }
-
 .olControlEditingToolbar .olControlSelectBoxItemInactive {
-    background-position: 0px -1px;
+    background-position: -152px -1px;
 }
-
 .olControlEditingToolbar .olControlSelectBoxItemActive {
-    background-position: 0px -24px;
+    background-position: -152px -24px;
 }
 
 .olDrowBox {
