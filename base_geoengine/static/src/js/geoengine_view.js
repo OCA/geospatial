@@ -302,10 +302,13 @@ openerp.base_geoengine = function(openerp) {
                 _.each(_.keys(self.geometry_columns), function(item) {
                     delete attributes[item];
                 });
-                features.push(new OpenLayers.Feature.Vector(
-                    geojson.parseGeometry(
-                        OpenLayers.Format.JSON.prototype.read.call(self, item[cfg.geo_field_id[1]])),
-                        attributes));
+                var geometry = item[cfg.geo_field_id[1]];
+                if (geometry) {
+                    features.push(new OpenLayers.Feature.Vector(
+                        geojson.parseGeometry(
+                            OpenLayers.Format.JSON.prototype.read.call(self, geometry)),
+                            attributes));
+                }
             });
             var indicator = cfg.attribute_field_id[1];
             switch (cfg.geo_repr) {
