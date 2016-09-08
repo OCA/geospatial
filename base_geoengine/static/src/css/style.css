@@ -34,6 +34,14 @@ div.olLayerDiv {
     font-size: 1px;
     filter: alpha(opacity=50);
 }
+.olHandlerBoxSelectFeature {
+    border: 2px solid red;
+    position: absolute;
+    background-color: white;
+    opacity: 0.50;
+    font-size: 1px;
+    filter: alpha(opacity=50);
+}
 .olImageLoadError {
     background-color: pink;
     opacity: 0.5;
@@ -163,7 +171,16 @@ a.olControlZoomOut {
 .olControlEditingToolbar .olControlDrawFeaturePolygonItemActive {
     background-position: -26px -24px;
 }
+.olControlEditingToolbar .olControlSelectBoxItemInactive {
+    background-position: -152px -1px;
+}
+.olControlEditingToolbar .olControlSelectBoxItemActive {
+    background-position: -152px -24px;
+}
 
+.olDrowBox {
+    cursor: crosshair;
+}
 
 /* Page styles */
 #the_map {
@@ -193,6 +210,11 @@ a.olControlZoomOut {
         padding: 10px;
         height: 130px;
 }
+#map_info_filter_selection {
+        position: absolute;
+        top: 40px;
+}
+
 #map_measurementbox {
         top: 18px;
         left: 160px;
