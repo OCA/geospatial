@@ -1,0 +1,527 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * account_sequence
+#
+# Translators:
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-08-12 10:27+0000\n"
+"PO-Revision-Date: 2016-08-12 14:30+0200\n"
+"Last-Translator: Eric Lemesre <eric.lemesre@gmail.com>\n"
+"Language-Team: French (http://www.transifex.com/odoo/odoo-8/language/fr/)\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Poedit 1.8.8\n"
+
+#. module: base_geoengine
+#: code:addons/base_geoengine/geo_model.py:162
+#, python-format
+msgid "%s column does not exists or is not a geo field"
+msgstr "La colonne %s n'existe pas ou n'est pas de type géographique."
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,swisstopo_type:0
+msgid "Aerial imagery"
+msgstr "Image aérienne"
+
+#. module: base_geoengine
+#: selection:geoengine.vector.layer,geo_repr:0
+msgid "Basic"
+msgstr "Basique"
+
+#. module: base_geoengine
+#: field:geoengine.vector.layer,begin_color:0
+msgid "Begin color class"
+msgstr "Première couleur de la classe"
+
+#. module: base_geoengine
+#: field:geoengine.vector.layer,symbol_binary:0
+msgid "Binary Symbol"
+msgstr "Symbole binaire"
+
+#. module: base_geoengine
+#. openerp-web
+#: code:addons/base_geoengine/static/src/xml/geoengine.xml:41
+#, python-format
+msgid "Bottom-Left"
+msgstr "Bas-Gauche"
+
+#. module: base_geoengine
+#: view:geoengine.vector.layer:base_geoengine.geo_vector_view_form
+msgid "Classification"
+msgstr "Classification"
+
+#. module: base_geoengine
+#: field:geoengine.vector.layer,classification:0
+msgid "Classification mode"
+msgstr "Méthode de classification."
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,swisstopo_type:0
+msgid "Color map"
+msgstr "Carte des couleurs"
+
+#. module: base_geoengine
+#: selection:geoengine.vector.layer,geo_repr:0
+msgid "Colored range/Choropleth"
+msgstr "Gamme de couleur/Choroplèthe"
+
+#. module: base_geoengine
+#: view:geoengine.vector.layer:base_geoengine.geo_vector_view_form
+msgid "Colors"
+msgstr "Couleurs"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_base_view_menu
+msgid "Configuration"
+msgstr "Configuration"
+
+#. module: base_geoengine
+#: field:ir.model.fields,gist_index:0
+msgid "Create gist index"
+msgstr "Créer un indexe gist"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,create_uid:0
+#: field:geoengine.vector.layer,create_uid:0
+msgid "Created by"
+msgstr "Créée par"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,create_date:0
+#: field:geoengine.vector.layer,create_date:0
+msgid "Created on"
+msgstr "Créée le"
+
+#. module: base_geoengine
+#: field:ir.ui.view,default_extent:0
+msgid "Default map extent in 900913"
+msgstr "Étendue par défaut de la carte en 900913"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,display_name:0
+#: field:geoengine.vector.layer,display_name:0
+msgid "Display Name"
+msgstr "Nom à afficher"
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Distant WMS"
+msgstr "WMS distant"
+
+#. module: base_geoengine
+#: field:geoengine.vector.layer,end_color:0
+msgid "End color class"
+msgstr "Dernière couleur de la classe"
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_ir_model_fields
+msgid "Fields"
+msgstr "Champs"
+
+#. module: base_geoengine
+#: view:geoengine.raster.layer:base_geoengine.geo_raster_view_form
+#: view:geoengine.vector.layer:base_geoengine.geo_vector_view_form
+msgid "General"
+msgstr "Général"
+
+#. module: base_geoengine
+#: code:addons/base_geoengine/geo_field.py:89
+#, python-format
+msgid "Geo Value %s must be of the same type %s as fields"
+msgstr "La valeur géographique %s doit être du même type que le champ %s"
+
+#. module: base_geoengine
+#: field:geoengine.vector.layer,geo_field_id:0
+msgid "Geo field"
+msgstr "Champ Géographique"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_base_menu
+msgid "GeoEngine Backend"
+msgstr "Géo back-office"
+
+#. module: base_geoengine
+#: view:ir.ui.view:base_geoengine.geoengine_view_form
+msgid "GeoEngine Data"
+msgstr "Données Géomatique"
+
+#. module: base_geoengine
+#: model:res.groups,name:base_geoengine.group_geoengine_admin
+msgid "Geoengine admin"
+msgstr "Administrateur Géomatique"
+
+#. module: base_geoengine
+#: model:res.groups,name:base_geoengine.group_geoengine_user
+msgid "Geoengine user"
+msgstr "Utilisateur Géomatique"
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Google"
+msgstr "Google"
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,google_type:0
+msgid "Google Hybrid map"
+msgstr "Carte Google Hybrid"
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,google_type:0
+msgid "Google Physical map"
+msgstr "Carte Google Terrestre"
+
+#. module: base_geoengine
+#: view:geoengine.raster.layer:base_geoengine.geo_raster_view_form
+msgid "Google layer data"
+msgstr "Couche de donnée Google "
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,google_type:0
+msgid "Google normal map"
+msgstr "Carte Google normale"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,google_type:0
+msgid "Google raster layer type"
+msgstr "Couche de type image Google"
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,google_type:0
+msgid "Google staellite map"
+msgstr "Carte satellite Google "
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,id:0 field:geoengine.vector.layer,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: base_geoengine
+#: selection:geoengine.vector.layer,classification:0
+msgid "Interval"
+msgstr "Intervalle de temps"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,overlay:0
+msgid "Is overlay layer?"
+msgstr "Est une couche de superposition?"
+
+# don't translate it is database type
+#. module: base_geoengine
+#: selection:ir.model.fields,geo_type:0
+msgid "LINESTRING"
+msgstr "LINESTRING"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,__last_update:0
+#: field:geoengine.vector.layer,__last_update:0
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,write_uid:0
+#: field:geoengine.vector.layer,write_uid:0
+msgid "Last Updated by"
+msgstr "Dernière modification par"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,write_date:0
+#: field:geoengine.vector.layer,write_date:0
+msgid "Last Updated on"
+msgstr "Modifié le"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,name:0 field:geoengine.vector.layer,name:0
+msgid "Layer Name"
+msgstr "Nom de la couche"
+
+#. module: base_geoengine
+#: field:geoengine.vector.layer,readonly:0
+msgid "Layer is read only"
+msgstr "La couche est en lecture seule"
+
+# don't translate it is database type
+#. module: base_geoengine
+#: selection:ir.model.fields,geo_type:0
+msgid "MULTILINESTRING"
+msgstr "MULTILINESTRING"
+
+# don't translate it is database type
+#. module: base_geoengine
+#: selection:ir.model.fields,geo_type:0
+msgid "MULTIPOINT"
+msgstr "MULTIPOINT"
+
+# don't translate it is database type
+#. module: base_geoengine
+#: selection:ir.model.fields,geo_type:0
+msgid "MULTIPOLYGON"
+msgstr "MULTIPOLYGON"
+
+# MapBox is a trade mark
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "MapBox"
+msgstr "MapBox"
+
+# MapBox is a trade mark
+#. module: base_geoengine
+#: view:geoengine.raster.layer:base_geoengine.geo_raster_view_form
+msgid "MapBox layer data"
+msgstr "Couche de donnée MapBox "
+
+# MapBox is a trade mark
+#. module: base_geoengine
+#: field:geoengine.raster.layer,mapbox_id:0
+msgid "Mapbox ID"
+msgstr "Id MapBox"
+
+#. module: base_geoengine
+#: code:addons/base_geoengine/geo_model.py:103
+#, python-format
+msgid "No GeoEngine view defined for the model %s"
+msgstr "Aucune vue Géomatique définie pour ce modèle %s"
+
+#. module: base_geoengine
+#: code:addons/base_geoengine/geo_model.py:173
+#, python-format
+msgid "No raster layer for view %s"
+msgstr "Aucune couche raster pour la vue %s"
+
+#. module: base_geoengine
+#: field:geoengine.vector.layer,nb_class:0
+msgid "Number of class"
+msgstr "Nombre de classe"
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "OpenERP -- not implemented"
+msgstr "OpenERP -- Non implémenté."
+
+#. module: base_geoengine
+#: view:geoengine.raster.layer:base_geoengine.geo_raster_view_form
+msgid "OpenERP layer data (Not implemented)"
+msgstr "Couche de donnée OpenERP (Non implémenté)"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,field_id:0
+msgid "OpenERP layer field to use"
+msgstr "OpenERP champ de la couche à utiliser"
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "OpenStreetMap"
+msgstr "OpenStreetMap"
+
+# don't translate it is database type
+#. module: base_geoengine
+#: selection:ir.model.fields,geo_type:0
+msgid "POINT"
+msgstr "POINT"
+
+# don't translate it is database type
+#. module: base_geoengine
+#: selection:ir.model.fields,geo_type:0
+msgid "POLYGON"
+msgstr "POLYGON"
+
+#. module: base_geoengine
+#: code:addons/base_geoengine/geo_model.py:104
+#, python-format
+msgid "Please create a view or modify view mode"
+msgstr "Merci de créer une vue ou changer de mode de vue"
+
+#. module: base_geoengine
+#: field:ir.model.fields,dim:0 field:ir.model.fields,geo_type:0
+msgid "PostGIs type"
+msgstr "Type PostGIS"
+
+#. module: base_geoengine
+#: selection:geoengine.vector.layer,geo_repr:0
+msgid "Proportional Symbol"
+msgstr "Symbole proportionnel"
+
+#. module: base_geoengine
+#: selection:geoengine.vector.layer,classification:0
+msgid "Quantile"
+msgstr "Quantile"
+
+#. module: base_geoengine
+#: view:geoengine.raster.layer:base_geoengine.geo_raster_view_tree
+msgid "Raster"
+msgstr "Raster"
+
+#. module: base_geoengine
+#: view:ir.ui.view:base_geoengine.geoengine_view_form
+msgid "Raster (Background layers)"
+msgstr "Couleur de fond raster"
+
+#. module: base_geoengine
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_rater_action
+msgid "Raster Layer"
+msgstr "Couche Raster"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_raster_layer_menu
+msgid "Raster Layer Management"
+msgstr "Gestion des couches Raster "
+
+#. module: base_geoengine
+#: view:geoengine.raster.layer:base_geoengine.geo_raster_view_form
+msgid "Raster Layer View"
+msgstr "Vue de couche Raster"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,raster_type:0
+msgid "Raster layer type"
+msgstr "Type de couche Raster "
+
+#. module: base_geoengine
+#: field:ir.ui.view,raster_layer_ids:0
+msgid "Raster layers"
+msgstr "Couches Raster"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,view_id:0
+#: field:geoengine.vector.layer,view_id:0
+msgid "Related View"
+msgstr "Vue liée"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,swisstopo_time:0
+msgid "Release date"
+msgstr "Date de réalisation"
+
+#. module: base_geoengine
+#: view:geoengine.vector.layer:base_geoengine.geo_vector_view_form
+msgid "Representation"
+msgstr "Présentation"
+
+#. module: base_geoengine
+#: field:geoengine.vector.layer,geo_repr:0
+msgid "Representation mode"
+msgstr "Mode de présentation"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,url:0
+msgid "Service URL"
+msgstr "URL du service"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,swisstopo_type:0
+msgid "Swisstopo raster layer type"
+msgstr "Type de couche raster Suissetopo"
+
+#. module: base_geoengine
+#: field:geoengine.vector.layer,symbol_url:0
+msgid "Symbol URL"
+msgstr "URL du symbole"
+
+#. module: base_geoengine
+#: selection:geoengine.vector.layer,classification:0
+msgid "Unique value"
+msgstr "Valeur unique"
+
+#. module: base_geoengine
+#. openerp-web
+#: code:addons/base_geoengine/static/src/xml/geoengine.xml:60
+#, python-format
+msgid "Up-Right"
+msgstr "Haut-Droit"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,use_to_edit:0
+msgid "Use to edit"
+msgstr "Utiliser pour éditer"
+
+#. module: base_geoengine
+#: view:geoengine.vector.layer:base_geoengine.geo_vector_view_form
+#: view:geoengine.vector.layer:base_geoengine.geo_vector_view_tree
+msgid "Vector"
+msgstr "Vectoriel"
+
+#. module: base_geoengine
+#: view:ir.ui.view:base_geoengine.geoengine_view_form
+msgid "Vector (Active layers)"
+msgstr "Couche vectoriel active"
+
+#. module: base_geoengine
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_raster_action
+msgid "Vector Layer"
+msgstr "Couche vectoriel"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_vector_layer_menu
+msgid "Vector Layer Management"
+msgstr "Gestion des couches vectoriels"
+
+#. module: base_geoengine
+#: field:ir.ui.view,vector_layer_ids:0
+msgid "Vector layers"
+msgstr "Couches vectorielles"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_view_menu
+msgid "View Management"
+msgstr "Gestion des vues"
+
+#. module: base_geoengine
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_action
+msgid "Views"
+msgstr "Vues"
+
+#. module: base_geoengine
+#. openerp-web
+#: code:addons/base_geoengine/static/src/xml/geoengine.xml:15
+#: code:addons/base_geoengine/static/src/xml/geoengine.xml:46
+#: code:addons/base_geoengine/static/src/xml/geoengine.xml:65
+#, python-format
+msgid "X:"
+msgstr "X:"
+
+#. module: base_geoengine
+#. openerp-web
+#: code:addons/base_geoengine/static/src/xml/geoengine.xml:21
+#: code:addons/base_geoengine/static/src/xml/geoengine.xml:52
+#: code:addons/base_geoengine/static/src/xml/geoengine.xml:71
+#, python-format
+msgid "Y:"
+msgstr "Y:"
+
+#. module: base_geoengine
+#: field:geoengine.vector.layer,attribute_field_id:0
+msgid "attribute field"
+msgstr "champ attribut"
+
+#. module: base_geoengine
+#: help:geoengine.vector.layer,begin_color:0
+#: help:geoengine.vector.layer,end_color:0
+msgid "hex value"
+msgstr "valeur hexadécimale"
+
+#. module: base_geoengine
+#: field:geoengine.raster.layer,sequence:0
+#: field:geoengine.vector.layer,sequence:0
+msgid "layer priority lower on top"
+msgstr "priorité de couche (le plus bas au-dessus)"
+
+#. module: base_geoengine
+#: field:ir.model.fields,srid:0
+msgid "srid"
+msgstr "srid"
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "swisstopo"
+msgstr "Suissetopo"
+
+#. module: base_geoengine
+#: view:geoengine.raster.layer:base_geoengine.geo_raster_view_form
+msgid "swisstopo layer data"
+msgstr "Couche de donnée Suissetopo "
