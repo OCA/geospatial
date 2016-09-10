@@ -103,7 +103,7 @@ class GeoPoint(GeoField):
                     ST_GeomFromText(%(wkt)s, 4326),
                     %(srid)s)
         """, {'wkt': pt.wkt,
-              'srid': cls.srid})
+              'srid': cls._slots['srid']})
         res = cr.fetchone()
         return cls.load_geo(res[0])
 
