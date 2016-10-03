@@ -32,18 +32,6 @@ var DEFAULT_END_COLOR = "#000000";
 var DEFAULT_MIN_SIZE = 5; // for prop symbols only
 var DEFAULT_MAX_SIZE = 15; // for prop symbols only
 var DEFAULT_NUM_CLASSES = 5; // for choroplets only
-/*var STYLE_DEFAULT = OpenLayers.Util.applyDefaults({
-        fillColor: DEFAULT_BEGIN_COLOR,
-        fillOpacity: 0.8,
-        strokeColor: "#333333",
-        strokeOpacity: 0.8,
-        cursor: "pointer",
-        strokeWidth: 1
-    }, OpenLayers.Feature.Vector.style['default']);
-var STYLE_SELECT = {
-    fillColor: "#ffcc66",
-    strokeColor: "#ff9933"
-};*/
 
 /**
  * Method: formatHTML
@@ -105,17 +93,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         this.view_id = view_id;
         this.view_type = 'geoengine'
         this.geometry_columns = {};
-        this.vectorLayers = [];
         this.overlaysGroup = null;
-
-        // use {selectedFeatures:[]} as a hack to simulate a vector layer
-        // with no feature selected
-        this.selectFeatureControls = [
-            /*new OpenLayers.Control.SelectFeature(
-            {selectedFeatures:[]}, {hover: true, highlightOnly: true}),
-            new OpenLayers.Control.SelectFeature(
-                {selectedFeatures:[]}, {})*/
-        ];
     },
     load_view: function(context) {
         var self = this;
@@ -207,33 +185,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         var geostat = null;
         var vectorSource = new ol.source.Vector({
         });
-        /*new OpenLayers.Layer.Vector(
-            cfg.name,
-            {
-                styleMap: new OpenLayers.StyleMap({
-                    'default': OpenLayers.Util.applyDefaults({
-                        fillColor: cfg.begin_color
-                    }, STYLE_DEFAULT),
-                    'select': STYLE_SELECT
-                }),
-                rendererOptions: {
-                    zIndexing: true
-                },
-                eventListeners: {
-                    "featureselected": function(event) {
-                        $("#map_info").html(formatHTML(event.feature.attributes, self.fields_view.fields));
-                        $("#map_infobox").off().click(function() {
-                            self.open_record(event.feature);
-                        });
-                        $("#map_infobox").show();
-
-                    },
-                    "featureunselected": function() {
-                        $("#map_infobox").hide();
-                    }
-                }
-            }
-        );*/
         if (data.length == 0)
             return vl
         _.each(data, function(item) {
@@ -241,16 +192,15 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             _.each(_.keys(self.geometry_columns), function(item) {
                 delete attributes[item];
             });
-            vectorSource.addFeature(
-                new ol.Feature({
-                    geometry: new ol.format.GeoJSON().readGeometry(item[cfg.geo_field_id[1]]),
-                    attributes: attributes
-                })
-            );
-            /*features.push(new OpenLayers.Feature.Vector(
-                geojson.parseGeometry(
-                    OpenLayers.Format.JSON.prototype.read.call(self, item[cfg.geo_field_id[1]])),
-                    attributes)); */
+            var json_geometry = item[cfg.geo_field_id[1]];
+            if (json_geometry) {
+                vectorSource.addFeature(
+                    new ol.Feature({
+                        geometry: new ol.format.GeoJSON().readGeometry(json_geometry),
+                        attributes: attributes
+                    })
+                );
+            }
         });
         /*var indicator = cfg.attribute_field_id[1];
         switch (cfg.geo_repr) {
@@ -312,10 +262,34 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             geostat.setClassification();
             geostat.applyClassification();
         }*/
-        return new ol.layer.Vector({
+
+        var fill = new ol.style.Fill({
+            color: cfg.begin_color
+        });
+        var stroke = new ol.style.Stroke({
+            color: '#3399CC',
+            width: 1.25
+        });
+        var styles = [
+            new ol.style.Style({
+              image: new ol.style.Circle({
+                fill: fill,
+                stroke: stroke,
+                radius: 5
+              }),
+              fill: fill,
+              stroke: stroke
+            })
+        ];
+        var lv = new ol.layer.Vector({
             source: vectorSource,
             title: cfg.name,
-        });
+            style: function(feature, resolution) {
+               return styles;
+            },
+            opacity: 0.5,
+         });
+         return lv;
     },
 
     getUniqueValuesStyleMap: function(cfg, features) {
@@ -391,29 +365,17 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             return;
         }
         var self = this;
-        _.each(this.selectFeatureControls, function(ctrl) {
-            ctrl.deactivate();
-            // setLayer a fake layer to avoid js error on unselectAll
-            // use {selectedFeatures:[]} as a hack to simulate a vector
-            // layer with no feature selected
-            ctrl.setLayer({selectedFeatures:[]});
-        });
         map.removeLayer(this.overlaysGroup);
 
-        this.vectorLayers = this.createVectorLayers(data);
+        var vectorLayers = this.createVectorLayers(data);
         this.overlaysGroup = new ol.layer.Group({
             title: 'Overlays',
-            layers: this.vectorLayers,
+            layers: vectorLayers,
         });
 
-        /*this.map.addLayers(this.vectorLayers);
-        _.each(this.selectFeatureControls, function(ctrl) {
-            ctrl.setLayer(self.vectorLayers);
-            ctrl.activate();
-        });*/
-        _.each(this.vectorLayers, function(vlayer) {
+        _.each(vectorLayers, function(vlayer) {
             // keep only one vector layer active at startup
-            if (vlayer != self.vectorLayers[0]) {
+            if (vlayer != vectorLayers[0]) {
                 vlayer.setVisible(false);
             }
         });
@@ -421,7 +383,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
 
         // zoom to data extent
         //map.zoomTo
-        var extent = this.vectorLayers[0].getSource().getExtent();
+        var extent = vectorLayers[0].getSource().getExtent();
         if (extent) {
             this.zoom_to_extent_ctrl.extent_ = extent;
             this.zoom_to_extent_ctrl.changed();
@@ -445,13 +407,37 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         return $.when();
     },
 
+    register_interaction: function(){
+        // select interaction working on "click"
+        var selectClick = new ol.interaction.Select({
+          condition: ol.events.condition.click
+        });
+        selectClick.on('select', function(e) {
+            var features = e.target.getFeatures();
+            if (features.getLength() > 0){
+                var attributes = features.item(0).get('attributes');
+                $("#map_info").html(formatHTML(attributes));
+                $("#map_infobox").show();
+            } else {
+                $("#map_infobox").hide();
+            }
+          });
+
+        // select interaction working on "pointermove"
+        var selectPointerMove = new ol.interaction.Select({
+          condition: ol.events.condition.pointerMove
+        });
+        this.map.addInteraction(selectClick);
+        this.map.addInteraction(selectPointerMove);
+    },
+
     render_map: function() {
         if (_.isUndefined(this.map)){
             this.zoom_to_extent_ctrl = new ol.control.ZoomToExtent();
             map = new ol.Map({
                 layers: [new ol.layer.Group({
                     title: 'Base maps',
-                    layers: openerp.base_geoengine.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
+                    layers: this.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
                 })],
                 target: 'olmap',
                 view: new ol.View({
@@ -467,6 +453,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             var layerSwitcher = new ol.control.LayerSwitcher({});
             map.addControl(layerSwitcher);
             this.map = map;
+            this.register_interaction();
             /*OpenLayers.ImgPath = "//dr0duaxde13i9.cloudfront.net/theme/dark/";
             this.map = new OpenLayers.Map("the_map", {
                 layers: this.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
@@ -488,9 +475,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 if (this.projection != this.map.getProjection()) {
                     this.map.restrictedExtent = this.map.restrictedExtent.transform(this.projection, this.map.getProjection());
                 }
-            }
-            this.map.addControls(this.selectFeatureControls);
-            this.map.zoomToMaxExtent();*/
+            }*/
         }
     },
 
