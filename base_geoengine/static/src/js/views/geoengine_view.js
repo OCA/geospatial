@@ -116,8 +116,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             new OpenLayers.Control.SelectFeature(
                 {selectedFeatures:[]}, {})*/
         ];
-        this.selectFeatureControls[0].handlers.feature.stopDown = false;
-        this.selectFeatureControls[1].handlers.feature.stopDown = false;
     },
     load_view: function(context) {
         var self = this;
