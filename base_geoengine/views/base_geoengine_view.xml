@@ -13,7 +13,7 @@
                 <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat/ProportionalSymbol.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat/Choropleth.js"></script>
                 -->
-                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/ol-3.6.0/ol-debug.js"></script>
+                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/ol-3.18.2/ol-debug.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/lib/ol3-layerswitcher.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/geoengine_view.js"></script>
 
@@ -21,7 +21,7 @@
                 <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_view.js"></script>
                 <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_widgets.js"></script>
 
-                <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/ol-3.6.0/ol.css"/>
+                <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/ol-3.18.2/ol.css"/>
                 <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/ol3-layerswitcher.css"/>
                 <link rel="stylesheet" href="/base_geoengine/static/src/css/style.css"/>
 
