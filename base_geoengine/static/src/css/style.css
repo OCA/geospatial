@@ -227,12 +227,14 @@ a.olControlZoomOut {
         -webkit-border-radius: 6px;
 }
 #map_info {
+        cursor: pointer;
         overflow-x: hidden;
         overflow-y: auto;
         padding: 10px;
         height: 130px;
 }
 #map_info_open {
+    cursor: pointer;
     background-color: #337ab7;
     vertical-align: middle;
     text-align: center;

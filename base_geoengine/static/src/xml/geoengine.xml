@@ -7,8 +7,8 @@
         <div id="map_info_open">
           <span class="fa fa-edit"/>
         </div>
+        <div id="map_info"/>
       </div>
-      <div id="map_info"/>
       <div id="map_measurementbox" class="map_overlay"/>
     </div>
   </div>

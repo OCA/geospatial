@@ -408,6 +408,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     },
 
     register_interaction: function(){
+        var self = this;
         // select interaction working on "click"
         var selectClick = new ol.interaction.Select({
           condition: ol.events.condition.click
@@ -416,7 +417,10 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             var features = e.target.getFeatures();
             if (features.getLength() > 0){
                 var attributes = features.item(0).get('attributes');
-                $("#map_info").html(formatHTML(attributes));
+                $("#map_info").html(formatHTML(attributes, self.fields_view.fields));
+                $("#map_infobox").off().click(function() {
+                    self.open_record(features.item(0));
+                });
                 $("#map_infobox").show();
             } else {
                 $("#map_infobox").hide();
@@ -489,7 +493,9 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         });
     },
     open_record: function (feature, options) {
-        oid = feature.attributes.id
+
+        var attributes = feature.get('attributes');
+        oid = attributes.id
         if (this.dataset.select_id(oid)) {
             this.do_switch_view('form', null, options); //, null, { mode: "edit" });
         } else {
