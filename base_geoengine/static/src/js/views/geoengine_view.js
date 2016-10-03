@@ -244,12 +244,11 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 delete attributes[item];
             });
             vectorSource.addFeature(
-                    new ol.Feature({
-                        geometry: new ol.format.GeoJSON().readGeometry(item[cfg.geo_field_id[1]]),
-                        attributes: attributes
-                    })
-                );
-            });
+                new ol.Feature({
+                    geometry: new ol.format.GeoJSON().readGeometry(item[cfg.geo_field_id[1]]),
+                    attributes: attributes
+                })
+            );
             /*features.push(new OpenLayers.Feature.Vector(
                 geojson.parseGeometry(
                     OpenLayers.Format.JSON.prototype.read.call(self, item[cfg.geo_field_id[1]])),
@@ -315,7 +314,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             geostat.setClassification();
             geostat.applyClassification();
         }*/
-        return new ol.layer.Vector({;
+        return new ol.layer.Vector({
             source: vectorSource,
             title: cfg.name,
         });
@@ -428,7 +427,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         if (extent) {
             this.zoom_to_extent_ctrl.extent_ = extent;
             this.zoom_to_extent_ctrl.changed();
-            map.getView().fitExtent(extent, map.getSize()); 
+            map.getView().fitExtent(extent, map.getSize());
 
             var ids = [];
             // Javascript expert please improve this code
