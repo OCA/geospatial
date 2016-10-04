@@ -210,7 +210,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
      */
     createVectorLayer: function(cfg, data) {
         var self = this;
-        var features = [];
         var geostat = null;
         var vectorSource = new ol.source.Vector({
         });
@@ -540,6 +539,9 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 $("#map_info").html(formatFeatureListHTML(features));
                 $("#map_info_filter_selection").show();
                 $("#map_infobox").show();
+                $("#map_infobox").off().click(function() {
+                    self.filter_selection(features);
+                });
             } else {
                 $("#map_infobox").hide();
             }
@@ -600,21 +602,14 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             self.render_map();
         });
     },
-    filter_selection: function() {
-        var selectedFeatures = [];
-        for (var l in this.map.layers) {
-            var layer = this.map.layers[l];
-            if (layer.selectedFeatures && layer.selectedFeatures.length > 0) {
-                selectedFeatures = layer.selectedFeatures;
-                break;
-            }
-        }
-        var selected_ids = selectedFeatures.map(function(x) {return x.data.id;});
+    filter_selection: function(features) {
+        var selected_ids = [];
+        features.forEach(function (x) {selected_ids.push(x.get('attributes').id);});
         var selection_domain = [['id', 'in', selected_ids]];
         var searchview = this.ViewManager.searchview
         searchview.query.add({
-            category: _t("Geo selection"),
-            values: {label: _t("Geo selection")},
+            category: _lt("Geo selection"),
+            values: {label: _lt("Geo selection")},
             icon: '$', // world globe in mnmlicons
             field: {
               get_context: function () { },
