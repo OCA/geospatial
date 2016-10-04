@@ -67,16 +67,6 @@ var GeoengineMixin = {
                             })
                         );
                         break;
-                    case "mapbox":
-                        out.push(
-                            new ol.layer.Tile({
-                                title: l.name,
-                                visible: !l.overlay,
-                                type:'base',
-                                source: new ol.source.MapQuest({layer: 'sat'})
-                            })
-                        );
-                        break;
                     case "google":
                         var glayers = {
                             "G_PHYSICAL_MAP": google.maps.MapTypeId.TERRAIN,
