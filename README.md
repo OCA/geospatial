@@ -21,7 +21,6 @@ Map Visualization and administration
 Background map and layers can be configured in the administration part.
 Various background sources are available:
 
- - Mapbox,
  - OpenStreetMap,
  - SwissTopo,
  - Any WMS sources.
