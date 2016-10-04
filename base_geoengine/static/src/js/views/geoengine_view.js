@@ -88,7 +88,7 @@ var formatFeatureHTML = function(a, fields) {
  */
 var formatFeatureListHTML = function(features) {
     var str = [];
-    str.push(features.length + ' features selected');
+    str.push(features.getLength() + ' features selected');
     return str.join('<br />');
 };
 
