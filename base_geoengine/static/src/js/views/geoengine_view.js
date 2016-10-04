@@ -615,7 +615,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         searchview.query.add({
             category: _lt("Geo selection"),
             values: {label: _lt("Geo selection")},
-            icon: '$', // world globe in mnmlicons
+            icon: 'fa-map-o',
             field: {
               get_context: function () { },
               get_domain: function() {return selection_domain;},
