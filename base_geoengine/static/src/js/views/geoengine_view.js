@@ -25,25 +25,14 @@ var QWeb = core.qweb;
 //var map, layer, vectorLayers = [];
 //TODO: remove this DEBUG
 var map = null;
-var layer = null;
+this.zoom_to_extent_ctrl = null;
 /* CONSTANTS */
 var DEFAULT_BEGIN_COLOR = "#FFFFFF";
 var DEFAULT_END_COLOR = "#000000";
 var DEFAULT_MIN_SIZE = 5; // for prop symbols only
 var DEFAULT_MAX_SIZE = 15; // for prop symbols only
 var DEFAULT_NUM_CLASSES = 5; // for choroplets only
-var STYLE_DEFAULT = OpenLayers.Util.applyDefaults({
-        fillColor: DEFAULT_BEGIN_COLOR,
-        fillOpacity: 0.8,
-        strokeColor: "#333333",
-        strokeOpacity: 0.8,
-        cursor: "pointer",
-        strokeWidth: 1
-    }, OpenLayers.Feature.Vector.style['default']);
-var STYLE_SELECT = {
-    fillColor: "#ffcc66",
-    strokeColor: "#ff9933"
-};
+var LEGEND_MAX_ITEMS = 10;
 
 /**
  * Method: formatHTML
@@ -105,18 +94,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         this.view_id = view_id;
         this.view_type = 'geoengine'
         this.geometry_columns = {};
-        this.vectorLayers = [];
-
-        // use {selectedFeatures:[]} as a hack to simulate a vector layer
-        // with no feature selected
-        this.selectFeatureControls = [
-            new OpenLayers.Control.SelectFeature(
-            {selectedFeatures:[]}, {hover: true, highlightOnly: true}),
-            new OpenLayers.Control.SelectFeature(
-                {selectedFeatures:[]}, {})
-        ];
-        this.selectFeatureControls[0].handlers.feature.stopDown = false;
-        this.selectFeatureControls[1].handlers.feature.stopDown = false;
+        this.overlaysGroup = null;
     },
     load_view: function(context) {
         var self = this;
@@ -206,34 +184,8 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         var self = this;
         var features = [];
         var geostat = null;
-        var geojson = new OpenLayers.Format.GeoJSON();
-        var vl = new OpenLayers.Layer.Vector(
-            cfg.name,
-            {
-                styleMap: new OpenLayers.StyleMap({
-                    'default': OpenLayers.Util.applyDefaults({
-                        fillColor: cfg.begin_color
-                    }, STYLE_DEFAULT),
-                    'select': STYLE_SELECT
-                }),
-                rendererOptions: {
-                    zIndexing: true
-                },
-                eventListeners: {
-                    "featureselected": function(event) {
-                        $("#map_info").html(formatHTML(event.feature.attributes, self.fields_view.fields));
-                        $("#map_infobox").off().click(function() {
-                            self.open_record(event.feature);
-                        });
-                        $("#map_infobox").show();
-
-                    },
-                    "featureunselected": function() {
-                        $("#map_infobox").hide();
-                    }
-                }
-            }
-        );
+        var vectorSource = new ol.source.Vector({
+        });
         if (data.length == 0)
             return vl
         _.each(data, function(item) {
@@ -241,14 +193,56 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             _.each(_.keys(self.geometry_columns), function(item) {
                 delete attributes[item];
             });
-            features.push(new OpenLayers.Feature.Vector(
-                geojson.parseGeometry(
-                    OpenLayers.Format.JSON.prototype.read.call(self, item[cfg.geo_field_id[1]])),
-                    attributes));
+            var json_geometry = item[cfg.geo_field_id[1]];
+            if (json_geometry) {
+                vectorSource.addFeature(
+                    new ol.Feature({
+                        geometry: new ol.format.GeoJSON().readGeometry(json_geometry),
+                        attributes: attributes
+                    })
+                );
+            }
         });
+        styleInfo = self.styleVectorLayer(cfg, data);
+        // init legend
+        parentContainer = self.$el.find('#map_legend');
+        var elLegend = $(styleInfo.legend || '<div/>');
+        elLegend.hide();
+        parentContainer.append(elLegend);
+        var lv = new ol.layer.Vector({
+            source: vectorSource,
+            title: cfg.name,
+            // opacity: 0.8, //TODO cenfiguarble opacity to be applied on
+            style: styleInfo.style,
+        });
+        lv.on('change:visible', function(e){
+            if(lv.getVisible()){
+                elLegend.show();
+            } else {
+                elLegend.hide();
+            }
+        });
+        return lv;
+    },
+
+    extractLayerValues: function(cfg, data) {
+       var values = [];
         var indicator = cfg.attribute_field_id[1];
+        _.each(data, function(item) {
+            values.push(item[indicator]);
+        });
+        return values;
+    },
+
+    styleVectorLayer: function(cfg, data) {
+        var self = this;
+        var indicator = cfg.attribute_field_id[1];
+        var opacity = 0.8; // TODO to be defined on cfg
+        var begin_color = chroma(cfg.begin_color || DEFAULT_BEGIN_COLOR).alpha(opacity).css();
+        var begin_color = chroma(cfg.begin_color || DEFAULT_BEGIN_COLOR).alpha(opacity).css();
+        var end_color = chroma(cfg.end_color || DEFAULT_END_COLOR).alpha(opacity).css();
         switch (cfg.geo_repr) {
-            case "basic":
+            /* case "basic":
                 if (!cfg.symbols) {
                     break;
                 }
@@ -257,108 +251,165 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                     vl.styleMap = new OpenLayers.StyleMap({
                         'default': style,
                     });
-                }
-                break;
+                } */
             case "colored":
-                var begin_color = new mapfish.ColorRgb();
-                begin_color.setFromHex(cfg.begin_color || DEFAULT_BEGIN_COLOR);
-                var end_color = new mapfish.ColorRgb();
-                end_color.setFromHex(cfg.end_color || DEFAULT_END_COLOR);
+                var values = self.extractLayerValues(cfg, data);
+                var nb_class = cfg.nb_class || DEFAULT_NUM_CLASSES
+                var scale = chroma.scale([begin_color, end_color]);
+                var serie = new geostats(values);
                 switch (cfg.classification) {
                     case "unique":
-                        vl.styleMap = this.getUniqueValuesStyleMap(cfg, features);
+                        var vals = serie.getClassUniqueValues();
+                        scale = chroma.scale('RdYlBu').domain([0, vals.length], vals.length);
                         break;
                     case "quantile":
-                        geostat = new mapfish.GeoStat.Choropleth(map, {
-                            method: mapfish.GeoStat.Distribution.CLASSIFY_BY_QUANTILS,
-                            numClasses: cfg.nb_class || DEFAULT_NUM_CLASSES,
-                            colors: [ begin_color, end_color ],
-                            layer: vl,
-                            indicator: indicator,
-                            featureSelection: false
-                        });
+                        serie.getClassQuantile(nb_class);
+                        var vals = serie.getRanges();
+                        scale = scale.domain([0, vals.length], vals.length);
                         break;
                     case "interval":
-                        geostat = new mapfish.GeoStat.Choropleth(map, {
-                            method: mapfish.GeoStat.Distribution.CLASSIFY_BY_EQUAL_INTERVALS,
-                            numClasses: cfg.nb_class || DEFAULT_NUM_CLASSES,
-                            colors: [ begin_color, end_color ],
-                            layer: vl,
-                            indicator: indicator,
-                            featureSelection: false
-                        });
+                        serie.getClassEqInterval(nb_class);
+                        displayLegond = true;
+                        var vals = serie.getRanges();
+                        scale = scale.domain([0, vals.length], vals.length);
                         break;
                 }
+                var colors = [];
+                _.each(scale.colors(mode='hex'), function(color){
+                    colors.push(chroma(color).alpha(opacity).css());
+                });
+                var styles_map = {};
+                _.each(colors, function(color) {
+                    if (color in styles_map) {
+                        return;
+                    }
+                    var fill = new ol.style.Fill({
+                        color: color
+                    });
+                    var stroke = new ol.style.Stroke({
+                        //color: color,
+                        color: '#333333',
+                        width: 1
+                    });
+                    var styles = [
+                        new ol.style.Style({
+                          image: new ol.style.Circle({
+                            fill: fill,
+                            stroke: stroke,
+                            radius: 5
+                          }),
+                          fill: fill,
+                          stroke: stroke
+                        })
+                    ];
+                    styles_map[color] = styles;
+                });
+                var legend = null;
+                if(vals.length <= LEGEND_MAX_ITEMS){
+                    serie.setColors(colors);
+                    legend = serie.getHtmlLegend(null, cfg.name, 1);
+                }
+                return {
+                    style : function(feature, resolution) {
+                        var value = feature.get('attributes')[indicator];
+                        var color_idx = self.getClass(value, vals);
+                        return styles_map[colors[color_idx]];
+                     },
+                    legend: legend
+                };
                 break;
             case "proportion":
-                geostat = new mapfish.GeoStat.ProportionalSymbol(map, {
-                    layer: vl,
-                    indicator: indicator,
-                    //TODO: this should not be hardcoded!
-                    minSize: cfg.min_size || DEFAULT_MIN_SIZE,
-                    maxSize: cfg.max_size || DEFAULT_MAX_SIZE,
-                    featureSelection: false
+                var values = self.extractLayerValues(cfg, data);
+                var serie = new geostats(values);
+                var styles_map = {};
+                var minSize = cfg.min_size || DEFAULT_MIN_SIZE;
+                var maxSize = cfg.max_size || DEFAULT_MAX_SIZE;
+                var minVal = serie.min();
+                var maxVal = serie.max();
+                var fill = new ol.style.Fill({
+                    color: begin_color
                 });
+                var stroke = new ol.style.Stroke({
+                    color: '#333333',
+                    width: 1
+                });
+                _.each(values, function(value) {
+                    if (value in styles_map) {
+                        return;
+                    }
+                    var radius = (value - minVal) / (maxVal - minVal) *
+                        (maxSize - minSize) + minSize;
+                    var styles = [
+                        new ol.style.Style({
+                          image: new ol.style.Circle({
+                            fill: fill,
+                            stroke: stroke,
+                            radius: radius
+                          }),
+                          fill: fill,
+                          stroke: stroke
+                        })
+                    ];
+                    styles_map[value] = styles;
+                });
+
+                return {
+                     style : function(feature, resolution) {
+                         var value = feature.get('attributes')[indicator];
+                         return styles_map[value];
+                     },
+                     legend : ''
+                };
+                break;
+            default: // basic
+                var fill = new ol.style.Fill({
+                    color: begin_color
+                });
+                var stroke = new ol.style.Stroke({
+                    color: '#333333',
+                    width: 1
+                });
+                var styles = [
+                    new ol.style.Style({
+                      image: new ol.style.Circle({
+                        fill: fill,
+                        stroke: stroke,
+                        radius: 5
+                      }),
+                      fill: fill,
+                      stroke: stroke
+                    })
+                ];
+                return {
+                     style : function(feature, resolution) {
+                          return styles;
+                     },
+                    legend: ''
+                };
                 break;
         }
-        vl.addFeatures(features);
-        if (geostat instanceof mapfish.GeoStat) {
-            geostat.setClassification();
-            geostat.applyClassification();
-        }
-        return vl;
     },
 
-    getUniqueValuesStyleMap: function(cfg, features) {
-        if (jQuery.isEmptyObject(features)) {
-            return;
+    getClass :function(val, a) {
+        // uniqueValues classification
+        idx = a.indexOf(val);
+        if (idx > -1){
+            return idx;
         }
-        var l = features.length, f = features[0];
-        var v = cfg.attribute_field_id[1];
-
-        // get the number of unique values
-        var distinct = {};
-        var i = 0;
-        do {
-            f = features[i];
-            i += 1;
-        } while (!f.attributes.hasOwnProperty(v));
-        // ok, we've found a feature whose attribute is present
-        distinct[f.attributes[v].toString()] = null;
-        var nb = 1;
-        while(l-- && l>=i) {
-            f = features[l];
-            if (!distinct.hasOwnProperty(f.attributes[v])) {
-                distinct[f.attributes[v]] = null;
-                nb += 1;
+        // range classification
+        var separator = ' - '
+        for(var i= 0; i < a.length; i++) {
+            // all classification except uniqueValues
+            if(a[i].indexOf(separator) != -1) {
+                var item = a[i].split(separator);
+                if(val <= parseFloat(item[1])) {return i;}
+            } else {
+                // uniqueValues classification
+                if(val == a[i]) {
+                    return i;
+                }
             }
         }
-        // define the nb different colors
-        var colors = utils.color.generateDistinctColors(nb);
-        // associate colors with values
-        l = 0;
-        for (var key in distinct) {
-            if (distinct.hasOwnProperty(key)) {
-                distinct[key] = colors[l];
-                l += 1;
-            }
-        }
-        // display them
-        return new OpenLayers.StyleMap({
-            'default': new OpenLayers.Style(
-                OpenLayers.Util.applyDefaults({
-                    fillColor: "${color}"
-                }, STYLE_DEFAULT),
-                {
-                    context: {
-                        color: function(f) {
-                            return (f.attributes.hasOwnProperty(v) && distinct.hasOwnProperty(f.attributes[v])) ?
-                                '#'+distinct[f.attributes[v]] : "#ffffff";
-                        }
-                    }
-                }),
-            'select': STYLE_SELECT
-        });
     },
 
     /**
@@ -382,39 +433,30 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             return;
         }
         var self = this;
-        _.each(this.selectFeatureControls, function(ctrl) {
-            ctrl.deactivate();
-            // setLayer a fake layer to avoid js error on unselectAll
-            // use {selectedFeatures:[]} as a hack to simulate a vector
-            // layer with no feature selected
-            ctrl.setLayer({selectedFeatures:[]});
-        });
-        _.each(this.vectorLayers, function(vlayer) {
-            vlayer.destroy();
+        map.removeLayer(this.overlaysGroup);
+
+        var vectorLayers = this.createVectorLayers(data);
+        this.overlaysGroup = new ol.layer.Group({
+            title: 'Overlays',
+            layers: vectorLayers,
         });
 
-        this.vectorLayers = this.createVectorLayers(data);
-        this.map.addLayers(this.vectorLayers);
-        _.each(this.selectFeatureControls, function(ctrl) {
-            ctrl.setLayer(self.vectorLayers);
-            ctrl.activate();
-        });
-        _.each(this.vectorLayers, function(vlayer) {
+        _.each(vectorLayers, function(vlayer) {
             // keep only one vector layer active at startup
-            if (vlayer != self.vectorLayers[0]) {
-                vlayer.setVisibility(false);
+            if (vlayer != vectorLayers[0]) {
+                vlayer.setVisible(false);
             }
         });
+        map.addLayer(this.overlaysGroup);
 
         // zoom to data extent
-        var data_extent = this.vectorLayers[0].getDataExtent();
-        if (data_extent) {
-            var bbox = data_extent.scale(1.1);
-            if (bbox.getWidth() * bbox.getHeight() !== 0) {
-                this.map.zoomToExtent(bbox);
-            } else {
-                this.map.setCenter(bbox.getCenterLonLat(), 15);
-            }
+        //map.zoomTo
+        var extent = vectorLayers[0].getSource().getExtent();
+        if (extent) {
+            this.zoom_to_extent_ctrl.extent_ = extent;
+            this.zoom_to_extent_ctrl.changed();
+            map.getView().fitExtent(extent, map.getSize()); 
+
             var ids = [];
             // Javascript expert please improve this code
             for (var i=0, len=data.length; i<len; ++i) {
@@ -425,8 +467,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     },
 
     view_loading: function(fv) {
-        console.log("GeoengineView.on_loaded: function(fv): arguments=");
-        console.log(fv);
         var self = this;
         this.fields_view = fv;
         _.each(fv.geoengine_layers.actives, function(item) {
@@ -435,33 +475,57 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         return $.when();
     },
 
-    render_map: function() {
-        //TODO: copy this mapbox dark theme in the addons
-        if (_.isUndefined(this.map)){
-            OpenLayers.ImgPath = "//dr0duaxde13i9.cloudfront.net/theme/dark/";
-            this.map = new OpenLayers.Map("the_map", {
-                layers: this.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
-                displayProjection: new OpenLayers.Projection("EPSG:4326"), // Fred should manage projection here
-                theme: null,
-                controls: [
-                    new OpenLayers.Control.KeyboardDefaults(),
-                    new OpenLayers.Control.ZoomBox(),
-                    new OpenLayers.Control.Attribution(),
-                    new OpenLayers.Control.LayerSwitcher({roundedCornerColor: 'black'}),
-                    new OpenLayers.Control.PanZoomBar(),
-                    new OpenLayers.Control.ToolPanel()
-                ]
-            });
-            // set z-index of container to be under search view z-index of 666
-            this.map.layerContainerDiv.style.zIndex = 600;
-            if (this.restricted_extent) {
-                this.map.restrictedExtent = OpenLayers.Bounds.fromString(this.restricted_extent);
-                if (this.projection != this.map.getProjection()) {
-                    this.map.restrictedExtent = this.map.restrictedExtent.transform(this.projection, this.map.getProjection());
-                }
+    register_interaction: function(){
+        var self = this;
+        // select interaction working on "click"
+        var selectClick = new ol.interaction.Select({
+          condition: ol.events.condition.click
+        });
+        selectClick.on('select', function(e) {
+            var features = e.target.getFeatures();
+            if (features.getLength() > 0){
+                var attributes = features.item(0).get('attributes');
+                $("#map_info").html(formatHTML(attributes, self.fields_view.fields));
+                $("#map_infobox").off().click(function() {
+                    self.open_record(features.item(0));
+                });
+                $("#map_infobox").show();
+            } else {
+                $("#map_infobox").hide();
             }
-            this.map.addControls(this.selectFeatureControls);
-            this.map.zoomToMaxExtent();
+          });
+
+        // select interaction working on "pointermove"
+        var selectPointerMove = new ol.interaction.Select({
+          condition: ol.events.condition.pointerMove
+        });
+        this.map.addInteraction(selectClick);
+        this.map.addInteraction(selectPointerMove);
+    },
+
+    render_map: function() {
+        if (_.isUndefined(this.map)){
+            this.zoom_to_extent_ctrl = new ol.control.ZoomToExtent();
+            map = new ol.Map({
+                layers: [new ol.layer.Group({
+                    title: 'Base maps',
+                    layers: this.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
+                })],
+                target: 'olmap',
+                view: new ol.View({
+                    center: [0, 0],
+                    zoom: 2
+                }),
+                controls: ol.control.defaults().extend([
+                    new ol.control.FullScreen(),
+                    new ol.control.ScaleLine(),
+                    this.zoom_to_extent_ctrl
+                ]),
+            });
+            var layerSwitcher = new ol.control.LayerSwitcher({});
+            map.addControl(layerSwitcher);
+            this.map = map;
+            this.register_interaction();
         }
     },
 
@@ -475,7 +539,9 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         });
     },
     open_record: function (feature, options) {
-        oid = feature.attributes.id
+
+        var attributes = feature.get('attributes');
+        oid = attributes.id
         if (this.dataset.select_id(oid)) {
             this.do_switch_view('form', null, options); //, null, { mode: "edit" });
         } else {
@@ -484,105 +550,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     },
 
 });
-// here you may tweak globals object, if any, and play with on_* or do_* callbacks on them
-
-var utils = {
-    color: {
-
-        colorPalette: [
-            "00FFFF", "FF00FF", "000080", "00FF00", "FFFF00", "FF0000",
-            "0000FF", "008080", "FFB300", "803E75", "FF6800", "A6BDD7",
-            "C10020", "CEA262", "817066", "007D34", "F6768E", "FF7A5C",
-            "53377A", "B32851", "93AA00", "593315", "F13A13", "232C16"
-        ],
-
-        /**
-        * Converts an HSV color value to RGB. Conversion formula
-        * adapted from http://en.wikipedia.org/wiki/HSV_color_space.
-        * Assumes h, s, and v are contained in the set [0, 1] and
-        * returns r, g, and b in the set [0, 255].
-        *
-        * @param   Number  h       The hue
-        * @param   Number  s       The saturation
-        * @param   Number  v       The value
-        * @return  Array           The RGB representation
-        */
-        hsvToRgb: function(h, s, v) {
-            var r, g, b;
-
-            var i = Math.floor(h * 6);
-            var f = h * 6 - i;
-            var p = v * (1 - s);
-            var q = v * (1 - f * s);
-            var t = v * (1 - (1 - f) * s);
-
-            switch(i % 6) {
-                case 0: r = v, g = t, b = p; break;
-                case 1: r = q, g = v, b = p; break;
-                case 2: r = p, g = v, b = t; break;
-                case 3: r = p, g = q, b = v; break;
-                case 4: r = t, g = p, b = v; break;
-                case 5: r = v, g = p, b = q; break;
-            }
-
-            return [r * 255, g * 255, b * 255];
-        },
-
-        /**
-        * Converts an RGB color value to Hex.
-        * Assumes r, g, and b are contained in the set [0, 255]
-        *
-        * @param   Number  r       The red color value
-        * @param   Number  g       The green color value
-        * @param   Number  b       The blue color value
-        * @return  Array           The HSV representation
-        */
-        rgbToHex: function(r, g, b) {
-            var colorBase10 = (r + 256 * g + 256 * 256 * b).toString(16);
-            while (colorBase10.length < 6) {
-                colorBase10 = '0' + colorBase10;
-            }
-            return colorBase10;
-        },
-
-        /**
-        * Method: generateDistinctColors
-        *
-        * Parameters:
-        * nb - {integer} number of distinct colors to generate (max 768)
-        */
-        generateDistinctColors: function(nb) {
-            var palette = utils.color.colorPalette;
-            // use the static palette is few colors else dynamically generate a new
-            // palette
-            if (nb <= palette.length) {
-                return palette.slice(0, nb);
-            } else {
-                var h, s, v; // hue, value, saturation of the HSV color space
-                var SV_RANGE = 0.6; // empiric value
-                var SV_MAXVALUE = 0.9; // empiric value
-                var HUE_NB_VARIATIONS_PER_SV = 20; // empiric value
-                var sv_variation = Math.ceil(nb/HUE_NB_VARIATIONS_PER_SV);
-                var it; // iterator which value is: 0 <= it <= sv_variation
-                var out = [];
-                for (var i=0; i<nb; i+=1) {
-                    h = i/nb;
-                    it = i % sv_variation;
-                    s = v = (it == sv_variation-1) ?
-                        SV_MAXVALUE : SV_MAXVALUE - it*(SV_RANGE/(sv_variation-1));
-                    out.push(this.rgbToHex.apply(this, _.map(
-                        this.hsvToRgb(i/nb, s, v),
-                        function(num) {
-                            return Math.round(num);
-                        })
-                    ));
-                }
-                return out;
-
-            }
-        }
-    }
-};
 
 core.view_registry.add('geoengine', GeoengineView);
 
