@@ -211,10 +211,13 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     createVectorLayer: function(cfg, data) {
         var self = this;
         var geostat = null;
-        var vectorSource = new ol.source.Vector({
-        });
-        if (data.length == 0)
-            return vl
+        var vectorSource = new ol.source.Vector({});
+        if (data.length == 0) {
+            return new ol.layer.Vector({
+                source: vectorSource,
+                title: cfg.name,
+            })
+        }
         _.each(data, function(item) {
             var attributes = _.clone(item);
             _.each(_.keys(self.geometry_columns), function(item) {
@@ -478,8 +481,8 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
 
         // zoom to data extent
         //map.zoomTo
-        var extent = vectorLayers[0].getSource().getExtent();
-        if (extent) {
+        if (data.length) {
+            var extent = vectorLayers[0].getSource().getExtent();
             this.zoom_to_extent_ctrl.extent_ = extent;
             this.zoom_to_extent_ctrl.changed();
 
