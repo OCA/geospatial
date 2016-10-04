@@ -16,7 +16,7 @@ class GeoVectorLayer(models.Model):
          # Actually we have to think if we should separate it for colored
          # ('choropleth', 'Choropleth'),
          ('proportion', 'Proportional Symbol'),
-         ('colored', 'Colored range/Choropleth')],
+         ('colored', 'Colored range/Chroma.js')],
         string="Representation mode",
         required=True)
     classification = fields.Selection(
