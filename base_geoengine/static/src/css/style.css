@@ -65,6 +65,7 @@ div.olClearMapItemInactive:hover {
 .olmap:fullscreen {
   height: 100%;
   width: 100%;
+}
 
 .olControlSelectSimple,
 .olControlSelectBox {
