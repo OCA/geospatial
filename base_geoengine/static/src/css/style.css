@@ -1,5 +1,8 @@
 /* OpenLayers Style */
 div.olmap {
+    /* For map size recomputation we have to define this size. */
+    height: 100%;
+    width: 100%;
     z-index: 0;
     padding: 0 !important;
     margin: 0 !important;
