@@ -107,22 +107,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         this.view_type = 'geoengine'
         this.geometry_columns = {};
         this.overlaysGroup = null;
-        /* XXX
-         this.selectFeatureControls = {
-            selectHover: new OpenLayers.Control.SelectFeature(
-                {selectedFeatures:[]}, {hover: true, highlightOnly: true}),
-            select: new OpenLayers.Control.SelectFeature(
-                {selectedFeatures:[]},
-                {
-                    // displayClass used to find it
-                    displayClass: 'olSelectFeature',
-                    clickout: true, toggle: false,
-                    multiple: false,
-                    toggleKey: "ctrlKey",
-                    multipleKey: "shiftKey", box: false
-                }
-            )
-        };*/
+        this.vectorSources = [];
     },
     load_view: function(context) {
         var self = this;
@@ -252,6 +237,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 elLegend.hide();
             }
         });
+        this.vectorSources.push(vectorSource);
         return lv;
     },
 
@@ -502,15 +488,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             }
             self.dataset.ids = ids;
         }
-        /* XXX
-         for(var key in this.selectFeatureControls) {
-            var ctrl = this.selectFeatureControls[key];
-            ctrl.setLayer(this.vectorLayers);
-            // ensure map is define on controler and handler
-            ctrl.map = map
-            ctrl.handlers.feature.map = map
-            ctrl.activate();
-        }*/
     },
 
     view_loading: function(fv) {
@@ -522,6 +499,29 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         return $.when();
     },
 
+    update_info_box: function(features) {
+        var self = this;
+        if (features.getLength() == 1){
+            var attributes = features.item(0).get('attributes');
+            $("#map_info").html(formatFeatureHTML(attributes, this.fields_view.fields));
+            $("#map_info_open").show();
+            $("#map_info_filter_selection").hide();
+            $("#map_infobox").off().click(function() {
+                self.open_record(features.item(0));
+            });
+            $("#map_infobox").show();
+        } else if (features.getLength() > 1) {
+            $("#map_info").html(formatFeatureListHTML(features));
+            $("#map_info_open").hide();
+            $("#map_info_filter_selection").show();
+            $("#map_infobox").off().click(function() {
+                self.filter_selection(features);
+            });
+            $("#map_infobox").show();
+        } else {
+            $("#map_infobox").hide();
+        }
+    },
     register_interaction: function(){
         var self = this;
         // select interaction working on "click"
@@ -530,32 +530,41 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         });
         selectClick.on('select', function(e) {
             var features = e.target.getFeatures();
-            if (features.getLength() == 1){
-                var attributes = features.item(0).get('attributes');
-                $("#map_info").html(formatFeatureHTML(attributes, self.fields_view.fields));
-                $("#map_info_open").show();
-                $("#map_info_filter_selection").hide();
-                $("#map_infobox").off().click(function() {
-                    self.open_record(features.item(0));
-                });
-                $("#map_infobox").show();
-            } else if (features.getLength() > 1) {
-                $("#map_info").html(formatFeatureListHTML(features));
-                $("#map_info_open").hide();
-                $("#map_info_filter_selection").show();
-                $("#map_infobox").off().click(function() {
-                    self.filter_selection(features);
-                });
-                $("#map_infobox").show();
-            } else {
-                $("#map_infobox").hide();
-            }
+            self.update_info_box(features);
           });
 
         // select interaction working on "pointermove"
         var selectPointerMove = new ol.interaction.Select({
           condition: ol.events.condition.pointerMove
         });
+
+        // a DragBox interaction used to select features by drawing boxes
+        var dragBox = new ol.interaction.DragBox({
+          condition: ol.events.condition.shiftKeyOnly,
+          style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: [0, 0, 255, 1]
+            })
+          })
+        });
+
+        var selectedFeatures = selectClick.getFeatures();
+        dragBox.on('boxend', function(e) {
+            // features that intersect the box are added to the collection of
+            // selected features, and their names are displayed in the "info"
+            // div
+            var info = [];
+            var extent = dragBox.getGeometry().getExtent();
+            var vectorSource = self.vectorSources[0];
+            vectorSource.forEachFeatureIntersectingExtent(extent, function(feature) {
+                if (selectedFeatures.getArray().indexOf(feature) < 0) {
+                    selectedFeatures.push(feature);
+                }
+            });
+            self.update_info_box(selectedFeatures);
+        });
+
+        this.map.addInteraction(dragBox);
         this.map.addInteraction(selectClick);
         this.map.addInteraction(selectPointerMove);
     },
@@ -581,18 +590,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             });
             var layerSwitcher = new ol.control.LayerSwitcher({});
             map.addControl(layerSwitcher);
-            /*
-            map.addControl(this.selectFeatureControls.selectHover);
-            map.addControl(this.selectFeatureControls.select);
-            // create box handler as we want it to be activable
-            this.selectFeatureControls.select.handlers.box = new OpenLayers.Handler.Box(
-                this.selectFeatureControls.select, {done: this.selectFeatureControls.select.selectBox},
-                {boxDivClassName: "olHandlerBoxSelectFeature"}
-            );
-            this.selectFeatureControls.select.setMap(map);
-            this.selectFeatureControls.select.handlers.map = map;
-            map.addControl(new OpenLayers.Control.ToolPanel());
-            */
             this.map = map;
             this.register_interaction();
         }

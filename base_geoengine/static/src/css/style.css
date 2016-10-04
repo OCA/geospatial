@@ -34,15 +34,6 @@ div.olmap {
   height: 100%;
   width: 100%;
 }
-/*XXX*/
-.olHandlerBoxSelectFeature {
-    border: 2px solid red;
-    position: absolute;
-    background-color: white;
-    opacity: 0.50;
-    font-size: 1px;
-    filter: alpha(opacity=50);
-}
 
 div.olControlPanel {
     margin: 80px 10px;
