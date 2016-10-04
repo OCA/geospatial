@@ -455,7 +455,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         if (extent) {
             this.zoom_to_extent_ctrl.extent_ = extent;
             this.zoom_to_extent_ctrl.changed();
-            map.getView().fitExtent(extent, map.getSize()); 
+            map.getView().fit(extent, map.getSize());
 
             var ids = [];
             // Javascript expert please improve this code
