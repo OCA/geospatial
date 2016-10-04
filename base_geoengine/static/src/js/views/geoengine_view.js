@@ -530,6 +530,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             if (features.getLength() == 1){
                 var attributes = features.item(0).get('attributes');
                 $("#map_info").html(formatFeatureHTML(attributes, self.fields_view.fields));
+                $("#map_info_open").show();
                 $("#map_info_filter_selection").hide();
                 $("#map_infobox").off().click(function() {
                     self.open_record(features.item(0));
@@ -537,11 +538,12 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 $("#map_infobox").show();
             } else if (features.getLength() > 1) {
                 $("#map_info").html(formatFeatureListHTML(features));
+                $("#map_info_open").hide();
                 $("#map_info_filter_selection").show();
-                $("#map_infobox").show();
                 $("#map_infobox").off().click(function() {
                     self.filter_selection(features);
                 });
+                $("#map_infobox").show();
             } else {
                 $("#map_infobox").hide();
             }
