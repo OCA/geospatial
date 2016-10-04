@@ -36,11 +36,6 @@
                            colspan="4">
                       <field name="type_id" widget="selection" attrs="{'required': [('has_type', '=', True)]}"/>
                     </group>
-                    <group string="MapBox layer data"
-                        attrs="{'invisible': [('raster_type', '!=', 'mapbox')]}"
-                        colspan="4">
-                        <field name="mapbox_id" attrs="{'required': [('raster_type', '=', 'mapbox')]}"/>
-                    </group>
                     <group string="Odoo layer data (Not implemented)"
                            attrs="{'invisible': [('raster_type', '!=', 'odoo')]}"
                            colspan="4">
