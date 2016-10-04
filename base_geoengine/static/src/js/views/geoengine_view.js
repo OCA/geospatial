@@ -88,7 +88,15 @@ var formatFeatureHTML = function(a, fields) {
  */
 var formatFeatureListHTML = function(features) {
     var str = [];
-    str.push(features.getLength() + ' features selected');
+    // count unique record selected through all features
+    var selected_ids = [];
+    features.forEach(function(x) {
+        var rec_id = x.get('attributes').id;
+        if (selected_ids.indexOf(rec_id) < 0) {
+            selected_ids.push(rec_id);
+        }
+    });
+    str.push(selected_ids.length + ' selected records');
     return str.join('<br />');
 };
 
@@ -555,10 +563,16 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             // div
             var info = [];
             var extent = dragBox.getGeometry().getExtent();
-            var vectorSource = self.vectorSources[0];
-            vectorSource.forEachFeatureIntersectingExtent(extent, function(feature) {
-                if (selectedFeatures.getArray().indexOf(feature) < 0) {
-                    selectedFeatures.push(feature);
+            var layerVectors = self.map.getLayers().item(1).getLayers();
+            layerVectors.forEach(function(lv) {
+                // enable selection only on visible layers
+                if (lv.getVisible()) {
+                    vectorSource = lv.getSource();
+                    vectorSource.forEachFeatureIntersectingExtent(extent, function(feature) {
+                        if (selectedFeatures.getArray().indexOf(feature) < 0) {
+                            selectedFeatures.push(feature);
+                        }
+                    });
                 }
             });
             self.update_info_box(selectedFeatures);
