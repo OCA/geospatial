@@ -455,6 +455,14 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         if (extent) {
             this.zoom_to_extent_ctrl.extent_ = extent;
             this.zoom_to_extent_ctrl.changed();
+
+            // When user quit fullscreen map, the size is set to undefined
+            // So we have to check this and recompute the size.
+            var size = map.getSize();
+            if ( size === undefined ){
+                map.updateSize();
+                size = map.getSize();
+            }
             map.getView().fit(extent, map.getSize());
 
             var ids = [];
