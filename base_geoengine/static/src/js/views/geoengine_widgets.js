@@ -13,8 +13,8 @@ var core = require('web.core');
 var data = require('web.data');
 var GeoengineView = require('base_geoengine.GeoengineView');
 var common = require('web.form_common');
-
 var geoengine_common = require('base_geoengine.geoengine_common');
+var OpenLayers = ol; // TODO change this alias in this file !
 
 var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.GeoengineMixin, {
     template: 'FieldGeoEngineEditMap',
@@ -29,24 +29,26 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     tab_listener_installed: false,
 
     create_edit_layers: function(self, field_infos) {
-        var vl = new OpenLayers.Layer.Vector(self.name, {
-            styleMap: new OpenLayers.StyleMap({
-                'default': new OpenLayers.Style({
+        var vl = new OpenLayers.layer.Vector(self.name, {
+            // styleMap: null,
+            styleMap: new OpenLayers.style.Fill({
+                // 'default': new OpenLayers.style.Style({
                 fillColor: '#ee9900',
                 fillOpacity: 0.7,
                 strokeColor: '#ee9900',
                 strokeOpacity: 1,
                 strokeWidth: 3,
                 pointRadius: 6
-                }),
-                'select': new OpenLayers.Style({
-                fillColor: 'red',
-                strokeColor: 'red'
-                }),
-                'temporary': new OpenLayers.Style({
-                fillColor: 'blue',
-                strokeColor: 'blue'
-                })
+
+                // ),
+                // 'select': new OpenLayers.style.Style({
+                // fillColor: 'red',
+                // strokeColor: 'red'
+                // }),
+                // 'temporary': new OpenLayers.style.Style({
+                // fillColor: 'blue',
+                // strokeColor: 'blue'
+                // })
             }),
             eventListeners : {
                 featuremodified: function(event) {
@@ -124,29 +126,53 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
 
     set_value: function(value, zoom) {
         zoom = (typeof zoom === 'undefined') ? true : zoom
-
         this._super.apply(this, arguments);
         this.value = value;
+
         if (this.map) {
-            var vl = this.map.getLayersByName(this.name)[0];
-            vl.destroyFeatures();
-            var extent = this.default_extend;
-            if (this.value) {
-                var features = this.format.read(this.value);
-                vl.addFeatures(features, {silent: true});
-                extent = vl.getDataExtent();
-            }
-            if (zoom) {
-                this.map.zoomToExtent(extent);
-                if (this.value && this.default_zoom) {
-                    this.map.zoomTo(this.default_zoom);
+            var vectorSource = new ol.source.Vector({
+            });
+            this.vector_source = vectorSource;
+
+            var ft = new ol.Feature({
+                        geometry: new ol.format.GeoJSON().readGeometry(value),
+                        labelPoint:  new ol.format.GeoJSON().readGeometry(value),
+                    });
+            vectorSource.addFeature(ft);
+            var vl = new ol.layer.Vector({
+                source: vectorSource,
+            });
+            this.map.addLayer(vl);
+            if (value){
+
+                if (vectorSource){
+                    var extent = vectorSource.getExtent();
+                    if (zoom && extent != [Infinity, Infinity, -Infinity, -Infinity]) {
+                        var map_view = this.map.getView();
+                        if (map_view){
+                            map_view.fit(extent, this.map.getSize(), {
+                                maxZoom:15
+                            });
+                        }
+                    }
                 }
             }
-        }
+            else {
+                var map_view = this.map.getView();
+                // default_extent
+                if (map_view){
+                    map_view.fit(this.default_extent.split(", "), this.map.getSize(), {
+                                maxZoom:5
+                            });
+                }
+            }
+            }
+
     },
 
     on_ui_change: function() {
-        this.set_value(this.format.write(this._geometry), false);
+        this.vector_source.clear()
+        this.set_value(this.format.writeGeometry(this._geometry), false);
     },
 
     validate: function() {
@@ -161,72 +187,98 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     },
 
     render_map: function() {
+        var self = this;
         if (!this.map) {
             map_opt = {
                 theme: null,
                 layers: this.layers[0],
+                target: this.$el[0].id,
+
+                view: new ol.View({
+                    center: [0, 0],
+                    zoom: 5
+                }),
             }
             this.map = new OpenLayers.Map(map_opt);
-            if (this.restricted_extent) {
-                this.map.restrictedExtent = OpenLayers.Bounds.fromString(this.restricted_extent).transform(this.projection, this.map.getProjection());
-            }
+            // if (this.restricted_extent) {
+            //     this.map.restrictedExtent = OpenLayers.Bounds.fromString(this.restricted_extent).transform(this.projection, this.map.getProjection());
+            // }
             this.map.addLayer(this.layers[1]);
-            this.modify_control = new OpenLayers.Control.ModifyFeature(this.layers[1]);
-            if (this.geo_type == 'POINT' || this.geo_type == 'MULTIPOINT') {
-                this.modify_control.mode = OpenLayers.Control.ModifyFeature.DRAG;
-            }
-            this.map.addControl(this.modify_control);
 
+            // ol.geom.GeometryType
+            // 'Point', 'LineString', 'LinearRing', 'Polygon', 'MultiPoint', 'MultiLineString', 'MultiPolygon', 'GeometryCollection', 'Circle'.
             var handler = null;
-            if (this.geo_type == 'POLYGON' || this.geo_type == 'MULTIPOLYGON') {
-                handler = OpenLayers.Handler.Polygon;
-            } else if (this.geo_type == 'LINESTRING' || this.geo_type == 'MULTILINESTRING') {
-                handler = OpenLayers.Handler.Path;
-            } else if (this.geo_type == 'POINT' || this.geo_type == 'MULTIPOINT') {
-                handler = OpenLayers.Handler.Point;
+            if (this.geo_type == 'POLYGON') {
+                handler = "Polygon";
+            } else if (this.geo_type == 'MULTIPOLYGON') {
+                handler = "MultiPolygon";
+            } else if (this.geo_type == 'LINESTRING') {
+                handler = "LineString";
+            } else if (this.geo_type == 'MULTILINESTRING') {
+                handler = "MultiLineString";
+            } else if (this.geo_type == 'POINT') {
+                handler = "Point";
+            } else if (this.geo_type == 'MULTIPOINT') {
+                handler = "MultiPoint";
             } else {
                 // FIXME: unsupported geo type
             }
-            this.draw_control = new OpenLayers.Control.DrawFeature(this.layers[1], handler);
-            this.map.addControl(this.draw_control);
+
+            var draw = new ol.interaction.Draw({
+                source: this.vector_source,
+                type: /** @type {ol.geom.GeometryType} */ (handler)//,
+                // geometryFunction: geometryFunction,
+                // maxPoints: 2
+            });
+
+            if (this.get("effective_readonly") || this.force_readonly) {
+                draw.setProperties({active: false}, silent=true)
+            }
+            else {
+                draw.setProperties({active: true}, silent=true)
+            }
+            this.map.addInteraction(draw);
+
+            draw.on('drawend', function(e){
+                self._geometry = e.feature.getGeometry();
+                self.on_ui_change();
+            })
 
             function clearMap() {
                 var vl = this.map.getLayersByName(this.widget.name)[0];
                 vl.destroyFeatures();
                 this.widget.set_value(null);
             }
-            this.modify_panel = new OpenLayers.Control.Panel();
-            clear_button = new OpenLayers.Control.Button({
-                displayClass: 'olClearMap',
-                type: OpenLayers.Control.TYPE_BUTTON,
-                trigger: clearMap,
-                widget: this,
-            })
-            this.modify_panel.addControls([clear_button]);
 
-            this.map.addControl(this.modify_panel);
-
-            this.default_extend = OpenLayers.Bounds.fromString(this.default_extent).transform(this.projection, this.map.getProjection());
-            this.map.zoomToExtent(this.default_extend);
-            this.format = new OpenLayers.Format.GeoJSON({
-                internalProjection: this.map.getProjection(),
+            this.format = new ol.format.GeoJSON({
+                internalProjection: this.map.getView().getProjection(),
                 externalProjection: 'EPSG:' + this.srid
             });
+
             this.map.render(this.$el[0]);
             $(document).trigger('FieldGeoEngineEditMap:ready', [this.map]);
             this.set_value(this.value);
-            view_manager = this.$el.closest(".oe-view-manager")
-            view_manager.on("scroll", {'map': this.map}, function (event) {
-                event.data.map.events.element.offsets = null;
-            });
+            // view_manager = this.$el.closest(".oe-view-manager")
+            // view_manager.on("scroll", {'map': this.map}, function (event) {
+            //     event.data.map.events.element.offsets = null;
+            // });
         }
-        if (this.get("effective_readonly") || this.force_readonly) {
-            this.modify_control.deactivate();
-            this.modify_panel.deactivate();
-        } else {
-            this.modify_control.activate();
-            this.modify_panel.activate();
-            this.value === false ? this.draw_control.activate() : this.draw_control.deactivate();
+        else{
+            // this.vector_source.clear();
+            var draw = null;
+            interactions = this.map.getInteractions().getArray();
+            var i;
+            for (i = 0; i < interactions.length; i++) {
+                if (interactions[i].constructor == ol.interaction.Draw){
+                    draw = interactions[i];
+                }
+            }
+            if (this.get("effective_readonly") || this.force_readonly) {
+                draw.setProperties({active: false}, silent=true)
+            }
+            else {
+                draw.setProperties({active: true}, silent=true)
+            }
         }
     },
 });
