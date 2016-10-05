@@ -35,13 +35,13 @@ var DEFAULT_NUM_CLASSES = 5; // for choroplets only
 var LEGEND_MAX_ITEMS = 10;
 
 /**
- * Method: formatHTML
+ * Method: formatFeatureHTML
  * formats attributes into a string
  *
  * Parameters:
  * a - {Object}
  */
-var formatHTML = function(a, fields) {
+var formatFeatureHTML = function(a, fields) {
     var str = [];
     var oid = '';
     for (var key in a) {
@@ -79,6 +79,26 @@ var formatHTML = function(a, fields) {
     str.unshift(oid);
     return str.join('<br />');
 };
+/**
+ * Method: formatFeatureListHTML
+ * formats attributes into a string
+ *
+ * Parameters:
+ * features - [Array]
+ */
+var formatFeatureListHTML = function(features) {
+    var str = [];
+    // count unique record selected through all features
+    var selected_ids = [];
+    features.forEach(function(x) {
+        var rec_id = x.get('attributes').id;
+        if (selected_ids.indexOf(rec_id) < 0) {
+            selected_ids.push(rec_id);
+        }
+    });
+    str.push(selected_ids.length + ' selected records');
+    return str.join('<br />');
+};
 
 var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     template: "GeoengineView",
@@ -95,6 +115,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         this.view_type = 'geoengine'
         this.geometry_columns = {};
         this.overlaysGroup = null;
+        this.vectorSources = [];
     },
     load_view: function(context) {
         var self = this;
@@ -182,14 +203,16 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
      */
     createVectorLayer: function(cfg, data) {
         var self = this;
-        var features = [];
         var geostat = null;
-        var vectorSource = new ol.source.Vector({
-        });
-        if (data.length == 0)
-            return vl
+        var vectorSource = new ol.source.Vector({});
+        if (data.length == 0) {
+            return new ol.layer.Vector({
+                source: vectorSource,
+                title: cfg.name,
+            })
+        }
         _.each(data, function(item) {
-            attributes = _.clone(item);
+            var attributes = _.clone(item);
             _.each(_.keys(self.geometry_columns), function(item) {
                 delete attributes[item];
             });
@@ -222,6 +245,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 elLegend.hide();
             }
         });
+        this.vectorSources.push(vectorSource);
         return lv;
     },
 
@@ -451,8 +475,8 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
 
         // zoom to data extent
         //map.zoomTo
-        var extent = vectorLayers[0].getSource().getExtent();
-        if (extent) {
+        if (data.length) {
+            var extent = vectorLayers[0].getSource().getExtent();
             this.zoom_to_extent_ctrl.extent_ = extent;
             this.zoom_to_extent_ctrl.changed();
 
@@ -483,6 +507,29 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         return $.when();
     },
 
+    update_info_box: function(features) {
+        var self = this;
+        if (features.getLength() == 1){
+            var attributes = features.item(0).get('attributes');
+            $("#map_info").html(formatFeatureHTML(attributes, this.fields_view.fields));
+            $("#map_info_open").show();
+            $("#map_info_filter_selection").hide();
+            $("#map_infobox").off().click(function() {
+                self.open_record(features.item(0));
+            });
+            $("#map_infobox").show();
+        } else if (features.getLength() > 1) {
+            $("#map_info").html(formatFeatureListHTML(features));
+            $("#map_info_open").hide();
+            $("#map_info_filter_selection").show();
+            $("#map_infobox").off().click(function() {
+                self.filter_selection(features);
+            });
+            $("#map_infobox").show();
+        } else {
+            $("#map_infobox").hide();
+        }
+    },
     register_interaction: function(){
         var self = this;
         // select interaction working on "click"
@@ -491,22 +538,47 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         });
         selectClick.on('select', function(e) {
             var features = e.target.getFeatures();
-            if (features.getLength() > 0){
-                var attributes = features.item(0).get('attributes');
-                $("#map_info").html(formatHTML(attributes, self.fields_view.fields));
-                $("#map_infobox").off().click(function() {
-                    self.open_record(features.item(0));
-                });
-                $("#map_infobox").show();
-            } else {
-                $("#map_infobox").hide();
-            }
+            self.update_info_box(features);
           });
 
         // select interaction working on "pointermove"
         var selectPointerMove = new ol.interaction.Select({
           condition: ol.events.condition.pointerMove
         });
+
+        // a DragBox interaction used to select features by drawing boxes
+        var dragBox = new ol.interaction.DragBox({
+          condition: ol.events.condition.shiftKeyOnly,
+          style: new ol.style.Style({
+            stroke: new ol.style.Stroke({
+              color: [0, 0, 255, 1]
+            })
+          })
+        });
+
+        var selectedFeatures = selectClick.getFeatures();
+        dragBox.on('boxend', function(e) {
+            // features that intersect the box are added to the collection of
+            // selected features, and their names are displayed in the "info"
+            // div
+            var info = [];
+            var extent = dragBox.getGeometry().getExtent();
+            var layerVectors = self.map.getLayers().item(1).getLayers();
+            layerVectors.forEach(function(lv) {
+                // enable selection only on visible layers
+                if (lv.getVisible()) {
+                    vectorSource = lv.getSource();
+                    vectorSource.forEachFeatureIntersectingExtent(extent, function(feature) {
+                        if (selectedFeatures.getArray().indexOf(feature) < 0) {
+                            selectedFeatures.push(feature);
+                        }
+                    });
+                }
+            });
+            self.update_info_box(selectedFeatures);
+        });
+
+        this.map.addInteraction(dragBox);
         this.map.addInteraction(selectClick);
         this.map.addInteraction(selectPointerMove);
     },
@@ -546,6 +618,23 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             self.render_map();
         });
     },
+    filter_selection: function(features) {
+        var selected_ids = [];
+        features.forEach(function (x) {selected_ids.push(x.get('attributes').id);});
+        var selection_domain = [['id', 'in', selected_ids]];
+        var searchview = this.ViewManager.searchview
+        searchview.query.add({
+            category: _lt("Geo selection"),
+            values: {label: _lt("Geo selection")},
+            icon: 'fa-map-o',
+            field: {
+              get_context: function () { },
+              get_domain: function() {return selection_domain;},
+              get_groupby: function () { }
+            }
+        });
+    },
+
     open_record: function (feature, options) {
 
         var attributes = feature.get('attributes');

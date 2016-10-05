@@ -69,6 +69,18 @@ div.olClearMapItemInactive:hover {
   height: 100%;
   width: 100%;
 }
+
+.olControlEditingToolbar .olControlSelectBoxItemInactive {
+    background-position: 0px -1px;
+}
+
+.olControlEditingToolbar .olControlSelectBoxItemActive {
+    background-position: 0px -24px;
+}
+
+.olDrowBox {
+    cursor: crosshair;
+}
 .map_overlay {
     position: absolute;
     display: none;
@@ -100,6 +112,14 @@ div.olClearMapItemInactive:hover {
     text-align: center;
     color: white;
 }
+#map_info_filter_selection {
+    cursor: pointer;
+    background-color: #337ab7;
+    vertical-align: middle;
+    text-align: center;
+    color: white;
+}
+
 #map_measurementbox {
         top: 18px;
         left: 160px;
