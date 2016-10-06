@@ -10,7 +10,7 @@
  'depends': ['base_geoengine'],
  'data': ['data/geo_raster_layer_type.xml'],
  'test': [],
- 'installable': True,
+ 'installable': False,
  'auto_install': False,
  'application': True,
  }
