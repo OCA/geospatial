@@ -34,6 +34,6 @@
      'data/npa_geom.xml',
      'security/ir.model.access.csv'
  ],
- 'installable': True,
+ 'installable': False,
  'application': True,
  }
