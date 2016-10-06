@@ -14,7 +14,6 @@ var data = require('web.data');
 var GeoengineView = require('base_geoengine.GeoengineView');
 var common = require('web.form_common');
 var geoengine_common = require('base_geoengine.geoengine_common');
-var OpenLayers = ol; // TODO change this alias in this file !
 
 var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.GeoengineMixin, {
     template: 'FieldGeoEngineEditMap',
@@ -29,9 +28,9 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     tab_listener_installed: false,
 
     create_edit_layers: function(self, field_infos) {
-        var vl = new OpenLayers.layer.Vector(self.name, {
+        var vl = new ol.layer.Vector(self.name, {
             // styleMap: null,
-            styleMap: new OpenLayers.style.Fill({
+            styleMap: new ol.style.Fill({
                 // 'default': new OpenLayers.style.Style({
                 fillColor: '#ee9900',
                 fillOpacity: 0.7,
@@ -199,7 +198,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
                     zoom: 5
                 }),
             }
-            this.map = new OpenLayers.Map(map_opt);
+            this.map = new ol.Map(map_opt);
             // if (this.restricted_extent) {
             //     this.map.restrictedExtent = OpenLayers.Bounds.fromString(this.restricted_extent).transform(this.projection, this.map.getProjection());
             // }
