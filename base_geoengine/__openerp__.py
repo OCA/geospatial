@@ -28,6 +28,6 @@
                 'geojson'],
  },
  'qweb': ["static/src/xml/geoengine.xml"],
- 'installable': True,
+ 'installable': False,
  'pre_init_hook': 'init_postgis',
  }
