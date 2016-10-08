@@ -9,11 +9,11 @@
         <field name="name"/>
       </group>
       <notebook>
-        <page string="Geometry">
-          <group col="4">
-            <field name="the_point" widget="geo_edit_map"/>
-            <field name="the_line" widget="geo_edit_map"/>
-          </group>
+        <page string="The point">
+          <field name="the_point" widget="geo_edit_map"/>
+        </page>
+        <page string="The line">
+          <field name="the_line" widget="geo_edit_map"/>
         </page>
         <page string="attributes">
           <group>
