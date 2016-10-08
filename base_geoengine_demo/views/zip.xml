@@ -6,15 +6,21 @@
   <field name="model">dummy.zip</field>
   <field name="arch" type="xml">
     <form string="Dummy">
-      <field name="name"/>
-      <field name="city"/>
-      <field name="priority" />
-      <notebook colspan="4">
-        <page string="Geometry">
-          <field name="the_geom" colspan="4" widget="geo_edit_map"/>
-        </page>
-      </notebook>
-      <field name="total_sales"/>
+      <sheet>
+        <group>
+          <group>
+            <field name="name"/>
+            <field name="city"/>
+            <field name="priority" />
+          </group>
+        </group>
+        <notebook colspan="4">
+          <page string="Geometry">
+            <field name="the_geom" colspan="4" widget="geo_edit_map"/>
+          </page>
+        </notebook>
+        <field name="total_sales"/>
+      </sheet>
     </form>
   </field>
 </record>
