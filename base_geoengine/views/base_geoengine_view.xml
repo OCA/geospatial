@@ -1,36 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
-    <data>
-        <template id="assets_backend" inherit_id="web.assets_backend">
-            <xpath expr="." position="inside">
-                <!--  script type="text/javascript" src="/base_geoengine/static/src/js/lib/OpenLayers.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/proj4js-compressed.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/EPSG21781.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/namespaces.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/Util.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/Color.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat/ProportionalSymbol.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/mapfish/GeoStat/Choropleth.js"></script>
-                -->
-                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/ol-3.18.2/ol-debug.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/ol3-layerswitcher.js"></script>
+<odoo>
+<template id="assets_backend" inherit_id="web.assets_backend">
+  <xpath expr="." position="inside">
+    <script type="text/javascript" src="/base_geoengine/static/src/js/lib/ol-3.18.2/ol-debug.js"></script>
+    <script type="text/javascript" src="/base_geoengine/static/src/js/lib/ol3-layerswitcher.js"></script>
 
-                <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_common.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_view.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_widgets.js"></script>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/chromajs-0.8.0/chroma.js"/>
-                <script type="text/javascript" src="/base_geoengine/static/src/js/lib/geostats-1.4.0/geostats.js"/>
+    <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_common.js"></script>
+    <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_view.js"></script>
+    <script type="text/javascript" src="/base_geoengine/static/src/js/views/geoengine_widgets.js"></script>
+    <script type="text/javascript" src="/base_geoengine/static/src/js/lib/chromajs-0.8.0/chroma.js"/>
+    <script type="text/javascript" src="/base_geoengine/static/src/js/lib/geostats-1.4.0/geostats.js"/>
 
-                <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/ol-3.18.2/ol.css"/>
-                <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/geostats-1.4.0/geostats.css"/>
-                <link rel="stylesheet" href="/base_geoengine/static/src/css/style.css"/>
-                <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/ol3-layerswitcher.css"/>
-             </xpath>
-        </template>
+    <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/ol-3.18.2/ol.css"/>
+    <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/geostats-1.4.0/geostats.css"/>
+    <link rel="stylesheet" href="/base_geoengine/static/src/css/style.css"/>
+    <link rel="stylesheet" href="/base_geoengine/static/src/js/lib/ol3-layerswitcher.css"/>
+  </xpath>
+</template>
 
-        <menuitem name="GeoEngine Backend" id="geoengine_base_menu"
-                  web_icon="base_geoengine,images/map.png" groups="group_geoengine_admin"
-                  web_icon_hover="base_geoengine,images/map-hover.png"/>
-    </data>
-</openerp>
+<menuitem name="GeoEngine Backend" id="geoengine_base_menu"
+          web_icon="base_geoengine,images/map.png" groups="group_geoengine_admin"
+          web_icon_hover="base_geoengine,images/map-hover.png"/>
+</odoo>
