@@ -24,7 +24,6 @@ class GeoRasterLayer(models.Model):
 
     raster_type = fields.Selection(
         [('osm', 'OpenStreetMap'),
-         # FIXME ('google', 'Google'), see OCA/geospatial#63
          ('wmts', 'WMTS'),
          ('d_wms', 'Distant WMS'),
          ('odoo', 'Odoo field')],
@@ -77,7 +76,7 @@ class GeoRasterLayer(models.Model):
     @api.one
     @api.depends('raster_type', 'is_wmts')
     def _get_has_type(self):
-        self.has_type = self.raster_type in ('google', 'is_wmts')
+        self.has_type = self.raster_type == 'is_wmts'
 
     @api.one
     @api.depends('raster_type')
