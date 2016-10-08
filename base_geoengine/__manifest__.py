@@ -15,7 +15,6 @@
  'init_xml': [],
  'data': [
      'security/data.xml',
-     'data/geo_raster_layer_type.xml',
      'views/base_geoengine_view.xml',
      'geo_ir/ir_model_view.xml',
      'geo_view/ir_view_view.xml',
