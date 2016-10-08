@@ -48,8 +48,7 @@
         </record>
 
         <record id="geoengine_raster_layer_sales_order" model="geoengine.raster.layer">
-            <field name="raster_type">google</field>
-            <field name="google_type">G_HYBRID_MAP</field>
+            <field name="raster_type">osm</field>
             <field name="name">Sale Order background</field>
             <field name="view_id" ref="ir_ui_view_geo_sale_order"/>
             <field eval="0" name="overlay"/>
