@@ -66,19 +66,6 @@ var GeoengineMixin = {
                             })
                         );
                         break;
-                    case "google":
-                        var glayers = {
-                            "G_PHYSICAL_MAP": google.maps.MapTypeId.TERRAIN,
-                            "G_HYBRID_MAP": google.maps.MapTypeId.HYBRID,
-                            "G_SATELLITE_MAP": google.maps.MapTypeId.SATELLITE
-                        };
-                        out.push(
-                            new OpenLayers.Layer.Google(
-                                l.name,
-                                {type: glayers[l.google_type],
-                                attribution: "<a href='http://www.camptocamp.com' style='position:relative;left:-470px;color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>"}
-                            ));
-                        break;
                 }
             }
         });
