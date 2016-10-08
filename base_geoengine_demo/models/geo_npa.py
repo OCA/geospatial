@@ -48,8 +48,8 @@ class NPA(geo_model.GeoModel):
             else:
                 rec.total_sales = 0.0
 
-    def name_get(self, cursor, uid, ids, context=None):
+    def name_get(self):
         res = []
-        for r in self.browse(cursor, uid, ids):
-            res.append((r.id, u"%s %s" % (r.name, r.city)))
+        for rec in self:
+            res.append((rec.id, u"%s %s" % (rec.name, rec.city)))
         return res
