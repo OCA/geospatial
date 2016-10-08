@@ -2,7 +2,7 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {'name': 'Geo spatial support Demo',
- 'version': '9.0.1.0.0',
+ 'version': '10.0.1.0.0',
  'category': 'GeoBI',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
@@ -17,6 +17,11 @@
      'data/npa_geom.xml',
      'security/ir.model.access.csv'
  ],
- 'installable': False,
+ 'external_dependencies': {
+     'python': [
+         'geojson',
+     ],
+ },
+ 'installable': True,
  'application': True,
  }
