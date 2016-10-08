@@ -33,7 +33,6 @@ var GeoengineMixin = {
         var out = [];
         _.each(bg_layers, function(l) {
             if (l.is_wmts) {
-                // http://map.lausanne.ch/tiles/1.0.0/WMTSCapabilities.xml
                 var opt = {
                     name: l.name,
                     url: l.url.split(','),
