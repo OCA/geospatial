@@ -240,6 +240,8 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
                     zoom: 5
                 }),
             });
+            // TODO restricted extent is not implemented yet in OL3
+            // see: https://github.com/openlayers/ol3/pull/2777
             // if (this.restricted_extent) {
             //     this.map.restrictedExtent = OpenLayers.Bounds.fromString(this.restricted_extent).transform(this.projection, this.map.getProjection());
             // }
