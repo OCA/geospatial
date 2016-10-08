@@ -256,11 +256,6 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
             $(document).trigger('FieldGeoEngineEditMap:ready', [this.map]);
             this.set_value(this.value);
             this.setup_controls();
-
-            // view_manager = this.$el.closest(".oe-view-manager")
-            // view_manager.on("scroll", {'map': this.map}, function (event) {
-            //     event.data.map.events.element.offsets = null;
-            // });
         }
         var edit_active = (!this.get("effective_readonly") && !this.force_readonly);
         this.draw_control.setActive(edit_active);
