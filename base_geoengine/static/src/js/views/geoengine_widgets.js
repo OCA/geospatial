@@ -170,6 +170,12 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     },
 
     setup_controls: function() {
+        /* Add a draw interaction depending on geo_type of the field
+         * plus adds a modify interaction to be able to change line
+         * and polygons.
+         * As modify needs to get pointer position on map it requires
+         * the map to be rendered before being created
+         */
         var self = this;
         var handler = null;
         if (this.geo_type == 'POLYGON') {
@@ -200,10 +206,18 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
             self.on_ui_change();
         });
 
-        //this.modify_control = new ol.interaction.Modify({
-            //source: this.source,
-        //});
-        //this.map.addInteraction(this.modify_control);
+        this.features = this.source.getFeaturesCollection();
+        this.modify_control = new ol.interaction.Modify({
+            features: this.features,
+            // the SHIFT key must be pressed to delete vertices, so
+            // that new vertices can be drawn at the same position
+            // of existing vertices
+            deleteCondition: function(event) {
+              return ol.events.condition.shiftKeyOnly(event) &&
+                  ol.events.condition.singleClick(event);
+            }
+        });
+        this.map.addInteraction(this.modify_control);
 
         //TODO
         function clearMap() {
@@ -231,8 +245,6 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
             // }
             this.map.addLayer(this.vector_layer);
 
-            this.setup_controls();
-
             this.format = new ol.format.GeoJSON({
                 internalProjection: this.map.getView().getProjection(),
                 externalProjection: 'EPSG:' + this.srid
@@ -241,18 +253,16 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
             this.map.render(this.$el[0]);
             $(document).trigger('FieldGeoEngineEditMap:ready', [this.map]);
             this.set_value(this.value);
+            this.setup_controls();
+
             // view_manager = this.$el.closest(".oe-view-manager")
             // view_manager.on("scroll", {'map': this.map}, function (event) {
             //     event.data.map.events.element.offsets = null;
             // });
         }
-        if (this.get("effective_readonly") || this.force_readonly) {
-            this.draw_control.setProperties({active: false}, silent=true);
-            //this.modify_control.setProperties({active: false}, silent=true);
-        } else {
-            this.draw_control.setProperties({active: true}, silent=true);
-            //this.modify_control.setProperties({active: true}, silent=true);
-        }
+        var edit_active = (!this.get("effective_readonly") && !this.force_readonly);
+        this.draw_control.setActive(edit_active);
+        this.modify_control.setActive(edit_active);
     },
 });
 
