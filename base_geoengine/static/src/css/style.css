@@ -39,31 +39,9 @@ div.olControlPanel {
     margin: 80px 10px;
 }
 
-div.olClearMapItemInactive {
-    border-radius: 4px;
-    float: right;
-    display: block;
-    margin: 1px;
-    padding: 0;
-    color: white;
-    text-align: center;
-    font-size: 18px;
-    font-family: FontAwesome, Verdana;
-    content: "\f1f8";
-    height: 22px;
-    width:22px;
-    background: #130085; /* fallback for IE - IE6 requires background shorthand*/
-    background: rgba(0, 60, 136, 0.5);
-    filter: alpha(opacity=80);
-}
-div.olClearMapItemInactive:before {
-    font-family: FontAwesome, Verdana;
-    content: "\f1f8";
-}
-div.olClearMapItemInactive:hover {
-    background: #130085; /* fallback for IE */
-    background: rgba(0, 60, 136, 0.7);
-    filter: alpha(opacity=100);
+div.ol-clear {
+    top: 65px;
+    left: .5em;
 }
 .olmap:fullscreen {
   height: 100%;
