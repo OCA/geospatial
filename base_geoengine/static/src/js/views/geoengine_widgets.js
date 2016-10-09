@@ -154,8 +154,11 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     },
 
     on_ui_change: function() {
-        this.source.clear()
-        this.set_value(this.format.writeGeometry(this._geometry), false);
+        value = null;
+        if (this._geometry) {
+            value = this.format.writeGeometry(this._geometry);
+        }
+        this.set_value(value, false);
     },
 
     validate: function() {
@@ -224,13 +227,28 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
         this.map.addInteraction(this.modify_control);
         this.modify_control.on('modifyend', onchange_geom);
 
-        //TODO
-        function clearMap() {
-            var vl = this.map.getLayersByName(this.widget.name)[0];
-            vl.destroyFeatures();
-            this.widget.set_value(null);
-        }
+        ClearMapControl = function(opt_options) {
+            var options = opt_options || {};
+            var button = document.createElement('button');
+            button.innerHTML = '<i class="fa fa-trash"/>';
+            button.addEventListener('click', function() {
+                self.source.clear();
+                self._geometry = null;
+                self.on_ui_change();
+            });
+            var element = document.createElement('div');
+            element.className = 'ol-clear ol-unselectable ol-control';
+            element.appendChild(button);
 
+            ol.control.Control.call(this, {
+                element: element,
+                target: options.target,
+            });
+        };
+        ol.inherits(ClearMapControl, ol.control.Control);
+        this.clearmap_control = new ClearMapControl();
+
+        this.map.addControl(this.clearmap_control);
     },
 
     render_map: function() {
@@ -265,6 +283,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
         var edit_active = (!this.get("effective_readonly") && !this.force_readonly);
         this.draw_control.setActive(edit_active);
         this.modify_control.setActive(edit_active);
+        this.clearmap_control.element.children[0].disabled = !edit_active;
     },
 });
 
