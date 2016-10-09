@@ -199,12 +199,16 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
             type: /** @type {ol.geom.GeometryType} */ (handler)//,
         });
         this.map.addInteraction(this.draw_control);
-
-        // Trigger onchanges when drawing is done
-        this.draw_control.on('drawend', function(e){
-            self._geometry = e.feature.getGeometry();
+        var onchange_geom = function(e){
+            // Trigger onchanges when drawing is done
+            if (e.type == 'drawend') {
+                self._geometry = e.feature.getGeometry();
+            } else { // modifyend
+                self._geometry = e.features.item(0).getGeometry();
+            }
             self.on_ui_change();
-        });
+        };
+        this.draw_control.on('drawend', onchange_geom);
 
         this.features = this.source.getFeaturesCollection();
         this.modify_control = new ol.interaction.Modify({
@@ -218,6 +222,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
             }
         });
         this.map.addInteraction(this.modify_control);
+        this.modify_control.on('modifyend', onchange_geom);
 
         //TODO
         function clearMap() {
