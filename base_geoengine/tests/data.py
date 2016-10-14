@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# © 2015 Laurent Mignon Acsone SA/NV (http://www.acsone.eu)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2015 Laurent Mignon Acsone SA/NV (http://www.acsone.eu)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 MULTIPOLYGON_1 = """
      MULTIPOLYGON (((726469.938970306 5873145.03456248,
                      726520.174105436 5872946.03059195,
