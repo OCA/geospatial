@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# © 2011-2015 Nicolas Bessi (Camptocamp SA)
-# © 2016 Yannick Vaucher (Camptocamp SA)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2011-2015 Nicolas Bessi (Camptocamp SA)
+# Copyright 2016 Yannick Vaucher (Camptocamp SA)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {'name': 'Geospatial support for Odoo',
  'version': '9.0.1.2.5',
  'category': 'GeoBI',
