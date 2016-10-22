@@ -2,16 +2,14 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # Copyright 2016 Yannick Vaucher (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from openerp import models
-from openerp.exceptions import except_orm, MissingError
-from openerp.osv import fields
-from openerp.tools.translate import _
+from odoo import _, api, models
+from odoo.exceptions import except_orm, MissingError
 from . import geo_operators
 from . import fields as geo_fields
 
 
-DEFAULT_EXTENT = '-123164.85222423, 5574694.9538936, ' \
-    '1578017.6490538, 6186191.1800898'
+DEFAULT_EXTENT = ('-123164.85222423, 5574694.9538936, '
+                  '1578017.6490538, 6186191.1800898')
 
 
 class GeoModel(models.BaseModel):
@@ -26,7 +24,8 @@ class GeoModel(models.BaseModel):
     _register = False
     _transient = False  # True in a TransientModel
 
-    def _auto_init(self, cursor, context=None):
+    @api.model_cr_context
+    def _auto_init(self):
         """Initialize the columns in dB and Create the GIST index
         only create and update supported
 
@@ -34,98 +33,99 @@ class GeoModel(models.BaseModel):
         actually delegated to the field it self but to the ORM _auto_init
         function
         """
-        columns = {}
-        geo_columns = {}
-        tmp = {}
-        for kol in self._columns:
-            tmp[kol] = self._columns[kol]
-            k_obj = self._columns[kol]
-            if k_obj._type.startswith('geo_'):
-                geo_columns[kol] = self._columns[kol]
+        cr = self._cr
+
+        base_fields = {}
+        geo_fields = {}
+        tmp_fields = self._fields.copy()
+        for f_name, field in self._fields.iteritems():
+            if field.type.startswith('geo_'):
+                geo_fields[f_name] = field
             else:
-                columns[kol] = self._columns[kol]
-        self._columns = columns
-        res = super(GeoModel, self)._auto_init(cursor, context)
-        column_data = self._select_column_data(cursor)
-        for kol in geo_columns:
-            if not isinstance(geo_columns[kol], fields.function):
-                fct = geo_columns[kol].create_geo_column
-                if kol in column_data:
-                    fct = geo_columns[kol].update_geo_column
-                fct(cursor, kol, geo_columns[kol], self._table, self._name)
-        self._columns = tmp
-        self._field_create(cursor, context)
+                base_fields[f_name] = field
+        self._fields = base_fields
+        res = super(GeoModel, self)._auto_init()
+        column_data = self._select_column_data()
+        for f_name, geo_field in geo_fields.iteritems():
+            # XXX check if not computed field
+            if not geo_field.compute:
+                fct = geo_field.create_geo_column
+                if f_name in column_data:
+                    fct = geo_field.update_geo_column
+                fct(cr, f_name, self._table, self._name)
+        self._fields = tmp_fields
+        self._field_create()
         return res
 
-    def fields_get(self, cursor, uid, allfields=None, context=None):
+    @api.model
+    def fields_get(self, allfields=None, attributes=None):
         """Add geo_type definition for geo fields"""
         res = super(GeoModel, self).fields_get(
-            cursor, uid, allfields=allfields, context=context)
-        for field in res:
-            if field in self._columns:
-                col = self._columns[field]
-                if col._type.startswith('geo_'):
-                    if isinstance(col, (fields.function, fields.related)):
-                        res[field]['geo_type'] = {'type': col._type,
-                                                  'dim': col.dim or 2,
-                                                  'srid': col.srid or 900913}
-                    else:
-                        res[field]['geo_type'] = {'type': col._geo_type,
-                                                  'dim': col._dim,
-                                                  'srid': col._srid}
+            allfields=allfields, attributes=attributes)
+        for f_name in res:
+            field = self._fields.get(f_name)
+            if field and field.type.startswith('geo_'):
+                geo_type = {'type': field.type,
+                            'dim': field.dim,
+                            'srid': field.srid}
+                if field.compute or field.related:
+                    if not field.dim:
+                        geo_type['dim'] = 2
+                    if not field.srid:
+                        geo_type['srid'] = 900913
+                res[f_name]['geo_type'] = geo_type
         return res
 
-    def _get_geo_view(self, cursor, uid):
-        view_obj = self.pool.get('ir.ui.view')
-        geo_view_id = view_obj.search(cursor,
-                                      uid,
-                                      [('model', '=', self._name),
-                                       ('type', '=', 'geoengine')])
-        if not geo_view_id:
+    @api.model
+    def _get_geo_view(self):
+        geo_view = self.env['ir.ui.view'].search(
+            [('model', '=', self._name),
+             ('type', '=', 'geoengine')], limit=1)
+        if not geo_view:
             raise except_orm(
                 _('No GeoEngine view defined for the model %s') % self._name,
                 _('Please create a view or modify view mode'))
-        return view_obj.browse(cursor, uid, geo_view_id[0])
+        return geo_view
 
-    def fields_view_get(self, cursor, uid, view_id=None, view_type='form',
-                        context=None, toolbar=False, submenu=False):
+    @api.model
+    def fields_view_get(self, view_id=None, view_type='form',
+                        toolbar=False, submenu=False):
         """Returns information about the available fields of the class.
            If view type == 'map' returns geographical columns available"""
-        view_obj = self.pool.get('ir.ui.view')
-        raster_obj = self.pool.get('geoengine.raster.layer')
-        vector_obj = self.pool.get('geoengine.vector.layer')
-        field_obj = self.pool.get('ir.model.fields')
+        view_obj = self.env['ir.ui.view']
+        field_obj = self.env['ir.model.fields']
 
         def set_field_real_name(in_tuple):
             if not in_tuple:
                 return in_tuple
-            name = field_obj.read(cursor, uid, in_tuple[0], ['name'])['name']
+            name = field_obj.browse(in_tuple[0]).name
             out = (in_tuple[0], name, in_tuple[1])
             return out
         if view_type == "geoengine":
             if not view_id:
-                view = self._get_geo_view(cursor, uid)
+                view = self._get_geo_view()
             else:
-                view = view_obj.browse(cursor, uid, view_id)
+                view = view_obj.browse(view_id)
             res = super(GeoModel, self).fields_view_get(
-                cursor, uid, view.id, 'form', context, toolbar, submenu)
-            res['geoengine_layers'] = {}
-            res['geoengine_layers']['backgrounds'] = []
-            res['geoengine_layers']['actives'] = []
-            res['geoengine_layers']['projection'] = view.projection
-            restricted_extent = view.restricted_extent
-            res['geoengine_layers']['restricted_extent'] = restricted_extent
-            default_extent = view.default_extent or DEFAULT_EXTENT
-            res['geoengine_layers']['default_extent'] = default_extent
-            res['geoengine_layers']['default_zoom'] = view.default_zoom
+                view_id=view.id, view_type='form', toolbar=toolbar,
+                submenu=submenu)
+            res['geoengine_layers'] = {
+                'backgrounds': [],
+                'actives': [],
+                'projection': view.projection,
+                'restricted_extent': view.restricted_extent,
+                'default_extent': view.default_extent or DEFAULT_EXTENT,
+                'default_zoom': view.default_zoom,
+            }
+            # XXX still the case ?
             # TODO find why context in read does not work with webclient
             for layer in view.raster_layer_ids:
-                layer_dict = raster_obj.read(cursor, uid, layer.id)
+                layer_dict = layer.read()[0]
                 res['geoengine_layers']['backgrounds'].append(layer_dict)
             for layer in view.vector_layer_ids:
-                layer_dict = vector_obj.read(cursor, uid, layer.id)
+                layer_dict = layer.read()[0]
                 # get category groups for this vector layer
-                if layer.geo_repr == 'basic':
+                if layer.geo_repr == 'basic' and layer.symbol_ids:
                     layer_dict['symbols'] = layer.symbol_ids.read(
                         ['img', 'fieldname', 'value'])
                 layer_dict['attribute_field_id'] = set_field_real_name(
@@ -136,48 +136,46 @@ class GeoModel(models.BaseModel):
                 # adding geo column desc
                 geo_f_name = layer_dict['geo_field_id'][1]
                 res['fields'].update(
-                    self.fields_get(cursor, uid, [geo_f_name]))
+                    self.fields_get([geo_f_name]))
         else:
             return super(GeoModel, self).fields_view_get(
-                cursor, uid, view_id, view_type, context, toolbar, submenu)
+                view_id=view_id, view_type=view_type, toolbar=toolbar,
+                submenu=submenu)
         return res
 
-    def get_edit_info_for_geo_column(self, cursor, uid, column, context=None):
-        res = {}
-        raster_obj = self.pool['geoengine.raster.layer']
+    @api.model
+    def get_edit_info_for_geo_column(self, column):
+        raster_obj = self.env['geoengine.raster.layer']
 
         field = self._fields.get(column)
         if not field or not isinstance(field, geo_fields.GeoField):
             raise ValueError(
                 _("%s column does not exists or is not a geo field") % column)
-        view = self._get_geo_view(cursor, uid)
-        raster_id = raster_obj.search(cursor, uid,
-                                      [('view_id', '=', view.id),
-                                       ('use_to_edit', '=', True)],
-                                      context=context)
-        if not raster_id:
-            raster_id = raster_obj.search(cursor, uid,
-                                          [('view_id', '=', view.id)],
-                                          context=context)
-        if not raster_id:
+        view = self._get_geo_view()
+        raster = raster_obj.search([('view_id', '=', view.id),
+                                    ('use_to_edit', '=', True)], limit=1)
+        if not raster:
+            raster = raster_obj.search([('view_id', '=', view.id)], limit=1)
+        if not raster:
             raise MissingError(_('No raster layer for view %s') % (view.name,))
-        res['edit_raster'] = raster_obj.read(
-            cursor, uid, raster_id[0], context=context)
-        res['geo_type'] = field.geo_type
-        res['srid'] = field.srid
-        res['projection'] = view.projection
-        res['restricted_extent'] = view.restricted_extent
-        res['default_extent'] = view.default_extent
-        res['default_zoom'] = view.default_zoom
-        return res
+        return {
+            'edit_raster': raster.read()[0],
+            'geo_type': field.geo_type,
+            'srid': field.srid,
+            'projection': view.projection,
+            'restricted_extent': view.restricted_extent,
+            'default_extent': view.default_extent,
+            'default_zoom': view.default_zoom,
+        }
 
-    def geo_search(self, cursor, uid, domain=None, geo_domain=None, offset=0,
-                   limit=None, order=None, context=None):
+    @api.model
+    def geo_search(self, domain=None, geo_domain=None, offset=0,
+                   limit=None, order=None):
         """Perform a geo search it allows direct domain:
-           geo_search(r, uid,
-           domaine=[('name', 'ilike', 'toto']),
-           geo_domain=[('the_point', 'geo_intersect',
-                         myshaply_obj or mywkt or mygeojson)])
+           geo_search(
+               domain=[('name', 'ilike', 'toto']),
+               geo_domain=[('the_point', 'geo_intersect',
+                             myshaply_obj or mywkt or mygeojson)])
 
            We can also support indirect geo_domain (
               ‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] })
@@ -197,5 +195,5 @@ class GeoModel(models.BaseModel):
         domain = domain or []
         geo_domain = geo_domain or []
         return geo_operators.geo_search(
-            self, cursor, uid, domain=domain, geo_domain=geo_domain,
-            offset=offset, limit=limit, order=order, context=context)
+            self, domain=domain, geo_domain=geo_domain,
+            offset=offset, limit=limit, order=order)
