@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from openerp import fields, models
-from openerp.addons import base
+from odoo import api, fields, models
+from odoo.addons import base
 if 'geoengine' not in base.ir.ir_actions.VIEW_TYPES:
     base.ir.ir_actions.VIEW_TYPES.append(('geoengine', 'Geoengine'))
 
@@ -24,8 +24,10 @@ POSTGIS_GEO_TYPES = [('POINT', 'POINT'),
 class IrModelField(models.Model):
     _inherit = 'ir.model.fields'
 
-    def _get_fields_type(self, cr, uid, context=None):
-        cr.execute('select distinct ttype,ttype from ir_model_fields')
+    @api.model
+    def _get_fields_type(self):
+        cr = self._cr
+        cr.execute('SELECT DISTINCT ttype,ttype from ir_model_fields')
         res = cr.fetchall()
         to_return = list(set(res+GEO_TYPES))
         to_return.sort()
@@ -49,6 +51,5 @@ class IrModelField(models.Model):
     ttype = fields.Selection(
         '_get_fields_type',
         'Field Type',
-        size=64,
         required=True
     )
