@@ -105,13 +105,8 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     display_name: _lt('Geoengine'),
     icon: 'fa-map-o',
 
-    init: function(parent, dataset, view_id, options) {
-        this._super(parent);
-        this.set_default_options(options);
-        this.view_manager = parent;
-        this.dataset = dataset;
-        this.model = this.dataset.model;
-        this.view_id = view_id;
+    init: function() {
+        this._super.apply(this, arguments);
         this.view_type = 'geoengine'
         this.geometry_columns = {};
         this.overlaysGroup = null;
@@ -614,7 +609,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         this._super();
 
         // Wait for element to be rendered before adding the map
-        core.bus.on('DOM_updated', self.view_manager.is_in_DOM, function () {
+        core.bus.on('DOM_updated', self.ViewManager.is_in_DOM, function () {
             self.render_map();
         });
     },
