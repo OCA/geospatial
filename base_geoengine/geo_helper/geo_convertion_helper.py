@@ -22,19 +22,14 @@ def value_to_shape(value):
         # exception are ressource costly
         if '{' in value:
             geo_dict = geojson.loads(value)
-            shape_to_return = asShape(geo_dict)
-        elif value:
-            # if value is empty sting we return False to be orm coherent,
-            # may be we should return an empty shapely
-            shape_to_return = wkt.loads(value)
+            return asShape(geo_dict)
         else:
-            return False
+            return wkt.loads(value)
     elif hasattr(value, 'wkt'):
         if isinstance(value, BaseGeometry):
-            shape_to_return = value
+            return value
         else:
-            shape_to_return = wkt.loads(value.wkt)
+            return wkt.loads(value.wkt)
     else:
         raise TypeError('Write/create/search geo type must be wkt/geojson '
                         'string or must respond to wkt')
-    return shape_to_return
