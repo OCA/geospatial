@@ -47,7 +47,7 @@ var formatFeatureHTML = function(a, fields) {
     for (var key in a) {
         if (a.hasOwnProperty(key)) {
             var val = a[key];
-            if (val == false) {
+            if (val === false) {
                 continue;
             }
             var span = '';
@@ -107,7 +107,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
 
     init: function() {
         this._super.apply(this, arguments);
-        this.view_type = 'geoengine'
+        this.view_type = 'geoengine';
         this.geometry_columns = {};
         this.overlaysGroup = null;
         this.vectorSources = [];
@@ -153,7 +153,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         var self = this;
         options = {};
         rules = [];
-        for (i in symbols) {
+        for (var i in symbols) {
 
             new_rule = new OpenLayers.Rule({
                 filter: new OpenLayers.Filter.Comparison({
@@ -174,7 +174,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                     externalGraphic: "base_geoengine/static/img/map-marker.png"
                 }
             })
-        )
+        );
 
         style = new OpenLayers.Style(
             // base options
@@ -200,11 +200,11 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         var self = this;
         var geostat = null;
         var vectorSource = new ol.source.Vector({});
-        if (data.length == 0) {
+        if (data.length === 0) {
             return new ol.layer.Vector({
                 source: vectorSource,
                 title: cfg.name,
-            })
+            });
         }
         _.each(data, function(item) {
             var attributes = _.clone(item);
@@ -258,38 +258,28 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         var indicator = cfg.attribute_field_id[1];
         var opacity = 0.8; // TODO to be defined on cfg
         var begin_color = chroma(cfg.begin_color || DEFAULT_BEGIN_COLOR).alpha(opacity).css();
-        var begin_color = chroma(cfg.begin_color || DEFAULT_BEGIN_COLOR).alpha(opacity).css();
         var end_color = chroma(cfg.end_color || DEFAULT_END_COLOR).alpha(opacity).css();
         switch (cfg.geo_repr) {
-            /* case "basic":
-                if (!cfg.symbols) {
-                    break;
-                }
-                if (cfg.symbols.length > 0) {
-                    style = this.createMultiSymbolStyle(cfg.symbols);
-                    vl.styleMap = new OpenLayers.StyleMap({
-                        'default': style,
-                    });
-                } */
             case "colored":
                 var values = self.extractLayerValues(cfg, data);
                 var nb_class = cfg.nb_class || DEFAULT_NUM_CLASSES
                 var scale = chroma.scale([begin_color, end_color]);
                 var serie = new geostats(values);
+                var vals = null;
                 switch (cfg.classification) {
                     case "unique":
-                        var vals = serie.getClassUniqueValues();
+                        vals = serie.getClassUniqueValues();
                         scale = chroma.scale('RdYlBu').domain([0, vals.length], vals.length);
                         break;
                     case "quantile":
                         serie.getClassQuantile(nb_class);
-                        var vals = serie.getRanges();
+                        vals = serie.getRanges();
                         scale = scale.domain([0, vals.length], vals.length);
                         break;
                     case "interval":
                         serie.getClassEqInterval(nb_class);
                         displayLegond = true;
-                        var vals = serie.getRanges();
+                        vals = serie.getRanges();
                         scale = scale.domain([0, vals.length], vals.length);
                         break;
                 }
@@ -306,7 +296,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                         color: color
                     });
                     var stroke = new ol.style.Stroke({
-                        //color: color,
                         color: '#333333',
                         width: 1
                     });
@@ -336,7 +325,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                      },
                     legend: legend
                 };
-                break;
             case "proportion":
                 var values = self.extractLayerValues(cfg, data);
                 var serie = new geostats(values);
@@ -379,7 +367,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                      },
                      legend : ''
                 };
-                break;
             default: // basic
                 var fill = new ol.style.Fill({
                     color: begin_color
@@ -405,7 +392,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                      },
                     legend: ''
                 };
-                break;
         }
     },
 
@@ -416,7 +402,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             return idx;
         }
         // range classification
-        var separator = ' - '
+        var separator = ' - ';
         for(var i= 0; i < a.length; i++) {
             // all classification except uniqueValues
             if(a[i].indexOf(separator) != -1) {
@@ -617,7 +603,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         var selected_ids = [];
         features.forEach(function (x) {selected_ids.push(x.get('attributes').id);});
         var selection_domain = [['id', 'in', selected_ids]];
-        var searchview = this.ViewManager.searchview
+        var searchview = this.ViewManager.searchview;
         searchview.query.add({
             category: _lt("Geo selection"),
             values: {label: _lt("Geo selection")},
@@ -633,7 +619,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     open_record: function (feature, options) {
 
         var attributes = feature.get('attributes');
-        oid = attributes.id
+        var oid = attributes.id;
         if (this.dataset.select_id(oid)) {
             this.do_switch_view('form', null, options); //, null, { mode: "edit" });
         } else {

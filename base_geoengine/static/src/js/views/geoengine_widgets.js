@@ -115,7 +115,9 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     },
 
     set_value: function(value, zoom) {
-        zoom = (typeof zoom === 'undefined') ? true : zoom
+        var map_view = null;
+
+        zoom = (typeof zoom === 'undefined') ? true : zoom;
         this._super.apply(this, arguments);
         this.value = value;
 
@@ -132,7 +134,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
                 if (this.source){
                     var extent = this.source.getExtent();
                     if (zoom && extent != [Infinity, Infinity, -Infinity, -Infinity]) {
-                        var map_view = this.map.getView();
+                        map_view = this.map.getView();
                         if (map_view){
                             map_view.fit(extent, this.map.getSize(), {
                                 maxZoom:15
@@ -142,7 +144,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
                 }
             }
             else {
-                var map_view = this.map.getView();
+                map_view = this.map.getView();
                 // default_extent
                 if (map_view){
                     map_view.fit(this.default_extent.split(", "), this.map.getSize(), {
