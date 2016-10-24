@@ -39,9 +39,8 @@ var GeoengineMixin = {
                     layer: l.type,
                     style: 'default',
                     matrixSet: l.matrix_set,
-                    attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>\
-                              data <a href='http://map.lausanne.ch/' target='_blank'>&copy; Lausanne</a>"
-                }
+                    attribution: "<a href='http://www.camptocamp.com' style='color:orange;font-weight:bold;background-color:#FFFFFF' target='_blank'>Powered by Camptocamp</a>"
+                };
 
                 if (l.format_suffix) { opt.formatSuffix = l.format_suffix; }
                 if (l.request_encoding) { opt.requestEncoding = l.request_encoding; }
