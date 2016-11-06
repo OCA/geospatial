@@ -19,9 +19,10 @@
 #
 ##############################################################################
 from openerp.osv import fields, orm
-from openerp.addons import base
-if 'geoengine' not in base.ir.ir_actions.VIEW_TYPES:
-    base.ir.ir_actions.VIEW_TYPES.append(('geoengine', 'Geoengine'))
+from openerp.addons.base import ir
+
+if 'geoengine' not in ir.ir_actions.VIEW_TYPES:
+    ir.ir_actions.VIEW_TYPES.append(('geoengine', 'Geoengine'))
 
 GEO_TYPES = [('geo_polygon', 'geo_polygon'),
              ('geo_multi_polygon', 'geo_multi_polygon'),
