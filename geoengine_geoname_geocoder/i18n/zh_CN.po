@@ -34,7 +34,7 @@ msgstr ""
 #. module: geoengine_geoname_geocoder
 #: view:geoengine.geoname.encoder:geoengine_geoname_geocoder.geonames_geocoder_wizard
 msgid "Cancel"
-msgstr ""
+msgstr "取消"
 
 #. module: geoengine_geoname_geocoder
 #: model:ir.model,name:geoengine_geoname_geocoder.model_res_company
@@ -54,7 +54,7 @@ msgstr "创建时间"
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "显示名称"
 
 #. module: geoengine_geoname_geocoder
 #: field:res.company,enable_geocoding:0
@@ -100,7 +100,7 @@ msgstr "ID"
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "最后修改时间"
 
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,write_uid:0
@@ -131,4 +131,4 @@ msgstr ""
 #. module: geoengine_geoname_geocoder
 #: view:geoengine.geoname.encoder:geoengine_geoname_geocoder.geonames_geocoder_wizard
 msgid "or"
-msgstr ""
+msgstr "或"

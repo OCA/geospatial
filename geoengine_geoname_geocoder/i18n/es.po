@@ -40,7 +40,7 @@ msgstr "Cancelar"
 #. module: geoengine_geoname_geocoder
 #: model:ir.model,name:geoengine_geoname_geocoder.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Compañías"
 
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,create_uid:0
@@ -132,4 +132,4 @@ msgstr ""
 #. module: geoengine_geoname_geocoder
 #: view:geoengine.geoname.encoder:geoengine_geoname_geocoder.geonames_geocoder_wizard
 msgid "or"
-msgstr ""
+msgstr "o"

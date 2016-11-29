@@ -79,7 +79,7 @@ msgstr ""
 #. module: base_geoengine
 #: model:ir.ui.menu,name:base_geoengine.geoengine_base_view_menu
 msgid "Configuration"
-msgstr ""
+msgstr "Configuração"
 
 #. module: base_geoengine
 #: field:ir.model.fields,gist_index:0
@@ -135,7 +135,7 @@ msgstr ""
 #: view:geoengine.raster.layer:base_geoengine.geo_raster_view_form
 #: view:geoengine.vector.layer:base_geoengine.geo_vector_view_form
 msgid "General"
-msgstr ""
+msgstr "Geral"
 
 #. module: base_geoengine
 #: code:addons/base_geoengine/geo_field.py:89

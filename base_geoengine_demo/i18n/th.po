@@ -1,0 +1,240 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * base_geoengine_demo
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-09-17 10:39+0000\n"
+"PO-Revision-Date: 2016-09-17 10:39+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: Thai (https://www.transifex.com/oca/teams/23907/th/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: th\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_basictest0
+msgid "Basic ZIP"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: field:dummy.zip,city:0
+msgid "City"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_coloredrangetest0
+msgid "Colored range ZIP"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_coloredrangezipquantile0
+msgid "Colored range ZIP quantile"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: field:geoengine.demo.automatic.retailing.machine,the_point:0
+msgid "Coordinate"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: field:dummy.zip,create_uid:0
+#: field:geoengine.demo.automatic.retailing.machine,create_uid:0
+msgid "Created by"
+msgstr "สร้างโดย"
+
+#. module: base_geoengine_demo
+#: field:dummy.zip,create_date:0
+#: field:geoengine.demo.automatic.retailing.machine,create_date:0
+msgid "Created on"
+msgstr "สร้างเมื่อ"
+
+#. module: base_geoengine_demo
+#: field:dummy.zip,display_name:0
+#: field:geoengine.demo.automatic.retailing.machine,display_name:0
+msgid "Display Name"
+msgstr "ชื่อที่ใช้แสดง"
+
+#. module: base_geoengine_demo
+#: view:dummy.zip:base_geoengine_demo.dummy_zip_form
+#: view:dummy.zip:base_geoengine_demo.dummy_zip_tree
+msgid "Dummy"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:ir.ui.menu,name:base_geoengine_demo.geoengine_demo_menu
+msgid "GeoEngine Demo"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:ir.ui.menu,name:base_geoengine_demo.geoengine_demo_retail_menu
+msgid "GeoEngine Samples"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: view:dummy.zip:base_geoengine_demo.dummy_zip_form
+#: view:geoengine.demo.automatic.retailing.machine:base_geoengine_demo.geo_retail_machine_view_form
+msgid "Geometry"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: selection:geoengine.demo.automatic.retailing.machine,state:0
+msgid "HS"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: field:dummy.zip,id:0 field:geoengine.demo.automatic.retailing.machine,id:0
+msgid "ID"
+msgstr "รหัส"
+
+#. module: base_geoengine_demo
+#: field:dummy.zip,__last_update:0
+#: field:geoengine.demo.automatic.retailing.machine,__last_update:0
+msgid "Last Modified on"
+msgstr "แก้ไขครั้งสุดท้ายเมื่อ"
+
+#. module: base_geoengine_demo
+#: field:dummy.zip,write_uid:0
+#: field:geoengine.demo.automatic.retailing.machine,write_uid:0
+msgid "Last Updated by"
+msgstr "อัพเดทครั้งสุดท้ายโดย"
+
+#. module: base_geoengine_demo
+#: field:dummy.zip,write_date:0
+#: field:geoengine.demo.automatic.retailing.machine,write_date:0
+msgid "Last Updated on"
+msgstr "อัพเดทครั้งสุดท้ายเมื่อ"
+
+#. module: base_geoengine_demo
+#: field:geoengine.demo.automatic.retailing.machine,money_level:0
+msgid "Money level"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: field:dummy.zip,the_geom:0
+msgid "NPA Shape"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: selection:geoengine.demo.automatic.retailing.machine,state:0
+msgid "OK"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: field:geoengine.demo.automatic.retailing.machine,the_line:0
+msgid "Power supply line"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: field:dummy.zip,priority:0
+msgid "Priority"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: view:geoengine.demo.automatic.retailing.machine:base_geoengine_demo.geo_retail_machine_view_form
+#: view:geoengine.demo.automatic.retailing.machine:base_geoengine_demo.geo_retail_machine_view_tree
+#: model:ir.ui.menu,name:base_geoengine_demo.geoengine_retail_machine_menu
+msgid "Retail Machine"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinebasicline0
+msgid "Retail Machine Basic Line"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinebasicpoint0
+msgid "Retail Machine Basic point"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinecoloredontotalsales1
+msgid "Retail Machine Colored on total sales proportion"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinecoloredontotalsales0
+msgid "Retail Machine Colored on total sales quantile"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_retailmachinemapbox
+msgid "Retail Machine Mapbox"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinestatecolored0
+msgid "Retail Machine State colored"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:ir.actions.act_window,name:base_geoengine_demo.geoengine_view_retail_machine_action
+msgid "Retail Machines"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: view:geoengine.demo.automatic.retailing.machine:base_geoengine_demo.geo_retail_machine_view_search
+msgid "Search Retail Machine"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: view:dummy.zip:base_geoengine_demo.dummy_zip_search
+msgid "Search ZIP"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: field:geoengine.demo.automatic.retailing.machine,name:0
+msgid "Serial number"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: field:dummy.zip,total_sales:0
+msgid "Spatial! Total Sales"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: field:geoengine.demo.automatic.retailing.machine,state:0
+msgid "State"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: field:geoengine.demo.automatic.retailing.machine,total_sales:0
+msgid "Total sale"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: field:dummy.zip,name:0
+#: model:ir.ui.menu,name:base_geoengine_demo.zip_retail_machine
+msgid "ZIP"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:ir.actions.act_window,name:base_geoengine_demo.action_zip_tree
+msgid "ZIP Management"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_mapbox0
+msgid "ZIP Mapbox Light"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_test0
+msgid "ZIP OSM"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: view:geoengine.demo.automatic.retailing.machine:base_geoengine_demo.geo_retail_machine_view_form
+msgid "attributes"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_basic0
+msgid "basic"
+msgstr ""

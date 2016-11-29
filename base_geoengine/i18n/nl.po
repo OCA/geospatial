@@ -90,13 +90,13 @@ msgstr ""
 #: field:geoengine.raster.layer,create_uid:0
 #: field:geoengine.vector.layer,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,create_date:0
 #: field:geoengine.vector.layer,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: base_geoengine
 #: field:ir.ui.view,default_extent:0
@@ -209,7 +209,7 @@ msgstr ""
 #. module: base_geoengine
 #: field:geoengine.raster.layer,id:0 field:geoengine.vector.layer,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: base_geoengine
 #: selection:geoengine.vector.layer,classification:0
@@ -236,13 +236,13 @@ msgstr "Laatst bijgewerkt op"
 #: field:geoengine.raster.layer,write_uid:0
 #: field:geoengine.vector.layer,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,write_date:0
 #: field:geoengine.vector.layer,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,name:0 field:geoengine.vector.layer,name:0

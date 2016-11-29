@@ -59,7 +59,7 @@ msgstr "创建时间"
 #: field:dummy.zip,display_name:0
 #: field:geoengine.demo.automatic.retailing.machine,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "显示名称"
 
 #. module: base_geoengine_demo
 #: view:dummy.zip:base_geoengine_demo.dummy_zip_form
@@ -97,7 +97,7 @@ msgstr "ID"
 #: field:dummy.zip,__last_update:0
 #: field:geoengine.demo.automatic.retailing.machine,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "最后修改时间"
 
 #. module: base_geoengine_demo
 #: field:dummy.zip,write_uid:0

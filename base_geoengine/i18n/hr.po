@@ -4,13 +4,14 @@
 # 
 # Translators:
 # Bole <bole@dajmi5.com>, 2016
+# OCA Transbot <transbot@odoo-community.org>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-09-17 10:39+0000\n"
 "PO-Revision-Date: 2016-09-17 10:39+0000\n"
-"Last-Translator: Bole <bole@dajmi5.com>, 2016\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Croatian (https://www.transifex.com/oca/teams/23907/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -135,7 +136,7 @@ msgstr ""
 #: view:geoengine.raster.layer:base_geoengine.geo_raster_view_form
 #: view:geoengine.vector.layer:base_geoengine.geo_vector_view_form
 msgid "General"
-msgstr ""
+msgstr "Općenito"
 
 #. module: base_geoengine
 #: code:addons/base_geoengine/geo_field.py:89
@@ -474,7 +475,7 @@ msgstr ""
 #. module: base_geoengine
 #: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_action
 msgid "Views"
-msgstr ""
+msgstr "Pregled"
 
 #. module: base_geoengine
 #. openerp-web

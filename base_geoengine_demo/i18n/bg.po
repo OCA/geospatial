@@ -59,7 +59,7 @@ msgstr "Създадено на"
 #: field:dummy.zip,display_name:0
 #: field:geoengine.demo.automatic.retailing.machine,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Име за Показване"
 
 #. module: base_geoengine_demo
 #: view:dummy.zip:base_geoengine_demo.dummy_zip_form
@@ -124,7 +124,7 @@ msgstr ""
 #. module: base_geoengine_demo
 #: selection:geoengine.demo.automatic.retailing.machine,state:0
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #. module: base_geoengine_demo
 #: field:geoengine.demo.automatic.retailing.machine,the_line:0

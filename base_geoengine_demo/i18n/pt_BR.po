@@ -134,7 +134,7 @@ msgstr ""
 #. module: base_geoengine_demo
 #: field:dummy.zip,priority:0
 msgid "Priority"
-msgstr ""
+msgstr "Prioridade"
 
 #. module: base_geoengine_demo
 #: view:geoengine.demo.automatic.retailing.machine:base_geoengine_demo.geo_retail_machine_view_form
@@ -201,7 +201,7 @@ msgstr ""
 #. module: base_geoengine_demo
 #: field:geoengine.demo.automatic.retailing.machine,state:0
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #. module: base_geoengine_demo
 #: field:geoengine.demo.automatic.retailing.machine,total_sales:0

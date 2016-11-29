@@ -54,7 +54,7 @@ msgstr "Създадено на"
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Име за Показване"
 
 #. module: geoengine_geoname_geocoder
 #: field:res.company,enable_geocoding:0

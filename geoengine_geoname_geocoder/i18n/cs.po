@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-08 14:27+0000\n"
-"PO-Revision-Date: 2016-09-08 14:27+0000\n"
+"POT-Creation-Date: 2016-09-17 10:39+0000\n"
+"PO-Revision-Date: 2016-09-17 10:39+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Czech (https://www.transifex.com/oca/teams/23907/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -44,17 +44,17 @@ msgstr ""
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Vytvořil(a)"
 
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Vytvořeno"
 
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovaný název"
 
 #. module: geoengine_geoname_geocoder
 #: field:res.company,enable_geocoding:0
@@ -95,22 +95,22 @@ msgstr ""
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Naposled upraveno"
 
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Naposled upraveno"
 
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Naposled upraveno"
 
 #. module: geoengine_geoname_geocoder
 #: model:ir.ui.menu,name:geoengine_geoname_geocoder.actiongeonames_geocoder_wizard_menu
@@ -131,4 +131,4 @@ msgstr ""
 #. module: geoengine_geoname_geocoder
 #: view:geoengine.geoname.encoder:geoengine_geoname_geocoder.geonames_geocoder_wizard
 msgid "or"
-msgstr ""
+msgstr "nebo"

@@ -107,7 +107,7 @@ msgstr ""
 #: field:geoengine.raster.layer,display_name:0
 #: field:geoengine.vector.layer,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "显示名称"
 
 #. module: base_geoengine
 #: selection:geoengine.raster.layer,raster_type:0
@@ -135,7 +135,7 @@ msgstr ""
 #: view:geoengine.raster.layer:base_geoengine.geo_raster_view_form
 #: view:geoengine.vector.layer:base_geoengine.geo_vector_view_form
 msgid "General"
-msgstr ""
+msgstr "通用"
 
 #. module: base_geoengine
 #: code:addons/base_geoengine/geo_field.py:89
@@ -230,7 +230,7 @@ msgstr ""
 #: field:geoengine.raster.layer,__last_update:0
 #: field:geoengine.vector.layer,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "最后修改时间"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,write_uid:0
@@ -474,7 +474,7 @@ msgstr ""
 #. module: base_geoengine
 #: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_action
 msgid "Views"
-msgstr ""
+msgstr "视图"
 
 #. module: base_geoengine
 #. openerp-web

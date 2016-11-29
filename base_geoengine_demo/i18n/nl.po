@@ -47,13 +47,13 @@ msgstr ""
 #: field:dummy.zip,create_uid:0
 #: field:geoengine.demo.automatic.retailing.machine,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: base_geoengine_demo
 #: field:dummy.zip,create_date:0
 #: field:geoengine.demo.automatic.retailing.machine,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: base_geoengine_demo
 #: field:dummy.zip,display_name:0
@@ -91,7 +91,7 @@ msgstr ""
 #. module: base_geoengine_demo
 #: field:dummy.zip,id:0 field:geoengine.demo.automatic.retailing.machine,id:0
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: base_geoengine_demo
 #: field:dummy.zip,__last_update:0
@@ -103,13 +103,13 @@ msgstr "Laatst bijgewerkt op"
 #: field:dummy.zip,write_uid:0
 #: field:geoengine.demo.automatic.retailing.machine,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: base_geoengine_demo
 #: field:dummy.zip,write_date:0
 #: field:geoengine.demo.automatic.retailing.machine,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: base_geoengine_demo
 #: field:geoengine.demo.automatic.retailing.machine,money_level:0

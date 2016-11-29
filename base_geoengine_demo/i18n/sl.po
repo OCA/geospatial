@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-08 14:27+0000\n"
-"PO-Revision-Date: 2016-09-08 14:27+0000\n"
+"POT-Creation-Date: 2016-09-17 10:39+0000\n"
+"PO-Revision-Date: 2016-09-17 10:39+0000\n"
 "Last-Translator: Matjaž Mozetič <m.mozetic@matmoz.si>, 2016\n"
 "Language-Team: Slovenian (https://www.transifex.com/oca/teams/23907/sl/)\n"
 "MIME-Version: 1.0\n"
@@ -66,7 +66,7 @@ msgstr "Prikazni naziv"
 #: view:dummy.zip:base_geoengine_demo.dummy_zip_form
 #: view:dummy.zip:base_geoengine_demo.dummy_zip_tree
 msgid "Dummy"
-msgstr ""
+msgstr "Nadomestek"
 
 #. module: base_geoengine_demo
 #: model:ir.ui.menu,name:base_geoengine_demo.geoengine_demo_menu
@@ -142,47 +142,47 @@ msgstr "Prioriteta"
 #: view:geoengine.demo.automatic.retailing.machine:base_geoengine_demo.geo_retail_machine_view_tree
 #: model:ir.ui.menu,name:base_geoengine_demo.geoengine_retail_machine_menu
 msgid "Retail Machine"
-msgstr ""
+msgstr "Prodajni avtomat"
 
 #. module: base_geoengine_demo
 #: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinebasicline0
 msgid "Retail Machine Basic Line"
-msgstr ""
+msgstr "Osnovna postavka prodajnega avtomata"
 
 #. module: base_geoengine_demo
 #: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinebasicpoint0
 msgid "Retail Machine Basic point"
-msgstr ""
+msgstr "Osnovna točka prodajnega avtomata"
 
 #. module: base_geoengine_demo
 #: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinecoloredontotalsales1
 msgid "Retail Machine Colored on total sales proportion"
-msgstr ""
+msgstr "Prodajni avtomat obarvan glede na razmerje skupne prodaje"
 
 #. module: base_geoengine_demo
 #: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinecoloredontotalsales0
 msgid "Retail Machine Colored on total sales quantile"
-msgstr ""
+msgstr "Prodajni avtomat obarvan glede na prodajni kvantil"
 
 #. module: base_geoengine_demo
 #: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_retailmachinemapbox
 msgid "Retail Machine Mapbox"
-msgstr ""
+msgstr "Zemljevid prodajnih avtomatov"
 
 #. module: base_geoengine_demo
 #: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinestatecolored0
 msgid "Retail Machine State colored"
-msgstr ""
+msgstr "Obarvano stanje prodajnega avtomata"
 
 #. module: base_geoengine_demo
 #: model:ir.actions.act_window,name:base_geoengine_demo.geoengine_view_retail_machine_action
 msgid "Retail Machines"
-msgstr ""
+msgstr "Prodajni avtomati"
 
 #. module: base_geoengine_demo
 #: view:geoengine.demo.automatic.retailing.machine:base_geoengine_demo.geo_retail_machine_view_search
 msgid "Search Retail Machine"
-msgstr ""
+msgstr "Iskanje prodajnega avtomata"
 
 #. module: base_geoengine_demo
 #: view:dummy.zip:base_geoengine_demo.dummy_zip_search
@@ -197,7 +197,7 @@ msgstr "Serijska številka"
 #. module: base_geoengine_demo
 #: field:dummy.zip,total_sales:0
 msgid "Spatial! Total Sales"
-msgstr ""
+msgstr "Prostorsko! Skupna prodaja"
 
 #. module: base_geoengine_demo
 #: field:geoengine.demo.automatic.retailing.machine,state:0
@@ -223,7 +223,7 @@ msgstr "Upravljanje poštnih številk"
 #. module: base_geoengine_demo
 #: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_mapbox0
 msgid "ZIP Mapbox Light"
-msgstr ""
+msgstr "ZIP Mapbox Light"
 
 #. module: base_geoengine_demo
 #: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_test0
