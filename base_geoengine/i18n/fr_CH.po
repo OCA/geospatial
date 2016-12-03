@@ -4,13 +4,14 @@
 # 
 # Translators:
 # OCA Transbot <transbot@odoo-community.org>, 2016
+# leemannd <leemannd@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-17 10:39+0000\n"
-"PO-Revision-Date: 2016-09-17 10:39+0000\n"
-"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"POT-Creation-Date: 2016-11-29 11:35+0000\n"
+"PO-Revision-Date: 2016-11-29 11:35+0000\n"
+"Last-Translator: leemannd <leemannd@gmail.com>, 2016\n"
 "Language-Team: French (Switzerland) (https://www.transifex.com/oca/teams/23907/fr_CH/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -107,7 +108,7 @@ msgstr ""
 #: field:geoengine.raster.layer,display_name:0
 #: field:geoengine.vector.layer,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Nom affiché"
 
 #. module: base_geoengine
 #: selection:geoengine.raster.layer,raster_type:0
@@ -214,7 +215,7 @@ msgstr "ID"
 #. module: base_geoengine
 #: selection:geoengine.vector.layer,classification:0
 msgid "Interval"
-msgstr ""
+msgstr "Intervalle"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,overlay:0
@@ -230,7 +231,7 @@ msgstr ""
 #: field:geoengine.raster.layer,__last_update:0
 #: field:geoengine.vector.layer,__last_update:0
 msgid "Last Modified on"
-msgstr ""
+msgstr "Dernière modification le"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,write_uid:0
