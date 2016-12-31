@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-17 10:39+0000\n"
-"PO-Revision-Date: 2016-09-17 10:39+0000\n"
+"POT-Creation-Date: 2016-12-24 01:30+0000\n"
+"PO-Revision-Date: 2016-12-24 01:30+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Spanish (Costa Rica) (https://www.transifex.com/oca/teams/23907/es_CR/)\n"
 "MIME-Version: 1.0\n"
@@ -44,7 +44,7 @@ msgstr ""
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,create_date:0
@@ -105,12 +105,12 @@ msgstr ""
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultima actualización por"
 
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultima actualización en"
 
 #. module: geoengine_geoname_geocoder
 #: model:ir.ui.menu,name:geoengine_geoname_geocoder.actiongeonames_geocoder_wizard_menu
@@ -120,7 +120,7 @@ msgstr ""
 #. module: geoengine_geoname_geocoder
 #: model:ir.model,name:geoengine_geoname_geocoder.model_res_partner
 msgid "Partner"
-msgstr ""
+msgstr "Empresa"
 
 #. module: geoengine_geoname_geocoder
 #: view:geoengine.geoname.encoder:geoengine_geoname_geocoder.geonames_geocoder_wizard

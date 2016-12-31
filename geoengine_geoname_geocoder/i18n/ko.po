@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-09-17 10:39+0000\n"
-"PO-Revision-Date: 2016-09-17 10:39+0000\n"
+"POT-Creation-Date: 2016-12-24 01:30+0000\n"
+"PO-Revision-Date: 2016-12-24 01:30+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: Korean (https://www.transifex.com/oca/teams/23907/ko/)\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +34,7 @@ msgstr ""
 #. module: geoengine_geoname_geocoder
 #: view:geoengine.geoname.encoder:geoengine_geoname_geocoder.geonames_geocoder_wizard
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 #. module: geoengine_geoname_geocoder
 #: model:ir.model,name:geoengine_geoname_geocoder.model_res_company

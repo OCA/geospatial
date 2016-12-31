@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-17 01:51+0000\n"
-"PO-Revision-Date: 2016-12-17 01:51+0000\n"
+"POT-Creation-Date: 2016-12-24 01:30+0000\n"
+"PO-Revision-Date: 2016-12-24 01:30+0000\n"
 "Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
 "Language-Team: French (Canada) (https://www.transifex.com/oca/teams/23907/fr_CA/)\n"
 "MIME-Version: 1.0\n"
@@ -90,13 +90,13 @@ msgstr ""
 #: field:geoengine.raster.layer,create_uid:0
 #: field:geoengine.vector.layer,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,create_date:0
 #: field:geoengine.vector.layer,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: base_geoengine
 #: field:ir.ui.view,default_extent:0
@@ -107,7 +107,7 @@ msgstr ""
 #: field:geoengine.raster.layer,display_name:0
 #: field:geoengine.vector.layer,display_name:0
 msgid "Display Name"
-msgstr ""
+msgstr "Afficher le nom"
 
 #. module: base_geoengine
 #: selection:geoengine.raster.layer,raster_type:0
@@ -209,7 +209,7 @@ msgstr ""
 #. module: base_geoengine
 #: field:geoengine.raster.layer,id:0 field:geoengine.vector.layer,id:0
 msgid "ID"
-msgstr ""
+msgstr "Identifiant"
 
 #. module: base_geoengine
 #: selection:geoengine.vector.layer,classification:0
@@ -236,13 +236,13 @@ msgstr ""
 #: field:geoengine.raster.layer,write_uid:0
 #: field:geoengine.vector.layer,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,write_date:0
 #: field:geoengine.vector.layer,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: base_geoengine
 #: field:geoengine.raster.layer,name:0 field:geoengine.vector.layer,name:0
