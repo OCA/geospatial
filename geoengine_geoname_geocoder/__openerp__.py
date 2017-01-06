@@ -26,7 +26,6 @@
  'website': 'http://openerp.camptocamp.com',
  'depends': [
      'base',
-     'sale',
      'geoengine_partner'
  ],
  'data': [
