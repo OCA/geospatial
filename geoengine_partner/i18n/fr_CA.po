@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * geoengine_partner
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-12-31 03:12+0000\n"
+"PO-Revision-Date: 2016-12-31 03:12+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2016\n"
+"Language-Team: French (Canada) (https://www.transifex.com/oca/teams/23907/fr_CA/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: fr_CA\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: geoengine_partner
+#: field:res.partner,geo_point:0
+msgid "Addresses coordinate"
+msgstr ""
+
+#. module: geoengine_partner
+#: model:ir.model,name:geoengine_partner.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: geoengine_partner
+#: model:geoengine.raster.layer,name:geoengine_partner.geoengine_raster_layer_res_partner_osm
+msgid "Partner background"
+msgstr ""
+
+#. module: geoengine_partner
+#: model:geoengine.vector.layer,name:geoengine_partner.geoengine_vector_layer_res_partner
+msgid "Partner location"
+msgstr ""
