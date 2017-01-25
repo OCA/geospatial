@@ -1,24 +1,9 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Nicolas Bessi
-#    Copyright 2011-2012 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
+
+from .fields import GeoField
 
 UNION_MAPPING = {'|': 'OR', '&': 'AND'}
 
@@ -29,21 +14,21 @@ logger = logging.getLogger('geoengine.sql.debug')
 
 def _get_geo_func(model, domain):
     """Map operator to function we do not want to override __getattr__"""
-    current_field = model._columns[domain[0]]
-    current_operator = current_field._geo_operator
-    attr = "get_%s_sql" % (domain[1],)
-    if not hasattr(current_operator, attr):
-        raise ValueError(
-            'Field %s does not support %s' % (current_field, domain[1]))
-    func = getattr(current_operator, attr)
-    return func
+    current_field = model._fields[domain[0]]
+    if isinstance(current_field, GeoField):
+        current_operator = GeoOperator(current_field)
+        attr = "get_%s_sql" % (domain[1],)
+        if hasattr(current_operator, attr):
+            return getattr(current_operator, attr)
+    raise ValueError(
+        'Field %s does not support %s' % (current_field, domain[1]))
 
 
-def geo_search(model, cursor, uid, domain=None, geo_domain=None, offset=0,
-               limit=None, order=None, context=None):
+def geo_search(model, domain=None, geo_domain=None, offset=0,
+               limit=None, order=None):
     """Perform a geo search it allows direct domain:
     geo_search(
-        r, uid, domaine=[('name', 'ilike', 'toto']),
+        domain=[('name', 'ilike', 'toto']),
         geo_domain=[('the_point',
                      'geo_intersect',
                      myshaply_obj or mywkt or mygeojson)])
@@ -60,13 +45,12 @@ def geo_search(model, cursor, uid, domain=None, geo_domain=None, offset=0,
      * geo_contains
      * geo_intersect
     """
+    cr = model._cr
     domain = domain or []
     geo_domain = geo_domain or []
-    context = context or {}
-    model.pool.get('ir.model.access').check(cursor, uid, model._name, 'read')
-    query = model._where_calc(
-        cursor, uid, domain, active_test=True, context=context)
-    model._apply_ir_rules(cursor, uid, query, 'read', context=context)
+    model.env['ir.model.access'].check(model._name, 'read')
+    query = model._where_calc(domain, active_test=True)
+    model._apply_ir_rules(query, 'read')
     order_by = ''
     if order:
         order_by = model._generate_order_by(order, query) or ''
@@ -99,14 +83,13 @@ def geo_search(model, cursor, uid, domain=None, geo_domain=None, offset=0,
                     i = key.rfind('.')
                     rel_model = key[0:i]
                     rel_col = key[i + 1:]
-                    rel_model = model.pool.get(rel_model)
+                    rel_model = model.env[rel_model]
                     from_clause += ', %s' % (rel_model._table,)
                     att_where_sql = u''
                     # we compute the attributes search on spatial rel
                     if ref_search[key]:
                         rel_query = rel_model._where_calc(
-                            cursor, uid, ref_search[key], active_test=True,
-                            context=context)
+                            ref_search[key], active_test=True)
                         rel_res = rel_query.get_sql()
                         att_where_sql = rel_res[1]
                         where_clause_params += rel_res[2]
@@ -134,8 +117,8 @@ def geo_search(model, cursor, uid, domain=None, geo_domain=None, offset=0,
     sql = 'SELECT "%s".id FROM ' % model._table + from_clause + \
         where_statement + order_by + limit_str + offset_str
     # logger.debug(cursor.mogrify(sql, where_clause_params))
-    cursor.execute(sql, where_clause_params)
-    res = cursor.fetchall()
+    cr.execute(sql, where_clause_params)
+    res = cr.fetchall()
     if res:
         return [x[0] for x in res]
     else:
@@ -151,7 +134,7 @@ class GeoOperator(object):
         """Retrieves the expression to use in PostGIS statement for a spatial
            rel search"""
         try:
-            rel_model._columns[rel_col]
+            rel_model._fields[rel_col]
         except Exception:
             raise Exception(
                 'Model %s has no column %s' % (rel_model._name, rel_col))
@@ -167,7 +150,7 @@ class GeoOperator(object):
                     'search' % (op,))
             return " ST_Area(%s.%s) %s %s" % (table, col, op, value)
         else:
-            if rel_col and rel_model:
+            if rel_col and rel_model is not None:
                 compare_to = self.get_rel_field(rel_col, rel_model)
             else:
                 base = self.geo_field.entry_to_shape(value, same_type=False)
@@ -179,11 +162,11 @@ class GeoOperator(object):
                               rel_model=None, op=''):
         """return raw sql for all search based on St_**(a, b) posgis operator
         """
-        if rel_col and rel_model:
+        if rel_col and rel_model is not None:
             compare_to = self.get_rel_field(rel_col, rel_model)
         else:
             base = self.geo_field.entry_to_shape(value, same_type=False)
-            srid = self.geo_field._srid
+            srid = self.geo_field.srid
             compare_to = "ST_GeomFromText('%s',%s)" % (base.wkt, srid)
         return " %s(%s.%s, %s)" % (op, table, col, compare_to)
 
@@ -207,7 +190,7 @@ class GeoOperator(object):
         """Returns raw sql for geo_equal operator
         (used for equality comparison)
         """
-        if rel_col and rel_model:
+        if rel_col and rel_model is not None:
             compare_to = self.get_rel_field(rel_col, rel_model)
         else:
             base = self.geo_field.entry_to_shape(value, same_type=False)

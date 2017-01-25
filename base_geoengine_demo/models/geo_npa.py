@@ -1,23 +1,6 @@
 # -*- coding: utf-8 -*-
-##############################################################################
-#
-#    Author: Nicolas Bessi
-#    Copyright 2011-2012 Camptocamp SA
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
-##############################################################################
+# Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from openerp import fields, api
 
 from openerp.addons.base_geoengine import geo_model
@@ -65,8 +48,8 @@ class NPA(geo_model.GeoModel):
             else:
                 rec.total_sales = 0.0
 
-    def name_get(self, cursor, uid, ids, context=None):
+    def name_get(self):
         res = []
-        for r in self.browse(cursor, uid, ids):
-            res.append((r.id, u"%s %s" % (r.name, r.city)))
+        for rec in self:
+            res.append((rec.id, u"%s %s" % (rec.name, rec.city)))
         return res

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# © 2011-2012 Nicolas Bessi (Camptocamp SA)
-# © 2016 Yannick Vaucher (Camptocamp SA)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
+# Copyright 2016 Yannick Vaucher (Camptocamp SA)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from openerp import api, fields, models
 
 
@@ -24,8 +24,6 @@ class GeoRasterLayer(models.Model):
 
     raster_type = fields.Selection(
         [('osm', 'OpenStreetMap'),
-         ('mapbox', 'MapBox'),
-         # FIXME ('google', 'Google'), see OCA/geospatial#63
          ('wmts', 'WMTS'),
          ('d_wms', 'Distant WMS'),
          ('odoo', 'Odoo field')],
@@ -64,7 +62,6 @@ class GeoRasterLayer(models.Model):
         domain="[('service', '=', raster_type)]"
     )
     type = fields.Char(related='type_id.code')
-    mapbox_id = fields.Char("Mapbox ID", size=256)
     sequence = fields.Integer('layer priority lower on top', default=6)
     overlay = fields.Boolean('Is overlay layer?')
     field_id = fields.Many2one(
@@ -79,7 +76,7 @@ class GeoRasterLayer(models.Model):
     @api.one
     @api.depends('raster_type', 'is_wmts')
     def _get_has_type(self):
-        self.has_type = self.raster_type in ('google', 'mapbox', 'is_wmts')
+        self.has_type = self.raster_type == 'is_wmts'
 
     @api.one
     @api.depends('raster_type')

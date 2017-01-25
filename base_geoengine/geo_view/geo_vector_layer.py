@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-# © 2011-2012 Nicolas Bessi (Camptocamp SA)
-# © 2016 Yannick Vaucher (Camptocamp SA)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+# Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
+# Copyright 2016 Yannick Vaucher (Camptocamp SA)
+# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from openerp import fields, models
 
 SUPPORTED_ATT = ['float', 'integer', 'integer_big', 'related',
@@ -14,9 +14,8 @@ class GeoVectorLayer(models.Model):
     geo_repr = fields.Selection(
         [('basic', 'Basic'),
          # Actually we have to think if we should separate it for colored
-         # ('choropleth', 'Choropleth'),
          ('proportion', 'Proportional Symbol'),
-         ('colored', 'Colored range/Choropleth')],
+         ('colored', 'Colored range/Chroma.js')],
         string="Representation mode",
         required=True)
     classification = fields.Selection(
@@ -26,7 +25,7 @@ class GeoVectorLayer(models.Model):
         string="Classification mode",
         required=False)
     name = fields.Char(
-        'Layer Name', size=256, translate=True, required=True)
+        'Layer Name', translate=True, required=True)
     symbol_ids = fields.One2many('geoengine.vector.symbol', 'vector_layer_id')
     begin_color = fields.Char(
         'Begin color class', size=64, required=False, help='hex value')
