@@ -73,6 +73,7 @@ class ResPartner(geo_model.GeoModel):
         doc = xml.dom.minidom.parseString(res)
         codes = doc.getElementsByTagName('code')
         if len(codes) < 1:
+            logger.warn("Geonaming failed: %s", res)
             return False
         latitude, longitude = parse_code(codes[0])
         return fields.GeoPoint.from_latlon(self.env.cr, latitude, longitude)
@@ -95,8 +96,10 @@ class ResPartner(geo_model.GeoModel):
         filters = {}
         for add in self:
             logger.info('geolocalize %s', add.name)
-            if add.country_id.code and (add.city or add.zip):
-                filters[u'country'] = add.country_id.code.encode('utf-8')
+            country_code = add.country_id.code or \
+                self.env.user.company_id.country_id.code
+            if country_code and (add.city or add.zip):
+                filters[u'country'] = country_code.encode('utf-8')
                 filters[u'username'] = username.encode('utf-8')
                 if add.city:
                     filters[u'placename'] = add.city.encode('utf-8')
