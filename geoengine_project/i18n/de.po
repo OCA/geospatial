@@ -1,0 +1,44 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * geoengine_project
+# 
+# Translators:
+# Rudolf Schnapka <rs@techno-flex.de>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-14 02:46+0000\n"
+"PO-Revision-Date: 2017-01-14 02:46+0000\n"
+"Last-Translator: Rudolf Schnapka <rs@techno-flex.de>, 2017\n"
+"Language-Team: German (https://www.transifex.com/oca/teams/23907/de/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: geoengine_project
+#: field:project.project,geo_point:0
+msgid "Addresses coordinate"
+msgstr ""
+
+#. module: geoengine_project
+#: view:project.project:geoengine_project.geo_project_project_view_form
+msgid "Geo Localisation"
+msgstr ""
+
+#. module: geoengine_project
+#: model:ir.model,name:geoengine_project.model_project_project
+msgid "Project"
+msgstr "Projekt"
+
+#. module: geoengine_project
+#: model:geoengine.raster.layer,name:geoengine_project.geoengine_raster_layer_project_project
+msgid "Project background"
+msgstr ""
+
+#. module: geoengine_project
+#: model:geoengine.vector.layer,name:geoengine_project.geoengine_vector_layer_project_project
+msgid "Project location"
+msgstr ""
