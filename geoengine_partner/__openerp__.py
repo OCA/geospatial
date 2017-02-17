@@ -29,7 +29,7 @@
      'base_geoengine'
  ],
  'data': [
-     'geo_partner_view.xml'
+     'views/partner.xml'
  ],
  'installable': False,
  'application': True,
