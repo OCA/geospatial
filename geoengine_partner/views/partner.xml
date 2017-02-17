@@ -18,7 +18,7 @@
         <record id="ir_ui_view_geo_partner" model="ir.ui.view">
             <field name="name">Partner view</field>
             <field name="arch" type="xml">
-                <geoengine version="7.0">
+                <geoengine>
                     <field name="name" select="1"/>
                     <field name="title" />
                     <field name="function"/>
@@ -68,7 +68,7 @@
                 AABJRU5ErkJggg==
             </field>
         </record>
-        <record id="geoengine_vector_layer_res_partner_osm" model="geoengine.raster.layer">
+        <record id="geoengine_raster_layer_res_partner_osm" model="geoengine.raster.layer">
             <field name="raster_type">osm</field>
             <field name="name">Partner background</field>
             <field name="view_id" ref="ir_ui_view_geo_partner"/>
