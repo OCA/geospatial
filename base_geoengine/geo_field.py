@@ -241,6 +241,7 @@ class GeoFunction(fields.function):
     # shell class
     pass
 
+
 GeoFunction.postprocess = postprocess
 fields.geo_function = GeoFunction
 
@@ -248,5 +249,7 @@ fields.geo_function = GeoFunction
 class GeoRelated(fields.related):
     # shell class
     pass
+
+
 GeoRelated.postprocess = postprocess
 fields.geo_related = GeoRelated
