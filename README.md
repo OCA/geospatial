@@ -58,6 +58,7 @@ Requirements
   *  **geojson** http://pypi.python.org/pypi/geojson
 
 [//]: # (addons)
+
 Available addons
 ----------------
 addon | version | summary
