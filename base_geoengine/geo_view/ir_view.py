@@ -44,7 +44,7 @@ class IrUIView(models.Model):
         'geoengine.raster.layer', 'view_id', 'Raster layers', required=False)
 
     vector_layer_ids = fields.One2many(
-        'geoengine.vector.layer', 'view_id', 'Vector layers', required=True)
+        'geoengine.vector.layer', 'view_id', 'Vector layers', required=False)
 
     default_extent = fields.Char(
         'Default map extent in 900913', size=128,
