@@ -73,6 +73,7 @@ addon | version | summary
 [geoengine_maplausanne](geoengine_maplausanne/) | 9.0.1.0.0 | Geospatial - map.lausanne.ch layers
 [geoengine_swisstopo](geoengine_swisstopo/) | 9.0.1.0.0 | Geospatial - Swisstopo layers
 
+
 Unported addons
 ---------------
 addon | version | summary
