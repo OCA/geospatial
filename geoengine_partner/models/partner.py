@@ -2,8 +2,8 @@
 # Copyright 2011-2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from openerp.addons.base_geoengine import geo_model
-from openerp.addons.base_geoengine import fields
+from odoo.addons.base_geoengine import geo_model
+from odoo.addons.base_geoengine import fields
 
 
 class ResPartner(geo_model.GeoModel):
