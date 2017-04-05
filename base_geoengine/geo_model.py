@@ -35,15 +35,10 @@ class GeoModel(models.BaseModel):
         """
         cr = self._cr
 
-        base_fields = {}
         geo_fields = {}
-        tmp_fields = self._fields.copy()
         for f_name, field in self._fields.iteritems():
             if field.type.startswith('geo_'):
                 geo_fields[f_name] = field
-            else:
-                base_fields[f_name] = field
-        self._fields = base_fields
         res = super(GeoModel, self)._auto_init()
         column_data = self._select_column_data()
         for f_name, geo_field in geo_fields.iteritems():
@@ -53,8 +48,6 @@ class GeoModel(models.BaseModel):
                 if f_name in column_data:
                     fct = geo_field.update_geo_column
                 fct(cr, f_name, self._table, self._name)
-        self._fields = tmp_fields
-        self._field_create()
         return res
 
     @api.model
