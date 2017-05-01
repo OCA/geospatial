@@ -80,7 +80,7 @@ msgstr ""
 #. module: base_geoengine
 #: model:ir.ui.menu,name:base_geoengine.geoengine_base_view_menu
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiguration"
 
 #. module: base_geoengine
 #: field:ir.model.fields,gist_index:0
