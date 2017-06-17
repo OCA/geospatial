@@ -1,0 +1,39 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# * geoengine_sale
+# 
+# Translators:
+# OCA Transbot <transbot@odoo-community.org>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2017-01-14 02:46+0000\n"
+"PO-Revision-Date: 2017-01-14 02:46+0000\n"
+"Last-Translator: OCA Transbot <transbot@odoo-community.org>, 2017\n"
+"Language-Team: Romanian (https://www.transifex.com/oca/teams/23907/ro/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+#. module: geoengine_sale
+#: field:sale.order,geo_point:0
+msgid "Addresses coordinate"
+msgstr ""
+
+#. module: geoengine_sale
+#: model:geoengine.raster.layer,name:geoengine_sale.geoengine_raster_layer_sales_order_osm
+msgid "Sale Order background"
+msgstr ""
+
+#. module: geoengine_sale
+#: model:geoengine.vector.layer,name:geoengine_sale.geoengine_vector_layer_sales_order
+msgid "Sale order proportional"
+msgstr ""
+
+#. module: geoengine_sale
+#: model:ir.model,name:geoengine_sale.model_sale_order
+msgid "Sales Order"
+msgstr "Comandă vânzare"
