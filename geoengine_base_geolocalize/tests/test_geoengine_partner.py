@@ -23,12 +23,12 @@ import openerp.tests.common as common
 class TestGeoenginePartner(common.TransactionCase):
 
     def setUp(self):
-        common.TransactionCase.setUp(self)
+        super(TestGeoenginePartner, self).setUp()
 
     def test_get_geo_point(self):
         partner_id = self.env.ref('base.user_root').partner_id
-        partner_id.partner_longitude = False
-        partner_id.partner_latitude = False
+        partner_id.partner_longitude = 0
+        partner_id.partner_latitude = 0
         self.assertFalse(
             partner_id.geo_point, 'Should not have geo_point with no latlon')
         partner_id.partner_latitude = 20
