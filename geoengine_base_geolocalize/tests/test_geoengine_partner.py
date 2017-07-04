@@ -41,18 +41,19 @@ class TestGeoenginePartner(common.TransactionCase):
     def test_geo_localize(self):
         vals = {
             'name': 'Partner Project',
-            'street': 'Rue au bois la dame',
+            'street': 'Rue Neuve 74',
             'country_id': self.env.ref('base.be').id,
-            'zip': '6800',
+            'zip': '1000',
         }
         partner_id = self.env['res.partner'].create(vals)
         partner_id.name = 'Other Partner'
         partner_id.geo_localize()
+        # tested with one point into openstreet map
         self.assertAlmostEqual(
-            partner_id.partner_latitude, 49.95353, 5,
+            partner_id.partner_latitude, 50.85396, 5,
             'Latitude Should be equals')
         self.assertAlmostEqual(
-            partner_id.partner_longitude, 5.40539, 5,
+            partner_id.partner_longitude, 4.35719, 5,
             'Longitude Should be equals')
         domain = [('id', '=', partner_id.id)]
         partner_id.unlink()
