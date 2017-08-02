@@ -58,9 +58,6 @@ Requirements
 
   *  **geojson** http://pypi.python.org/pypi/geojson
 
-* Odoo patch
-
-  * In order to be able to create geometries, you will need to apply this patch on official Odoo branch (OCB is already patched): https://github.com/odoo/odoo/pull/10639
 
 [//]: # (addons)
 
