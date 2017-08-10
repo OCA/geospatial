@@ -198,13 +198,13 @@ class GeoLine(GeoField):
         :param cr: DB cursor
         :param point1: Point (BaseGeometry)
         :param point2: Point (BaseGeometry)
-        :return: LINESTRING HEX
+        :return: LINESTRING Object
         """
         sql = """
         SELECT
             ST_MakeLine(
-                ST_GeomFromText(%(wkt1)s, 4326),
-                ST_GeomFromText(%(wkt2)s, 4326)
+                ST_GeomFromText(%(wkt1)s, %(srid)s),
+                ST_GeomFromText(%(wkt2)s, %(srid)s)
             )
         """
         cr.execute(sql, {
