@@ -23,8 +23,11 @@
      'security/ir.model.access.csv',
  ],
  'external_dependencies': {
-     'python': ['shapely',
-                'geojson'],
+     'python': [
+        'shapely',
+        'geojson',
+        'simplejson'
+     ],
  },
  'qweb': ["static/src/xml/geoengine.xml"],
  'installable': True,
