@@ -184,6 +184,30 @@ class GeoLine(GeoField):
     type = 'geo_line'
     geo_type = 'LINESTRING'
 
+    @classmethod
+    def from_points(cls, cr, point1, point2):
+        """
+        Converts given points in parameter to a line.
+        :param cr: DB cursor
+        :param point1: Point (BaseGeometry)
+        :param point2: Point (BaseGeometry)
+        :return: LINESTRING HEX
+        """
+        sql = """
+        SELECT
+            ST_MakeLine(
+                ST_GeomFromText(%(wkt1)s, 4326),
+                ST_GeomFromText(%(wkt2)s, 4326)
+            )
+        """
+        cr.execute(sql, {
+            'wkt1': point1.wkt,
+            'wkt2': point2.wkt,
+            'srid': cls._slots['srid'],
+        })
+        res = cr.fetchone()
+        return cls.load_geo(res[0])
+
 
 class GeoMultiLine(GeoField):
     """Field for POSTGIS geometry MultiLine type"""
