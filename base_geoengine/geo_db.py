@@ -2,9 +2,9 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 """Helper to setup Postgis"""
-from openerp.exceptions import MissingError
-
 import logging
+
+from odoo.exceptions import MissingError
 
 logger = logging.getLogger('geoengine.sql')
 
