@@ -42,12 +42,13 @@ class GeoModel(models.BaseModel):
         res = super(GeoModel, self)._auto_init()
         column_data = self._select_column_data()
         for f_name, geo_field in geo_fields.iteritems():
-            # XXX check if not computed field
-            if not geo_field.compute:
-                fct = geo_field.create_geo_column
-                if f_name in column_data:
-                    fct = geo_field.update_geo_column
-                fct(cr, f_name, self._table, self._name)
+            # XXX check if not computed stored field
+            if geo_field.compute and not geo_field.store:
+                continue
+            fct = geo_field.create_geo_column
+            if f_name in column_data:
+                fct = geo_field.update_geo_column
+            fct(cr, f_name, self._table, self._name)
         return res
 
     @api.model
