@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 # Copyright 2015 Laurent Mignon Acsone SA/NV (http://www.acsone.eu)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import mock
-import simplejson
 from cStringIO import StringIO
 import logging
+import geojson
+import mock
+import simplejson
+
 from shapely.wkt import loads as wktloads
 from shapely.geometry import Polygon, MultiPolygon
 from shapely.geometry.linestring import LineString
 from shapely.geometry.point import Point
-import geojson
 
 import odoo.tests.common as common
 from odoo import fields
@@ -90,11 +91,11 @@ class TestGeoengine(common.TransactionCase):
                 </geoengine> """
         })
 
-    def _init_test_model(cls, model_cls):
-        registry = cls.env.registry
-        cr = cls.env.cr
+    def _init_test_model(self, model_cls):
+        registry = self.env.registry
+        cr = self.env.cr
         model_cls._build_model(registry, cr)
-        model = cls.env[model_cls._name].with_context(todo=[])
+        model = self.env[model_cls._name].with_context(todo=[])
         model._prepare_setup()
         model._setup_base(partial=False)
         model._setup_fields(partial=False)
@@ -189,10 +190,7 @@ class TestGeoengine(common.TransactionCase):
         ids = self.test_model.geo_search(
             domain=[],
             geo_domain=[
-                ('the_geom',
-                 'geo_contains',
-                 'POINT(1 1)'
-                 )
+                ('the_geom', 'geo_contains', 'POINT(1 1)')
             ])
         self.assertListEqual([self.dummy_id], ids)
 
