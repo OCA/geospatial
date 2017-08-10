@@ -17,6 +17,11 @@
      'data/npa_geom.xml',
      'security/ir.model.access.csv'
  ],
+ 'external_dependencies': {
+     'python': [
+         'geojson',
+     ],
+ },
  'installable': True,
  'application': True,
  }
