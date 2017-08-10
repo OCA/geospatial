@@ -11,6 +11,7 @@
                     <field name="view_id"/>
                     <field name="geo_field_id"/>
                     <field name="attribute_field_id" attrs="{'required': [('geo_repr', 'in', ['choropleth', 'proportion', 'colored'])]}"/>
+                    <field name="active_on_startup"/>
                     <field name="sequence"/>
                     <field name="readonly"/>
                 </group>
@@ -54,6 +55,7 @@
                 <field name="classification" select="1"/>
                 <field name="geo_field_id" select="1"/>
                 <field name="attribute_field_id" select="1"/>
+                <field name="active_on_startup"/>
                 <field name="sequence"/>
             </tree>
         </field>
