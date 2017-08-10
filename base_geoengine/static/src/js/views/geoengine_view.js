@@ -230,6 +230,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         var lv = new ol.layer.Vector({
             source: vectorSource,
             title: cfg.name,
+            active_on_startup: cfg.active_on_startup,
             // opacity: 0.8, //TODO cenfiguarble opacity to be applied on
             style: styleInfo.style,
         });
@@ -447,8 +448,8 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         });
 
         _.each(vectorLayers, function(vlayer) {
-            // keep only one vector layer active at startup
-            if (vlayer != vectorLayers[0]) {
+            // First vector always visible on startup
+            if (vlayer !== vectorLayers[0] && !vlayer.values_.active_on_startup) {
                 vlayer.setVisible(false);
             }
         });
