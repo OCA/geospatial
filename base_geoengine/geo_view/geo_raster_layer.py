@@ -35,7 +35,7 @@ class GeoRasterLayer(models.Model):
     url = fields.Char('Service URL', size=1024)
 
     # technical field to display or not wmts options
-    is_wmts = fields.Boolean(compute='_get_is_wmts')
+    is_wmts = fields.Boolean(compute='_compute_is_wmts')
     # wmts options
     matrix_set = fields.Char("matrixSet")
     format_suffix = fields.Char("formatSuffix", help="eg. png")
@@ -56,7 +56,7 @@ class GeoRasterLayer(models.Model):
     )
 
     # technical field to display or not layer type
-    has_type = fields.Boolean(compute='_get_has_type')
+    has_type = fields.Boolean(compute='_compute_has_type')
     type_id = fields.Many2one(
         'geoengine.raster.layer.type', "Layer",
         domain="[('service', '=', raster_type)]"
@@ -73,17 +73,18 @@ class GeoRasterLayer(models.Model):
         required=True)
     use_to_edit = fields.Boolean('Use to edit')
 
-    @api.one
+    @api.multi
     @api.depends('raster_type', 'is_wmts')
-    def _get_has_type(self):
-        self.has_type = self.raster_type == 'is_wmts'
+    def _compute_has_type(self):
+        for rec in self:
+            rec.has_type = rec.raster_type == 'is_wmts'
 
-    @api.one
+    @api.multi
     @api.depends('raster_type')
-    def _get_is_wmts(self):
-        self.is_wmts = self.raster_type == 'wmts'
+    def _compute_is_wmts(self):
+        for rec in self:
+            rec.is_wmts = rec.raster_type == 'wmts'
 
-    @api.one
     @api.onchange('raster_type')
     def onchange_set_wmts_options(self):
         """ Abstract method for WMTS modules to set default options """
