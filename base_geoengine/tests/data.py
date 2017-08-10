@@ -119,7 +119,7 @@ FORM_VIEW = {
             "geo_type": {
                 "dim": 2,
                 "srid": 900913,
-                "type": "MULTIPOLYGON"
+                "type": "geo_multi_polygon"
             },
             "required": False,
             "searchable": True,
