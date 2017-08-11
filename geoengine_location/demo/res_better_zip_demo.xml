@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2017 LasLabs Inc.
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record id="demo_res_better_zip_1" model="res.better.zip">
+        <field name="city">Paris</field>
+        <field name="latitude" eval="48.864716" />
+        <field name="longitude" eval="2.349014" />
+    </record>
+
+</odoo>
