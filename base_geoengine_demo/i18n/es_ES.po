@@ -202,7 +202,7 @@ msgstr ""
 #. module: base_geoengine_demo
 #: field:geoengine.demo.automatic.retailing.machine,state:0
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #. module: base_geoengine_demo
 #: field:geoengine.demo.automatic.retailing.machine,total_sales:0
