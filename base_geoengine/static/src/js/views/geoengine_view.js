@@ -8,6 +8,7 @@
  *---------------------------------------------------------
 */
 odoo.define('base_geoengine.GeoengineView', function (require) {
+"use strict";
 
 /*---------------------------------------------------------
  * Odoo geoengine view
@@ -15,17 +16,23 @@ odoo.define('base_geoengine.GeoengineView', function (require) {
 
 var core = require('web.core');
 var time = require('web.time');
+
 var View = require('web.View');
+var QWeb = require('web.QWeb');
+var GeoengineRecord = require('base_geoengine.Record');
+
+var formats = require('web.formats');
+var session = require('web.session');
+var utils = require('web.utils');
 
 var geoengine_common = require('base_geoengine.geoengine_common');
 
 var _lt = core._lt;
-var QWeb = core.qweb;
 
 //var map, layer, vectorLayers = [];
 //TODO: remove this DEBUG
 var map = null;
-this.zoom_to_extent_ctrl = null;
+
 /* CONSTANTS */
 var DEFAULT_BEGIN_COLOR = "#FFFFFF";
 var DEFAULT_END_COLOR = "#000000";
@@ -54,10 +61,10 @@ var formatFeatureHTML = function(a, fields) {
             if (fields.hasOwnProperty(key)) {
                 var field = fields[key];
                 var label = field.string;
-                if (field.type == 'selection') {
+                if (field.type === 'selection') {
                     // get display value of selection option
                     for (var option in field.selection) {
-                        if (field.selection[option][0] == val) {
+                        if (field.selection[option][0] === val) {
                             val = field.selection[option][1];
                             break;
                         }
@@ -67,7 +74,7 @@ var formatFeatureHTML = function(a, fields) {
                     str.push('<span style="font-weight: bold">' + label + '</span>: ' +val[1]);
                 } else {
                     span = '<span style="font-weight: bold">' + label + '</span>: ' +val;
-                     if (key == 'id') {
+                     if (key === 'id') {
                         oid = span;
                     } else {
                         str.push(span);
@@ -104,13 +111,22 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     template: "GeoengineView",
     display_name: _lt('Geoengine'),
     icon: 'fa-map-o',
+    events: {
+        'click a.ol-popup-closer': 'hide_popup',
+        'click a.ol-popup-edit': 'open_popup_record',
+    },
 
     init: function() {
         this._super.apply(this, arguments);
+        this.qweb = new QWeb(session.debug, {_s: session.origin});
         this.view_type = 'geoengine';
         this.geometry_columns = {};
         this.overlaysGroup = null;
         this.vectorSources = [];
+        this.zoom_to_extent_ctrl = null;
+        this.popup_element = undefined;
+        this.overlayPopup = undefined;
+        this.featurePopup = undefined;
     },
     load_view: function(context) {
         var self = this;
@@ -151,8 +167,10 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
 
     createMultiSymbolStyle: function(symbols) {
         var self = this;
-        options = {};
-        rules = [];
+        var options = {};
+        var rules = [];
+        var new_rule, style;
+
         for (var i in symbols) {
 
             new_rule = new OpenLayers.Rule({
@@ -189,6 +207,16 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         return style;
     },
 
+    open_popup_record: function() {
+        var self = this;
+        self.open_record(self.featurePopup);
+    },
+
+    hide_popup: function() {
+        var self = this;
+        self.overlayPopup.setPosition(undefined);
+    },
+
     /**
      * Method: createVectorLayer
      *
@@ -216,14 +244,14 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 vectorSource.addFeature(
                     new ol.Feature({
                         geometry: new ol.format.GeoJSON().readGeometry(json_geometry),
-                        attributes: attributes
+                        attributes: attributes,
                     })
                 );
             }
         });
-        styleInfo = self.styleVectorLayer(cfg, data);
+        var styleInfo = self.styleVectorLayer(cfg, data);
         // init legend
-        parentContainer = self.$el.find('#map_legend');
+        var parentContainer = self.$el.find('#map_legend');
         var elLegend = $(styleInfo.legend || '<div/>');
         elLegend.hide();
         parentContainer.append(elLegend);
@@ -279,7 +307,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                         break;
                     case "interval":
                         serie.getClassEqInterval(nb_class);
-                        displayLegond = true;
                         vals = serie.getRanges();
                         scale = scale.domain([0, vals.length], vals.length);
                         break;
@@ -289,6 +316,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                     colors.push(chroma(color).alpha(opacity).css());
                 });
                 var styles_map = {};
+                var styles;
                 _.each(colors, function(color) {
                     if (color in styles_map) {
                         return;
@@ -300,7 +328,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                         color: '#333333',
                         width: 1
                     });
-                    var styles = [
+                    styles = [
                         new ol.style.Style({
                           image: new ol.style.Circle({
                             fill: fill,
@@ -398,7 +426,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
 
     getClass :function(val, a) {
         // uniqueValues classification
-        idx = a.indexOf(val);
+        var idx = a.indexOf(val);
         if (idx > -1){
             return idx;
         }
@@ -406,12 +434,12 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         var separator = ' - ';
         for(var i= 0; i < a.length; i++) {
             // all classification except uniqueValues
-            if(a[i].indexOf(separator) != -1) {
+            if(a[i].indexOf(separator) !== -1) {
                 var item = a[i].split(separator);
                 if(val <= parseFloat(item[1])) {return i;}
             } else {
                 // uniqueValues classification
-                if(val == a[i]) {
+                if(val === a[i]) {
                     return i;
                 }
             }
@@ -434,18 +462,72 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         return out;
     },
 
+    createPopupOverlay: function() {
+        var self = this;
+        if(self.overlayPopup !== undefined) {
+            return self.overlayPopup;
+        }
+
+        var $popup = self.$('.layer-popup');
+        var popup_element = $popup.get(0);
+        var overlayPopup = new ol.Overlay({
+            element: popup_element,
+            positioning: 'bottom-center',
+            stopEvent: false
+        });
+        self.popup_element = popup_element;
+        self.overlayPopup = overlayPopup;
+        return overlayPopup;
+    },
+
+    getGeoengineRecord: function(record) {
+        var self = this;
+        var fields = self.fields_view.fields;
+        var record_options = {
+            fields: fields,
+            model: self.model,
+            qweb: self.qweb,
+        };
+        return new GeoengineRecord(self, record, record_options);
+    },
+
+    getCenterCoordinatesFromGeometry: function(geometry) {
+        /**
+         * Returns the center of geometry coordinatres.
+         */
+        return ol.extent.getCenter(geometry.getExtent());
+    },
+
+    showFeaturePopup: function(feature) {
+        var self = this;
+        var template_name = 'layer-box';
+        if (self.qweb.templates[template_name]) {
+            var geometry = feature.getGeometry();
+            var coord = self.getCenterCoordinatesFromGeometry(geometry);
+            self.overlayPopup.setPosition(coord);
+            self.featurePopup = feature;
+            var record = feature.get('attributes');
+            var geoengine_record = self.getGeoengineRecord(record);
+            self.$('.popup-content').empty();
+            geoengine_record.appendTo(self.$('.popup-content'));
+        }
+    },
+
     do_load_vector_data: function(data) {
-        if (!this.map) {
+        var self = this;
+        if (!self.map) {
             return;
         }
-        var self = this;
-        map.removeLayer(this.overlaysGroup);
 
-        var vectorLayers = this.createVectorLayers(data);
-        this.overlaysGroup = new ol.layer.Group({
+        map.removeLayer(self.overlaysGroup);
+
+        var vectorLayers = self.createVectorLayers(data);
+        self.overlaysGroup = new ol.layer.Group({
             title: 'Overlays',
             layers: vectorLayers,
         });
+
+        self.createPopupOverlay();
 
         _.each(vectorLayers, function(vlayer) {
             // First vector always visible on startup
@@ -453,19 +535,20 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 vlayer.setVisible(false);
             }
         });
-        map.addLayer(this.overlaysGroup);
+        map.addLayer(self.overlaysGroup);
+        map.addOverlay(self.overlayPopup);
 
         // zoom to data extent
         //map.zoomTo
         if (data.length) {
             var extent = vectorLayers[0].getSource().getExtent();
-            this.zoom_to_extent_ctrl.extent_ = extent;
-            this.zoom_to_extent_ctrl.changed();
+            self.zoom_to_extent_ctrl.extent_ = extent;
+            self.zoom_to_extent_ctrl.changed();
 
             // When user quit fullscreen map, the size is set to undefined
             // So we have to check this and recompute the size.
             var size = map.getSize();
-            if ( size === undefined ){
+            if (size === undefined ){
                 map.updateSize();
                 size = map.getSize();
             }
@@ -482,46 +565,68 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
 
     view_loading: function(fv) {
         var self = this;
-        this.fields_view = fv;
+        self.fields_view = fv;
         _.each(fv.geoengine_layers.actives, function(item) {
             self.geometry_columns[item.geo_field_id[1]] = true;
         });
         return $.when();
     },
 
+    willStart: function() {
+        var self = this;
+        var arch = self.fields_view.arch;
+        _.each(arch.children, function(child) {
+            if (child.tag === 'templates') {
+                self.qweb.add_template(utils.json_node_to_xml(child));
+            }
+        });
+        return self._super();
+    },
+
     update_info_box: function(features) {
         var self = this;
-        if (features.getLength() == 1){
+        var $map_info = $("#map_info");
+        var $map_infobox = $("#map_infobox");
+        var $map_info_open = $('#map_info_open');
+        var $map_info_filter_selection = $("#map_info_filter_selection");
+
+        if (features.getLength() === 1){
             var attributes = features.item(0).get('attributes');
-            $("#map_info").html(formatFeatureHTML(attributes, this.fields_view.fields));
-            $("#map_info_open").show();
-            $("#map_info_filter_selection").hide();
-            $("#map_infobox").off().click(function() {
+            $map_info.html(formatFeatureHTML(attributes, this.fields_view.fields));
+            $map_info_open.show();
+            $map_info_filter_selection.hide();
+            $map_infobox.off().click(function() {
                 self.open_record(features.item(0));
             });
-            $("#map_infobox").show();
+            $map_infobox.show();
         } else if (features.getLength() > 1) {
-            $("#map_info").html(formatFeatureListHTML(features));
-            $("#map_info_open").hide();
-            $("#map_info_filter_selection").show();
-            $("#map_infobox").off().click(function() {
+            $map_info.html(formatFeatureListHTML(features));
+            $map_info_open.hide();
+            $map_info_filter_selection.show();
+            $map_infobox.off().click(function() {
                 self.filter_selection(features);
             });
-            $("#map_infobox").show();
+            $map_infobox.show();
         } else {
-            $("#map_infobox").hide();
+            $map_infobox.hide();
+            self.hide_popup();
         }
     },
     register_interaction: function(){
         var self = this;
         // select interaction working on "click"
         var selectClick = new ol.interaction.Select({
-          condition: ol.events.condition.click
+            condition: ol.events.condition.click
         });
         selectClick.on('select', function(e) {
             var features = e.target.getFeatures();
             self.update_info_box(features);
-          });
+
+            if(features.getLength() > 0) {
+                var feature = features.item(0);
+                self.showFeaturePopup(feature);
+            }
+        });
 
         // select interaction working on "pointermove"
         var selectPointerMove = new ol.interaction.Select({
@@ -546,6 +651,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             var info = [];
             var extent = dragBox.getGeometry().getExtent();
             var layerVectors = self.map.getLayers().item(1).getLayers();
+            var vectorSource;
             layerVectors.forEach(function(lv) {
                 // enable selection only on visible layers
                 if (lv.getVisible()) {
@@ -566,12 +672,13 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     },
 
     render_map: function() {
+        var self = this;
         if (_.isUndefined(this.map)){
-            this.zoom_to_extent_ctrl = new ol.control.ZoomToExtent();
+            self.zoom_to_extent_ctrl = new ol.control.ZoomToExtent();
             map = new ol.Map({
                 layers: [new ol.layer.Group({
                     title: 'Base maps',
-                    layers: this.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
+                    layers: self.createBackgroundLayers(self.fields_view.geoengine_layers.backgrounds),
                 })],
                 target: 'olmap',
                 view: new ol.View({
@@ -581,13 +688,13 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 controls: ol.control.defaults().extend([
                     new ol.control.FullScreen(),
                     new ol.control.ScaleLine(),
-                    this.zoom_to_extent_ctrl
+                    self.zoom_to_extent_ctrl
                 ]),
             });
             var layerSwitcher = new ol.control.LayerSwitcher({});
             map.addControl(layerSwitcher);
-            this.map = map;
-            this.register_interaction();
+            self.map = map;
+            self.register_interaction();
         }
     },
 
@@ -618,7 +725,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     },
 
     open_record: function (feature, options) {
-
         var attributes = feature.get('attributes');
         var oid = attributes.id;
         if (this.dataset.select_id(oid)) {
