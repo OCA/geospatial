@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-01-14 02:46+0000\n"
-"PO-Revision-Date: 2017-01-14 02:46+0000\n"
+"POT-Creation-Date: 2017-08-19 02:30+0000\n"
+"PO-Revision-Date: 2017-08-19 02:30+0000\n"
 "Last-Translator: Peter Hageman <hageman.p@gmail.com>, 2017\n"
 "Language-Team: Dutch (Netherlands) (https://www.transifex.com/oca/teams/23907/nl_NL/)\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: geoengine_geoname_geocoder
-#: code:addons/geoengine_geoname_geocoder/res_partner.py:90
+#: code:addons/geoengine_geoname_geocoder/res_partner.py:91
 #, python-format
 msgid ""
 "A username is required to access http://ws.geonames.org/ \n"
@@ -34,7 +34,7 @@ msgstr ""
 #. module: geoengine_geoname_geocoder
 #: view:geoengine.geoname.encoder:geoengine_geoname_geocoder.geonames_geocoder_wizard
 msgid "Cancel"
-msgstr ""
+msgstr "Verwijderen"
 
 #. module: geoengine_geoname_geocoder
 #: model:ir.model,name:geoengine_geoname_geocoder.model_res_company
@@ -44,12 +44,12 @@ msgstr ""
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,create_date:0
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,display_name:0
@@ -82,7 +82,7 @@ msgid "GeoEngine Backend"
 msgstr ""
 
 #. module: geoengine_geoname_geocoder
-#: code:addons/geoengine_geoname_geocoder/res_partner.py:113
+#: code:addons/geoengine_geoname_geocoder/res_partner.py:116
 #, python-format
 msgid "Geoencoding fails"
 msgstr ""
@@ -105,12 +105,12 @@ msgstr "Laatst gewijzigd op"
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,write_uid:0
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: geoengine_geoname_geocoder
 #: field:geoengine.geoname.encoder,write_date:0
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: geoengine_geoname_geocoder
 #: model:ir.ui.menu,name:geoengine_geoname_geocoder.actiongeonames_geocoder_wizard_menu
