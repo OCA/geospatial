@@ -409,7 +409,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                       image: new ol.style.Circle({
                         fill: fill,
                         stroke: stroke,
-                        radius: 5
+                        radius: self.getBasicCircleRadius(cfg, data),
                       }),
                       fill: fill,
                       stroke: stroke
@@ -422,6 +422,10 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                     legend: ''
                 };
         }
+    },
+
+    getBasicCircleRadius: function(cfg, data) {
+        return 5;
     },
 
     getClass :function(val, a) {
@@ -612,11 +616,37 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             self.hide_popup();
         }
     },
+
+    get_custom_selected_style_function: function() {
+        var self = this;
+        return function (feature, resolution) {
+            var geometryType = feature.getGeometry().getType();
+            var styles = ol.style.Style.createDefaultEditing();
+            var geometryStyle = styles[geometryType];
+            if (geometryType !== ol.geom.GeometryType.POINT) {
+                return geometryStyle;
+            }
+
+            var geometryStylePoint = geometryStyle[0];
+            return [new ol.style.Style({
+                fill: geometryStylePoint.getFill(),
+                stroke: geometryStylePoint.getStroke(),
+                image: new ol.style.Circle({
+                    fill: geometryStylePoint.image_.getFill(),
+                    stroke: geometryStylePoint.image_.getStroke(),
+                    radius: self.getBasicCircleRadius(),
+                })
+            })];
+        }
+    },
+
     register_interaction: function(){
         var self = this;
         // select interaction working on "click"
+
         var selectClick = new ol.interaction.Select({
-            condition: ol.events.condition.click
+            condition: ol.events.condition.click,
+            style: self.get_custom_selected_style_function(),
         });
         selectClick.on('select', function(e) {
             var features = e.target.getFeatures();
@@ -630,7 +660,8 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
 
         // select interaction working on "pointermove"
         var selectPointerMove = new ol.interaction.Select({
-          condition: ol.events.condition.pointerMove
+            condition: ol.events.condition.pointerMove,
+            style: self.get_custom_selected_style_function(),
         });
 
         // a DragBox interaction used to select features by drawing boxes

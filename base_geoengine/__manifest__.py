@@ -8,12 +8,11 @@
     'category': 'GeoBI',
     'author': "Camptocamp,ACSONE SA/NV,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
-    'website': 'http://openerp.camptocamp.com',
+    'website': 'https://github.com/OCA/geospatial',
     'depends': [
         'base',
         'web'
     ],
-    'init_xml': [],
     'data': [
         'security/data.xml',
         'views/base_geoengine_view.xml',
@@ -30,7 +29,9 @@
             'simplejson'
         ],
     },
-    'qweb': ["static/src/xml/geoengine.xml"],
+    'qweb': [
+        'static/src/xml/geoengine.xml',
+    ],
     'installable': True,
     'pre_init_hook': 'init_postgis',
 }
