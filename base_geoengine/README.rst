@@ -56,6 +56,7 @@ Contributors
 * Sandy Carter <sandy.carter@savoirfairelinux.com>
 * Vincent Renaville <vincent.renaville@camptocamp.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
+* Benjamin Willig <benjamin.willig@acsone.eu>
 
 Maintainer
 ----------
