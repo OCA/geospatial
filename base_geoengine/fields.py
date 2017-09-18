@@ -192,12 +192,13 @@ class GeoLine(GeoField):
     geo_type = 'LINESTRING'
 
     @classmethod
-    def from_points(cls, cr, point1, point2):
+    def from_points(cls, cr, point1, point2, srid=None):
         """
         Converts given points in parameter to a line.
         :param cr: DB cursor
         :param point1: Point (BaseGeometry)
         :param point2: Point (BaseGeometry)
+        :param srid: SRID
         :return: LINESTRING Object
         """
         sql = """
@@ -210,7 +211,7 @@ class GeoLine(GeoField):
         cr.execute(sql, {
             'wkt1': point1.wkt,
             'wkt2': point2.wkt,
-            'srid': cls._slots['srid'],
+            'srid': srid or cls._slots['srid'],
         })
         res = cr.fetchone()
         return cls.load_geo(res[0])
