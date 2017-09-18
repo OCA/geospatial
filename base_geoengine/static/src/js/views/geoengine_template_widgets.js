@@ -1,6 +1,5 @@
 /*---------------------------------------------------------
  * Odoo base_geoengine
- * Contributor N. Bessi Copyright Camptocamp SA
  * Author Benjamin Willig 2017 Acsone SA/NV
  *---------------------------------------------------------
 */
@@ -8,11 +7,9 @@
 odoo.define('base_geoengine.template_widgets', function (require) {
     "use strict";
 
-    var core = require('web.core');
     var formats = require('web.formats');
     var pyeval = require('web.pyeval');
     var Registry = require('web.Registry');
-    var session = require('web.session');
     var Widget = require('web.Widget');
 
     /**
