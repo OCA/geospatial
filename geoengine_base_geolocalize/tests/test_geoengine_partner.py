@@ -1,29 +1,10 @@
 # -*- coding: utf-8 -*-
-#
-#
-#    Authors: Jonathan Nemry
-#    Copyright (c) 2015 Acsone SA/NV (http://www.acsone.eu)
-#
-#    This program is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU Affero General Public License as
-#    published by the Free Software Foundation, either version 3 of the
-#    License, or (at your option) any later version.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU Affero General Public License for more details.
-#
-#    You should have received a copy of the GNU Affero General Public License
-#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
+# Copyright 2015-2017 ACSONE SA/NV (<http://acsone.eu>)
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 import odoo.tests.common as common
 
 
 class TestGeoenginePartner(common.TransactionCase):
-
-    def setUp(self):
-        common.TransactionCase.setUp(self)
 
     def test_get_geo_point(self):
         partner_id = self.env.ref('base.user_root').partner_id
