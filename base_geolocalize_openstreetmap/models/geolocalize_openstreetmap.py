@@ -13,6 +13,7 @@ _logger = logging.getLogger(__name__)
 class GeoengineGeolocalizeOpenStreetmap(models.AbstractModel):
 
     _name = 'geoengine.geolocalize.openstreetmap'
+    _url = 'http://nominatim.openstreetmap.org/search'
 
     @api.model
     def _geocode_address(
@@ -21,7 +22,6 @@ class GeoengineGeolocalizeOpenStreetmap(models.AbstractModel):
         """Get the latitude and longitude by requesting "mapquestapi"
         see http://open.mapquestapi.com/geocoding/
         """
-        url = 'http://nominatim.openstreetmap.org/search'
         pay_load = {
             'limit': 1,
             'format': 'json',
@@ -33,7 +33,7 @@ class GeoengineGeolocalizeOpenStreetmap(models.AbstractModel):
             'countryCodes': country_codes,
         }
 
-        request_result = requests.get(url, params=pay_load)
+        request_result = requests.get(self._url, params=pay_load)
         try:
             request_result.raise_for_status()
         except Exception as e:
