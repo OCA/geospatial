@@ -80,8 +80,40 @@
     <geoengine>
       <field name="name" select="1"/>
       <field name="total_sales" select="1"/>
+      <field name="zip_id"/>
       <field name="money_level"/>
       <field name="state"/>
+
+      <templates>
+          <t t-name="layer-box">
+              <div id="content">
+                  <b>
+                      <field name="name"/>
+                    <t t-if="record.zip_id.raw_value">
+                      (<field name="zip_id"/>)
+                    </t>
+                  </b>
+                  <hr/>
+                  <div class="row">
+                      <div class="col-xs-4">
+                          <b>Total Sales:</b>
+                      </div>
+                      <div class="col-xs-8">
+                          <field name="total_sales"/>
+                      </div>
+                  </div>
+                  <br/>
+                  <div class="row">
+                      <div class="col-xs-4">
+                          <b>Money level:</b>
+                      </div>
+                      <div class="col-xs-8">
+                          <field name="money_level"/>
+                      </div>
+                  </div>
+              </div>
+          </t>
+      </templates>
     </geoengine>
   </field>
   <field eval="16" name="priority"/>

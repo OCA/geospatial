@@ -24,6 +24,58 @@ The module also requires two additional python libs:
 
 for a complete documentation please refer to the `public documenation <http://oca.github.io/geospatial/index.html>`_
 
+Usage
+=====
+
+If you created a map view, you can create a custom view when clicking on a record.
+This can be achieved by creating an HTML architecture insides a templates div.
+
+For example, if you want to create a custom view for partners, you can proceed like
+following.
+
+.. code:: xml
+
+    <geoengine>
+        <field name="name"/>
+        <field name="street"/>
+        <field name="city"/>
+        <field name="zip"/>
+        <field name="country_id"/>
+
+        <templates>
+            <t t-name="layer-box">
+                <div id="content">
+                    <b>
+                        <field name="name"/>
+                    </b>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <b>Country:</b>
+                        </div>
+                        <div class="col-xs-8">
+                            <field name="country_id"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4">
+                            <b>City:</b>
+                        </div>
+                        <div class="col-xs-8">
+                          <field name="city"/>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </templates>
+    </geoengine>
+
+Here is an example of a custom geoengine record popup.
+
+.. image:: ./static/docs/img/marker-popup-example.png
+   :alt: Popup example
+
 Known issues / Roadmap
 ======================
 
@@ -32,7 +84,7 @@ Known issues / Roadmap
    It should work using `do_switch_view` and this probably requires to set `self.dataset.index`
  * A good way to open a record from map should be done with double click.
    However selection handlers have difficulties to work nice with click events.
-
+ * Find a solution when two geometry objects overlap on the map
 
 Bug Tracker
 ===========
