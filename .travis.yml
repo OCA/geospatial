@@ -1,0 +1,36 @@
+sudo: false
+cache: pip
+
+addons:
+  apt:
+    packages:
+      - expect-dev  # provides unbuffer utility
+      - python-lxml # because pip installation is slow
+
+language: python
+
+python:
+  - "3.5"
+
+
+env:
+  matrix:
+  - VERSION="11.0" LINT_CHECK="1"
+  - VERSION="11.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0"
+  - VERSION="11.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0" DOCS="1"
+  global:
+    secure: "HLfds+sQG4JcM53.5b/sTemGvBlVNdfGc4XvJ+py2rx25F4BWojpbOYx44nSiUjBO9U6Eo5kwiK0mWEXoPGg6trQcbiur9kgHrV3+hydlUUKe2/P/mnoP2JAxtu0JBSLxNcG40FdIwEE3Sd0w/ocmxMOp3RmOOVacAY48eWYeh8="
+
+install:
+  - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
+  - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
+  - travis_install_nightly
+  - pip install geojson Shapely sphinx sphinx_bootstrap_theme sphinx-intl odoo-sphinx-autodoc
+
+script:
+  - if [ -z "$DOCS" ] ; then travis_run_tests; fi
+  - if [ -n "$DOCS" ] ; then ./.travis_build_doc; fi
+
+after_success:
+  - if [ -z "$DOCS" ] ; then coveralls; fi
+  - if [ -n "$DOCS" ] ; then ./.travis_push_doc; fi
