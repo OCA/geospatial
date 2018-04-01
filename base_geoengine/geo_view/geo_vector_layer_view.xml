@@ -14,6 +14,7 @@
                     <field name="active_on_startup"/>
                     <field name="sequence"/>
                     <field name="readonly"/>
+		    <field name="display_polygon_labels"/>
                 </group>
                 <group string="Representation" col="4" colspan="4">
                     <field name="geo_repr"/>
