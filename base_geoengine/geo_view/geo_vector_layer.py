@@ -46,3 +46,4 @@ class GeoVectorLayer(models.Model):
     readonly = fields.Boolean('Layer is read only')
     active_on_startup = fields.Boolean(
         help="Layer will be shown on startup if checked.")
+    display_polygon_labels = fields.Boolean('Display Labels on Polygon')
