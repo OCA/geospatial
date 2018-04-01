@@ -211,6 +211,12 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             _.each(_.keys(self.geometry_columns), function(item) {
                 delete attributes[item];
             });
+
+            if (cfg.display_polygon_labels == true)
+                attributes['label']=item[cfg.attribute_field_id[1]];
+            else
+                attributes['label']='';
+
             var json_geometry = item[cfg.geo_field_id[1]];
             if (json_geometry) {
                 vectorSource.addFeature(
@@ -375,6 +381,16 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                     color: '#333333',
                     width: 1
                 });
+                var olStyleText = new ol.style.Text({
+                    text: "",
+                    fill: new ol.style.Fill({
+                      color: "#000000"
+                    }),
+                    stroke: new ol.style.Stroke({
+                      color: "#FFFFFF",
+                      width: 2
+                    })
+                });
                 var styles = [
                     new ol.style.Style({
                       image: new ol.style.Circle({
@@ -383,11 +399,16 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                         radius: 5
                       }),
                       fill: fill,
-                      stroke: stroke
+                      stroke: stroke,
+                      text: olStyleText,
                     })
                 ];
                 return {
                      style : function(feature, resolution) {
+                          var label_text = feature.values_.attributes['label'];
+                          if(label_text === false)
+                            label_text = '';
+                          styles[0].text_.text_ = label_text;
                           return styles;
                      },
                     legend: ''
