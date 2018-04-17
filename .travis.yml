@@ -9,6 +9,11 @@ addons:
 
 language: python
 
+before_script:
+  - createdb openerp_test
+  - psql -U postgres -d openerp_test -c "create extension postgis"
+  - psql -U postgres -d openerp_test -c "create extension postgis_topology"
+
 python:
   - "2.7"
 
