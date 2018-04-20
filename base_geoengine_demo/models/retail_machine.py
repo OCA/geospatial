@@ -3,9 +3,9 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import geojson
 
-from openerp import api, fields
-from openerp.addons.base_geoengine import geo_model
-from openerp.addons.base_geoengine import fields as geo_fields
+from odoo import api, fields
+from odoo.addons.base_geoengine import geo_model
+from odoo.addons.base_geoengine import fields as geo_fields
 
 
 class RetailMachine(geo_model.GeoModel):
