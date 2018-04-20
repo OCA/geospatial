@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from openerp.addons.base_geoengine import geo_model, fields
+from odoo.addons.base_geoengine import geo_model, fields
 
 
 class SaleOrder(geo_model.GeoModel):
