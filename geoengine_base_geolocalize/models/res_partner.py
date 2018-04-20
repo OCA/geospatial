@@ -20,11 +20,11 @@
 ##############################################################################
 
 import logging
-from openerp import api, fields
-from openerp import exceptions
-from openerp.tools.translate import _
-from openerp.addons.base_geoengine import geo_model
-from openerp.addons.base_geoengine import fields as geo_fields
+from odoo import api, fields
+from odoo import exceptions
+from odoo.tools.translate import _
+from odoo.addons.base_geoengine import geo_model
+from odoo.addons.base_geoengine import fields as geo_fields
 
 try:
     import requests
