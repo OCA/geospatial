@@ -2,7 +2,7 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # Copyright 2016 Yannick Vaucher (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 
 class GeoRasterLayerType(models.Model):
