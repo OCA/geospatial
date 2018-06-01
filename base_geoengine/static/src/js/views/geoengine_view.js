@@ -270,6 +270,9 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             }
         });
         this.vectorSources.push(vectorSource);
+        if (cfg.layer_opacity){
+            lv.setOpacity(cfg.layer_opacity);
+        }
         return lv;
     },
 
