@@ -13,6 +13,7 @@ from .geo_helper import geo_convertion_helper as convert
 logger = logging.getLogger(__name__)
 try:
     from shapely.geometry import Point
+    from shapely.geometry.base import BaseGeometry
     from shapely.wkb import loads as wkbloads
     import geojson
 except ImportError:
@@ -56,9 +57,29 @@ class GeoField(Field):
         else:
             return shape_to_write.wkt
 
+    def convert_to_cache(self, value, record, validate=True):
+        val = value
+        if isinstance(value, BaseGeometry):
+            val = value.wkb_hex
+        return val
+
+    def convert_to_record(self, value, record):
+        if not value:
+            return False
+        if isinstance(value, str):
+            # Geometry object hexcode from cache
+            shape = self.load_geo(value)
+        else:
+            # Might be unicode containing dict
+            shape = convert.value_to_shape(value)
+        return shape
+
     def convert_to_read(self, value, record, use_name_get=True):
-        # read hexadecimal value from database
-        shape = self.load_geo(value)
+        if not isinstance(value, BaseGeometry):
+            # read hexadecimal value from database
+            shape = self.load_geo(value)
+        else:
+            shape = value
         if not shape or shape.is_empty:
             return False
         return geojson.dumps(shape)
@@ -169,6 +190,31 @@ class GeoLine(GeoField):
     """Field for POSTGIS geometry Line type"""
     type = 'geo_line'
     geo_type = 'LINESTRING'
+
+    @classmethod
+    def from_points(cls, cr, point1, point2, srid=None):
+        """
+        Converts given points in parameter to a line.
+        :param cr: DB cursor
+        :param point1: Point (BaseGeometry)
+        :param point2: Point (BaseGeometry)
+        :param srid: SRID
+        :return: LINESTRING Object
+        """
+        sql = """
+        SELECT
+            ST_MakeLine(
+                ST_GeomFromText(%(wkt1)s, %(srid)s),
+                ST_GeomFromText(%(wkt2)s, %(srid)s)
+            )
+        """
+        cr.execute(sql, {
+            'wkt1': point1.wkt,
+            'wkt2': point2.wkt,
+            'srid': srid or cls._slots['srid'],
+        })
+        res = cr.fetchone()
+        return cls.load_geo(res[0])
 
 
 class GeoMultiLine(GeoField):

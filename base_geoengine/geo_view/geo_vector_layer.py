@@ -45,3 +45,5 @@ class GeoVectorLayer(models.Model):
     sequence = fields.Integer('layer priority lower on top', default=6)
     readonly = fields.Boolean('Layer is read only')
     display_polygon_labels = fields.Boolean('Display Labels on Polygon')
+    active_on_startup = fields.Boolean(
+        help="Layer will be shown on startup if checked.")
