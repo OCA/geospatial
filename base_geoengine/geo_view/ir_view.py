@@ -28,7 +28,7 @@ class IrUIView(models.Model):
         'geoengine.raster.layer', 'view_id', 'Raster layers', required=False)
 
     vector_layer_ids = fields.One2many(
-        'geoengine.vector.layer', 'view_id', 'Vector layers', required=True)
+        'geoengine.vector.layer', 'view_id', 'Vector layers')
 
     projection = fields.Char(default="EPSG:900913", required=True)
     default_extent = fields.Char(
