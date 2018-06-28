@@ -24,7 +24,7 @@ class GeoRasterLayer(models.Model):
     def onchange_set_wmts_options(self):
         """ Define default values for lausanne map service """
         if self.raster_type == 'map.lausanne.ch':
-            self.url = 'http://map.lausanne.ch/main/tiles/'
+            self.url = 'http://map.lausanne.ch/tiles/'
             self.format_suffix = 'png'
             self.projection = 'EPSG:21781'
             self.units = 'm'
