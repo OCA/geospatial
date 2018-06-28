@@ -23,7 +23,7 @@
 #
 ##############################################################################
 
-from openerp.addons.base_geoengine import geo_model, fields
+from odoo.addons.base_geoengine import geo_model, fields
 
 
 class ProjectProject(geo_model.GeoModel):

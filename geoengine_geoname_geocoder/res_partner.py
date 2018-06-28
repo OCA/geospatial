@@ -24,12 +24,12 @@ from urllib2 import urlopen
 import xml.dom.minidom
 import logging
 
-from openerp import api
-from openerp.tools.translate import _
-from openerp.exceptions import ValidationError
-from openerp.exceptions import except_orm
+from odoo import api
+from odoo.tools.translate import _
+from odoo.exceptions import ValidationError
+from odoo.exceptions import except_orm
 
-from openerp.addons.base_geoengine import geo_model, fields
+from odoo.addons.base_geoengine import geo_model, fields
 
 logger = logging.getLogger('GeoNames address encoding')
 
