@@ -65,6 +65,7 @@ addon | version | summary
 --- | --- | ---
 [base_geoengine](base_geoengine/) | 10.0.2.0.0 | Geospatial support for Odoo
 [base_geoengine_demo](base_geoengine_demo/) | 10.0.1.0.0 | Geo spatial support Demo
+[geoengine_partner](geoengine_partner/) | 10.0.1.0.0 | Geospatial support of partners
 
 
 Unported addons
@@ -74,7 +75,6 @@ addon | version | summary
 [geoengine_base_geolocalize](geoengine_base_geolocalize/) | 8.0.0.1.0 (unported) | Geospatial support for base_geolocalize
 [geoengine_geoname_geocoder](geoengine_geoname_geocoder/) | 8.0.0.1.0 (unported) | Auto Geocoding of partners
 [geoengine_maplausanne](geoengine_maplausanne/) | 9.0.1.0.0 (unported) | Geospatial - map.lausanne.ch layers
-[geoengine_partner](geoengine_partner/) | 8.0.0.1.0 (unported) | Geospatial support of partners
 [geoengine_project](geoengine_project/) | 8.0.0.1.0 (unported) | Geospatial support for projects
 [geoengine_sale](geoengine_sale/) | 8.0.0.1.0 (unported) | Geospatial support for sales
 [geoengine_swisstopo](geoengine_swisstopo/) | 9.0.1.0.0 (unported) | Geospatial - Swisstopo layers
