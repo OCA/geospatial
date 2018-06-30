@@ -259,7 +259,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             source: vectorSource,
             title: cfg.name,
             active_on_startup: cfg.active_on_startup,
-            // opacity: 0.8, //TODO cenfiguarble opacity to be applied on
             style: styleInfo.style,
         });
         lv.on('change:visible', function(e){
