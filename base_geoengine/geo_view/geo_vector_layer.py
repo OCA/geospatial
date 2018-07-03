@@ -47,3 +47,4 @@ class GeoVectorLayer(models.Model):
     display_polygon_labels = fields.Boolean('Display Labels on Polygon')
     active_on_startup = fields.Boolean(
         help="Layer will be shown on startup if checked.")
+    layer_opacity = fields.Float('Layer Opacity')
