@@ -12,9 +12,10 @@
                     <field name="geo_field_id"/>
                     <field name="attribute_field_id" attrs="{'required': [('geo_repr', 'in', ['choropleth', 'proportion', 'colored'])]}"/>
                     <field name="active_on_startup"/>
+                    <field name="display_polygon_labels"/>
                     <field name="sequence"/>
                     <field name="readonly"/>
-		    <field name="display_polygon_labels"/>
+                    <field name="layer_opacity"/>
                 </group>
                 <group string="Representation" col="4" colspan="4">
                     <field name="geo_repr"/>
