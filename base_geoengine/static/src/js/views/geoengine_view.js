@@ -438,7 +438,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 ];
                 return {
                      style : function(feature, resolution) {
-                          var label_text = feature.values_.attributes.label.;
+                          var label_text = feature.values_.attributes.label;
                           if(label_text === false){
                             label_text = '';
                           }
