@@ -32,4 +32,5 @@ class GeoPoint(geo_field.Geom):
         super(GeoPoint, self).__init__(
             string, dim=dim, srid=srid, gist_index=gist_index, **args)
 
+
 fields.geo_point = GeoPoint

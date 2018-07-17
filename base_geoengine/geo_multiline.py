@@ -32,4 +32,5 @@ class GeoMultiLine(geo_field.Geom):
             string, dim=dim, srid=srid,
             gist_index=gist_index, **args)
 
+
 fields.geo_multi_line = GeoMultiLine
