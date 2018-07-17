@@ -225,6 +225,10 @@ openerp.base_geoengine = function(openerp) {
             }
             return this.alive(view_loaded_def).then(function(r) {
                 self.fields_view = r;
+                var data = r.geoengine_layers;
+                self.projection = data.projection;
+                self.restricted_extent = data.restricted_extent;
+                self.default_extent = data.default_extent;
                 return $.when(self.view_loading(r)).then(function() {
                     self.trigger('view_loaded', r);
                 });
@@ -531,6 +535,12 @@ openerp.base_geoengine = function(openerp) {
                 this.selectFeatureControls.select.setMap(map);
                 this.selectFeatureControls.select.handlers.map = map;
                 map.addControl(new OpenLayers.Control.ToolPanel());
+                if (this.restricted_extent) {
+                    map.restrictedExtent = OpenLayers.Bounds.fromString(this.restricted_extent);
+                    if (this.projection != map.getProjection()) {
+                        map.restrictedExtent = map.restrictedExtent.transform(this.projection, map.getProjection());
+                    }
+                }
                 map.zoomToMaxExtent();
                 this.map = map;
                 this.do_search(self.domains, null, self.offet);
@@ -755,7 +765,9 @@ openerp.base_geoengine = function(openerp) {
             rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0).then(function(result) {
                 self.layers = self.create_edit_layers(self, result);
                 self.geo_type = result.geo_type;
+                self.projection = result.projection;
                 self.default_extent = result.default_extent;
+                self.restricted_extent = result.restricted_extent;
                 self.default_zoom = result.default_zoom;
                 self.srid = result.srid;
                 if (self.$el.is(':visible')){
@@ -802,10 +814,14 @@ openerp.base_geoengine = function(openerp) {
 
         render_map: function() {
             if (_.isNull(this.map)){
-                this.map = new OpenLayers.Map({
+                var map_opt = {
                     theme: null,
-                    layers: this.layers[0]
-                });
+                    layers: this.layers[0],
+                };
+                this.map = new OpenLayers.Map(map_opt);
+                if (this.restricted_extent) {
+                    this.map.restrictedExtent = OpenLayers.Bounds.fromString(this.restricted_extent).transform(this.projection, this.map.getProjection());
+                }
                 this.map.addLayer(this.layers[1]);
                 this.modify_control = new OpenLayers.Control.ModifyFeature(this.layers[1]);
                 if (this.geo_type == 'POINT' || this.geo_type == 'MULTIPOINT') {
@@ -826,7 +842,7 @@ openerp.base_geoengine = function(openerp) {
                 this.draw_control = new OpenLayers.Control.DrawFeature(this.layers[1], handler);
                 this.map.addControl(this.draw_control);
 
-                this.default_extend = OpenLayers.Bounds.fromString(this.default_extent).transform('EPSG:900913', this.map.getProjection());
+                this.default_extend = OpenLayers.Bounds.fromString(this.default_extent).transform(this.projection, this.map.getProjection());
                 this.map.zoomToExtent(this.default_extend);
                 this.format = new OpenLayers.Format.GeoJSON({
                     internalProjection: this.map.getProjection(),

@@ -46,10 +46,21 @@ class IrUIView(models.Model):
     vector_layer_ids = fields.One2many(
         'geoengine.vector.layer', 'view_id', 'Vector layers', required=True)
 
+    projection = fields.Char(
+        string="Projection",
+        default="EPSG:900913",
+        required=True,
+    )
     default_extent = fields.Char(
-        'Default map extent in 900913', size=128,
+        'Default map extent',
+        size=128,
         default='-123164.85222423, 5574694.9538936, 1578017.6490538,'
-        ' 6186191.1800898')
+        ' 6186191.1800898',
+    )
     default_zoom = fields.Integer(
         string="Default map zoom",
+    )
+    restricted_extent = fields.Char(
+        string="Restricted map extent",
+        size=128,
     )
