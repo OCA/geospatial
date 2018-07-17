@@ -11,6 +11,8 @@
                         <field name="view_id"/>
                         <field name="geo_field_id"/>
                         <field name="attribute_field_id" attrs="{'required': [('geo_repr', 'in', ['choropleth', 'proportion', 'colored'])]}"/>
+                        <field name="label_field_id" attrs="{'required': [('display_polygon_labels', '=', True ),]}"/>
+                        <field name="display_polygon_labels"/>
                         <field name="sequence"/>
                         <field name="readonly"/>
                     </group>
@@ -35,7 +37,7 @@
                         <field name="nb_class"
                             attrs="{'invisible': [('classification', 'in', ['unique', False])], 'required': [('classification', 'in', ['interval', 'quantil'])]}"
                         />
-                        </group> 
+                        </group>
                     </group>
                 </form>
             </field>

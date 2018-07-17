@@ -22,13 +22,13 @@ openerp.base_geoengine = function(openerp) {
     var DEFAULT_MAX_SIZE = 15; // for prop symbols only
     var DEFAULT_NUM_CLASSES = 5; // for choroplets only
     var STYLE_DEFAULT = OpenLayers.Util.applyDefaults({
-            fillColor: DEFAULT_BEGIN_COLOR,
-            fillOpacity: 0.8,
-            strokeColor: "#333333",
-            strokeOpacity: 0.8,
-            cursor: "pointer",
-            strokeWidth: 1
-        }, OpenLayers.Feature.Vector.style['default']);
+        fillColor: DEFAULT_BEGIN_COLOR,
+        fillOpacity: 0.8,
+        strokeColor: "#333333",
+        strokeOpacity: 0.8,
+        cursor: "pointer",
+        strokeWidth: 1
+    }, OpenLayers.Feature.Vector.style['default']);
     var STYLE_SELECT = {
         fillColor: "#ffcc66",
         strokeColor: "#ff9933"
@@ -252,11 +252,27 @@ openerp.base_geoengine = function(openerp) {
             var features = [];
             var geostat = null;
             var geojson = new OpenLayers.Format.GeoJSON();
+            var l = data.length;
+            var f = data[0];
+            var v;
+            if (cfg.display_polygon_labels === true) {
+                v = cfg.label_field_id[1];
+            } else {
+                v = '';
+            }
             var vl = new OpenLayers.Layer.Vector(cfg.name, {
                 styleMap: new OpenLayers.StyleMap({
-                    'default': OpenLayers.Util.applyDefaults({
-                        fillColor: cfg.begin_color
-                    }, STYLE_DEFAULT),
+                    'default': new OpenLayers.Style(
+                        OpenLayers.Util.applyDefaults({
+                            fillColor: cfg.begin_color,
+                            label: "${label}",
+                        }, STYLE_DEFAULT), {
+                            context: {
+                                label: function(f) {
+                                    return (f.data.hasOwnProperty(v)) ? f.data[v]:"";
+                                },
+                            }
+                        }),
                     'select': STYLE_SELECT
                 }),
             rendererOptions: {
@@ -416,20 +432,18 @@ openerp.base_geoengine = function(openerp) {
             return new OpenLayers.StyleMap({
                 'default': new OpenLayers.Style(
                     OpenLayers.Util.applyDefaults({
-                        fillColor: "${color}"
-                    }, STYLE_DEFAULT),
-                    {
+                        fillColor: "${color}",
+                    }, STYLE_DEFAULT), {
                         context: {
                             color: function(f) {
                                 return (f.attributes.hasOwnProperty(v) && distinct.hasOwnProperty(f.attributes[v])) ?
-                                    '#'+distinct[f.attributes[v]] : "#ffffff";
-                            }
+                                    '#' + distinct[f.attributes[v]] : "#ffffff";
+                            },
                         }
                     }),
                 'select': STYLE_SELECT
             });
         },
-
         /**
             * Method: createVectorLayers
             * creates vector layers from config and populates them with features
@@ -563,7 +577,7 @@ openerp.base_geoengine = function(openerp) {
             }
             var selected_ids = selectedFeatures.map(function(x) {return x.data.id;});
             var selection_domain = [['id', 'in', selected_ids]];
-            var searchview = this.ViewManager.searchview
+
             searchview.query.add({
                 category: _t("Geo selection"),
                 values: {label: _t("Geo selection")},
