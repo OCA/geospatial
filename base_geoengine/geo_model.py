@@ -129,9 +129,12 @@ class GeoModel(models.BaseModel):
             res['geoengine_layers'] = {}
             res['geoengine_layers']['backgrounds'] = []
             res['geoengine_layers']['actives'] = []
-            default_extent = (view.default_extent or DEFAULT_EXTENT).split(',')
-            res['geoengine_layers']['default_extent'] = [
-                float(x) for x in default_extent]
+            res['geoengine_layers']['projection'] = view.projection
+            restricted_extent = view.restricted_extent
+            res['geoengine_layers']['restricted_extent'] = restricted_extent
+            default_extent = view.default_extent or DEFAULT_EXTENT
+            res['geoengine_layers']['default_extent'] = default_extent
+            res['geoengine_layers']['default_zoom'] = view.default_zoom
             # TODO find why context in read does not work with webclient
             for layer in view.raster_layer_ids:
                 layer_dict = raster_obj.read(cursor, uid, layer.id)
@@ -175,7 +178,10 @@ class GeoModel(models.BaseModel):
             cursor, uid, raster_id[0], context=context)
         res['geo_type'] = field.geo_type
         res['srid'] = field.srid
+        res['projection'] = view.projection
+        res['restricted_extent'] = view.restricted_extent
         res['default_extent'] = view.default_extent
+        res['default_zoom'] = view.default_zoom
         return res
 
     def geo_search(self, cursor, uid, domain=None, geo_domain=None, offset=0,
