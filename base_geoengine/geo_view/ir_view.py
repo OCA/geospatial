@@ -50,3 +50,6 @@ class IrUIView(models.Model):
         'Default map extent in 900913', size=128,
         default='-123164.85222423, 5574694.9538936, 1578017.6490538,'
         ' 6186191.1800898')
+    default_zoom = fields.Integer(
+        string="Default map zoom",
+    )

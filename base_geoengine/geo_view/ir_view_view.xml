@@ -10,7 +10,10 @@
                 <notebook position="inside">
                     <page string="GeoEngine Data" col="4"
                         attrs="{'invisible': [('type', '!=', 'geoengine')]}">
-                        <field name="default_extent" colspan="4"/>
+                        <group name="geo_data">
+                            <field name="default_zoom"/>
+                            <field name="default_extent" colspan="4"/>
+                        </group>
                         <separator string="Vector (Active layers)" colspan="4"/>
                         <field name="vector_layer_ids" colspan="4" nolabel="1"/>
                         <separator string="Raster (Background layers)" colspan="4"/>

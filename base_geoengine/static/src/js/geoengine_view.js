@@ -744,6 +744,7 @@ openerp.base_geoengine = function(openerp) {
                 self.layers = self.create_edit_layers(self, result);
                 self.geo_type = result.geo_type;
                 self.default_extent = result.default_extent;
+                self.default_zoom = result.default_zoom;
                 self.srid = result.srid;
                 if (self.$el.is(':visible')){
                     self.render_map();
@@ -751,18 +752,25 @@ openerp.base_geoengine = function(openerp) {
             });
         },
 
-        set_value: function(value) {
+        set_value: function(value, zoom = true) {
             this._super.apply(this, arguments);
             this.value = value;
             if (this.map) {
                 var vl = this.map.getLayersByName(this.name)[0];
                 vl.destroyFeatures();
+                var extent = this.default_extend;
                 if (this.value) {
                     var features = this.format.read(this.value);
-                    vl.addFeatures(features, {silent: true});
-                    this.map.zoomToExtent(vl.getDataExtent());
-                } else {
+                    vl.addFeatures(features, {
+                        silent: true
+                    });
+                    extent = vl.getDataExtent();
+                }
+                if (zoom) {
                     this.map.zoomToExtent(this.default_extend);
+                    if (this.value && this.default_zoom) {
+                        this.map.zoomTo(this.default_zoom);
+                    }
                 }
             }
         },
