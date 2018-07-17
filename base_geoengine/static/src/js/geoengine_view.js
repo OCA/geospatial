@@ -263,6 +263,9 @@ openerp.base_geoengine = function(openerp) {
                         var selectedFeatures = this.selectedFeatures[0].layer.selectedFeatures;
                         if (selectedFeatures.length == 1) {
                             $("#map_info").html(formatFeatureHTML(event.feature.attributes, self.fields_view.fields));
+                            $('#map_infobox').off().click(function() {
+                                self.open_record(event.feature);
+                            });
                             $("#map_info_filter_selection").hide();
                         } else {
                             $("#map_info").html(formatFeatureListHTML(selectedFeatures));
@@ -360,6 +363,15 @@ openerp.base_geoengine = function(openerp) {
                 geostat.applyClassification();
             }
             return vl;
+        },
+
+        open_record: function (feature, options) {
+            var oid = feature.attributes.id;
+            if (this.dataset.select_id(oid)) {
+                this.do_switch_view('form', null, options);
+            } else {
+                this.do_warn("Geoengine: could not find id#" + oid);
+            }
         },
 
         getUniqueValuesStyleMap: function(cfg, features) {
