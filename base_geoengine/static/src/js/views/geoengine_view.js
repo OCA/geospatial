@@ -16,6 +16,7 @@ odoo.define('base_geoengine.GeoengineView', function (require) {
 var core = require('web.core');
 var time = require('web.time');
 var View = require('web.View');
+var Model = require('web.DataModel')
 
 var geoengine_common = require('base_geoengine.geoengine_common');
 
@@ -475,11 +476,32 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         });
     },
     open_record: function (feature, options) {
-        oid = feature.attributes.id
-        if (this.dataset.select_id(oid)) {
-            this.do_switch_view('form', null, options); //, null, { mode: "edit" });
+        this.oid = feature.attributes.id
+        if (this.dataset.select_id(this.oid)) {
+            var self = this
+            var PartnerModel = new Model(this.dataset.model);
+            var ActWindowModel = new Model('ir.actions.act_window');
+            new Model('ir.model.data').call(
+                'xmlid_to_res_id' , ['base.view_partner_form']
+            ).then(function(view_id) {
+                var action = {
+                    type: 'ir.actions.act_window',
+                    name: 'Partner details',
+                    res_model: 'res.partner',
+                    res_id: self.oid,
+                    view_mode: 'form',
+                    view_type: 'form',
+                    views: [[view_id, 'form']],
+                    target: 'new',
+                    flags: {
+                        initial_mode: 'view',
+                    },
+                    context: {},
+                };
+                return self.do_action(action);
+            })
         } else {
-            this.do_warn("Geoengine: could not find id#" + oid);
+            this.do_warn("Geoengine: could not find id#" + this.oid);
         }
     },
 
