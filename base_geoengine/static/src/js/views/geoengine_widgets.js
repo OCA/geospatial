@@ -12,6 +12,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
 var core = require('web.core');
 var data = require('web.data');
 var GeoengineView = require('base_geoengine.GeoengineView');
+/*FIXME*/
 var common = require('web.form_common');
 var geoengine_common = require('base_geoengine.geoengine_common');
 

@@ -3,6 +3,7 @@ odoo.define('base_geoengine.Record', function (require) {
 
     var core = require('web.core');
     var data = require('web.data');
+    /*FIXME*/
     var formats = require('web.formats');
     var framework = require('web.framework');
     var session = require('web.session');

@@ -3,8 +3,8 @@
  * Author B.Binet Copyright Camptocamp SA
  * Contributor N. Bessi Copyright Camptocamp SA
  * Contributor Laurent Mignon 2015 Acsone SA/NV
- * Contributor Yannick Vaucher 2015-2016 Camptocamp SA
- * License in __openerp__.py at root level of the module
+ * Contributor Yannick Vaucher 2015-2018 Camptocamp SA
+ * License in __manifest__.py at root level of the module
  *---------------------------------------------------------
 */
 odoo.define('base_geoengine.GeoengineView', function (require) {
@@ -17,11 +17,10 @@ odoo.define('base_geoengine.GeoengineView', function (require) {
 var core = require('web.core');
 var time = require('web.time');
 
-var View = require('web.View');
+var BasicView = require('web.BasicView');
 var QWeb = require('web.QWeb');
 var GeoengineRecord = require('base_geoengine.Record');
 
-var formats = require('web.formats');
 var session = require('web.session');
 var utils = require('web.utils');
 
@@ -107,7 +106,7 @@ var formatFeatureListHTML = function(features) {
     return str.join('<br />');
 };
 
-var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
+var GeoengineView = BasicView.extend(geoengine_common.GeoengineMixin, {
     template: "GeoengineView",
     display_name: _lt('Geoengine'),
     icon: 'fa-map-o',
@@ -793,7 +792,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
 
 });
 
-core.view_registry.add('geoengine', GeoengineView);
 
 return GeoengineView;
 });

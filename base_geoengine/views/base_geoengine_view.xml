@@ -20,6 +20,9 @@
                     src="/base_geoengine/static/src/js/views/geoengine_widgets.js"/>
 
             <script type="text/javascript"
+                    src="/base_geoengine/static/src/js/views/view_registry.js"/>
+
+            <script type="text/javascript"
                     src="/base_geoengine/static/src/js/lib/chromajs-0.8.0/chroma.js"/>
             <script type="text/javascript"
                     src="/base_geoengine/static/src/js/lib/geostats-1.4.0/geostats.js"/>
