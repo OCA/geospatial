@@ -1,9 +1,8 @@
 odoo.define('base_geoengine.Record', function (require) {
     "use strict";
 
-    var core = require('web.core');
     var data = require('web.data');
-    var formats = require('web.formats');
+    var field_utils = require('web.field_utils');
     var framework = require('web.framework');
     var session = require('web.session');
     var time = require('web.time');
@@ -38,7 +37,8 @@ odoo.define('base_geoengine.Record', function (require) {
             _.each(_.extend(_.object(_.keys(this.fields), []), record), function(value, name) {
                 var r = _.clone(self.fields[name] || {});
                 r.raw_value = value;
-                r.value = formats.format_value(value, r);
+	        var formatted_value = field_utils.format[r.type](value, r);
+                r.value = formatted_value;
                 new_record[name] = r;
             });
             return new_record;
