@@ -15,9 +15,16 @@
             <script type="text/javascript"
                     src="/base_geoengine/static/src/js/views/geoengine_template_widgets.js"/>
             <script type="text/javascript"
-                    src="/base_geoengine/static/src/js/views/geoengine_view.js"/>
+		    src="/base_geoengine/static/src/js/views/geoengine/geoengine_controller.js"/>
+            <script type="text/javascript"
+		    src="/base_geoengine/static/src/js/views/geoengine/geoengine_renderer.js"/>
+            <script type="text/javascript"
+		    src="/base_geoengine/static/src/js/views/geoengine/geoengine_view.js"/>
             <script type="text/javascript"
                     src="/base_geoengine/static/src/js/views/geoengine_widgets.js"/>
+
+            <script type="text/javascript"
+                    src="/base_geoengine/static/src/js/views/view_registry.js"/>
 
             <script type="text/javascript"
                     src="/base_geoengine/static/src/js/lib/chromajs-0.8.0/chroma.js"/>
