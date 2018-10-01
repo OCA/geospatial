@@ -1,7 +1,7 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # Copyright 2016 Yannick Vaucher (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import _, api, models
+from odoo import _, api, models, tools
 from odoo.exceptions import except_orm, MissingError
 from . import geo_operators
 from . import fields as geo_fields
@@ -39,7 +39,8 @@ class GeoModel(models.BaseModel):
             if field.type.startswith('geo_'):
                 geo_fields[f_name] = field
         res = super(GeoModel, self)._auto_init()
-        column_data = self._select_column_data()
+        column_data = tools.table_columns(cr, self._table)
+
         for f_name, geo_field in geo_fields.items():
             if geo_field.compute and not geo_field.store:
                 continue
