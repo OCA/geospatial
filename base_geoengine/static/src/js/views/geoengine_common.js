@@ -14,11 +14,7 @@ odoo.define('base_geoengine.geoengine_common', function (require) {
  *---------------------------------------------------------*/
 
 var core = require('web.core');
-var time = require('web.time');
 
-
-var _lt = core._lt;
-var QWeb = core.qweb;
 
 var GeoengineMixin = {
     /**
