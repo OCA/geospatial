@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 from odoo import fields, api
@@ -51,5 +50,5 @@ class NPA(geo_model.GeoModel):
     def name_get(self):
         res = []
         for rec in self:
-            res.append((rec.id, u"%s %s" % (rec.name, rec.city)))
+            res.append((rec.id, "%s %s" % (rec.name, rec.city)))
         return res
