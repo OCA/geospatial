@@ -58,8 +58,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Odoo Geospatial'
-copyright = u'2015, Nicolas Bessi, Odoo Community Association (OCA)'
+project = 'Odoo Geospatial'
+copyright = '2015, Nicolas Bessi, Odoo Community Association (OCA)'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -196,8 +196,8 @@ htmlhelp_basename = 'OpenERPGeoEnginedoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ('index', 'OpenERPGeoEngine.tex', u'Odoo Geospatial Documentation',
-     u'Odoo Community Association (OCA), Nicolas Bessi', 'manual'),
+    ('index', 'OpenERPGeoEngine.tex', 'Odoo Geospatial Documentation',
+     'Odoo Community Association (OCA), Nicolas Bessi', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -229,6 +229,6 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'openerpgeoengine', u'Odoo Geospatial Documentation',
-     [u'Odoo Community Association (OCA), Nicolas Bessi'], 1)
+    ('index', 'openerpgeoengine', 'Odoo Geospatial Documentation',
+     ['Odoo Community Association (OCA), Nicolas Bessi'], 1)
 ]
