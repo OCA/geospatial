@@ -17,7 +17,7 @@ def value_to_shape(value):
     """Transforms input into a Shapely object"""
     if not value:
         return wkt.loads('GEOMETRYCOLLECTION EMPTY')
-    if isinstance(value, basestring):
+    if isinstance(value, str):
         # We try to do this before parsing json exception
         # exception are ressource costly
         if '{' in value:
