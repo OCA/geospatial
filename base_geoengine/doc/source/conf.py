@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # flake8: noqa
 #
 # OpenERP GeoEngine documentation build configuration file, created by
