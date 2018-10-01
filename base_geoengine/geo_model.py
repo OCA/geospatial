@@ -36,12 +36,12 @@ class GeoModel(models.BaseModel):
         cr = self._cr
 
         geo_fields = {}
-        for f_name, field in self._fields.iteritems():
+        for f_name, field in self._fields.items():
             if field.type.startswith('geo_'):
                 geo_fields[f_name] = field
         res = super(GeoModel, self)._auto_init()
         column_data = self._select_column_data()
-        for f_name, geo_field in geo_fields.iteritems():
+        for f_name, geo_field in geo_fields.items():
             if geo_field.compute and not geo_field.store:
                 continue
             fct = geo_field.create_geo_column

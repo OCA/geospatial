@@ -65,10 +65,10 @@ def geo_search(model, domain=None, geo_domain=None, offset=0,
     UNION = 'AND'
     JOIN_MODE = '%s %s'
     for domain in geo_domain:
-        if isinstance(domain, basestring):
+        if isinstance(domain, str):
             if domain == '!':
                 MODE = 'NOT'
-            if domain in UNION_MAPPING.keys():
+            if domain in list(UNION_MAPPING.keys()):
                 UNION = UNION_MAPPING[domain]
         if where_clause_arr:
             where_clause_arr.append(JOIN_MODE % (MODE, UNION))
@@ -85,7 +85,7 @@ def geo_search(model, domain=None, geo_domain=None, offset=0,
                     rel_col = key[i + 1:]
                     rel_model = model.env[rel_model]
                     from_clause += ', %s' % (rel_model._table,)
-                    att_where_sql = u''
+                    att_where_sql = ''
                     # we compute the attributes search on spatial rel
                     if ref_search[key]:
                         rel_query = rel_model._where_calc(
@@ -100,20 +100,20 @@ def geo_search(model, domain=None, geo_domain=None, offset=0,
                         rel_model=rel_model)
                     if att_where_sql:
                         rel_where_statement.append(
-                            u"(%s AND %s)" % (att_where_sql,
+                            "(%s AND %s)" % (att_where_sql,
                                               spatial_where_sql))
                     else:
                         rel_where_statement.append(
-                            u"(%s)" % (spatial_where_sql))
-                where_clause_arr.append(u"AND ".join(rel_where_statement))
+                            "(%s)" % (spatial_where_sql))
+                where_clause_arr.append("AND ".join(rel_where_statement))
             else:
                 func = _get_geo_func(model, domain)
                 where_sql = func(model._table, domain[0], domain[2])
                 where_clause_arr.append(where_sql)
     if where_clause_arr:
-        where_statement = " WHERE %s" % (u' '.join(where_clause_arr))
+        where_statement = " WHERE %s" % (' '.join(where_clause_arr))
     else:
-        where_statement = u''
+        where_statement = ''
     sql = 'SELECT "%s".id FROM ' % model._table + from_clause + \
         where_statement + order_by + limit_str + offset_str
     # logger.debug(cursor.mogrify(sql, where_clause_params))
@@ -143,7 +143,7 @@ class GeoOperator(object):
     def _get_direct_como_op_sql(self, table, col, value, rel_col=None,
                                 rel_model=None, op=''):
         """provide raw sql for geater and lesser operators"""
-        if isinstance(value, (int, long, float)):
+        if isinstance(value, (int, float)):
             if rel_col and rel_model:
                 raise Exception(
                     'Area %s does not support int compare for relation '
