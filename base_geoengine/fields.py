@@ -43,7 +43,7 @@ class GeoField(Field):
         'manual': True,
     }
 
-    def convert_to_column(self, value, record):
+    def convert_to_column(self, value, record, values=None):
         """Convert value to database format
 
         value can be geojson, wkt, shapely geometry object.
