@@ -7,7 +7,7 @@
 odoo.define('base_geoengine.template_widgets', function (require) {
     "use strict";
 
-    var formats = require('web.formats');
+    var field_utils = require('web.field_utils');
     var pyeval = require('web.pyeval');
     var Registry = require('web.Registry');
     var Widget = require('web.Widget');
@@ -48,7 +48,8 @@ odoo.define('base_geoengine.template_widgets', function (require) {
             this.set("value", field.raw_value);
         },
         renderElement: function() {
-            this.$el.text(formats.format_value(this.field.raw_value, this.format_descriptor));
+            this.$el.text(field_utils.format[this.field.type](this.field.raw_value, this.format_descriptor));
+
         }
     });
 
@@ -81,7 +82,7 @@ odoo.define('base_geoengine.template_widgets', function (require) {
         .add('char', FieldChar)
         .add('many2one', FieldMany2one)
         .add('float', FieldFloat)
-        .add('float_time', FieldFloat)
+        .add('float_time', FieldFloatTime)
         .add('date', FieldDate)
         .add('datetime', FieldDatetime)
     ;

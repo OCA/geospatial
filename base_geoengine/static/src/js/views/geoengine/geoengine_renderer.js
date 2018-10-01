@@ -1,37 +1,19 @@
 /*---------------------------------------------------------
- * OpenERP base_geoengine
- * Author B.Binet Copyright Camptocamp SA
- * Contributor N. Bessi Copyright Camptocamp SA
- * Contributor Laurent Mignon 2015 Acsone SA/NV
- * Contributor Yannick Vaucher 2015-2016 Camptocamp SA
- * License in __openerp__.py at root level of the module
+ * Odoo base_geoengine
+ * Contributor Yannick Vaucher 2018 Camptocamp SA
+ * License in __manifest__.py at root level of the module
  *---------------------------------------------------------
 */
-odoo.define('base_geoengine.GeoengineView', function (require) {
+odoo.define('base_geoengine.GeoengineRenderer', function (require) {
 "use strict";
 
-/*---------------------------------------------------------
- * Odoo geoengine view
- *---------------------------------------------------------*/
-
+var BasicRenderer = require('web.BasicRenderer');
 var core = require('web.core');
-var time = require('web.time');
-
-var View = require('web.View');
-var QWeb = require('web.QWeb');
-var GeoengineRecord = require('base_geoengine.Record');
-
-var formats = require('web.formats');
-var session = require('web.session');
 var utils = require('web.utils');
+var QWeb = require('web.QWeb');
+var session = require('web.session');
 
 var geoengine_common = require('base_geoengine.geoengine_common');
-
-var _lt = core._lt;
-
-//var map, layer, vectorLayers = [];
-//TODO: remove this DEBUG
-var map = null;
 
 /* CONSTANTS */
 var DEFAULT_BEGIN_COLOR = "#FFFFFF";
@@ -107,27 +89,166 @@ var formatFeatureListHTML = function(features) {
     return str.join('<br />');
 };
 
-var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
-    template: "GeoengineView",
-    display_name: _lt('Geoengine'),
-    icon: 'fa-map-o',
+
+var GeoengineRenderer = BasicRenderer.extend(geoengine_common.GeoengineMixin, {
     events: {
         'click a.ol-popup-closer': 'hide_popup',
         'click a.ol-popup-edit': 'open_popup_record',
+        /* TODO register map events 'click tbody .o_list_record_selector': '_onSelectRecord', */
+    },
+    /**
+     * @constructor
+     * @param {Widget} parent
+     * @param {any} state
+     * @param {Object} params
+     * @param {boolean} params.hasSelectors
+     */
+    init: function (parent, state, params) {
+        this._super.apply(this, arguments);
+
+        this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
+
+        this.selection = params.selectedRecords || [];
+
+        this.geometryColumns = params.geometryColumns;
+        this.overlaysGroup = params.overlaysGroup;
+        this.vectorSources = params.vectorSounces;
+        this.zoomToExtentCtrl = params.zoomToExtentCtrl;
+        this.popupElement = params.popupElement;
+        this.overlayPopup = params.overlayPopup;
+        this.featurePopup = params.featurePopup;
+        this.mapOptions = params.mapOptions;
     },
 
-    init: function() {
-        this._super.apply(this, arguments);
-        this.qweb = new QWeb(session.debug, {_s: session.origin});
-        this.view_type = 'geoengine';
-        this.geometry_columns = {};
-        this.overlaysGroup = null;
-        this.vectorSources = [];
-        this.zoom_to_extent_ctrl = null;
-        this.popup_element = undefined;
-        this.overlayPopup = undefined;
-        this.featurePopup = undefined;
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * Render the map 
+     *
+     * @private
+     * @returns {jQueryElement} a jquery element <tbody>
+     */
+    _renderMap: function () {
+
+        var self = this;
+        if (_.isUndefined(this.map)){
+            self.zoomToExtentCtrl = new ol.control.ZoomToExtent();
+            var backgrounds = self.mapOptions.geoengine_layers.backgrounds;
+            var map = new ol.Map({
+                layers: [new ol.layer.Group({
+                    title: 'Base maps',
+                    layers: self.createBackgroundLayers(backgrounds),
+                })],
+                target: 'olmap',
+                view: new ol.View({
+                    center: [0, 0],
+                    zoom: 2
+                }),
+                controls: ol.control.defaults().extend([
+                    new ol.control.FullScreen(),
+                    new ol.control.ScaleLine(),
+                    self.zoomToExtentCtrl
+                ]),
+            });
+            var layerSwitcher = new ol.control.LayerSwitcher({});
+            map.addControl(layerSwitcher);
+            self.map = map;
+            self.register_interaction();
+        }
+	return self.map;
     },
+    /**
+     * Main render function for the map.  It is rendered as a div.
+     *
+     * @override
+     * @private
+     * returns {Deferred} this deferred is resolved immediately
+     */
+    _renderView: function () {
+        var self = this;
+        //TODO this.$el contains base elem but what is base elem?
+
+        // display the no content helper if there is no data to display
+	/* FIXME add no content helper ?
+        if (!this._hasContent() && this.noContentHelp) {
+            this._renderNoContentHelper();
+            return this._super();
+        }
+	*/
+
+        var $map_div = $('<div>', {id: 'olmap', class: 'olmap'});
+        this.$el
+            .addClass('o_geo_view')
+	    .append($map_div)
+	/*
+        if (this.selection.length) {
+            var $checked_rows = this.$('tr').filter(function (index, el) {
+                return _.contains(self.selection, $(el).data('id'));
+            });
+            $checked_rows.find('.o_list_record_selector input').prop('checked', true);
+        }*/
+        return this._super();
+    },
+    /**
+     * Called each time the renderer is attached into the DOM.
+     */
+    on_attach_callback: function () {
+        var map = this._renderMap();
+	$('#olmap').data('map', map);
+        return this._super();
+    },
+    /**
+     * Update the footer aggregate values.  This method should be called each
+     * time the state of some field is changed, to make sure their sum are kept
+     * in sync.
+     *
+     * @private
+     */
+    _updateFooter: function () {
+        this._computeAggregates();
+        this.$('tfoot').replaceWith(this._renderFooter(!!this.state.groupedBy.length));
+    },
+    /**
+     * Whenever we change the state of the selected rows, we need to call this
+     * method to keep the this.selection variable in sync, and also to recompute
+     * the aggregates.
+     *
+     * @private
+     */
+    _updateSelection: function () {
+        var $selectedRows = this.$('tbody .o_list_record_selector input:checked')
+                                .closest('tr');
+        this.selection = _.map($selectedRows, function (row) {
+            return $(row).data('id');
+        });
+        this.trigger_up('selection_changed', { selection: this.selection });
+        this._updateFooter();
+    },
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {MouseEvent} event
+     */
+    _onSelectRecord: function (event) {
+        event.stopPropagation();
+        this._updateSelection();
+        if (!$(event.currentTarget).find('input').prop('checked')) {
+            this.$('thead .o_list_record_selector input').prop('checked', false);
+        }
+    },
+
+    /* TODO */
     load_view: function(context) {
         var self = this;
         var view_loaded_def;
@@ -145,9 +266,9 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 "context": this.dataset.get_context(),
             });
         }
-        return this.alive(view_loaded_def).then(function(r) {
-            self.fields_view = r;
-            var data = r.geoengine_layers;
+        return this.alive(view_loaded_def).then(function() {
+            var options = self.mapOptions;
+            var data = options.geoengine_layers;
             self.projection = data.projection;
             self.restricted_extent = data.restricted_extent;
             self.default_extent = data.default_extent;
@@ -236,7 +357,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         }
         _.each(data, function(item) {
             var attributes = _.clone(item);
-            _.each(_.keys(self.geometry_columns), function(item) {
+            _.each(_.keys(self.geometryColumns), function(item) {
                 delete attributes[item];
             });
 
@@ -486,7 +607,8 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     createVectorLayers: function(data) {
         var self = this;
         var out = [];
-        _.each(this.fields_view.geoengine_layers.actives, function(item) {
+	var layers = self.mapOptions.geoengine_layers.actives;
+        _.each(layers, function(item) {
             out.push(self.createVectorLayer(item, data));
         });
         return out;
@@ -499,13 +621,13 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         }
 
         var $popup = self.$('.layer-popup');
-        var popup_element = $popup.get(0);
+        var popupElement = $popup.get(0);
         var overlayPopup = new ol.Overlay({
-            element: popup_element,
+            element: popupElement,
             positioning: 'bottom-center',
             stopEvent: false
         });
-        self.popup_element = popup_element;
+        self.popupElement = popupElement;
         self.overlayPopup = overlayPopup;
         return overlayPopup;
     },
@@ -549,7 +671,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             return;
         }
 
-        map.removeLayer(self.overlaysGroup);
+        self.map.removeLayer(self.overlaysGroup);
 
         var vectorLayers = self.createVectorLayers(data);
         self.overlaysGroup = new ol.layer.Group({
@@ -565,24 +687,24 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 vlayer.setVisible(false);
             }
         });
-        map.addLayer(self.overlaysGroup);
-        map.addOverlay(self.overlayPopup);
+        self.map.addLayer(self.overlaysGroup);
+        self.map.addOverlay(self.overlayPopup);
 
         // zoom to data extent
         //map.zoomTo
         if (data.length) {
             var extent = vectorLayers[0].getSource().getExtent();
-            self.zoom_to_extent_ctrl.extent_ = extent;
-            self.zoom_to_extent_ctrl.changed();
+            self.zoomToExtentCtrl.extent_ = extent;
+            self.zoomToExtentCtrl.changed();
 
             // When user quit fullscreen map, the size is set to undefined
             // So we have to check this and recompute the size.
-            var size = map.getSize();
+            var size = self.map.getSize();
             if (size === undefined ){
-                map.updateSize();
-                size = map.getSize();
+                self.map.updateSize();
+                size = self.map.getSize();
             }
-            map.getView().fit(extent, map.getSize());
+            self.map.getView().fit(extent, map.getSize());
 
             var ids = [];
             // Javascript expert please improve this code
@@ -596,20 +718,21 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     view_loading: function(fv) {
         var self = this;
         self.fields_view = fv;
-        _.each(fv.geoengine_layers.actives, function(item) {
-            self.geometry_columns[item.geo_field_id[1]] = true;
+	var layers = self.mapOptions.geoengine_layers.actives;
+        _.each(layers, function(item) {
+            self.geometryColumns[item.geo_field_id[1]] = true;
         });
         return $.when();
     },
 
     willStart: function() {
         var self = this;
-        var arch = self.fields_view.arch;
+        /*var arch = self.fields_view.arch;
         _.each(arch.children, function(child) {
             if (child.tag === 'templates') {
                 self.qweb.add_template(utils.json_node_to_xml(child));
             }
-        });
+        });*/
         return self._super();
     },
 
@@ -728,33 +851,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         this.map.addInteraction(selectPointerMove);
     },
 
-    render_map: function() {
-        var self = this;
-        if (_.isUndefined(this.map)){
-            self.zoom_to_extent_ctrl = new ol.control.ZoomToExtent();
-            map = new ol.Map({
-                layers: [new ol.layer.Group({
-                    title: 'Base maps',
-                    layers: self.createBackgroundLayers(self.fields_view.geoengine_layers.backgrounds),
-                })],
-                target: 'olmap',
-                view: new ol.View({
-                    center: [0, 0],
-                    zoom: 2
-                }),
-                controls: ol.control.defaults().extend([
-                    new ol.control.FullScreen(),
-                    new ol.control.ScaleLine(),
-                    self.zoom_to_extent_ctrl
-                ]),
-            });
-            var layerSwitcher = new ol.control.LayerSwitcher({});
-            map.addControl(layerSwitcher);
-            self.map = map;
-            self.register_interaction();
-        }
-    },
-
     do_show: function () {
         var self = this;
         this._super();
@@ -790,10 +886,8 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             this.do_warn("Geoengine: could not find id#" + oid);
         }
     },
-
 });
 
-core.view_registry.add('geoengine', GeoengineView);
-
-return GeoengineView;
+return GeoengineRenderer;
 });
+
