@@ -12,10 +12,10 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
 var core = require('web.core');
 var data = require('web.data');
 var GeoengineView = require('base_geoengine.GeoengineView');
-var common = require('web.form_common');
+var AbstractField = require('web.AbstractField');
 var geoengine_common = require('base_geoengine.geoengine_common');
 
-var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.GeoengineMixin, {
+var FieldGeoEngineEditMap = AbstractField.extend(geoengine_common.GeoengineMixin, {
     template: 'FieldGeoEngineEditMap',
 
     geo_type: null,
@@ -297,7 +297,7 @@ var FieldGeoEngineEditMapReadonly = FieldGeoEngineEditMap.extend({
 });
 
 //-----------------------------------------------------------------------
-var FieldGeoPointXY = common.AbstractField.extend({
+var FieldGeoPointXY = AbstractField.extend({
     template: 'FieldGeoPointXY',
 
     start: function() {
@@ -381,7 +381,7 @@ var FieldGeoPointXYReadonly = FieldGeoPointXY.extend({
     }
 });
 
-var FieldGeoRect = common.AbstractField.extend({
+var FieldGeoRect = AbstractField.extend({
     template: 'FieldGeoRect',
 
     start: function() {
