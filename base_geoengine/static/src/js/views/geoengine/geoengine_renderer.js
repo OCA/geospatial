@@ -1,132 +1,178 @@
 /*---------------------------------------------------------
- * OpenERP base_geoengine
- * Author B.Binet Copyright Camptocamp SA
- * Contributor N. Bessi Copyright Camptocamp SA
- * Contributor Laurent Mignon 2015 Acsone SA/NV
- * Contributor Yannick Vaucher 2015-2018 Camptocamp SA
+ * Odoo base_geoengine
+ * Contributor Yannick Vaucher 2018 Camptocamp SA
  * License in __manifest__.py at root level of the module
  *---------------------------------------------------------
 */
-odoo.define('base_geoengine.GeoengineView', function (require) {
+odoo.define('base_geoengine.GeoengineRenderer', function (require) {
 "use strict";
 
-/*---------------------------------------------------------
- * Odoo geoengine view
- *---------------------------------------------------------*/
-
+var BasicRenderer = require('web.BasicRenderer');
+var config = require('web.config');
 var core = require('web.core');
-var time = require('web.time');
-
-var BasicView = require('web.BasicView');
-var QWeb = require('web.QWeb');
-var GeoengineRecord = require('base_geoengine.Record');
-
-var session = require('web.session');
+var Dialog = require('web.Dialog');
+var dom = require('web.dom');
+var field_utils = require('web.field_utils');
 var utils = require('web.utils');
 
-var geoengine_common = require('base_geoengine.geoengine_common');
+var _t = core._t;
 
-var _lt = core._lt;
+// Allowed decoration on the list's rows: bold, italic and bootstrap semantics classes
+var DECORATIONS = [
+    'decoration-bf',
+    'decoration-it',
+    'decoration-danger',
+    'decoration-info',
+    'decoration-muted',
+    'decoration-primary',
+    'decoration-success',
+    'decoration-warning'
+];
 
-//var map, layer, vectorLayers = [];
-//TODO: remove this DEBUG
-var map = null;
-
-/* CONSTANTS */
-var DEFAULT_BEGIN_COLOR = "#FFFFFF";
-var DEFAULT_END_COLOR = "#000000";
-var DEFAULT_MIN_SIZE = 5; // for prop symbols only
-var DEFAULT_MAX_SIZE = 15; // for prop symbols only
-var DEFAULT_NUM_CLASSES = 5; // for choroplets only
-var LEGEND_MAX_ITEMS = 10;
-
-/**
- * Method: formatFeatureHTML
- * formats attributes into a string
- *
- * Parameters:
- * a - {Object}
- */
-var formatFeatureHTML = function(a, fields) {
-    var str = [];
-    var oid = '';
-    for (var key in a) {
-        if (a.hasOwnProperty(key)) {
-            var val = a[key];
-            if (val === false) {
-                continue;
-            }
-            var span = '';
-            if (fields.hasOwnProperty(key)) {
-                var field = fields[key];
-                var label = field.string;
-                if (field.type === 'selection') {
-                    // get display value of selection option
-                    for (var option in field.selection) {
-                        if (field.selection[option][0] === val) {
-                            val = field.selection[option][1];
-                            break;
-                        }
-                    }
-                }
-                if (val instanceof Array) {
-                    str.push('<span style="font-weight: bold">' + label + '</span>: ' +val[1]);
-                } else {
-                    span = '<span style="font-weight: bold">' + label + '</span>: ' +val;
-                     if (key === 'id') {
-                        oid = span;
-                    } else {
-                        str.push(span);
-                    }
-                }
-            }
-        }
-    }
-    str.unshift(oid);
-    return str.join('<br />');
-};
-/**
- * Method: formatFeatureListHTML
- * formats attributes into a string
- *
- * Parameters:
- * features - [Array]
- */
-var formatFeatureListHTML = function(features) {
-    var str = [];
-    // count unique record selected through all features
-    var selected_ids = [];
-    features.forEach(function(x) {
-        var rec_id = x.get('attributes').id;
-        if (selected_ids.indexOf(rec_id) < 0) {
-            selected_ids.push(rec_id);
-        }
-    });
-    str.push(selected_ids.length + ' selected records');
-    return str.join('<br />');
+var FIELD_CLASSES = {
+    float: 'o_list_number',
+    integer: 'o_list_number',
+    monetary: 'o_list_number',
+    text: 'o_list_text',
 };
 
-var GeoengineView = BasicView.extend(geoengine_common.GeoengineMixin, {
-    template: "GeoengineView",
-    display_name: _lt('Geoengine'),
-    icon: 'fa-map-o',
+var GeoengineRenderer = BasicRenderer.extend({
     events: {
         'click a.ol-popup-closer': 'hide_popup',
         'click a.ol-popup-edit': 'open_popup_record',
+        /* TODO register map events 'click tbody .o_list_record_selector': '_onSelectRecord', */
+    },
+    /**
+     * @constructor
+     * @param {Widget} parent
+     * @param {any} state
+     * @param {Object} params
+     * @param {boolean} params.hasSelectors
+     */
+    init: function (parent, state, params) {
+        this._super.apply(this, arguments);
+        this.selection = params.selectedRecords || [];
     },
 
-    init: function() {
-        this._super.apply(this, arguments);
-        this.qweb = new QWeb(session.debug, {_s: session.origin});
-        this.view_type = 'geoengine';
-        this.geometry_columns = {};
-        this.overlaysGroup = null;
-        this.vectorSources = [];
-        this.zoom_to_extent_ctrl = null;
-        this.popup_element = undefined;
-        this.overlayPopup = undefined;
-        this.featurePopup = undefined;
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    /**
+     * Render the map 
+     *
+     * @private
+     * @returns {jQueryElement} a jquery element <tbody>
+     */
+    _renderMap: function () {
+        var self = this;
+        if (_.isUndefined(this.map)){
+            self.zoom_to_extent_ctrl = new ol.control.ZoomToExtent();
+            var map = new ol.Map({
+                layers: [new ol.layer.Group({
+                    title: 'Base maps',
+                    //layers: self.createBackgroundLayers(self.fields_view.geoengine_layers.backgrounds),
+                })],
+                target: 'olmap',
+                view: new ol.View({
+                    center: [0, 0],
+                    zoom: 2
+                }),
+                controls: ol.control.defaults().extend([
+                    new ol.control.FullScreen(),
+                    new ol.control.ScaleLine(),
+                    self.zoom_to_extent_ctrl
+                ]),
+            });
+            var layerSwitcher = new ol.control.LayerSwitcher({});
+            map.addControl(layerSwitcher);
+            self.map = map;
+            self.register_interaction();
+        }
     },
+    /**
+     * Main render function for the map.  It is rendered as a div.
+     *
+     * @override
+     * @private
+     * returns {Deferred} this deferred is resolved immediately
+     */
+    _renderView: function () {
+        var self = this;
+        //TODO this.$el contains base elem but what is base elem?
+
+        // display the no content helper if there is no data to display
+	/* FIXME add no content helper ?
+        if (!this._hasContent() && this.noContentHelp) {
+            this._renderNoContentHelper();
+            return this._super();
+        }
+	*/
+
+        var $map_div = $('<div>', {class: 'olmap'});
+        this.$el
+            .addClass('o_geo_view')
+	    .append($map_div)
+        this._renderMap();
+	/*
+        if (this.selection.length) {
+            var $checked_rows = this.$('tr').filter(function (index, el) {
+                return _.contains(self.selection, $(el).data('id'));
+            });
+            $checked_rows.find('.o_list_record_selector input').prop('checked', true);
+        }*/
+        return this._super();
+    },
+    /**
+     * Update the footer aggregate values.  This method should be called each
+     * time the state of some field is changed, to make sure their sum are kept
+     * in sync.
+     *
+     * @private
+     */
+    _updateFooter: function () {
+        this._computeAggregates();
+        this.$('tfoot').replaceWith(this._renderFooter(!!this.state.groupedBy.length));
+    },
+    /**
+     * Whenever we change the state of the selected rows, we need to call this
+     * method to keep the this.selection variable in sync, and also to recompute
+     * the aggregates.
+     *
+     * @private
+     */
+    _updateSelection: function () {
+        var $selectedRows = this.$('tbody .o_list_record_selector input:checked')
+                                .closest('tr');
+        this.selection = _.map($selectedRows, function (row) {
+            return $(row).data('id');
+        });
+        this.trigger_up('selection_changed', { selection: this.selection });
+        this._updateFooter();
+    },
+
+    //--------------------------------------------------------------------------
+    // Handlers
+    //--------------------------------------------------------------------------
+
+    /**
+     * @private
+     * @param {MouseEvent} event
+     */
+    _onSelectRecord: function (event) {
+        event.stopPropagation();
+        this._updateSelection();
+        if (!$(event.currentTarget).find('input').prop('checked')) {
+            this.$('thead .o_list_record_selector input').prop('checked', false);
+        }
+    },
+
+    /* TODO */
     load_view: function(context) {
         var self = this;
         var view_loaded_def;
@@ -594,7 +640,7 @@ var GeoengineView = BasicView.extend(geoengine_common.GeoengineMixin, {
 
     view_loading: function(fv) {
         var self = this;
-        self.fields_view = fv;
+        //self.fields_view = fv;
         _.each(fv.geoengine_layers.actives, function(item) {
             self.geometry_columns[item.geo_field_id[1]] = true;
         });
@@ -603,12 +649,12 @@ var GeoengineView = BasicView.extend(geoengine_common.GeoengineMixin, {
 
     willStart: function() {
         var self = this;
-        var arch = self.fields_view.arch;
+        /*var arch = self.fields_view.arch;
         _.each(arch.children, function(child) {
             if (child.tag === 'templates') {
                 self.qweb.add_template(utils.json_node_to_xml(child));
             }
-        });
+        });*/
         return self._super();
     },
 
@@ -727,33 +773,6 @@ var GeoengineView = BasicView.extend(geoengine_common.GeoengineMixin, {
         this.map.addInteraction(selectPointerMove);
     },
 
-    render_map: function() {
-        var self = this;
-        if (_.isUndefined(this.map)){
-            self.zoom_to_extent_ctrl = new ol.control.ZoomToExtent();
-            map = new ol.Map({
-                layers: [new ol.layer.Group({
-                    title: 'Base maps',
-                    layers: self.createBackgroundLayers(self.fields_view.geoengine_layers.backgrounds),
-                })],
-                target: 'olmap',
-                view: new ol.View({
-                    center: [0, 0],
-                    zoom: 2
-                }),
-                controls: ol.control.defaults().extend([
-                    new ol.control.FullScreen(),
-                    new ol.control.ScaleLine(),
-                    self.zoom_to_extent_ctrl
-                ]),
-            });
-            var layerSwitcher = new ol.control.LayerSwitcher({});
-            map.addControl(layerSwitcher);
-            self.map = map;
-            self.register_interaction();
-        }
-    },
-
     do_show: function () {
         var self = this;
         this._super();
@@ -789,9 +808,8 @@ var GeoengineView = BasicView.extend(geoengine_common.GeoengineMixin, {
             this.do_warn("Geoengine: could not find id#" + oid);
         }
     },
-
 });
 
-
-return GeoengineView;
+return GeoengineRenderer;
 });
+
