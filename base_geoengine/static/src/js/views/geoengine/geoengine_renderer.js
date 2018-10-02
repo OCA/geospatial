@@ -13,28 +13,84 @@ var utils = require('web.utils');
 var QWeb = require('web.QWeb');
 var session = require('web.session');
 
-var _t = core._t;
+var geoengine_common = require('base_geoengine.geoengine_common');
 
-// Allowed decoration on the list's rows: bold, italic and bootstrap semantics classes
-var DECORATIONS = [
-    'decoration-bf',
-    'decoration-it',
-    'decoration-danger',
-    'decoration-info',
-    'decoration-muted',
-    'decoration-primary',
-    'decoration-success',
-    'decoration-warning'
-];
+/* CONSTANTS */
+var DEFAULT_BEGIN_COLOR = "#FFFFFF";
+var DEFAULT_END_COLOR = "#000000";
+var DEFAULT_MIN_SIZE = 5; // for prop symbols only
+var DEFAULT_MAX_SIZE = 15; // for prop symbols only
+var DEFAULT_NUM_CLASSES = 5; // for choroplets only
+var LEGEND_MAX_ITEMS = 10;
 
-var FIELD_CLASSES = {
-    float: 'o_list_number',
-    integer: 'o_list_number',
-    monetary: 'o_list_number',
-    text: 'o_list_text',
+/**
+ * Method: formatFeatureHTML
+ * formats attributes into a string
+ *
+ * Parameters:
+ * a - {Object}
+ */
+var formatFeatureHTML = function(a, fields) {
+    var str = [];
+    var oid = '';
+    for (var key in a) {
+        if (a.hasOwnProperty(key)) {
+            var val = a[key];
+            if (val === false) {
+                continue;
+            }
+            var span = '';
+            if (fields.hasOwnProperty(key)) {
+                var field = fields[key];
+                var label = field.string;
+                if (field.type === 'selection') {
+                    // get display value of selection option
+                    for (var option in field.selection) {
+                        if (field.selection[option][0] === val) {
+                            val = field.selection[option][1];
+                            break;
+                        }
+                    }
+                }
+                if (val instanceof Array) {
+                    str.push('<span style="font-weight: bold">' + label + '</span>: ' +val[1]);
+                } else {
+                    span = '<span style="font-weight: bold">' + label + '</span>: ' +val;
+                     if (key === 'id') {
+                        oid = span;
+                    } else {
+                        str.push(span);
+                    }
+                }
+            }
+        }
+    }
+    str.unshift(oid);
+    return str.join('<br />');
+};
+/**
+ * Method: formatFeatureListHTML
+ * formats attributes into a string
+ *
+ * Parameters:
+ * features - [Array]
+ */
+var formatFeatureListHTML = function(features) {
+    var str = [];
+    // count unique record selected through all features
+    var selected_ids = [];
+    features.forEach(function(x) {
+        var rec_id = x.get('attributes').id;
+        if (selected_ids.indexOf(rec_id) < 0) {
+            selected_ids.push(rec_id);
+        }
+    });
+    str.push(selected_ids.length + ' selected records');
+    return str.join('<br />');
 };
 
-var GeoengineRenderer = BasicRenderer.extend({
+
+var GeoengineRenderer = BasicRenderer.extend(geoengine_common.GeoengineMixin, {
     events: {
         'click a.ol-popup-closer': 'hide_popup',
         'click a.ol-popup-edit': 'open_popup_record',
@@ -61,6 +117,7 @@ var GeoengineRenderer = BasicRenderer.extend({
         this.popupElement = params.popupElement;
         this.overlayPopup = params.overlayPopup;
         this.featurePopup = params.featurePopup;
+        this.mapOptions = params.mapOptions;
     },
 
     //--------------------------------------------------------------------------
@@ -79,19 +136,15 @@ var GeoengineRenderer = BasicRenderer.extend({
      * @returns {jQueryElement} a jquery element <tbody>
      */
     _renderMap: function () {
-	    // FIXME tests
-	var layer = new ol.layer.Tile({
-            source: new ol.source.OSM()
-        });
 
         var self = this;
         if (_.isUndefined(this.map)){
             self.zoomToExtentCtrl = new ol.control.ZoomToExtent();
+            var backgrounds = self.mapOptions.geoengine_layers.backgrounds;
             var map = new ol.Map({
                 layers: [new ol.layer.Group({
                     title: 'Base maps',
-                    //layers: self.createBackgroundLayers(self.fields_view.geoengine_layers.backgrounds),
-		    layers: [layer],
+                    layers: self.createBackgroundLayers(backgrounds),
                 })],
                 target: 'olmap',
                 view: new ol.View({
@@ -213,9 +266,9 @@ var GeoengineRenderer = BasicRenderer.extend({
                 "context": this.dataset.get_context(),
             });
         }
-        return this.alive(view_loaded_def).then(function(r) {
-            self.fields_view = r;
-            var data = r.geoengine_layers;
+        return this.alive(view_loaded_def).then(function() {
+            var options = self.mapOptions;
+            var data = options.geoengine_layers;
             self.projection = data.projection;
             self.restricted_extent = data.restricted_extent;
             self.default_extent = data.default_extent;
@@ -554,7 +607,8 @@ var GeoengineRenderer = BasicRenderer.extend({
     createVectorLayers: function(data) {
         var self = this;
         var out = [];
-        _.each(this.fields_view.geoengine_layers.actives, function(item) {
+	var layers = self.mapOptions.geoengine_layers.actives;
+        _.each(layers, function(item) {
             out.push(self.createVectorLayer(item, data));
         });
         return out;
@@ -617,7 +671,7 @@ var GeoengineRenderer = BasicRenderer.extend({
             return;
         }
 
-        map.removeLayer(self.overlaysGroup);
+        self.map.removeLayer(self.overlaysGroup);
 
         var vectorLayers = self.createVectorLayers(data);
         self.overlaysGroup = new ol.layer.Group({
@@ -633,8 +687,8 @@ var GeoengineRenderer = BasicRenderer.extend({
                 vlayer.setVisible(false);
             }
         });
-        map.addLayer(self.overlaysGroup);
-        map.addOverlay(self.overlayPopup);
+        self.map.addLayer(self.overlaysGroup);
+        self.map.addOverlay(self.overlayPopup);
 
         // zoom to data extent
         //map.zoomTo
@@ -645,12 +699,12 @@ var GeoengineRenderer = BasicRenderer.extend({
 
             // When user quit fullscreen map, the size is set to undefined
             // So we have to check this and recompute the size.
-            var size = map.getSize();
+            var size = self.map.getSize();
             if (size === undefined ){
-                map.updateSize();
-                size = map.getSize();
+                self.map.updateSize();
+                size = self.map.getSize();
             }
-            map.getView().fit(extent, map.getSize());
+            self.map.getView().fit(extent, map.getSize());
 
             var ids = [];
             // Javascript expert please improve this code
@@ -664,7 +718,8 @@ var GeoengineRenderer = BasicRenderer.extend({
     view_loading: function(fv) {
         var self = this;
         self.fields_view = fv;
-        _.each(fv.geoengine_layers.actives, function(item) {
+	var layers = self.mapOptions.geoengine_layers.actives;
+        _.each(layers, function(item) {
             self.geometryColumns[item.geo_field_id[1]] = true;
         });
         return $.when();

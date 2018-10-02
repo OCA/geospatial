@@ -40,6 +40,7 @@ var GeoengineController = BasicController.extend({
         this.toolbarActions = params.toolbarActions || {};
         this.noLeaf = params.noLeaf;
         this.selectedRecords = params.selectedRecords || [];
+
     },
 
     //--------------------------------------------------------------------------
