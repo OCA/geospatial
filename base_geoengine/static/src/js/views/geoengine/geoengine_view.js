@@ -135,15 +135,17 @@ var GeoengineView = BasicView.extend(geoengine_common.GeoengineMixin, {
         this.controllerParams.hasSidebar = params.sidebar;
         this.controllerParams.selectedRecords = selectedRecords;
 
-        this.rendererParams.geometry_columns = {};
+        this.rendererParams.geometryColumns = {};
         this.rendererParams.overlaysGroup = null;
         this.rendererParams.vectorSources = [];
-        this.rendererParams.zoom_to_extent_ctrl = null;
-        this.rendererParams.popup_element = undefined;
+        this.rendererParams.zoomToExtentCtrl = null;
+        this.rendererParams.popupElement = undefined;
         this.rendererParams.overlayPopup = undefined;
         this.rendererParams.featurePopup = undefined;
 
         this.rendererParams.selectedRecords = selectedRecords;
+
+        this.loadParams.type = 'list';
     },
 
 

@@ -8,12 +8,10 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
 "use strict";
 
 var BasicRenderer = require('web.BasicRenderer');
-var config = require('web.config');
 var core = require('web.core');
-var Dialog = require('web.Dialog');
-var dom = require('web.dom');
-var field_utils = require('web.field_utils');
 var utils = require('web.utils');
+var QWeb = require('web.QWeb');
+var session = require('web.session');
 
 var _t = core._t;
 
@@ -51,7 +49,18 @@ var GeoengineRenderer = BasicRenderer.extend({
      */
     init: function (parent, state, params) {
         this._super.apply(this, arguments);
+
+        this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
+
         this.selection = params.selectedRecords || [];
+
+        this.geometryColumns = params.geometryColumns;
+        this.overlaysGroup = params.overlaysGroup;
+        this.vectorSources = params.vectorSounces;
+        this.zoomToExtentCtrl = params.zoomToExtentCtrl;
+        this.popupElement = params.popupElement;
+        this.overlayPopup = params.overlayPopup;
+        this.featurePopup = params.featurePopup;
     },
 
     //--------------------------------------------------------------------------
@@ -70,13 +79,19 @@ var GeoengineRenderer = BasicRenderer.extend({
      * @returns {jQueryElement} a jquery element <tbody>
      */
     _renderMap: function () {
+	    // FIXME tests
+	var layer = new ol.layer.Tile({
+            source: new ol.source.OSM()
+        });
+
         var self = this;
         if (_.isUndefined(this.map)){
-            self.zoom_to_extent_ctrl = new ol.control.ZoomToExtent();
+            self.zoomToExtentCtrl = new ol.control.ZoomToExtent();
             var map = new ol.Map({
                 layers: [new ol.layer.Group({
                     title: 'Base maps',
                     //layers: self.createBackgroundLayers(self.fields_view.geoengine_layers.backgrounds),
+		    layers: [layer],
                 })],
                 target: 'olmap',
                 view: new ol.View({
@@ -86,7 +101,7 @@ var GeoengineRenderer = BasicRenderer.extend({
                 controls: ol.control.defaults().extend([
                     new ol.control.FullScreen(),
                     new ol.control.ScaleLine(),
-                    self.zoom_to_extent_ctrl
+                    self.zoomToExtentCtrl
                 ]),
             });
             var layerSwitcher = new ol.control.LayerSwitcher({});
@@ -94,6 +109,7 @@ var GeoengineRenderer = BasicRenderer.extend({
             self.map = map;
             self.register_interaction();
         }
+	return self.map;
     },
     /**
      * Main render function for the map.  It is rendered as a div.
@@ -114,11 +130,10 @@ var GeoengineRenderer = BasicRenderer.extend({
         }
 	*/
 
-        var $map_div = $('<div>', {class: 'olmap'});
+        var $map_div = $('<div>', {id: 'olmap', class: 'olmap'});
         this.$el
             .addClass('o_geo_view')
 	    .append($map_div)
-        this._renderMap();
 	/*
         if (this.selection.length) {
             var $checked_rows = this.$('tr').filter(function (index, el) {
@@ -126,6 +141,14 @@ var GeoengineRenderer = BasicRenderer.extend({
             });
             $checked_rows.find('.o_list_record_selector input').prop('checked', true);
         }*/
+        return this._super();
+    },
+    /**
+     * Called each time the renderer is attached into the DOM.
+     */
+    on_attach_callback: function () {
+        var map = this._renderMap();
+	$('#olmap').data('map', map);
         return this._super();
     },
     /**
@@ -281,7 +304,7 @@ var GeoengineRenderer = BasicRenderer.extend({
         }
         _.each(data, function(item) {
             var attributes = _.clone(item);
-            _.each(_.keys(self.geometry_columns), function(item) {
+            _.each(_.keys(self.geometryColumns), function(item) {
                 delete attributes[item];
             });
 
@@ -544,13 +567,13 @@ var GeoengineRenderer = BasicRenderer.extend({
         }
 
         var $popup = self.$('.layer-popup');
-        var popup_element = $popup.get(0);
+        var popupElement = $popup.get(0);
         var overlayPopup = new ol.Overlay({
-            element: popup_element,
+            element: popupElement,
             positioning: 'bottom-center',
             stopEvent: false
         });
-        self.popup_element = popup_element;
+        self.popupElement = popupElement;
         self.overlayPopup = overlayPopup;
         return overlayPopup;
     },
@@ -617,8 +640,8 @@ var GeoengineRenderer = BasicRenderer.extend({
         //map.zoomTo
         if (data.length) {
             var extent = vectorLayers[0].getSource().getExtent();
-            self.zoom_to_extent_ctrl.extent_ = extent;
-            self.zoom_to_extent_ctrl.changed();
+            self.zoomToExtentCtrl.extent_ = extent;
+            self.zoomToExtentCtrl.changed();
 
             // When user quit fullscreen map, the size is set to undefined
             // So we have to check this and recompute the size.
@@ -640,9 +663,9 @@ var GeoengineRenderer = BasicRenderer.extend({
 
     view_loading: function(fv) {
         var self = this;
-        //self.fields_view = fv;
+        self.fields_view = fv;
         _.each(fv.geoengine_layers.actives, function(item) {
-            self.geometry_columns[item.geo_field_id[1]] = true;
+            self.geometryColumns[item.geo_field_id[1]] = true;
         });
         return $.when();
     },
