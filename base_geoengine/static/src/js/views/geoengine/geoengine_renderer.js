@@ -1,6 +1,9 @@
 /*---------------------------------------------------------
  * Odoo base_geoengine
- * Contributor Yannick Vaucher 2018 Camptocamp SA
+ * Author B.Binet Copyright Camptocamp SA
+ * Contributor N. Bessi Copyright Camptocamp SA
+ * Contributor Laurent Mignon 2015 Acsone SA/NV
+ * Contributor Yannick Vaucher 2015-2018 Camptocamp SA
  * License in __manifest__.py at root level of the module
  *---------------------------------------------------------
 */
@@ -90,6 +93,7 @@ var formatFeatureListHTML = function(features) {
 };
 
 
+// FIXME AbstractRenderer if not widget
 var GeoengineRenderer = BasicRenderer.extend(geoengine_common.GeoengineMixin, {
     events: {
         'click a.ol-popup-closer': 'hide_popup',
@@ -112,7 +116,7 @@ var GeoengineRenderer = BasicRenderer.extend(geoengine_common.GeoengineMixin, {
 
         this.geometryColumns = params.geometryColumns;
         this.overlaysGroup = params.overlaysGroup;
-        this.vectorSources = params.vectorSounces;
+        this.vectorSources = params.vectorSources;
         this.zoomToExtentCtrl = params.zoomToExtentCtrl;
         this.popupElement = params.popupElement;
         this.overlayPopup = params.overlayPopup;
@@ -202,6 +206,8 @@ var GeoengineRenderer = BasicRenderer.extend(geoengine_common.GeoengineMixin, {
     on_attach_callback: function () {
         var map = this._renderMap();
 	$('#olmap').data('map', map);
+
+        this._renderVectorLayers();
         return this._super();
     },
     /**
@@ -283,7 +289,9 @@ var GeoengineRenderer = BasicRenderer.extend(geoengine_common.GeoengineMixin, {
     },
     _do_search: function(domain, context, _group_by) {
         var self = this;
-        self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domain}).then(this.do_load_vector_data);
+	    // TODO replacement for do_search ?
+	    // _load() et reload() dans Model
+        self.dataset.read_slice(_.keys(self.fields_view.fields), {'domain':domain}).then(this._renderVectorLayers);
     },
 
     createMultiSymbolStyle: function(symbols) {
@@ -443,7 +451,8 @@ var GeoengineRenderer = BasicRenderer.extend(geoengine_common.GeoengineMixin, {
                         break;
                 }
                 var colors = [];
-                _.each(scale.colors(mode='hex'), function(color){
+		// TODO test (I removed mode=hex)
+                _.each(scale.colors(), function(color){
                     colors.push(chroma(color).alpha(opacity).css());
                 });
                 var styles_map = {};
@@ -598,6 +607,7 @@ var GeoengineRenderer = BasicRenderer.extend(geoengine_common.GeoengineMixin, {
     },
 
     /**
+     * FIXME move in model ?
         * Method: createVectorLayers
         * creates vector layers from config and populates them with features
         *
@@ -665,11 +675,12 @@ var GeoengineRenderer = BasicRenderer.extend(geoengine_common.GeoengineMixin, {
         }
     },
 
-    do_load_vector_data: function(data) {
+    _renderVectorLayers: function() {
         var self = this;
         if (!self.map) {
             return;
         }
+        var data = this.state.data;
 
         self.map.removeLayer(self.overlaysGroup);
 
@@ -704,14 +715,18 @@ var GeoengineRenderer = BasicRenderer.extend(geoengine_common.GeoengineMixin, {
                 self.map.updateSize();
                 size = self.map.getSize();
             }
-            self.map.getView().fit(extent, map.getSize());
+	    // FIXME extent should be set before
+	    extent = [-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898];
+	    // ----
+            self.map.getView().fit(extent, self.map.getSize());
 
             var ids = [];
             // Javascript expert please improve this code
             for (var i=0, len=data.length; i<len; ++i) {
                 ids.push(data[i]['id']);
             }
-            self.dataset.ids = ids;
+	    // FIXME
+            //self.dataset.ids = ids;
         }
     },
 
@@ -852,12 +867,13 @@ var GeoengineRenderer = BasicRenderer.extend(geoengine_common.GeoengineMixin, {
     },
 
     do_show: function () {
+// TODO to move somewhere ???
         var self = this;
         this._super();
 
         // Wait for element to be rendered before adding the map
         core.bus.on('DOM_updated', self.ViewManager.is_in_DOM, function () {
-            self.render_map();
+            self.renderMap();
         });
     },
     filter_selection: function(features) {

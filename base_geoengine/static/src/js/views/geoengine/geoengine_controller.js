@@ -36,6 +36,7 @@ var GeoengineController = BasicController.extend({
      */
     init: function (parent, model, renderer, params) {
         this._super.apply(this, arguments);
+
         this.hasSidebar = params.hasSidebar;
         this.toolbarActions = params.toolbarActions || {};
         this.noLeaf = params.noLeaf;
@@ -48,13 +49,9 @@ var GeoengineController = BasicController.extend({
     //--------------------------------------------------------------------------
 
     /**
-     * Calculate the active domain of the list view. This should be done only
+     * Calculate the active domain of the geo view. This should be done only
      * if the header checkbox has been checked. This is done by evaluating the
      * search results, and then adding the dataset domain (i.e. action domain).
-     *
-     * @todo This is done only for the data export.  The full mechanism is wrong,
-     * this method should be private, most of the code in the sidebar should be
-     * moved to the controller, and we should not use the getParent method...
      *
      * @returns {Deferred<array[]>} a deferred that resolve to the active domain
      */
@@ -93,6 +90,7 @@ var GeoengineController = BasicController.extend({
      * Returns the list of currently selected records (highlighted on the map)
      *
      * @returns {Object[]} list of records
+     * TODO
      */
     getSelectedRecords: function () {
         var self = this;
@@ -146,6 +144,7 @@ var GeoengineController = BasicController.extend({
      * Overrides to update the list of selected records
      *
      * @override
+     * TODO
      */
     update: function (params, options) {
         var self = this;

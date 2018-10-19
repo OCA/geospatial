@@ -1,9 +1,6 @@
 /*---------------------------------------------------------
  * Odoo base_geoengine
- * Author B.Binet Copyright Camptocamp SA
- * Contributor N. Bessi Copyright Camptocamp SA
- * Contributor Laurent Mignon 2015 Acsone SA/NV
- * Contributor Yannick Vaucher 2015-2018 Camptocamp SA
+ * Author Yannick Vaucher 2018 Camptocamp SA
  * License in __manifest__.py at root level of the module
  *---------------------------------------------------------
 */
@@ -22,24 +19,32 @@ var QWeb = require('web.QWeb');
 var GeoengineRecord = require('base_geoengine.Record');
 var GeoengineController = require('base_geoengine.GeoengineController');
 var GeoengineRenderer = require('base_geoengine.GeoengineRenderer');
+var GeoengineModel = require('base_geoengine.GeoengineModel');
 
 var session = require('web.session');
 var utils = require('web.utils');
 
 var _lt = core._lt;
 
-//var map, layer, vectorLayers = [];
-//TODO: remove this DEBUG
-var map = null;
-
 
 var GeoengineView = BasicView.extend({
     accesskey: "g",
     display_name: _lt('Geoengine'),
     icon: 'fa-map-o',
+    cssLibs: [
+        '/base_geoengine/static/lib/ol-3.18.2/ol.css',
+        '/base_geoengine/static/lib/geostats-1.4.0/geostats.css',
+    ],
+    jsLibs: [
+        '/base_geoengine/static/lib/ol-3.18.2/ol-debug.js',
+	      '/base_geoengine/static/lib/ol3-layerswitcher.js',
+        '/base_geoengine/static/lib/chromajs-0.8.0/chroma.js',
+        '/base_geoengine/static/lib/geostats-1.4.0/geostats.js',
+    ],
     config: _.extend({}, BasicView.prototype.config, {
         Renderer: GeoengineRenderer,
         Controller: GeoengineController,
+        Model: GeoengineModel,
     }),
     viewType: 'geoengine',
     template: "GeoengineView",
