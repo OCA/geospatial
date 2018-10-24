@@ -17,16 +17,17 @@ var core = require('web.core');
 
 
 var GeoengineMixin = {
+
     /**
      * Method: createBackgroundLayers
      * creates background layers from config
      *
      * Parameters:
-     * bg_layers - {Array} the background layers array of config objects
+     * layersCfg - {Array} the background layers array of config objects
      */
-    createBackgroundLayers: function(bg_layers) {
+    createBackgroundLayers: function(layersCfg) {
         var out = [];
-        _.each(bg_layers, function(l) {
+        _.each(layersCfg, function(l) {
             if (l.is_wmts) {
                 var opt = {
                     name: l.name,
@@ -47,6 +48,7 @@ var GeoengineMixin = {
                 if (l.dimensions) { opt.dimensions = l.dimensions.split(','); }
                 if (l.params) { opt.params = JSON.parse(l.params); }
 
+                // FIXME use OL3 syntax here instead of OL2
                 out.push(new OpenLayers.Layer.WMTS(opt));
             } else {
                 switch (l.raster_type) {
