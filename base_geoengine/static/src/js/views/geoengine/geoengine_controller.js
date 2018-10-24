@@ -48,7 +48,7 @@ var GeoengineController = BasicController.extend({
     //--------------------------------------------------------------------------
 
     /**
-     * Calculate the active domain of the list view. This should be done only
+     * Calculate the active domain of the geo view. This should be done only
      * if the header checkbox has been checked. This is done by evaluating the
      * search results, and then adding the dataset domain (i.e. action domain).
      *
@@ -186,6 +186,7 @@ var GeoengineController = BasicController.extend({
     /**
      * Adds a record to the list.
      * Disables the buttons to prevent concurrent record creation or edition.
+     * TODO probably not needed
      *
      * @todo make record creation a basic controller feature
      * @private
