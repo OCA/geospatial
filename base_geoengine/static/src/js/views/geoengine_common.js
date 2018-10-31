@@ -18,6 +18,17 @@ var core = require('web.core');
 
 var GeoengineMixin = {
 
+    cssLibs: [
+        '/base_geoengine/static/lib/ol-3.18.2/ol.css',
+        '/base_geoengine/static/lib/geostats-1.4.0/geostats.css',
+    ],
+    jsLibs: [
+        '/base_geoengine/static/lib/ol-3.18.2/ol-debug.js',
+        '/base_geoengine/static/lib/ol3-layerswitcher.js',
+        '/base_geoengine/static/lib/chromajs-0.8.0/chroma.js',
+        '/base_geoengine/static/lib/geostats-1.4.0/geostats.js',
+    ],
+
     /**
      * Method: createBackgroundLayers
      * creates background layers from config
