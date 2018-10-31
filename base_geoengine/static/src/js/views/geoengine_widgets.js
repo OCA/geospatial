@@ -14,24 +14,52 @@ var data = require('web.data');
 var GeoengineView = require('base_geoengine.GeoengineView');
 var AbstractField = require('web.AbstractField');
 var geoengine_common = require('base_geoengine.geoengine_common');
+var registry = require('web.field_registry');
 
 var FieldGeoEngineEditMap = AbstractField.extend(geoengine_common.GeoengineMixin, {
     template: 'FieldGeoEngineEditMap',
 
-    geo_type: null,
+    geoType: null,
     map: null,
-    default_extent: null,
+    defaultExtent: null,
     format: null,
-    force_readonly: null,
-    vector_layer: null,
-    raster_layers: null,
+    vectorLayer: null,
+    rasterLayers: null,
     source: null,
     features: null,
-    draw_control: null,
-    modify_control: null,
-    tab_listener_installed: false,
+    drawControl: null,
+    modifyControl: null,
+    tabListenerInstalled: false,
 
-    create_vector_layer: function(self) {
+    //--------------------------------------------------------------------------
+    // Public
+    //--------------------------------------------------------------------------
+
+    /**
+     * @override
+     */
+    start: function() {
+        var def = this._super();
+
+        // add a listener on parent tab if it exists in order to refresh geoengine view
+        // we need to trigger it on DOM update for changes from view to edit mode
+        core.bus.on('DOM_updated', this, function () {
+            this._addTabListener();
+        }.bind(this));
+
+        return def;
+    },
+
+    // FIXME still used?
+    validate: function() {
+        this.invalid = false;
+    },
+
+    //--------------------------------------------------------------------------
+    // Private
+    //--------------------------------------------------------------------------
+
+    _createVectorLayer: function() {
         this.features = new ol.Collection();
         this.source = new ol.source.Vector({features: this.features});
         return new ol.layer.Vector({
@@ -56,69 +84,36 @@ var FieldGeoEngineEditMap = AbstractField.extend(geoengine_common.GeoengineMixin
         });
     },
 
-    create_layers: function(self, field_infos) {
-        this.vector_layer = this.create_vector_layer();
-        this.raster_layers = this.createBackgroundLayers([field_infos.edit_raster]);
-        this.raster_layers[0].isBaseLayer = true;
+    _createLayers: function(field_infos) {
+        this.vectorLayer = this._createVectorLayer();
+        this.rasterLayers = this.createBackgroundLayers([field_infos.edit_raster]);
+        this.rasterLayers[0].isBaseLayer = true;
     },
 
-    add_tab_listener: function() {
-        tab_href = this.$el.closest('div[role="tabpanel"]')
-        if (tab_href.length == 0) {
+    _addTabListener: function() {
+        if (this.tabListenerInstalled) {
             return;
         }
-        $('a[href="#' + tab_href[0].id + '"]').on('shown.bs.tab', function(e) {
-            this.render_map();
+        this.tabListenerInstalled = true;
+
+        var tab = this.$el.closest('div.tab-pane');
+        if (!tab.length) {
             return;
+        }
+        $('a[href="#' + tab[0].id + '"]').on('shown.bs.tab', function(e) {
+            this._renderMap();
         }.bind(this));
     },
 
-    start: function() {
-        this._super.apply(this, arguments);
-        if (this.map) {
-            return;
-        }
-        this.view.on("change:actual_mode", this, this.on_mode_change);
-        var self = this;
-        // add a listener on parent tab if it exists in order to refresh geoengine view
-        // we need to trigger it on DOM update for changes from view to edit mode
-        core.bus.on('DOM_updated', self.view.ViewManager.is_in_DOM, function () {
-            if (!self.tab_listener_installed) {
-                self.add_tab_listener();
-                self.tab_listener_installed = true;
-            }
-        });
-        // When opening a popup form DOM update isn't triggered and there is no change from view to
-        // edit mode thus we install listener anyway
-        if (this.view.ViewManager.$modal) {
-            if (!self.tab_listener_installed) {
-                self.add_tab_listener();
-                self.tab_listener_installed = true;
-            }
-        }
-        // We blacklist all other fields in order to avoid calling get_value inside the build_context on field widget which aren't started yet
-        var blacklist = this.view.fields_order.slice();
-        delete blacklist[this.name];
-        var rdataset = new data.DataSetStatic(self, self.view.model, self.build_context(blacklist));
-        rdataset.call("get_edit_info_for_geo_column", [self.name, rdataset.get_context()], false, 0).then(function(result) {
-            self.create_layers(self, result);
-            self.geo_type = result.geo_type;
-            self.projection = result.projection;
-            self.default_extent = result.default_extent;
-            self.default_zoom = result.default_zoom;
-            self.restricted_extent = result.restricted_extent;
-            self.srid = result.srid;
-            if (self.$el.is(':visible')){
-                self.render_map();
-            }
-        });
+    _parseValue: function (value) {
+        return value;
     },
 
-    set_value: function(value, zoom) {
+    _setValue: function(value, zoom) {
         var map_view = null;
 
         zoom = (typeof zoom === 'undefined') ? true : zoom;
-        this._super.apply(this, arguments);
+        this._super(value);
         this.value = value;
 
         if (this.map) {
@@ -129,94 +124,97 @@ var FieldGeoEngineEditMap = AbstractField.extend(geoengine_common.GeoengineMixin
             });
             this.source.clear();
             this.source.addFeature(ft);
-            if (value){
-
+            if (value) {
                 if (this.source){
                     var extent = this.source.getExtent();
                     if (zoom && extent != [Infinity, Infinity, -Infinity, -Infinity]) {
                         map_view = this.map.getView();
                         if (map_view){
                             map_view.fit(extent, this.map.getSize(), {
-                                maxZoom:15
+                                maxZoom: 15
                             });
                         }
                     }
                 }
-            }
-            else {
+            } else {
                 map_view = this.map.getView();
-                // default_extent
+                // defaultExtent
                 if (map_view){
-                    map_view.fit(this.default_extent.split(", "), this.map.getSize(), {
-                        maxZoom:5
+                    map_view.fit(this.defaultExtent.split(", "), this.map.getSize(), {
+                        maxZoom: 5
                     });
                 }
             }
         }
     },
 
-    on_ui_change: function() {
-        value = null;
+    _isTabActive: function() {
+        var tab = this.$el.closest('div.tab-pane');
+        if (!tab.length) {
+            return false;
+        }
+        return tab.hasClass('active');
+    },
+
+    _onUIChange: function() {
+        var value = null;
         if (this._geometry) {
             value = this.format.writeGeometry(this._geometry);
         }
-        this.set_value(value, false);
+        this._setValue(value, false);
     },
 
-    validate: function() {
-        this.invalid = false;
-    },
-
-    on_mode_change: function() {
-        if (this.$el.is(':visible')){
-            this.render_map();
-        }
-        this.$el.toggle(!this.invisible);
-    },
-
-    setup_controls: function() {
-        /* Add a draw interaction depending on geo_type of the field
+    _setupControls: function() {
+        /* Add a draw interaction depending on geoType of the field
          * plus adds a modify interaction to be able to change line
          * and polygons.
          * As modify needs to get pointer position on map it requires
          * the map to be rendered before being created
          */
-        var self = this;
         var handler = null;
-        if (this.geo_type == 'POLYGON') {
+        if (this.geoType == 'POLYGON') {
             handler = "Polygon";
-        } else if (this.geo_type == 'MULTIPOLYGON') {
+        } else if (this.geoType == 'MULTIPOLYGON') {
             handler = "MultiPolygon";
-        } else if (this.geo_type == 'LINESTRING') {
+        } else if (this.geoType == 'LINESTRING') {
             handler = "LineString";
-        } else if (this.geo_type == 'MULTILINESTRING') {
+        } else if (this.geoType == 'MULTILINESTRING') {
             handler = "MultiLineString";
-        } else if (this.geo_type == 'POINT') {
+        } else if (this.geoType == 'POINT') {
             handler = "Point";
-        } else if (this.geo_type == 'MULTIPOINT') {
+        } else if (this.geoType == 'MULTIPOINT') {
             handler = "MultiPoint";
         } else {
             // FIXME: unsupported geo type
         }
 
-        this.draw_control = new ol.interaction.Draw({
+        var drawControl = function(options) {
+            ol.interaction.Draw.call(this, options);
+        };
+        ol.inherits(drawControl, ol.interaction.Draw);
+        drawControl.prototype.finishDrawing = function() {
+            this.source_.clear();
+            ol.interaction.Draw.prototype.finishDrawing.call(this);
+        };
+
+        this.drawControl = new drawControl({
             source: this.source,
-            type: /** @type {ol.geom.GeometryType} */ (handler)//,
+            type: /** @type {ol.geom.GeometryType} */ (handler)
         });
-        this.map.addInteraction(this.draw_control);
+        this.map.addInteraction(this.drawControl);
         var onchange_geom = function(e){
             // Trigger onchanges when drawing is done
             if (e.type == 'drawend') {
-                self._geometry = e.feature.getGeometry();
+                this._geometry = e.feature.getGeometry();
             } else { // modifyend
-                self._geometry = e.features.item(0).getGeometry();
+                this._geometry = e.features.item(0).getGeometry();
             }
-            self.on_ui_change();
-        };
-        this.draw_control.on('drawend', onchange_geom);
+            this._onUIChange();
+        }.bind(this);
+        this.drawControl.on('drawend', onchange_geom);
 
         this.features = this.source.getFeaturesCollection();
-        this.modify_control = new ol.interaction.Modify({
+        this.modifyControl = new ol.interaction.Modify({
             features: this.features,
             // the SHIFT key must be pressed to delete vertices, so
             // that new vertices can be drawn at the same position
@@ -226,17 +224,18 @@ var FieldGeoEngineEditMap = AbstractField.extend(geoengine_common.GeoengineMixin
                   ol.events.condition.singleClick(event);
             }
         });
-        this.map.addInteraction(this.modify_control);
-        this.modify_control.on('modifyend', onchange_geom);
+        this.map.addInteraction(this.modifyControl);
+        this.modifyControl.on('modifyend', onchange_geom);
 
-        ClearMapControl = function(opt_options) {
+        var self = this;
+        var ClearMapControl = function(opt_options) {
             var options = opt_options || {};
             var button = document.createElement('button');
             button.innerHTML = '<i class="fa fa-trash"/>';
             button.addEventListener('click', function() {
                 self.source.clear();
                 self._geometry = null;
-                self.on_ui_change();
+                self._onUIChange();
             });
             var element = document.createElement('div');
             element.className = 'ol-clear ol-unselectable ol-control';
@@ -248,29 +247,22 @@ var FieldGeoEngineEditMap = AbstractField.extend(geoengine_common.GeoengineMixin
             });
         };
         ol.inherits(ClearMapControl, ol.control.Control);
-        this.clearmap_control = new ClearMapControl();
-
-        this.map.addControl(this.clearmap_control);
+        this.clearmapControl = new ClearMapControl();
+        this.map.addControl(this.clearmapControl);
     },
 
-    render_map: function() {
-        var self = this;
+    _renderMap: function() {
         if (!this.map) {
             this.map = new ol.Map({
                 theme: null,
-                layers: this.raster_layers,
+                layers: this.rasterLayers,
                 target: this.$el[0],
                 view: new ol.View({
                     center: [0, 0],
                     zoom: 5
                 }),
             });
-            // TODO restricted extent is not implemented yet in OL3
-            // see: https://github.com/openlayers/ol3/pull/2777
-            // if (this.restricted_extent) {
-            //     this.map.restrictedExtent = OpenLayers.Bounds.fromString(this.restricted_extent).transform(this.projection, this.map.getProjection());
-            // }
-            this.map.addLayer(this.vector_layer);
+            this.map.addLayer(this.vectorLayer);
 
             this.format = new ol.format.GeoJSON({
                 internalProjection: this.map.getView().getProjection(),
@@ -279,21 +271,35 @@ var FieldGeoEngineEditMap = AbstractField.extend(geoengine_common.GeoengineMixin
 
             this.map.render(this.$el[0]);
             $(document).trigger('FieldGeoEngineEditMap:ready', [this.map]);
-            this.set_value(this.value);
-            this.setup_controls();
-        }
-        var edit_active = (!this.get("effective_readonly") && !this.force_readonly);
-        this.draw_control.setActive(edit_active);
-        this.modify_control.setActive(edit_active);
-        this.clearmap_control.element.children[0].disabled = !edit_active;
-    },
-});
+            this._setValue(this.value);
 
-var FieldGeoEngineEditMapReadonly = FieldGeoEngineEditMap.extend({
-    init: function(view, node) {
-        this.force_readonly = true;
-        this._super(view, node);
-     }
+            if (this.mode != 'readonly' && !this.get('effective_readonly')) {
+                this._setupControls();
+                this.drawControl.setActive(true);
+                this.modifyControl.setActive(true);
+                this.clearmapControl.element.children[0].disabled = false;
+            }
+        }
+    },
+
+    _render: function () {
+        this._rpc({
+            model: this.model,
+            method: 'get_edit_info_for_geo_column',
+            args: [this.name]
+        }).then(function(result) {
+            this._createLayers(result);
+            this.geoType = result.geo_type;
+            this.projection = result.projection;
+            this.defaultExtent = result.default_extent;
+            this.defaultZoom = result.default_zoom;
+            this.restrictedExtent = result.restricted_extent;
+            this.srid = result.srid;
+            if (this._isTabActive()) {
+                this._renderMap();
+            }
+        }.bind(this));
+    },
 });
 
 //-----------------------------------------------------------------------
@@ -303,7 +309,7 @@ var FieldGeoPointXY = AbstractField.extend({
     start: function() {
         this._super.apply(this, arguments);
         this.$input = this.$el.find('input');
-        this.$input.change(this.on_ui_change);
+        this.$input.change(this._onUIChange);
         this.setupFocus(this.$input);
     },
     get_coords: function() {
@@ -318,7 +324,7 @@ var FieldGeoPointXY = AbstractField.extend({
     make_GeoJSON: function(coords) {
         return {"type": "Point", "coordinates": coords};
     },
-    set_value: function(value) {
+    _setValue: function(value) {
         this._super.apply(this, arguments);
 
         if (value) {
@@ -329,7 +335,7 @@ var FieldGeoPointXY = AbstractField.extend({
             this.$input.val('');
         }
     },
-    on_ui_change: function() {
+    _onUIChange: function() {
         var coords = this.get_coords();
         if (coords[0] && coords[1]) {
             var json = this.make_GeoJSON(coords);
@@ -366,7 +372,7 @@ var FieldGeoPointXY = AbstractField.extend({
 var FieldGeoPointXYReadonly = FieldGeoPointXY.extend({
     template: 'FieldGeoPointXY.readonly',
 
-    set_value: function(value) {
+    _setValue: function(value) {
         this._super.apply(this, arguments);
         var show_value = '';
         if (value) {
@@ -387,7 +393,7 @@ var FieldGeoRect = AbstractField.extend({
     start: function() {
         this._super.apply(this, arguments);
         this.$input = this.$el.find('input');
-        this.$input.change(this.on_ui_change);
+        this.$input.change(this._onUIChange);
         this.setupFocus(this.$input);
     },
     get_coords: function() {
@@ -411,7 +417,7 @@ var FieldGeoRect = AbstractField.extend({
         var points = [[ p1, p2, p3, p4, p1 ]];
         return {"type": "Polygon", "coordinates": points};
     },
-    set_value: function(value) {
+    _setValue: function(value) {
         this._super.apply(this, arguments);
 
         if (value) {
@@ -443,7 +449,7 @@ var FieldGeoRect = AbstractField.extend({
 
         return [[minx, miny], [maxx, maxy]];
     },
-    on_ui_change: function() {
+    _onUIChange: function() {
         var coords = this.get_coords();
         if (this.all_are_set(coords)) {
 
@@ -490,7 +496,7 @@ var FieldGeoRect = AbstractField.extend({
 var FieldGeoRectReadonly = FieldGeoRect.extend({
     template: 'FieldGeoRect.readonly',
 
-    set_value: function(value) {
+    _setValue: function(value) {
         this._super.apply(this, arguments);
         var show_value = '';
         if (value) {
@@ -501,14 +507,14 @@ var FieldGeoRectReadonly = FieldGeoRect.extend({
         this.$el.find('div').text(show_value);
         return show_value;
     },
+
     validate: function() {
         this.invalid = false;
     }
 });
 
-core.form_widget_registry
+registry
     .add('geo_edit_map', FieldGeoEngineEditMap)
-    .add('geo_edit_map_readonly', FieldGeoEngineEditMapReadonly)
     .add('geo_point_xy', FieldGeoPointXY)
     .add('geo_point_xy', FieldGeoPointXYReadonly)
     .add('geo_rect', FieldGeoRect)
@@ -516,7 +522,6 @@ core.form_widget_registry
 
 return {
     FieldGeoEngineEditMap: FieldGeoEngineEditMap,
-    FieldGeoEngineEditMapReadonly: FieldGeoEngineEditMapReadonly,
     FieldGeoPointXY: FieldGeoPointXY,
     FieldGeoPointXYReadonly: FieldGeoPointXYReadonly,
     FieldGeoRect: FieldGeoRect,

@@ -18,23 +18,14 @@ var core = require('web.core');
 var BasicView = require('web.BasicView');
 var GeoengineController = require('base_geoengine.GeoengineController');
 var GeoengineRenderer = require('base_geoengine.GeoengineRenderer');
+var geoengine_common = require('base_geoengine.geoengine_common');
 
 var _lt = core._lt;
 
-var GeoengineView = BasicView.extend({
+var GeoengineView = BasicView.extend(geoengine_common.GeoengineMixin, {
     accesskey: "g",
     display_name: _lt('Geoengine'),
     icon: 'fa-map-o',
-    cssLibs: [
-        '/base_geoengine/static/lib/ol-3.18.2/ol.css',
-        '/base_geoengine/static/lib/geostats-1.4.0/geostats.css',
-    ],
-    jsLibs: [
-        '/base_geoengine/static/lib/ol-3.18.2/ol-debug.js',
-        '/base_geoengine/static/lib/ol3-layerswitcher.js',
-        '/base_geoengine/static/lib/chromajs-0.8.0/chroma.js',
-        '/base_geoengine/static/lib/geostats-1.4.0/geostats.js',
-    ],
     config: _.extend({}, BasicView.prototype.config, {
         Renderer: GeoengineRenderer,
         Controller: GeoengineController,
