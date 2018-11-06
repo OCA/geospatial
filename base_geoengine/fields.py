@@ -64,15 +64,14 @@ class GeoField(Field):
         return val
 
     def convert_to_record(self, value, record):
+        """ Value may be:
+            - a GeoJSON string when field onchange is triggered
+            - a geometry object hexcode from cache
+            - a unicode containing dict
+        """
         if not value:
             return False
-        if isinstance(value, str):
-            # Geometry object hexcode from cache
-            shape = self.load_geo(value)
-        else:
-            # Might be unicode containing dict
-            shape = convert.value_to_shape(value)
-        return shape
+        return convert.value_to_shape(value, use_wkb=True)
 
     def convert_to_read(self, value, record, use_name_get=True):
         if not isinstance(value, BaseGeometry):
