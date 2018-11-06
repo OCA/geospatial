@@ -61,6 +61,7 @@
       <field name="name"/>
       <field name="city"/>
       <field name="total_sales"/>
+      <field name="the_geom"/>
     </geoengine>
   </field>
   <field eval="16" name="priority"/>

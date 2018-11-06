@@ -1,6 +1,5 @@
 # Copyright 2011-2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import geojson
 
 from odoo import api, fields
 from odoo.addons.base_geoengine import geo_model
@@ -27,14 +26,11 @@ class RetailMachine(geo_model.GeoModel):
     def onchange_geo_point(self):
         """ Exemple of on change on the point
         Lookup in zips if the code is within an area.
-
         Change the zip_id field accordingly
         """
         if self.the_point:
-            x, y = geojson.loads(self.the_point).coordinates
-            point = "POINT({} {})".format(x, y)
             zip_match = self.env['dummy.zip'].geo_search(
-                geo_domain=[('the_geom', 'geo_contains', point)],
+                geo_domain=[('the_geom', 'geo_contains', self.the_point)],
                 limit=1
             )
             if zip_match:
