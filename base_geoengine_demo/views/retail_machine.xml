@@ -82,6 +82,8 @@
       <field name="total_sales" select="1"/>
       <field name="money_level"/>
       <field name="state"/>
+      <field name="the_point"/>
+      <field name="the_line"/>
     </geoengine>
   </field>
   <field eval="16" name="priority"/>
