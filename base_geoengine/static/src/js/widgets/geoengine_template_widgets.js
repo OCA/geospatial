@@ -77,6 +77,9 @@ odoo.define('base_geoengine.template_widgets', function (require) {
         tagName: 'span',
     });
 
+    // TODO: rather use:
+    // var registry = require('web.field_registry');
+    // registry.add(...
     var fields_registry = new Registry();
     fields_registry
         .add('char', FieldChar)
