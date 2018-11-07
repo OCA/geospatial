@@ -302,6 +302,8 @@ var FieldGeoEngineEditMap = AbstractField.extend(geoengine_common.GeoengineMixin
     },
 });
 
+// TODO migrate the following widgets:
+
 //-----------------------------------------------------------------------
 var FieldGeoPointXY = AbstractField.extend({
     template: 'FieldGeoPointXY',
@@ -515,17 +517,17 @@ var FieldGeoRectReadonly = FieldGeoRect.extend({
 
 registry
     .add('geo_edit_map', FieldGeoEngineEditMap)
-    .add('geo_point_xy', FieldGeoPointXY)
-    .add('geo_point_xy', FieldGeoPointXYReadonly)
-    .add('geo_rect', FieldGeoRect)
-    .add('geo_rect', FieldGeoRectReadonly);
+//    .add('geo_point_xy', FieldGeoPointXY);
+//    .add('geo_point_xy', FieldGeoPointXYReadonly)
+//    .add('geo_rect', FieldGeoRect)
+//    .add('geo_rect', FieldGeoRectReadonly);
 
 return {
     FieldGeoEngineEditMap: FieldGeoEngineEditMap,
-    FieldGeoPointXY: FieldGeoPointXY,
-    FieldGeoPointXYReadonly: FieldGeoPointXYReadonly,
-    FieldGeoRect: FieldGeoRect,
-    FieldGeoRectReadonly: FieldGeoRectReadonly,
+//    FieldGeoPointXY: FieldGeoPointXY,
+//    FieldGeoPointXYReadonly: FieldGeoPointXYReadonly,
+//    FieldGeoRect: FieldGeoRect,
+//    FieldGeoRectReadonly: FieldGeoRectReadonly,
 };
 
 });
