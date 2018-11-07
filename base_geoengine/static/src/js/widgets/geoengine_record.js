@@ -15,54 +15,51 @@ odoo.define('base_geoengine.Record', function (require) {
         template: 'Geoengine.Record',
 
         init: function (parent, record, options) {
-            var self = this;
-            self._super(parent);
-            self.fields = options.fields;
-            self.qweb = options.qweb;
-            self.record = record;
-            self.id = record.id;
-            self.sub_widgets = [];
-            self.init_content();
+            this._super(parent);
+            this.fields = options.fields;
+            this.qweb = options.qweb;
+            this.record = record;
+            this.id = record.id;
+            this.sub_widgets = [];
+            this._initContent();
         },
 
-        init_content: function() {
-            var self = this;
-            self.record = self.transform_record(self.record);
-            self.render_content();
+        _initContent: function () {
+            this.record = this._transformRecord(this.record);
+            this._renderContent();
         },
 
-        transform_record: function(record) {
-            var self = this;
+        _transformRecord: function (record) {
             var new_record = {};
-            _.each(_.extend(_.object(_.keys(this.fields), []), record), function(value, name) {
-                var r = _.clone(self.fields[name] || {});
-                r.raw_value = value;
-	        var formatted_value = field_utils.format[r.type](value, r);
-                r.value = formatted_value;
-                new_record[name] = r;
-            });
+            _.each(_.extend(_.object(_.keys(this.fields), []), record),
+                function (value, name) {
+                    var r = _.clone(this.fields[name] || {});
+                    r.raw_value = value;
+                    var formatted_value = field_utils.format[r.type](value, r);
+                    r.value = formatted_value;
+                    new_record[name] = r;
+                }.bind(this)
+            );
             return new_record;
         },
 
-        render_content: function() {
-            var self = this;
+        _renderContent: function () {
             var qweb_context = {
-                record: self.record,
-                widget: self,
+                record: this.record,
+                widget: this,
                 user_context: session.user_context,
                 formats: formats,
             };
-            self.content = self.qweb.render('layer-box', qweb_context);
+            this.content = this.qweb.render('layer-box', qweb_context);
         },
 
-        start: function() {
-            var self = this;
-            self.add_widgets();
+        start: function () {
+            this._addWidgets();
         },
 
-        add_widgets: function() {
+        _addWidgets: function() {
             var self = this;
-            self.$("field").each(function() {
+            self.$("field").each(function () {
                 var $field = $(this);
                 var field = self.record[$field.attr("name")];
                 var type = $field.attr("widget") || field.type;
