@@ -100,7 +100,7 @@ def geo_search(model, domain=None, geo_domain=None, offset=0,
                     if att_where_sql:
                         rel_where_statement.append(
                             "(%s AND %s)" % (att_where_sql,
-                                              spatial_where_sql))
+                                             spatial_where_sql))
                     else:
                         rel_where_statement.append(
                             "(%s)" % (spatial_where_sql))
