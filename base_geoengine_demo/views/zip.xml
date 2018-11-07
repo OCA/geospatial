@@ -11,15 +11,18 @@
           <group>
             <field name="name"/>
             <field name="city"/>
-            <field name="priority" />
+            <field name="priority"/>
+            <field name="total_sales"/>
           </group>
         </group>
         <notebook colspan="4">
           <page string="Geometry">
-            <field name="the_geom" colspan="4" widget="geo_edit_map"/>
+            <field name="the_geom" widget="geo_edit_map"/>
+          </page>
+          <page string="Retail machines">
+            <field name="retail_machine_ids"/>
           </page>
         </notebook>
-        <field name="total_sales"/>
       </sheet>
     </form>
   </field>
