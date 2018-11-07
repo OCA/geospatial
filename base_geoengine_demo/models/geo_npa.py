@@ -20,6 +20,11 @@ class NPA(geo_model.GeoModel):
         compute='_get_ZIP_total_sales',
         string='Spatial! Total Sales',
     )
+    retail_machine_ids = fields.One2many(
+        string='Retail machines',
+        comodel_name='geoengine.demo.automatic.retailing.machine',
+        inverse_name='zip_id',
+    )
 
     @api.multi
     def _get_ZIP_total_sales(self):
