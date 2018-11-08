@@ -305,7 +305,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
             var values = [];
             var indicator = cfg.attribute_field_id[1];
             _.each(data, function(item) {
-                values.push(item[indicator]);
+                values.push(item.data[indicator]);
             });
             return values;
         },
