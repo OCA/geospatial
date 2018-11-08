@@ -21,6 +21,7 @@ odoo.define('base_geoengine.geoengine_common', function (require) {
 
         cssLibs: [
             '/base_geoengine/static/lib/ol-3.18.2/ol.css',
+            '/base_geoengine/static/lib/ol3-layerswitcher.css',
             '/base_geoengine/static/lib/geostats-1.4.0/geostats.css',
         ],
         jsLibs: [
