@@ -96,12 +96,11 @@ class TestGeoengine(common.TransactionCase):
         model_cls._build_model(registry, cr)
         model = self.env[model_cls._name].with_context(todo=[])
         model._prepare_setup()
-        model._setup_base(partial=False)
-        model._setup_fields(partial=False)
+        model._setup_base()
+        model._setup_fields()
         model._setup_complete()
         model._auto_init()
         model.init()
-        model._auto_end()
         return model
 
     def _compare_view(self, view_type, expected_result, paths):
