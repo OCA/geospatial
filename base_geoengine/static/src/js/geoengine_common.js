@@ -40,18 +40,25 @@ odoo.define('base_geoengine.geoengine_common', function (require) {
         createBackgroundLayers: function (layersCfg) {
             var out = [];
             _.each(layersCfg, function (l) {
-                // FIXME to be tested
                 if (l.is_wmts) {
                     var source_opt = {
                         layer: l.name,
                         matrixSet: l.matrix_set,
-                        url: l.url.split(','), // FIXME or maybe "urls"?
                         style: 'default',
                     };
                     var tilegrid_opt = {};
                     var layer_opt = {
-                        layer: l.type, // FIXME deprecated?
+                        title: l.name,
+                        visible: !l.overlay,
+                        type: 'base',
                     };
+
+                    var urls = l.url.split(',');
+                    if (urls.length > 1) {
+                        source_opt.urls = urls;
+                    } else {
+                        source_opt.url = urls[0];
+                    }
 
                     if (l.format_suffix) {
                         source_opt.format = l.format_suffix;
@@ -60,7 +67,14 @@ odoo.define('base_geoengine.geoengine_common', function (require) {
                         source_opt.requestEncoding = l.request_encoding;
                     }
                     if (l.projection) {
-                        source_opt.projection = l.projection;
+                        source_opt.projection = ol.proj.get(l.projection);
+                        // FIXME if the projection definition is not available...
+                        if (source_opt.projection) {
+                            var projectionExtent =
+                                source_opt.projection.getExtent();
+                            tilegrid_opt.origin =
+                                ol.extent.getTopLeft(projectionExtent);
+                        }
                     }
                     // FIXME deprecated?
                     // if (l.units) {
@@ -69,6 +83,12 @@ odoo.define('base_geoengine.geoengine_common', function (require) {
                     if (l.resolutions) {
                         tilegrid_opt.resolutions =
                             l.resolutions.split(',').map(Number);
+                        var nbRes = tilegrid_opt.resolutions.length;
+                        var matrixIds = new Array(nbRes);
+                        for (var i = 0; i < nbRes; i++) {
+                            matrixIds[i] = i;
+                        }
+                        tilegrid_opt.matrixIds = matrixIds;
                     }
                     if (l.max_extent) {
                         var extent = l.max_extent.split(',').map(Number);
@@ -80,17 +100,14 @@ odoo.define('base_geoengine.geoengine_common', function (require) {
                     //     opt.serverResolutions =
                     //         l.server_resolutions.split(',').map(Number);
                     // }
-                    if (l.dimensions) {
-                        source_opt.dimensions = l.dimensions.split(',');
+                    if (l.params) {
+                        // FIXME still used?
+                        //source_opt.dimensions = l.dimensions.split(',');
+                        source_opt.dimensions = JSON.parse(l.params);
                     }
-                    // FIXME deprecated?
-                    // if (l.params) {
-                    //     opt.params = JSON.parse(l.params);
-                    // }
 
                     source_opt.tileGrid = new ol.tilegrid.WMTS(tilegrid_opt);
                     layer_opt.source = new ol.source.WMTS(source_opt);
-
                     out.push(new ol.layer.Tile(layer_opt));
                 } else {
                     switch (l.raster_type) {
