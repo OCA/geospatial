@@ -5,25 +5,27 @@
   <field name="model">geoengine.demo.automatic.retailing.machine</field>
   <field name="arch" type="xml">
     <form string="Retail Machine">
-      <group>
-        <field name="name"/>
-        <field name="zip_id"/>
-      </group>
-      <notebook>
-        <page string="The point">
-          <field name="the_point" widget="geo_edit_map"/>
-        </page>
-        <page string="The line">
-          <field name="the_line" widget="geo_edit_map"/>
-        </page>
-        <page string="attributes">
-          <group>
-            <field name="total_sales"/>
-            <field name="money_level"/>
-            <field name="state"/>
-          </group>
-        </page>
-      </notebook>
+      <sheet>
+        <group>
+          <field name="name"/>
+          <field name="zip_id"/>
+        </group>
+        <notebook>
+          <page string="The point">
+            <field name="the_point" widget="geo_edit_map"/>
+          </page>
+          <page string="The line">
+            <field name="the_line" widget="geo_edit_map"/>
+          </page>
+          <page string="attributes">
+            <group>
+              <field name="total_sales"/>
+              <field name="money_level"/>
+              <field name="state"/>
+            </group>
+          </page>
+        </notebook>
+      </sheet>
     </form>
   </field>
 </record>
