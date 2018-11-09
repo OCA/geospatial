@@ -157,12 +157,12 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
             }
         },
 
-        _isTabActive: function () {
+        _isTabVisible: function () {
             var tab = this.$el.closest('div.tab-pane');
             if (!tab.length) {
                 return false;
             }
-            return tab.hasClass('active');
+            return tab.is(":visible");
         },
 
         _onUIChange: function () {
@@ -262,10 +262,11 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
 
         _renderMap: function () {
             if (!this.map) {
+                var $el = this.$el[0];
+                $($el).css({width: '100%', height: '100%'});
                 this.map = new ol.Map({
-                    theme: null,
                     layers: this.rasterLayers,
-                    target: this.$el[0],
+                    target: $el,
                     view: new ol.View({
                         center: [0, 0],
                         zoom: 5,
@@ -278,7 +279,6 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
                     externalProjection: 'EPSG:' + this.srid,
                 });
 
-                this.map.render(this.$el[0]);
                 $(document).trigger('FieldGeoEngineEditMap:ready', [this.map]);
                 this._setValue(this.value);
 
@@ -305,7 +305,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
                 this.defaultZoom = result.default_zoom;
                 this.restrictedExtent = result.restricted_extent;
                 this.srid = result.srid;
-                if (this._isTabActive()) {
+                if (this.$el.is(":visible") || this._isTabVisible()) {
                     this._renderMap();
                 }
             }.bind(this));
