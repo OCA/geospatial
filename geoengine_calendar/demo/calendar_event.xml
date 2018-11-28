@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 KMEE INFORMATICA LTDA
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="calendar.event" id="calendar.calendar_event_1">
+        <field name='the_point'>POINT(746676.106813609 5865349.7175855)</field>
+    </record>
+
+    <record model="calendar.event" id="calendar.calendar_event_2">
+        <field name='the_point'>POINT(731452.399608894 5875278.22228421)</field>
+    </record>
+
+    <record model="calendar.event" id="calendar.calendar_event_3">
+        <field name='the_point'>POINT(751499.582114456 5874026.56366551)</field>
+    </record>
+
+    <record model="calendar.event" id="calendar.calendar_event_4">
+        <field name='the_point'>POINT(709526.951732539 5873457.99642278)</field>
+    </record>
+
+    <record model="calendar.event" id="calendar.calendar_event_5">
+        <field name='the_point'>POINT(748413.595135886 5867583.63114271)</field>
+    </record>
+
+    <record model="calendar.event" id="calendar.calendar_event_6">
+        <field name='the_point'>POINT(734100.000861888 5873871.68411856)</field>
+    </record>
+
+    <record model="calendar.event" id="calendar.calendar_event_7">
+        <field name='the_point'>POINT(749985.608379851 5876684.76044986)</field>
+    </record>
+
+</odoo>

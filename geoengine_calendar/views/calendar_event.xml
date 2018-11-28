@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2018 KMEE INFORMATICA LTDA
+     License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl). -->
+
+<odoo>
+
+    <record model="ir.ui.view" id="calendar_event_form_view">
+        <field name="name">calendar.event.form (in geoengine_calendar)</field>
+        <field name="model">calendar.event</field>
+        <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+        <field name="arch" type="xml">
+            <xpath expr='//notebook' position="inside">
+                <page string="Map" name="map">
+                    <field name="the_point" widget="geo_edit_map"/>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="calendar_event_geoengine_view">
+        <field name="name">calendar.event.geoengine (in geoengine_calendar)</field>
+        <field name="model">calendar.event</field>
+        <field eval="16" name="priority"/>
+        <field name="arch" type="xml">
+            <geoengine>
+                <field name="name" select="1"/>
+            </geoengine>
+        </field>
+    </record>
+
+    <record id="CALENDAR_EVENT_VECTOR_LAYER" model="geoengine.vector.layer">
+        <field name="geo_field_id" ref="geoengine_calendar.field_calendar_event_the_point"/>
+        <field name="name">Location</field>
+        <field eval="6" name="sequence"/>
+        <field name="view_id" ref="calendar_event_geoengine_view"/>
+        <field name="geo_repr">basic</field>
+        <field eval="1" name="nb_class"/>
+        <field name="begin_color">#FF680A</field>
+    </record>
+
+    <record id="CALENDAR_EVENT_RASTER_LAYER"
+            model="geoengine.raster.layer">
+        <field name="raster_type">osm</field>
+        <field name="name">Open Street Map</field>
+        <field name="view_id" ref="calendar_event_geoengine_view"/>
+        <field eval="0" name="overlay"/>
+    </record>
+
+    <record id="calendar.action_calendar_event"
+            model="ir.actions.act_window">
+        <field name="view_mode">calendar,tree,form,geoengine</field>
+    </record>
+
+</odoo>
