@@ -74,6 +74,7 @@ Contributors
 * Vincent Renaville <vincent.renaville@camptocamp.com>
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Benjamin Willig <benjamin.willig@acsone.eu>
+* Sandip Mangukiya <smangukiya@opensourceintegrators.com>
 
 Maintainer
 ----------

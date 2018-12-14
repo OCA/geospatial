@@ -20,7 +20,8 @@ class GeoVectorLayer(models.Model):
     classification = fields.Selection(
         [('unique', 'Unique value'),
          ('interval', 'Interval'),
-         ('quantile', 'Quantile')],
+         ('quantile', 'Quantile'),
+         ('custom', 'Custom')],
         string="Classification mode",
         required=False)
     name = fields.Char(
