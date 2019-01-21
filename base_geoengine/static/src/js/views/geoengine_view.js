@@ -322,6 +322,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                         break;
                 }
                 var colors = [];
+                var mode = '';
                 _.each(scale.colors(mode='hex'), function(color){
                     colors.push(chroma(color).alpha(opacity).css());
                 });
