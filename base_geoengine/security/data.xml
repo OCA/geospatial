@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="group_geoengine_user" model="res.groups">
+        <field name="name">Geoengine User</field>
+    </record>
+
+    <record id="group_geoengine_admin" model="res.groups">
+        <field name="name">Geoengine Admin</field>
+        <field name="implied_ids" eval="[(4, ref('group_geoengine_user')),]"/>
+        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
+</odoo>

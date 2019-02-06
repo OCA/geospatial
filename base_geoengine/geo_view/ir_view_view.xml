@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="geoengine_view_form">
+        <field name="name">geoengine.view.form</field>
+        <field name="model">ir.ui.view</field>
+        <field name="inherit_id" ref="base.view_view_form"/>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <notebook position="inside">
+                <page string="GeoEngine Data" col="4"
+                    attrs="{'invisible': [('type', '!=', 'geoengine')]}">
+                    <group>
+                        <field name="projection"/>
+                        <field name="restricted_extent" colspan="4"/>
+                        <field name="default_extent" colspan="4"/>
+                        <field name="default_zoom"/>
+                    </group>
+                    <separator string="Vector (Active layers)" colspan="4"/>
+                    <field name="vector_layer_ids" colspan="4" nolabel="1"/>
+                    <separator string="Raster (Background layers)" colspan="4"/>
+                    <field name="raster_layer_ids" colspan="4" nolabel="1"/>
+                </page>
+            </notebook>
+        </field>
+    </record>
+    <menuitem name="Configuration" id="geoengine_base_view_menu"
+        parent="geoengine_base_menu"
+        groups="group_geoengine_admin" />
+
+    <record id="geo_engine_view_action" model="ir.actions.act_window">
+        <field name="name">Views</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ir.ui.view</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="base.view_view_tree"/>
+        <field name="search_view_id" ref="base.action_view_search"/>
+        <field name="domain">[('type', '=', 'geoengine')]</field>
+    </record>
+
+    <menuitem name="View Management" id="geoengine_view_menu"
+        parent="geoengine_base_view_menu" action="geo_engine_view_action"
+        groups="group_geoengine_admin"/>
+
+</odoo>

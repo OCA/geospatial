@@ -1,0 +1,180 @@
+/* OpenLayers Style */
+div.olmap {
+    /* For map size recomputation we have to define this size. */
+    height: 100%;
+    width: 100%;
+    z-index: 0;
+    padding: 0 !important;
+    margin: 0 !important;
+    cursor: default;
+}
+
+.ol-control{
+    background-image: none;
+}
+.ol-control button{
+    background-image: none;
+}
+
+.olmap svg{
+    width: initial;
+    height: initial;
+    
+}
+
+.olmap:-moz-full-screen {
+  height: 100%;
+  width: 100%;
+}
+.olmap:-webkit-full-screen {
+  height: 100%;
+  width: 100%;
+}
+.olmap:-ms-fullscreen {
+  height: 100%;
+  width: 100%;
+}
+
+div.olControlPanel {
+    margin: 80px 10px;
+}
+
+div.ol-clear {
+    top: 65px;
+    left: .5em;
+}
+.olmap:fullscreen {
+  height: 100%;
+  width: 100%;
+}
+
+.olControlEditingToolbar .olControlSelectBoxItemInactive {
+    background-position: 0px -1px;
+}
+
+.olControlEditingToolbar .olControlSelectBoxItemActive {
+    background-position: 0px -24px;
+}
+
+.olDrowBox {
+    cursor: crosshair;
+}
+.map_overlay {
+    position: absolute;
+    display: none;
+    background: white;
+    opacity: 0.9;
+    border: 2px solid black;
+    z-index: 3000;
+    padding: 0 0 5px 0;
+}
+#map_infobox {
+        bottom: 10px;
+        left: 10px;
+        width: 200px;
+        height: 150px;
+        -moz-border-radius: 6px;
+        -webkit-border-radius: 6px;
+}
+#map_info {
+        cursor: pointer;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding: 10px;
+        height: 130px;
+}
+#map_info_open {
+    cursor: pointer;
+    background-color: #337ab7;
+    vertical-align: middle;
+    text-align: center;
+    color: white;
+}
+#map_info_filter_selection {
+    cursor: pointer;
+    background-color: #337ab7;
+    vertical-align: middle;
+    text-align: center;
+    color: white;
+}
+
+#map_measurementbox {
+        top: 18px;
+        left: 160px;
+        padding: 2px 5px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+}
+
+#map_legend {
+        bottom: 6em;
+        right: 5em;
+        z-index: 3000;
+}
+
+/* Button style */
+.openerp .oe_view_manager .oe_view_manager_switch .oe_vm_switch_geoengine:after {
+    content: "2";
+}
+
+/* Edit Widget */
+.field_geo_edit_map {
+    border: 1px solid #999;
+    width: 100%;
+    height: 500px;
+}
+
+.ol-popup {
+    position: absolute;
+    background-color: white;
+    -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+    filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 12px;
+    left: -50px;
+    min-width: 280px;
+}
+
+.ol-popup:after, .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.ol-popup:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+}
+
+.ol-popup:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+}
+
+.ol-popup-edit {
+    text-decoration: none;
+    position: absolute;
+    top: 5px;
+    right: 25px;
+}
+
+.ol-popup-closer {
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+}
+
+.ol-popup-closer:after {
+    content: "✖";
+}

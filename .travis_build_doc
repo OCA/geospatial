@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd ${HOME}
+mkdir build_doc
+cd ${TRAVIS_BUILD_DIR}
+sphinx-build -b html ./base_geoengine/doc/source ${HOME}/build_doc

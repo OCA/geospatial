@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="geo_vector_view_form">
+        <field name="name">geoengine.vector.layer.form</field>
+        <field name="model">geoengine.vector.layer</field>
+        <field name="arch" type="xml">
+            <form string="Vector">
+                <group string="General" col="4">
+                    <field name="name" colspan="4"/>
+                    <field name="view_id"/>
+                    <field name="geo_field_id"/>
+                    <field name="attribute_field_id" attrs="{'required': [('geo_repr', 'in', ['choropleth', 'proportion', 'colored'])]}"/>
+                    <field name="active_on_startup"/>
+                    <field name="display_polygon_labels"/>
+                    <field name="sequence"/>
+                    <field name="readonly"/>
+                    <field name="layer_opacity"/>
+                </group>
+                <group string="Representation" col="4" colspan="4">
+                    <field name="geo_repr"/>
+                </group>
+                <field name="symbol_ids" attrs="{'invisible': [('geo_repr', '!=', 'basic')]}">
+                    <tree editable="bottom">
+                      <field name="img" placeholder="module/static/img/icon.png"/>
+                      <field name="fieldname"/>
+                      <field name="value"/>
+                    </tree>
+                </field>
+                <group string="Classification" colspan="4"
+                    attrs="{'invisible': [('geo_repr', '=', 'basic')]}">
+                    <field name="classification"
+                        attrs="{'invisible': [('geo_repr', '=', 'basic')], 'required': [('geo_repr', 'in', ['choropleth', 'proportion', 'colored'])]}"
+                    />
+                </group>
+                <group string="Colors" col="4" colspan="4">
+                    <field name="begin_color"/>
+                    <group colspan="4" attrs="{'invisible': [('geo_repr', 'in', ['basic', 'proportion'])]}">
+                    <field name="end_color"
+                        attrs="{'invisible': [('classification', 'in', ['unique', False])], 'required': [('classification', 'in', ['interval', 'quantil'])]}"/>
+                    <field name="nb_class"
+                        attrs="{'invisible': [('classification', 'in', ['unique', False])], 'required': [('classification', 'in', ['interval', 'quantil'])]}"
+                    />
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="geo_vector_view_tree">
+        <field name="name">geoengine.vector.layer.tree</field>
+        <field name="model">geoengine.vector.layer</field>
+        <field name="arch" type="xml">
+            <tree string="Vector">
+                <field name="name" select="1"/>
+                <field name="geo_repr" select="1"/>
+                <field name="classification" select="1"/>
+                <field name="geo_field_id" select="1"/>
+                <field name="attribute_field_id" select="1"/>
+                <field name="active_on_startup"/>
+                <field name="sequence"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="geo_engine_view_raster_action" model="ir.actions.act_window">
+        <field name="name">Vector Layer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">geoengine.vector.layer</field>
+        <field name="view_type">form</field>
+        <field name="view_id" ref="geo_vector_view_tree"/>
+    </record>
+
+    <menuitem name="Vector Layer Management" id="geoengine_vector_layer_menu"
+        parent="geoengine_base_view_menu" action="geo_engine_view_raster_action"
+        groups="group_geoengine_admin"/>
+
+</odoo>
