@@ -11,17 +11,13 @@ DEFAULT_EXTENT = ('-123164.85222423, 5574694.9538936, '
                   '1578017.6490538, 6186191.1800898')
 
 
-class GeoModel(models.BaseModel):
-    """Base class for all models defining geo fields.
+class GeoModel(models.AbstractModel):
+    """ Extend Base class for to allow definition of geo fields.
     """
+    _inherit = 'base'
 
     # Array of ash that define layer and data to use
     _georepr = []
-    _name = None
-    _auto = True
-    # not visible in ORM registry, meant to be python-inherited only
-    _register = False
-    _transient = False  # True in a TransientModel
 
     @api.model_cr_context
     def _auto_init(self):
