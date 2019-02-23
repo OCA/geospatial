@@ -2,8 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import api, fields, models
 from odoo.addons import base
-if 'geoengine' not in base.ir.ir_actions.VIEW_TYPES:
-    base.ir.ir_actions.VIEW_TYPES.append(('geoengine', 'Geoengine'))
+if 'geoengine' not in base.models.ir_actions.VIEW_TYPES:
+    base.models.ir_actions.VIEW_TYPES.append(('geoengine', 'Geoengine'))
 
 GEO_TYPES = [('geo_polygon', 'geo_polygon'),
              ('geo_multi_polygon', 'geo_multi_polygon'),
