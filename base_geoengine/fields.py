@@ -4,8 +4,7 @@
 import logging
 from operator import attrgetter
 
-from odoo import _
-from odoo.fields import Field
+from odoo import fields, _
 
 from .geo_helper import geo_convertion_helper as convert
 
@@ -19,7 +18,7 @@ except ImportError:
     logger.warning('Shapely or geojson are not available in the sys path')
 
 
-class GeoField(Field):
+class GeoField(fields.Field):
     """ The field descriptor contains the field definition common to all
     specialized fields for geolocalization. Subclasses must define a type
     and a geo_type. The type is the name of the corresponding column type,
@@ -215,24 +214,6 @@ class GeoLine(GeoField):
         return cls.load_geo(res[0])
 
 
-class GeoMultiLine(GeoField):
-    """Field for POSTGIS geometry MultiLine type"""
-    type = 'geo_multi_line'
-    geo_type = 'MULTILINESTRING'
-
-
-class GeoMultiPoint(GeoField):
-    """Field for POSTGIS geometry MultiPoint type"""
-    type = 'geo_multi_point'
-    geo_type = 'MULTIPOINT'
-
-
-class GeoMultiPolygon(GeoField):
-    """Field for POSTGIS geometry MultiPolygon type"""
-    type = 'geo_multi_polygon'
-    geo_type = 'MULTIPOLYGON'
-
-
 class GeoPoint(GeoField):
     """Field for POSTGIS geometry Point type"""
     type = 'geo_point'
@@ -258,3 +239,29 @@ class GeoPolygon(GeoField):
     """Field for POSTGIS geometry Polygon type"""
     type = 'geo_polygon'
     geo_type = 'POLYGON'
+
+
+class GeoMultiLine(GeoField):
+    """Field for POSTGIS geometry MultiLine type"""
+    type = 'geo_multi_line'
+    geo_type = 'MULTILINESTRING'
+
+
+class GeoMultiPoint(GeoField):
+    """Field for POSTGIS geometry MultiPoint type"""
+    type = 'geo_multi_point'
+    geo_type = 'MULTIPOINT'
+
+
+class GeoMultiPolygon(GeoField):
+    """Field for POSTGIS geometry MultiPolygon type"""
+    type = 'geo_multi_polygon'
+    geo_type = 'MULTIPOLYGON'
+
+
+fields.GeoLine = GeoLine
+fields.GeoPoint = GeoPoint
+fields.GeoPolygon = GeoPolygon
+fields.GeoMultiLine = GeoMultiLine
+fields.GeoMultiPoint = GeoMultiPoint
+fields.GeoMultiPolygon = GeoMultiPolygon
