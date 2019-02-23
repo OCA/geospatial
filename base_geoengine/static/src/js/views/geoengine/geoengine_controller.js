@@ -15,7 +15,7 @@ odoo.define('base_geoengine.GeoengineController', function (require) {
 
     var core = require('web.core');
     var BasicController = require('web.BasicController');
-    var pyeval = require('web.pyeval');
+    var pyUtils = require('web.py_utils');
     var Sidebar = require('web.Sidebar');
 
     var _t = core._t;
@@ -68,7 +68,7 @@ odoo.define('base_geoengine.GeoengineController', function (require) {
                 var searchView = this.getParent().searchview;
                 var searchData = searchView.build_search_data();
                 var userContext = this.getSession().user_context;
-                var results = pyeval.eval_domains_and_contexts({
+                var results = pyUtils.eval_domains_and_contexts({
                     domains: searchData.domains,
                     contexts: [userContext].concat(searchData.contexts),
                     group_by_seq: searchData.groupbys || [],

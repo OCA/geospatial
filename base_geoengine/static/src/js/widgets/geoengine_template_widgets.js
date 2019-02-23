@@ -8,7 +8,7 @@ odoo.define('base_geoengine.template_widgets', function (require) {
     "use strict";
 
     var field_utils = require('web.field_utils');
-    var pyeval = require('web.pyeval');
+    var pyUtils = require('web.py_utils');
     var Registry = require('web.Registry');
     var Widget = require('web.Widget');
 
@@ -46,7 +46,7 @@ odoo.define('base_geoengine.template_widgets', function (require) {
             this._super(parent, field, $node);
             this.field = field;
             this.$node = $node;
-            this.options = pyeval.py_eval(this.$node.attr("options") || '{}');
+            this.options = pyUtils.py_eval(this.$node.attr("options") || '{}');
             this.format_descriptor = _.extend({}, this.field, {
                 'widget': this.$node.attr('widget')
             });
