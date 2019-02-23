@@ -35,6 +35,10 @@ class GeoModel(models.AbstractModel):
             if field.type.startswith('geo_'):
                 geo_fields[f_name] = field
         res = super(GeoModel, self)._auto_init()
+        if self._abstract:
+            return res
+
+        # Create geo columns
         column_data = tools.table_columns(cr, self._table)
 
         for f_name, geo_field in geo_fields.items():
