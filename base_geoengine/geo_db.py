@@ -3,6 +3,7 @@
 """Helper to setup Postgis"""
 import logging
 
+from odoo import _
 from odoo.exceptions import MissingError
 
 logger = logging.getLogger('geoengine.sql')
@@ -32,12 +33,15 @@ def init_postgis(cr):
     """)
     except Exception:
         raise MissingError(
-            "Error, can not automatically initialize spatial postgis support. "
-            "Database user may have to be superuser and postgres/postgis "
-            "extentions with their devel header have to be installed. "
-            "If you do not want Odoo to connect with a super user "
-            "you can manually prepare your database. To do this"
-            "open a client to your database using a super user and run: \n"
-            "CREATE EXTENSION postgis;\n"
-            "CREATE EXTENSION postgis_topology;\n"
+            _(
+                "Error, can not automatically initialize spatial postgis"
+                " support. Database user may have to be superuser and"
+                " postgres/postgis extensions with their devel header have"
+                " to be installed. If you do not want Odoo to connect with a"
+                " super user you can manually prepare your database. To do"
+                " this, open a client to your database using a super user and"
+                " run:\n"
+                "CREATE EXTENSION postgis;\n"
+                "CREATE EXTENSION postgis_topology;\n"
+            )
         )
