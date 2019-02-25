@@ -65,7 +65,7 @@ class GeoModel(models.AbstractModel):
                     if not field.dim:
                         geo_type['dim'] = 2
                     if not field.srid:
-                        geo_type['srid'] = 900913
+                        geo_type['srid'] = 3857
                 res[f_name]['geo_type'] = geo_type
         return res
 
