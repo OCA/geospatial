@@ -21,7 +21,7 @@ class IrUIView(models.Model):
             tmp = list(type_selection)
             tmp.append(GEO_VIEW)
             cls._fields['type'].selection = tuple(set(tmp))
-        super(IrUIView, self)._setup_fields()
+        super()._setup_fields()
 
     raster_layer_ids = fields.One2many(
         'geoengine.raster.layer', 'view_id', 'Raster layers', required=False)
