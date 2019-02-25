@@ -3,6 +3,11 @@
 
 from odoo import fields, models
 
+# make pytest happy
+# in pytest context module dependencies are not loaded
+# thus geo fields are unknown
+from odoo.addons import base_geoengine  # noqa
+
 
 class DummyAbstractModel(models.AbstractModel):
     _name = 'test.abstract.dummy'
