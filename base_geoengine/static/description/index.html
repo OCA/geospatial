@@ -388,6 +388,26 @@ sudo apt-get install postgis
 </ul>
 <p>for a complete documentation please refer to the <a class="reference external" href="http://oca.github.io/geospatial/index.html">public documenation</a></p>
 </div>
+<div class="section" id="usage">
+<h1>Usage</h1>
+</div>
+<div class="section" id="important-changes-in-version-11">
+<h1>Important changes in version 11</h1>
+<p>The geometry attributes must now be explicitly mentioned in the list of fields of
+the XML geoengine view definitions. For instance:</p>
+<pre class="literal-block">
+&lt;record id=&quot;some_model_geo_view&quot; model=&quot;ir.ui.view&quot;&gt;
+  &lt;field name=&quot;name&quot;&gt;Some data view&lt;/field&gt;
+  &lt;field name=&quot;model&quot;&gt;some.model&lt;/field&gt;
+  &lt;field name=&quot;arch&quot; type=&quot;xml&quot;&gt;
+    &lt;geoengine&gt;
+      &lt;field name=&quot;name&quot; select=&quot;1&quot;/&gt;
+      &lt;field name=&quot;the_geom&quot;/&gt;
+    &lt;/geoengine&gt;
+  &lt;/field&gt;
+&lt;/record&gt;
+</pre>
+</div>
 <div class="section" id="known-issues-roadmap">
 <h1>Known issues / Roadmap</h1>
 <ul class="simple">
