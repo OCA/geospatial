@@ -95,11 +95,6 @@ odoo.define('base_geoengine.geoengine_common', function (require) {
                         layer_opt.extent = extent;
                         tilegrid_opt.extent = extent;
                     }
-                    // FIXME deprecated?
-                    // if (l.server_resolutions) {
-                    //     opt.serverResolutions =
-                    //         l.server_resolutions.split(',').map(Number);
-                    // }
                     if (l.params) {
                         // FIXME still used?
                         //source_opt.dimensions = l.dimensions.split(',');

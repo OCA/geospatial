@@ -43,9 +43,6 @@ class GeoRasterLayer(models.Model):
     units = fields.Char(help="eg. m")
     resolutions = fields.Char("resolutions")
     max_extent = fields.Char("max_extent")
-    server_resolutions = fields.Char(
-        "resolutions",
-        help="List of dimensions separated by ',' eg. 50, 20, 10")
     dimensions = fields.Char(
         "dimensions",
         help="List of dimensions separated by ','")
