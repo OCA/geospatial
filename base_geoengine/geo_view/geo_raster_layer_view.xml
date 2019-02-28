@@ -26,7 +26,6 @@
                   <field name="units"/>
                   <field name="resolutions"/>
                   <field name="max_extent"/>
-                  <field name="server_resolutions"/>
                   <field name="dimensions"/>
                   <field name="params"/>
                 </group>
