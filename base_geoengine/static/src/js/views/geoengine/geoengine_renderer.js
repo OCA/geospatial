@@ -13,6 +13,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
     var session = require('web.session');
 
     var geoengine_common = require('base_geoengine.geoengine_common');
+    var BackgroundLayers = require('base_geoengine.BackgroundLayers');
 
     /* CONSTANTS */
     var DEFAULT_BEGIN_COLOR = "#FFFFFF";
@@ -112,6 +113,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
             this.mapOptions = {
                 'geoengine_layers': params.viewInfo.geoengine_layers,
             };
+            this.bgLayers = new BackgroundLayers();
 
             this.selection = [];
             this.overlaysGroup = null;
@@ -178,7 +180,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
                 this.map = new ol.Map({
                     layers: [new ol.layer.Group({
                         title: 'Base maps',
-                        layers: this.createBackgroundLayers(backgrounds),
+                        layers: this.bgLayers.create(backgrounds),
                     })],
                     target: 'olmap',
                     view: new ol.View({

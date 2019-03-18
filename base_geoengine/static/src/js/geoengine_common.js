@@ -18,7 +18,6 @@ odoo.define('base_geoengine.geoengine_common', function (require) {
     var core = require('web.core');
 
     var GeoengineMixin = {
-
         cssLibs: [
             '/base_geoengine/static/lib/ol-3.20.1/ol.css',
             '/base_geoengine/static/lib/ol3-layerswitcher.css',
@@ -29,7 +28,21 @@ odoo.define('base_geoengine.geoengine_common', function (require) {
             '/base_geoengine/static/lib/ol3-layerswitcher.js',
             '/base_geoengine/static/lib/chromajs-0.8.0/chroma.js',
             '/base_geoengine/static/lib/geostats-1.4.0/geostats.js',
-        ],
+        ]
+    };
+
+    return {
+        GeoengineMixin: GeoengineMixin,
+    };
+});
+
+
+odoo.define('base_geoengine.BackgroundLayers', function (require) {
+    "use strict";
+
+    var Class = require('web.Class');
+
+    var BackgroundLayers = Class.extend({
 
         /**
          * Creates background layers from config
@@ -37,7 +50,7 @@ odoo.define('base_geoengine.geoengine_common', function (require) {
          * @param {Array} layersCfg - the background layers array of config objects
          * @returns {Array}
          */
-        createBackgroundLayers: function (layersCfg) {
+        create: function (layersCfg) {
             var out = [];
             _.each(layersCfg, function (l) {
                 if (l.is_wmts) {
@@ -121,14 +134,23 @@ odoo.define('base_geoengine.geoengine_common', function (require) {
                                 })
                             );
                             break;
+                        default:
+                            var customLayers = this.handleCustomLayers(l);
+                            if (customLayers.length) {
+                                out = out.concat(customLayers);
+                            }
+                            break;
                     }
                 }
-            });
+            }.bind(this));
             return out;
         },
-    };
 
-    return {
-        GeoengineMixin: GeoengineMixin,
-    };
+        // To be overridden in geoengine extensions
+        handleCustomLayers: function(layer) {
+            return [];
+        }
+    });
+
+    return BackgroundLayers;
 });
