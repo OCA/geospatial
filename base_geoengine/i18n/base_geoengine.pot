@@ -516,6 +516,11 @@ msgid "Service URL"
 msgstr ""
 
 #. module: base_geoengine
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Swisstopo"
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__symbol_ids
 msgid "Symbol"
 msgstr ""
