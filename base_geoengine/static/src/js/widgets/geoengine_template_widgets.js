@@ -48,7 +48,7 @@ odoo.define('base_geoengine.template_widgets', function (require) {
             this.$node = $node;
             this.options = pyUtils.py_eval(this.$node.attr("options") || '{}');
             this.format_descriptor = _.extend({}, this.field, {
-                'widget': this.$node.attr('widget')
+                'widget': this.$node.attr('widget'),
             });
             this.set("value", field.raw_value);
         },

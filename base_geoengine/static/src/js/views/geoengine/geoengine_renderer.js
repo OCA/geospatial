@@ -12,55 +12,76 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
     var QWeb = require('web.QWeb');
     var session = require('web.session');
 
+    var Record = require('base_geoengine.Record');
+    var GeoengineRecord = Record.GeoengineRecord;
     var geoengine_common = require('base_geoengine.geoengine_common');
 
     /* CONSTANTS */
     var DEFAULT_BEGIN_COLOR = "#FFFFFF";
     var DEFAULT_END_COLOR = "#000000";
-    var DEFAULT_MIN_SIZE = 5; // for prop symbols only
-    var DEFAULT_MAX_SIZE = 15; // for prop symbols only
-    var DEFAULT_NUM_CLASSES = 5; // for choroplets only
+    // For prop symbols only
+    var DEFAULT_MIN_SIZE = 5;
+    // For prop symbols only
+    var DEFAULT_MAX_SIZE = 15;
+    // For choroplets only
+    var DEFAULT_NUM_CLASSES = 5;
     var LEGEND_MAX_ITEMS = 10;
 
     /**
-     * Formats attributes into a string
+     * Get display value of selection technical value
      *
-     * @param {Object} a
-     * @param {Object} fields
+     * @param {Object} field - odoo selection field
+     * @param {String} value - technical value for selection field
+     *
+     * @returns {String} Selection label for value
+     */
+    var _getSelectionLabel = function (field, value) {
+        for (var option in field.selection) {
+            if (field.selection[option][0] === value) {
+                return field.selection[option][1];
+            }
+        }
+    };
+
+    var _createFieldSpan = function (field, value) {
+        var label = field.string;
+        var val = value;
+        if (field.type === 'selection') {
+            val = _getSelectionLabel(field, val);
+        }
+        if (val instanceof Array) {
+            // TODO this needs a comment to know when a field in an Array
+            val = val[1];
+        }
+        return '<span style="font-weight: bold">' +
+               label + '</span>: ' + val;
+    };
+
+    /**
+     * Formats attributes into a string for a single feature
+     *
+     * @param {Object} a - attributes
+     * @param {Object} fields - list of fields
+     *
+     * @returns {String} HTML content
      */
     var formatFeatureHTML = function (a, fields) {
         var str = [];
         var oid = '';
         for (var key in a) {
-            if (a.hasOwnProperty(key)) {
+            if (Object.prototype.hasOwnProperty.call(a, key)) {
                 var val = a[key];
                 if (val === false) {
                     continue;
                 }
-                var span = '';
-                if (fields.hasOwnProperty(key)) {
+                if (Object.prototype.hasOwnProperty.call(fields, key)) {
                     var field = fields[key];
-                    var label = field.string;
-                    if (field.type === 'selection') {
-                        // Get display value of selection option
-                        for (var option in field.selection) {
-                            if (field.selection[option][0] === val) {
-                                val = field.selection[option][1];
-                                break;
-                            }
-                        }
-                    }
-                    if (val instanceof Array) {
-                        str.push('<span style="font-weight: bold">' +
-                                 label + '</span>: ' +val[1]);
+                    var span = _createFieldSpan(field, key);
+                    // ID field to put on first position
+                    if (key === 'id') {
+                        oid = span;
                     } else {
-                        span = '<span style="font-weight: bold">' +
-                               label + '</span>: ' + val;
-                         if (key === 'id') {
-                            oid = span;
-                        } else {
-                            str.push(span);
-                        }
+                        str.push(span);
                     }
                 }
             }
@@ -70,15 +91,17 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
     };
 
     /**
-     * Formats attributes into a string
+     * Formats attributes into a string for multiple features
      *
-     * @param {Array} features
+     * @param {Array} features: features of the map
+     *
+     * @returns {String} HTML content
      */
     var formatFeatureListHTML = function (features) {
         var str = [];
-        // count unique record selected through all features
+        // Count unique record selected through all features
         var selected_ids = [];
-        features.forEach(function(x) {
+        features.forEach(function (x) {
             var rec_id = x.get('attributes').id;
             if (selected_ids.indexOf(rec_id) < 0) {
                 selected_ids.push(rec_id);
@@ -88,16 +111,14 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
         return str.join('<br />');
     };
 
-
-    var GeoengineRenderer =
-        BasicRenderer.extend(geoengine_common.GeoengineMixin, {
+    var GeoengineRenderer = BasicRenderer.extend(geoengine_common.GeoengineMixin, { // eslint-disable-line max-len
 
         events: {
             'click #map_infobox': '_onInfoBoxClicked',
         },
 
         /**
-         * @constructor
+         * @class
          * @param {Widget} parent
          * @param {Any} state
          * @param {Object} params
@@ -117,19 +138,22 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
             this.overlaysGroup = null;
             this.vectorSources = [];
             this.zoomToExtentCtrl = null;
-            this.popupElement = undefined;
-            this.overlayPopup = undefined;
-            this.featurePopup = undefined;
+            this.popupElement = null;
+            this.overlayPopup = null;
+            this.featurePopup = null;
             this.ids = {};
 
-            this.geometryColumns = [];
-            _.each(this.mapOptions.geoengine_layers.actives, function(item) {
-                this.geometryColumns.push(item.geo_field_id[1]);
+            this.geometryFields = [];
+            _.each(this.mapOptions.geoengine_layers.actives, function (item) {
+                this.geometryFields.push(item.geo_field_id[1]);
             }.bind(this));
         },
 
         /**
+         * @override
          * Called each time the renderer is attached into the DOM.
+         *
+         * Redraw the map and its vector layers
          */
         on_attach_callback: function () {
             var map = this._renderMap();
@@ -145,7 +169,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
         /**
          * @override
          */
-        updateState: function (state) {
+        updateState: function () {
             var def = this._super.apply(this, arguments);
             this._renderVectorLayers();
             return def;
@@ -153,7 +177,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
 
         willStart: function () {
             var arch = this.viewInfo.arch;
-            _.each(arch.children, function(child) {
+            _.each(arch.children, function (child) {
                 if (child.tag === 'templates') {
                     this.qweb.add_template(utils.json_node_to_xml(child));
                 }
@@ -166,13 +190,13 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
         // --------------------------------------------------------------------
 
         /**
-         * Render the map 
+         * Render the map
          *
          * @private
          * @returns {jQueryElement} a jquery element <tbody>
          */
         _renderMap: function () {
-            if (_.isUndefined(this.map)){
+            if (_.isUndefined(this.map)) {
                 this.zoomToExtentCtrl = new ol.control.ZoomToExtent();
                 var backgrounds = this.mapOptions.geoengine_layers.backgrounds;
                 this.map = new ol.Map({
@@ -241,7 +265,9 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
          *
          * Parameters:
          * @param {Object} cfg - config object specific to the vector layer
-         * @param {Array(features)} data
+         * @param {Array} data - array of features
+         *
+         * @returns {ol.layer.Vector}: One Vector layer containing the features
          */
         _createVectorLayer: function (cfg, data) {
             if (!data.length) {
@@ -251,10 +277,10 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
                 });
             }
             var vectorSource = new ol.source.Vector();
-            _.each(data, function(item) {
-                var attributes = _.clone(item['data']);
-                _.each(this.geometryColumns, function(item) {
-                    delete attributes[item];
+            _.each(data, function (item) {
+                var attributes = _.clone(item.data);
+                _.each(this.geometryFields, function (geo_field) {
+                    delete attributes[geo_field];
                 });
 
                 if (cfg.display_polygon_labels === true) {
@@ -263,15 +289,15 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
                     attributes.label = '';
                 }
 
-                var json_geometry = item['data'][cfg.geo_field_id[1]];
+                var json_geometry = item.data[cfg.geo_field_id[1]];
                 if (json_geometry) {
                     var feature = new ol.Feature({
                         geometry: new ol.format.GeoJSON()
-                                        .readGeometry(json_geometry),
+                            .readGeometry(json_geometry),
                         attributes: attributes,
                     });
                     var id = String(attributes.id);
-                    this.ids[id] = item['id'];
+                    this.ids[id] = item.id;
                     vectorSource.addFeature(feature);
                 }
             }.bind(this));
@@ -287,7 +313,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
                 active_on_startup: cfg.active_on_startup,
                 style: styleInfo.style,
             });
-            lv.on('change:visible', function (e) {
+            lv.on('change:visible', function () {
                 if (lv.getVisible()) {
                     elLegend.show();
                 } else {
@@ -304,190 +330,211 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
         _extractLayerValues: function (cfg, data) {
             var values = [];
             var indicator = cfg.attribute_field_id[1];
-            _.each(data, function(item) {
+            _.each(data, function (item) {
                 values.push(item.data[indicator]);
             });
             return values;
         },
 
-        _styleVectorLayer: function (cfg, data) {
+        _styleVectorLayerColored: function (cfg, data) {
             var indicator = cfg.attribute_field_id[1];
-            var opacity = 0.8; // TODO to be defined on cfg
-            var begin_color = chroma(cfg.begin_color || DEFAULT_BEGIN_COLOR)
-                                  .alpha(opacity).css();
-            var end_color = chroma(cfg.end_color || DEFAULT_END_COLOR)
-                                  .alpha(opacity).css();
+            var values = this._extractLayerValues(cfg, data);
+            var nb_class = cfg.nb_class || DEFAULT_NUM_CLASSES;
+            var opacity = 0.8;
+            var begin_color_hex = cfg.begin_color || DEFAULT_BEGIN_COLOR;
+            var end_color_hex = cfg.end_color || DEFAULT_END_COLOR;
+            var begin_color = chroma(begin_color_hex).alpha(opacity).css();
+            var end_color = chroma(end_color_hex).alpha(opacity).css();
+            var scale = chroma.scale([begin_color, end_color]);
+            var serie = new geostats(values);
+            var vals = null;
 
-            switch (cfg.geo_repr) {
-                case 'colored':
-                    var values = this._extractLayerValues(cfg, data);
-                    var nb_class = cfg.nb_class || DEFAULT_NUM_CLASSES
-                    var scale = chroma.scale([begin_color, end_color]);
-                    var serie = new geostats(values);
-                    var vals = null;
-
-                    switch (cfg.classification) {
-                        case 'unique':
-                        case 'custom':
-                            vals = serie.getClassUniqueValues();
-                            scale = chroma.scale('RdYlBu')
-                                          .domain([0, vals.length], vals.length);
-                            break;
-                        case 'quantile':
-                            serie.getClassQuantile(nb_class);
-                            vals = serie.getRanges();
-                            scale = scale.domain([0, vals.length], vals.length);
-                            break;
-                        case 'interval':
-                            serie.getClassEqInterval(nb_class);
-                            vals = serie.getRanges();
-                            scale = scale.domain([0, vals.length], vals.length);
-                            break;
+            switch (cfg.classification) {
+            case 'unique':
+            case 'custom':
+                vals = serie.getClassUniqueValues();
+                scale = chroma.scale('RdYlBu').domain(
+                    [0, vals.length], vals.length);
+                break;
+            case 'quantile':
+                serie.getClassQuantile(nb_class);
+                vals = serie.getRanges();
+                scale = scale.domain([0, vals.length], vals.length);
+                break;
+            case 'interval':
+                serie.getClassEqInterval(nb_class);
+                vals = serie.getRanges();
+                scale = scale.domain([0, vals.length], vals.length);
+                break;
+            }
+            var colors = [];
+            if (cfg.classification === 'custom') {
+                _.each(vals, function (val) {
+                    if (val) {
+                        colors.push(chroma(val).alpha(opacity).css());
                     }
-                    var colors = [];
-                    if (cfg.classification == 'custom') {
-                        _.each(vals, function (val) {
-                            if (val) {
-                                colors.push(chroma(val).alpha(opacity).css());
-                            }
-                        });
-                    } else {
-                        _.each(scale.colors(), function (color) {
-                            colors.push(chroma(color).alpha(opacity).css());
-                        });
-                    }
-                    var styles_map = {};
-                    var styles;
-                    _.each(colors, function (color) {
-                        if (color in styles_map) {
-                            return;
-                        }
-                        var fill = new ol.style.Fill({
-                            color: color,
-                        });
-                        var stroke = new ol.style.Stroke({
-                            color: '#333333',
-                            width: 2,
-                        });
-                        styles = [
-                            new ol.style.Style({
-                              image: new ol.style.Circle({
-                                  fill: fill,
-                                  stroke: stroke,
-                                  radius: 7,
-                              }),
-                              fill: fill,
-                              stroke: stroke,
-                            })
-                        ];
-                        styles_map[color] = styles;
-                    });
-                    var legend = null;
-                    if (vals.length <= LEGEND_MAX_ITEMS) {
-                        serie.setColors(colors);
-                        legend = serie.getHtmlLegend(null, cfg.name, 1);
-                    }
-                    return {
-                        style: function (feature, resolution) {
-                            var value = feature.get('attributes')[indicator];
-                            var color_idx = this._getClass(value, vals);
-                            return styles_map[colors[color_idx]];
-                        }.bind(this),
-                        legend: legend,
-                    };
-                case 'proportion':
-                    var values = this._extractLayerValues(cfg, data);
-                    var serie = new geostats(values);
-                    var styles_map = {};
-                    var minSize = cfg.min_size || DEFAULT_MIN_SIZE;
-                    var maxSize = cfg.max_size || DEFAULT_MAX_SIZE;
-                    var minVal = serie.min();
-                    var maxVal = serie.max();
-                    var fill = new ol.style.Fill({
-                        color: begin_color
-                    });
-                    var stroke = new ol.style.Stroke({
-                        color: '#333333',
-                        width: 2,
-                    });
-                    _.each(values, function (value) {
-                        if (value in styles_map) {
-                            return;
-                        }
-                        var radius = (value - minVal) / (maxVal - minVal) *
-                            (maxSize - minSize) + minSize;
-                        var styles = [
-                            new ol.style.Style({
-                                image: new ol.style.Circle({
-                                    fill: fill,
-                                    stroke: stroke,
-                                    radius: radius
-                                }),
-                                fill: fill,
-                                stroke: stroke
-                            }),
-                        ];
-                        styles_map[value] = styles;
-                    });
-
-                    return {
-                        style: function (feature, resolution) {
-                            var value = feature.get('attributes')[indicator];
-                            return styles_map[value];
-                        },
-                        legend : '',
-                    };
-                default:
-                    // Basic
-                    var fill = new ol.style.Fill({
-                        color: begin_color,
-                    });
-                    var stroke = new ol.style.Stroke({
-                        color: '#333333',
-                        width: 2,
-                    });
-                    var olStyleText = new ol.style.Text({
-                        text: '',
-                        fill: new ol.style.Fill({
-                            color: '#000000',
-                        }),
-                        stroke: new ol.style.Stroke({
-                            color: '#FFFFFF',
-                            width: 5,
-                        })
-                    });
-                    var styles = [
-                        new ol.style.Style({
-                            image: new ol.style.Circle({
-                                fill: fill,
-                                stroke: stroke,
-                                radius: this._getBasicCircleRadius(cfg, data),
-                            }),
+                });
+            } else {
+                _.each(scale.colors(), function (color) {
+                    colors.push(chroma(color).alpha(opacity).css());
+                });
+            }
+            var styles_map = {};
+            _.each(colors, function (color) {
+                if (color in styles_map) {
+                    return;
+                }
+                var fill = new ol.style.Fill({
+                    color: color,
+                });
+                var stroke = new ol.style.Stroke({
+                    color: '#333333',
+                    width: 2,
+                });
+                var styles = [
+                    new ol.style.Style({
+                        image: new ol.style.Circle({
                             fill: fill,
                             stroke: stroke,
-                            text: olStyleText,
+                            radius: 7,
                         }),
-                    ];
-                    return {
-                        style: function (feature, resolution) {
-                            var label_text = feature.values_.attributes.label;
-                            if (label_text === false) {
-                                label_text = '';
-                            }
-                            styles[0].text_.text_ = label_text;
-                            return styles;
-                        },
-                        legend: '',
-                    };
+                        fill: fill,
+                        stroke: stroke,
+                    }),
+                ];
+                styles_map[color] = styles;
+            });
+            var legend = null;
+            if (vals.length <= LEGEND_MAX_ITEMS) {
+                serie.setColors(colors);
+                legend = serie.getHtmlLegend(null, cfg.name, 1);
+            }
+            return {
+                style: function (feature) {
+                    var value = feature.get('attributes')[indicator];
+                    var color_idx = this._getClass(value, vals);
+                    return styles_map[colors[color_idx]];
+                }.bind(this),
+                legend: legend,
+            };
+        },
+
+        _styleVectorLayerProportion: function (cfg, data) {
+            var indicator = cfg.attribute_field_id[1];
+            var values = this._extractLayerValues(cfg, data);
+            var serie = new geostats(values);
+            var styles_map = {};
+            var minSize = cfg.min_size || DEFAULT_MIN_SIZE;
+            var maxSize = cfg.max_size || DEFAULT_MAX_SIZE;
+            var minVal = serie.min();
+            var maxVal = serie.max();
+            // TODO to be defined on cfg
+            var opacity = 0.8;
+            var color_hex = cfg.begin_color || DEFAULT_BEGIN_COLOR;
+            var color = chroma(color_hex).alpha(opacity).css();
+            var fill = new ol.style.Fill({
+                color: color,
+            });
+            var stroke = new ol.style.Stroke({
+                color: '#333333',
+                width: 2,
+            });
+            _.each(values, function (value) {
+                if (value in styles_map) {
+                    return;
+                }
+                var proportion = (value - minVal) / (maxVal - minVal);
+                var proportion_sized = proportion * (maxSize - minSize);
+                var radius = proportion_sized + minSize;
+                var styles = [
+                    new ol.style.Style({
+                        image: new ol.style.Circle({
+                            fill: fill,
+                            stroke: stroke,
+                            radius: radius,
+                        }),
+                        fill: fill,
+                        stroke: stroke,
+                    }),
+                ];
+                styles_map[value] = styles;
+            });
+
+            return {
+                style: function (feature) {
+                    var value = feature.get('attributes')[indicator];
+                    return styles_map[value];
+                },
+                legend : '',
+            };
+        },
+
+        _styleVectorLayerDefault: function (cfg, data) {
+            // TODO to be defined on cfg
+            var opacity = 0.8;
+            var color_hex = cfg.begin_color || DEFAULT_BEGIN_COLOR;
+            var color = chroma(color_hex).alpha(opacity).css();
+            // Basic
+            var fill = new ol.style.Fill({
+                color: color,
+            });
+            var stroke = new ol.style.Stroke({
+                color: '#333333',
+                width: 2,
+            });
+            var olStyleText = new ol.style.Text({
+                text: '',
+                fill: new ol.style.Fill({
+                    color: '#000000',
+                }),
+                stroke: new ol.style.Stroke({
+                    color: '#FFFFFF',
+                    width: 5,
+                }),
+            });
+            var styles = [
+                new ol.style.Style({
+                    image: new ol.style.Circle({
+                        fill: fill,
+                        stroke: stroke,
+                        radius: this._getBasicCircleRadius(cfg, data),
+                    }),
+                    fill: fill,
+                    stroke: stroke,
+                    text: olStyleText,
+                }),
+            ];
+            return {
+                style: function (feature) {
+                    var label_text = feature.values_.attributes.label;
+                    if (label_text === false) {
+                        label_text = '';
+                    }
+                    styles[0].text_.text_ = label_text;
+                    return styles;
+                },
+                legend: '',
+            };
+        },
+
+        _styleVectorLayer: function (cfg, data) {
+
+            switch (cfg.geo_repr) {
+            case 'colored':
+                return this._styleVectorLayerColored(cfg, data);
+            case 'proportion':
+                return this._styleVectorLayerProportion(cfg, data);
+            default:
+                return this._styleVectorLayerDefault(cfg, data);
             }
         },
 
-        _getBasicCircleRadius: function (cfg, data) {
+        _getBasicCircleRadius: function () {
             return 5;
         },
 
         _getClass: function (val, a) {
-            // uniqueValues classification
+            // Classification uniqueValues
             var idx = a.indexOf(val);
             if (idx > -1) {
                 return idx;
@@ -501,11 +548,9 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
                     if (val <= parseFloat(item[1])) {
                         return i;
                     }
-                } else {
-                    // uniqueValues classification
-                    if (val === a[i]) {
-                        return i;
-                    }
+                } else if (val === a[i]) {
+                    // Classification uniqueValues
+                    return i;
                 }
             }
         },
@@ -515,6 +560,8 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
          *
          * Parameters:
          * @param {Array} data - vector data to be added to the vector layer
+         *
+         * @returns {Array} - array of vector layers
          */
         _createVectorLayers: function (data) {
             var out = [];
@@ -526,7 +573,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
         },
 
         _createPopupOverlay: function () {
-            if (this.overlayPopup !== undefined) {
+            if (this.overlayPopup !== null) {
                 return this.overlayPopup;
             }
 
@@ -554,8 +601,8 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
         _showFeaturePopup: function (feature) {
             var template_name = 'layer-box';
             if (this.qweb.templates[template_name]) {
-                var coord = ol.extent.getCenter(feature.getGeometry()
-                              .getExtent());
+                var coord = ol.extent.getCenter(
+                    feature.getGeometry().getExtent());
                 this.overlayPopup.setPosition(coord);
                 this.featurePopup = feature;
                 var record = feature.get('attributes');
@@ -597,7 +644,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
 
                 // When user quits fullscreen map, the size is set to undefined
                 // So we have to check this and recompute the size.
-                if (this.map.getSize() === undefined ) {
+                if (typeof this.map.getSize() === 'undefined' ) {
                     this.map.updateSize();
                 }
                 if (!ol.extent.isEmpty(extent)) {
@@ -606,13 +653,48 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
             }
         },
 
-        _updateInfoBox: function (features) {
+        _updateInfoBoxSingle: function (features) {
             var $map_info = $("#map_info");
             var $map_infobox = $("#map_infobox");
             var $map_info_open = $('#map_info_open');
             var $map_info_filter_selection = $("#map_info_filter_selection");
 
+            var feature = features.item(0);
+            var attributes = feature.get('attributes');
+            $map_info.html(formatFeatureHTML(attributes, this.viewInfo.fields));
+            var id = attributes.id;
+            if (id in this.ids) {
+                $map_infobox.data('id', this.ids[id]);
+            }
+            $map_info_open.show();
+            $map_info_filter_selection.hide();
+            $map_infobox.show();
+        },
+
+        _updateInfoBoxMulti: function (features) {
+            var $map_info = $("#map_info");
+            var $map_infobox = $("#map_infobox");
+            var $map_info_open = $('#map_info_open');
+            var $map_info_filter_selection = $("#map_info_filter_selection");
+
+            // Several selected features
+            $map_info.html(formatFeatureListHTML(features));
+            var selected_ids = [];
+            features.forEach(function (feature) {
+                var attributes = feature.get('attributes');
+                selected_ids.push(attributes.id);
+            });
+            $map_infobox.data('ids', selected_ids);
+            $map_info_open.hide();
+            $map_info_filter_selection.show();
+            $map_infobox.show();
+        },
+
+        _updateInfoBox: function (features) {
+
             var nbFeatures = features.getLength();
+
+            var $map_infobox = $("#map_infobox");
             $map_infobox.data('id', null);
             $map_infobox.data('ids', []);
 
@@ -622,35 +704,16 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
                 return;
             }
 
-            if (nbFeatures == 1) {
-                var feature = features.item(0);
-                var attributes = feature.get('attributes');
-                $map_info.html(formatFeatureHTML(attributes, this.viewInfo.fields));
-                var id = attributes['id'];
-                if (id in this.ids) {
-                    $map_infobox.data('id', this.ids[id]);
-                }
-                $map_info_open.show();
-                $map_info_filter_selection.hide();
-                $map_infobox.show();
+            if (nbFeatures === 1) {
+                this._updateInfoBoxSingle(features);
             } else {
-                // Several selected features
-                $map_info.html(formatFeatureListHTML(features));
-                var selected_ids = [];
-                features.forEach(function(feature) {
-                    var attributes = feature.get('attributes');
-                    selected_ids.push(attributes.id);
-                });
-                $map_infobox.data('ids', selected_ids);
-                $map_info_open.hide();
-                $map_info_filter_selection.show();
-                $map_infobox.show();
+                this._updateInfoBoxMulti(features);
             }
         },
 
         _getCustomSelectedStyleFunction: function () {
             var self = this;
-            return function (feature, resolution) {
+            return function (feature) {
                 var geometryType = feature.getGeometry().getType();
                 var styles = ol.style.Style.createDefaultEditing();
                 var geometryStyle = styles[geometryType];
@@ -668,7 +731,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
                         radius: self._getBasicCircleRadius(),
                     }),
                 })];
-            }
+            };
         },
 
         _registerInteraction: function () {
@@ -699,20 +762,19 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
                 condition: ol.events.condition.shiftKeyOnly,
                 style: new ol.style.Style({
                     stroke: new ol.style.Stroke({
-                        color: [0, 0, 255, 1]
+                        color: [0, 0, 255, 1],
                     }),
                 }),
             });
 
             var selectedFeatures = selectClick.getFeatures();
-            dragBox.on('boxend', function (e) {
-                // Features that intersect the box are added to the collection of
-                // selected features, and their names are displayed in the "info"
-                // div
-                var info = [];
+            dragBox.on('boxend', function () {
+                // Features that intersect the box are added to the collection
+                // of selected features, and their names are displayed in the
+                // "info" div
                 var extent = dragBox.getGeometry().getExtent();
                 var layerVectors = this.map.getLayers().item(1).getLayers();
-                var vectorSource;
+                var vectorSource = null;
                 layerVectors.forEach(function (lv) {
                     // Enable selection only on visible layers
                     if (lv.getVisible()) {
@@ -720,13 +782,13 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
                         vectorSource.forEachFeatureIntersectingExtent(
                             extent, function (feature) {
                                 if (selectedFeatures.getArray()
-                                                    .indexOf(feature) < 0) {
+                                    .indexOf(feature) < 0) {
                                     selectedFeatures.push(feature);
                                 }
                             }
                         );
                     }
-                }.bind(this));
+                });
                 this._updateInfoBox(selectedFeatures);
             }.bind(this));
 
@@ -739,27 +801,18 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
         // Handlers
         // --------------------------------------------------------------------
 
-        _onInfoBoxClicked: function(event) {
+        _onInfoBoxClicked: function (event) {
             if (!$(event.target).prop('special_click')) {
                 var id = $(event.currentTarget).data('id');
                 var ids = $(event.currentTarget).data('ids');
                 if (id) {
-                    this.trigger_up('open_record', {id: id, target: event.target});
+                    this.trigger_up(
+                        'open_record', {id: id, target: event.target}
+                    );
                 } else if (ids.length) {
-                    /*
-                    var searchview = this.ViewManager.searchview;
-                    searchview.query.add({
-                        category: _lt("Geo selection"),
-                        values: {label: _lt("Geo selection")},
-                        icon: 'fa-map-o',
-                        field: {
-                          get_context: function () { },
-                          get_domain: function() {return selection_domain;},
-                          get_groupby: function () { }
-                        }
-                    });
-                    */
-                    // TODO show "Geo selection" item in search view field
+                    // TODO restore "Geo selection" item in search view field
+                    // using icon fa-map-o currently the selection cannot be
+                    // cancelled as it was in Odoo 10.0
                     this.trigger_up('search', {
                         domains: [[['id', 'in', ids]]],
                         contexts: [],
@@ -772,4 +825,3 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
 
     return GeoengineRenderer;
 });
-
