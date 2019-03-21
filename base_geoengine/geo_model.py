@@ -139,7 +139,8 @@ class GeoModel(models.BaseModel):
                     self.fields_get(cursor, uid, [geo_f_name]))
         else:
             return super(GeoModel, self).fields_view_get(
-                cursor, uid, view_id, view_type, context, toolbar, submenu)
+                cr=cursor, uid=uid, view_id=view_id, view_type=view_type,
+                context=context, toolbar=toolbar, submenu=submenu)
         return res
 
     def get_edit_info_for_geo_column(self, cursor, uid, column, context=None):
