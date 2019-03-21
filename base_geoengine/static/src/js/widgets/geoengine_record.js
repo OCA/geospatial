@@ -1,12 +1,8 @@
 odoo.define('base_geoengine.Record', function (require) {
     "use strict";
 
-    var data = require('web.data');
     var field_utils = require('web.field_utils');
-    var framework = require('web.framework');
     var session = require('web.session');
-    var time = require('web.time');
-    var utils = require('web.utils');
     var Widget = require('web.Widget');
 
     var fields_registry = require('base_geoengine.template_widgets').registry;
@@ -57,7 +53,7 @@ odoo.define('base_geoengine.Record', function (require) {
             this._addWidgets();
         },
 
-        _addWidgets: function() {
+        _addWidgets: function () {
             var self = this;
             self.$("field").each(function () {
                 var $field = $(this);

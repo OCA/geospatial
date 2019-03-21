@@ -17,6 +17,7 @@ odoo.define('base_geoengine.GeoengineController', function (require) {
     var BasicController = require('web.BasicController');
     var pyUtils = require('web.py_utils');
     var Sidebar = require('web.Sidebar');
+    var DataExport = require('web.DataExport');
 
     var _t = core._t;
 
@@ -26,9 +27,9 @@ odoo.define('base_geoengine.GeoengineController', function (require) {
         }),
 
         /**
-         * @constructor
+         * @class
          * @override
-         * @param {Object} parent
+         * @param {Object} parent node
          * @param {Boolean} params.editable
          * @param {Boolean} params.hasSidebar
          * @param {Object} params.toolbarActions
@@ -110,7 +111,7 @@ odoo.define('base_geoengine.GeoengineController', function (require) {
          * Render the sidebar (the 'action' menu in the control panel, right of
          * the main buttons)
          *
-         * @param {jQuery Node} $node
+         * @param {jQuery.Element} $node
          */
         renderSidebar: function ($node) {
             if (this.hasSidebar && !this.sidebar) {
@@ -138,7 +139,7 @@ odoo.define('base_geoengine.GeoengineController', function (require) {
                     editable: this.is_action_enabled('edit'),
                     env: {
                         context: this.model.get(this.handle, {
-                            raw: true
+                            raw: true,
                         }).getContext(),
                         activeIds: this.getSelectedIds(),
                         model: this.modelName,
@@ -184,7 +185,7 @@ odoo.define('base_geoengine.GeoengineController', function (require) {
          *
          * @override
          * @private
-         * @param {string} [recordID] - default to the main recordID
+         * @param {String} [recordID] - default to the main recordID
          */
         _abandonRecord: function (recordID) {
             this._super.apply(this, arguments);
@@ -203,6 +204,8 @@ odoo.define('base_geoengine.GeoengineController', function (require) {
          *
          * @todo make record creation a basic controller feature
          * @private
+         *
+         * @returns {Deferred} callback
          */
         _addRecord: function () {
             var self = this;
@@ -223,9 +226,9 @@ odoo.define('base_geoengine.GeoengineController', function (require) {
          * Archive the current selection
          *
          * @private
-         * @param {string[]} ids
-         * @param {boolean} archive
-         * @returns {Deferred}
+         * @param {String[]} ids - ids of objects to (un)archive
+         * @param {Boolean} archive - to active or deactive
+         * @returns {Deferred} callback
          */
         _archive: function (ids, archive) {
             if (ids.length === 0) {
@@ -285,7 +288,7 @@ odoo.define('base_geoengine.GeoengineController', function (require) {
          * Called when clicking on 'Archive' or 'Unarchive' in the sidebar.
          *
          * @private
-         * @param {boolean} archive
+         * @param {Boolean} archive
          */
         _onToggleArchiveState: function (archive) {
             this._archive(this.selectedRecords, archive);
