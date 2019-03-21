@@ -48,7 +48,6 @@ odoo.define('base_geoengine.GeoengineView', function (require) {
             this.controllerParams.hasSidebar = params.sidebar;
             this.rendererParams.viewInfo = viewInfo;
 
-            // this.loadParams.type = 'list';
             this.loadParams.limit = 1000;
         },
     });
