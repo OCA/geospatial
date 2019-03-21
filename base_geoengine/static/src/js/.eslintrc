@@ -1,0 +1,9 @@
+{
+  "globals": {
+    "$": false,
+    "_": false,
+    "ol": false,
+    "chroma": false,
+    "geostats": false,
+  }
+}
