@@ -6,6 +6,7 @@ from odoo import api, fields, models
 
 class GeoRasterLayerType(models.Model):
     _name = 'geoengine.raster.layer.type'
+    _description = "Raster Layer Type"
 
     name = fields.Char(
         translate=True, required=True
@@ -20,6 +21,7 @@ class GeoRasterLayerType(models.Model):
 
 class GeoRasterLayer(models.Model):
     _name = 'geoengine.raster.layer'
+    _description = "Raster Layer"
 
     raster_type = fields.Selection(
         [('osm', 'OpenStreetMap'),
