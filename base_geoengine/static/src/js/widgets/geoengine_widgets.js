@@ -135,12 +135,10 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
                         var infinite_extent = [
                             Infinity, Infinity, -Infinity, -Infinity,
                         ];
-                        if (zoom && extent != infinite_extent) {
+                        if (zoom && extent !== infinite_extent) {
                             map_view = this.map.getView();
                             if (map_view) {
-                                map_view.fit(extent, this.map.getSize(), {
-                                    maxZoom: 15,
-                                });
+                                map_view.fit(extent, { maxZoom: 15 });
                             }
                         }
                     }
@@ -148,10 +146,8 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
                     map_view = this.map.getView();
                     // Default extent
                     if (map_view) {
-                        var extent = this.defaultExtent.split(', ');
-                        map_view.fit(extent, this.map.getSize(), {
-                            maxZoom: 5,
-                        });
+                        extent = this.defaultExtent.split(', ');
+                        map_view.fit(extent, { maxZoom: 5 });
                     }
                 }
             }
