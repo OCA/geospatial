@@ -29,9 +29,8 @@ install:
   - pip install geojson Shapely sphinx sphinx_bootstrap_theme sphinx-intl odoo-sphinx-autodoc
 
 before_script:
-  - createdb openerp_test
-  - psql -U postgres -d openerp_test -c "create extension postgis"
-  - psql -U postgres -d openerp_test -c "create extension postgis_topology"
+  - if [ "$TESTS" -e "1" ] ; then psql -U postgres -d postgres -c "create extension postgis"; fi
+  - if [ "$TESTS" -e "1" ] ; then psql -U postgres -d postgres -c "create extension postgis_topology"; fi
 
 script:
   - if [ -z "$DOCS" ] ; then travis_run_tests; fi
