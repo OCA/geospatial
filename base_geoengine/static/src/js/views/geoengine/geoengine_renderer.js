@@ -597,12 +597,12 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
 
                 // When user quits fullscreen map, the size is set to undefined
                 // So we have to check this and recompute the size.
-                var size = this.map.getSize();
-                if (size === undefined ) {
+                if (this.map.getSize() === undefined ) {
                     this.map.updateSize();
-                    size = this.map.getSize();
                 }
-                this.map.getView().fit(extent, this.map.getSize());
+                if (!ol.extent.isEmpty(extent)) {
+                    this.map.getView().fit(extent);
+                }
             }
         },
 
