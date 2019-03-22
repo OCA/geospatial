@@ -42,7 +42,7 @@ class IrModelField(models.Model):
     )
     dim = fields.Selection(
         [(2, '2'), (3, '3'), (4, '4')],
-        string="PostGIs type"
+        string="PostGIs Dimension",
     )
     gist_index = fields.Boolean(
         'Create gist index'
