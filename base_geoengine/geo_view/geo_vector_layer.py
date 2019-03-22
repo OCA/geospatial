@@ -9,6 +9,7 @@ SUPPORTED_ATT = ['float', 'integer', 'integer_big', 'related',
 
 class GeoVectorLayer(models.Model):
     _name = 'geoengine.vector.layer'
+    _description = "Vector Layer"
 
     geo_repr = fields.Selection(
         [('basic', 'Basic'),

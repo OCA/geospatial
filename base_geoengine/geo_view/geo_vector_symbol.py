@@ -5,6 +5,7 @@ from odoo import fields, models
 
 class GeoVectorSymbol(models.Model):
     _name = 'geoengine.vector.symbol'
+    _description = "Vector Layer Symbol"
 
     vector_layer_id = fields.Many2one('geoengine.vector.layer')
     fieldname = fields.Char(
