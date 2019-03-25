@@ -24,7 +24,7 @@ env:
   matrix:
   - VERSION="11.0" LINT_CHECK="1"
   - VERSION="11.0" ODOO_REPO="OCA/OCB" LINT_CHECK="0"
-  - VERSION="11.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0" DOCS="1"
+  - VERSION="11.0" ODOO_REPO="odoo/odoo" LINT_CHECK="0"
   global:
     secure: "HLfds+sQG4JcM53.5b/sTemGvBlVNdfGc4XvJ+py2rx25F4BWojpbOYx44nSiUjBO9U6Eo5kwiK0mWEXoPGg6trQcbiur9kgHrV3+hydlUUKe2/P/mnoP2JAxtu0JBSLxNcG40FdIwEE3Sd0w/ocmxMOp3RmOOVacAY48eWYeh8="
 
