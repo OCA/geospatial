@@ -21,7 +21,7 @@ class IrUIView(models.Model):
             tmp = list(type_selection)
             tmp.append(GEO_VIEW)
             cls._fields['type'].selection = tuple(set(tmp))
-        super(IrUIView, self)._setup_fields()
+        super()._setup_fields()
 
     raster_layer_ids = fields.One2many(
         'geoengine.raster.layer', 'view_id', 'Raster layers', required=False)
@@ -29,7 +29,7 @@ class IrUIView(models.Model):
     vector_layer_ids = fields.One2many(
         'geoengine.vector.layer', 'view_id', 'Vector layers', required=True)
 
-    projection = fields.Char(default="EPSG:900913", required=True)
+    projection = fields.Char(default="EPSG:3857", required=True)
     default_extent = fields.Char(
         'Default map extent', size=128,
         default='-123164.85222423, 5574694.9538936, 1578017.6490538,'

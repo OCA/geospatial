@@ -96,6 +96,10 @@ MULTIPOLYGON_1 = """
                      726304.138055426 5873041.11333845,
                      726469.938970306 5873145.03456248)))"""
 
+GEOLINE_1 = """
+     LINESTRING (726469.938970306 5873145.03456248,
+                 726520.174105436 5872946.03059195,
+                 726394.076006275 5872675.04267336)"""
 
 GEO_VIEW = {
     "geoengine_layers": {
@@ -104,7 +108,7 @@ GEO_VIEW = {
         "default_extent": "-123164.85222423, 5574694.9538936,"
                           " 1578017.6490538, 6186191.1800898",
         "default_zoom": 0,
-        "projection": "EPSG:900913",
+        "projection": "EPSG:3857",
         "restricted_extent": False
     },
     "model": "test.dummy",
@@ -114,17 +118,17 @@ GEO_VIEW = {
 
 FORM_VIEW = {
     "fields": {
-        "the_geom": {
+        "geo_multipolygon": {
             "geo_type": {
                 "dim": 2,
-                "srid": 900913,
+                "srid": 3857,
                 "type": "geo_multi_polygon"
             },
             "required": False,
             "searchable": True,
             "sortable": True,
             "store": True,
-            "string": "NPA Shape",
+            "string": "Geo Multipolygon",
             "type": "geo_multi_polygon"
         }
     },
@@ -137,5 +141,5 @@ EXPECTED_GEO_COLUMN_MULTIPOLYGON = {
     'default_extent':
         '-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898',
     'geo_type': 'MULTIPOLYGON',
-    'srid': 900913
+    'srid': 3857
 }

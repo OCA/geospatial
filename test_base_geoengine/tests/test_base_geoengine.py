@@ -14,17 +14,15 @@ from shapely.geometry.linestring import LineString
 from shapely.geometry.point import Point
 
 import odoo.tests.common as common
-from odoo.exceptions import MissingError
+from odoo import exceptions, fields
 
-from odoo.addons.base_geoengine import fields as geo_fields
-
-from .data import MULTIPOLYGON_1, GEO_VIEW, FORM_VIEW
+from .data import MULTIPOLYGON_1, GEOLINE_1, GEO_VIEW, FORM_VIEW
 from .data import EXPECTED_GEO_COLUMN_MULTIPOLYGON
 
 _logger = logging.getLogger(__name__)
 
 
-class TestBaseGeoengine(common.TransactionCase):
+class TestBaseGeoengine(common.SavepointCase):
 
     def setUp(self):
         super().setUp()
@@ -34,9 +32,8 @@ class TestBaseGeoengine(common.TransactionCase):
 
         self.dummy = self.env['test.dummy'].create({
             'name': 'test dummy',
-            'the_geom': wktloads(MULTIPOLYGON_1)
+            'geo_multipolygon': wktloads(MULTIPOLYGON_1)
         })
-        self.dummy_id = self.dummy.id
 
     def _compare_view(self, view_type, expected_result, paths):
         values = self.dummy.fields_view_get(
@@ -64,26 +61,28 @@ class TestBaseGeoengine(common.TransactionCase):
 
     def test_field(self):
         _logger.info("Tests fields")
-        self.assertAlmostEqual(8250285.406718118, self.dummy.the_geom.area)
+        self.assertAlmostEqual(
+            8250285.406718118,
+            self.dummy.geo_multipolygon.area)
         tmp1 = Polygon([(0, 0), (1, 1), (1, 0)])
         tmp2 = Polygon([(3, 0), (4, 1), (4, 0)])
         shape_b = MultiPolygon([tmp1, tmp2])
-        self.dummy.write({'the_geom': shape_b})
+        self.dummy.write({'geo_multipolygon': shape_b})
         self.dummy.refresh()
-        self.assertIsInstance(self.dummy.the_geom, MultiPolygon)
+        self.assertIsInstance(self.dummy.geo_multipolygon, MultiPolygon)
         self.assertEqual(
             'MULTIPOLYGON (((0 0, 1 1, 1 0, 0 0)), ((3 0, 4 1, 4 0, 3 0)))',
-            self.dummy.the_geom.wkt)
+            self.dummy.geo_multipolygon.wkt)
 
         tmp1 = Polygon([(0, 1), (1, 1), (1, 0)])
         tmp2 = Polygon([(3, 1), (4, 1), (4, 0)])
         shape_c = MultiPolygon([tmp1, tmp2])
-        self.dummy.write({'the_geom': geojson.dumps(shape_c)})
+        self.dummy.write({'geo_multipolygon': geojson.dumps(shape_c)})
         self.dummy.refresh()
-        self.assertIsInstance(self.dummy.the_geom, MultiPolygon)
+        self.assertIsInstance(self.dummy.geo_multipolygon, MultiPolygon)
         self.assertEqual(
             'MULTIPOLYGON (((0 1, 1 1, 1 0, 0 1)), ((3 1, 4 1, 4 0, 3 1)))',
-            self.dummy.the_geom.wkt)
+            self.dummy.geo_multipolygon.wkt)
 
     def test_view(self):
         _logger.info("Tests view")
@@ -92,25 +91,29 @@ class TestBaseGeoengine(common.TransactionCase):
             ['geoengine_layers', 'type', 'model', 'name'])
         self._compare_view(
             'form', FORM_VIEW,
-            ['type', 'model', 'name', 'fields.the_geom.geo_type',
-             'fields.the_geom.required', 'fields.the_geom.searchable',
-             'fields.the_geom.sortable', 'fields.the_geom.store',
-             'fields.the_geom.string', 'fields.the_geom.type'])
+            ['type', 'model', 'name',
+             'fields.geo_multipolygon.geo_type',
+             'fields.geo_multipolygon.required',
+             'fields.geo_multipolygon.searchable',
+             'fields.geo_multipolygon.sortable',
+             'fields.geo_multipolygon.store',
+             'fields.geo_multipolygon.string',
+             'fields.geo_multipolygon.type'])
 
     def test_search(self):
         _logger.info("Tests search")
         ids = self.dummy.geo_search(
             domain=[],
             geo_domain=[
-                ('the_geom',
+                ('geo_multipolygon',
                  'geo_greater',
                  Polygon([(3, 0), (4, 1), (4, 0)]))])
-        self.assertListEqual([self.dummy_id], ids)
+        self.assertListEqual([self.dummy.id], ids)
 
         ids = self.dummy.geo_search(
             domain=[],
             geo_domain=[
-                ('the_geom',
+                ('geo_multipolygon',
                  'geo_lesser',
                  Polygon([(3, 0), (4, 1), (4, 0)]))])
         self.assertListEqual([], ids)
@@ -118,14 +121,14 @@ class TestBaseGeoengine(common.TransactionCase):
     def test_search_geo_contains(self):
         _logger.info("Tests search geo_contains")
         self.dummy.write({
-            'the_geom': 'MULTIPOLYGON (((0 0, 2 0, 2 2, 0 2, 0 0)))',
+            'geo_multipolygon': 'MULTIPOLYGON (((0 0, 2 0, 2 2, 0 2, 0 0)))',
         })
         ids = self.dummy.geo_search(
             domain=[],
             geo_domain=[
-                ('the_geom', 'geo_contains', 'POINT(1 1)')
+                ('geo_multipolygon', 'geo_contains', 'POINT(1 1)')
             ])
-        self.assertListEqual([self.dummy_id], ids)
+        self.assertListEqual([self.dummy.id], ids)
 
     def test_get_edit_info_for_geo_column(self):
         # the field doesn't exists
@@ -133,9 +136,9 @@ class TestBaseGeoengine(common.TransactionCase):
             self.dummy.get_edit_info_for_geo_column(
                 'not_exist')
         # no raster layer is defined
-        with self.assertRaises(MissingError):
+        with self.assertRaises(exceptions.MissingError):
             self.dummy.get_edit_info_for_geo_column(
-                'the_geom')
+                'geo_multipolygon')
         # define a raster layer
         raster_obj = self.env['geoengine.raster.layer']
         vals = {
@@ -146,7 +149,7 @@ class TestBaseGeoengine(common.TransactionCase):
         }
         raster_obj.create(vals)
         res = self.dummy.get_edit_info_for_geo_column(
-            'the_geom')
+            'geo_multipolygon')
         expect = EXPECTED_GEO_COLUMN_MULTIPOLYGON
         g = 'geo_type'
         s = 'srid'
@@ -168,7 +171,7 @@ class TestBaseGeoengine(common.TransactionCase):
         }
         raster_obj.create(vals)
         res = self.env['test.dummy.related'].get_edit_info_for_geo_column(
-            'the_geom_related')
+            'dummy_geo_multipolygon')
         self.assertEqual(
             res[g], expect[g], 'Should be the same geo_type')
         self.assertEqual(
@@ -201,6 +204,16 @@ class TestBaseGeoengine(common.TransactionCase):
             [1.0, 1.0],
         ])
 
-        geo_line = geo_fields.GeoLine.from_points(
+        geo_line = fields.GeoLine.from_points(
             self.env.cr, geo_point_1, geo_point_2)
         self.assertEqual(geo_line, expected_line)
+
+    def test_abstractmodel(self):
+        _logger.info("Tests search geo_contains")
+        dummy = self.env['test.dummy.from_abstract'].create({
+            'name': 'test dummy',
+            'geo_line': wktloads(GEOLINE_1)
+        })
+        dummy.write({
+            'geo_multipolygon': 'LINE (0 0, 2 0, 2 2, 0 2, 0 0)',
+        })

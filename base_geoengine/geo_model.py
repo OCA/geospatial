@@ -11,17 +11,13 @@ DEFAULT_EXTENT = ('-123164.85222423, 5574694.9538936, '
                   '1578017.6490538, 6186191.1800898')
 
 
-class GeoModel(models.BaseModel):
-    """Base class for all models defining geo fields.
+class GeoModel(models.AbstractModel):
+    """ Extend Base class for to allow definition of geo fields.
     """
+    _inherit = 'base'
 
     # Array of ash that define layer and data to use
     _georepr = []
-    _name = None
-    _auto = True
-    # not visible in ORM registry, meant to be python-inherited only
-    _register = False
-    _transient = False  # True in a TransientModel
 
     @api.model_cr_context
     def _auto_init(self):
@@ -38,7 +34,11 @@ class GeoModel(models.BaseModel):
         for f_name, field in self._fields.items():
             if field.type.startswith('geo_'):
                 geo_fields[f_name] = field
-        res = super(GeoModel, self)._auto_init()
+        res = super()._auto_init()
+        if self._abstract:
+            return res
+
+        # Create geo columns
         column_data = tools.table_columns(cr, self._table)
 
         for f_name, geo_field in geo_fields.items():
@@ -53,7 +53,7 @@ class GeoModel(models.BaseModel):
     @api.model
     def fields_get(self, allfields=None, attributes=None):
         """Add geo_type definition for geo fields"""
-        res = super(GeoModel, self).fields_get(
+        res = super().fields_get(
             allfields=allfields, attributes=attributes)
         for f_name in res:
             field = self._fields.get(f_name)
@@ -65,7 +65,7 @@ class GeoModel(models.BaseModel):
                     if not field.dim:
                         geo_type['dim'] = 2
                     if not field.srid:
-                        geo_type['srid'] = 900913
+                        geo_type['srid'] = 3857
                 res[f_name]['geo_type'] = geo_type
         return res
 
@@ -99,7 +99,7 @@ class GeoModel(models.BaseModel):
                 view = self._get_geo_view()
             else:
                 view = view_obj.browse(view_id)
-            res = super(GeoModel, self).fields_view_get(
+            res = super().fields_view_get(
                 view_id=view.id, view_type='form', toolbar=toolbar,
                 submenu=submenu)
             res['geoengine_layers'] = {
@@ -131,7 +131,7 @@ class GeoModel(models.BaseModel):
                 res['fields'].update(
                     self.fields_get([geo_f_name]))
         else:
-            return super(GeoModel, self).fields_view_get(
+            return super().fields_view_get(
                 view_id=view_id, view_type=view_type, toolbar=toolbar,
                 submenu=submenu)
         return res
