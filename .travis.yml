@@ -6,6 +6,7 @@ addons:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
+      - postgis postgresql-9.6-postgis-2.3 postgresql-9.6-postgis-2.3-scripts # because travis doesn't know which one to install
 
 language: python
 
