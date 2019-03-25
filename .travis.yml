@@ -7,7 +7,8 @@ addons:
     packages:
       - expect-dev  # provides unbuffer utility
       - python-lxml # because pip installation is slow
-      - postgresql-9.6-postgis-2.3 postgis # because travis doesn't know which one to install
+      - postgis postgresql-9.6-postgis-2.3 # travis doesn't know which one to install
+      - postgresql-9.6-postgis-2.3-scripts # pre-installed on travis but required for runbot
 
 language: python
 
