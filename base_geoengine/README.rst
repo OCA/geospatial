@@ -25,9 +25,6 @@ Geospatial support for Odoo
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-Geospatial support for Odoo
-===========================
-
 Geospatial support based on PostGIS add the ability of server to server
 geojson to do geo CRUD and view definition.
 
