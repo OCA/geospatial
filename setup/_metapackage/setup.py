@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo11-addon-base_geoengine',
+        'odoo11-addon-base_geoengine_demo',
         'odoo11-addon-test_base_geoengine',
     ],
     classifiers=[
