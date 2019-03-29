@@ -1,0 +1,102 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* test_base_geoengine
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 11.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: test_base_geoengine
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_create_uid
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_related_create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_create_date
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_related_create_date
+msgid "Created on"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_display_name
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_related_display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.ui.view,arch_db:test_base_geoengine.test_dummy_form_view
+msgid "Dummy"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_related_dummy_test_id
+msgid "Dummy Test"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.ui.view,arch_db:test_base_geoengine.test_dummy_form_view
+msgid "Geometry"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_id
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_related_id
+msgid "ID"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy___last_update
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_related___last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_related_write_uid
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_related_write_date
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_the_geom
+msgid "NPA Shape"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_geo_point
+msgid "Point"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_name
+msgid "Zip"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model.fields,field_description:test_base_geoengine.field_test_dummy_related_the_geom_related
+msgid "related"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model,name:test_base_geoengine.model_test_dummy
+msgid "test.dummy"
+msgstr ""
+
+#. module: test_base_geoengine
+#: model:ir.model,name:test_base_geoengine.model_test_dummy_related
+msgid "test.dummy.related"
+msgstr ""
+
