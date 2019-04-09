@@ -1,18 +1,16 @@
 # Copyright 2011-2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import api, fields
-from odoo.addons.base_geoengine import geo_model
-from odoo.addons.base_geoengine import fields as geo_fields
+from odoo import api, fields, models
 
 
-class RetailMachine(geo_model.GeoModel):
+class RetailMachine(models.Model):
     """GEO OSV SAMPLE"""
 
     _name = "geoengine.demo.automatic.retailing.machine"
 
-    the_point = geo_fields.GeoPoint('Coordinate')
-    the_line = geo_fields.GeoLine('Power supply line', index=True)
+    the_point = fields.GeoPoint('Coordinate')
+    the_line = fields.GeoLine('Power supply line', index=True)
     total_sales = fields.Float('Total sale', index=True)
     money_level = fields.Char('Money level', size=32, index=True)
     state = fields.Selection([('hs', 'HS'),
