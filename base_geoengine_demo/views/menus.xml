@@ -1,0 +1,7 @@
+<odoo>
+
+    <menuitem name="GeoEngine Demo" id="geoengine_demo_menu" groups="base_geoengine.group_geoengine_user"
+      web_icon="base_geoengine_demo,images/map.png" web_icon_hover="base_geoengine_demo,images/map-hover.png"/>
+    <menuitem name="GeoEngine Samples" id="geoengine_demo_retail_menu" parent="geoengine_demo_menu" groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
+
+</odoo>
