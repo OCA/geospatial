@@ -10,4 +10,3 @@ class GeoRasterLayer(models.Model):
     raster_type = fields.Selection(selection_add=[('swisstopo', 'Swisstopo')])
     layername = fields.Char('Layer Machine Name')
     time = fields.Char('Time Dimension')
-    projection = fields.Char('Projection')
