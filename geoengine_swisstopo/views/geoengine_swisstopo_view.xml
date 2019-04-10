@@ -4,7 +4,7 @@
     <template id="assets_backend" inherit_id="base_geoengine.assets_backend">
         <xpath expr="." position="inside">
             <script type="text/javascript"
-                    src="/swisstopo_geoengine/static/src/js/swisstopo_geoengine.js"/>
+                    src="/geoengine_swisstopo/static/src/js/geoengine_swisstopo.js"/>
         </xpath>
     </template>
 

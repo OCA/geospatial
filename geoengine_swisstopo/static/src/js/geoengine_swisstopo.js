@@ -19,7 +19,7 @@ var ATTRIBUTIONS = '<a target="_blank" href="https://www.swisstopo.admin.ch">swi
 var EXTENT = [420000, 30000, 900000, 350000];
 
 
-odoo.define('swisstopo_geoengine.BackgroundLayers', function (require) {
+odoo.define('geoengine_swisstopo.BackgroundLayers', function (require) {
     "use strict";
 
     var BackgroundLayers = require('base_geoengine.BackgroundLayers');
