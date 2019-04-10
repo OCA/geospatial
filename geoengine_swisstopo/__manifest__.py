@@ -11,7 +11,7 @@
         'base_geoengine',
     ],
     'data': [
-        'views/swisstopo_geoengine_view.xml',
+        'views/geoengine_swisstopo_view.xml',
         'geo_view/geo_raster_layer_view.xml',
     ],
     'installable': True,
