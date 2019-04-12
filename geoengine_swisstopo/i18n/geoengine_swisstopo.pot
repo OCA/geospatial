@@ -1,0 +1,85 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* geoengine_swisstopo
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: geoengine_swisstopo
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Bing"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Distant WMS"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: model_terms:ir.ui.view,arch_db:geoengine_swisstopo.geo_raster_view_form
+msgid "GeoAdmin API documentation"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: model:ir.model.fields,field_description:geoengine_swisstopo.field_geoengine_raster_layer__layername
+msgid "Layer Machine Name"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Odoo field"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "OpenStreetMap"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: model:ir.model,name:geoengine_swisstopo.model_geoengine_raster_layer
+msgid "Raster Layer"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: model:ir.model.fields,field_description:geoengine_swisstopo.field_geoengine_raster_layer__raster_type
+msgid "Raster layer type"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: model_terms:ir.ui.view,arch_db:geoengine_swisstopo.geo_raster_view_form
+msgid "See"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Swisstopo"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: model_terms:ir.ui.view,arch_db:geoengine_swisstopo.geo_raster_view_form
+msgid "Swisstopo WMTS options"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: model:ir.model.fields,field_description:geoengine_swisstopo.field_geoengine_raster_layer__time
+msgid "Time Dimension"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "WMTS"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: model_terms:ir.ui.view,arch_db:geoengine_swisstopo.geo_raster_view_form
+msgid "for registration info and available layers. As for now only projection EPSG:21781 is supported."
+msgstr ""
+
