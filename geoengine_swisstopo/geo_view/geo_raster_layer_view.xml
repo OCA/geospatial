@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="geo_raster_view_form">
+        <field name="name">geoengine.raster.layer.form</field>
+        <field name="model">geoengine.raster.layer</field>
+        <field name="inherit_id" ref="base_geoengine.geo_raster_view_form"/>
+        <field name="arch" type="xml">
+            <field name="url" position="attributes">
+                <attribute name="invisible">[('raster_type', '=', 'swisstopo')]</attribute>
+            </field>
+
+            <xpath expr="//form" position="inside">
+                <group string="Swisstopo WMTS options"
+                       attrs="{'invisible': [('raster_type', '!=', 'swisstopo')]}"
+                       colspan="4">
+                  <p colspan="2">See <a href="https://api3.geo.admin.ch/services/sdiservices.html#wmts" target="_blank">GeoAdmin API documentation</a> for registration info and available layers. As for now only projection EPSG:21781 is supported.</p>
+                  <field name="layername"/>
+                  <field name="time"/>
+                  <field name="format_suffix"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
