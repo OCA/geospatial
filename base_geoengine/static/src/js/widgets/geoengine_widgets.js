@@ -15,6 +15,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
     var GeoengineView = require('base_geoengine.GeoengineView');
     var AbstractField = require('web.AbstractField');
     var geoengine_common = require('base_geoengine.geoengine_common');
+    var BackgroundLayers = require('base_geoengine.BackgroundLayers');
     var registry = require('web.field_registry');
 
     var FieldGeoEngineEditMap =
@@ -32,6 +33,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
         drawControl: null,
         modifyControl: null,
         tabListenerInstalled: false,
+        bgLayers: new BackgroundLayers(),
 
         // --------------------------------------------------------------------
         // Public
@@ -89,10 +91,12 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
 
         _createLayers: function (field_infos) {
             this.vectorLayer = this._createVectorLayer();
-            this.rasterLayers = this.createBackgroundLayers([
+            this.rasterLayers = this.bgLayers.create([
                 field_infos.edit_raster,
             ]);
-            this.rasterLayers[0].isBaseLayer = true;
+            if (this.rasterLayers.length) {
+                this.rasterLayers[0].isBaseLayer = true;
+            }
         },
 
         _addTabListener: function () {
