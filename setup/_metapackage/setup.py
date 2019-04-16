@@ -10,6 +10,7 @@ setuptools.setup(
     install_requires=[
         'odoo11-addon-base_geoengine',
         'odoo11-addon-base_geoengine_demo',
+        'odoo11-addon-geoengine_swisstopo',
         'odoo11-addon-test_base_geoengine',
     ],
     classifiers=[
