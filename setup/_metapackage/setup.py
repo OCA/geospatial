@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo12-addon-base_geoengine',
+        'odoo12-addon-base_geoengine_demo',
         'odoo12-addon-geoengine_swisstopo',
         'odoo12-addon-test_base_geoengine',
     ],
