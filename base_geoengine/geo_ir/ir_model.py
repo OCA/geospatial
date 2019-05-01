@@ -23,15 +23,6 @@ POSTGIS_GEO_TYPES = [('POINT', 'POINT'),
 class IrModelField(models.Model):
     _inherit = 'ir.model.fields'
 
-    @api.model
-    def _get_fields_type(self):
-        cr = self._cr
-        cr.execute('SELECT DISTINCT ttype,ttype from ir_model_fields')
-        res = cr.fetchall()
-        to_return = list(set(res+GEO_TYPES))
-        to_return.sort()
-        return to_return
-
     srid = fields.Integer(
         'srid',
         required=False
@@ -48,7 +39,5 @@ class IrModelField(models.Model):
         'Create gist index'
     )
     ttype = fields.Selection(
-        '_get_fields_type',
-        'Field Type',
-        required=True
+        selection_add=GEO_TYPES,
     )
