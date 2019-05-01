@@ -52,6 +52,11 @@ msgid "Begin color class"
 msgstr ""
 
 #. module: base_geoengine
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Bing"
+msgstr ""
+
+#. module: base_geoengine
 #. openerp-web
 #: code:addons/base_geoengine/static/src/xml/geoengine.xml:66
 #, python-format
