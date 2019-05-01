@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="geo_raster_view_form" model="ir.ui.view">
+        <field name="name">geoengine.raster.layer.form</field>
+        <field name="model">geoengine.raster.layer</field>
+        <field name="inherit_id" ref="base_geoengine.geo_raster_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_wmts']" position="after">
+                <field name="is_bing" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='url']" position="after">
+                <field name="bing_key" colspan="4" attrs="{'required': [('is_bing', '=', True)], 'invisible': [('is_bing', '=', False)]}"/>
+                <field name="bing_imagery_set" colspan="4" attrs="{'required': [('is_bing', '=', True)], 'invisible': [('is_bing', '=', False)]}"/>
+            </xpath>
+            <xpath expr="//field[@name='url']" position="attributes">
+                <attribute name="attrs">{'required': [('is_wmts', '=', True)], 'invisible': [('is_bing', '=', True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
