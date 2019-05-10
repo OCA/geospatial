@@ -15,6 +15,11 @@ msgstr ""
 
 #. module: geoengine_swisstopo
 #: selection:geoengine.raster.layer,raster_type:0
+msgid "Bing"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: selection:geoengine.raster.layer,raster_type:0
 msgid "Distant WMS"
 msgstr ""
 
