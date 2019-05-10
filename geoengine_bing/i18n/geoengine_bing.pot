@@ -1,0 +1,100 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* geoengine_bing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Aerial"
+msgstr ""
+
+#. module: geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Aerial with labels"
+msgstr ""
+
+#. module: geoengine_bing
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Bing"
+msgstr ""
+
+#. module: geoengine_bing
+#: model:ir.model.fields,field_description:geoengine_bing.field_geoengine_raster_layer__bing_key
+msgid "Bing Key"
+msgstr ""
+
+#. module: geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Collins Bart"
+msgstr ""
+
+#. module: geoengine_bing
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Distant WMS"
+msgstr ""
+
+#. module: geoengine_bing
+#: model:ir.model.fields,field_description:geoengine_bing.field_geoengine_raster_layer__bing_imagery_set
+msgid "Imagery Set"
+msgstr ""
+
+#. module: geoengine_bing
+#: model:ir.model.fields,field_description:geoengine_bing.field_geoengine_raster_layer__is_bing
+msgid "Is Bing"
+msgstr ""
+
+#. module: geoengine_bing
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Odoo field"
+msgstr ""
+
+#. module: geoengine_bing
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "OpenStreetMap"
+msgstr ""
+
+#. module: geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Ordnance Survey"
+msgstr ""
+
+#. module: geoengine_bing
+#: model:ir.model,name:geoengine_bing.model_geoengine_raster_layer
+msgid "Raster Layer"
+msgstr ""
+
+#. module: geoengine_bing
+#: model:ir.model.fields,field_description:geoengine_bing.field_geoengine_raster_layer__raster_type
+msgid "Raster layer type"
+msgstr ""
+
+#. module: geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Road"
+msgstr ""
+
+#. module: geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Road on demand"
+msgstr ""
+
+#. module: geoengine_bing
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "Swisstopo"
+msgstr ""
+
+#. module: geoengine_bing
+#: selection:geoengine.raster.layer,raster_type:0
+msgid "WMTS"
+msgstr ""
+
