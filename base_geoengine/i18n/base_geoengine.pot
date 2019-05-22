@@ -633,6 +633,31 @@ msgid "attribute field"
 msgstr ""
 
 #. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "binary"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "boolean"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "char"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "date"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "datetime"
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__dimensions
 msgid "dimensions"
 msgstr ""
@@ -658,8 +683,43 @@ msgid "eg. png"
 msgstr ""
 
 #. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "float"
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__format_suffix
 msgid "formatSuffix"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "geo_line"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "geo_multi_line"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "geo_multi_point"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "geo_multi_polygon"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "geo_point"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "geo_polygon"
 msgstr ""
 
 #. module: base_geoengine
@@ -669,9 +729,29 @@ msgid "hex value"
 msgstr ""
 
 #. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "html"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "integer"
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__sequence
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__sequence
 msgid "layer priority lower on top"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "many2many"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "many2one"
 msgstr ""
 
 #. module: base_geoengine
@@ -690,6 +770,16 @@ msgid "module/static/img/icon.png"
 msgstr ""
 
 #. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "monetary"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "one2many"
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params
 msgid "params"
 msgstr ""
@@ -697,6 +787,11 @@ msgstr ""
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__projection
 msgid "projection"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "reference"
 msgstr ""
 
 #. module: base_geoengine
@@ -710,7 +805,17 @@ msgid "resolutions"
 msgstr ""
 
 #. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "selection"
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__srid
 msgid "srid"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:ir.model.fields,ttype:0
+msgid "text"
 msgstr ""
 
