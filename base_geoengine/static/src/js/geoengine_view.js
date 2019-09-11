@@ -3,6 +3,8 @@
  * Author B.Binet Copyright Camptocamp SA
  * Contributor N. Bessi Copyright Camptocamp SA
  * Contributor Laurent Mignon 2015 Acsone SA/NV
+ * Contributor Yannick Vaucher 2015-2016 Camptocamp SA
+ * Contributor Kevin Graveman Onestein BV
  * License in __openerp__.py at root level of the module
  *---------------------------------------------------------
 */
@@ -808,7 +810,9 @@ openerp.base_geoengine = function(openerp) {
         },
 
         on_mode_change: function() {
-            this.render_map();
+            if (this.$el.is(':visible')){
+                this.render_map();
+            }
             this.$el.toggle(!this.invisible);
         },
 
@@ -848,7 +852,7 @@ openerp.base_geoengine = function(openerp) {
                     internalProjection: this.map.getProjection(),
                     externalProjection: 'EPSG:' + this.srid
                 });
-                this.map.render(this.name);
+                this.map.render(this.$el[0]);
                 $(document).trigger('FieldGeoEngineEditMap:ready', [this.map]);
                 this.set_value(this.value);
             }
