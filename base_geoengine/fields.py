@@ -39,7 +39,6 @@ class GeoField(fields.Field):
         'dim': 2,
         'srid': 3857,
         'gist_index': True,
-        'manual': True,
     }
 
     def convert_to_column(self, value, record, values=None):
