@@ -61,7 +61,6 @@
         <field name="name">Raster Layer</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">geoengine.raster.layer</field>
-        <field name="view_type">form</field>
         <field name="view_id" ref="geo_raster_view_tree"/>
     </record>
 
