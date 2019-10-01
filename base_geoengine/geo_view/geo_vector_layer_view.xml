@@ -67,7 +67,6 @@
         <field name="name">Vector Layer</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">geoengine.vector.layer</field>
-        <field name="view_type">form</field>
         <field name="view_id" ref="geo_vector_view_tree"/>
     </record>
 
