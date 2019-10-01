@@ -71,13 +71,11 @@ class GeoRasterLayer(models.Model):
         required=True)
     use_to_edit = fields.Boolean('Use to edit')
 
-    @api.multi
     @api.depends('raster_type', 'is_wmts')
     def _compute_has_type(self):
         for rec in self:
             rec.has_type = rec.raster_type == 'is_wmts'
 
-    @api.multi
     @api.depends('raster_type')
     def _compute_is_wmts(self):
         for rec in self:
