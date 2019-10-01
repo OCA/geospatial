@@ -19,7 +19,6 @@ class GeoModel(models.AbstractModel):
     # Array of ash that define layer and data to use
     _georepr = []
 
-    @api.model_cr_context
     def _auto_init(self):
         """Initialize the columns in dB and Create the GIST index
         only create and update supported
@@ -59,7 +58,7 @@ class GeoModel(models.AbstractModel):
             field = self._fields.get(f_name)
             if field and field.type.startswith('geo_'):
                 geo_type = {'type': field.type,
-                            'dim': field.dim,
+                            'dim': int(field.dim),
                             'srid': field.srid}
                 if field.compute or field.related:
                     if not field.dim:
