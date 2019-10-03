@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: base_geoengine
-#: code:addons/base_geoengine/geo_model.py:146
+#: code:addons/base_geoengine/geo_model.py:113
 #, python-format
 msgid "%s column does not exists or is not a geo field"
 msgstr ""
@@ -171,7 +171,7 @@ msgid "End color class"
 msgstr ""
 
 #. module: base_geoengine
-#: code:addons/base_geoengine/geo_db.py:36
+#: code:addons/base_geoengine/geo_db.py:38
 #, python-format
 msgid "Error, can not automatically initialize spatial postgis support. Database user may have to be superuser and postgres/postgis extensions with their devel header have to be installed. If you do not want Odoo to connect with a super user you can manually prepare your database. To do this, open a client to your database using a super user and run:\n"
 "CREATE EXTENSION postgis;\n"
@@ -210,7 +210,7 @@ msgid "General"
 msgstr ""
 
 #. module: base_geoengine
-#: code:addons/base_geoengine/fields.py:123
+#: code:addons/base_geoengine/fields.py:104
 #, python-format
 msgid "Geo Value %s must be of the same type %s as fields"
 msgstr ""
@@ -371,13 +371,13 @@ msgid "Name of the char field or selection field used for comparison"
 msgstr ""
 
 #. module: base_geoengine
-#: code:addons/base_geoengine/geo_model.py:79
+#: code:addons/base_geoengine/geo_model.py:48
 #, python-format
 msgid "No GeoEngine view defined for the model %s"
 msgstr ""
 
 #. module: base_geoengine
-#: code:addons/base_geoengine/geo_model.py:153
+#: code:addons/base_geoengine/geo_model.py:120
 #, python-format
 msgid "No raster layer for view %s"
 msgstr ""
@@ -418,7 +418,7 @@ msgid "POLYGON"
 msgstr ""
 
 #. module: base_geoengine
-#: code:addons/base_geoengine/geo_model.py:80
+#: code:addons/base_geoengine/geo_model.py:49
 #, python-format
 msgid "Please create a view or modify view mode"
 msgstr ""
