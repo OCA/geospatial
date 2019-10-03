@@ -5,8 +5,10 @@ import logging
 from operator import attrgetter
 
 from odoo import fields, _
+from odoo.tools import sql
 
 from .geo_helper import geo_convertion_helper as convert
+from .geo_db import create_geo_column
 
 logger = logging.getLogger(__name__)
 try:
@@ -39,7 +41,6 @@ class GeoField(fields.Field):
         'dim': 2,
         'srid': 3857,
         'gist_index': True,
-        'manual': True,
     }
 
     def convert_to_column(self, value, record, values=None):
@@ -95,26 +96,6 @@ class GeoField(fields.Field):
         """Load geometry into browse record after read was done"""
         return wkbloads(wkb, hex=True) if wkb else False
 
-    def create_geo_column(self, cr, col_name, table, model):
-        """Create a columns of type the geom"""
-        try:
-            cr.execute("SELECT AddGeometryColumn( %s, %s, %s, %s, %s)",
-                       (table,
-                        col_name,
-                        self.srid,
-                        self.geo_type,
-                        self.dim))
-            self._create_index(cr, table, col_name)
-        except Exception:
-            cr.rollback()
-            logger.exception('Cannot create column %s table %s:',
-                             col_name, table)
-            raise
-        finally:
-            cr.commit()
-
-        return True
-
     def entry_to_shape(self, value, same_type=False):
         """Transform input into an object"""
         shape = convert.value_to_shape(value)
@@ -125,62 +106,91 @@ class GeoField(fields.Field):
                                        self.geo_type.lower()))
         return shape
 
-    def _postgis_index_name(self, table, col_name):
-        return "%s_%s_gist_index" % (table, col_name)
-
-    def _create_index(self, cr, table, col_name):
-        if self.gist_index:
-            try:
-                cr.execute("CREATE INDEX %s ON %s USING GIST ( %s )" %
-                           (self._postgis_index_name(table, col_name),
-                            table,
-                            col_name))
-            except Exception:
-                cr.rollback()
-                logger.exception(
-                    'Cannot create gist index for col %s table %s:',
-                    col_name, table)
-                raise
-            finally:
-                cr.commit()
-
-    def update_geo_column(self, cr, col_name, table, model):
+    def update_geo_db_column(self, model):
         """Update the column type in the database.
         """
+        cr = model._cr
         query = ("""SELECT srid, type, coord_dimension
                  FROM geometry_columns
                  WHERE f_table_name = %s
                  AND f_geometry_column = %s""")
-        cr.execute(query, (table, col_name))
+        cr.execute(query, (model._table, self.name))
         check_data = cr.fetchone()
         if not check_data:
             raise TypeError(
-                "geometry_columns table seems to be corrupted. "
-                "SRID check is not possible")
+                "geometry_columns table seems to be corrupted."
+                " SRID check is not possible")
         if check_data[0] != self.srid:
             raise TypeError(
-                "Reprojection of column is not implemented"
-                "We can not change srid %s to %s" % (
+                "Reprojection of column is not implemented."
+                " We can not change srid %s to %s" % (
                     self.srid, check_data[0]))
-        if check_data[1] != self.geo_type:
+        elif check_data[1] != self.geo_type:
             raise TypeError(
-                "Geo type modification is not implemented"
-                "We can not change type %s to %s" % (
+                "Geo type modification is not implemented."
+                " We can not change type %s to %s" % (
                     check_data[1], self.geo_type))
-        if check_data[2] != self.dim:
+        elif check_data[2] != self.dim:
             raise TypeError(
-                "Geo dimention modification is not implemented"
-                "We can not change dimention %s to %s" % (
+                "Geo dimention modification is not implemented."
+                " We can not change dimention %s to %s" % (
                     check_data[2], self.dim))
         if self.gist_index:
             cr.execute(
                 "SELECT indexname FROM pg_indexes WHERE indexname = %s",
-                (self._postgis_index_name(table, col_name),))
+                (self._postgis_index_name(model._table, self.name),))
             index = cr.fetchone()
             if index:
                 return True
-            self._create_index(cr, table, col_name)
+            self._create_index(cr, model._table, self.name)
         return True
+
+    def update_db_column(self, model, column):
+        """ Create/update the column corresponding to ``self``.
+
+            For creation of geo column
+
+            :param model: an instance of the field's model
+            :param column: the column's configuration (dict)
+                           if it exists, or ``None``
+        """
+        # the column does not exist, create it
+
+        if not column:
+            create_geo_column(
+                model._cr,
+                model._table,
+                self.name,
+                self.geo_type,
+                self.srid,
+                self.dim,
+                self.string)
+            return
+
+        if column['udt_name'] == self.column_type[0]:
+            return
+
+        self.update_geo_db_column(model)
+
+        if column['udt_name'] in self.column_cast_from:
+            sql.convert_column(
+                model._cr, model._table, self.name, self.column_type[1])
+        else:
+            newname = (self.name + '_moved{}').format
+            i = 0
+            while sql.column_exists(
+                model._cr, model._table, newname(i)
+            ):
+                i += 1
+            if column['is_nullable'] == 'NO':
+                sql.drop_not_null(model._cr, model._table, self.name)
+            sql.rename_column(model._cr, model._table, self.name, newname(i))
+            sql.create_column(
+                model._cr,
+                model._table,
+                self.name,
+                self.column_type[1],
+                self.string)
 
 
 class GeoLine(GeoField):
