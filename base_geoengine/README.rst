@@ -112,6 +112,7 @@ Contributors
 * Yannick Vaucher <yannick.vaucher@camptocamp.com>
 * Benjamin Willig <benjamin.willig@acsone.eu>
 * Sandip Mangukiya <smangukiya@opensourceintegrators.com>
+* Luis Felipe Mileo <mileo@kmee.com.br>
 
 Maintainers
 ~~~~~~~~~~~
