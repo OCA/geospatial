@@ -33,3 +33,6 @@ class RetailMachine(models.Model):
             )
             if zip_match:
                 self.zip_id = zip_match[0]
+
+    def geo_again(self, latitude=None, longitude=None, test=False, *kwargs):
+        pass
