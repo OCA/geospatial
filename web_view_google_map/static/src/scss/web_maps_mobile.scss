@@ -1,0 +1,41 @@
+@include media-breakpoint-down(sm) {
+    .o_map_container {
+        .o_kanban_view.o_kanban_grouped {
+            min-height: 100%;
+            padding: 0;
+            background-color: desaturate($gray-100, 100%);
+
+            .o_kanban_record {
+                width: 100%;
+                margin-left: 0;
+                margin-right: 0;
+                display: block;
+                padding: $o-kanban-inside-vgutter $o-kanban-inside-hgutter;
+                border: 1px solid gray('300');
+                background-color: white;
+            }
+
+            &.o_kanban_small_column .o_kanban_group:not(.o_column_folded) {
+                position: initial !important;
+                width: $o-kanban-small-record-width + 2*$o-kanban-group-padding;
+                overflow-x: scroll;
+            }
+
+            &[class] .o_kanban_group:not(.o_column_folded) {
+                position: initial !important;
+                width: $o-kanban-small-record-width + 2*$o-kanban-group-padding;
+                overflow-x: scroll;
+
+                .o_kanban_record {
+                    width: 100%;
+                    margin-left: 0;
+                    margin-right: 0;
+                    display: block;
+                    padding: $o-kanban-inside-vgutter $o-kanban-inside-hgutter;
+                    border: 1px solid gray('300');
+                    background-color: white;
+                }
+            }
+        }
+    }   
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <div t-name="MapView.MapView" class="o_map_container">
+        <div class="o_map_view"></div>
+        <div class="o_map_right_sidebar closed"></div>
+    </div>
+    <t t-name="MapView.MapViewGroupInfo">
+        <ul t-if="widget.groups">
+            <t t-foreach="widget.groups" t-as="group">
+                <li>
+                    <img t-att-src="group.marker"/>
+                    <span class="title">
+                        <t t-esc="group.title"/>
+                    </span>
+                    <span class="total">
+                        <t t-esc="group.count"/>
+                    </span>
+                </li>
+            </t>
+        </ul>
+    </t>
+    <t t-name="MapView.buttons">
+        <div class="o_list_buttons">
+            <t t-if="widget.is_action_enabled !== undefined ? widget.is_action_enabled('create') : false">
+                <button type="button" class="btn btn-primary o-map-button-new" accesskey="c">
+                    <t t-esc="create_text || _t('Create')"/>
+                </button>
+            </t>
+            <button type="button" class="btn btn-secondary o-map-button-center-map">
+                <t t-esc="_t('Center Map')"/>
+            </button>
+        </div>
+    </t>
+</templates>
