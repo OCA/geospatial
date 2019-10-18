@@ -77,7 +77,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
                 }
                 if (Object.prototype.hasOwnProperty.call(fields, key)) {
                     var field = fields[key];
-                    var span = _createFieldSpan(field, key);
+                    var span = _createFieldSpan(field, val);
                     // ID field to put on first position
                     if (key === 'id') {
                         oid = span;
