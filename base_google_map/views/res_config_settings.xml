@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.google_maps</field>
+            <field name="priority" eval="200"/>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='integration']" position="after">
+                    <div name="google_maps">
+                        <h2>Google Maps View</h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_right_pane">
+                                    <!-- <label string="Configure your Google Maps View"/> -->
+                                    <div class="text-muted">
+                                        <p>Set API keys and map localization</p>
+                                        <span>Visit the <a href="https://developers.google.com/maps/documentation/javascript/localization" target="_blank">page</a> about Localizing the Map</span>
+                                    </div>
+                                    <div class="content-group">
+                                        <div class="mt16">
+                                            <label for="google_maps_view_api_key" string="Api key"/>
+                                            <field name="google_maps_view_api_key"/>
+                                        </div>
+                                        <div class="mt16">
+                                            <label for="google_maps_theme" string="Theme"/>
+                                            <field name="google_maps_theme"/>
+                                        </div>
+                                        <div class="mt16">
+                                            <label for="google_maps_lang_localization" string="Language"/>
+                                            <field name="google_maps_lang_localization"/>
+                                        </div>
+                                        <div class="mt16" attrs="{'invisible': [('google_maps_lang_localization', 'in', [False, ''])]}">
+                                            <div class="text-muted">
+                                                If you set the language of the map, it's important to consider setting the region too. This helps ensure that your application complies with local laws.
+                                            </div>
+                                            <label for="google_maps_region_localization" string="Region"/>
+                                            <field name="google_maps_region_localization"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="module_web_view_google_map"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="module_web_view_google_map" string="Allow Google Map View"/>
+                                    <div class="text-muted">
+                                        Allow Google Map View
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="module_web_widget_google_marker_icon_picker"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="module_web_widget_google_marker_icon_picker" string="Allow Google Marker Icon Picker"/>
+                                    <div class="text-muted">
+                                        Allow Google Marker Icon Picker
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="module_web_widget_google_address_autocomplete"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="module_web_widget_google_address_autocomplete" string="Allow Google Address Autocomplete on Website"/>
+                                    <div class="text-muted">
+                                        Allow Google Address Autocomplete on Website Form (requires Website)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2> Google Maps Libraries </h2>
+                        <div class="row mt16 o_settings_container">
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="google_maps_geometry"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="google_maps_geometry"/>
+                                    <div class="text-muted">
+                                        Geometry includes utility functions for calculating scalar geometric values (such as distance and area) on the surface of the earth. 
+                                        Consult the <a href="https://developers.google.com/maps/documentation/javascript/geometry">Geometry library documentation</a> for more information.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-md-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="google_maps_places"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="google_maps_places"/>
+                                    <div class="text-muted">
+                                        Places enables your application to search for places such as establishments, geographic locations, or prominent points of interest, within a defined area. 
+                                        Consult the <a href="https://developers.google.com/maps/documentation/javascript/places">Places library documentation</a> for more information.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
