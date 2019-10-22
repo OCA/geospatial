@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="frontend_layout" inherit_id="portal.frontend_layout" name="website_google_address_form layout">
+        <xpath expr="//t[@t-call-assets='web.assets_common']" position="before">
+            <t t-set="google_maps_api_key" t-value="request.env['ir.config_parameter'].sudo().get_param('google.api_key_geocode')"/>
+            <t t-set="google_maps_libraries" t-value="request.env['ir.config_parameter'].sudo().get_param('google.maps_libraries')"/>
+            <t t-if="google_maps_api_key">
+                <script type="text/javascript" t-attf-src="https://maps.googleapis.com/maps/api/js?v=quarterly&amp;key=#{google_maps_api_key}&amp;libraries=#{google_maps_libraries}"/>
+            </t>
+            <t t-if="not google_maps_api_key">
+                <script type="text/javascript" t-attf-src="https://maps.googleapis.com/maps/api/js?v=quarterly&amp;libraries=#{google_maps_libraries}"/>
+            </t>
+        </xpath>
+    </template>
+    <template id="assets_frontend" inherit_id="website.assets_frontend" name="website_google_address_form assets">
+        <xpath expr="//script[last()]" position="after">
+            <script type="text/javascript" src="/website_google_address_form/static/src/js/website_google_address_form.js"/>
+        </xpath>
+    </template>
+</odoo>
