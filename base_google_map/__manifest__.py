@@ -2,7 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 {
-    'name': 'Base Google Map',
+    'name': 'Google Maps Integration',
+    'summary': 'View modes and widgets to integrate Google Maps in your UI',
     'version': '12.0.1.0.0',
     'author': 'Open Source Integrators, Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/geospatial',
@@ -18,6 +19,7 @@
     ],
     'images': ['static/description/thumbnails.png'],
     'installable': True,
+    'application': True,
     'maintainers': [
         'gityopie',
         'wolfhall'
