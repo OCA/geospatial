@@ -1,0 +1,105 @@
+/* https://github.com/twbs/bootstrap/issues/4160 */
+/* put google places autocomplete dropdown results above the bootstrap modal 1050 zindex. */
+.pac-container {
+    z-index: 1051 !important;
+}
+
+.o_field_x2many_map {
+    margin-top: 10px;
+}
+
+.o_map_container {
+    display: flex;
+    align-content: stretch;
+    overflow-x: visible;
+    min-height: 550px;
+    height: 100%;
+
+    .o_map_view {
+        width: 100%;
+
+        .gm-style-iw {
+            min-width: 300px;
+        }
+    }
+
+    .o_map_left_sidenav {
+        left: 0;
+        top: 0;
+        bottom: 0;
+        max-width: 400px;
+        width: 400px;
+        position: absolute;
+        z-index: 1;
+        background-color: #f5f5f5;
+        overflow-x: hidden;
+        transition: 0.5s;
+        transform: translate3d(0, 0, 0);
+        -webkit-transform: translate3d(0, 0, 0);
+
+        &.closed {
+            transform: translate3d(-100%, 0, 0);
+            -webkit-transform: translate3d(-100%, 0, 0);
+
+            .sidenav-body .panel {
+                border: none;
+            }
+        }
+    }
+
+    .o_map_right_sidebar {
+        right: 0;
+        bottom: 0;
+        background-color: #f5f5f5;
+
+        &.closed {
+            width: 0;
+            transition: 0.5s;
+            transform: translateX(-100%);
+            -webkit-transform: translateX(-100%);
+        }
+
+        &.open {
+            width: 250px;
+            transition: 0.5s;
+            transform: translateX(0);
+            -webkit-transform: translateX(0);
+            overflow-x: auto;
+        }
+
+        ul {
+            margin-top: 10px;
+            padding-left: 3px;
+            list-style: none;
+            font-size: 12px;
+
+            li {
+                padding-bottom: 8px;
+
+                span {
+                    padding: 3px 6px;
+
+                    &.total {
+                        font-size: 10px;
+                        background: #ddd;
+                        border-radius: 3px;
+                    }
+                }
+            }
+        }
+
+    }
+
+    .o_map_button {
+        cursor: pointer;
+        text-align: center;
+        width: auto;
+        padding: 0px 6px;
+        margin: 0px 15px 5px 0px;
+        background-color: #ffffff;
+        border-radius: 2px;
+        line-height: 25px;
+        font-family: 'Roboto,Arial,sans-serif';
+    }
+
+}
