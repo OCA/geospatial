@@ -14,6 +14,7 @@ setuptools.setup(
         'odoo12-addon-geoengine_bing',
         'odoo12-addon-geoengine_swisstopo',
         'odoo12-addon-test_base_geoengine',
+        'odoo12-addon-web_view_google_map',
     ],
     classifiers=[
         'Programming Language :: Python',
