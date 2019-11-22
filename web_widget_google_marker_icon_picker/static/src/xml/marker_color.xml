@@ -11,8 +11,8 @@
                 <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="aqua" title="Aqua" aria-label="Aqua">
                     <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/aqua.png" alt="Aqua"/>
                 </a>
-                <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="blue-violet" title="BlueViolet" aria-label="BlueViolet">
-                    <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/blue-violet.png" alt="BlueViolet"/>
+                <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="blueviolet" title="BlueViolet" aria-label="BlueViolet">
+                    <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/blueviolet.png" alt="BlueViolet"/>
                 </a>
                 <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="blue" title="Blue" aria-label="Blue">
                     <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/blue.png" alt="blue"/>
@@ -20,13 +20,13 @@
                 <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="brown" title="Brown" aria-label="Brown">
                     <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/brown.png" alt="Brown"/>
                 </a>
-                <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="deep-sky-blue" title="DeepSkyBlue" aria-label="DeepSkyBlue">
-                    <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/deep-sky-blue.png" alt="DeepSkyBlue"/>
+                <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="deepskyblue" title="DeepSkyBlue" aria-label="DeepSkyBlue">
+                    <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/deepskyblue.png" alt="DeepSkyBlue"/>
                 </a>
             </div>
             <div class="row">
-                <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="fuschia" title="Fuschia" aria-label="Fuschia">
-                    <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/fuschia.png" alt="Fuschia"/>
+                <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="fuchsia" title="Fuchsia" aria-label="Fuchsia">
+                    <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/fuchsia.png" alt="Fuchsia"/>
                 </a>
                 <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="gold" title="Gold" aria-label="Gold">
                     <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/gold.png" alt="Gold"/>
@@ -42,8 +42,8 @@
                 </a>
             </div>
             <div class="row">
-                <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="lime-green" title="LimeGreen" aria-label="LimeGreen">
-                    <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/lime-green.png" alt="LimeGreen"/>
+                <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="limegreen" title="LimeGreen" aria-label="LimeGreen">
+                    <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/limegreen.png" alt="LimeGreen"/>
                 </a>
                 <a class="list-group-item d-flex justify-content-between align-items-center" role="menuitem" href="#" data-color="lime" title="Lime" aria-label="Lime">
                     <img src="/web_widget_google_marker_icon_picker/static/src/img/markers/lime.png" alt="Lime"/>
