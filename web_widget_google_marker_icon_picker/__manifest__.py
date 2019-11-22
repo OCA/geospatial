@@ -3,7 +3,7 @@
 {
     'name': 'Google Marker Icon Picker',
     'summary': "Google map widget allowing to set marker's color",
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.1.0',
     'author': 'Open Source Integrators, Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/geospatial',
     'license': 'AGPL-3',
