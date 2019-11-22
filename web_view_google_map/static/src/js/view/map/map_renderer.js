@@ -1040,8 +1040,20 @@ odoo.define('web_view_google_map.MapRenderer', function (require) {
                 animation: google.maps.Animation.DROP,
                 _odooRecord: record
             };
+            var fieldMarkerColor = record.data[this.markerColor];
             if (color) {
                 options.icon = this.iconUrl + color.trim() + '.png';
+            }
+            if(fieldMarkerColor){
+                options.icon = {
+                    path : 'M583 1885 c-82 -22 -147 -60 -216 -125 -103 -96 -157 -220 -157 -360 0 -135 33 -211 216 -496 57 -89 128 -211 158 -271 53 -105 135 -326 137 -368 0 -11 11 18 24 65 51 186 140 366 305 615 147 223 197 353 187 486 -17 221 -166 397 -384 454 -71 19 -201 18 -270 0z m210 -309 c71 -29 126 -127 113 -199 -13 -71 -82 -140 -153 -153 -78 -15 -178 46 -204 124 -48 144 104 287 244 228z',
+                    fillColor: fieldMarkerColor.trim(),
+                    fillOpacity: 0.8,
+                    scale: 0.026,
+                    rotation: 180,
+                    strokeColor: 'black',
+                    strokeWeight: 1
+                }; 
             }
             var marker = new google.maps.Marker(options);
             this.markers.push(marker);
