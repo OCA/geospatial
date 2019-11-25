@@ -57,7 +57,7 @@ msgstr ""
 #: code:addons/web_widget_google_marker_icon_picker/static/src/xml/marker_color.xml:28
 #: code:addons/web_widget_google_marker_icon_picker/static/src/xml/marker_color.xml:29
 #, python-format
-msgid "Fuschia"
+msgid "Fuchsia"
 msgstr ""
 
 #. module: web_widget_google_marker_icon_picker
