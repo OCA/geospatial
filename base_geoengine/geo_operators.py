@@ -83,7 +83,7 @@ def geo_search(model, domain=None, geo_domain=None, offset=0,
                     rel_model = key[0:i]
                     rel_col = key[i + 1:]
                     rel_model = model.env[rel_model]
-                    from_clause += ', %s' % (rel_model._table,)
+                    from_clause += ', %s AS _%s_' % (rel_model._table, rel_model._table,)
                     att_where_sql = ''
                     # we compute the attributes search on spatial rel
                     if ref_search[key]:
@@ -169,7 +169,7 @@ class GeoOperator(object):
             base = self.geo_field.entry_to_shape(value, same_type=False)
             srid = self.geo_field.srid
             compare_to = "ST_GeomFromText('%s',%s)" % (base.wkt, srid)
-        return " %s(%s.%s, %s)" % (op, table, col, compare_to)
+        return " %s(_%s_.%s, %s)" % (op, table, col, compare_to)
 
     def get_geo_greater_sql(self, table, col, value, rel_col=None,
                             rel_model=None):
@@ -196,7 +196,7 @@ class GeoOperator(object):
         else:
             base = self.geo_field.entry_to_shape(value, same_type=False)
             compare_to = "ST_GeomFromText('%s')" % (base.wkt,)
-        return " %s.%s = %s" % (table, col, compare_to)
+        return " _%s_.%s = %s" % (table, col, compare_to)
 
     def get_geo_intersect_sql(self, table, col, value, rel_col=None,
                               rel_model=None):
