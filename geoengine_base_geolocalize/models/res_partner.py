@@ -39,11 +39,12 @@ class ResPartner(geo_model.GeoModel):
     """Add geo_point to partner using a function field"""
     _inherit = "res.partner"
 
-    @api.one
+    @api.multi
     def geocode_address(self):
         """Get the latitude and longitude by requesting "mapquestapi"
         see http://open.mapquestapi.com/geocoding/
         """
+        self.ensure_one()
         url = 'http://nominatim.openstreetmap.org/search'
         pay_load = {
             'limit': 1,
@@ -69,12 +70,13 @@ class ResPartner(geo_model.GeoModel):
             'partner_longitude': vals.get('lon'),
             'date_localization': fields.Date.today()})
 
-    @api.one
+    @api.multi
     def geo_localize(self):
-        self.geocode_address()
+        for rec in self:
+            rec.geocode_address()
         return True
 
-    @api.one
+    @api.multi
     @api.depends('partner_latitude', 'partner_longitude')
     def _get_geo_point(self):
         """
@@ -84,11 +86,12 @@ class ResPartner(geo_model.GeoModel):
         If one of those parameters is not set then reset the partner's
         geo_point and do not recompute it
         """
-        if not self.partner_latitude or not self.partner_longitude:
-            self.geo_point = False
-        else:
-            self.geo_point = geo_fields.GeoPoint.from_latlon(
-                self.env.cr, self.partner_latitude, self.partner_longitude)
+        for rec in self:
+            if not rec.partner_latitude or not rec.partner_longitude:
+                rec.geo_point = False
+            else:
+                rec.geo_point = geo_fields.GeoPoint.from_latlon(
+                    self.env.cr, rec.partner_latitude, rec.partner_longitude)
 
     geo_point = geo_fields.GeoPoint(
         readonly=True, store=True, compute='_get_geo_point')

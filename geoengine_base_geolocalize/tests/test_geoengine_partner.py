@@ -23,12 +23,12 @@ import openerp.tests.common as common
 class TestGeoenginePartner(common.TransactionCase):
 
     def setUp(self):
-        common.TransactionCase.setUp(self)
+        super(TestGeoenginePartner, self).setUp()
 
     def test_get_geo_point(self):
         partner_id = self.env.ref('base.user_root').partner_id
-        partner_id.partner_longitude = False
-        partner_id.partner_latitude = False
+        partner_id.partner_longitude = 0
+        partner_id.partner_latitude = 0
         self.assertFalse(
             partner_id.geo_point, 'Should not have geo_point with no latlon')
         partner_id.partner_latitude = 20
@@ -41,18 +41,19 @@ class TestGeoenginePartner(common.TransactionCase):
     def test_geo_localize(self):
         vals = {
             'name': 'Partner Project',
-            'street': 'Rue au bois la dame',
+            'street': 'Rue Neuve 74',
             'country_id': self.env.ref('base.be').id,
-            'zip': '6800',
+            'zip': '1000',
         }
         partner_id = self.env['res.partner'].create(vals)
         partner_id.name = 'Other Partner'
         partner_id.geo_localize()
+        # tested with one point into openstreet map
         self.assertAlmostEqual(
-            partner_id.partner_latitude, 49.95353, 5,
+            partner_id.partner_latitude, 50.85396, 5,
             'Latitude Should be equals')
         self.assertAlmostEqual(
-            partner_id.partner_longitude, 5.40539, 5,
+            partner_id.partner_longitude, 4.35719, 5,
             'Longitude Should be equals')
         domain = [('id', '=', partner_id.id)]
         partner_id.unlink()
