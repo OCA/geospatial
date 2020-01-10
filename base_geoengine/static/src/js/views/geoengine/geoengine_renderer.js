@@ -54,6 +54,9 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
             // TODO this needs a comment to know when a field in an Array
             val = val[1];
         }
+        if (val instanceof Object){
+            val = (val['data'] || {})['display_name'];
+        }
         return '<span style="font-weight: bold">' +
                label + '</span>: ' + val;
     };
