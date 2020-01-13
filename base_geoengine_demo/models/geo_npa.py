@@ -8,6 +8,7 @@ class NPA(models.Model):
     """GEO OSV SAMPLE"""
 
     _name = "dummy.zip"
+    _description = "Geoengine demo ZIP"
 
     priority = fields.Integer('Priority', default=100)
     name = fields.Char('ZIP', size=64, index=True, required=True)
