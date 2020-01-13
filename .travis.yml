@@ -26,11 +26,18 @@ env:
   - TESTS="1" ODOO_REPO="odoo/odoo" LINT_CHECK="0" MAKEPOT="1"
   - TESTS="1" ODOO_REPO="OCA/OCB" LINT_CHECK="0"
 
+before_install:
+
 install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
   - pip install geojson Shapely sphinx sphinx_bootstrap_theme sphinx-intl odoo-sphinx-autodoc
+  # This is to solve an issue with stdout file descriptor
+  # raising a BlockingIOError while executing pylint and returns an exit -1
+  # seems related to the numerous lint errors on web_view_google_map module
+  # https://github.com/travis-ci/travis-ci/issues/8920
+  - /usr/bin/env python -c "import fcntl; fcntl.fcntl(1, fcntl.F_SETFL, 0)"
 
 before_script:
   - psql -U postgres -d postgres -c "create extension postgis"
