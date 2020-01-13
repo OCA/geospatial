@@ -63,6 +63,9 @@ def create_geo_column(
                 geotype,
                 dim))
     if comment:
+        # TODO use SQL string Composition
+        # http://initd.org/psycopg/docs/sql.html
+        # pylint: disable=E8103
         cr.execute('COMMENT ON COLUMN "{}"."{}" IS %s'.format(
             tablename, columnname), (comment,))
     _schema.debug(
@@ -79,6 +82,8 @@ def create_geo_index(cr, columnname, tablename):
     indexname = _postgis_index_name(tablename, columnname)
     if sql.index_exists(cr, indexname):
         return
+    # TODO use SQL string Composition http://initd.org/psycopg/docs/sql.html
+    # pylint: disable=E8103
     cr.execute("CREATE INDEX %s ON %s USING GIST ( %s )" %
                (indexname,
                 tablename,

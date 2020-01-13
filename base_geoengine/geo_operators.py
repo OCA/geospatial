@@ -113,6 +113,8 @@ def geo_search(model, domain=None, geo_domain=None, offset=0,
         where_statement = " WHERE %s" % (' '.join(where_clause_arr))
     else:
         where_statement = ''
+    # TODO use SQL string Composition http://initd.org/psycopg/docs/sql.html
+    # pylint: disable=E8103
     sql = 'SELECT "%s".id FROM ' % model._table + from_clause + \
         where_statement + order_by + limit_str + offset_str
     # logger.debug(cursor.mogrify(sql, where_clause_params))
