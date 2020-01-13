@@ -8,6 +8,7 @@ class RetailMachine(models.Model):
     """GEO OSV SAMPLE"""
 
     _name = "geoengine.demo.automatic.retailing.machine"
+    _description = "Geoengine demo retailing machine"
 
     the_point = fields.GeoPoint('Coordinate')
     the_line = fields.GeoLine('Power supply line', index=True)
