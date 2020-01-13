@@ -73,6 +73,16 @@ msgid "GeoEngine Samples"
 msgstr ""
 
 #. module: base_geoengine_demo
+#: model:ir.model,name:base_geoengine_demo.model_dummy_zip
+msgid "Geoengine demo ZIP"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:ir.model,name:base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine
+msgid "Geoengine demo retailing machine"
+msgstr ""
+
+#. module: base_geoengine_demo
 #: model_terms:ir.ui.view,arch_db:base_geoengine_demo.dummy_zip_form
 msgid "Geometry"
 msgstr ""
@@ -253,15 +263,5 @@ msgstr ""
 #. module: base_geoengine_demo
 #: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_basic0
 msgid "basic"
-msgstr ""
-
-#. module: base_geoengine_demo
-#: model:ir.model,name:base_geoengine_demo.model_dummy_zip
-msgid "dummy.zip"
-msgstr ""
-
-#. module: base_geoengine_demo
-#: model:ir.model,name:base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine
-msgid "geoengine.demo.automatic.retailing.machine"
 msgstr ""
 
