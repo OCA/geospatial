@@ -100,15 +100,18 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
             if (this.tabListenerInstalled) {
                 return;
             }
-            this.tabListenerInstalled = true;
-
             var tab = this.$el.closest('div.tab-pane');
             if (!tab.length) {
                 return;
             }
-            $('a[href="#' + tab[0].id + '"]').on('shown.bs.tab', function (e) {
-                this._renderMap();
+            var tab_link = $('a[href="#' + tab[0].id + '"]')
+            if (!tab_link.length) {
+                return;
+            }
+            tab_link.on('shown.bs.tab', function (e) {
+                this._render();
             }.bind(this));
+            this.tabListenerInstalled = true;
         },
 
         _parseValue: function (value) {
