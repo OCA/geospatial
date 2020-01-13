@@ -109,7 +109,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
                 return;
             }
             tab_link.on('shown.bs.tab', function (e) {
-                this._renderMap();
+                this._render();
             }.bind(this));
             this.tabListenerInstalled = true;
         },
