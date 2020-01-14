@@ -6,7 +6,7 @@ import logging
 from odoo import _
 from odoo.exceptions import MissingError
 
-logger = logging.getLogger('geoengine.sql')
+logger = logging.getLogger("geoengine.sql")
 
 
 def init_postgis(cr):

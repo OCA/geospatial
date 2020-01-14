@@ -3,38 +3,38 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import api, fields, models
 
-GEO_VIEW = ('geoengine', 'GeoEngine')
+GEO_VIEW = ("geoengine", "GeoEngine")
 
 
 class IrUIView(models.Model):
-    _inherit = 'ir.ui.view'
+    _inherit = "ir.ui.view"
 
     @api.model
     def _setup_fields(self):
         """Hack due since the field 'type' is not defined with the new api.
         """
         cls = type(self)
-        type_selection = cls._fields['type'].selection
+        type_selection = cls._fields["type"].selection
         if GEO_VIEW not in type_selection:
             tmp = list(type_selection)
             tmp.append(GEO_VIEW)
-            cls._fields['type'].selection = tuple(set(tmp))
+            cls._fields["type"].selection = tuple(set(tmp))
         super()._setup_fields()
 
     raster_layer_ids = fields.One2many(
-        'geoengine.raster.layer', 'view_id', 'Raster layers', required=False
+        "geoengine.raster.layer", "view_id", "Raster layers", required=False
     )
 
     vector_layer_ids = fields.One2many(
-        'geoengine.vector.layer', 'view_id', 'Vector layers', required=True
+        "geoengine.vector.layer", "view_id", "Vector layers", required=True
     )
 
     projection = fields.Char(default="EPSG:3857", required=True)
     default_extent = fields.Char(
-        'Default map extent',
+        "Default map extent",
         size=128,
-        default='-123164.85222423, 5574694.9538936, 1578017.6490538,'
-        ' 6186191.1800898',
+        default="-123164.85222423, 5574694.9538936, 1578017.6490538,"
+        " 6186191.1800898",
     )
-    default_zoom = fields.Integer('Default map zoom')
-    restricted_extent = fields.Char('Restricted map extent', size=128)
+    default_zoom = fields.Integer("Default map zoom")
+    restricted_extent = fields.Char("Restricted map extent", size=128)
