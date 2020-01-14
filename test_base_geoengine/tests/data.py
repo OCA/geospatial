@@ -106,40 +106,36 @@ GEO_VIEW = {
         "actives": [],
         "backgrounds": [],
         "default_extent": "-123164.85222423, 5574694.9538936,"
-                          " 1578017.6490538, 6186191.1800898",
+        " 1578017.6490538, 6186191.1800898",
         "default_zoom": 0,
         "projection": "EPSG:3857",
-        "restricted_extent": False
+        "restricted_extent": False,
     },
     "model": "test.dummy",
     "name": "test.dummy.geo_view",
-    "type": "geoengine"
+    "type": "geoengine",
 }
 
 FORM_VIEW = {
     "fields": {
         "geo_multipolygon": {
-            "geo_type": {
-                "dim": 2,
-                "srid": 3857,
-                "type": "geo_multi_polygon"
-            },
+            "geo_type": {"dim": 2, "srid": 3857, "type": "geo_multi_polygon"},
             "required": False,
             "searchable": True,
             "sortable": True,
             "store": True,
             "string": "Geo Multipolygon",
-            "type": "geo_multi_polygon"
+            "type": "geo_multi_polygon",
         }
     },
     "model": "test.dummy",
     "name": "test.dummy.form_view",
-    "type": "form"
+    "type": "form",
 }
 
 EXPECTED_GEO_COLUMN_MULTIPOLYGON = {
-    'default_extent':
-        '-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898',
+    'default_extent': '-123164.85222423, 5574694.9538936,'
+    '1578017.6490538, 6186191.1800898',
     'geo_type': 'MULTIPOLYGON',
-    'srid': 3857
+    'srid': 3857,
 }

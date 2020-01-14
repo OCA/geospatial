@@ -8,15 +8,9 @@ class GeoRasterLayerType(models.Model):
     _name = 'geoengine.raster.layer.type'
     _description = "Raster Layer Type"
 
-    name = fields.Char(
-        translate=True, required=True
-    )
-    code = fields.Char(
-        required=True,
-    )
-    service = fields.Char(
-        required=True,
-    )
+    name = fields.Char(translate=True, required=True)
+    code = fields.Char(required=True)
+    service = fields.Char(required=True)
 
 
 class GeoRasterLayer(models.Model):
@@ -24,15 +18,17 @@ class GeoRasterLayer(models.Model):
     _description = "Raster Layer"
 
     raster_type = fields.Selection(
-        [('osm', 'OpenStreetMap'),
-         ('wmts', 'WMTS'),
-         ('d_wms', 'Distant WMS'),
-         ('odoo', 'Odoo field')],
+        [
+            ('osm', 'OpenStreetMap'),
+            ('wmts', 'WMTS'),
+            ('d_wms', 'Distant WMS'),
+            ('odoo', 'Odoo field'),
+        ],
         string="Raster layer type",
         default='osm',
-        required=True)
-    name = fields.Char(
-        'Layer Name', size=256, translate=True, required=True)
+        required=True,
+    )
+    name = fields.Char('Layer Name', size=256, translate=True, required=True)
     url = fields.Char('Service URL', size=1024)
 
     # technical field to display or not wmts options
@@ -46,29 +42,33 @@ class GeoRasterLayer(models.Model):
     resolutions = fields.Char("resolutions")
     max_extent = fields.Char("max_extent")
     dimensions = fields.Char(
-        "dimensions",
-        help="List of dimensions separated by ','")
+        "dimensions", help="List of dimensions separated by ','"
+    )
     params = fields.Char(
-        "params",
-        help="Dictiorary of values for dimensions as JSON"
+        "params", help="Dictiorary of values for dimensions as JSON"
     )
 
     # technical field to display or not layer type
     has_type = fields.Boolean(compute='_compute_has_type')
     type_id = fields.Many2one(
-        'geoengine.raster.layer.type', "Layer",
-        domain="[('service', '=', raster_type)]"
+        'geoengine.raster.layer.type',
+        "Layer",
+        domain="[('service', '=', raster_type)]",
     )
     type = fields.Char(related='type_id.code')
     sequence = fields.Integer('layer priority lower on top', default=6)
     overlay = fields.Boolean('Is overlay layer?')
     field_id = fields.Many2one(
-        'ir.model.fields', 'Odoo layer field to use',
-        domain=[('ttype', 'ilike', 'geo_'),
-                ('model', '=', 'view_id.model')])
+        'ir.model.fields',
+        'Odoo layer field to use',
+        domain=[('ttype', 'ilike', 'geo_'), ('model', '=', 'view_id.model')],
+    )
     view_id = fields.Many2one(
-        'ir.ui.view', 'Related View', domain=[('type', '=', 'geoengine')],
-        required=True)
+        'ir.ui.view',
+        'Related View',
+        domain=[('type', '=', 'geoengine')],
+        required=True,
+    )
     use_to_edit = fields.Boolean('Use to edit')
 
     @api.depends('raster_type', 'is_wmts')

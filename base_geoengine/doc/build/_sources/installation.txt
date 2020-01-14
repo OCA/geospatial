@@ -28,12 +28,12 @@ OpenERP
 Add the template as an argument to OpenERP server::
 
  --db-template=template_postgis
- 
+
 or in config file::
 
  db_template = template_postgis
- 
+
 
 Do not forget to add the GeoEngine modules to your addons path.
- 
+
 Then install (eventually update module list) the base GeoEngine module form the OpenERP client.

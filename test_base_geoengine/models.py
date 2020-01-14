@@ -38,6 +38,8 @@ class DummyModelRelated(models.Model):
     _description = 'test.dummy.related'
 
     dummy_test_id = fields.Many2one(
-        comodel_name='test.dummy', string='Dummy test')
+        comodel_name='test.dummy', string='Dummy test'
+    )
     dummy_geo_multipolygon = fields.GeoMultiPolygon(
-        related='dummy_test_id.geo_multipolygon', string='Related Geom')
+        related='dummy_test_id.geo_multipolygon', string='Related Geom'
+    )
