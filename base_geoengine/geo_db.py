@@ -15,22 +15,26 @@ def init_postgis(cr):
     extender for PostgreSQL object-relational database. It adds support for
     geographic objects allowing location queries to be run in SQL.
     """
-    cr.execute("""
+    cr.execute(
+        """
         SELECT
             tablename
         FROM
             pg_tables
         WHERE
             tablename='spatial_ref_sys';
-    """)
+    """
+    )
     check = cr.fetchone()
     if check:
         return {}
     try:
-        cr.execute("""
+        cr.execute(
+            """
         CREATE EXTENSION postgis;
         CREATE EXTENSION postgis_topology;
-    """)
+    """
+        )
     except Exception:
         raise MissingError(
             _(
