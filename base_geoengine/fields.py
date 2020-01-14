@@ -15,7 +15,7 @@ try:
     from shapely.wkb import loads as wkbloads
     import geojson
 except ImportError:
-    logger.warning('Shapely or geojson are not available in the sys path')
+    logger.warning("Shapely or geojson are not available in the sys path")
 
 
 class GeoField(fields.Field):
@@ -33,9 +33,9 @@ class GeoField(fields.Field):
 
     @property
     def column_type(self):
-        return ('geometry', 'geometry')
+        return ("geometry", "geometry")
 
-    _slots = {'dim': 2, 'srid': 3857, 'gist_index': True}
+    _slots = {"dim": 2, "srid": 3857, "gist_index": True}
 
     def convert_to_column(self, value, record, values=None):
         """Convert value to database format
@@ -81,9 +81,9 @@ class GeoField(fields.Field):
     #
 
     # properties used by get_description()
-    _description_dim = property(attrgetter('dim'))
-    _description_srid = property(attrgetter('srid'))
-    _description_gist_index = property(attrgetter('gist_index'))
+    _description_dim = property(attrgetter("dim"))
+    _description_srid = property(attrgetter("srid"))
+    _description_gist_index = property(attrgetter("gist_index"))
 
     @classmethod
     def load_geo(cls, wkb):
@@ -100,9 +100,7 @@ class GeoField(fields.Field):
             self._create_index(cr, table, col_name)
         except Exception:
             cr.rollback()
-            logger.exception(
-                'Cannot create column %s table %s:', col_name, table
-            )
+            logger.exception("Cannot create column %s table %s:", col_name, table)
             raise
         finally:
             cr.commit()
@@ -114,10 +112,8 @@ class GeoField(fields.Field):
         shape = convert.value_to_shape(value)
         if same_type and not shape.is_empty:
             if shape.geom_type.lower() != self.geo_type.lower():
-                msg = _('Geo Value %s must be of the same type %s as fields')
-                raise TypeError(
-                    msg % (shape.geom_type.lower(), self.geo_type.lower())
-                )
+                msg = _("Geo Value %s must be of the same type %s as fields")
+                raise TypeError(msg % (shape.geom_type.lower(), self.geo_type.lower()))
         return shape
 
     def _postgis_index_name(self, table, col_name):
@@ -129,18 +125,12 @@ class GeoField(fields.Field):
                 # pylint: disable=E8103
                 cr.execute(
                     "CREATE INDEX %s ON %s USING GIST ( %s )"
-                    % (
-                        self._postgis_index_name(table, col_name),
-                        table,
-                        col_name,
-                    )
+                    % (self._postgis_index_name(table, col_name), table, col_name)
                 )
             except Exception:
                 cr.rollback()
                 logger.exception(
-                    'Cannot create gist index for col %s table %s:',
-                    col_name,
-                    table,
+                    "Cannot create gist index for col %s table %s:", col_name, table
                 )
                 raise
             finally:
@@ -168,14 +158,12 @@ class GeoField(fields.Field):
         if check_data[1] != self.geo_type:
             raise TypeError(
                 "Geo type modification is not implemented"
-                "We can not change type %s to %s"
-                % (check_data[1], self.geo_type)
+                "We can not change type %s to %s" % (check_data[1], self.geo_type)
             )
         if check_data[2] != self.dim:
             raise TypeError(
                 "Geo dimention modification is not implemented"
-                "We can not change dimention %s to %s"
-                % (check_data[2], self.dim)
+                "We can not change dimention %s to %s" % (check_data[2], self.dim)
             )
         if self.gist_index:
             cr.execute(
@@ -192,8 +180,8 @@ class GeoField(fields.Field):
 class GeoLine(GeoField):
     """Field for POSTGIS geometry Line type"""
 
-    type = 'geo_line'
-    geo_type = 'LINESTRING'
+    type = "geo_line"
+    geo_type = "LINESTRING"
 
     @classmethod
     def from_points(cls, cr, point1, point2, srid=None):
@@ -215,9 +203,9 @@ class GeoLine(GeoField):
         cr.execute(
             sql,
             {
-                'wkt1': point1.wkt,
-                'wkt2': point2.wkt,
-                'srid': srid or cls._slots['srid'],
+                "wkt1": point1.wkt,
+                "wkt2": point2.wkt,
+                "srid": srid or cls._slots["srid"],
             },
         )
         res = cr.fetchone()
@@ -227,8 +215,8 @@ class GeoLine(GeoField):
 class GeoPoint(GeoField):
     """Field for POSTGIS geometry Point type"""
 
-    type = 'geo_point'
-    geo_type = 'POINT'
+    type = "geo_point"
+    geo_type = "POINT"
 
     @classmethod
     def from_latlon(cls, cr, latitude, longitude):
@@ -242,7 +230,7 @@ class GeoPoint(GeoField):
                     ST_GeomFromText(%(wkt)s, 4326),
                     %(srid)s)
         """,
-            {'wkt': pt.wkt, 'srid': cls._slots['srid']},
+            {"wkt": pt.wkt, "srid": cls._slots["srid"]},
         )
         res = cr.fetchone()
         return cls.load_geo(res[0])
@@ -251,29 +239,29 @@ class GeoPoint(GeoField):
 class GeoPolygon(GeoField):
     """Field for POSTGIS geometry Polygon type"""
 
-    type = 'geo_polygon'
-    geo_type = 'POLYGON'
+    type = "geo_polygon"
+    geo_type = "POLYGON"
 
 
 class GeoMultiLine(GeoField):
     """Field for POSTGIS geometry MultiLine type"""
 
-    type = 'geo_multi_line'
-    geo_type = 'MULTILINESTRING'
+    type = "geo_multi_line"
+    geo_type = "MULTILINESTRING"
 
 
 class GeoMultiPoint(GeoField):
     """Field for POSTGIS geometry MultiPoint type"""
 
-    type = 'geo_multi_point'
-    geo_type = 'MULTIPOINT'
+    type = "geo_multi_point"
+    geo_type = "MULTIPOINT"
 
 
 class GeoMultiPolygon(GeoField):
     """Field for POSTGIS geometry MultiPolygon type"""
 
-    type = 'geo_multi_polygon'
-    geo_type = 'MULTIPOLYGON'
+    type = "geo_multi_polygon"
+    geo_type = "MULTIPOLYGON"
 
 
 fields.GeoLine = GeoLine
