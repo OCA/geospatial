@@ -2,18 +2,19 @@
 # Copyright 2016 Yannick Vaucher (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import _, api, models, tools
-from odoo.exceptions import except_orm, MissingError
-from . import geo_operators
-from . import fields as geo_fields
+from odoo.exceptions import MissingError, except_orm
 
+from . import fields as geo_fields, geo_operators
 
-DEFAULT_EXTENT = ('-123164.85222423, 5574694.9538936, '
-                  '1578017.6490538, 6186191.1800898')
+DEFAULT_EXTENT = (
+    '-123164.85222423, 5574694.9538936, ' '1578017.6490538, 6186191.1800898'
+)
 
 
 class GeoModel(models.AbstractModel):
     """ Extend Base class for to allow definition of geo fields.
     """
+
     _inherit = 'base'
 
     # Array of ash that define layer and data to use
@@ -52,14 +53,15 @@ class GeoModel(models.AbstractModel):
     @api.model
     def fields_get(self, allfields=None, attributes=None):
         """Add geo_type definition for geo fields"""
-        res = super().fields_get(
-            allfields=allfields, attributes=attributes)
+        res = super().fields_get(allfields=allfields, attributes=attributes)
         for f_name in res:
             field = self._fields.get(f_name)
             if field and field.type.startswith('geo_'):
-                geo_type = {'type': field.type,
-                            'dim': int(field.dim),
-                            'srid': field.srid}
+                geo_type = {
+                    'type': field.type,
+                    'dim': int(field.dim),
+                    'srid': field.srid,
+                }
                 if field.compute or field.related:
                     if not field.dim:
                         geo_type['dim'] = 2
@@ -71,17 +73,19 @@ class GeoModel(models.AbstractModel):
     @api.model
     def _get_geo_view(self):
         geo_view = self.env['ir.ui.view'].search(
-            [('model', '=', self._name),
-             ('type', '=', 'geoengine')], limit=1)
+            [('model', '=', self._name), ('type', '=', 'geoengine')], limit=1
+        )
         if not geo_view:
             raise except_orm(
                 _('No GeoEngine view defined for the model %s') % self._name,
-                _('Please create a view or modify view mode'))
+                _('Please create a view or modify view mode'),
+            )
         return geo_view
 
     @api.model
-    def fields_view_get(self, view_id=None, view_type='form',
-                        toolbar=False, submenu=False):
+    def fields_view_get(
+        self, view_id=None, view_type='form', toolbar=False, submenu=False
+    ):
         """Returns information about the available fields of the class.
            If view type == 'map' returns geographical columns available"""
         view_obj = self.env['ir.ui.view']
@@ -93,14 +97,18 @@ class GeoModel(models.AbstractModel):
             name = field_obj.browse(in_tuple[0]).name
             out = (in_tuple[0], name, in_tuple[1])
             return out
+
         if view_type == "geoengine":
             if not view_id:
                 view = self._get_geo_view()
             else:
                 view = view_obj.browse(view_id)
             res = super().fields_view_get(
-                view_id=view.id, view_type='form', toolbar=toolbar,
-                submenu=submenu)
+                view_id=view.id,
+                view_type='form',
+                toolbar=toolbar,
+                submenu=submenu,
+            )
             res['geoengine_layers'] = {
                 'backgrounds': [],
                 'actives': [],
@@ -119,20 +127,25 @@ class GeoModel(models.AbstractModel):
                 # get category groups for this vector layer
                 if layer.geo_repr == 'basic' and layer.symbol_ids:
                     layer_dict['symbols'] = layer.symbol_ids.read(
-                        ['img', 'fieldname', 'value'])
+                        ['img', 'fieldname', 'value']
+                    )
                 layer_dict['attribute_field_id'] = set_field_real_name(
-                    layer_dict.get('attribute_field_id', False))
+                    layer_dict.get('attribute_field_id', False)
+                )
                 layer_dict['geo_field_id'] = set_field_real_name(
-                    layer_dict.get('geo_field_id', False))
+                    layer_dict.get('geo_field_id', False)
+                )
                 res['geoengine_layers']['actives'].append(layer_dict)
                 # adding geo column desc
                 geo_f_name = layer_dict['geo_field_id'][1]
-                res['fields'].update(
-                    self.fields_get([geo_f_name]))
+                res['fields'].update(self.fields_get([geo_f_name]))
         else:
             return super().fields_view_get(
-                view_id=view_id, view_type=view_type, toolbar=toolbar,
-                submenu=submenu)
+                view_id=view_id,
+                view_type=view_type,
+                toolbar=toolbar,
+                submenu=submenu,
+            )
         return res
 
     @api.model
@@ -142,10 +155,12 @@ class GeoModel(models.AbstractModel):
         field = self._fields.get(column)
         if not field or not isinstance(field, geo_fields.GeoField):
             raise ValueError(
-                _("%s column does not exists or is not a geo field") % column)
+                _("%s column does not exists or is not a geo field") % column
+            )
         view = self._get_geo_view()
-        raster = raster_obj.search([('view_id', '=', view.id),
-                                    ('use_to_edit', '=', True)], limit=1)
+        raster = raster_obj.search(
+            [('view_id', '=', view.id), ('use_to_edit', '=', True)], limit=1
+        )
         if not raster:
             raster = raster_obj.search([('view_id', '=', view.id)], limit=1)
         if not raster:
@@ -161,8 +176,9 @@ class GeoModel(models.AbstractModel):
         }
 
     @api.model
-    def geo_search(self, domain=None, geo_domain=None, offset=0,
-                   limit=None, order=None):
+    def geo_search(
+        self, domain=None, geo_domain=None, offset=0, limit=None, order=None
+    ):
         """Perform a geo search it allows direct domain:
            geo_search(
                domain=[('name', 'ilike', 'toto']),
@@ -187,5 +203,10 @@ class GeoModel(models.AbstractModel):
         domain = domain or []
         geo_domain = geo_domain or []
         return geo_operators.geo_search(
-            self, domain=domain, geo_domain=geo_domain,
-            offset=offset, limit=limit, order=order)
+            self,
+            domain=domain,
+            geo_domain=geo_domain,
+            offset=offset,
+            limit=limit,
+            order=order,
+        )
