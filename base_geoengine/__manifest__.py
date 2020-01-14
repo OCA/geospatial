@@ -8,10 +8,7 @@
     'author': "Camptocamp,ACSONE SA/NV,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
     'website': 'https://github.com/OCA/geospatial',
-    'depends': [
-        'base',
-        'web'
-    ],
+    'depends': ['base', 'web'],
     'data': [
         'security/data.xml',
         'views/base_geoengine_view.xml',
@@ -21,16 +18,8 @@
         'geo_view/geo_vector_layer_view.xml',
         'security/ir.model.access.csv',
     ],
-    'external_dependencies': {
-        'python': [
-            'shapely',
-            'geojson',
-            'simplejson'
-        ],
-    },
-    'qweb': [
-        'static/src/xml/geoengine.xml',
-    ],
+    'external_dependencies': {'python': ['shapely', 'geojson', 'simplejson']},
+    'qweb': ['static/src/xml/geoengine.xml'],
     'installable': True,
     'pre_init_hook': 'init_postgis',
 }
