@@ -6,7 +6,7 @@ If you want to install the GeoEngine on an existing database, you have to run th
 
  psql -U superuser my database -f postgis.sql
  psql -U superuser my database -f spatial_ref_sys.sql
- 
+
 In order to test if the installation is sucessfull log into you database and::
 
  SELECT * from GEOMETRY_COLUMNS;

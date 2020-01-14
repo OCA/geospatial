@@ -318,4 +318,3 @@ odoo.define('base_geoengine.GeoengineController', function (require) {
     return GeoengineController;
 
 });
-

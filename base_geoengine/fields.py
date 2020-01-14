@@ -4,7 +4,7 @@
 import logging
 from operator import attrgetter
 
-from odoo import fields, _
+from odoo import _, fields
 
 from .geo_helper import geo_convertion_helper as convert
 
@@ -29,17 +29,13 @@ class GeoField(fields.Field):
 
     @property
     def column_format(self):
-        return "ST_GeomFromText(%%s, %s)" % (self.srid,)
+        return "ST_GeomFromText(%s, {})".format(self.srid)
 
     @property
     def column_type(self):
         return ('geometry', 'geometry')
 
-    _slots = {
-        'dim': 2,
-        'srid': 3857,
-        'gist_index': True,
-    }
+    _slots = {'dim': 2, 'srid': 3857, 'gist_index': True}
 
     def convert_to_column(self, value, record, values=None):
         """Convert value to database format
@@ -97,17 +93,16 @@ class GeoField(fields.Field):
     def create_geo_column(self, cr, col_name, table, model):
         """Create a columns of type the geom"""
         try:
-            cr.execute("SELECT AddGeometryColumn( %s, %s, %s, %s, %s)",
-                       (table,
-                        col_name,
-                        self.srid,
-                        self.geo_type,
-                        self.dim))
+            cr.execute(
+                "SELECT AddGeometryColumn( %s, %s, %s, %s, %s)",
+                (table, col_name, self.srid, self.geo_type, self.dim),
+            )
             self._create_index(cr, table, col_name)
         except Exception:
             cr.rollback()
-            logger.exception('Cannot create column %s table %s:',
-                             col_name, table)
+            logger.exception(
+                'Cannot create column %s table %s:', col_name, table
+            )
             raise
         finally:
             cr.commit()
@@ -120,25 +115,33 @@ class GeoField(fields.Field):
         if same_type and not shape.is_empty:
             if shape.geom_type.lower() != self.geo_type.lower():
                 msg = _('Geo Value %s must be of the same type %s as fields')
-                raise TypeError(msg % (shape.geom_type.lower(),
-                                       self.geo_type.lower()))
+                raise TypeError(
+                    msg % (shape.geom_type.lower(), self.geo_type.lower())
+                )
         return shape
 
     def _postgis_index_name(self, table, col_name):
-        return "%s_%s_gist_index" % (table, col_name)
+        return "{}_{}_gist_index".format(table, col_name)
 
     def _create_index(self, cr, table, col_name):
         if self.gist_index:
             try:
-                cr.execute("CREATE INDEX %s ON %s USING GIST ( %s )" %
-                           (self._postgis_index_name(table, col_name),
-                            table,
-                            col_name))
+                # pylint: disable=E8103
+                cr.execute(
+                    "CREATE INDEX %s ON %s USING GIST ( %s )"
+                    % (
+                        self._postgis_index_name(table, col_name),
+                        table,
+                        col_name,
+                    )
+                )
             except Exception:
                 cr.rollback()
                 logger.exception(
                     'Cannot create gist index for col %s table %s:',
-                    col_name, table)
+                    col_name,
+                    table,
+                )
                 raise
             finally:
                 cr.commit()
@@ -146,35 +149,39 @@ class GeoField(fields.Field):
     def update_geo_column(self, cr, col_name, table, model):
         """Update the column type in the database.
         """
-        query = ("""SELECT srid, type, coord_dimension
+        query = """SELECT srid, type, coord_dimension
                  FROM geometry_columns
                  WHERE f_table_name = %s
-                 AND f_geometry_column = %s""")
+                 AND f_geometry_column = %s"""
         cr.execute(query, (table, col_name))
         check_data = cr.fetchone()
         if not check_data:
             raise TypeError(
                 "geometry_columns table seems to be corrupted. "
-                "SRID check is not possible")
+                "SRID check is not possible"
+            )
         if check_data[0] != self.srid:
             raise TypeError(
                 "Reprojection of column is not implemented"
-                "We can not change srid %s to %s" % (
-                    self.srid, check_data[0]))
+                "We can not change srid %s to %s" % (self.srid, check_data[0])
+            )
         if check_data[1] != self.geo_type:
             raise TypeError(
                 "Geo type modification is not implemented"
-                "We can not change type %s to %s" % (
-                    check_data[1], self.geo_type))
+                "We can not change type %s to %s"
+                % (check_data[1], self.geo_type)
+            )
         if check_data[2] != self.dim:
             raise TypeError(
                 "Geo dimention modification is not implemented"
-                "We can not change dimention %s to %s" % (
-                    check_data[2], self.dim))
+                "We can not change dimention %s to %s"
+                % (check_data[2], self.dim)
+            )
         if self.gist_index:
             cr.execute(
                 "SELECT indexname FROM pg_indexes WHERE indexname = %s",
-                (self._postgis_index_name(table, col_name),))
+                (self._postgis_index_name(table, col_name),),
+            )
             index = cr.fetchone()
             if index:
                 return True
@@ -184,6 +191,7 @@ class GeoField(fields.Field):
 
 class GeoLine(GeoField):
     """Field for POSTGIS geometry Line type"""
+
     type = 'geo_line'
     geo_type = 'LINESTRING'
 
@@ -204,17 +212,21 @@ class GeoLine(GeoField):
                 ST_GeomFromText(%(wkt2)s, %(srid)s)
             )
         """
-        cr.execute(sql, {
-            'wkt1': point1.wkt,
-            'wkt2': point2.wkt,
-            'srid': srid or cls._slots['srid'],
-        })
+        cr.execute(
+            sql,
+            {
+                'wkt1': point1.wkt,
+                'wkt2': point2.wkt,
+                'srid': srid or cls._slots['srid'],
+            },
+        )
         res = cr.fetchone()
         return cls.load_geo(res[0])
 
 
 class GeoPoint(GeoField):
     """Field for POSTGIS geometry Point type"""
+
     type = 'geo_point'
     geo_type = 'POINT'
 
@@ -223,37 +235,43 @@ class GeoPoint(GeoField):
         """  Convert a (latitude, longitude) into an UTM coordinate Point:
         """
         pt = Point(longitude, latitude)
-        cr.execute("""
+        cr.execute(
+            """
             SELECT
                 ST_Transform(
                     ST_GeomFromText(%(wkt)s, 4326),
                     %(srid)s)
-        """, {'wkt': pt.wkt,
-              'srid': cls._slots['srid']})
+        """,
+            {'wkt': pt.wkt, 'srid': cls._slots['srid']},
+        )
         res = cr.fetchone()
         return cls.load_geo(res[0])
 
 
 class GeoPolygon(GeoField):
     """Field for POSTGIS geometry Polygon type"""
+
     type = 'geo_polygon'
     geo_type = 'POLYGON'
 
 
 class GeoMultiLine(GeoField):
     """Field for POSTGIS geometry MultiLine type"""
+
     type = 'geo_multi_line'
     geo_type = 'MULTILINESTRING'
 
 
 class GeoMultiPoint(GeoField):
     """Field for POSTGIS geometry MultiPoint type"""
+
     type = 'geo_multi_point'
     geo_type = 'MULTIPOINT'
 
 
 class GeoMultiPolygon(GeoField):
     """Field for POSTGIS geometry MultiPolygon type"""
+
     type = 'geo_multi_polygon'
     geo_type = 'MULTIPOLYGON'
 
