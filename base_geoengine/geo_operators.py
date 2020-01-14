@@ -16,15 +16,17 @@ def _get_geo_func(model, domain):
     current_field = model._fields[domain[0]]
     if isinstance(current_field, GeoField):
         current_operator = GeoOperator(current_field)
-        attr = "get_%s_sql" % (domain[1],)
+        attr = "get_{}_sql".format(domain[1])
         if hasattr(current_operator, attr):
             return getattr(current_operator, attr)
     raise ValueError(
-        'Field %s does not support %s' % (current_field, domain[1]))
+        'Field {} does not support {}'.format(current_field, domain[1])
+    )
 
 
-def geo_search(model, domain=None, geo_domain=None, offset=0,
-               limit=None, order=None):
+def geo_search(
+    model, domain=None, geo_domain=None, offset=0, limit=None, order=None
+):
     """Perform a geo search it allows direct domain:
     geo_search(
         domain=[('name', 'ilike', 'toto']),
@@ -81,29 +83,37 @@ def geo_search(model, domain=None, geo_domain=None, offset=0,
                 for key in ref_search:
                     i = key.rfind('.')
                     rel_model = key[0:i]
-                    rel_col = key[i + 1:]
+                    rel_col = key[i + 1 :]
                     rel_model = model.env[rel_model]
                     from_clause += ', %s' % (rel_model._table,)
                     att_where_sql = ''
                     # we compute the attributes search on spatial rel
                     if ref_search[key]:
                         rel_query = rel_model._where_calc(
-                            ref_search[key], active_test=True)
+                            ref_search[key], active_test=True
+                        )
                         rel_res = rel_query.get_sql()
                         att_where_sql = rel_res[1]
                         where_clause_params += rel_res[2]
                     # we compute the spatial search on spatial rel
                     func = _get_geo_func(model, domain)
                     spatial_where_sql = func(
-                        model._table, domain[0], domain[2], rel_col=rel_col,
-                        rel_model=rel_model)
+                        model._table,
+                        domain[0],
+                        domain[2],
+                        rel_col=rel_col,
+                        rel_model=rel_model,
+                    )
                     if att_where_sql:
                         rel_where_statement.append(
-                            "(%s AND %s)" % (att_where_sql,
-                                             spatial_where_sql))
+                            "({} AND {})".format(
+                                att_where_sql, spatial_where_sql
+                            )
+                        )
                     else:
                         rel_where_statement.append(
-                            "(%s)" % (spatial_where_sql))
+                            "(%s)" % (spatial_where_sql)
+                        )
                 where_clause_arr.append("AND ".join(rel_where_statement))
             else:
                 func = _get_geo_func(model, domain)
@@ -113,8 +123,15 @@ def geo_search(model, domain=None, geo_domain=None, offset=0,
         where_statement = " WHERE %s" % (' '.join(where_clause_arr))
     else:
         where_statement = ''
-    sql = 'SELECT "%s".id FROM ' % model._table + from_clause + \
-        where_statement + order_by + limit_str + offset_str
+    # pylint: disable=E8103
+    sql = (
+        'SELECT "%s".id FROM ' % model._table
+        + from_clause
+        + where_statement
+        + order_by
+        + limit_str
+        + offset_str
+    )
     # logger.debug(cursor.mogrify(sql, where_clause_params))
     cr.execute(sql, where_clause_params)
     res = cr.fetchall()
@@ -125,7 +142,6 @@ def geo_search(model, domain=None, geo_domain=None, offset=0,
 
 
 class GeoOperator(object):
-
     def __init__(self, geo_field):
         self.geo_field = geo_field
 
@@ -136,29 +152,34 @@ class GeoOperator(object):
             rel_model._fields[rel_col]
         except Exception:
             raise Exception(
-                'Model %s has no column %s' % (rel_model._name, rel_col))
-        return "%s.%s" % (rel_model._table, rel_col)
+                'Model {} has no column {}'.format(rel_model._name, rel_col)
+            )
+        return "{}.{}".format(rel_model._table, rel_col)
 
-    def _get_direct_como_op_sql(self, table, col, value, rel_col=None,
-                                rel_model=None, op=''):
+    def _get_direct_como_op_sql(
+        self, table, col, value, rel_col=None, rel_model=None, op=''
+    ):
         """provide raw sql for geater and lesser operators"""
         if isinstance(value, (int, float)):
             if rel_col and rel_model:
                 raise Exception(
                     'Area %s does not support int compare for relation '
-                    'search' % (op,))
-            return " ST_Area(%s.%s) %s %s" % (table, col, op, value)
+                    'search' % (op,)
+                )
+            return " ST_Area({}.{}) {} {}".format(table, col, op, value)
         else:
             if rel_col and rel_model is not None:
                 compare_to = self.get_rel_field(rel_col, rel_model)
             else:
                 base = self.geo_field.entry_to_shape(value, same_type=False)
                 compare_to = base.wkt
-            return " ST_Area(%s.%s) %s ST_Area(ST_GeomFromText('%s'))" % (
-                table, col, op, compare_to)
+            return " ST_Area({}.{}) {} ST_Area(ST_GeomFromText('{}'))".format(
+                table, col, op, compare_to
+            )
 
-    def _get_postgis_comp_sql(self, table, col, value, rel_col=None,
-                              rel_model=None, op=''):
+    def _get_postgis_comp_sql(
+        self, table, col, value, rel_col=None, rel_model=None, op=''
+    ):
         """return raw sql for all search based on St_**(a, b) posgis operator
         """
         if rel_col and rel_model is not None:
@@ -169,23 +190,28 @@ class GeoOperator(object):
             compare_to = "ST_GeomFromText('%s',%s)" % (base.wkt, srid)
         return " %s(%s.%s, %s)" % (op, table, col, compare_to)
 
-    def get_geo_greater_sql(self, table, col, value, rel_col=None,
-                            rel_model=None):
+    def get_geo_greater_sql(
+        self, table, col, value, rel_col=None, rel_model=None
+    ):
         """Returns raw sql for geo_greater operator
         (used for area comparison)
         """
-        return self._get_direct_como_op_sql(table, col, value,
-                                            rel_col, rel_model, op='>')
+        return self._get_direct_como_op_sql(
+            table, col, value, rel_col, rel_model, op='>'
+        )
 
-    def get_geo_lesser_sql(self, table, col, value, rel_col=None,
-                           rel_model=None):
+    def get_geo_lesser_sql(
+        self, table, col, value, rel_col=None, rel_model=None
+    ):
         """Returns raw sql for geo_lesser operator
         (used for area comparison)"""
-        return self._get_direct_como_op_sql(table, col, value,
-                                            rel_col, rel_model, op='<')
+        return self._get_direct_como_op_sql(
+            table, col, value, rel_col, rel_model, op='<'
+        )
 
-    def get_geo_equal_sql(self, table, col, value, rel_col=None,
-                          rel_model=None):
+    def get_geo_equal_sql(
+        self, table, col, value, rel_col=None, rel_model=None
+    ):
         """Returns raw sql for geo_equal operator
         (used for equality comparison)
         """
@@ -196,38 +222,42 @@ class GeoOperator(object):
             compare_to = "ST_GeomFromText('%s')" % (base.wkt,)
         return " %s.%s = %s" % (table, col, compare_to)
 
-    def get_geo_intersect_sql(self, table, col, value, rel_col=None,
-                              rel_model=None):
+    def get_geo_intersect_sql(
+        self, table, col, value, rel_col=None, rel_model=None
+    ):
         """Returns raw sql for geo_intersec operator
         (used for spatial comparison)
         """
-        return self._get_postgis_comp_sql(table, col, value,
-                                          rel_col, rel_model,
-                                          op='ST_Intersects')
+        return self._get_postgis_comp_sql(
+            table, col, value, rel_col, rel_model, op='ST_Intersects'
+        )
 
-    def get_geo_touch_sql(self, table, col, value, rel_col=None,
-                          rel_model=None):
+    def get_geo_touch_sql(
+        self, table, col, value, rel_col=None, rel_model=None
+    ):
         """Returns raw sql for geo_touch operator
         (used for spatial comparison)
         """
-        return self._get_postgis_comp_sql(table, col, value,
-                                          rel_col, rel_model,
-                                          op='ST_Touches')
+        return self._get_postgis_comp_sql(
+            table, col, value, rel_col, rel_model, op='ST_Touches'
+        )
 
-    def get_geo_within_sql(self, table, col, value, rel_col=None,
-                           rel_model=None):
+    def get_geo_within_sql(
+        self, table, col, value, rel_col=None, rel_model=None
+    ):
         """Returns raw sql for geo_within operator
         (used for spatial comparison)
         """
-        return self._get_postgis_comp_sql(table, col, value,
-                                          rel_col, rel_model,
-                                          op='ST_Within')
+        return self._get_postgis_comp_sql(
+            table, col, value, rel_col, rel_model, op='ST_Within'
+        )
 
-    def get_geo_contains_sql(self, table, col, value, rel_col=None,
-                             rel_model=None):
+    def get_geo_contains_sql(
+        self, table, col, value, rel_col=None, rel_model=None
+    ):
         """Returns raw sql for geo_contains operator
         (used for spatial comparison)
         """
-        return self._get_postgis_comp_sql(table, col, value,
-                                          rel_col, rel_model,
-                                          op='ST_Contains')
+        return self._get_postgis_comp_sql(
+            table, col, value, rel_col, rel_model, op='ST_Contains'
+        )

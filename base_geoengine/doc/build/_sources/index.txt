@@ -10,7 +10,7 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
-   
+
    what_is_geoengine
    prerequisite
    installation
@@ -22,11 +22,10 @@ Contents:
    API presentation
    Manage your layer from client
    Create a geocolumn from client
-   
+
 
 Indices and tables
 ==================
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
-

@@ -11,9 +11,10 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
 import imp
 import os
+import sys
+
 import sphinx_bootstrap_theme
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -29,8 +30,11 @@ sphinxodoo_addons_path = [
     os.path.abspath(os.environ['TRAVIS_BUILD_DIR']),
 ]
 geo_path = os.environ['TRAVIS_BUILD_DIR']
-addons = [x for x in os.listdir(geo_path)
-          if not x.startswith('.') and os.path.isdir(os.path.join(geo_path, x))]
+addons = [
+    x
+    for x in os.listdir(geo_path)
+    if not x.startswith('.') and os.path.isdir(os.path.join(geo_path, x))
+]
 sphinxodoo_addons = addons
 sys.path.append(os.environ['TRAVIS_BUILD_DIR'])
 # -- General configuration ----------------------------------------------------
@@ -41,8 +45,7 @@ sys.path.append(os.environ['TRAVIS_BUILD_DIR'])
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc',
-              'sphinxodoo.ext.autodoc']
+extensions = ['sphinx.ext.autodoc', 'sphinxodoo.ext.autodoc']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -75,9 +78,9 @@ release = '0.3'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:
-#today = ''
+# today = ''
 # Else, today_fmt is used as the format for a strftime call.
-#today_fmt = '%B %d, %Y'
+# today_fmt = '%B %d, %Y'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
@@ -195,8 +198,13 @@ htmlhelp_basename = 'OpenERPGeoEnginedoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ('index', 'OpenERPGeoEngine.tex', 'Odoo Geospatial Documentation',
-     'Odoo Community Association (OCA), Nicolas Bessi', 'manual'),
+    (
+        'index',
+        'OpenERPGeoEngine.tex',
+        'Odoo Geospatial Documentation',
+        'Odoo Community Association (OCA), Nicolas Bessi',
+        'manual',
+    )
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -228,6 +236,11 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'openerpgeoengine', 'Odoo Geospatial Documentation',
-     ['Odoo Community Association (OCA), Nicolas Bessi'], 1)
+    (
+        'index',
+        'openerpgeoengine',
+        'Odoo Geospatial Documentation',
+        ['Odoo Community Association (OCA), Nicolas Bessi'],
+        1,
+    )
 ]

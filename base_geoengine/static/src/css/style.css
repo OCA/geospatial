@@ -19,7 +19,7 @@ div.olmap {
 .olmap svg{
     width: initial;
     height: initial;
-    
+
 }
 
 .olmap:-moz-full-screen {
