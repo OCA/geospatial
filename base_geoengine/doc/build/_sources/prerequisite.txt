@@ -15,14 +15,14 @@ Shapely:
 ::
 
  pip install Shapely==1.2.13
-    
+
 For Mac user: do not forget the following directive:
 
 ::
 
  ARCHFLAGS="-arch i386 -arch x86_64"
- 
- 
+
+
 ***************
 PostGIS 1.5
 ***************
