@@ -49,6 +49,11 @@ install:
   # seems related to the numerous lint errors on web_view_google_map module
   # https://github.com/travis-ci/travis-ci/issues/8920
   - /usr/bin/env python -c "import fcntl; fcntl.fcntl(1, fcntl.F_SETFL, 0)"
+
+before_script:
+  - if [ "$TESTS" -e "1" ] ; then psql -U postgres -d postgres -c "create extension postgis"; fi
+  - if [ "$TESTS" -e "1" ] ; then psql -U postgres -d postgres -c "create extension postgis_topology"; fi
+
 script:
   - travis_run_tests
 
