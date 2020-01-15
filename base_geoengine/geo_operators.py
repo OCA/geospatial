@@ -81,8 +81,8 @@ def geo_search(model, domain=None, geo_domain=None, offset=0, limit=None, order=
                     rel_model = key[0:i]
                     rel_col = key[i + 1 :]
                     rel_model = model.env[rel_model]
-                    from_clause += ', %s' % (rel_model._table,)
-                    att_where_sql = ''
+                    from_clause += ", {}".format(rel_model._table)
+                    att_where_sql = ""
                     # we compute the attributes search on spatial rel
                     if ref_search[key]:
                         rel_query = rel_model._where_calc(
@@ -179,8 +179,8 @@ class GeoOperator(object):
         else:
             base = self.geo_field.entry_to_shape(value, same_type=False)
             srid = self.geo_field.srid
-            compare_to = "ST_GeomFromText('%s',%s)" % (base.wkt, srid)
-        return " %s(%s.%s, %s)" % (op, table, col, compare_to)
+            compare_to = "ST_GeomFromText('{}',{})".format(base.wkt, srid)
+        return " {}({}.{}, {})".format(op, table, col, compare_to)
 
     def get_geo_greater_sql(self, table, col, value, rel_col=None, rel_model=None):
         """Returns raw sql for geo_greater operator
@@ -205,8 +205,8 @@ class GeoOperator(object):
             compare_to = self.get_rel_field(rel_col, rel_model)
         else:
             base = self.geo_field.entry_to_shape(value, same_type=False)
-            compare_to = "ST_GeomFromText('%s')" % (base.wkt,)
-        return " %s.%s = %s" % (table, col, compare_to)
+            compare_to = "ST_GeomFromText('{}')".format(base.wkt)
+        return " {}.{} = {}".format(table, col, compare_to)
 
     def get_geo_intersect_sql(self, table, col, value, rel_col=None, rel_model=None):
         """Returns raw sql for geo_intersec operator
