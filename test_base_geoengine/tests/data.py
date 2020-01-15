@@ -134,7 +134,7 @@ FORM_VIEW = {
 }
 
 EXPECTED_GEO_COLUMN_MULTIPOLYGON = {
-    "default_extent": "-123164.85222423, 5574694.9538936,"
+    "default_extent": "-123164.85222423, 5574694.9538936, "
     "1578017.6490538, 6186191.1800898",
     "geo_type": "MULTIPOLYGON",
     "srid": 3857,
