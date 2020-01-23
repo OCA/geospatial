@@ -123,6 +123,8 @@ class TestBaseGeoengine(common.SavepointCase):
         self.dummy.write({
             'geo_multipolygon': wktloads('MULTIPOLYGON (((0 0, 2 0, 2 2, 0 2, 0 0)))'),
         })
+        self.dummy.flush()
+        self.dummy.invalidate_cache()
         ids = self.dummy.geo_search(
             domain=[],
             geo_domain=[
