@@ -184,7 +184,7 @@ class TestBaseGeoengine(common.SavepointCase):
         geo_point_2 = Point(1.0, 1.0)
 
         self.dummy.geo_point = geo_point_1
-        self.assertEqual(self.dummy.geo_point, geo_point_1)
+        self.assertTrue(self.dummy.geo_point.equals(geo_point_1))
         self.assertTrue(isinstance(self.dummy.geo_point, Point))
 
         geo_point_read = self.dummy.read(['geo_point'])[0]
@@ -194,7 +194,7 @@ class TestBaseGeoengine(common.SavepointCase):
         self.dummy.write({
             'geo_point': geojson.dumps(geo_point_2),
         })
-        self.assertEqual(self.dummy.geo_point, geo_point_2)
+        self.assertTrue(self.dummy.geo_point.equals(geo_point_2))
 
     def test_create_line_from_points(self):
         geo_point_1 = Point(0.0, 0.0)
