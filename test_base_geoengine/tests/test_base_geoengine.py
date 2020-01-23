@@ -121,7 +121,7 @@ class TestBaseGeoengine(common.SavepointCase):
     def test_search_geo_contains(self):
         _logger.info("Tests search geo_contains")
         self.dummy.write({
-            'geo_multipolygon': 'MULTIPOLYGON (((0 0, 2 0, 2 2, 0 2, 0 0)))',
+            'geo_multipolygon': wktloads('MULTIPOLYGON (((0 0, 2 0, 2 2, 0 2, 0 0)))'),
         })
         ids = self.dummy.geo_search(
             domain=[],
@@ -215,5 +215,5 @@ class TestBaseGeoengine(common.SavepointCase):
             'geo_line': wktloads(GEOLINE_1)
         })
         dummy.write({
-            'geo_multipolygon': 'LINE (0 0, 2 0, 2 2, 0 2, 0 0)',
+            'geo_line': wktloads('LINESTRING (0 0, 2 0, 2 2, 0 2, 0 0)'),
         })
