@@ -18,7 +18,7 @@ class DummyAbstractModel(models.AbstractModel):
 
 class DummyInheritAbstract(models.Model):
     _name = "test.dummy.from_abstract"
-
+    _description = "submodel of test.abstract.dummy"
     _inherit = "test.abstract.dummy"
 
     name = fields.Char()
