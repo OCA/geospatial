@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="test_dummy_geo_view">
+        <field name="name">test.dummy.geo_view</field>
+        <field name="model">test.dummy</field>
+        <field name="arch" type="xml">
+            <geoengine>
+                <field name="name"/>
+            </geoengine>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="test_dummy_form_view">
+        <field name="name">test.dummy.form_view</field>
+        <field name="model">test.dummy</field>
+        <field name="arch" type="xml">
+            <form string="Dummy">
+                <field name="name"/>
+                <notebook colspan="4">
+                    <page string="Geometry">
+                        <field name="geo_multipolygon" colspan="4"
+                               widget="geo_edit_map"/>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="test_dummy_related_geo_view">
+        <field name="name">test.dummy.related.geo_view</field>
+        <field name="model">test.dummy.related</field>
+        <field name="arch" type="xml">
+            <geoengine>
+                <field name="dummy_test_id"/>
+                <field name="dummy_geo_multipolygon" colspan="4"
+                       widget="geo_edit_map"/>
+            </geoengine>
+        </field>
+    </record>
+
+</odoo>
