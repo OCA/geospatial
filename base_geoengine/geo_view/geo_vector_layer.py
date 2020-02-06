@@ -54,6 +54,9 @@ class GeoVectorLayer(models.Model):
     attribute_field_id = fields.Many2one(
         'ir.model.fields', 'attribute field',
         domain=[('ttype', 'in', SUPPORTED_ATT)])
+    label_field_id = fields.Many2one(
+        'ir.model.fields', 'label field',
+        domain=[('ttype', 'in', SUPPORTED_ATT)])
     geo_field_id = fields.Many2one(
         'ir.model.fields', 'Geo field',
         domain=[('ttype', 'ilike', 'geo_')], required=True)
@@ -62,3 +65,4 @@ class GeoVectorLayer(models.Model):
         required=True)
     sequence = fields.Integer('layer priority lower on top', default=6)
     readonly = fields.Boolean('Layer is read only')
+    display_polygon_labels = fields.Boolean('Display Labels on Polygon')
