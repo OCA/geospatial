@@ -8,7 +8,7 @@
             <notebook>
                 <page string="Geoengine Map">
                     <field name="geo_point" widget="geo_edit_map"
-                               groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
+                           groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
                 </page>
             </notebook>
         </field>
