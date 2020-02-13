@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 ##############################################################################
 #
 #   Author: Laurent Mignon
@@ -20,11 +19,11 @@
 ##############################################################################
 
 import logging
-from openerp import api, fields
-from openerp import exceptions
-from openerp.tools.translate import _
-from openerp.addons.base_geoengine import geo_model
-from openerp.addons.base_geoengine import fields as geo_fields
+from odoo import api, fields
+from odoo import exceptions
+from odoo.tools.translate import _
+from odoo.addons.base_geoengine import geo_model
+from odoo.addons.base_geoengine import fields as geo_fields
 
 try:
     import requests
@@ -39,42 +38,43 @@ class ResPartner(geo_model.GeoModel):
     """Add geo_point to partner using a function field"""
     _inherit = "res.partner"
 
-    @api.one
+    @api.multi
     def geocode_address(self):
-        """Get the latitude and longitude by requesting "mapquestapi"
-        see http://open.mapquestapi.com/geocoding/
+        """Get the latitude and longitude by requesting the "Nominatim"
+        search engine from "openstreetmap". See:
+        https://nominatim.org/release-docs/latest/api/Overview/
         """
-        url = 'http://nominatim.openstreetmap.org/search'
-        pay_load = {
-            'limit': 1,
-            'format': 'json',
-            'street': self.street or '',
-            'postalCode': self.zip or '',
-            'city': self.city or '',
-            'state':  self.state_id and self.state_id.name or '',
-            'country': self.country_id and self.country_id.name or '',
-            'countryCodes': self.country_id and self.country_id.code or ''}
+        for partner in self:
+            url = 'http://nominatim.openstreetmap.org/search'
+            pay_load = {
+                'limit': 1,
+                'format': 'json',
+                'street': partner.street or '',
+                'postalCode': partner.zip or '',
+                'city': partner.city or '',
+                'state':  partner.state_id and partner.state_id.name or '',
+                'country': partner.country_id and partner.country_id.name or '',
+                'countryCodes': partner.country_id and partner.country_id.code or ''}
 
-        request_result = requests.get(url, params=pay_load)
-        try:
-            request_result.raise_for_status()
-        except Exception as e:
-            _logger.exception('Geocoding error')
-            raise exceptions.Warning(_(
-                'Geocoding error. \n %s') % e.message)
-        vals = request_result.json()
-        vals = vals and vals[0] or {}
-        self.write({
-            'partner_latitude': vals.get('lat'),
-            'partner_longitude': vals.get('lon'),
-            'date_localization': fields.Date.today()})
+            request_result = requests.get(url, params=pay_load)
+            try:
+                request_result.raise_for_status()
+            except Exception as e:
+                _logger.exception('Geocoding error')
+                raise exceptions.Warning(_('Geocoding error. \n %s') % e.message)
+            vals = request_result.json()
+            vals = vals and vals[0] or {}
+            partner.write({
+                'partner_latitude': vals.get('lat'),
+                'partner_longitude': vals.get('lon'),
+                'date_localization': fields.Date.today()})
 
-    @api.one
+    @api.multi
     def geo_localize(self):
         self.geocode_address()
         return True
 
-    @api.one
+    @api.multi
     @api.depends('partner_latitude', 'partner_longitude')
     def _get_geo_point(self):
         """
@@ -84,11 +84,12 @@ class ResPartner(geo_model.GeoModel):
         If one of those parameters is not set then reset the partner's
         geo_point and do not recompute it
         """
-        if not self.partner_latitude or not self.partner_longitude:
-            self.geo_point = False
-        else:
-            self.geo_point = geo_fields.GeoPoint.from_latlon(
-                self.env.cr, self.partner_latitude, self.partner_longitude)
+        for partner in self:
+            if not partner.partner_latitude or not partner.partner_longitude:
+                partner.geo_point = False
+            else:
+                partner.geo_point = geo_fields.GeoPoint.from_latlon(
+                    partner.env.cr, partner.partner_latitude, partner.partner_longitude)
 
     geo_point = geo_fields.GeoPoint(
         readonly=True, store=True, compute='_get_geo_point')
