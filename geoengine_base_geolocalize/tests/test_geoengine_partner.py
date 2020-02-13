@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 #
 #    Authors: Jonathan Nemry
@@ -17,7 +16,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-import openerp.tests.common as common
+import odoo.tests.common as common
 
 
 class TestGeoenginePartner(common.TransactionCase):
