@@ -44,8 +44,10 @@ class ResPartner(geo_model.GeoModel):
         search engine from "openstreetmap". See:
         https://nominatim.org/release-docs/latest/api/Overview/
         """
+        url = 'http://nominatim.openstreetmap.org/search'
+        headers = {'User-Agent': 'Odoobot/11.0.1.0.0 (OCA-geospatial)'}
+
         for partner in self:
-            url = 'http://nominatim.openstreetmap.org/search'
             pay_load = {
                 'limit': 1,
                 'format': 'json',
@@ -56,7 +58,7 @@ class ResPartner(geo_model.GeoModel):
                 'country': partner.country_id and partner.country_id.name or '',
                 'countryCodes': partner.country_id and partner.country_id.code or ''}
 
-            request_result = requests.get(url, params=pay_load)
+            request_result = requests.get(url, params=pay_load, headers=headers)
             try:
                 request_result.raise_for_status()
             except Exception as e:
