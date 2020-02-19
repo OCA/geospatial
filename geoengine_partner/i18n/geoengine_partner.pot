@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 11.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
@@ -20,13 +20,13 @@ msgid "Address coordinates"
 msgstr ""
 
 #. module: geoengine_partner
-#: model:ir.ui.view,arch_db:geoengine_partner.geo_partner_view_form
-msgid "Geoengine Map"
+#: model:ir.model,name:geoengine_partner.model_res_partner
+msgid "Contact"
 msgstr ""
 
 #. module: geoengine_partner
-#: model:ir.model,name:geoengine_partner.model_res_partner
-msgid "Partner"
+#: model:ir.ui.view,arch_db:geoengine_partner.geo_partner_view_form
+msgid "Geoengine Map"
 msgstr ""
 
 #. module: geoengine_partner
