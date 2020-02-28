@@ -20,6 +20,7 @@ class GeoengineRasterLayer(models.Model):
         ('RoadOnDemand', 'Road on demand'),
         ('Aerial', 'Aerial'),
         ('AerialWithLabels', 'Aerial with labels'),
+        ('AerialWithLabelsOnDemand', 'Aerial with labels on demand'),
         ('collins Bart', 'Collins Bart'),
         ('ordnanceSurvey', 'Ordnance Survey')
         ], string="Imagery Set", default="AerialWithLabels")
