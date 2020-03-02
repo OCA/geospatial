@@ -19,11 +19,9 @@
 ##############################################################################
 
 import logging
-from odoo import api, fields
+from odoo import api, fields, models
 from odoo import exceptions
 from odoo.tools.translate import _
-from odoo.addons.base_geoengine import geo_model
-from odoo.addons.base_geoengine import fields as geo_fields
 
 try:
     import requests
@@ -34,9 +32,12 @@ except ImportError:
 _logger = logging.getLogger(__name__)
 
 
-class ResPartner(geo_model.GeoModel):
+class ResPartner(models.Model):
     """Add geo_point to partner using a function field"""
     _inherit = "res.partner"
+
+    geo_point = fields.GeoPoint(
+        readonly=True, store=True, compute='_get_geo_point')
 
     @api.multi
     def geocode_address(self):
@@ -90,8 +91,5 @@ class ResPartner(geo_model.GeoModel):
             if not partner.partner_latitude or not partner.partner_longitude:
                 partner.geo_point = False
             else:
-                partner.geo_point = geo_fields.GeoPoint.from_latlon(
+                partner.geo_point = fields.GeoPoint.from_latlon(
                     partner.env.cr, partner.partner_latitude, partner.partner_longitude)
-
-    geo_point = geo_fields.GeoPoint(
-        readonly=True, store=True, compute='_get_geo_point')

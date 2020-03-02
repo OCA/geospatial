@@ -18,7 +18,7 @@
 #
 ##############################################################################
 {'name': 'Geospatial support for base_geolocalize',
- 'version': '11.0.0.1.0',
+ 'version': '12.0.1.0.0',
  'category': 'GeoBI',
  'author': "ACSONE SA/NV, Odoo Community Association (OCA)",
  'license': 'AGPL-3',
