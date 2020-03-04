@@ -24,6 +24,11 @@ msgid "Aerial with labels"
 msgstr ""
 
 #. module: geoengine_bing
+#: selection:geoengine.raster.layer,bing_imagery_set:0
+msgid "Aerial with labels on demand"
+msgstr ""
+
+#. module: geoengine_bing
 #: selection:geoengine.raster.layer,raster_type:0
 msgid "Bing"
 msgstr ""
