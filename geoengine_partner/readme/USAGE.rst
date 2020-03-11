@@ -11,7 +11,7 @@ To use this module, you need to:
 * Open a partner form
 * Go in `Geoengine Map` tab
 * Change to edit mode
-* Click on the map to add a point.
+* Click on the map to add a point or update It.
 
 To remove the point click on the trash bin.
 To edit the point drag and drop it.

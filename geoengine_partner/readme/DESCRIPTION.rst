@@ -4,4 +4,6 @@
 Geospatial support of partners
 ==============================
 
-Geolocalise your partner.
+This module allow to geolocalise your partner.
+
+
