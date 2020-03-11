@@ -7,7 +7,7 @@
         <field name="arch" type="xml">
             <notebook>
                 <page string="Geoengine Map">
-                    <field name="geo_point" widget="geo_edit_map"
+                    <field name="partner_point" widget="geo_edit_map"
                            groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
                 </page>
             </notebook>
@@ -25,6 +25,7 @@
                 <field name="zip"/>
                 <field name="city"/>
                 <field name="country_id"/>
+                <field name="partner_point"/>
             </geoengine>
         </field>
         <field eval="16" name="priority"/>
@@ -40,7 +41,7 @@
 
     <record id="geoengine_vector_layer_res_partner" model="geoengine.vector.layer">
         <field name="geo_field_id"
-            ref="geoengine_partner.field_res_partner_geo_point"/>
+            ref="geoengine_partner.field_res_partner__partner_point"/>
         <field name="name">Partner location</field>
         <field eval="6" name="sequence"/>
         <field name="view_id" ref="ir_ui_view_geo_partner"/>
