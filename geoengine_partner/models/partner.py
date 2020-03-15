@@ -22,6 +22,7 @@ class ResPartner(models.Model):
         if self.partner_latitude and self.partner_longitude:
             if not self.partner_point:
                 cr = self.env.cr
-                self.partner_point = fields.GeoPoint.from_latlon(cr,self.partner_latitude, self.partner_longitude)
+                self.partner_point = fields.GeoPoint.from_latlon(
+                    cr, self.partner_latitude, self.partner_longitude)
         else:
             self.partner_point = False
