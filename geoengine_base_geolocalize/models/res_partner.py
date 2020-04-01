@@ -20,10 +20,8 @@
 
 import logging
 
-from odoo import api, exceptions, fields
+from odoo import api, exceptions, fields, models
 from odoo.tools.translate import _
-
-from odoo.addons.base_geoengine import fields as geo_fields, geo_model
 
 try:
     import requests
@@ -34,19 +32,18 @@ except ImportError:
 _logger = logging.getLogger(__name__)
 
 
-class ResPartner(geo_model.GeoModel):
+class ResPartner(models.Model):
     """Add geo_point to partner using a function field"""
 
     _inherit = "res.partner"
 
-    @api.multi
     def geocode_address(self):
         """Get the latitude and longitude by requesting the "Nominatim"
         search engine from "openstreetmap". See:
         https://nominatim.org/release-docs/latest/api/Overview/
         """
         url = "http://nominatim.openstreetmap.org/search"
-        headers = {"User-Agent": "Odoobot/11.0.1.0.0 (OCA-geospatial)"}
+        headers = {"User-Agent": "Odoobot/13.0.1.0.0 (OCA-geospatial)"}
 
         for partner in self:
             pay_load = {
@@ -65,7 +62,7 @@ class ResPartner(geo_model.GeoModel):
                 request_result.raise_for_status()
             except Exception as e:
                 _logger.exception("Geocoding error")
-                raise exceptions.Warning(_("Geocoding error. \n %s") % e.message)
+                raise exceptions.UserError(_("Geocoding error. \n %s") % str(e))
             vals = request_result.json()
             vals = vals and vals[0] or {}
             partner.write(
@@ -76,14 +73,12 @@ class ResPartner(geo_model.GeoModel):
                 }
             )
 
-    @api.multi
     def geo_localize(self):
         self.geocode_address()
         return True
 
-    @api.multi
     @api.depends("partner_latitude", "partner_longitude")
-    def _get_geo_point(self):
+    def _compute_geo_point(self):
         """
         Set the `geo_point` of the partner depending of its `partner_latitude`
         and its `partner_longitude`
@@ -95,8 +90,8 @@ class ResPartner(geo_model.GeoModel):
             if not partner.partner_latitude or not partner.partner_longitude:
                 partner.geo_point = False
             else:
-                partner.geo_point = geo_fields.GeoPoint.from_latlon(
+                partner.geo_point = fields.GeoPoint.from_latlon(
                     partner.env.cr, partner.partner_latitude, partner.partner_longitude
                 )
 
-    geo_point = geo_fields.GeoPoint(readonly=True, store=True, compute="_get_geo_point")
+    geo_point = fields.GeoPoint(readonly=True, store=True, compute="_compute_geo_point")

@@ -20,9 +20,6 @@ import odoo.tests.common as common
 
 
 class TestGeoenginePartner(common.TransactionCase):
-    def setUp(self):
-        common.TransactionCase.setUp(self)
-
     def test_get_geo_point(self):
         partner_id = self.env.ref("base.user_root").partner_id
         partner_id.partner_longitude = False

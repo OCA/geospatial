@@ -19,13 +19,12 @@
 ##############################################################################
 {
     "name": "Geospatial support for base_geolocalize",
-    "version": "11.0.0.1.0",
+    "version": "13.0.1.0.0",
     "category": "GeoBI",
     "author": "ACSONE SA/NV, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "http://www.acsone.eu",
     "depends": ["base", "geoengine_partner", "base_geolocalize"],
-    "external_dependencies": {"python": ["requests"]},
     "data": ["views/res_partner_view.xml"],
     "installable": True,
     "application": True,
