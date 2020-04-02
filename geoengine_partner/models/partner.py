@@ -1,10 +1,10 @@
-# Copyright 2011-2017 Camptocamp SA
+# Copyright 2011-2020 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo.addons.base_geoengine import fields, geo_model
+from odoo import fields, models
 
 
-class ResPartner(geo_model.GeoModel):
+class ResPartner(models.Model):
     """Add geo_point to partner using a function filed"""
 
     _inherit = "res.partner"
