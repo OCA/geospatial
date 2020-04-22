@@ -52,6 +52,11 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
             return def;
         },
 
+        init: function () {
+            this._super.apply(this, arguments);
+            this._setAdditionalLayers();
+        },
+
         // FIXME still used?
         validate: function () {
             this.invalid = false;
@@ -61,33 +66,112 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
         // Private
         // --------------------------------------------------------------------
 
-        _createVectorLayer: function () {
-            this.features = new ol.Collection();
-            this.source = new ol.source.Vector({features: this.features});
+        /**
+         * Define additional readonly layers based on other fields of the model
+         *
+         * To set on the XML view through
+         * options={'add_layer_fields': ['field1', 'field2']}
+         */
+        _setAdditionalLayers: function () {
+            this.vectorFields = this.nodeOptions.add_layer_fields || [];
+        },
+
+        _createVectorLayer: function (field, style) {
+            this.features[field] = new ol.Collection();
+            this.source[field] = new ol.source.Vector({features: this.features[field]});
             return new ol.layer.Vector({
-                source: this.source,
-                style: new ol.style.Style({
+                source: this.source[field],
+                style: style,
+            });
+        },
+
+        _createFeatureStyles: function () {
+            var styles = {
+                edit: new ol.style.Style({
+                    fill: new ol.style.Fill({
+                        opacity: 0.7,
+                        color: '#c0392b',
+                    }),
+                    stroke: new ol.style.Stroke({
+                        width: 5,
+                        opacity: 1,
+                        color: '#c0392b',
+                    }),
+                    image: new ol.style.Circle({
+                        radius: 7,
+                        fill: new ol.style.Fill({
+                            color: '#c0392b',
+                        }),
+                    }),
+                }),
+                readonly: new ol.style.Style({
                     fill: new ol.style.Fill({
                         color: '#ee9900',
                         opacity: 0.7,
                     }),
                     stroke: new ol.style.Stroke({
                         color: '#ee9900',
-                        width: 3,
+                        width: 5,
                         opacity: 1,
                     }),
                     image: new ol.style.Circle({
                         radius: 7,
                         fill: new ol.style.Fill({
-                            color: '#ffcc33',
+                            color: '#ffcb8e',
                         }),
                     }),
-                }),
+                })
+            };
+            return styles
+        },
+
+
+        /**
+         * Creates vector layers from config
+         *
+         * Those layers comes empty and are filled later with
+         * features.
+         */
+        _createVectorLayers: function () {
+            this.vectorLayers = [];
+            this.source = {};
+            this.features = {};
+            var styles = this._createFeatureStyles()
+            this.vectorLayers.push(this._createVectorLayer(this.name, styles.edit));
+
+            _.each(this.vectorFields, function (field) {
+                this.vectorLayers.push(this._createVectorLayer(field, styles.readonly));
+            }.bind(this));
+        },
+
+        /**
+         * Add vector layers to the map
+         *
+         * Those layers are added in 2 groups
+         * The main overlay for edition
+         * The second overlay for readonly layers.
+         */
+        _addVectorLayers: function () {
+            // first create the readonly layers to have a
+            // lower zIndex
+            var readonlyLayers = this.vectorLayers.slice(1);
+            if (readonlyLayers) {
+                this.readonlyOverlaysGroup = new ol.layer.Group({
+                    title: 'Readonly Overlays',
+                    layers: readonlyLayers,
+                });
+                this.map.addLayer(this.readonlyOverlaysGroup);
+            }
+            this.mainOverlaysGroup = new ol.layer.Group({
+                title: 'Main Overlays',
+                layers: this.vectorLayers.slice(0, 1),
             });
+            this.map.addLayer(this.mainOverlaysGroup);
+
         },
 
         _createLayers: function (field_infos) {
-            this.vectorLayer = this._createVectorLayer();
+            this._createVectorLayers();
             this.rasterLayers = this.bgLayers.create([
                 field_infos.edit_raster,
             ]);
@@ -104,7 +188,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
             if (!tab.length) {
                 return;
             }
-            var tab_link = $('a[href="#' + tab[0].id + '"]')
+            var tab_link = $('a[href="#' + tab[0].id + '"]');
             if (!tab_link.length) {
                 return;
             }
@@ -131,8 +215,8 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
 
             var map_zoom = typeof zoom === 'undefined' ? true : zoom;
 
-            if (this.source) {
-                var extent = this.source.getExtent();
+            if (this.source[this.name]) {
+                var extent = this.source[this.name].getExtent();
                 var infinite_extent = [
                     Infinity, Infinity, -Infinity, -Infinity,
                 ];
@@ -156,13 +240,23 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
                     geometry: new ol.format.GeoJSON().readGeometry(value),
                     labelPoint:  new ol.format.GeoJSON().readGeometry(value),
                 });
-                this.source.clear();
-                this.source.addFeature(ft);
+                this.source[this.name].clear();
+                this.source[this.name].addFeature(ft);
                 if (value) {
                     this._updateMapZoom(zoom);
                 } else {
                     this._updateMapEmpty();
                 }
+
+                _.each(this.vectorFields, function (fieldName) {
+                    var value = this.record.data[fieldName];
+                    var ft = new ol.Feature({
+                        geometry: new ol.format.GeoJSON().readGeometry(value),
+                        labelPoint:  new ol.format.GeoJSON().readGeometry(value),
+                    });
+                    this.source[fieldName].clear();
+                    this.source[fieldName].addFeature(ft);
+                }.bind(this));
             }
         },
 
@@ -217,7 +311,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
             };
 
             this.drawControl = new drawControl({
-                source: this.source,
+                source: this.source[this.name],
                 type: handler,
             });
             this.map.addInteraction(this.drawControl);
@@ -233,9 +327,10 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
             }.bind(this);
             this.drawControl.on('drawend', onchange_geom);
 
-            this.features = this.source.getFeaturesCollection();
+            this.features = []
+            this.features[this.name] = this.source[this.name].getFeaturesCollection();
             this.modifyControl = new ol.interaction.Modify({
-                features: this.features,
+                features: this.features[this.name],
                 // The SHIFT key must be pressed to delete vertices, so
                 // that new vertices can be drawn at the same position
                 // of existing vertices
@@ -253,7 +348,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
                 var button = document.createElement('button');
                 button.innerHTML = '<i class="fa fa-trash"/>';
                 button.addEventListener('click', function () {
-                    self.source.clear();
+                    self.source[self.name].clear();
                     self._geometry = null;
                     self._onUIChange();
                 });
@@ -283,8 +378,9 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
                         zoom: 5,
                     }),
                 });
-                this.map.addLayer(this.vectorLayer);
 
+                this._createVectorLayers();
+                this._addVectorLayers();
                 this.format = new ol.format.GeoJSON({
                     internalProjection: this.map.getView().getProjection(),
                     externalProjection: 'EPSG:' + this.srid,
