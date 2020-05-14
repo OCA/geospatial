@@ -1,25 +1,13 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # Copyright 2016 Yannick Vaucher (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import api, fields, models
-
-GEO_VIEW = ("geoengine", "GeoEngine")
+from odoo import fields, models
 
 
 class IrUIView(models.Model):
     _inherit = "ir.ui.view"
 
-    @api.model
-    def _setup_fields(self):
-        """Hack due since the field 'type' is not defined with the new api.
-        """
-        cls = type(self)
-        type_selection = cls._fields["type"].selection
-        if GEO_VIEW not in type_selection:
-            tmp = list(type_selection)
-            tmp.append(GEO_VIEW)
-            cls._fields["type"].selection = tuple(set(tmp))
-        super()._setup_fields()
+    type = fields.Selection(selection_add=[("geoengine", "GeoEngine")])
 
     raster_layer_ids = fields.One2many(
         "geoengine.raster.layer", "view_id", "Raster layers", required=False
