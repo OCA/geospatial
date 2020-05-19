@@ -124,7 +124,7 @@ class GeoModel(models.AbstractModel):
             'srid': field.srid,
             'projection': view.projection,
             'restricted_extent': view.restricted_extent,
-            'default_extent': view.default_extent,
+            'default_extent': view.default_extent or DEFAULT_EXTENT,
             'default_zoom': view.default_zoom,
         }
 

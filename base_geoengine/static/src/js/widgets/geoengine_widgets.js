@@ -207,6 +207,9 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
             // Default extent
             if (map_view) {
                 var extent = this.defaultExtent.split(', ');
+                Object.keys(extent).forEach(key => {
+                    extent[key] = Number(extent[key])
+                });
                 map_view.fit(extent, {maxZoom: this.defaultZoom || 5});
             }
         },
