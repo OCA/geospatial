@@ -12,6 +12,7 @@ from .geo_helper import geo_convertion_helper as convert
 
 logger = logging.getLogger(__name__)
 try:
+    from shapely.geometry import asShape
     from shapely.geometry import Point
     from shapely.geometry.base import BaseGeometry
     from shapely.wkb import loads as wkbloads
@@ -39,7 +40,7 @@ class GeoField(Field):
 
     _slots = {
         'dim': 2,
-        'srid': 900913,
+        'srid': 3857,
         'gist_index': True,
         'manual': True,
     }
@@ -95,6 +96,8 @@ class GeoField(Field):
     @classmethod
     def load_geo(cls, wkb):
         """Load geometry into browse record after read was done"""
+        if isinstance(wkb, BaseGeometry):
+            return wkb
         return wkbloads(wkb, hex=True) if wkb else False
 
     def create_geo_column(self, cr, col_name, table, model):
@@ -254,6 +257,31 @@ class GeoPoint(GeoField):
         res = cr.fetchone()
         return cls.load_geo(res[0])
 
+    @classmethod
+    def to_latlon(cls, cr, geopoint):
+        """  Convert a UTM coordinate point to (latitude, longitude):
+        """
+        # Line to execute to retrieve longitude, latitude  from UTM in postgres command line:
+        #  SELECT ST_X(geom), ST_Y(geom) FROM (SELECT ST_TRANSFORM(ST_SetSRID(
+        #               ST_MakePoint(601179.61612, 6399375,681364), 900913), 4326) as geom) g;
+        if isinstance(geopoint, BaseGeometry):
+            geo_point_instance = geopoint
+        else:
+            geo_point_instance = asShape(geojson.loads(geopoint))
+        cr.execute("""
+                    SELECT
+                        ST_TRANSFORM(
+                            ST_SetSRID(
+                                ST_MakePoint(
+                                        %(coord_x)s, %(coord_y)s
+                                            ),
+                                        %(srid)s
+                                      ), 4326)""",
+                        {'coord_x': geo_point_instance.x, 'coord_y':geo_point_instance.y, 'srid': cls._slots['srid']})
+
+        res = cr.fetchone()
+        point_latlon = cls.load_geo(res[0])
+        return point_latlon.x, point_latlon.y
 
 class GeoPolygon(GeoField):
     """Field for POSTGIS geometry Polygon type"""
