@@ -263,7 +263,7 @@ class GeoPoint(GeoField):
         """
         # Line to execute to retrieve longitude, latitude  from UTM in postgres command line:
         #  SELECT ST_X(geom), ST_Y(geom) FROM (SELECT ST_TRANSFORM(ST_SetSRID(
-        #               ST_MakePoint(601179.61612, 6399375,681364), 900913), 4326) as geom) g;
+        #               ST_MakePoint(601179.61612, 6399375,681364), 3847), 4326) as geom) g;
         if isinstance(geopoint, BaseGeometry):
             geo_point_instance = geopoint
         else:

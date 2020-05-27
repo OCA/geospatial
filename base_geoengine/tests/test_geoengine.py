@@ -18,6 +18,7 @@ from odoo.exceptions import MissingError
 
 from odoo.addons.base_geoengine.geo_model import GeoModel
 from odoo.addons.base_geoengine import fields as geo_fields
+from odoo.addons.base_geoengine.fields import GeoPoint
 from .data import MULTIPOLYGON_1, GEO_VIEW, FORM_VIEW
 from .data import EXPECTED_GEO_COLUMN_MULTIPOLYGON
 
@@ -272,3 +273,29 @@ class TestGeoengine(common.TransactionCase):
         geo_line = geo_fields.GeoLine.from_points(
             self.env.cr, geo_point_1, geo_point_2)
         self.assertEqual(geo_line, expected_line)
+
+
+    def test_from_lat_lon(self):
+        latitude = 49.72842315886126
+        longitude = 5.400488376617026 
+
+        # This is computed with postgis in postgres:
+
+        expected_coordinates = [601179.61612, 6399375.681364]
+
+        geo_point = GeoPoint.from_latlon(self.env.cr, latitude, longitude)
+
+        self.assertAlmostEqual(geo_point.x, expected_coordinates[0], 4)
+        self.assertAlmostEqual(geo_point.y, expected_coordinates[1], 4)
+    
+    def test_to_lat_lon(self):
+        x = 613393.2849222135
+        y = 5587677.847237722
+
+        geo_point = Point(601179.61612, 6399375,681364)
+        expected_lat_lon = [49.72842315886126, 5.400488376617026]
+
+        longitude, latitude = GeoPoint.to_latlon(self.env.cr, geo_point)
+
+        self.assertAlmostEqual(latitude, 49.72842315886126, 4)
+        self.assertAlmostEqual(longitude, 5.400488376617026, 4)
