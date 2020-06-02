@@ -6,10 +6,10 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base_geolocalize.view_crm_partner_geo_form"/>
         <field name="arch" type="xml">
-            <field name="date_localization" position="after">
+            <xpath expr="//page[@name='geo_location']/group" position="after">
                 <field name="geo_point" widget="geo_edit_map"
                        groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"/>
-            </field>
+            </xpath>
         </field>
     </record>
 

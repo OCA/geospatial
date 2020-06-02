@@ -11,8 +11,6 @@
     'depends': [
         'base',
         'geoengine_partner',
-        'base_geolocalize',
-        'base_geolocalize_openstreetmap',
     ],
     'external_dependencies': {
         'python': [
