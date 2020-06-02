@@ -21,6 +21,7 @@ except ImportError:
     logger.warning('Shapely or geojson are not available in the sys path')
 
 
+# pylint: disable=sql-injection, invalid-commit
 class GeoField(Field):
     """ The field descriptor contains the field definition common to all
     specialized fields for geolocalization. Subclasses must define a type
@@ -55,8 +56,7 @@ class GeoField(Field):
         shape_to_write = self.entry_to_shape(value, same_type=True)
         if shape_to_write.is_empty:
             return None
-        else:
-            return shape_to_write.wkt
+        return shape_to_write.wkt
 
     def convert_to_cache(self, value, record, validate=True):
         val = value
@@ -117,7 +117,6 @@ class GeoField(Field):
             raise
         finally:
             cr.commit()
-
         return True
 
     def entry_to_shape(self, value, same_type=False):
@@ -190,6 +189,7 @@ class GeoField(Field):
 
 class GeoLine(GeoField):
     """Field for POSTGIS geometry Line type"""
+
     type = 'geo_line'
     geo_type = 'LINESTRING'
 
@@ -261,27 +261,27 @@ class GeoPoint(GeoField):
     def to_latlon(cls, cr, geopoint):
         """  Convert a UTM coordinate point to (latitude, longitude):
         """
-        # Line to execute to retrieve longitude, latitude  from UTM in postgres command line:
+        # Line to execute to retrieve longitude, latitude  from UTM
+        # in postgres command line:
         #  SELECT ST_X(geom), ST_Y(geom) FROM (SELECT ST_TRANSFORM(ST_SetSRID(
-        #               ST_MakePoint(601179.61612, 6399375,681364), 3847), 4326) as geom) g;
+        #  ST_MakePoint(601179.61612, 6399375,681364), 3847), 4326) as geom) g;
         if isinstance(geopoint, BaseGeometry):
             geo_point_instance = geopoint
         else:
             geo_point_instance = asShape(geojson.loads(geopoint))
         cr.execute("""
-                    SELECT
-                        ST_TRANSFORM(
-                            ST_SetSRID(
-                                ST_MakePoint(
-                                        %(coord_x)s, %(coord_y)s
-                                            ),
-                                        %(srid)s
-                                      ), 4326)""",
-                        {'coord_x': geo_point_instance.x, 'coord_y':geo_point_instance.y, 'srid': cls._slots['srid']})
+                   SELECT
+                   ST_TRANSFORM(
+                   ST_SetSRID(ST_MakePoint(%(coord_x)s, %(coord_y)s),
+                   %(srid)s), 4326)""",
+                   {'coord_x': geo_point_instance.x,
+                    'coord_y': geo_point_instance.y,
+                    'srid': cls._slots['srid']})
 
         res = cr.fetchone()
         point_latlon = cls.load_geo(res[0])
         return point_latlon.x, point_latlon.y
+
 
 class GeoPolygon(GeoField):
     """Field for POSTGIS geometry Polygon type"""

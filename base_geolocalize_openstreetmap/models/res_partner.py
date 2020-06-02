@@ -5,7 +5,7 @@
 import logging
 import requests
 
-from odoo import api, exceptions, models, _
+from odoo import exceptions, models, _
 
 _logger = logging.getLogger(__name__)
 
@@ -16,8 +16,8 @@ class ResPartner(models.AbstractModel):
     _inherit = 'res.partner'
 
     @classmethod
-    def _geocode_address(
-            cls, street=None, zip_code=None, city=None, state=None, country=None):
+    def _geocode_address(cls, street=None,
+                         zip_code=None, city=None, state=None, country=None):
         """Get the latitude and longitude by requesting Openstreetmap"
         """
         pay_load = {
@@ -30,7 +30,7 @@ class ResPartner(models.AbstractModel):
             'country': country or '',
         }
 
-        request_result = requests.get(cls._url, params=pay_load) 
+        request_result = requests.get(cls._url, params=pay_load)
         try:
             request_result.raise_for_status()
         except Exception as e:
@@ -38,14 +38,20 @@ class ResPartner(models.AbstractModel):
             raise exceptions.Warning(
                 _('Geocoding error. \n %s') % e.message)
         values = request_result.json()
-        values = values and values[0] or {}
+        values = values[0] if values else {}
         return values
 
     @classmethod
-    def _geo_localize(cls, apikey, street='', zip='', city='', state='', country=''):
-        result = cls._geocode_address(street=street, zip_code=zip, city=city, state=state, country=country)
-  
+    def _geo_localize(cls,
+                      apikey, street='', zip='',
+                      city='', state='', country=''):
+        # pylint: disable=W0622
+        result = cls._geocode_address(street=street,
+                                      zip_code=zip, city=city,
+                                      state=state, country=country)
+
         if not result:
-            result = cls._geocode_address(city=city, state=state, country=country)
-   
+            result = cls._geocode_address(city=city,
+                                          state=state, country=country)
+
         return result.get('lat'), result.get('lon')

@@ -107,7 +107,7 @@ class ResPartner(geo_model.GeoModel):
                     url = base_url + urlencode(filters)
                     answer = urlopen(url)
                     add.geo_point = self._get_point_from_reply(answer)
-                except Exception, exc:
+                except Exception as exc:
                     logger.exception('error while updating geocodes')
                     if strict:
                         raise except_orm(_('Geoencoding fails'), str(exc))
