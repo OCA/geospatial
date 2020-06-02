@@ -22,33 +22,7 @@ class ResPartner(geo_model.GeoModel):
     """Add geo_point to partner using a function field"""
     _inherit = "res.partner"
 
-    @api.multi
-    def geocode_address(self):
-        """Get the latitude and longitude by requesting "mapquestapi"
-        see http://open.mapquestapi.com/geocoding/
-        """
-        self.ensure_one()
-        values = self.env[
-            'geoengine.geolocalize.openstreetmap'
-        ]._geocode_address(
-            self.street or '',
-            self.zip or '',
-            self.city or '',
-            self.state_id and self.state_id.name or '',
-            self.country_id and self.country_id.name or '',
-            self.country_id and self.country_id.code or '',
-        )
-        self.write({
-            'partner_latitude': values.get('lat'),
-            'partner_longitude': values.get('lon'),
-            'date_localization': fields.Date.today()
-        })
 
-    @api.multi
-    def geo_localize(self):
-        self.ensure_one()
-        self.geocode_address()
-        return True
 
     @api.multi
     @api.depends('partner_latitude', 'partner_longitude')
@@ -68,4 +42,14 @@ class ResPartner(geo_model.GeoModel):
                     rec.env.cr, rec.partner_latitude, rec.partner_longitude)
 
     geo_point = geo_fields.GeoPoint(
-        readonly=True, store=True, compute='_compute_geo_point')
+        store=True, compute='_compute_geo_point', inverse='_inverse_geo_point')
+
+    @api.multi
+    def _inverse_geo_point(self):
+        for rec in self:
+            if not rec.geo_point:
+                # FIXME: For now, if no coordinates are provided, latitude and longitude are set to false
+                rec.partner_longitude, rec.partner_latitude = False, False 
+            else:
+                rec.partner_longitude, rec.partner_latitude = geo_fields.GeoPoint.to_latlon(rec.env.cr, rec.geo_point)
+        
