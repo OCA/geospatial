@@ -2,27 +2,14 @@
 # Copyright 2015 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
-import logging
-from odoo import api, fields
-from odoo import exceptions
-from odoo.tools.translate import _
+from odoo import api
 from odoo.addons.base_geoengine import geo_model
 from odoo.addons.base_geoengine import fields as geo_fields
-
-try:
-    import requests
-except ImportError:
-    logger = logging.getLogger(__name__)
-    logger.warning('requests is not available in the sys path')
-
-_logger = logging.getLogger(__name__)
 
 
 class ResPartner(geo_model.GeoModel):
     """Add geo_point to partner using a function field"""
     _inherit = "res.partner"
-
-
 
     @api.multi
     @api.depends('partner_latitude', 'partner_longitude')
@@ -48,8 +35,7 @@ class ResPartner(geo_model.GeoModel):
     def _inverse_geo_point(self):
         for rec in self:
             if not rec.geo_point:
-                # FIXME: For now, if no coordinates are provided, latitude and longitude are set to false
-                rec.partner_longitude, rec.partner_latitude = False, False 
+                rec.partner_longitude, rec.partner_latitude = False, False
             else:
-                rec.partner_longitude, rec.partner_latitude = geo_fields.GeoPoint.to_latlon(rec.env.cr, rec.geo_point)
-        
+                rec.partner_longitude, rec.partner_latitude = \
+                    geo_fields.GeoPoint.to_latlon(rec.env.cr, rec.geo_point)
