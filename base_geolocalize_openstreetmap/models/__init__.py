@@ -1,1 +1,1 @@
-from . import geolocalize_openstreetmap
+from . import res_partner

@@ -11,7 +11,7 @@
     'author': 'ACSONE SA/NV, Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/geospatial',
     'depends': [
-        'base_geoengine',
+        'base_geolocalize',
     ],
     'external_dependencies': {
         'python': [
