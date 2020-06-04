@@ -1,4 +1,4 @@
-odoo.define('web_view_google_map.FieldsRegistry', function(require) {
+odoo.define('web_view_google_map.FieldsRegistry', function (require) {
     'use strict';
 
     var registry = require('web.field_registry');

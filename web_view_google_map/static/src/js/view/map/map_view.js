@@ -17,7 +17,7 @@ odoo.define('web_view_google_map.MapView', function (require) {
         config: _.extend({}, BasicView.prototype.config, {
             Model: MapModel,
             Renderer: MapRenderer,
-            Controller: MapController
+            Controller: MapController,
         }),
         viewType: 'map',
         mobile_friendly: true,
@@ -73,7 +73,7 @@ odoo.define('web_view_google_map.MapView', function (require) {
                     expr = pair[1];
                     return [color, py.parse(py.tokenize(expr)), expr];
                 }).value();
-        }
+        },
     });
 
     return MapView;
