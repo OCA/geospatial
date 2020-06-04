@@ -16,6 +16,7 @@ odoo.define('web_view_google_map.MapController', function (require) {
             kanban_record_update: '_onUpdateRecord',
             kanban_column_archive_records: '_onArchiveRecords',
         }),
+
         /**
          * @override
          * @param {Object} params
@@ -26,6 +27,7 @@ odoo.define('web_view_google_map.MapController', function (require) {
             this.on_create = params.on_create;
             this.hasButtons = params.hasButtons;
         },
+
         /**
          * @private
          * @param {Widget} kanbanRecord
@@ -89,6 +91,7 @@ odoo.define('web_view_google_map.MapController', function (require) {
                 }
             });
         },
+
         /**
          * @private
          * @param {OdooEvent} event
@@ -116,6 +119,7 @@ odoo.define('web_view_google_map.MapController', function (require) {
                 on_closed: this._reloadAfterButtonClick.bind(this, event.target, event.data),
             });
         },
+
         /**
          * @private
          * @param {OdooEvent} event
@@ -123,6 +127,7 @@ odoo.define('web_view_google_map.MapController', function (require) {
         _onRecordDelete: function (event) {
             this._deleteRecords([event.data.id]);
         },
+
         /**
          * @todo should simply use field_changed event...
          *
@@ -134,6 +139,7 @@ odoo.define('web_view_google_map.MapController', function (require) {
             ev.data.force_save = true;
             this._applyChanges(ev.target.db_id, changes, ev);
         },
+
         /**
          * The interface allows in some case the user to archive a column. This is
          * what this handler is for.
@@ -155,6 +161,7 @@ odoo.define('web_view_google_map.MapController', function (require) {
                     });
             }
         },
+
         /**
          * @private
          * @param {OdooEvent} event
@@ -195,4 +202,5 @@ odoo.define('web_view_google_map.MapController', function (require) {
     });
 
     return MapController;
+
 });
