@@ -27,8 +27,9 @@ odoo.define('web_view_google_map.Utils', function (require) {
         natural_feature: 'short_name',
         airport: 'short_name',
         park: 'short_name',
-        point_of_interest: 'long_name'
+        point_of_interest: 'long_name',
     };
+
     /**
      * Mapping field with an alias
      * key: alias
@@ -40,10 +41,10 @@ odoo.define('web_view_google_map.Utils', function (require) {
         city: 'city',
         zip: 'zip',
         state_id: 'state_id',
-        country_id: 'country_id'
+        country_id: 'country_id',
     };
 
-    function fetchValues(model, field_name, value) {
+    function fetchValues (model, field_name, value) {
         var def = $.Deferred(),
             res = {};
 
@@ -51,7 +52,7 @@ odoo.define('web_view_google_map.Utils', function (require) {
             rpc.query({
                 model: model,
                 method: 'search_read',
-                args: [['|', ['name', '=', value], ['code', '=', value]], ['display_name',]],
+                args: [['|', ['name', '=', value], ['code', '=', value]], ['display_name']],
                 limit: 1,
             }).then(function (record) {
                 res[field_name] = record.length === 1 ? record[0] : false;
@@ -64,7 +65,7 @@ odoo.define('web_view_google_map.Utils', function (require) {
         return def;
     }
 
-    function fetchCountryState(model, country, state) {
+    function fetchCountryState (model, country, state) {
         var def = $.Deferred();
 
         if (model && country && state) {
@@ -83,7 +84,7 @@ odoo.define('web_view_google_map.Utils', function (require) {
         return def;
     }
 
-    function gmaps_get_geolocation(place, options) {
+    function gmaps_get_geolocation (place, options) {
         if (!place) return {};
 
         var vals = {};
@@ -97,7 +98,7 @@ odoo.define('web_view_google_map.Utils', function (require) {
         return vals;
     }
 
-    function gmaps_populate_places(place, place_options) {
+    function gmaps_populate_places (place, place_options) {
         if (!place) return {};
 
         var values = {},
@@ -115,24 +116,24 @@ odoo.define('web_view_google_map.Utils', function (require) {
         return values;
     }
 
-    function gmaps_populate_address(place, address_options, delimiter) {
+    function gmaps_populate_address (place, address_options, delimiter) {
         if (!place) return {};
 
         var address_options = address_options || {},
             fields_delimiter = delimiter || {
                 street: " ",
-                street2: ", "
+                street2: ", ",
             },
             fields_to_fill = {},
             temp, dlmter, result = {};
 
-        // initialize object key and value
+        // Initialize object key and value
         _.each(address_options, function (value, key) {
             fields_to_fill[key] = [];
         });
 
         _.each(address_options, function (options, field) {
-            // turn all fields options into an Array
+            // Turn all fields options into an Array
             options = _.flatten([options]);
             temp = {};
             _.each(place.address_components, function (component) {
@@ -163,6 +164,6 @@ odoo.define('web_view_google_map.Utils', function (require) {
         'gmaps_populate_places': gmaps_populate_places,
         'gmaps_get_geolocation': gmaps_get_geolocation,
         'fetchValues': fetchValues,
-        'fetchCountryState': fetchCountryState
-    }
+        'fetchCountryState': fetchCountryState,
+    };
 });
