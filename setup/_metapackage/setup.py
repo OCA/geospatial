@@ -11,6 +11,7 @@ setuptools.setup(
         'odoo13-addon-base_geoengine',
         'odoo13-addon-geoengine_base_geolocalize',
         'odoo13-addon-geoengine_partner',
+        'odoo13-addon-geoengine_swisstopo',
         'odoo13-addon-test_base_geoengine',
     ],
     classifiers=[
