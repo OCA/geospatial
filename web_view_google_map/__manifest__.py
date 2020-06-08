@@ -4,7 +4,7 @@
 {
     'name': 'Google Map View',
     'summary': 'Add a Google Map view type to the Odoo web client',
-    'version': '12.0.1.1.0',
+    'version': '12.0.1.1.1',
     'author': 'Open Source Integrators, Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/geospatial',
     'license': 'AGPL-3',
