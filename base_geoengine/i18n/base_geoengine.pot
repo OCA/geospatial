@@ -216,6 +216,11 @@ msgid "Geo field"
 msgstr ""
 
 #. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_ui_view__type__geoengine
+msgid "GeoEngine"
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.ui.menu,name:base_geoengine.geoengine_base_menu
 msgid "GeoEngine Backend"
 msgstr ""
@@ -602,6 +607,11 @@ msgstr ""
 #. module: base_geoengine
 #: model:ir.ui.menu,name:base_geoengine.geoengine_view_menu
 msgid "View Management"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__type
+msgid "View Type"
 msgstr ""
 
 #. module: base_geoengine
