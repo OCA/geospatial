@@ -34,11 +34,12 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
     create_vector_layer: function(self) {
         this.features = new ol.Collection();
         this.source = new ol.source.Vector({features: this.features});
-        return new ol.layer.Vector({
+
+        var vl = new ol.layer.Vector({
             source: this.source,
             style: new ol.style.Style({
                 fill: new ol.style.Fill({
-                    color: '#ee9900',
+                    color: (!!this.options && this.options.fill_color) ?  this.options.fill_color :'#ee9900',
                     opacity: 0.7,
                 }),
                 stroke: new ol.style.Stroke({
@@ -54,10 +55,17 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
                 }),
             })
         });
+
+        if (!!this.options && this.options.opacity) {
+            vl.setOpacity(this.options.opacity)
+        }
+        
+        return vl;
     },
 
     create_layers: function(self, field_infos) {
         this.vector_layer = this.create_vector_layer();
+
         this.raster_layers = this.createBackgroundLayers([field_infos.edit_raster]);
         this.raster_layers[0].isBaseLayer = true;
     },
