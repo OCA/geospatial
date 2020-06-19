@@ -149,6 +149,15 @@ msgid "End color class"
 msgstr ""
 
 #. module: base_geoengine
+#: code:addons/base_geoengine/geo_db.py:37
+#, python-format
+msgid "Error,can not automatically initialize spatial postgis support.Database user may have to be superuser and postgres/postgis extentions with their devel header have to be installed. If you do not want Odoo to connect with a super user you can manually prepare your database. To do thisopen a client to your database using a super user and run: \n"
+"CREATE EXTENSION postgis;\n"
+"CREATE EXTENSION postgis_topology;\n"
+""
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.model,name:base_geoengine.model_ir_model_fields
 msgid "Fields"
 msgstr ""
@@ -167,7 +176,7 @@ msgid "General"
 msgstr ""
 
 #. module: base_geoengine
-#: code:addons/base_geoengine/fields.py:126
+#: code:addons/base_geoengine/fields.py:127
 #, python-format
 msgid "Geo Value %s must be of the same type %s as fields"
 msgstr ""
@@ -299,7 +308,7 @@ msgid "Last Updated on"
 msgstr ""
 
 #. module: base_geoengine
-#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type_id_1439
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type_id_1445
 msgid "Layer"
 msgstr ""
 
