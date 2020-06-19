@@ -1,11 +1,18 @@
 # -*- coding: utf-8 -*-
 # Copyright 2011-2016 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import geojson
+import logging
 
 from odoo import api, fields
 from odoo.addons.base_geoengine import geo_model
 from odoo.addons.base_geoengine import fields as geo_fields
+
+
+logger = logging.getLogger(__name__)
+try:
+    import geojson
+except ImportError:
+    logger.warning('geojson is not available in the sys path')
 
 
 class RetailMachine(geo_model.GeoModel):
