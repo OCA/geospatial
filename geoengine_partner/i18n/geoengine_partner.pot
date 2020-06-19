@@ -20,11 +20,6 @@ msgid "Address coordinates"
 msgstr ""
 
 #. module: geoengine_partner
-#: model:ir.ui.view,arch_db:geoengine_partner.geo_partner_view_form
-msgid "Geoengine Map"
-msgstr ""
-
-#. module: geoengine_partner
 #: model:ir.model,name:geoengine_partner.model_res_partner
 msgid "Partner"
 msgstr ""
