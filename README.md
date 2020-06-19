@@ -65,6 +65,8 @@ addon | version | summary
 --- | --- | ---
 [base_geoengine](base_geoengine/) | 10.0.2.0.2 | Geospatial support for Odoo
 [base_geoengine_demo](base_geoengine_demo/) | 10.0.1.0.1 | Geo spatial support Demo
+[base_geolocalize_openstreetmap](base_geolocalize_openstreetmap/) | 10.0.1.0.0 | Open street map API call to geolocalize an address
+[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 10.0.1.0.0 | Geospatial support for base_geolocalize
 [geoengine_partner](geoengine_partner/) | 10.0.1.0.1 | Geospatial support of partners
 
 
@@ -72,7 +74,6 @@ Unported addons
 ---------------
 addon | version | summary
 --- | --- | ---
-[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 8.0.0.1.0 (unported) | Geospatial support for base_geolocalize
 [geoengine_geoname_geocoder](geoengine_geoname_geocoder/) | 8.0.0.1.0 (unported) | Auto Geocoding of partners
 [geoengine_maplausanne](geoengine_maplausanne/) | 9.0.1.0.0 (unported) | Geospatial - map.lausanne.ch layers
 [geoengine_project](geoengine_project/) | 8.0.0.1.0 (unported) | Geospatial support for projects
