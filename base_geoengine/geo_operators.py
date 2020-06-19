@@ -45,6 +45,7 @@ def geo_search(model, domain=None, geo_domain=None, offset=0,
      * geo_contains
      * geo_intersect
     """
+
     cr = model._cr
     domain = domain or []
     geo_domain = geo_domain or []
@@ -114,9 +115,12 @@ def geo_search(model, domain=None, geo_domain=None, offset=0,
         where_statement = " WHERE %s" % (u' '.join(where_clause_arr))
     else:
         where_statement = u''
+
+    # pylint: disable=sql-injection
     sql = 'SELECT "%s".id FROM ' % model._table + from_clause + \
         where_statement + order_by + limit_str + offset_str
     # logger.debug(cursor.mogrify(sql, where_clause_params))
+
     cr.execute(sql, where_clause_params)
     res = cr.fetchall()
     if res:

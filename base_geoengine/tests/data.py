@@ -118,7 +118,7 @@ FORM_VIEW = {
         "the_geom": {
             "geo_type": {
                 "dim": 2,
-                "srid": 900913,
+                "srid": 3857,
                 "type": "geo_multi_polygon"
             },
             "required": False,
@@ -138,5 +138,5 @@ EXPECTED_GEO_COLUMN_MULTIPOLYGON = {
     'default_extent':
         u'-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898',
     'geo_type': 'MULTIPOLYGON',
-    'srid': 900913
+    'srid': 3857
 }

@@ -4,7 +4,7 @@
 import logging
 
 try:
-    from shapely import wkt
+    from shapely import wkt, wkb
     from shapely.geometry import asShape
     from shapely.geometry.base import BaseGeometry
     import geojson
@@ -13,7 +13,7 @@ except ImportError:
     logger.warning('Shapely or geojson are not available in the sys path')
 
 
-def value_to_shape(value):
+def value_to_shape(value, use_wkb=False):
     """Transforms input into a Shapely object"""
     if not value:
         return wkt.loads('GEOMETRYCOLLECTION EMPTY')
@@ -23,6 +23,8 @@ def value_to_shape(value):
         if '{' in value:
             geo_dict = geojson.loads(value)
             return asShape(geo_dict)
+        elif use_wkb:
+            return wkb.loads(value, hex=True)
         else:
             return wkt.loads(value)
     elif hasattr(value, 'wkt'):
