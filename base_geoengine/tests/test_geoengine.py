@@ -27,7 +27,7 @@ _logger = logging.getLogger(__name__)
 class TestGeoengine(common.TransactionCase):
 
     def setUp(self):
-        common.TransactionCase.setUp(self)
+        super(TestGeoengine, self).setUp()
 
         class DummyModel(GeoModel):
             _name = 'test.dummy'
