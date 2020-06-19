@@ -10,6 +10,8 @@ setuptools.setup(
     install_requires=[
         'odoo10-addon-base_geoengine',
         'odoo10-addon-base_geoengine_demo',
+        'odoo10-addon-base_geolocalize_openstreetmap',
+        'odoo10-addon-geoengine_base_geolocalize',
         'odoo10-addon-geoengine_partner',
     ],
     classifiers=[
