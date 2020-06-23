@@ -61,6 +61,11 @@ var formatFeatureHTML = function(a, fields) {
             if (fields.hasOwnProperty(key)) {
                 var field = fields[key];
                 var label = field.string;
+
+                if (field.type.startsWith('geo_')) {
+                    continue;
+                }
+
                 if (field.type === 'selection') {
                     // get display value of selection option
                     for (var option in field.selection) {
@@ -416,12 +421,13 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                 });
                 var olStyleText = new ol.style.Text({
                     text: "",
+                    font: '12px Arial',
                     fill: new ol.style.Fill({
                       color: "#000000"
                     }),
                     stroke: new ol.style.Stroke({
                       color: "#FFFFFF",
-                      width: 2
+                      width: 10
                     })
                 });
                 var styles = [

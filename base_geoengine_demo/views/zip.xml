@@ -16,7 +16,7 @@
         </group>
         <notebook colspan="4">
           <page string="Geometry">
-            <field name="the_geom" colspan="4" widget="geo_edit_map"/>
+            <field name="the_geom" colspan="4" widget="geo_edit_map" options='{"opacity": 0.4, "fill_color":"#33ccff"}'/>
           </page>
         </notebook>
         <field name="total_sales"/>
