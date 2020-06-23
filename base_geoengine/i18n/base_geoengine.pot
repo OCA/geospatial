@@ -188,8 +188,8 @@ msgstr ""
 
 #. module: base_geoengine
 #. openerp-web
-#: code:addons/base_geoengine/static/src/js/views/geoengine_view.js:773
-#: code:addons/base_geoengine/static/src/js/views/geoengine_view.js:774
+#: code:addons/base_geoengine/static/src/js/views/geoengine_view.js:779
+#: code:addons/base_geoengine/static/src/js/views/geoengine_view.js:780
 #, python-format
 msgid "Geo selection"
 msgstr ""
@@ -206,7 +206,7 @@ msgstr ""
 
 #. module: base_geoengine
 #. openerp-web
-#: code:addons/base_geoengine/static/src/js/views/geoengine_view.js:112
+#: code:addons/base_geoengine/static/src/js/views/geoengine_view.js:117
 #, python-format
 msgid "Geoengine"
 msgstr ""
