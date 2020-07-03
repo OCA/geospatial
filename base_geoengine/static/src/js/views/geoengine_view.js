@@ -24,10 +24,13 @@ var GeoengineRecord = require('base_geoengine.Record');
 var formats = require('web.formats');
 var session = require('web.session');
 var utils = require('web.utils');
+var Model = require('web.Model');
+var common = require('web.form_common');
 
 var geoengine_common = require('base_geoengine.geoengine_common');
 
 var _lt = core._lt;
+var _t = core._t;
 
 //var map, layer, vectorLayers = [];
 //TODO: remove this DEBUG
@@ -229,39 +232,62 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
      * cfg - {Object} config object specific to the vector layer
      * data - {Array(features)}
      */
-    createVectorLayer: function(cfg, data) {
+
+    addFeatureToSource: function(cfg, data, vectorSource) {
         var self = this;
-        var geostat = null;
-        var vectorSource = new ol.source.Vector({});
-        if (data.length === 0) {
-            return new ol.layer.Vector({
-                source: vectorSource,
-                title: cfg.name,
-            });
-        }
         _.each(data, function(item) {
             var attributes = _.clone(item);
-            _.each(_.keys(self.geometry_columns), function(item) {
-                delete attributes[item];
-            });
+            _.each(_.keys(self.geometry_columns), function(col) {delete attributes[col]});
 
-            if (cfg.display_polygon_labels === true) {
-                attributes.label = item[cfg.attribute_field_id[1]];
-            }
-            else {
-                attributes.label = '';
-            }
+            attributes.label = (!!cfg.display_polygon_labels) ? item[cfg.attribute_field_id[1]] : '';
+            attributes.model = (!!cfg.model_id) ? cfg.model_id[2] : self.model;
 
             var json_geometry = item[cfg.geo_field_id[1]];
+
             if (json_geometry) {
-                vectorSource.addFeature(
-                    new ol.Feature({
-                        geometry: new ol.format.GeoJSON().readGeometry(json_geometry),
-                        attributes: attributes,
-                    })
-                );
+              vectorSource.addFeature(
+                  new ol.Feature({
+                      geometry: new ol.format.GeoJSON().readGeometry(json_geometry),
+                      attributes: attributes,
+                  })
+              );
+          }
+        })
+
+    },
+
+    createVectorLayer: function(cfg, data) {
+        var self = this;
+        if (!!cfg.model_id){
+
+            var model = new Model(cfg.model_id[2]);
+            var fields_to_read = [cfg.geo_field_id[1]];
+                        
+            if (cfg.attribute_field_id) {
+                fields_to_read.push(cfg.attribute_field_id[1]);
             }
-        });
+
+            var vectorSource = new ol.source.Vector({
+                title: cfg.name,
+                loader: function(extent, resolution, projection) {
+                   model.query(fields_to_read).all().then(function(result) {
+                        self.addFeatureToSource(cfg, result, vectorSource)
+                  })},
+                strategy: ol.loadingstrategy.all});
+                     
+        }
+        else {
+            if (data.length === 0) {
+                return new ol.layer.Vector({
+                    source: vectorSource,
+                    title: cfg.name,
+                });
+            }
+            var vectorSource = new ol.source.Vector({});
+            self.addFeatureToSource(cfg, data, vectorSource);
+        }
+
+
         var styleInfo = self.styleVectorLayer(cfg, data);
         // init legend
         var parentContainer = self.$el.find('#map_legend');
@@ -521,7 +547,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         var fields = self.fields_view.fields;
         var record_options = {
             fields: fields,
-            model: self.model,
+            model: record.model,
             qweb: self.qweb,
         };
         return new GeoengineRecord(self, record, record_options);
@@ -788,18 +814,37 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     },
 
     open_record: function (feature, options) {
+        var self = this;
         var attributes = feature.get('attributes');
+        var model = attributes.model;
         var oid = attributes.id;
-        if (this.dataset.select_id(oid)) {
-            this.do_switch_view('form', null, options); //, null, { mode: "edit" });
-        } else {
-            this.do_warn("Geoengine: could not find id#" + oid);
-        }
-    },
 
+        if (model === this.model) {
+            if (this.dataset.select_id(oid)) {
+                this.do_switch_view('form', null, options); //, null, { mode: "edit" });
+            } else {
+                this.do_warn("Geoengine: could not find id#" + oid);
+            }
+        } 
+        else {
+            var model_obj = new Model(model);
+            model_obj.call('get_formview_id', [[oid], self.dataset.context]).then(function(view_id){
+                var pop = new common.FormViewDialog(self, {
+                    res_model: model,
+                    res_id: oid,
+                    context: self.dataset.context,
+                    title: _t("Open: ") + attributes.name,
+                    view_id: view_id,
+                    readonly: true
+                }).open();
+            });
+        }
+
+    }
 });
 
 core.view_registry.add('geoengine', GeoengineView);
 
 return GeoengineView;
 });
+

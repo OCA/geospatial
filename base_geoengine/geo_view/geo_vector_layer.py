@@ -48,3 +48,4 @@ class GeoVectorLayer(models.Model):
     active_on_startup = fields.Boolean(
         help="Layer will be shown on startup if checked.")
     layer_opacity = fields.Float('Layer Opacity')
+    model_id = fields.Many2one('ir.model', 'Model to use')
