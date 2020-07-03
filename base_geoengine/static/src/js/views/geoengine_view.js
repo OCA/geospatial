@@ -261,7 +261,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         if (!!cfg.model_id){
 
             var model = new Model(cfg.model_id[2]);
-            var fields_to_read = [cfg.geo_field_id[1]];
+            var fields_to_read = [cfg.geo_field_id[1], 'display_name'];
                         
             if (cfg.attribute_field_id) {
                 fields_to_read.push(cfg.attribute_field_id[1]);
@@ -833,7 +833,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                     res_model: model,
                     res_id: oid,
                     context: self.dataset.context,
-                    title: _t("Open: ") + attributes.name,
+                    title: _t("Open: ") + attributes.display_name,
                     view_id: view_id,
                     readonly: true
                 }).open();
