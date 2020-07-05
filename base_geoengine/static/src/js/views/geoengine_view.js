@@ -240,7 +240,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             _.each(_.keys(self.geometry_columns), function(col) {delete attributes[col]});
 
             attributes.label = (!!cfg.display_polygon_labels) ? item[cfg.attribute_field_id[1]] : '';
-            attributes.model = (!!cfg.model_id) ? cfg.model_id[2] : self.model;
+            attributes.model = (!!cfg.model) ? cfg.model : self.model;
 
             var json_geometry = item[cfg.geo_field_id[1]];
 
@@ -258,11 +258,11 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
 
     createVectorLayer: function(cfg, data) {
         var self = this;
-        if (!!cfg.model_id){
+        if (!!cfg.model){
 
-            var model = new Model(cfg.model_id[2]);
+            var model = new Model(cfg.model);
             var fields_to_read = [cfg.geo_field_id[1], 'display_name'];
-                        
+
             if (cfg.attribute_field_id) {
                 fields_to_read.push(cfg.attribute_field_id[1]);
             }

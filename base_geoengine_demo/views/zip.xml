@@ -81,7 +81,7 @@
 <record id="geoengine_vector_layer_othermodeltest0" model="geoengine.vector.layer">
   <field name="model_id" ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine" />
   <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_the_point"/>
-  <field name="name">Basic retail</field>
+  <field name="name">All retail machines</field>
   <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
   <field name="geo_repr">basic</field>
   <field name="begin_color">#0aa9ff</field>
