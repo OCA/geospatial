@@ -240,8 +240,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             _.each(_.keys(self.geometry_columns), function(col) {delete attributes[col]});
 
             attributes.label = (!!cfg.display_polygon_labels) ? item[cfg.attribute_field_id[1]] : '';
-            attributes.model = (!!cfg.model) ? cfg.model : self.model;
-
+            attributes._layer_cfg = cfg;
             var json_geometry = item[cfg.geo_field_id[1]];
 
             if (json_geometry) {
@@ -816,7 +815,8 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     open_record: function (feature, options) {
         var self = this;
         var attributes = feature.get('attributes');
-        var model = attributes.model;
+        var layer_cfg = attributes._layer_cfg;
+        var model = (!!layer_cfg.model) ? layer_cfg.model : self.model;
         var oid = attributes.id;
 
         if (model === this.model) {
