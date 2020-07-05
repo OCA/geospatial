@@ -17,6 +17,11 @@
                     <field name="readonly"/>
                     <field name="layer_opacity"/>
                 </group>
+                <group string="Related model" col="4" colspan="4">
+                    <field name="model_id"/>
+                    <field name="model_view_id" domain="[('mode', '=', 'geoengine')]"/>
+                    <field name="model_domain"/>
+                </group>
                 <group string="Representation" col="4" colspan="4">
                     <field name="geo_repr"/>
                 </group>

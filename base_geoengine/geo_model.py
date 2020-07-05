@@ -127,6 +127,7 @@ class GeoModel(models.BaseModel):
                     layer_dict.get('geo_field_id', False))
                 layer_dict['model'] = layer.model_id.model
                 layer_dict['model_domain'] = layer.model_domain
+                layer_dict['model_view_id'] = layer.model_view_id.id
                 res['geoengine_layers']['actives'].append(layer_dict)
                 # adding geo column desc
                 geo_f_name = layer_dict['geo_field_id'][1]
