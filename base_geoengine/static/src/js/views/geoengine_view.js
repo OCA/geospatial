@@ -260,6 +260,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         if (!!cfg.model){
 
             var model = new Model(cfg.model);
+            var domain = (cfg.model_domain)? cfg.model_domain: [];
             var fields_to_read = [cfg.geo_field_id[1], 'display_name'];
 
             if (cfg.attribute_field_id) {
@@ -269,7 +270,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             var vectorSource = new ol.source.Vector({
                 title: cfg.name,
                 loader: function(extent, resolution, projection) {
-                   model.query(fields_to_read).all().then(function(result) {
+                   model.query(fields_to_read).filter(domain).all().then(function(result) {
                         self.addFeatureToSource(cfg, result, vectorSource)
                   })},
                 strategy: ol.loadingstrategy.all});
