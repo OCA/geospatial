@@ -121,10 +121,6 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
     template: "GeoengineView",
     display_name: _lt('Geoengine'),
     icon: 'fa-map-o',
-    events: {
-        'click a.ol-popup-closer': 'hide_popup',
-        'click a.ol-popup-edit': 'open_popup_record',
-    },
 
     init: function() {
         this._super.apply(this, arguments);
@@ -556,8 +552,19 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         var overlayPopup = new ol.Overlay({
             element: popup_element,
             positioning: 'bottom-center',
-            stopEvent: false
+            stopEvent: true
         });
+        $popup.find('a.ol-popup-edit').click(
+            function(event) {
+                self.open_popup_record(event);
+            }
+        );
+        $popup.find('a.popup-closer').click(
+            function(event) {
+                self.hide_popup(event);
+            }
+        );
+
         self.popup_element = popup_element;
         self.overlayPopup = overlayPopup;
         return overlayPopup;
