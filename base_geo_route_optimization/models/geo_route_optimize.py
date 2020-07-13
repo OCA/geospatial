@@ -35,15 +35,6 @@ class GeoRouteOptimize(models.AbstractModel):
         """ Build and send the API request for the given origin and
            destination addresses.
         """
-
-        def build_address_str(addresses):
-            # Build a pipe-separated string of addresses
-            address_str = ""
-            for i in range(len(addresses) - 1):
-                address_str += addresses[i] + "|"
-            address_str += addresses[-1]
-            return address_str
-
         ICPSudo = self.env["ir.config_parameter"].sudo()
         api_key = ICPSudo.get_param("google.api_key_distance_matrix")
         if not api_key:
@@ -51,8 +42,8 @@ class GeoRouteOptimize(models.AbstractModel):
         request = (
             "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial"
         )
-        origin_address_str = build_address_str(origin_addresses)
-        dest_address_str = build_address_str(dest_addresses)
+        origin_address_str = "|".join(origin_addresses)
+        dest_address_str = "|".join(dest_addresses)
         request = (
             request
             + "&origins="
@@ -150,14 +141,14 @@ class GeoRouteOptimize(models.AbstractModel):
         unsorted_ids = self.ids
         num_vehicles = 1
         # A depot (start & end point) is the first index in `[addresses]`
-        depot = 0
+        DEPOT = 0
         destinations = self.prepare_destinations()
         addresses = [origin] + destinations
         distance_matrix = self.create_distance_matrix(addresses)
         _logger.info("Distance Matrix: %s", distance_matrix)
         # Create the routing index manager.
         manager = pywrapcp.RoutingIndexManager(
-            len(distance_matrix), num_vehicles, depot
+            len(distance_matrix), num_vehicles, DEPOT
         )
         # Create Routing Model.
         routing = pywrapcp.RoutingModel(manager)
@@ -189,7 +180,7 @@ class GeoRouteOptimize(models.AbstractModel):
             route = route_dict["route"]
             for dest in route:
                 # depot location does not get added to the list of ids
-                if route[dest] != depot:
+                if route[dest] != DEPOT:
                     sorted_ids.append(unsorted_ids[dest - 1])
             _logger.info("Sorted IDs: %s", sorted_ids)
             durations = route_dict["durations"]
