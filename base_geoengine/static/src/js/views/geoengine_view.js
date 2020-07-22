@@ -266,6 +266,10 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
 
     createVectorLayer: function(cfg, data) {
         var self = this;
+        var lv = new ol.layer.Vector({
+            title: cfg.name,
+            active_on_startup: cfg.active_on_startup,
+        });
         if (!!cfg.model){
             var vectorSource = new ol.source.Vector({
                 title: cfg.name,
@@ -286,11 +290,12 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
 
                         model.query(fields_to_read).filter(domain).all().then(function(result) {
                             self.addFeatureToSource(cfg, result,  fields, qweb, vectorSource)
+                            vectorSource.dispatchEvent(new ol.source.VectorEvent("vector.source.loaded", {"cfg":cfg, "data": result}))
                         })
                     });
                 },
-                strategy: ol.loadingstrategy.all});
-
+                strategy: ol.loadingstrategy.all
+            });
         }
         else {
             if (data.length === 0) {
@@ -303,31 +308,18 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             var qweb = self.qweb;
             var fields = self.fields_view.fields;
             self.addFeatureToSource(cfg, data, fields, qweb, vectorSource);
+            self.styleVectorLayer(lv, cfg, data)
         }
+        lv.setSource(vectorSource);
 
-        var styleInfo = self.styleVectorLayer(cfg, data);
-        // init legend
-        var parentContainer = self.$el.find('#map_legend');
-        var elLegend = $(styleInfo.legend || '<div/>');
-        elLegend.hide();
-        parentContainer.append(elLegend);
-        var lv = new ol.layer.Vector({
-            source: vectorSource,
-            title: cfg.name,
-            active_on_startup: cfg.active_on_startup,
-            style: styleInfo.style,
-        });
-        lv.on('change:visible', function(e){
-            if(lv.getVisible()){
-                elLegend.show();
-            } else {
-                elLegend.hide();
-            }
+        vectorSource.on("vector.source.loaded", function(e){
+            self.styleVectorLayer(lv, e.feature.cfg, e.feature.data);
+            // The loading of the source is triggered by the change:visible event
+            // since the styling could build a legend menu we redispatch the
+            // change:visible event to display the legend
+            lv.dispatchEvent('change:visible');
         });
         this.vectorSources.push(vectorSource);
-        if (cfg.layer_opacity){
-            lv.setOpacity(cfg.layer_opacity);
-        }
         return lv;
     },
 
@@ -340,7 +332,29 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
         return values;
     },
 
-    styleVectorLayer: function(cfg, data) {
+    styleVectorLayer: function(layer, cfg, data) {
+        var self = this;
+        var styleInfo = self._buildStyleVectorLayer(cfg, data);
+        // set opacity
+        if (cfg.layer_opacity){
+            layer.setOpacity(cfg.layer_opacity);
+        }
+        // init legend
+        var parentContainer = self.$el.find('#map_legend');
+        var elLegend = $(styleInfo.legend || '<div/>');
+        elLegend.hide();
+        parentContainer.append(elLegend);
+        layer.setStyle(styleInfo.style);
+        layer.on('change:visible', function(e){
+            if(layer.getVisible()){
+                elLegend.show();
+            } else {
+                elLegend.hide();
+            }
+        });
+    },
+
+    _buildStyleVectorLayer: function(cfg, data) {
         var self = this;
         var indicator = cfg.attribute_field_id[1];
         var opacity = 0.8; // TODO to be defined on cfg
@@ -825,6 +839,11 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
                     self.zoom_to_extent_ctrl
                 ]),
             });
+
+            /*var sidebar = new ol.control.Sidebar({ element: 'sidebar', position: 'left' });
+            var toc = document.getElementById("layers");
+             ol.control.LayerSwitcher.renderPanel(map, toc);
+            map.addControl(sidebar);*/
             var layerSwitcher = new ol.control.LayerSwitcher({});
             map.addControl(layerSwitcher);
             self.map = map;

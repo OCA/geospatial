@@ -164,6 +164,21 @@
   <field name="layer_opacity">0.9</field>
 </record>
 
+<record id="geoengine_vector_layer_retailmachine_zip" model="geoengine.vector.layer">
+  <field name="model_id" ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine" />
+  <field name="model_view_id" ref="base_geoengine_demo.retail_machine_details_view_geoengine"/>
+  <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_the_point"/>
+  <field name="name">Retail Machine Colored on total sales quantile</field>
+  <field name="classification">quantile</field>
+  <field eval="6" name="sequence"/>
+  <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
+  <field name="geo_repr">colored</field>
+  <field eval="5" name="nb_class"/>
+  <field name="attribute_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_total_sales"/>
+  <field name="begin_color">#4B69FD</field>
+  <field name="end_color">#FF680A</field>
+</record>
+
 <record id="geoengine_vector_layer_coloredrangetest0" model="geoengine.vector.layer">
   <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip_the_geom"/>
   <field name="name">Colored range ZIP</field>
