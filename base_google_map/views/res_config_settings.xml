@@ -20,8 +20,12 @@
                                     </div>
                                     <div class="content-group">
                                         <div class="mt16">
-                                            <label for="google_maps_view_api_key" string="Api key"/>
+                                            <label for="google_maps_view_api_key" string="Google Maps Api key"/>
                                             <field name="google_maps_view_api_key"/>
+                                        </div>
+                                        <div class="mt16">
+                                            <label for="google_autocomplete_api_key" string="Google Autocomplete Api key"/>
+                                            <field name="google_autocomplete_api_key"/>
                                         </div>
                                         <div class="mt16">
                                             <label for="google_maps_theme" string="Theme"/>
