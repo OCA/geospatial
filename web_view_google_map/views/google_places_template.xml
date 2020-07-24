@@ -26,6 +26,10 @@
             <script type="text/javascript" src="/web_view_google_map/static/src/js/view/map/map_renderer.js"></script>
             <script type="text/javascript" src="/web_view_google_map/static/src/js/view/map/map_view.js"></script>
             <script type="text/javascript" src="/web_view_google_map/static/src/js/view/view_registry.js"></script>
+            <script type="text/javascript" src="/web_view_google_map/static/src/js/fields/relational_fields.js"></script>
+            <script type="text/javascript" src="/web_view_google_map/static/src/js/widgets/utils.js"></script>
+            <script type="text/javascript" src="/web_view_google_map/static/src/js/widgets/gplaces_autocomplete.js"></script>
+            <script type="text/javascript" src="/web_view_google_map/static/src/js/widgets/fields_registry.js"></script>
         </xpath>
     </template>
 </odoo>
