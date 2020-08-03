@@ -369,6 +369,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
 
         _renderMap: function () {
             if (!this.map) {
+                var projection = new ol.proj.get(this.projectionCode);
                 var $el = this.$el[0];
                 $($el).css({width: '100%', height: '100%'});
                 this.map = new ol.Map({
@@ -377,14 +378,15 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
                     view: new ol.View({
                         center: [0, 0],
                         zoom: 5,
+                        projection: projection,
                     }),
                 });
 
                 this._createVectorLayers();
                 this._addVectorLayers();
                 this.format = new ol.format.GeoJSON({
-                    internalProjection: this.map.getView().getProjection(),
-                    externalProjection: 'EPSG:' + this.srid,
+                    featureProjection: projection,
+                    defaultDataProjection: 'EPSG:' + this.srid,
                 });
 
                 $(document).trigger('FieldGeoEngineEditMap:ready', [this.map]);
@@ -408,7 +410,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
             }).then(function (result) {
                 this._createLayers(result);
                 this.geoType = result.geo_type;
-                this.projection = result.projection;
+                this.projectionCode = result.projection;
                 this.defaultExtent = result.default_extent;
                 this.defaultZoom = result.default_zoom;
                 this.restrictedExtent = result.restricted_extent;
