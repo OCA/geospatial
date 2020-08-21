@@ -47,3 +47,7 @@ script:
 after_success:
   - if [ -z "$DOCS" ] ; then travis_after_tests_success; fi
   - if [ -n "$DOCS" ] ; then ./.travis_push_doc; fi
+
+branches:
+  except:
+    - /^merge-branch-.*$/
