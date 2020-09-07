@@ -18,6 +18,55 @@ var ATTRIBUTIONS = '<a target="_blank" href="https://www.swisstopo.admin.ch">swi
  */
 var EXTENT = [420000, 30000, 900000, 350000];
 
+var PROJECTION_CODE = "EPSG:21781";
+
+var init_EPSG_21781 = function (self) {
+    // Adding proj4
+    self.jsLibs.push(
+        '/geoengine_swisstopo/static/lib/proj4.js'
+    );
+};
+
+var define_EPSG_21781 = function () {
+    // add swiss projection to allow conversions
+    if (!ol.proj.get(PROJECTION_CODE)) {
+        proj4.defs('EPSG:21781', '+proj=somerc +lat_0=46.95240555555556 ' +
+            '+lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel ' +
+            '+towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs');
+    }
+};
+
+
+odoo.define('geoengine_swisstopo.projection_EPSG_21781', function (require) {
+    "use strict";
+
+    var GeoengineWidgets = require('base_geoengine.geoengine_widgets');
+    var GeoengineView = require('base_geoengine.GeoengineView');
+
+    GeoengineWidgets.FieldGeoEngineEditMap.include({
+        init: function (parent) {
+            this._super.apply(this, arguments);
+            init_EPSG_21781(this);
+        },
+        _render: function (parent) {
+            define_EPSG_21781();
+            this._super.apply(this, arguments);
+        },
+
+    });
+    GeoengineView.include({
+        init: function (parent) {
+            this._super.apply(this, arguments);
+            init_EPSG_21781(this);
+        },
+        _render: function (parent) {
+            define_EPSG_21781();
+            this._super.apply(this, arguments);
+        },
+
+    });
+});
+
 
 odoo.define('geoengine_swisstopo.BackgroundLayers', function (require) {
     "use strict";
@@ -43,6 +92,7 @@ odoo.define('geoengine_swisstopo.BackgroundLayers', function (require) {
                 var layer = l.layername || 'ch.swisstopo.pixelkarte-farbe';
 
                 var url = BASE_URL.replace('{format}', format);
+                var projection = ol.proj.get(PROJECTION_CODE);
                 var source = new ol.source.WMTS({
                     attributions: [
                         new ol.Attribution({
@@ -53,7 +103,7 @@ odoo.define('geoengine_swisstopo.BackgroundLayers', function (require) {
                     dimensions: {
                         'Time': l.time || 'current',
                     },
-                    projection: 'EPSG:21781',
+                    projection: projection,
                     requestEncoding: 'REST',
                     layer: layer,
                     style: 'default',

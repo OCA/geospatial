@@ -1,10 +1,14 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # Copyright 2016 Yannick Vaucher (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import logging
+
 from odoo import _, api, models
 from odoo.exceptions import except_orm, MissingError
 from . import geo_operators
 from . import fields as geo_fields
+
+logger = logging.getLogger(__name__)
 
 
 DEFAULT_EXTENT = ('-123164.85222423, 5574694.9538936, '
@@ -118,7 +122,7 @@ class GeoModel(models.AbstractModel):
             raster = raster_obj.search([('view_id', '=', view.id)], limit=1)
         if not raster:
             raise MissingError(_('No raster layer for view %s') % (view.name,))
-        return {
+        res = {
             'edit_raster': raster.read()[0],
             'geo_type': field.geo_type,
             'srid': field.srid,
@@ -127,6 +131,8 @@ class GeoModel(models.AbstractModel):
             'default_extent': view.default_extent or DEFAULT_EXTENT,
             'default_zoom': view.default_zoom,
         }
+        logger.debug("Parameters for geo field {}:\n{}".format(column, res))
+        return res
 
     @api.model
     def geo_search(self, domain=None, geo_domain=None, offset=0,
