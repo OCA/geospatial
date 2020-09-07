@@ -14,7 +14,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: base_geoengine
-#: code:addons/base_geoengine/geo_model.py:113
+#: code:addons/base_geoengine/geo_model.py:117
 #, python-format
 msgid "%s column does not exists or is not a geo field"
 msgstr ""
@@ -371,13 +371,13 @@ msgid "Name of the char field or selection field used for comparison"
 msgstr ""
 
 #. module: base_geoengine
-#: code:addons/base_geoengine/geo_model.py:48
+#: code:addons/base_geoengine/geo_model.py:52
 #, python-format
 msgid "No GeoEngine view defined for the model %s"
 msgstr ""
 
 #. module: base_geoengine
-#: code:addons/base_geoengine/geo_model.py:120
+#: code:addons/base_geoengine/geo_model.py:124
 #, python-format
 msgid "No raster layer for view %s"
 msgstr ""
@@ -418,7 +418,7 @@ msgid "POLYGON"
 msgstr ""
 
 #. module: base_geoengine
-#: code:addons/base_geoengine/geo_model.py:49
+#: code:addons/base_geoengine/geo_model.py:53
 #, python-format
 msgid "Please create a view or modify view mode"
 msgstr ""
