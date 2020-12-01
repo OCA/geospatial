@@ -11,13 +11,16 @@ class TestGeolocalizeOpenstreetmap(common.TransactionCase):
         self.expected_longitude = 4.6132813
 
         # First, test a street known by OSM
+        belgium = self.env.ref("base.be")
+        namur_values = {"name": "Namur", "code": "NA", "country_id": belgium.id}
+        namur_state = self.env["res.country.state"].create(namur_values)
         vals = {
             "name": "Partner Project",
             "street": "Rue bois des noix",
-            "country_id": self.env.ref("base.be").id,
+            "country_id": belgium.id,
             "zip": "5060",
             "city": "Tamines",
-            "state": "Namur",
+            "state_id": namur_state.id,
         }
 
         self.partner_id_known = self.env["res.partner"].create(vals)
@@ -48,7 +51,7 @@ class TestGeolocalizeOpenstreetmap(common.TransactionCase):
             responses.Response(
                 method="GET",
                 url="https://nominatim.openstreetmap.org/search?"
-                + "city=Tamines&format=json&country=Belgium&"
+                + "city=Tamines&format=json&country=Belgium&state=Namur&"
                 + "state=&street=Rue+bois+des+noix&limit=1&postalCode=5060",
                 match_querystring=True,
                 json=[
