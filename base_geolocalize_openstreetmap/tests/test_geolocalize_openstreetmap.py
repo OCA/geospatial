@@ -6,7 +6,6 @@ import odoo.tests.common as common
 
 
 class TestGeolocalizeOpenstreetmap(common.TransactionCase):
-
     def setUp(self):
         super(TestGeolocalizeOpenstreetmap, self).setUp()
         self.expected_latitude = 50.4311411
@@ -14,119 +13,137 @@ class TestGeolocalizeOpenstreetmap(common.TransactionCase):
 
         # First, test a street known by OSM
         vals = {
-            'name': 'Partner Project',
-            'street': 'Rue bois des noix',
-            'country_id': self.env.ref('base.be').id,
-            'zip': '5060',
-            'city': 'Tamines',
-            'state': 'Namur'
+            "name": "Partner Project",
+            "street": "Rue bois des noix",
+            "country_id": self.env.ref("base.be").id,
+            "zip": "5060",
+            "city": "Tamines",
+            "state": "Namur",
         }
 
-        self.partner_id_known = self.env['res.partner'].create(vals)
+        self.partner_id_known = self.env["res.partner"].create(vals)
 
         # Second, test a fake street to force the code to go to
         # the second iteration
         vals2 = {
-            'name': 'Partner Project',
-            'street': 'Rue test',
-            'city': 'Tamines',
-            'country_id': self.env.ref('base.be').id,
+            "name": "Partner Project",
+            "street": "Rue test",
+            "city": "Tamines",
+            "country_id": self.env.ref("base.be").id,
         }
-        self.partner_id_known_second = self.env['res.partner'].create(vals2)
+        self.partner_id_known_second = self.env["res.partner"].create(vals2)
 
         # Third, test a fake street to force the code to go
         # to the second iteration
         vals3 = {
-            'name': 'Partner Project',
-            'street': 'Rue test',
-            'city': 'Tmnss',
-            'country_id': self.env.ref('base.be').id,
+            "name": "Partner Project",
+            "street": "Rue test",
+            "city": "Tmnss",
+            "country_id": self.env.ref("base.be").id,
         }
-        self.partner_id_not_known = self.env['res.partner'].create(vals3)
+        self.partner_id_not_known = self.env["res.partner"].create(vals3)
 
     @responses.activate
     def test_osm_found_lat_long_with_mock(self):
         responses.add(
             responses.Response(
-                method='GET',
-                url='https://nominatim.openstreetmap.org/search?' +
-                    'city=Tamines&format=json&country=Belgium&' +
-                    'state=&street=Rue+bois+des+noix&limit=1&postalCode=5060',
+                method="GET",
+                url="https://nominatim.openstreetmap.org/search?"
+                + "city=Tamines&format=json&country=Belgium&"
+                + "state=&street=Rue+bois+des+noix&limit=1&postalCode=5060",
                 match_querystring=True,
-                json=[{'lat': self.expected_latitude,
-                       'lon': self.expected_longitude}],
-                status=200
-            ))
+                json=[
+                    {
+                        "lat": self.expected_latitude,
+                        "lon": self.expected_longitude,
+                    }
+                ],
+                status=200,
+            )
+        )
 
         self.partner_id_known.geo_localize()
 
-        self.assertEqual(len(responses.calls), 1, 'call does not exist')
+        self.assertEqual(len(responses.calls), 1, "call does not exist")
         self.assertAlmostEqual(
-            self.partner_id_known.partner_latitude, self.expected_latitude, 3,
-            'Latitude Should be equals')
+            self.partner_id_known.partner_latitude,
+            self.expected_latitude,
+            3,
+            "Latitude Should be equals",
+        )
         self.assertAlmostEqual(
             self.partner_id_known.partner_longitude,
-            self.expected_longitude, 3,
-            'Longitude Should be equals')
+            self.expected_longitude,
+            3,
+            "Longitude Should be equals",
+        )
 
     @responses.activate
     def test_osm_found_lat_long_second_time_with_mock(self):
         responses.add(
             responses.Response(
-                method='GET',
-                url='https://nominatim.openstreetmap.org/search?city=Tamines' +
-                    '&format=json&country=Belgium&state=&street=Rue+test&' +
-                    'limit=1&postalCode=',
+                method="GET",
+                url="https://nominatim.openstreetmap.org/search?city=Tamines"
+                + "&format=json&country=Belgium&state=&street=Rue+test&"
+                + "limit=1&postalCode=",
                 match_querystring=True,
                 json=[{}],
-                status=200
-            ))
+                status=200,
+            )
+        )
         responses.add(
             responses.Response(
-                method='GET',
-                url='https://nominatim.openstreetmap.org/search?city=Tamines' +
-                    '&format=json&country=Belgium&state=&street=&' +
-                    'limit=1&postalCode=',
+                method="GET",
+                url="https://nominatim.openstreetmap.org/search?city=Tamines"
+                + "&format=json&country=Belgium&state=&street=&"
+                + "limit=1&postalCode=",
                 match_querystring=True,
-                json=[{'lat': 50.825833, 'lon': 4.3475227}],
-                status=200
-            ))
+                json=[{"lat": 50.825833, "lon": 4.3475227}],
+                status=200,
+            )
+        )
 
         self.partner_id_known_second.geo_localize()
 
         self.assertAlmostEqual(
-            self.partner_id_known_second.partner_latitude, 50.825833, 3,
-            'Latitude Should be equals')
+            self.partner_id_known_second.partner_latitude,
+            50.825833,
+            3,
+            "Latitude Should be equals",
+        )
         self.assertAlmostEqual(
-            self.partner_id_known_second.partner_longitude, 4.3475227, 3,
-            'Longitude Should be equals')
+            self.partner_id_known_second.partner_longitude,
+            4.3475227,
+            3,
+            "Longitude Should be equals",
+        )
 
     @responses.activate
     def test_osm_loc_not_found_with_mock(self):
 
         responses.add(
             responses.Response(
-                method='GET',
-                url='https://nominatim.openstreetmap.org/search?city=Tmnss&' +
-                    'format=json&country=Belgium&state=&street=Rue+test&' +
-                    'limit=1&postalCode=',
+                method="GET",
+                url="https://nominatim.openstreetmap.org/search?city=Tmnss&"
+                + "format=json&country=Belgium&state=&street=Rue+test&"
+                + "limit=1&postalCode=",
                 match_querystring=True,
-                json=[{}]
-            ))
+                json=[{}],
+            )
+        )
 
         responses.add(
             responses.Response(
-                method='GET',
-                url='https://nominatim.openstreetmap.org/search?city=Tmnss&' +
-                    'format=json&country=Belgium&state=&street=&' +
-                    'limit=1&postalCode=',
+                method="GET",
+                url="https://nominatim.openstreetmap.org/search?city=Tmnss&"
+                + "format=json&country=Belgium&state=&street=&"
+                + "limit=1&postalCode=",
                 match_querystring=True,
-                json=[{}]
-            ))
+                json=[{}],
+            )
+        )
 
         self.partner_id_not_known.geo_localize()
 
-        self.assertFalse(
-            self.partner_id_not_known.partner_longitude)
-        self.assertFalse(
-            self.partner_id_not_known.partner_latitude)
+        self.assertFalse(self.partner_id_not_known.partner_longitude)
+        self.assertFalse(self.partner_id_not_known.partner_latitude)
