@@ -29,7 +29,7 @@ install:
   - git clone https://github.com/OCA/maintainer-quality-tools.git ${HOME}/maintainer-quality-tools
   - export PATH=${HOME}/maintainer-quality-tools/travis:${PATH}
   - travis_install_nightly
-  - pip install geojson Shapely sphinx sphinx_bootstrap_theme sphinx-intl odoo-sphinx-autodoc
+  - pip install geojson Shapely sphinx sphinx_bootstrap_theme sphinx-intl odoo-sphinx-autodoc responses
   # This is to solve an issue with stdout file descriptor
   # raising a BlockingIOError while executing pylint and returns an exit -1
   # seems related to the numerous lint errors on web_view_google_map module
