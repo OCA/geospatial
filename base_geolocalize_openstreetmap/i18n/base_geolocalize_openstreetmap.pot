@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 10.0\n"
+"Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
@@ -14,14 +14,14 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: base_geolocalize_openstreetmap
-#: code:addons/base_geolocalize_openstreetmap/models/res_partner.py:39
-#, python-format
-msgid "Geocoding error. \n"
-" %s"
+#: model:ir.model,name:base_geolocalize_openstreetmap.model_res_partner
+msgid "Contact"
 msgstr ""
 
 #. module: base_geolocalize_openstreetmap
-#: model:ir.model,name:base_geolocalize_openstreetmap.model_res_partner
-msgid "Partner"
+#: code:addons/base_geolocalize_openstreetmap/models/res_partner.py:37
+#, python-format
+msgid "Geocoding error. \n"
+" %s"
 msgstr ""
 
