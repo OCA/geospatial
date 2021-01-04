@@ -8,7 +8,7 @@
     "license": "AGPL-3",
     "website": "https://github.com/OCA/geospatial",
     "depends": [
-        "base",
+        "base_geolocalize",
         "geoengine_partner",
     ],
     "external_dependencies": {
