@@ -251,13 +251,20 @@ class GeoPoint(GeoField):
     def to_latlon(cls, cr, geopoint):
         """  Convert a UTM coordinate point to (latitude, longitude):
         """
-        # Line to execute to retrieve longitude, latitude  from UTM in postgres command line:
-        #  SELECT ST_X(geom), ST_Y(geom) FROM (SELECT ST_TRANSFORM(ST_SetSRID(
-        #               ST_MakePoint(601179.61612, 6399375,681364), 900913), 4326) as geom) g;
+        # Line to execute to retrieve longitude, latitude
+        # from UTM in postgres command line:
+        #  SELECT ST_X(geom), ST_Y(geom)
+        #  FROM (SELECT ST_TRANSFORM(ST_SetSRID(
+        #      ST_MakePoint(601179.61612, 6399375,681364), 900913), 4326) as geom) g;
         if isinstance(geopoint, BaseGeometry):
             geo_point_instance = geopoint
         else:
             geo_point_instance = asShape(geojson.loads(geopoint))
+        params = {
+            'coord_x': geo_point_instance.x,
+            'coord_y': geo_point_instance.y,
+            'srid': cls._slots['srid'],
+        }
         cr.execute("""
                     SELECT
                         ST_TRANSFORM(
@@ -266,12 +273,12 @@ class GeoPoint(GeoField):
                                         %(coord_x)s, %(coord_y)s
                                             ),
                                         %(srid)s
-                                      ), 4326)""",
-                        {'coord_x': geo_point_instance.x, 'coord_y':geo_point_instance.y, 'srid': cls._slots['srid']})
+                                      ), 4326)""", params)
 
         res = cr.fetchone()
         point_latlon = cls.load_geo(res[0])
         return point_latlon.x, point_latlon.y
+
 
 class GeoPolygon(GeoField):
     """Field for POSTGIS geometry Polygon type"""
