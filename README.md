@@ -63,7 +63,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[base_geoengine](base_geoengine/) | 10.0.2.0.4 | Geospatial support for Odoo
+[base_geoengine](base_geoengine/) | 10.0.2.0.5 | Geospatial support for Odoo
 [base_geoengine_demo](base_geoengine_demo/) | 10.0.1.0.3 | Geo spatial support Demo
 [base_geolocalize_openstreetmap](base_geolocalize_openstreetmap/) | 10.0.1.0.1 | Open street map API call to geolocalize an address
 [geoengine_base_geolocalize](geoengine_base_geolocalize/) | 10.0.1.0.1 | Geospatial support for base_geolocalize
