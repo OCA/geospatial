@@ -61,10 +61,71 @@
       <field name="name"/>
       <field name="city"/>
       <field name="total_sales"/>
+      <templates>
+        <t t-name="layer-box">
+            <div id="content">
+                <b>
+                    <field name="name"/> / <field name="city"/>
+                </b>
+                <hr/>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <b>Total sales:</b>
+                    </div>
+                    <div class="col-xs-8">
+                        <field name="total_sales"/>
+                    </div>
+                </div>
+            </div>
+        </t>
+      </templates>
     </geoengine>
   </field>
   <field eval="16" name="priority"/>
   <field name="model">dummy.zip</field>
+</record>
+
+<record id="retail_machine_details_view_geoengine" model="ir.ui.view">
+  <field name="name">retail.machine.details.geo_view</field>
+  <field name="arch" type="xml">
+    <geoengine>
+      <field name="name"/>
+      <field name="total_sales"/>
+      <field name="money_level"/>
+      <templates>
+        <t t-name="layer-box">
+            <div id="content">
+                <b>
+                    <field name="name"/>
+                </b>
+                <hr/>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <b>Total sales:</b>
+                    </div>
+                    <div class="col-xs-8">
+                        <field name="total_sales"/>
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-xs-4">
+                        <b>Money level:</b>
+                    </div>
+                    <div class="col-xs-8">
+                        <field name="money_level"/>
+                    </div>
+                </div>
+            </div>
+        </t>
+      </templates>
+    </geoengine>
+  </field>
+  <!--
+  put a higher priority to be sure that this view is not the one used by default
+  -->
+  <field name="priority" eval="99"/>
+  <field name="model">geoengine.demo.automatic.retailing.machine</field>
 </record>
 <record id="geoengine_vector_layer_basictest0" model="geoengine.vector.layer">
   <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip_the_geom"/>
@@ -72,8 +133,52 @@
   <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
   <field name="geo_repr">basic</field>
   <field name="attribute_field_id" ref="field_dummy_zip_city"/>
+  <field name="display_polygon_labels" eval="0"/>
   <field name="begin_color">#FF680A</field>
+  <field name="layer_opacity">0.3</field>
 </record>
+
+
+<record id="geoengine_vector_layer_all_retail_machines" model="geoengine.vector.layer">
+  <field name="model_id" ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine" />
+  <field name="model_view_id" ref="base_geoengine_demo.retail_machine_details_view_geoengine"/>
+  <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_the_point"/>
+  <field name="name">All retail machines</field>
+  <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
+  <field name="geo_repr">basic</field>
+  <field name="begin_color">#0aa9ff</field>
+  <field name="display_polygon_labels" eval="0"/>
+  <field name="layer_opacity">0.9</field>
+</record>
+
+<record id="geoengine_vector_layer_hs_retail_machines" model="geoengine.vector.layer">
+  <field name="model_id" ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine" />
+  <field name="model_view_id" ref="base_geoengine_demo.retail_machine_details_view_geoengine"/>
+  <field name="model_domain">[("state", "=", "hs")]</field>
+  <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_the_point"/>
+  <field name="name">HS retail machines</field>
+  <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
+  <field name="geo_repr">basic</field>
+  <field name="begin_color">#FF680A</field>
+  <field name="display_polygon_labels" eval="0"/>
+  <field name="layer_opacity">0.9</field>
+</record>
+
+<record id="geoengine_vector_layer_retailmachine_zip" model="geoengine.vector.layer">
+  <field name="model_id" ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine" />
+  <field name="model_view_id" ref="base_geoengine_demo.retail_machine_details_view_geoengine"/>
+  <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_the_point"/>
+  <field name="name">Retail Machine Colored on total sales quantile</field>
+  <field name="classification">quantile</field>
+  <field eval="6" name="sequence"/>
+  <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0"/>
+  <field name="geo_repr">colored</field>
+  <field eval="5" name="nb_class"/>
+  <field name="attribute_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine_total_sales"/>
+  <field name="begin_color">#4B69FD</field>
+  <field name="end_color">#FF680A</field>
+</record>
+
 <record id="geoengine_vector_layer_coloredrangetest0" model="geoengine.vector.layer">
   <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip_the_geom"/>
   <field name="name">Colored range ZIP</field>
