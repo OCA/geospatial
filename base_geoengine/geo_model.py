@@ -1,5 +1,6 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
-# Copyright 2016 Yannick Vaucher (Camptocamp SA)
+# Copyright 2016-2021 Yannick Vaucher (Camptocamp SA)
+# Copyright 2021 Stephane Mangin (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import _, api, models
 from odoo.exceptions import MissingError, except_orm
@@ -96,6 +97,9 @@ class GeoModel(models.AbstractModel):
                     )
                 layer_dict["attribute_field_id"] = set_field_real_name(
                     layer_dict.get("attribute_field_id", False)
+                )
+                layer_dict["label_field_id"] = set_field_real_name(
+                    layer_dict.get("label_field_id", False)
                 )
                 layer_dict["geo_field_id"] = set_field_real_name(
                     layer_dict.get("geo_field_id", False)
