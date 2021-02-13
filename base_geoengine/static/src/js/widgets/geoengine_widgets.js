@@ -45,9 +45,6 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
             // Add a listener on parent tab if it exists in order to refresh
             // geoengine view we need to trigger it on DOM update for changes
             // from view to edit mode.
-            console.log('start')
-            console.log(this)
-            this._addTabListener();
             core.bus.on('DOM_updated', this, function () {
                 this._addTabListener();
             }.bind(this));
