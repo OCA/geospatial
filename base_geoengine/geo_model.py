@@ -23,7 +23,7 @@ class GeoModel(models.AbstractModel):
     @api.model
     def fields_get(self, allfields=None, attributes=None):
         """Add geo_type definition for geo fields"""
-        res = super().fields_get(allfields=allfields, attributes=attributes)
+        res = super(GeoModel, self).fields_get(allfields=allfields, attributes=attributes)
         for f_name in res:
             field = self._fields.get(f_name)
             if field and field.type.startswith("geo_"):

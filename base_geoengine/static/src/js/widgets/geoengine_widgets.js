@@ -14,7 +14,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
     var AbstractField = require('web.AbstractField');
     var geoengine_common = require('base_geoengine.geoengine_common');
     var BackgroundLayers = require('base_geoengine.BackgroundLayers');
-    var registry = require('web.field_registry');
+    var field_registry = require('web.field_registry');
 
     var FieldGeoEngineEditMap = AbstractField.extend(geoengine_common.GeoengineMixin, { // eslint-disable-line max-len
         template: 'FieldGeoEngineEditMap',
@@ -45,6 +45,9 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
             // Add a listener on parent tab if it exists in order to refresh
             // geoengine view we need to trigger it on DOM update for changes
             // from view to edit mode.
+            console.log('start')
+            console.log(this)
+            this._addTabListener();
             core.bus.on('DOM_updated', this, function () {
                 this._addTabListener();
             }.bind(this));
@@ -569,8 +572,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
         },
     });
 
-    registry
-        .add('geo_edit_map', FieldGeoEngineEditMap);
+    field_registry.add('geo_edit_map', FieldGeoEngineEditMap);
     //    .add('geo_point_xy', FieldGeoPointXY)
     //    .add('geo_point_xy', FieldGeoPointXYReadonly)
     //    .add('geo_rect', FieldGeoRect)

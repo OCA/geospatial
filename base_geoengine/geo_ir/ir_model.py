@@ -32,7 +32,14 @@ class IrModelField(models.Model):
     srid = fields.Integer("srid", required=False)
     geo_type = fields.Selection(POSTGIS_GEO_TYPES, string="PostGIs type")
     dim = fields.Selection(
-        [("2", "2"), ("3", "3"), ("4", "4")], string="PostGIs Dimension"
+        [("2", "2"), ("3", "3"), ("4", "4")], string="PostGIs Dimension", default='2'
     )
     gist_index = fields.Boolean("Create gist index")
-    ttype = fields.Selection(selection_add=GEO_TYPES)
+    ttype = fields.Selection(selection_add=GEO_TYPES, ondelete={
+        'geo_polygon': 'cascade',
+        'geo_multi_polygon': 'cascade',
+        'geo_point': 'cascade',
+        'geo_multi_point': 'cascade',
+        'geo_line': 'cascade',
+        'geo_multi_line': 'cascade',
+    })
