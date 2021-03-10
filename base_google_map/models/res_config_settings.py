@@ -129,7 +129,6 @@ class ResConfigSettings(models.TransientModel):
         if not self.google_maps_lang_localization:
             self.google_maps_region_localization = ""
 
-    @api.multi
     def set_values(self):
         super(ResConfigSettings, self).set_values()
         ICPSudo = self.env["ir.config_parameter"].sudo()
@@ -174,7 +173,6 @@ class ResConfigSettings(models.TransientModel):
         )
         return res
 
-    @api.multi
     def _set_google_maps_lang_localization(self):
         if self.google_maps_lang_localization:
             lang_localization = "&language=%s" % self.google_maps_lang_localization
@@ -191,7 +189,6 @@ class ResConfigSettings(models.TransientModel):
         lang = val and val[-1] or ""
         return lang
 
-    @api.multi
     def _set_google_maps_region_localization(self):
         if self.google_maps_region_localization:
             region_localization = "&region=%s" % self.google_maps_region_localization
@@ -215,7 +212,6 @@ class ResConfigSettings(models.TransientModel):
         libraries = google_maps_libraries.split(",")
         return "geometry" in libraries
 
-    @api.multi
     def _set_google_maps_geometry(self):
         return "geometry" if self.google_maps_geometry else ""
 
@@ -226,6 +222,5 @@ class ResConfigSettings(models.TransientModel):
         libraries = google_maps_libraries.split(",")
         return "places" in libraries
 
-    @api.multi
     def _set_google_maps_places(self):
         return "places" if self.google_maps_places else ""
