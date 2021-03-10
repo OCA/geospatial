@@ -115,8 +115,8 @@ odoo.define('web_view_google_map.GplaceAutocompleteFields', function (require) {
         },
         /**
          * Map google address into Odoo fields
-         * @param {*} place 
-         * @param {*} fillfields 
+         * @param {*} place
+         * @param {*} fillfields
          */
         _populatePlaces: function (place, fillfields) {
             var place = place || false;
@@ -125,9 +125,9 @@ odoo.define('web_view_google_map.GplaceAutocompleteFields', function (require) {
         },
         /**
          * Get country's state
-         * @param {*} model 
-         * @param {*} country 
-         * @param {*} state 
+         * @param {*} model
+         * @param {*} country
+         * @param {*} state
          */
         _getCountryState: function (model, country, state) {
             var model = model || false;
@@ -137,9 +137,9 @@ odoo.define('web_view_google_map.GplaceAutocompleteFields', function (require) {
         },
         /**
          * Set country's state
-         * @param {*} model 
-         * @param {*} country 
-         * @param {*} state 
+         * @param {*} model
+         * @param {*} country
+         * @param {*} state
          */
         setCountryState: function (model, country, state) {
             var self = this;
@@ -238,7 +238,7 @@ odoo.define('web_view_google_map.GplaceAutocompleteFields', function (require) {
             return res;
         },
         /**
-         * @param {*} place 
+         * @param {*} place
          */
         handlePopulateAddress: function () {
             var self = this;
