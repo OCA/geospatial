@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record id="view_res_partner_map" model="ir.ui.view">
-        <field name="name">view.res.partner.map</field>
+    <record id="view_res_partner_google_map" model="ir.ui.view">
+        <field name="name">view.res.partner.google_map</field>
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
-            <map class="o_res_partner_map" library="geometry" string="Map" lat="partner_latitude" lng="partner_longitude" colors="blue:company_type=='person';green:company_type=='company';">
+            <google_map class="o_res_partner_map" library="geometry" string="Google Map" lat="partner_latitude" lng="partner_longitude" colors="blue:company_type=='person';green:company_type=='company';">
                 <field name="id"/>
                 <field name="partner_latitude"/>
                 <field name="partner_longitude"/>
@@ -89,18 +89,18 @@
                         </div>
                     </t>
                 </templates>
-            </map>
+            </google_map>
         </field>
     </record>
 
     <record id="contacts.action_contacts" model="ir.actions.act_window">
-        <field name="view_mode">kanban,tree,form,activity,map</field>
+        <field name="view_mode">kanban,tree,form,activity,google_map</field>
     </record>
 
     <record id="action_contacts_view_map" model="ir.actions.act_window.view">
         <field name="sequence" eval="3"/>
-        <field name="view_mode">map</field>
-        <field name="view_id" ref="view_res_partner_map"/>
+        <field name="view_mode">google_map</field>
+        <field name="view_id" ref="view_res_partner_google_map"/>
         <field name="act_window_id" ref="contacts.action_contacts"/>
     </record>
 
