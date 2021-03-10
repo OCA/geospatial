@@ -1,8 +1,8 @@
 Map view  `"map"`:-
 
-Basically, this new view `map`  will integrate Google Maps into Odoo.    
-Enable you to display `res.partner` geolocation on map or any model contains geolocation.   
-This feature will work seamlessly with Odoo means you can search your partner location using Odoo search feature.     
+Basically, this new view `map`  will integrate Google Maps into Odoo.
+Enable you to display `res.partner` geolocation on map or any model contains geolocation.
+This feature will work seamlessly with Odoo means you can search your partner location using Odoo search feature.
 
 There are five available attributes that you can customize:-
 
@@ -10,11 +10,11 @@ There are five available attributes that you can customize:-
  - `lng` : an attritute to tell the map the longitude field on the object __[mandatory]__
  - `color` : an attribute to modify marker color (optional) any given color will set all markers color __[optional]__.
  - `colors` : work like attribute `color` but more configurable (you can set marker color depends on it's value) this attribute works similar to `colors` of tree view on Odoo __[optional]__
- - `library` : an attribute to tell map which map that will be loaded __[mandatory]__.    
-    This options has two values:   
+ - `library` : an attribute to tell map which map that will be loaded __[mandatory]__.
+    This options has two values:
     1. `geometry`
     2. `drawing`
-     
+
 The XML Map view definitions. For instance::
 
     <record id="view_res_partner_map" model="ir.ui.view">
@@ -116,8 +116,8 @@ The XML Map view definitions. For instance::
         <field name="view_mode">tree,form,map</field>
         ...
     </record>
-    
-The marker info window will use `kanban-box` kanban card style.    
+
+The marker info window will use `kanban-box` kanban card style.
 
 How to setup color for marker on map?
 
@@ -152,7 +152,7 @@ The widget has four options that can be modify:
 
 Component form `component_form`:-
 
-Is an option used to modify which value you want to take from an objects returned by the geocoder.    
+Is an option used to modify which value you want to take from an objects returned by the geocoder.
 Full documentation about Google component types can be found [here](https://developers.google.com/maps/documentation/geocoding/intro#Types)
 
 By default this option are configured like the following javascript value::
@@ -184,8 +184,8 @@ By default this option are configured like the following javascript value::
         'point_of_interest': 'long_name'
     }
 
-This configuration can be modify into xml view field definition::    
-    
+This configuration can be modify into xml view field definition::
+
     <record id="view_res_partner_form" model="ir.ui.view">
        ...
        <field name="arch" type="xml">
@@ -199,8 +199,8 @@ Fill fields `fillfields`:-
 
 Is an option that will be influenced by `gplaces_address_autocomplete` widget.
 
-This options should contains known `fields` that you want the widget to fulfill a value for each given field automatically.    
-A field can contains one or multiple elements of component form    
+This options should contains known `fields` that you want the widget to fulfill a value for each given field automatically.
+A field can contains one or multiple elements of component form
 By default this options are configured like the following javascript value::
 
     {
@@ -211,7 +211,7 @@ By default this options are configured like the following javascript value::
         'state_id': 'administrative_area_level_1',
         'country_id': 'country',
     }
-        
+
 This configuration can be modify into xml view field definition as well::
 
     <record id="view_res_partner_form" model="ir.ui.view">
