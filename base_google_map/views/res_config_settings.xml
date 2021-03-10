@@ -88,7 +88,7 @@
                                 <div class="o_setting_right_pane">
                                     <label for="google_maps_geometry"/>
                                     <div class="text-muted">
-                                        Geometry includes utility functions for calculating scalar geometric values (such as distance and area) on the surface of the earth. 
+                                        Geometry includes utility functions for calculating scalar geometric values (such as distance and area) on the surface of the earth.
                                         Consult the <a href="https://developers.google.com/maps/documentation/javascript/geometry">Geometry library documentation</a> for more information.
                                     </div>
                                 </div>
@@ -100,7 +100,7 @@
                                 <div class="o_setting_right_pane">
                                     <label for="google_maps_places"/>
                                     <div class="text-muted">
-                                        Places enables your application to search for places such as establishments, geographic locations, or prominent points of interest, within a defined area. 
+                                        Places enables your application to search for places such as establishments, geographic locations, or prominent points of interest, within a defined area.
                                         Consult the <a href="https://developers.google.com/maps/documentation/javascript/places">Places library documentation</a> for more information.
                                     </div>
                                 </div>
