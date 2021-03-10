@@ -19,7 +19,7 @@ odoo.define('web_view_google_map.MapView', function (require) {
             Renderer: MapRenderer,
             Controller: MapController,
         }),
-        viewType: 'map',
+        viewType: 'google_map',
         mobile_friendly: true,
         init: function (viewInfo, params) {
             this._super.apply(this, arguments);

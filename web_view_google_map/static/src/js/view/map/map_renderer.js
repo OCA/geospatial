@@ -795,7 +795,7 @@ odoo.define('web_view_google_map.MapRenderer', function (require) {
     var MapRecord = KanbanRecord.extend({
         init: function (parent, state, options) {
             this._super.apply(this, arguments);
-            this.fieldsInfo = state.fieldsInfo.map;
+            this.fieldsInfo = state.fieldsInfo.google_map;
         },
     });
 
@@ -897,7 +897,7 @@ odoo.define('web_view_google_map.MapRenderer', function (require) {
             this.qweb.add_template(utils.json_node_to_xml(templates));
             this.recordOptions = _.extend({}, params.record_options, {
                 qweb: this.qweb,
-                viewType: 'map',
+                viewType: 'google_map',
             });
             this.state = state;
             this.shapesCache = {};
@@ -1415,7 +1415,7 @@ odoo.define('web_view_google_map.MapRenderer', function (require) {
             this.state = state;
 
             var groupByFieldAttrs = state.fields[state.groupedBy[0]];
-            var groupByFieldInfo = state.fieldsInfo.map[state.groupedBy[0]];
+            var groupByFieldInfo = state.fieldsInfo.google_map[state.groupedBy[0]];
             // Deactivate the drag'n'drop if the groupedBy field:
             // - is a date or datetime since we group by month or
             // - is readonly (on the field attrs or in the view)

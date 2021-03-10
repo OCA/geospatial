@@ -14,8 +14,8 @@ odoo.define('web_view_google_map.relational_fields', function (require) {
             }
             var arch = this.view.arch;
             var viewType;
-            if (arch.tag == 'map') {
-                viewType = 'map';
+            if (arch.tag == 'google_map') {
+                viewType = 'google_map';
                 var record_options = {
                     editable: true,
                     deletable: true,
@@ -43,7 +43,7 @@ odoo.define('web_view_google_map.relational_fields', function (require) {
          */
         _renderButtons: function () {
             this._super.apply(this, arguments);
-            if (this.view.arch.tag === 'map') {
+            if (this.view.arch.tag === 'google_map') {
                 var options = {create_text: this.nodeOptions.create_text, widget: this};
                 this.$buttons = $(qweb.render('MapView.buttons', options));
                 this.$buttons.on('click', 'button.o-map-button-new', this._onAddRecord.bind(this));

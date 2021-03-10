@@ -4,6 +4,6 @@ odoo.define('web_view_google_map.view_registry', function (require) {
     var MapView = require('web_view_google_map.MapView');
     var view_registry = require('web.view_registry');
 
-    view_registry.add('map', MapView);
+    view_registry.add('google_map', MapView);
 
 });
