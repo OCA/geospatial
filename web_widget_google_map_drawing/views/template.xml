@@ -1,0 +1,8 @@
+<odoo>
+    <template id="assets_backend" name="google_maps assets backend drawing" inherit_id="web_view_google_map.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/web_widget_google_map_drawing/static/src/js/widget/field_gmaps_drawing.js"></script>
+            <script type="text/javascript" src="/web_widget_google_map_drawing/static/src/js/widget/fields_registry.js"></script>
+        </xpath>
+    </template>
+</odoo>
