@@ -17,6 +17,7 @@ setuptools.setup(
         'odoo12-addon-geoengine_swisstopo',
         'odoo12-addon-test_base_geoengine',
         'odoo12-addon-web_view_google_map',
+        'odoo12-addon-web_widget_google_map_drawing',
         'odoo12-addon-web_widget_google_marker_icon_picker',
     ],
     classifiers=[
