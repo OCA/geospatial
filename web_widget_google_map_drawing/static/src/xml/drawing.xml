@@ -1,0 +1,12 @@
+<templates id="template" xml:space="preserve">
+    <t t-name="WidgetDrawing.BtnDelete">
+        <button class="btn btn-default" style="margin-bottom: 5px;padding: 1px 8px 2px 8px;" type="button" data-toggle="tooltip" data-placement="bottom" title="Press this button to delete the selected shape">
+            <i class="fa fa-trash-o fa-2x"></i>
+        </button>
+    </t>
+    <t t-name="WidgetDrawing.Map">
+        <div class="o_map_container">
+            <div class="o_map_view"></div>
+        </div>
+    </t>
+</templates>

@@ -1,0 +1,23 @@
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.web_google_maps_drawing</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_google_map.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='google_maps']/div[last()]" position="inside">
+                <div class="col-xs-12 col-md-6 o_setting_box">
+                    <div class="o_setting_left_pane">
+                        <field name="google_maps_drawing"/>
+                    </div>
+                    <div class="o_setting_right_pane">
+                        <label for="google_maps_drawing"/>
+                        <div class="text-muted">
+                            Drawing provides a graphical interface for users to draw polygons, rectangles, polylines, circles, and markers on the map. 
+                            Consult the <a href="https://developers.google.com/maps/documentation/javascript/drawinglayer">Drawing library documentation</a> for more information.
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
