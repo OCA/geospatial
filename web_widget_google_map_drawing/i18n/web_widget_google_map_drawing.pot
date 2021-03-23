@@ -1,0 +1,120 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_widget_google_map_drawing
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_widget_google_map_drawing
+#: model:ir.model.fields,field_description:web_widget_google_map_drawing.field_google_map_drawing_shape_mixin__shape_area
+msgid "Area"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: selection:google.map.drawing.shape.mixin,shape_type:0
+msgid "Circle"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model:ir.model,name:web_widget_google_map_drawing.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model:ir.model.fields,field_description:web_widget_google_map_drawing.field_google_map_drawing_shape_mixin__shape_description
+msgid "Description"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model:ir.model.fields,field_description:web_widget_google_map_drawing.field_google_map_drawing_shape_mixin__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model:ir.model.fields,field_description:web_widget_google_map_drawing.field_res_config_settings__google_maps_drawing
+msgid "Drawing"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model_terms:ir.ui.view,arch_db:web_widget_google_map_drawing.res_config_settings_view_form
+msgid "Drawing library documentation"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model_terms:ir.ui.view,arch_db:web_widget_google_map_drawing.res_config_settings_view_form
+msgid "Drawing provides a graphical interface for users to draw polygons, rectangles, polylines, circles, and markers on the map. \n"
+"                            Consult the"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model:ir.model,name:web_widget_google_map_drawing.model_google_map_drawing_shape_mixin
+msgid "Google Maps Shape Mixin"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model:ir.model.fields,field_description:web_widget_google_map_drawing.field_google_map_drawing_shape_mixin__id
+msgid "ID"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model:ir.model.fields,field_description:web_widget_google_map_drawing.field_google_map_drawing_shape_mixin____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model:ir.model.fields,field_description:web_widget_google_map_drawing.field_google_map_drawing_shape_mixin__shape_name
+msgid "Name"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#. openerp-web
+#: code:addons/web_widget_google_map_drawing/static/src/js/widget/field_gmaps_drawing.js:350
+#, python-format
+msgid "Only one shape is allowed!"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model:ir.model.fields,field_description:web_widget_google_map_drawing.field_google_map_drawing_shape_mixin__shape_paths
+msgid "Paths"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: selection:google.map.drawing.shape.mixin,shape_type:0
+msgid "Polygon"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#. openerp-web
+#: code:addons/web_widget_google_map_drawing/static/src/xml/drawing.xml:3
+#, python-format
+msgid "Press this button to delete the selected shape"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model:ir.model.fields,field_description:web_widget_google_map_drawing.field_google_map_drawing_shape_mixin__shape_radius
+msgid "Radius"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: selection:google.map.drawing.shape.mixin,shape_type:0
+msgid "Rectangle"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model:ir.model.fields,field_description:web_widget_google_map_drawing.field_google_map_drawing_shape_mixin__shape_type
+msgid "Type"
+msgstr ""
+
+#. module: web_widget_google_map_drawing
+#: model_terms:ir.ui.view,arch_db:web_widget_google_map_drawing.res_config_settings_view_form
+msgid "for more information."
+msgstr ""
+
