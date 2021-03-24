@@ -12,6 +12,8 @@
             <script type="text/javascript"
                     src="/base_geoengine/static/src/js/widgets/geoengine_widgets.js"/>
             <script type="text/javascript"
+                    src="/base_geoengine/static/src/js/widgets/geoengine_button.js"/>
+            <script type="text/javascript"
                     src="/base_geoengine/static/src/js/views/geoengine/geoengine_renderer.js"/>
             <script type="text/javascript"
                     src="/base_geoengine/static/src/js/views/geoengine/geoengine_controller.js"/>

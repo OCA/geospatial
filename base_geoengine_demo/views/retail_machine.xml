@@ -5,6 +5,9 @@
   <field name="model">geoengine.demo.automatic.retailing.machine</field>
   <field name="arch" type="xml">
     <form string="Retail Machine">
+      <header>
+        <button string="Geolocalize again with current user position" name="geo_again" class="oe_highlight" type="object" widget="geo_button"/>
+      </header>
       <sheet>
         <group>
           <field name="name"/>

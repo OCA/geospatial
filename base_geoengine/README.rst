@@ -143,6 +143,7 @@ Contributors
 * Thomas Nowicki <thomas.nowicki@camptocamp.com>
 * Alexandre Saunier <alexandre.saunier@camptocamp.com>
 * Sandip Mangukiya <smangukiya@opensourceintegrators.com>
+* Luis Felipe Mileo <mileo@kmee.com.br>
 
 Maintainers
 ~~~~~~~~~~~
