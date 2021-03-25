@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.website_google_address_form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@id='google_maps_setting']" position="after">
+                <div class="col-xs-12 col-md-6 o_setting_box" id="google_address_form_setting">
+                    <div class="o_setting_right_pane">
+                        <div class="mt16">
+                            <label for="google_maps_country_restriction" string="Google Address Form Autocomplete Country Restriction"/>
+                            <div class="text-muted">
+                                Restrict results of google address form autocomplete to one or multiple countries
+                            </div>
+                            <field name="google_maps_country_restriction" nolabel="1" widget="many2many_tags"/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>
