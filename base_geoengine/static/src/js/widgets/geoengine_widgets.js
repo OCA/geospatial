@@ -106,7 +106,7 @@ odoo.define('base_geoengine.geoengine_widgets', function (require) {
                 }),
                 readonly: new ol.style.Style({
                     fill: new ol.style.Fill({
-                        color: '#ee9900',
+                        color: '#ee990032',
                         opacity: 0.7,
                     }),
                     stroke: new ol.style.Stroke({

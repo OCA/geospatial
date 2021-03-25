@@ -12,8 +12,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
     var QWeb = require('web.QWeb');
     var session = require('web.session');
 
-    var Record = require('base_geoengine.Record');
-    var GeoengineRecord = Record.GeoengineRecord;
+    var GeoengineRecord = require('base_geoengine.Record');
     var geoengine_common = require('base_geoengine.geoengine_common');
     var BackgroundLayers = require('base_geoengine.BackgroundLayers');
 
@@ -282,6 +281,14 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
                 });
             }
             var vectorSource = new ol.source.Vector();
+            data = _.sortBy(data, function (item) {
+                var json_geometry = item.data[cfg.geo_field_id[1]];
+                var geometry = new ol.format.GeoJSON().readGeometry(json_geometry);
+                if (geometry && _.isFunction(geometry.getArea)) {
+                    return -geometry.getArea();
+                }
+            });
+
             _.each(data, function (item) {
                 var attributes = _.clone(item.data);
                 _.each(this.geometryFields, function (geo_field) {

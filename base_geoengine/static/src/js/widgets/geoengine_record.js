@@ -29,10 +29,15 @@ odoo.define('base_geoengine.Record', function (require) {
             var new_record = {};
             _.each(_.extend(_.object(_.keys(this.fields), []), record),
                 function (value, name) {
+                    if (typeof value === 'undefined') {
+                        return;
+                    }
                     var r = _.clone(this.fields[name] || {});
                     r.raw_value = value;
-                    var formatted_value = field_utils.format[r.type](value, r);
-                    r.value = formatted_value;
+                    if (r.type in field_utils.format) {
+                        var formatted_value = field_utils.format[r.type](value, r);
+                        r.value = formatted_value;
+                    }
                     new_record[name] = r;
                 }.bind(this)
             );
@@ -44,7 +49,6 @@ odoo.define('base_geoengine.Record', function (require) {
                 record: this.record,
                 widget: this,
                 user_context: session.user_context,
-                formats: formats,
             };
             this.content = this.qweb.render('layer-box', qweb_context);
         },
