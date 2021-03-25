@@ -90,8 +90,8 @@ odoo.define('web_view_google_map.GplaceAutocompleteFields', function (require) {
                         center: geolocation,
                         radius: position.coords.accuracy
                     });
-
-                    self.places_autocomplete.setBounds(circle.getBounds());
+                    // Temporary Comment
+                    // self.places_autocomplete.setBounds(circle.getBounds());
                 });
             }
         },
@@ -201,7 +201,7 @@ odoo.define('web_view_google_map.GplaceAutocompleteFields', function (require) {
             this._super.apply(this, arguments);
             this.fillfields = {
                 [this.address_form.street]: ['street_number', 'route'],
-                [this.address_form.street2]: ['administrative_area_level_3', 'administrative_area_level_4', 'administrative_area_level_5'],
+                // [this.address_form.street2]: ['administrative_area_level_3', 'administrative_area_level_4', 'administrative_area_level_5'],
                 [this.address_form.city]: ['locality', 'administrative_area_level_2'],
                 [this.address_form.zip]: 'postal_code',
                 [this.address_form.state_id]: 'administrative_area_level_1',
@@ -329,11 +329,11 @@ odoo.define('web_view_google_map.GplaceAutocompleteFields', function (require) {
                 general: {
                     name: 'name',
                     website: 'website',
-                    phone: ['international_phone_number', 'formatted_phone_number']
+                    // phone: ['international_phone_number', 'formatted_phone_number']
                 },
                 address: {
                     street: ['street_number', 'route'],
-                    street2: ['administrative_area_level_3', 'administrative_area_level_4', 'administrative_area_level_5'],
+                    // street2: ['administrative_area_level_3', 'administrative_area_level_4', 'administrative_area_level_5'],
                     city: ['locality', 'administrative_area_level_2'],
                     zip: 'postal_code',
                     state_id: 'administrative_area_level_1',
@@ -438,7 +438,7 @@ odoo.define('web_view_google_map.GplaceAutocompleteFields', function (require) {
             setTimeout(function () {
                 if (!self.places_autocomplete) {
                     self.places_autocomplete = new google.maps.places.Autocomplete(self.$input.get(0), {
-                        types: ['establishment']
+                        types: []
                     });
                 }
                 // When the user selects an address from the dropdown, populate the address fields in the form.

@@ -97,6 +97,8 @@ class ResConfigSettings(models.TransientModel):
         return values
 
     google_maps_view_api_key = fields.Char(string='Google Maps View Api Key')
+    google_autocomplete_api_key = fields.Char(string='Google Autocomplete Api Key')
+
     google_maps_lang_localization = fields.Selection(
         selection=GMAPS_LANG_LOCALIZATION,
         string='Google Maps Language Localization')
@@ -139,6 +141,8 @@ class ResConfigSettings(models.TransientModel):
 
         ICPSudo.set_param('google.api_key_geocode',
                           self.google_maps_view_api_key)
+        ICPSudo.set_param('google.fsm_key_autocomplete',
+                          self.google_autocomplete_api_key)
         ICPSudo.set_param('google.lang_localization',
                           lang_localization)
         ICPSudo.set_param('google.region_localization',
@@ -160,6 +164,8 @@ class ResConfigSettings(models.TransientModel):
         res.update({
             'google_maps_view_api_key': ICPSudo.get_param(
                 'google.api_key_geocode', default=''),
+            'google_autocomplete_api_key': ICPSudo.get_param(
+                'google.fsm_key_autocomplete', default=''),
             'google_maps_lang_localization': lang_localization,
             'google_maps_region_localization': region_localization,
             'google_maps_theme': ICPSudo.get_param(
