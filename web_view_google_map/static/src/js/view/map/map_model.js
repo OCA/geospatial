@@ -1,10 +1,9 @@
-odoo.define('web_view_google_map.MapModel', function (require) {
-    'use strict';
+odoo.define("web_view_google_map.MapModel", function (require) {
+    "use strict";
 
-    var BasicModel = require('web.BasicModel');
+    var BasicModel = require("web.BasicModel");
 
     var MapModel = BasicModel.extend({
-
         /**
          * @override
          */
@@ -20,7 +19,10 @@ odoo.define('web_view_google_map.MapModel', function (require) {
          */
         load: function (params) {
             this.defaultGroupedBy = params.groupBy;
-            params.groupedBy = (params.groupedBy && params.groupedBy.length) ? params.groupedBy : this.defaultGroupedBy;
+            params.groupedBy =
+                params.groupedBy && params.groupedBy.length
+                    ? params.groupedBy
+                    : this.defaultGroupedBy;
             return this._super(params);
         },
 
@@ -31,7 +33,6 @@ odoo.define('web_view_google_map.MapModel', function (require) {
          * @override
          */
         _readGroup: function (list) {
-            var self = this;
             if (list.groupedBy.length > 1) {
                 list.groupedBy = [list.groupedBy[0]];
             }
@@ -40,5 +41,4 @@ odoo.define('web_view_google_map.MapModel', function (require) {
     });
 
     return MapModel;
-
 });
