@@ -1,5 +1,6 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # Copyright 2016 Yannick Vaucher (Camptocamp SA)
+# Copyright 2021 Shurshilov Artem
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
 from operator import attrgetter
@@ -28,6 +29,9 @@ class GeoField(fields.Field):
     """
 
     geo_type = None
+    srid = 3857
+    dim = 2
+    gist_index = True
 
     @property
     def column_format(self):

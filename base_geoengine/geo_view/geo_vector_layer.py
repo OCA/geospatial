@@ -1,5 +1,6 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # Copyright 2016 Yannick Vaucher (Camptocamp SA)
+# Copyright 2021 Shurshilov Artem
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import fields, models
 
@@ -58,6 +59,7 @@ class GeoVectorLayer(models.Model):
         "Geo field",
         domain=[("ttype", "ilike", "geo_")],
         required=True,
+        ondelete='cascade'
     )
     view_id = fields.Many2one(
         "ir.ui.view", "Related View", domain=[("type", "=", "geoengine")], required=True

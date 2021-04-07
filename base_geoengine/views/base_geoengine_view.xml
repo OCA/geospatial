@@ -29,7 +29,6 @@
 
     <menuitem name="GeoEngine Backend" id="geoengine_base_menu"
               web_icon="base_geoengine,images/map.png"
-              groups="group_geoengine_admin"
-              web_icon_hover="base_geoengine,images/map-hover.png"/>
+              groups="group_geoengine_admin"/>
 
 </odoo>
