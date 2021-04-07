@@ -14,13 +14,13 @@ Google Map View
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github
-    :target: https://github.com/OCA/geospatial/tree/13.0/web_view_google_map
+    :target: https://github.com/OCA/geospatial/tree/14.0/web_view_google_map
     :alt: OCA/geospatial
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/geospatial-12-0/geospatial-12-0-web_view_google_map
+    :target: https://translation.odoo-community.org/projects/geospatial-14-0/geospatial-14-0-web_view_google_map
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/115/13.0
+    :target: https://runbot.odoo-community.org/runbot/115/14.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -40,9 +40,9 @@ Usage
 
 Map view  `"map"`:-
 
-Basically, this new view `map`  will integrate Google Maps into Odoo.    
-Enable you to display `res.partner` geolocation on map or any model contains geolocation.   
-This feature will work seamlessly with Odoo means you can search your partner location using Odoo search feature.     
+Basically, this new view `map`  will integrate Google Maps into Odoo.
+Enable you to display `res.partner` geolocation on map or any model contains geolocation.
+This feature will work seamlessly with Odoo means you can search your partner location using Odoo search feature.
 
 There are five available attributes that you can customize:-
 
@@ -50,11 +50,11 @@ There are five available attributes that you can customize:-
  - `lng` : an attritute to tell the map the longitude field on the object __[mandatory]__
  - `color` : an attribute to modify marker color (optional) any given color will set all markers color __[optional]__.
  - `colors` : work like attribute `color` but more configurable (you can set marker color depends on it's value) this attribute works similar to `colors` of tree view on Odoo __[optional]__
- - `library` : an attribute to tell map which map that will be loaded __[mandatory]__.    
-    This options has two values:   
+ - `library` : an attribute to tell map which map that will be loaded __[mandatory]__.
+    This options has two values:
     1. `geometry`
     2. `drawing`
-     
+
 The XML Map view definitions. For instance::
 
     <record id="view_res_partner_map" model="ir.ui.view">
@@ -156,8 +156,8 @@ The XML Map view definitions. For instance::
         <field name="view_mode">tree,form,map</field>
         ...
     </record>
-    
-The marker info window will use `kanban-box` kanban card style.    
+
+The marker info window will use `kanban-box` kanban card style.
 
 How to setup color for marker on map?
 
@@ -192,7 +192,7 @@ The widget has four options that can be modify:
 
 Component form `component_form`:-
 
-Is an option used to modify which value you want to take from an objects returned by the geocoder.    
+Is an option used to modify which value you want to take from an objects returned by the geocoder.
 Full documentation about Google component types can be found [here](https://developers.google.com/maps/documentation/geocoding/intro#Types)
 
 By default this option are configured like the following javascript value::
@@ -224,8 +224,8 @@ By default this option are configured like the following javascript value::
         'point_of_interest': 'long_name'
     }
 
-This configuration can be modify into xml view field definition::    
-    
+This configuration can be modify into xml view field definition::
+
     <record id="view_res_partner_form" model="ir.ui.view">
        ...
        <field name="arch" type="xml">
@@ -239,8 +239,8 @@ Fill fields `fillfields`:-
 
 Is an option that will be influenced by `gplaces_address_autocomplete` widget.
 
-This options should contains known `fields` that you want the widget to fulfill a value for each given field automatically.    
-A field can contains one or multiple elements of component form    
+This options should contains known `fields` that you want the widget to fulfill a value for each given field automatically.
+A field can contains one or multiple elements of component form
 By default this options are configured like the following javascript value::
 
     {
@@ -251,7 +251,7 @@ By default this options are configured like the following javascript value::
         'state_id': 'administrative_area_level_1',
         'country_id': 'country',
     }
-        
+
 This configuration can be modify into xml view field definition as well::
 
     <record id="view_res_partner_form" model="ir.ui.view">
@@ -307,7 +307,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/geospatial/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/geospatial/issues/new?body=module:%20web_view_google_map%0Aversion:%2013.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/geospatial/issues/new?body=module:%20web_view_google_map%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -325,6 +325,7 @@ Contributors
 * Yopi Angi <yopiangi@gmail.com>
 * Wolfgang Hall <whall@opensourceintegrators.com>
 * Serpent Consulting Services Pvt. Ltd. <support@serpentcs.com>
+* Ammar Officewala <aofficewala@opensourceintegrators.com>
 
 Maintainers
 ~~~~~~~~~~~
@@ -350,6 +351,6 @@ Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-gityopie| |maintainer-wolfhall| 
 
-This module is part of the `OCA/geospatial <https://github.com/OCA/geospatial/tree/13.0/web_view_google_map>`_ project on GitHub.
+This module is part of the `OCA/geospatial <https://github.com/OCA/geospatial/tree/14.0/web_view_google_map>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
