@@ -1,20 +1,19 @@
-odoo.define('web_view_google_map.MapController', function (require) {
-    'use strict';
+odoo.define("web_view_google_map.MapController", function (require) {
+    "use strict";
 
-    var Context = require('web.Context');
-    var core = require('web.core');
-    var BasicController = require('web.BasicController');
-    var Domain = require('web.Domain');
+    var Context = require("web.Context");
+    var core = require("web.core");
+    var BasicController = require("web.BasicController");
+    var Domain = require("web.Domain");
 
-    var _t = core._t;
     var qweb = core.qweb;
 
     var MapController = BasicController.extend({
         custom_events: _.extend({}, BasicController.prototype.custom_events, {
-            button_clicked: '_onButtonClicked',
-            kanban_record_delete: '_onRecordDelete',
-            kanban_record_update: '_onUpdateRecord',
-            kanban_column_archive_records: '_onArchiveRecords',
+            button_clicked: "_onButtonClicked",
+            kanban_record_delete: "_onRecordDelete",
+            kanban_record_update: "_onUpdateRecord",
+            kanban_column_archive_records: "_onArchiveRecords",
         }),
 
         /**
@@ -55,8 +54,8 @@ odoo.define('web_view_google_map.MapController', function (require) {
                 var domInData = _.every(domain, function (d) {
                     return d[0] in data.data;
                 });
-                var activeInDomain = _.pluck(domain, 0).indexOf('active') !== -1;
-                var activeInData = 'active' in data.data;
+                var activeInDomain = _.pluck(domain, 0).indexOf("active") !== -1;
+                var activeInData = "active" in data.data;
 
                 // Case # | domInData | activeInDomain | activeInData
                 //   1    |   true    |      true      |      true     => no domain change
@@ -73,13 +72,9 @@ odoo.define('web_view_google_map.MapController', function (require) {
                 // these cases, but this is out of scope. A simpler one is to do a try / catch.
 
                 if (domInData && !activeInDomain && activeInData) {
-                    domain = domain.concat([
-                        ['active', '=', true]
-                    ]);
+                    domain = domain.concat([["active", "=", true]]);
                 } else if (!domInData && !activeInDomain && activeInData) {
-                    domain = [
-                        ['active', '=', true]
-                    ];
+                    domain = [["active", "=", true]];
                 }
                 try {
                     var visible = new Domain(domain).compute(data.evalContext);
@@ -101,14 +96,13 @@ odoo.define('web_view_google_map.MapController', function (require) {
             var attrs = event.data.attrs;
             var record = event.data.record;
             if (attrs.context) {
-                attrs.context = new Context(attrs.context)
-                    .set_eval_context({
-                        active_id: record.res_id,
-                        active_ids: [record.res_id],
-                        active_model: record.model,
-                    });
+                attrs.context = new Context(attrs.context).set_eval_context({
+                    active_id: record.res_id,
+                    active_ids: [record.res_id],
+                    active_model: record.model,
+                });
             }
-            this.trigger_up('execute_action', {
+            this.trigger_up("execute_action", {
                 action_data: attrs,
                 env: {
                     context: record.getContext(),
@@ -116,7 +110,11 @@ odoo.define('web_view_google_map.MapController', function (require) {
                     model: record.model,
                     resIDs: record.res_ids,
                 },
-                on_closed: this._reloadAfterButtonClick.bind(this, event.target, event.data),
+                on_closed: this._reloadAfterButtonClick.bind(
+                    this,
+                    event.target,
+                    event.data
+                ),
             });
         },
 
@@ -151,56 +149,52 @@ odoo.define('web_view_google_map.MapController', function (require) {
             var self = this;
             var active_value = !event.data.archive;
             var column = event.target;
-            var record_ids = _.pluck(column.records, 'db_id');
+            var record_ids = _.pluck(column.records, "db_id");
             if (record_ids.length) {
                 this.model
                     .toggleActive(record_ids, active_value, column.db_id)
-                    .then(function (db_id) {
-                        var data = self.model.get(db_id);
+                    .then(function () {
                         self._updateEnv();
                     });
             }
         },
 
-        /**
-         * @private
-         * @param {OdooEvent} event
-         */
-        _onRecordDelete: function (event) {
-            this._deleteRecords([event.data.id]);
-        },
-        _onUpdateRecord: function (ev) {
-            var changes = _.clone(ev.data);
-            ev.data.force_save = true;
-            this._applyChanges(ev.target.db_id, changes, ev);
-        },
         renderButtons: function ($node) {
             if (this.hasButtons) {
-                this.$buttons = $(qweb.render('MapView.buttons', {
-                    widget: this
-                }));
-                this.$buttons.on('click', 'button.o-map-button-new', this._onButtonNew.bind(this));
-                this.$buttons.on('click', 'button.o-map-button-center-map', this._onButtonMapCenter.bind(this));
+                this.$buttons = $(
+                    qweb.render("MapView.buttons", {
+                        widget: this,
+                    })
+                );
+                this.$buttons.on(
+                    "click",
+                    "button.o-map-button-new",
+                    this._onButtonNew.bind(this)
+                );
+                this.$buttons.on(
+                    "click",
+                    "button.o-map-button-center-map",
+                    this._onButtonMapCenter.bind(this)
+                );
                 this.$buttons.appendTo($node);
             }
         },
         _onButtonMapCenter: function (event) {
             event.stopPropagation();
-            if (this.renderer.mapLibrary === 'geometry') {
+            if (this.renderer.mapLibrary === "geometry") {
                 this.renderer.mapGeometryCentered();
-            } else if (this.renderer.mapLibrary === 'drawing') {
+            } else if (this.renderer.mapLibrary === "drawing") {
                 this.renderer.mapShapesCentered();
             }
         },
         _onButtonNew: function (event) {
             event.stopPropagation();
-            this.trigger_up('switch_view', {
-                view_type: 'form',
-                res_id: undefined
+            this.trigger_up("switch_view", {
+                view_type: "form",
+                res_id: undefined,
             });
         },
     });
 
     return MapController;
-
 });
