@@ -1,10 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <templates id="template" xml:space="preserve">
-    <div t-name="MapView.MapView" class="o_map_container">
-        <div class="o_map_view" />
-        <div class="o_map_right_sidebar closed" />
+    <div t-name="GoogleMapView.MapView" class="o_google_map_container">
+        <div class="o_google_map_view" />
     </div>
-    <t t-name="MapView.MapViewGroupInfo">
+    <t t-name="GoogleMapView.MapViewGroupInfo">
         <ul t-if="widget.groups">
             <t t-foreach="widget.groups" t-as="group">
                 <li>
@@ -19,22 +17,34 @@
             </t>
         </ul>
     </t>
-    <t t-name="MapView.buttons">
+    <t t-name="GoogleMapView.buttons">
         <div class="o_list_buttons">
-            <t
-                t-if="widget.is_action_enabled !== undefined ? widget.is_action_enabled('create') : false"
-            >
+            <div class="o_form_marker_buttons_actions">
+                <t t-if="widget.is_action_enabled('create')">
+                    <button
+                        type="button"
+                        class="btn btn-primary o-map-button-new"
+                        accesskey="c"
+                    >
+                        <t t-esc="create_text || _t('Create')" />
+                    </button>
+                </t>
+                <button type="button" class="btn btn-secondary o-map-button-center-map">
+                    <t t-esc="_t('Center Map')" />
+                </button>
+            </div>
+            <div class="o_form_marker_buttons_edit o_hidden">
+                <button type="button" class="btn btn-primary o-map-button-marker-save">
+                    <t t-esc="_('Save')" />
+                </button>
                 <button
                     type="button"
-                    class="btn btn-primary o-map-button-new"
-                    accesskey="c"
+                    class="btn btn-secondary o-map-button-marker-discard"
                 >
-                    <t t-esc="create_text || _t('Create')" />
+                    <t t-esc="_('Discard')" />
                 </button>
-            </t>
-            <button type="button" class="btn btn-secondary o-map-button-center-map">
-                <t t-esc="_t('Center Map')" />
-            </button>
+            </div>
         </div>
     </t>
+
 </templates>

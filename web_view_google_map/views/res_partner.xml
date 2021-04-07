@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
     <record id="view_res_partner_google_map" model="ir.ui.view">
         <field name="name">view.res.partner.google_map</field>
@@ -6,7 +5,6 @@
         <field name="arch" type="xml">
             <google_map
                 class="o_res_partner_map"
-                library="geometry"
                 string="Google Map"
                 lat="partner_latitude"
                 lng="partner_longitude"
@@ -15,7 +13,6 @@
                 <field name="id" />
                 <field name="partner_latitude" />
                 <field name="partner_longitude" />
-                <field name="company_type" />
                 <field name="color" />
                 <field name="display_name" />
                 <field name="title" />
@@ -32,46 +29,64 @@
                 <field name="mobile" />
                 <field name="state_id" />
                 <field name="category_id" />
-                <field name="image_small" />
+                <field name="image_128" />
                 <field name="type" />
+                <field name="company_type" />
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_kanban_global_click o_res_partner_kanban">
-                            <div class="o_kanban_image">
-                                <t t-if="record.image_small.raw_value">
+                        <div
+                            class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban"
+                        >
+                            <t t-if="!record.is_company.raw_value">
+                                <t
+                                    t-if="record.type.raw_value === 'delivery'"
+                                    t-set="placeholder"
+                                    t-value="'/base/static/img/truck.png'"
+                                />
+                                <t
+                                    t-elif="record.type.raw_value === 'invoice'"
+                                    t-set="placeholder"
+                                    t-value="'/base/static/img/money.png'"
+                                />
+                                <t
+                                    t-else=""
+                                    t-set="placeholder"
+                                    t-value="'/base/static/img/avatar_grey.png'"
+                                />
+                                <div
+                                    class="o_kanban_image_fill_left d-none d-md-block"
+                                    t-attf-style="background-image:url('#{kanban_image('res.partner', 'image_128', record.id.raw_value, placeholder)}')"
+                                >
                                     <img
-                                        t-att-src="kanban_image('res.partner', 'image_small', record.id.raw_value)"
+                                        class="o_kanban_image_inner_pic"
+                                        t-if="record.parent_id.raw_value"
+                                        t-att-alt="record.parent_id.value"
+                                        t-att-src="kanban_image('res.partner', 'image_128', record.parent_id.raw_value)"
                                     />
-                                </t>
-                                <t t-if="!record.image_small.raw_value">
-                                    <t t-if="record.type.raw_value === 'delivery'">
-                                        <img
-                                            t-att-src='_s + "/base/static/src/img/truck.png"'
-                                            class="o_kanban_image oe_kanban_avatar_smallbox"
-                                        />
-                                    </t>
-                                    <t t-if="record.type.raw_value === 'invoice'">
-                                        <img
-                                            t-att-src='_s + "/base/static/src/img/money.png"'
-                                            class="o_kanban_image oe_kanban_avatar_smallbox"
-                                        />
-                                    </t>
-                                    <t
-                                        t-if="record.type.raw_value != 'invoice' &amp;&amp; record.type.raw_value != 'delivery'"
-                                    >
-                                        <t t-if="record.is_company.raw_value === true">
-                                            <img
-                                                t-att-src='_s + "/base/static/src/img/company_image.png"'
-                                            />
-                                        </t>
-                                        <t t-if="record.is_company.raw_value === false">
-                                            <img
-                                                t-att-src='_s + "/base/static/src/img/avatar.png"'
-                                            />
-                                        </t>
-                                    </t>
-                                </t>
-                            </div>
+                                </div>
+                                <div
+                                    class="o_kanban_image rounded-circle d-md-none"
+                                    t-attf-style="background-image:url('#{kanban_image('res.partner', 'image_128', record.id.raw_value, placeholder)}')"
+                                >
+                                    <img
+                                        class="o_kanban_image_inner_pic"
+                                        t-if="record.parent_id.raw_value"
+                                        t-att-alt="record.parent_id.value"
+                                        t-att-src="kanban_image('res.partner', 'image_128', record.parent_id.raw_value)"
+                                    />
+                                </div>
+                            </t>
+                            <t t-elif="record.image_128.raw_value">
+                                <t
+                                    t-set="placeholder"
+                                    t-value="'/base/static/img/company_image.png'"
+                                />
+                                <div
+                                    class="o_kanban_image_fill_left o_kanban_image_full"
+                                    t-attf-style="background-image: url(#{kanban_image('res.partner', 'image_128', record.id.raw_value, placeholder)})"
+                                    role="img"
+                                />
+                            </t>
                             <div class="oe_kanban_details">
                                 <strong
                                     class="o_kanban_record_title oe_partner_heading"
@@ -80,15 +95,7 @@
                                 </strong>
                                 <div
                                     class="o_kanban_tags_section oe_kanban_partner_categories"
-                                >
-                                    <span class="oe_kanban_list_many2many">
-                                        <field
-                                            name="category_id"
-                                            widget="many2many_tags"
-                                            options="{'color_field': 'color'}"
-                                        />
-                                    </span>
-                                </div>
+                                />
                                 <ul>
                                     <li
                                         t-if="record.parent_id.raw_value and !record.function.raw_value"
@@ -103,9 +110,9 @@
                                     <li
                                         t-if="record.parent_id.raw_value and record.function.raw_value"
                                     >
-                                        <field name="function" /> at <field
-                                            name="parent_id"
-                                        />
+                                        <field name="function" />
+at
+                                        <field name="parent_id" />
                                     </li>
                                     <li
                                         t-if="record.city.raw_value and !record.country_id.raw_value"
@@ -121,7 +128,8 @@
                                         t-if="record.city.raw_value and record.country_id.raw_value"
                                     >
                                         <field name="city" />
-                ,                        <field name="country_id" />
+,
+                                        <field name="country_id" />
                                     </li>
                                     <li
                                         t-if="record.email.raw_value"
@@ -138,16 +146,13 @@
             </google_map>
         </field>
     </record>
-
-    <record id="contacts.action_contacts" model="ir.actions.act_window">
-        <field name="view_mode">kanban,tree,form,activity,google_map</field>
+    <record id="base.action_partner_form" model="ir.actions.act_window">
+        <field name="view_mode">kanban,tree,form,google_map</field>
     </record>
-
-    <record id="action_contacts_view_map" model="ir.actions.act_window.view">
-        <field name="sequence" eval="3" />
+    <record id="action_partner_form_view3" model="ir.actions.act_window.view">
+        <field eval="3" name="sequence" />
         <field name="view_mode">google_map</field>
         <field name="view_id" ref="view_res_partner_google_map" />
-        <field name="act_window_id" ref="contacts.action_contacts" />
+        <field name="act_window_id" ref="base.action_partner_form" />
     </record>
-
 </odoo>

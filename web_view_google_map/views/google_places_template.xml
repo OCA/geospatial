@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <template id="assets_gmaps" name="Assets backend Google Map">
+    <template id="assets_gmaps" name="Google Maps Assets">
         <t
             t-set="google_maps_api_key"
             t-value="request.env['ir.config_parameter'].sudo().get_param('google.api_key_geocode')"
@@ -10,20 +10,24 @@
             t-value="request.env['ir.config_parameter'].sudo().get_param('google.lang_localization')"
         />
         <t
+            t-set="google_maps_libraries"
+            t-value="request.env['ir.config_parameter'].sudo().get_param('google.maps_libraries')"
+        />
+        <t
             t-set="google_maps_region_localization"
-            t-value="request.env['ir.config_parameter'].sudo().get_param('google.region_localization')"
+            t-value="request.env['ir.config_parameter'].sudo().get_param('google.region_localization', default='')"
         />
         <script
-            src="/web_view_google_map/static/lib/markercluster/markerclusterer.js"
+            src="/web_view_google_map/static/src/js/markerclusterer/markerclusterer.min.js"
         />
         <t t-if="google_maps_api_key">
             <script
-                t-attf-src="https://maps.googleapis.com/maps/api/js?v=quarterly&amp;libraries=geometry,places&amp;key=#{google_maps_api_key}&amp;#{google_maps_lang_localization}#{google_maps_region_localization}"
+                t-attf-src="https://maps.googleapis.com/maps/api/js?v=quarterly&amp;key=#{google_maps_api_key}&amp;libraries=#{google_maps_libraries}#{google_maps_lang_localization and '&amp;language=' + google_maps_lang_localization or ''}#{google_maps_region_localization and '&amp;region=' + google_maps_region_localization or ''}"
             />
         </t>
-        <t t-if="not google_maps_api_key">
+        <t t-else="">
             <script
-                t-attf-src="https://maps.googleapis.com/maps/api/js?v=quarterly&amp;libraries=geometry,places#{google_maps_lang_localization}#{google_maps_region_localization}"
+                t-attf-src="https://maps.googleapis.com/maps/api/js?v=quarterly&amp;libraries=#{google_maps_libraries}#{google_maps_lang_localization and '&amp;language=' + google_maps_lang_localization or ''}#{google_maps_region_localization and '&amp;region=' + google_maps_region_localization or ''}"
             />
         </t>
     </template>
@@ -38,7 +42,7 @@
     </template>
     <template
         id="assets_backend"
-        name="google_maps assets backend"
+        name="web_view_google_map assets backend"
         inherit_id="web.assets_backend"
     >
         <xpath expr="." position="inside">
@@ -71,6 +75,22 @@
             <script
                 type="text/javascript"
                 src="/web_view_google_map/static/src/js/view/view_registry.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_view_google_map/static/src/js/fields/relational_fields.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_view_google_map/static/src/js/widgets/utils.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_view_google_map/static/src/js/widgets/gplaces_autocomplete.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_view_google_map/static/src/js/widgets/fields_registry.js"
             />
         </xpath>
     </template>

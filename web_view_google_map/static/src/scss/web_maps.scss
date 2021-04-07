@@ -4,46 +4,22 @@
     z-index: 1051 !important;
 }
 
-.o_field_x2many_map {
+.o_field_x2many_google_map {
     margin-top: 10px;
 }
 
-.o_map_container {
+.o_google_map_container {
     display: flex;
     align-content: stretch;
     overflow-x: visible;
     min-height: 550px;
     height: 100%;
 
-    .o_map_view {
+    .o_google_map_view {
         width: 100%;
 
         .gm-style-iw {
             min-width: 300px;
-        }
-    }
-
-    .o_map_left_sidenav {
-        left: 0;
-        top: 0;
-        bottom: 0;
-        max-width: 400px;
-        width: 400px;
-        position: absolute;
-        z-index: 1;
-        background-color: #f5f5f5;
-        overflow-x: hidden;
-        transition: 0.5s;
-        transform: translate3d(0, 0, 0);
-        -webkit-transform: translate3d(0, 0, 0);
-
-        &.closed {
-            transform: translate3d(-100%, 0, 0);
-            -webkit-transform: translate3d(-100%, 0, 0);
-
-            .sidenav-body .panel {
-                border: none;
-            }
         }
     }
 
@@ -99,5 +75,41 @@
         border-radius: 2px;
         line-height: 25px;
         font-family: "Roboto,Arial,sans-serif";
+    }
+
+    .o_kanban_view {
+        .o_kanban_record,
+        .o_kanban_quick_create {
+            border: none;
+            margin-bottom: $o-kanban-inside-hgutter;
+            width: 100%;
+
+            &:focus,
+            &:focus-within {
+                -webkit-box-shadow: none;
+                -moz-box-shadow: none;
+                box-shadow: none;
+            }
+        }
+
+        .o_kanban_record {
+            border-top: 1px solid #ddd;
+            .o_kanban_record_title {
+                @include o-kanban-record-title($font-size: 14px);
+            }
+        }
+
+        .o_kanban_group {
+            padding: 5px 16px 5px 16px;
+        }
+
+        .oe_kanban_card,
+        .o_kanban_record {
+            .oe_kanban_details {
+                ul {
+                    font-size: 13px;
+                }
+            }
+        }
     }
 }
