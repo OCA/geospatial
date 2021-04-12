@@ -1,22 +1,21 @@
-![Licence](https://img.shields.io/badge/licence-AGPL--3-blue.svg)
-[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/115/11.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-geospatial-115)
-[![Build Status](https://travis-ci.org/OCA/geospatial.svg?branch=11.0)](https://travis-ci.org/OCA/geospatial)
-[![Coverage Status](https://coveralls.io/repos/OCA/geospatial/badge.svg?branch=11.0)](https://coveralls.io/r/OCA/geospatial?branch=11.0)
+[![Runbot Status](https://runbot.odoo-community.org/runbot/badge/flat/115/13.0.svg)](https://runbot.odoo-community.org/runbot/repo/github-com-oca-geospatial-115)
+[![Build Status](https://travis-ci.com/OCA/geospatial.svg?branch=13.0)](https://travis-ci.com/OCA/geospatial)
+[![codecov](https://codecov.io/gh/OCA/geospatial/branch/13.0/graph/badge.svg)](https://codecov.io/gh/OCA/geospatial)
+[![Translation Status](https://translation.odoo-community.org/widgets/geospatial-13-0/-/svg-badge.svg)](https://translation.odoo-community.org/engage/geospatial-13-0/?utm_source=widget)
 
-Geospatial Addons for Odoo/OpenERP
-==================================
+<!-- /!\ do not modify above this line -->
 
-This project will enable real life GIS support on Odoo/OpenERP.
+# Geospatial Addons for Odoo
 
-Storing your data
------------------
+This project will enable real life GIS support on Odoo.
+
+## Storing your data
 
 All of your spatial data will be stored using robust dataformat provided by PostGIS.
 Projections, complex geometry formats (ploygon, lines, dot, donuts, multi-polygon, etc) are supported.
 You can import your spatial data with ease using WKT and CSV or by drawing them directly in Web client.
 
-Map Visualization and administration
-------------------------------------
+## Map Visualization and administration
 
 Background map and layers can be configured in the administration part.
 Various background sources are available:
@@ -28,26 +27,22 @@ Various background sources are available:
 Data layers can also easily be configured using any geometry columns of your system.
 Styling like choropleth, propotional symbols etc are available.
 
-Querying
---------
+## Querying
 
 You data can be queried using various visual tools from your map view.
 Standard Odoo/OpenERP queries are supported and geographical operators in UI will be available.
 
 
-Referencing
------------
+## Referencing
 
 Customers can be georeferenced using open data services
 
-Extending
----------
+## Extending
 
 A geospatial API is provided, to add your own functionalites at your convenience
 
 
-Requirements
-------------
+## Requirements
 
 * System:
   *  **PostGIS** http://postgis.refractions.net/
@@ -57,8 +52,28 @@ Requirements
 
   *  **geojson** http://pypi.python.org/pypi/geojson
 
+<!-- /!\ do not modify below this line -->
 
+<!-- prettier-ignore-start -->
 
-Translation Status
-------------------
-[![Transifex Status](https://www.transifex.com/projects/p/OCA-geospatial-11-0/chart/image_png)](https://www.transifex.com/projects/p/OCA-geospatial-11-0)
+[//]: # (addons)
+
+This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+
+[//]: # (end addons)
+
+<!-- prettier-ignore-end -->
+
+## Licenses
+
+This repository is licensed under [AGPL-3.0](LICENSE).
+
+However, each module can have a totally different license, as long as they adhere to OCA
+policy. Consult each module's `__manifest__.py` file, which contains a `license` key
+that explains its license.
+
+----
+
+OCA, or the [Odoo Community Association](http://odoo-community.org/), is a nonprofit
+organization whose mission is to support the collaborative development of Odoo features
+and promote its widespread use.
