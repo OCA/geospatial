@@ -58,7 +58,15 @@ A geospatial API is provided, to add your own functionalites at your convenience
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | summary
+--- | --- | ---
+[base_geoengine](base_geoengine/) | 13.0.1.0.2 | Geospatial support for Odoo
+[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 13.0.1.0.0 | Geospatial support for base_geolocalize
+[geoengine_partner](geoengine_partner/) | 13.0.1.0.0 | Geospatial support of partners
+[geoengine_swisstopo](geoengine_swisstopo/) | 13.0.1.0.0 | GeoEngine - Swisstopo layers
+[test_base_geoengine](test_base_geoengine/) | 13.0.1.0.0 | test-base-geoengine
 
 [//]: # (end addons)
 
