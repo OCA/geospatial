@@ -7,7 +7,46 @@
 
 # geospatial
 
-TODO: add repo description.
+This project will enable real life GIS support on Odoo.
+
+## Storing your data
+
+All of your spatial data will be stored using robust dataformat provided by PostGIS.
+Projections, complex geometry formats (ploygon, lines, dot, donuts, multi-polygon,
+etc) are supported. You can import your spatial data with ease using WKT and CSV or by
+drawing them directly in Web client.
+
+## Map Visualization and administration
+
+Background map and layers can be configured in the administration part. Various
+background sources are available:
+
+- OpenStreetMap, - SwissTopo, - Any WMS sources.
+
+Data layers can also easily be configured using any geometry columns of your system.
+Styling like choropleth, propotional symbols etc are available.
+
+## Querying
+
+You data can be queried using various visual tools from your map view. Standard Odoo
+queries are supported and geographical operators in UI will be available.
+
+## Referencing
+
+Customers can be georeferenced using open data services
+
+## Extending
+
+A geospatial API is provided, to add your own functionalites at your convenience
+
+
+## Requirements
+
+* System: *  **PostGIS** http://postgis.refractions.net/
+
+* Python: *  **Shapely** http://pypi.python.org/pypi/Shapely
+
+*  **geojson** http://pypi.python.org/pypi/geojson
 
 <!-- /!\ do not modify below this line -->
 
