@@ -9,30 +9,29 @@ div.olmap {
     cursor: default;
 }
 
-.ol-control{
+.ol-control {
     background-image: none;
 }
-.ol-control button{
+.ol-control button {
     background-image: none;
 }
 
-.olmap svg{
+.olmap svg {
     width: initial;
     height: initial;
-
 }
 
 .olmap:-moz-full-screen {
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 }
 .olmap:-webkit-full-screen {
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 }
 .olmap:-ms-fullscreen {
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 }
 
 div.olControlPanel {
@@ -41,11 +40,11 @@ div.olControlPanel {
 
 div.ol-clear {
     top: 65px;
-    left: .5em;
+    left: 0.5em;
 }
 .olmap:fullscreen {
-  height: 100%;
-  width: 100%;
+    height: 100%;
+    width: 100%;
 }
 
 .olControlEditingToolbar .olControlSelectBoxItemInactive {
@@ -69,19 +68,19 @@ div.ol-clear {
     padding: 0 0 5px 0;
 }
 #map_infobox {
-        bottom: 10px;
-        left: 10px;
-        width: 200px;
-        height: 150px;
-        -moz-border-radius: 6px;
-        -webkit-border-radius: 6px;
+    bottom: 10px;
+    left: 10px;
+    width: 200px;
+    height: 150px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
 }
 #map_info {
-        cursor: pointer;
-        overflow-x: hidden;
-        overflow-y: auto;
-        padding: 10px;
-        height: 130px;
+    cursor: pointer;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 10px;
+    height: 130px;
 }
 #map_info_open {
     cursor: pointer;
@@ -99,17 +98,17 @@ div.ol-clear {
 }
 
 #map_measurementbox {
-        top: 18px;
-        left: 160px;
-        padding: 2px 5px;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
+    top: 18px;
+    left: 160px;
+    padding: 2px 5px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
 }
 
 #map_legend {
-        bottom: 6em;
-        right: 5em;
-        z-index: 3000;
+    bottom: 6em;
+    right: 5em;
+    z-index: 3000;
 }
 
 /* Button style */
@@ -137,7 +136,8 @@ div.ol-clear {
     min-width: 280px;
 }
 
-.ol-popup:after, .ol-popup:before {
+.ol-popup:after,
+.ol-popup:before {
     top: 100%;
     border: solid transparent;
     content: " ";

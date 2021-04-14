@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
     <record model="ir.ui.view" id="test_dummy_geo_view">
@@ -6,7 +6,7 @@
         <field name="model">test.dummy</field>
         <field name="arch" type="xml">
             <geoengine>
-                <field name="name"/>
+                <field name="name" />
             </geoengine>
         </field>
     </record>
@@ -16,11 +16,14 @@
         <field name="model">test.dummy</field>
         <field name="arch" type="xml">
             <form string="Dummy">
-                <field name="name"/>
+                <field name="name" />
                 <notebook colspan="4">
                     <page string="Geometry">
-                        <field name="geo_multipolygon" colspan="4"
-                               widget="geo_edit_map"/>
+                        <field
+                            name="geo_multipolygon"
+                            colspan="4"
+                            widget="geo_edit_map"
+                        />
                     </page>
                 </notebook>
             </form>
@@ -32,9 +35,12 @@
         <field name="model">test.dummy.related</field>
         <field name="arch" type="xml">
             <geoengine>
-                <field name="dummy_test_id"/>
-                <field name="dummy_geo_multipolygon" colspan="4"
-                       widget="geo_edit_map"/>
+                <field name="dummy_test_id" />
+                <field
+                    name="dummy_geo_multipolygon"
+                    colspan="4"
+                    widget="geo_edit_map"
+                />
             </geoengine>
         </field>
     </record>
