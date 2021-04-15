@@ -23,7 +23,7 @@
     "category": "GeoBI",
     "author": "ACSONE SA/NV, Odoo Community Association (OCA)",
     "license": "AGPL-3",
-    "website": "http://www.acsone.eu",
+    "website": "https://github.com/OCA/geospatial",
     "depends": ["base", "geoengine_partner", "base_geolocalize"],
     "data": ["views/res_partner_view.xml"],
     "installable": True,
