@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template
+        id="assets_backend"
+        name="google_marker_icon_picker assets backend"
+        inherit_id="web_view_google_map.assets_backend"
+    >
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/web_widget_google_marker_icon_picker/static/src/js/view/map/map_renderer.js"
+            />
+            <script
+                type="text/javascript"
+                src="/web_widget_google_marker_icon_picker/static/src/js/widget/field_marker.js"
+            />
+        </xpath>
+    </template>
+</odoo>
