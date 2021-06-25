@@ -1,0 +1,158 @@
+<odoo>
+    <record id="view_res_partner_google_map" model="ir.ui.view">
+        <field name="name">view.res.partner.google_map</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <google_map
+                class="o_res_partner_map"
+                string="Google Map"
+                lat="partner_latitude"
+                lng="partner_longitude"
+                colors="blue:company_type=='person';green:company_type=='company';"
+            >
+                <field name="id" />
+                <field name="partner_latitude" />
+                <field name="partner_longitude" />
+                <field name="color" />
+                <field name="display_name" />
+                <field name="title" />
+                <field name="email" />
+                <field name="parent_id" />
+                <field name="is_company" />
+                <field name="function" />
+                <field name="phone" />
+                <field name="street" />
+                <field name="street2" />
+                <field name="zip" />
+                <field name="city" />
+                <field name="country_id" />
+                <field name="mobile" />
+                <field name="state_id" />
+                <field name="category_id" />
+                <field name="image_128" />
+                <field name="type" />
+                <field name="company_type" />
+                <templates>
+                    <t t-name="kanban-box">
+                        <div
+                            class="oe_kanban_global_click o_kanban_record_has_image_fill o_res_partner_kanban"
+                        >
+                            <t t-if="!record.is_company.raw_value">
+                                <t
+                                    t-if="record.type.raw_value === 'delivery'"
+                                    t-set="placeholder"
+                                    t-value="'/base/static/img/truck.png'"
+                                />
+                                <t
+                                    t-elif="record.type.raw_value === 'invoice'"
+                                    t-set="placeholder"
+                                    t-value="'/base/static/img/money.png'"
+                                />
+                                <t
+                                    t-else=""
+                                    t-set="placeholder"
+                                    t-value="'/base/static/img/avatar_grey.png'"
+                                />
+                                <div
+                                    class="o_kanban_image_fill_left d-none d-md-block"
+                                    t-attf-style="background-image:url('#{kanban_image('res.partner', 'image_128', record.id.raw_value, placeholder)}')"
+                                >
+                                    <img
+                                        class="o_kanban_image_inner_pic"
+                                        t-if="record.parent_id.raw_value"
+                                        t-att-alt="record.parent_id.value"
+                                        t-att-src="kanban_image('res.partner', 'image_128', record.parent_id.raw_value)"
+                                    />
+                                </div>
+                                <div
+                                    class="o_kanban_image rounded-circle d-md-none"
+                                    t-attf-style="background-image:url('#{kanban_image('res.partner', 'image_128', record.id.raw_value, placeholder)}')"
+                                >
+                                    <img
+                                        class="o_kanban_image_inner_pic"
+                                        t-if="record.parent_id.raw_value"
+                                        t-att-alt="record.parent_id.value"
+                                        t-att-src="kanban_image('res.partner', 'image_128', record.parent_id.raw_value)"
+                                    />
+                                </div>
+                            </t>
+                            <t t-elif="record.image_128.raw_value">
+                                <t
+                                    t-set="placeholder"
+                                    t-value="'/base/static/img/company_image.png'"
+                                />
+                                <div
+                                    class="o_kanban_image_fill_left o_kanban_image_full"
+                                    t-attf-style="background-image: url(#{kanban_image('res.partner', 'image_128', record.id.raw_value, placeholder)})"
+                                    role="img"
+                                />
+                            </t>
+                            <div class="oe_kanban_details">
+                                <strong
+                                    class="o_kanban_record_title oe_partner_heading"
+                                >
+                                    <field name="display_name" />
+                                </strong>
+                                <div
+                                    class="o_kanban_tags_section oe_kanban_partner_categories"
+                                />
+                                <ul>
+                                    <li
+                                        t-if="record.parent_id.raw_value and !record.function.raw_value"
+                                    >
+                                        <field name="parent_id" />
+                                    </li>
+                                    <li
+                                        t-if="!record.parent_id.raw_value and record.function.raw_value"
+                                    >
+                                        <field name="function" />
+                                    </li>
+                                    <li
+                                        t-if="record.parent_id.raw_value and record.function.raw_value"
+                                    >
+                                        <field name="function" />
+at
+                                        <field name="parent_id" />
+                                    </li>
+                                    <li
+                                        t-if="record.city.raw_value and !record.country_id.raw_value"
+                                    >
+                                        <field name="city" />
+                                    </li>
+                                    <li
+                                        t-if="!record.city.raw_value and record.country_id.raw_value"
+                                    >
+                                        <field name="country_id" />
+                                    </li>
+                                    <li
+                                        t-if="record.city.raw_value and record.country_id.raw_value"
+                                    >
+                                        <field name="city" />
+,
+                                        <field name="country_id" />
+                                    </li>
+                                    <li
+                                        t-if="record.email.raw_value"
+                                        class="o_text_overflow"
+                                    >
+                                        <field name="email" />
+                                    </li>
+                                </ul>
+                                <div class="oe_kanban_partner_links" />
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </google_map>
+        </field>
+    </record>
+    <record id="base.action_partner_form" model="ir.actions.act_window">
+        <field name="view_mode">kanban,tree,form,google_map</field>
+    </record>
+    <record id="action_partner_form_view3" model="ir.actions.act_window.view">
+        <field eval="3" name="sequence" />
+        <field name="view_mode">google_map</field>
+        <field name="view_id" ref="view_res_partner_google_map" />
+        <field name="act_window_id" ref="base.action_partner_form" />
+    </record>
+</odoo>
