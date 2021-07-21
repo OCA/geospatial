@@ -14,6 +14,10 @@
                         name="attribute_field_id"
                         attrs="{'required': [('geo_repr', 'in', ['choropleth', 'proportion', 'colored'])]}"
                     />
+                    <field
+                        name="label_field_id"
+                        attrs="{'required': [('display_polygon_labels', '=', True ),]}"
+                    />
                     <field name="active_on_startup" />
                     <field name="display_polygon_labels" />
                     <field name="sequence" />
@@ -73,6 +77,7 @@
                 <field name="classification" select="1" />
                 <field name="geo_field_id" select="1" />
                 <field name="attribute_field_id" select="1" />
+                <field name="label_field_id" select="1" />
                 <field name="active_on_startup" />
                 <field name="sequence" />
             </tree>
