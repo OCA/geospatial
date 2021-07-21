@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_gmaps" name="Assets backend Google Map">
+        <t t-set="google_maps_api_key" t-value="request.env['ir.config_parameter'].sudo().get_param('google.api_key_geocode')"/>
+        <t t-set="google_maps_lang_localization" t-value="request.env['ir.config_parameter'].sudo().get_param('google.lang_localization')"/>
+        <t t-set="google_maps_region_localization" t-value="request.env['ir.config_parameter'].sudo().get_param('google.region_localization')"/>
+        <script src="/web_view_google_map/static/lib/markercluster/markerclusterer.js"></script>
+        <t t-if="google_maps_api_key">
+            <script t-attf-src="https://maps.googleapis.com/maps/api/js?v=quarterly&amp;libraries=geometry,places&amp;key=#{google_maps_api_key}&amp;#{google_maps_lang_localization}#{google_maps_region_localization}"></script>
+        </t>
+        <t t-if="not google_maps_api_key">
+            <script t-attf-src="https://maps.googleapis.com/maps/api/js?v=quarterly&amp;libraries=geometry,places#{google_maps_lang_localization}#{google_maps_region_localization}"></script>
+        </t>
+    </template>
+    <template id="webclient_bootstrap" name="webclient_bootstrap gmaps" inherit_id="web.webclient_bootstrap">
+        <xpath expr="//t[@t-call-assets='web.assets_common']" position="before">
+            <t t-call="web_view_google_map.assets_gmaps"/>
+        </xpath>
+    </template>
+    <template id="assets_backend" name="google_maps assets backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/web_view_google_map/static/src/scss/web_maps.scss"/>
+            <link rel="stylesheet" type="text/scss" href="/web_view_google_map/static/src/scss/web_maps_mobile.scss"/>
+            <script type="text/javascript" src="/web_view_google_map/static/src/js/view/map/map_model.js"></script>
+            <script type="text/javascript" src="/web_view_google_map/static/src/js/view/map/map_controller.js"></script>
+            <script type="text/javascript" src="/web_view_google_map/static/src/js/view/map/map_renderer.js"></script>
+            <script type="text/javascript" src="/web_view_google_map/static/src/js/view/map/map_view.js"></script>
+            <script type="text/javascript" src="/web_view_google_map/static/src/js/view/view_registry.js"></script>
+        </xpath>
+    </template>
+</odoo>
