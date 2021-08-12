@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <function
+        model="ir.config_parameter"
+        name="set_param"
+        eval="('google.maps_libraries', 'geometry,places')"
+    />
+</odoo>
