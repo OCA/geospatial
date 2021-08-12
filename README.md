@@ -58,7 +58,7 @@ Available addons
 ----------------
 addon | version | summary
 --- | --- | ---
-[base_google_map](base_google_map/) | 14.0.1.0.0 | View modes and widgets to integrate Google Maps in your UI
+[base_google_map](base_google_map/) | 14.0.1.0.1 | View modes and widgets to integrate Google Maps in your UI
 
 [//]: # (end addons)
 
