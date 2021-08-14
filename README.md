@@ -61,14 +61,14 @@ Requirements
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[base_geoengine](base_geoengine/) | 8.0.0.4.0 | Geospatial support for OpenERP
-[base_geoengine_demo](base_geoengine_demo/) | 8.0.0.1.0 | Geo spatial support Demo
-[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 8.0.0.1.0 | Geospatial support for base_geolocalize
-[geoengine_geoname_geocoder](geoengine_geoname_geocoder/) | 8.0.0.1.0 | Auto Geocoding of partners
-[geoengine_partner](geoengine_partner/) | 8.0.0.1.0 | Geospatial support of partners
-[geoengine_project](geoengine_project/) | 8.0.0.1.0 | Geospatial support for projects
-[geoengine_sale](geoengine_sale/) | 8.0.0.1.0 | Geospatial support for sales
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[base_geoengine](base_geoengine/) | 8.0.0.4.0 |  | Geospatial support for OpenERP
+[base_geoengine_demo](base_geoengine_demo/) | 8.0.0.1.0 |  | Geo spatial support Demo
+[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 8.0.0.1.0 |  | Geospatial support for base_geolocalize
+[geoengine_geoname_geocoder](geoengine_geoname_geocoder/) | 8.0.0.1.0 |  | Auto Geocoding of partners
+[geoengine_partner](geoengine_partner/) | 8.0.0.1.0 |  | Geospatial support of partners
+[geoengine_project](geoengine_project/) | 8.0.0.1.0 |  | Geospatial support for projects
+[geoengine_sale](geoengine_sale/) | 8.0.0.1.0 |  | Geospatial support for sales
 
 [//]: # (end addons)
