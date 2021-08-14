@@ -61,24 +61,24 @@ Requirements
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[base_geoengine](base_geoengine/) | 10.0.2.0.5 | Geospatial support for Odoo
-[base_geoengine_demo](base_geoengine_demo/) | 10.0.1.0.3 | Geo spatial support Demo
-[base_geolocalize_openstreetmap](base_geolocalize_openstreetmap/) | 10.0.1.0.1 | Open street map API call to geolocalize an address
-[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 10.0.1.0.1 | Geospatial support for base_geolocalize
-[geoengine_partner](geoengine_partner/) | 10.0.1.0.1 | Geospatial support of partners
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[base_geoengine](base_geoengine/) | 10.0.2.0.5 |  | Geospatial support for Odoo
+[base_geoengine_demo](base_geoengine_demo/) | 10.0.1.0.3 |  | Geo spatial support Demo
+[base_geolocalize_openstreetmap](base_geolocalize_openstreetmap/) | 10.0.1.0.1 |  | Open street map API call to geolocalize an address
+[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 10.0.1.0.1 |  | Geospatial support for base_geolocalize
+[geoengine_partner](geoengine_partner/) | 10.0.1.0.1 |  | Geospatial support of partners
 
 
 Unported addons
 ---------------
-addon | version | summary
---- | --- | ---
-[geoengine_geoname_geocoder](geoengine_geoname_geocoder/) | 8.0.0.1.0 (unported) | Auto Geocoding of partners
-[geoengine_maplausanne](geoengine_maplausanne/) | 9.0.1.0.0 (unported) | Geospatial - map.lausanne.ch layers
-[geoengine_project](geoengine_project/) | 8.0.0.1.0 (unported) | Geospatial support for projects
-[geoengine_sale](geoengine_sale/) | 8.0.0.1.0 (unported) | Geospatial support for sales
-[geoengine_swisstopo](geoengine_swisstopo/) | 9.0.1.0.0 (unported) | Geospatial - Swisstopo layers
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[geoengine_geoname_geocoder](geoengine_geoname_geocoder/) | 8.0.0.1.0 (unported) |  | Auto Geocoding of partners
+[geoengine_maplausanne](geoengine_maplausanne/) | 9.0.1.0.0 (unported) |  | Geospatial - map.lausanne.ch layers
+[geoengine_project](geoengine_project/) | 8.0.0.1.0 (unported) |  | Geospatial support for projects
+[geoengine_sale](geoengine_sale/) | 8.0.0.1.0 (unported) |  | Geospatial support for sales
+[geoengine_swisstopo](geoengine_swisstopo/) | 9.0.1.0.0 (unported) |  | Geospatial - Swisstopo layers
 
 [//]: # (end addons)
 
