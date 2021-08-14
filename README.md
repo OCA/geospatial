@@ -63,23 +63,23 @@ Requirements
 
 Available addons
 ----------------
-addon | version | summary
---- | --- | ---
-[base_geoengine](base_geoengine/) | 9.0.1.2.5 | Geospatial support for Odoo
-[base_geoengine_demo](base_geoengine_demo/) | 9.0.1.0.0 | Geo spatial support Demo
-[geoengine_maplausanne](geoengine_maplausanne/) | 9.0.1.0.0 | Geospatial - map.lausanne.ch layers
-[geoengine_partner](geoengine_partner/) | 9.0.1.0.0 | Geospatial support of partners
-[geoengine_swisstopo](geoengine_swisstopo/) | 9.0.1.0.0 | Geospatial - Swisstopo layers
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[base_geoengine](base_geoengine/) | 9.0.1.2.5 |  | Geospatial support for Odoo
+[base_geoengine_demo](base_geoengine_demo/) | 9.0.1.0.0 |  | Geo spatial support Demo
+[geoengine_maplausanne](geoengine_maplausanne/) | 9.0.1.0.0 |  | Geospatial - map.lausanne.ch layers
+[geoengine_partner](geoengine_partner/) | 9.0.1.0.0 |  | Geospatial support of partners
+[geoengine_swisstopo](geoengine_swisstopo/) | 9.0.1.0.0 |  | Geospatial - Swisstopo layers
 
 
 Unported addons
 ---------------
-addon | version | summary
---- | --- | ---
-[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 8.0.0.1.0 (unported) | Geospatial support for base_geolocalize
-[geoengine_geoname_geocoder](geoengine_geoname_geocoder/) | 8.0.0.1.0 (unported) | Auto Geocoding of partners
-[geoengine_project](geoengine_project/) | 8.0.0.1.0 (unported) | Geospatial support for projects
-[geoengine_sale](geoengine_sale/) | 8.0.0.1.0 (unported) | Geospatial support for sales
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 8.0.0.1.0 (unported) |  | Geospatial support for base_geolocalize
+[geoengine_geoname_geocoder](geoengine_geoname_geocoder/) | 8.0.0.1.0 (unported) |  | Auto Geocoding of partners
+[geoengine_project](geoengine_project/) | 8.0.0.1.0 (unported) |  | Geospatial support for projects
+[geoengine_sale](geoengine_sale/) | 8.0.0.1.0 (unported) |  | Geospatial support for sales
 
 [//]: # (end addons)
 
