@@ -59,7 +59,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
         if (!!this.options && this.options.opacity) {
             vl.setOpacity(this.options.opacity)
         }
-        
+
         return vl;
     },
 
@@ -76,7 +76,9 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
             return;
         }
         $('a[href="#' + tab_href[0].id + '"]').on('shown.bs.tab', function(e) {
-            this.render_map();
+            if (this.$el.is(':visible')){
+                this.render_map();
+            }
             return;
         }.bind(this));
     },
@@ -91,6 +93,9 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
         // add a listener on parent tab if it exists in order to refresh geoengine view
         // we need to trigger it on DOM update for changes from view to edit mode
         core.bus.on('DOM_updated', self.view.ViewManager.is_in_DOM, function () {
+            if (self.$el.is(':visible')){
+                self.render_map();
+            }
             if (!self.tab_listener_installed) {
                 self.add_tab_listener();
                 self.tab_listener_installed = true;
@@ -128,18 +133,38 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
         zoom = (typeof zoom === 'undefined') ? true : zoom;
         this._super.apply(this, arguments);
         this.value = value;
-
+        var empty = this.get('effective_readonly') && !this.is_set();
+        if(!this.map && !empty) {
+            // force toggle label to ensure that the element becomes visible if
+            // possible. This method will remove the 'o_form_field_empty' class
+            // on the current element and makes it visible into the DOM
+            if (this.$label) {
+                this._toggle_label();
+            }
+            // if the element is now visible and the map doesn't exists
+            // force rendition
+            if (this.$el.is(':visible')){
+                this.render_map();
+                // render_map call the set_value method, it's therefore
+                // safe to return here
+                return;
+            }
+        }
         if (this.map) {
 
-            var ft = new ol.Feature({
-                geometry: new ol.format.GeoJSON().readGeometry(value),
-                labelPoint:  new ol.format.GeoJSON().readGeometry(value),
-            });
-            this.source.clear();
-            this.source.addFeature(ft);
+            if (this.source) {
+                this.source.clear();
+            }
+
             if (value){
 
                 if (this.source){
+                    var ft = new ol.Feature({
+                        geometry: new ol.format.GeoJSON().readGeometry(value),
+                        labelPoint:  new ol.format.GeoJSON().readGeometry(value),
+                    });
+                    this.source.addFeature(ft);
+
                     var extent = this.source.getExtent();
                     if (zoom && extent != [Infinity, Infinity, -Infinity, -Infinity]) {
                         map_view = this.map.getView();
