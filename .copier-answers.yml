@@ -1,19 +1,20 @@
 # Do NOT update manually; changes here will be overwritten by Copier
-_commit: v1.1.4
+_commit: v1.3.4
 _src_path: gh:oca/oca-addons-repo-template
+ci: Travis
 dependency_installation_mode: PIP
 generate_requirements_txt: true
 include_wkhtmltopdf: false
 odoo_version: 14.0
 rebel_module_groups: []
-repo_description: "This project will enable real life GIS support on Odoo.
+repo_description: 'This project will enable real life GIS support on Odoo.
 
   ## Storing your data
 
   All of your spatial data will be stored using robust dataformat provided by PostGIS.
   Projections, complex geometry formats (ploygon, lines, dot, donuts, multi-polygon,
-  etc) are supported. You can import your spatial data with ease using WKT and CSV or by
-  drawing them directly in Web client.
+  etc) are supported. You can import your spatial data with ease using WKT and CSV
+  or by drawing them directly in Web client.
 
   ## Map Visualization and administration
 
@@ -27,8 +28,8 @@ repo_description: "This project will enable real life GIS support on Odoo.
 
   ## Querying
 
-  You data can be queried using various visual tools from your map view. Standard Odoo
-  queries are supported and geographical operators in UI will be available.
+  You data can be queried using various visual tools from your map view. Standard
+  Odoo queries are supported and geographical operators in UI will be available.
 
   ## Referencing
 
@@ -45,7 +46,7 @@ repo_description: "This project will enable real life GIS support on Odoo.
 
   * Python: *  **Shapely** http://pypi.python.org/pypi/Shapely
 
-  *  **geojson** http://pypi.python.org/pypi/geojson"
+  *  **geojson** http://pypi.python.org/pypi/geojson'
 repo_name: Geospatial Addons for Odoo
 repo_slug: geospatial
 travis_apt_packages: []
