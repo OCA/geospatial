@@ -25,11 +25,6 @@ msgid "Contact"
 msgstr ""
 
 #. module: geoengine_partner
-#: model_terms:ir.ui.view,arch_db:geoengine_partner.geo_partner_view_form
-msgid "Geoengine Map"
-msgstr ""
-
-#. module: geoengine_partner
 #: model:geoengine.raster.layer,name:geoengine_partner.geoengine_raster_layer_res_partner_osm
 msgid "Partner background"
 msgstr ""
