@@ -210,7 +210,7 @@ msgid "General"
 msgstr ""
 
 #. module: base_geoengine
-#: code:addons/base_geoengine/fields.py:104
+#: code:addons/base_geoengine/fields.py:107
 #, python-format
 msgid "Geo Value %s must be of the same type %s as fields"
 msgstr ""
