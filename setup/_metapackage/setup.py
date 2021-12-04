@@ -12,6 +12,7 @@ setuptools.setup(
         'odoo12-addon-base_geoengine_demo',
         'odoo12-addon-base_geolocalize_openstreetmap',
         'odoo12-addon-base_google_map',
+        'odoo12-addon-geoengine_base_geolocalize',
         'odoo12-addon-geoengine_bing',
         'odoo12-addon-geoengine_partner',
         'odoo12-addon-geoengine_swisstopo',
