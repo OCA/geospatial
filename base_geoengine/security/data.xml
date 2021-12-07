@@ -8,7 +8,7 @@
     <record id="group_geoengine_admin" model="res.groups">
         <field name="name">Geoengine Admin</field>
         <field name="implied_ids" eval="[(4, ref('group_geoengine_user')),]"/>
-        <field name="users" eval="[(4, ref('base.user_root'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
 
 </odoo>
