@@ -12,8 +12,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
     var QWeb = require('web.QWeb');
     var session = require('web.session');
 
-    var Record = require('base_geoengine.Record');
-    var GeoengineRecord = Record.GeoengineRecord;
+    var GeoengineRecord = require('base_geoengine.Record');
     var geoengine_common = require('base_geoengine.geoengine_common');
     var BackgroundLayers = require('base_geoengine.BackgroundLayers');
 
@@ -181,7 +180,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
         },
 
         willStart: function () {
-            var arch = this.viewInfo.arch;
+            var arch = this.arch;
             _.each(arch.children, function (child) {
                 if (child.tag === 'templates') {
                     this.qweb.add_template(utils.json_node_to_xml(child));
@@ -244,6 +243,14 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
             $map_info_open.append($('<span>', {class: 'fa fa-edit'}));
             $map_infobox.append($map_info_open);
 
+            var $map_popup = $('<div>', {
+                class: 'layer-popup ol-popup',
+            });
+            var $map_popup_content = $('<div>', {
+                class: 'popup-content',
+            });
+            $map_popup.append($map_popup_content);
+
             var $map_info_filter_selection = $('<div>', {
                 id: 'map_info_filter_selection',
             });
@@ -255,7 +262,7 @@ odoo.define('base_geoengine.GeoengineRenderer', function (require) {
             $map_infobox.append($('<div>', {id: 'map_info'}));
 
             $map_div.append($map_infobox);
-
+            $map_div.append($map_popup);
             this.$el.addClass('o_geo_view').append($map_div);
 
             return this._super();
