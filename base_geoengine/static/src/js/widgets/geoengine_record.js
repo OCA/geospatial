@@ -39,12 +39,21 @@ odoo.define('base_geoengine.Record', function (require) {
             return new_record;
         },
 
+        _format: function (record, fieldName) {
+            var field = this.state.fields[fieldName];
+            if (field.type === "one2many" || field.type === "many2many") {
+                return field_utils.format[field.type]({data: record[fieldName]}, field);
+            } else {
+                return field_utils.format[field.type](record[fieldName], field, {forceString: true});
+            }
+        },
+
         _renderContent: function () {
             var qweb_context = {
                 record: this.record,
                 widget: this,
                 user_context: session.user_context,
-                formats: formats,
+                formats: this._format.bind(this),
             };
             this.content = this.qweb.render('layer-box', qweb_context);
         },
