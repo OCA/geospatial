@@ -87,7 +87,7 @@ class GeoModel(models.BaseModel):
                 _('Please create a view or modify view mode'))
         return view_obj.browse(cursor, uid, geo_view_id[0])
 
-    def fields_view_get(self, cursor, uid, view_id=None, view_type='form',
+    def fields_view_get(self, cr, uid, view_id=None, view_type='form',
                         context=None, toolbar=False, submenu=False):
         """Returns information about the available fields of the class.
            If view type == 'map' returns geographical columns available"""
@@ -99,16 +99,16 @@ class GeoModel(models.BaseModel):
         def set_field_real_name(in_tuple):
             if not in_tuple:
                 return in_tuple
-            name = field_obj.read(cursor, uid, in_tuple[0], ['name'])['name']
+            name = field_obj.read(cr, uid, in_tuple[0], ['name'])['name']
             out = (in_tuple[0], name, in_tuple[1])
             return out
         if view_type == "geoengine":
             if not view_id:
-                view = self._get_geo_view(cursor, uid)
+                view = self._get_geo_view(cr, uid)
             else:
-                view = view_obj.browse(cursor, uid, view_id)
+                view = view_obj.browse(cr, uid, view_id)
             res = super(GeoModel, self).fields_view_get(
-                cursor, uid, view.id, 'form', context, toolbar, submenu)
+                cr, uid, view.id, 'form', context, toolbar, submenu)
             res['geoengine_layers'] = {}
             res['geoengine_layers']['backgrounds'] = []
             res['geoengine_layers']['actives'] = []
@@ -120,10 +120,10 @@ class GeoModel(models.BaseModel):
             res['geoengine_layers']['default_zoom'] = view.default_zoom
             # TODO find why context in read does not work with webclient
             for layer in view.raster_layer_ids:
-                layer_dict = raster_obj.read(cursor, uid, layer.id)
+                layer_dict = raster_obj.read(cr, uid, layer.id)
                 res['geoengine_layers']['backgrounds'].append(layer_dict)
             for layer in view.vector_layer_ids:
-                layer_dict = vector_obj.read(cursor, uid, layer.id)
+                layer_dict = vector_obj.read(cr, uid, layer.id)
                 # get category groups for this vector layer
                 if layer.geo_repr == 'basic':
                     layer_dict['symbols'] = layer.symbol_ids.read(
@@ -136,11 +136,12 @@ class GeoModel(models.BaseModel):
                 # adding geo column desc
                 geo_f_name = layer_dict['geo_field_id'][1]
                 res['fields'].update(
-                    self.fields_get(cursor, uid, [geo_f_name]))
+                    self.fields_get(cr, uid, [geo_f_name]))
         else:
             return super(GeoModel, self).fields_view_get(
-                cr=cursor, uid=uid, view_id=view_id, view_type=view_type,
-                context=context, toolbar=toolbar, submenu=submenu)
+                cr, uid, view_id=view_id, view_type=view_type,
+                context=context, toolbar=toolbar, submenu=submenu
+            )
         return res
 
     def get_edit_info_for_geo_column(self, cursor, uid, column, context=None):
