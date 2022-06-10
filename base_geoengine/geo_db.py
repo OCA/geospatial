@@ -77,7 +77,7 @@ def _postgis_index_name(table, col_name):
     return "%s_%s_gist_index" % (table, col_name)
 
 
-def create_geo_index(cr, columnname, tablename):
+def create_geo_index(cr, tablename, columnname):
     """ Create the given index unless it exists. """
     indexname = _postgis_index_name(tablename, columnname)
     if sql.index_exists(cr, indexname):
