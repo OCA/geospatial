@@ -288,7 +288,7 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
 
     render_map: function() {
         var self = this;
-        if (!this.map) {
+        if (!this.map && this.vector_layer) {
             this.map = new ol.Map({
                 theme: null,
                 layers: this.raster_layers,
@@ -315,10 +315,12 @@ var FieldGeoEngineEditMap = common.AbstractField.extend(geoengine_common.Geoengi
             this.set_value(this.value);
             this.setup_controls();
         }
-        var edit_active = (!this.get("effective_readonly") && !this.force_readonly);
-        this.draw_control.setActive(edit_active);
-        this.modify_control.setActive(edit_active);
-        this.clearmap_control.element.children[0].disabled = !edit_active;
+        if (this.draw_control) {
+            var edit_active = (!this.get("effective_readonly") && !this.force_readonly);
+            this.draw_control.setActive(edit_active);
+            this.modify_control.setActive(edit_active);
+            this.clearmap_control.element.children[0].disabled = !edit_active;
+        }
     },
 });
 
