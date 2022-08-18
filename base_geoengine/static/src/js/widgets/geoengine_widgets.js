@@ -16,8 +16,8 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
     var BackgroundLayers = require("base_geoengine.BackgroundLayers");
     var registry = require("web.field_registry");
 
+    // eslint-disable-next-line max-len
     var FieldGeoEngineEditMap = AbstractField.extend(geoengine_common.GeoengineMixin, {
-        // eslint-disable-line max-len
         template: "FieldGeoEngineEditMap",
 
         geoType: null,
@@ -113,6 +113,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             }
             tab_link.on(
                 "shown.bs.tab",
+                // eslint-disable-next-line no-unused-vars
                 function(e) {
                     this._render();
                 }.bind(this)
@@ -328,7 +329,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
     });
 
     // TODO migrate the following widgets
-
+    // eslint-disable-next-line no-unused-vars
     var FieldGeoPointXY = AbstractField.extend({
         template: "FieldGeoPointXY",
 
@@ -405,6 +406,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
         },
     });
 
+    // eslint-disable-next-line no-unused-vars
     var FieldGeoPointXYReadonly = FieldGeoPointXY.extend({
         template: "FieldGeoPointXY.readonly",
 
@@ -561,6 +563,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
         },
     });
 
+    // eslint-disable-next-line no-unused-vars
     var FieldGeoRectReadonly = FieldGeoRect.extend({
         template: "FieldGeoRect.readonly",
 

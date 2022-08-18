@@ -25,6 +25,7 @@ odoo.define("base_geoengine.template_widgets", function(require) {
          * - $node: The field <field> tag as it appears in the view,
          *     encapsulated in a jQuery object.
          */
+        // eslint-disable-next-line no-unused-vars, no-empty-function
         init: function(parent, field, $node) {},
     };
 

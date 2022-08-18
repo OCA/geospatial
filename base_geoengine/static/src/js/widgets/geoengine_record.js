@@ -45,7 +45,6 @@ odoo.define("base_geoengine.Record", function(require) {
                 record: this.record,
                 widget: this,
                 user_context: session.user_context,
-                formats: formats,
             };
             this.content = this.qweb.render("layer-box", qweb_context);
         },

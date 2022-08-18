@@ -141,6 +141,7 @@ odoo.define("base_geoengine.BackgroundLayers", function(require) {
         },
 
         // To be overridden in geoengine extensions
+        // eslint-disable-next-line no-unused-vars
         handleCustomLayers: function(layer) {
             return [];
         },
