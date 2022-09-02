@@ -70,8 +70,11 @@ odoo.define("base_geoengine.GeoengineRenderer", function (require) {
      */
     var formatFeatureHTML = function (a, fields) {
         var str = [];
-        var oid = "";
         for (var key in a) {
+            // Do not show ID
+            if (key === "id") {
+                continue;
+            }
             if (Object.prototype.hasOwnProperty.call(a, key)) {
                 var val = a[key];
                 if (val === false) {
@@ -80,16 +83,11 @@ odoo.define("base_geoengine.GeoengineRenderer", function (require) {
                 if (Object.prototype.hasOwnProperty.call(fields, key)) {
                     var field = fields[key];
                     var span = _createFieldSpan(field, val);
-                    // ID field to put on first position
-                    if (key === "id") {
-                        oid = span;
-                    } else {
-                        str.push(span);
-                    }
+
+                    str.push(span);
                 }
             }
         }
-        str.unshift(oid);
         return str.join("<br />");
     };
 
