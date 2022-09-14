@@ -1,0 +1,62 @@
+/*
+    Custom CSS for the elements introduced by web_view_leaflet_map module
+*/
+
+.o_leaflet_main_container {
+    display: flex;
+    align-content: stretch;
+    overflow-x: visible;
+    height: 100%;
+    width: 100%;
+
+}
+
+.o_leaflet_map_container {
+    height: 100%;
+    width: 100%;
+}
+
+.o_map_selector {
+    cursor: pointer;
+}
+
+
+.o_map_selector:hover {
+    background-color: #eee;
+}
+
+
+.leaflet_marker_icon {
+    background-color: white;
+    border: 1px black solid;
+    border-radius: 50% !important;
+}
+
+/*
+    Overload leaflet CSS to work with custom specific things of Odoo CSS
+*/
+
+/*  hide close button to avoid bad navigation experience
+    Before that patch, if user click on the 'close' button, the home page will be loaded.
+    (popup can be hidden by clicking out of the popup, on the map)
+*/
+.leaflet-popup-close-button {
+    display: none;
+}
+
+/*  Change z-index from 1000 to 999 to avoid to conflict with odoo menu that are set to 1000
+    See : https://github.com/odoo/odoo/blob/12.0/addons/web/static/lib/bootstrap/css/bootstrap.css#L2991
+*/
+.leaflet-top,
+.leaflet-bottom {
+    z-index: 999 !important;
+}
+
+/*  Odoo is hiding (with display directive) all the aria-hidden elements of Odoo
+    that prevent to display buttons introduced by the leaflet library.
+    This directive force to display the elements for the leaflet elements.
+    See : https://github.com/odoo/odoo/blob/12.0/addons/web/static/src/scss/ui.scss#L13
+*/
+.leaflet-container [aria-hidden="true"], [aria-hidden="1"] {
+    display: inline!important;
+}
