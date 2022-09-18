@@ -42,7 +42,7 @@ jobs:
             name: test with OCB
     services:
       postgres:
-        image: postgres:9.6
+        image: postgis/postgis:9.6-3.2
         env:
           POSTGRES_USER: odoo
           POSTGRES_PASSWORD: odoo
