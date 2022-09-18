@@ -13,6 +13,6 @@
         "base_geolocalize",
     ],
     "external_dependencies": {
-        "python": ["requests"],
+        "python": ["requests", "responses"],
     },
 }
