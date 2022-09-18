@@ -5,7 +5,7 @@
  'category': 'GeoBI',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
- 'website': 'http://openerp.camptocamp.com',
+ 'website': 'https://github.com/OCA/geospatial',
  'depends': [
      'base_geoengine'
  ],
