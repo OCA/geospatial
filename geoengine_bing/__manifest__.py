@@ -6,6 +6,7 @@
     "version": "12.0.1.0.1",
     "author": "MuK IT,Odoo Community Association (OCA)",
     "category": "GeoBI",
+    "website": "https://github.com/OCA/geospatial",
     "license": "AGPL-3",
     "depends": [
         "base_geoengine",
