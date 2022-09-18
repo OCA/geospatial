@@ -1,11 +1,11 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {'name': 'Geo spatial support Demo',
- 'version': '12.0.1.0.2',
+ 'version': '12.0.1.0.3',
  'category': 'GeoBI',
  'author': "Camptocamp,Odoo Community Association (OCA)",
  'license': 'AGPL-3',
- 'website': 'http://openerp.camptocamp.com',
+ 'website': 'https://github.com/OCA/geospatial',
  'depends': [
      'base_geoengine'
  ],
