@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright (C) 2022 - Today: GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <record id="base.res_partner_12" model="res.partner">
+        <!-- Azure Interior
+        3404 Edgewood Road Jonesboro Arkansas, 72401
+        -->
+        <field name="partner_latitude">35.82723</field>
+        <field name="partner_longitude">-90.69499</field>
+    </record>
+
+    <record id="base.res_partner_2" model="res.partner">
+        <!-- Deco Addict
+            325 Elsie Drive Franklin West Virginia, 26807
+        -->
+        <field name="partner_latitude">38.64289</field>
+        <field name="partner_longitude">-79.33115</field>
+    </record>
+
+
+    <record id="base.res_partner_3" model="res.partner">
+        <!-- Gemini Furniture
+            1128 Lunetta Street Tampa Florida, 33634
+        -->
+        <field name="partner_latitude">27.94776</field>
+        <field name="partner_longitude">-82.45844</field>
+    </record>
+
+    <record id="base.res_partner_18" model="res.partner">
+        <!-- Lumber Inc
+            3202 Hannah Street Asheville North Carolina, 28801
+        -->
+        <field name="partner_latitude">35.60095</field>
+        <field name="partner_longitude">-82.55402</field>
+    </record>
+
+    <record id="base.res_partner_4" model="res.partner">
+        <!-- Ready Mat
+            92 Emily Drive Columbia Carolina, 29201
+        -->
+        <field name="partner_latitude">34.090480</field>
+        <field name="partner_longitude">-80.876894</field>
+    </record>
+
+    <record id="base.res_partner_10" model="res.partner">
+        <!-- The Jackson Group
+            823 Turkey Pen Lane Auburn Alabama,36830
+        -->
+        <field name="partner_latitude">32.60986</field>
+        <field name="partner_longitude">-85.48078</field>
+    </record>
+
+    <record id="base.res_partner_1" model="res.partner">
+        <!-- Wood Corner
+            1164 Cambridge Drive White Tanks Arizona, 85340
+        -->
+        <field name="partner_latitude">34.1480092</field>
+        <field name="partner_longitude">-114.1726054</field>
+    </record>
+
+    <record id="base.main_partner" model="res.partner">
+        <!-- Your company
+        1725 Slough Ave. Scranton Pennsylvania, 18540
+    -->
+        <field name="partner_latitude">41.40869</field>
+        <field name="partner_longitude">-75.66213</field>
+    </record>
+
+</odoo>

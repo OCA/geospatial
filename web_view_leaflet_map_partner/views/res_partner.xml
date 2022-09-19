@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_res_partner_map" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <leaflet_map
+                    field_latitude="partner_latitude"
+                    field_longitude="partner_longitude"
+                    field_title="display_name"
+                    field_address="display_address"
+                    field_marker_icon_image="image_small"
+                >
+                <field name="__last_update"/>
+                <field name="partner_latitude"/>
+                <field name="partner_longitude"/>
+                <field name="display_name"/>
+                <field name="display_address"/>
+            </leaflet_map>
+        </field>
+    </record>
+
+    <record id="contacts.action_contacts" model="ir.actions.act_window">
+        <field name="view_mode">kanban,tree,form,activity,leaflet_map</field>
+    </record>
+
+    <record id="action_contacts_view_map" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">leaflet_map</field>
+        <field name="view_id" ref="view_res_partner_map"/>
+        <field name="act_window_id" ref="contacts.action_contacts"/>
+    </record>
+
+</odoo>
