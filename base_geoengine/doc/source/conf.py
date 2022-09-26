@@ -58,7 +58,6 @@ master_doc = 'index'
 
 # General information about the project.
 project = 'Odoo Geospatial'
-copyright = '2015, Nicolas Bessi, Odoo Community Association (OCA)'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the

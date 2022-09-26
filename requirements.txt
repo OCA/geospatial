@@ -1,3 +1,6 @@
-shapely
+# generated from manifests external_dependencies
 geojson
+requests
+responses
+shapely
 simplejson
