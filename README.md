@@ -34,7 +34,22 @@ A geospatial API is provided, to add your own functionalites at your convenience
 
 [//]: # (addons)
 
-This part will be replaced when running the oca-gen-addons-table script from OCA/maintainer-tools.
+Available addons
+----------------
+addon | version | maintainers | summary
+--- | --- | --- | ---
+[base_geoengine](base_geoengine/) | 12.0.1.2.0 |  | Geospatial support for Odoo
+[base_geoengine_demo](base_geoengine_demo/) | 12.0.1.0.2 |  | Geo spatial support Demo
+[base_geolocalize_openstreetmap](base_geolocalize_openstreetmap/) | 12.0.1.0.1 |  | Open street map API call to geolocalize an address
+[base_google_map](base_google_map/) | 12.0.1.0.0 | [![gityopie](https://github.com/gityopie.png?size=30px)](https://github.com/gityopie) [![wolfhall](https://github.com/wolfhall.png?size=30px)](https://github.com/wolfhall) | View modes and widgets to integrate Google Maps in your UI
+[geoengine_base_geolocalize](geoengine_base_geolocalize/) | 12.0.1.0.0 |  | Geospatial support for base_geolocalize
+[geoengine_bing](geoengine_bing/) | 12.0.1.0.1 |  | GeoEngine Bing Raster Support
+[geoengine_partner](geoengine_partner/) | 12.0.1.0.0 |  | Geospatial support of partners
+[geoengine_swisstopo](geoengine_swisstopo/) | 12.0.1.0.1 |  | GeoEngine - Swisstopo layers
+[test_base_geoengine](test_base_geoengine/) | 12.0.1.0.0 |  | test-base-geoengine
+[web_view_google_map](web_view_google_map/) | 12.0.1.1.1 | [![gityopie](https://github.com/gityopie.png?size=30px)](https://github.com/gityopie) [![wolfhall](https://github.com/wolfhall.png?size=30px)](https://github.com/wolfhall) | Add a Google Map view type to the Odoo web client
+[web_widget_google_map_drawing](web_widget_google_map_drawing/) | 12.0.1.0.0 | [![gityopie](https://github.com/gityopie.png?size=30px)](https://github.com/gityopie) [![brian10048](https://github.com/brian10048.png?size=30px)](https://github.com/brian10048) | Add drawing tools to Google Map view in Odoo
+[web_widget_google_marker_icon_picker](web_widget_google_marker_icon_picker/) | 12.0.1.1.0 | [![gityopie](https://github.com/gityopie.png?size=30px)](https://github.com/gityopie) [![wolfhall](https://github.com/wolfhall.png?size=30px)](https://github.com/wolfhall) | Google map widget allowing to set marker's color
 
 [//]: # (end addons)
 
