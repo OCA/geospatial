@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     'name': 'GeoEngine - Swisstopo layers',
-    'version': '12.0.1.0.1',
+    'version': '12.0.1.0.2',
     'category': 'GeoBI',
     'author': "Camptocamp,Odoo Community Association (OCA)",
     'license': 'AGPL-3',
