@@ -3,7 +3,7 @@
 
 {
     "name": "GeoEngine Bing Raster Support",
-    "version": "12.0.1.0.1",
+    "version": "12.0.1.0.2",
     "author": "MuK IT,Odoo Community Association (OCA)",
     "category": "GeoBI",
     "website": "https://github.com/OCA/geospatial",
