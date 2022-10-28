@@ -4,20 +4,19 @@
  * ---------------------------------------------------------
  */
 
-odoo.define('base_geoengine.template_widgets', function (require) {
+odoo.define("base_geoengine.template_widgets", function (require) {
     "use strict";
 
-    var field_utils = require('web.field_utils');
-    var pyUtils = require('web.py_utils');
-    var Registry = require('web.Registry');
-    var Widget = require('web.Widget');
+    var field_utils = require("web.field_utils");
+    var pyUtils = require("web.py_utils");
+    var Registry = require("web.Registry");
+    var Widget = require("web.Widget");
 
     /**
      * Interface to be implemented by geonengine fields.
      *
      */
     var FieldInterface = {
-
         /**
          * @constructor
          * - parent: The widget's parent.
@@ -37,7 +36,6 @@ odoo.define('base_geoengine.template_widgets', function (require) {
      *       the constructor sets value property.
      */
     var AbstractField = Widget.extend(FieldInterface, {
-
         /**
          * @constructor
          * Saves the field and $node parameters and sets the "value" property.
@@ -46,9 +44,9 @@ odoo.define('base_geoengine.template_widgets', function (require) {
             this._super(parent, field, $node);
             this.field = field;
             this.$node = $node;
-            this.options = pyUtils.py_eval(this.$node.attr("options") || '{}');
+            this.options = pyUtils.py_eval(this.$node.attr("options") || "{}");
             this.format_descriptor = _.extend({}, this.field, {
-                'widget': this.$node.attr('widget'),
+                widget: this.$node.attr("widget"),
             });
             this.set("value", field.raw_value);
         },
@@ -60,27 +58,27 @@ odoo.define('base_geoengine.template_widgets', function (require) {
     });
 
     var FieldChar = AbstractField.extend({
-        tagName: 'span',
+        tagName: "span",
     });
 
     var FieldMany2one = AbstractField.extend({
-        tagName: 'span',
+        tagName: "span",
     });
 
     var FieldFloat = AbstractField.extend({
-        tagName: 'span',
+        tagName: "span",
     });
 
     var FieldFloatTime = AbstractField.extend({
-        tagName: 'span',
+        tagName: "span",
     });
 
     var FieldDate = AbstractField.extend({
-        tagName: 'span',
+        tagName: "span",
     });
 
     var FieldDatetime = AbstractField.extend({
-        tagName: 'span',
+        tagName: "span",
     });
 
     // TODO: rather use:
@@ -88,17 +86,15 @@ odoo.define('base_geoengine.template_widgets', function (require) {
     // registry.add(...
     var fields_registry = new Registry();
     fields_registry
-        .add('char', FieldChar)
-        .add('many2one', FieldMany2one)
-        .add('float', FieldFloat)
-        .add('float_time', FieldFloatTime)
-        .add('date', FieldDate)
-        .add('datetime', FieldDatetime)
-    ;
+        .add("char", FieldChar)
+        .add("many2one", FieldMany2one)
+        .add("float", FieldFloat)
+        .add("float_time", FieldFloatTime)
+        .add("date", FieldDate)
+        .add("datetime", FieldDatetime);
 
     return {
         AbstractField: AbstractField,
         registry: fields_registry,
     };
-
 });
