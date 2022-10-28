@@ -22,7 +22,7 @@ except ImportError:
 
 
 class GeoField(fields.Field):
-    """ The field descriptor contains the field definition common to all
+    """The field descriptor contains the field definition common to all
     specialized fields for geolocalization. Subclasses must define a type
     and a geo_type. The type is the name of the corresponding column type,
     the geo_type is the name of the corresponding type in the GIS system.
@@ -63,10 +63,10 @@ class GeoField(fields.Field):
         return val
 
     def convert_to_record(self, value, record):
-        """ Value may be:
-            - a GeoJSON string when field onchange is triggered
-            - a geometry object hexcode from cache
-            - a unicode containing dict
+        """Value may be:
+        - a GeoJSON string when field onchange is triggered
+        - a geometry object hexcode from cache
+        - a unicode containing dict
         """
         if not value:
             return False
@@ -106,8 +106,7 @@ class GeoField(fields.Field):
         return shape
 
     def update_geo_db_column(self, model):
-        """Update the column type in the database.
-        """
+        """Update the column type in the database."""
         cr = model._cr
         query = """SELECT srid, type, coord_dimension
                  FROM geometry_columns
@@ -147,13 +146,13 @@ class GeoField(fields.Field):
         return True
 
     def update_db_column(self, model, column):
-        """ Create/update the column corresponding to ``self``.
+        """Create/update the column corresponding to ``self``.
 
-            For creation of geo column
+        For creation of geo column
 
-            :param model: an instance of the field's model
-            :param column: the column's configuration (dict)
-                           if it exists, or ``None``
+        :param model: an instance of the field's model
+        :param column: the column's configuration (dict)
+                       if it exists, or ``None``
         """
         # the column does not exist, create it
 
@@ -232,8 +231,7 @@ class GeoPoint(GeoField):
 
     @classmethod
     def from_latlon(cls, cr, latitude, longitude):
-        """  Convert a (latitude, longitude) into an UTM coordinate Point:
-        """
+        """Convert a (latitude, longitude) into an UTM coordinate Point:"""
         pt = Point(longitude, latitude)
         cr.execute(
             """

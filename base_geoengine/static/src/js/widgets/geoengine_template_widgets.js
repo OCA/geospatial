@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /* ---------------------------------------------------------
  * Odoo base_geoengine
  * Author Benjamin Willig 2017 Acsone SA/NV

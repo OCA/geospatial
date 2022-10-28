@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 Search.setIndex({
     objects: {
         "base_geoengine.geo_operators": {

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /* !
  * jQuery JavaScript Library v1.4.2
  * http://jquery.com/
@@ -703,11 +705,10 @@
                 var f = this.triggerHandler("getData" + d[1] + "!", [d[0]]);
                 if (f === w && this.length) f = c.data(this[0], a);
                 return f === w && d[1] ? this.data(d[0]) : f;
-            } return this.trigger("setData" + d[1] + "!", [d[0], b]).each(
-                    function () {
-                        c.data(this, a, b);
-                    }
-                );
+            }
+            return this.trigger("setData" + d[1] + "!", [d[0], b]).each(function () {
+                c.data(this, a, b);
+            });
         },
         removeData: function (a) {
             return this.each(function () {
@@ -2093,7 +2094,8 @@
                             l = 0;
                             for (m = h.length; l < m; l++) if (h[l] === g) return false;
                             return true;
-                        } k.error("Syntax error, unrecognized expression: " + q);
+                        }
+                        k.error("Syntax error, unrecognized expression: " + q);
                     },
                     CHILD: function (g, h) {
                         var l = h[1],
@@ -2711,7 +2713,8 @@
                         ],
                         f
                     )[0];
-                } return this.cloneNode(true);
+                }
+                return this.cloneNode(true);
             });
             if (a === true) {
                 ra(this, b);
@@ -2767,7 +2770,8 @@
                     c(this).remove();
                     b ? c(b).before(a) : c(d).append(a);
                 });
-            } return this.pushStack(c(c.isFunction(a) ? a() : a), "replaceWith", a);
+            }
+            return this.pushStack(c(c.isFunction(a) ? a() : a), "replaceWith", a);
         },
         detach: function (a) {
             return this.remove(a, true);
@@ -2849,14 +2853,13 @@
                     d[b](this[0]);
                     return this;
                 }
-                    e = 0;
-                    for (var j = d.length; e < j; e++) {
-                        var i = (e > 0 ? this.clone(true) : this).get();
-                        c.fn[b].apply(c(d[e]), i);
-                        f = f.concat(i);
-                    }
-                    return this.pushStack(f, a, d.selector);
-
+                e = 0;
+                for (var j = d.length; e < j; e++) {
+                    var i = (e > 0 ? this.clone(true) : this).get();
+                    c.fn[b].apply(c(d[e]), i);
+                    f = f.concat(i);
+                }
+                return this.pushStack(f, a, d.selector);
             };
         }
     );
@@ -3255,7 +3258,7 @@
                 ((e.data && N.test(e.data)) || N.test(e.url))
             ) {
                 j = e.jsonpCallback || "jsonp" + sb++;
-                if (e.data) e.data = (String(e.data)).replace(N, "=" + j + "$1");
+                if (e.data) e.data = String(e.data).replace(N, "=" + j + "$1");
                 e.url = e.url.replace(N, "=" + j + "$1");
                 e.dataType = "script";
                 A[j] =
@@ -3480,44 +3483,42 @@
         show: function (a, b) {
             if (a || a === 0) return this.animate(K("show", 3), a, b);
 
-                a = 0;
-                for (b = this.length; a < b; a++) {
-                    var d = c.data(this[a], "olddisplay");
-                    this[a].style.display = d || "";
-                    if (c.css(this[a], "display") === "none") {
-                        d = this[a].nodeName;
-                        var f;
-                        if (la[d]) f = la[d];
-                        else {
-                            var e = c("<" + d + " />").appendTo("body");
-                            f = e.css("display");
-                            if (f === "none") f = "block";
-                            e.remove();
-                            la[d] = f;
-                        }
-                        c.data(this[a], "olddisplay", f);
+            a = 0;
+            for (b = this.length; a < b; a++) {
+                var d = c.data(this[a], "olddisplay");
+                this[a].style.display = d || "";
+                if (c.css(this[a], "display") === "none") {
+                    d = this[a].nodeName;
+                    var f;
+                    if (la[d]) f = la[d];
+                    else {
+                        var e = c("<" + d + " />").appendTo("body");
+                        f = e.css("display");
+                        if (f === "none") f = "block";
+                        e.remove();
+                        la[d] = f;
                     }
+                    c.data(this[a], "olddisplay", f);
                 }
-                a = 0;
-                for (b = this.length; a < b; a++)
-                    this[a].style.display = c.data(this[a], "olddisplay") || "";
-                return this;
-
+            }
+            a = 0;
+            for (b = this.length; a < b; a++)
+                this[a].style.display = c.data(this[a], "olddisplay") || "";
+            return this;
         },
         hide: function (a, b) {
             if (a || a === 0) return this.animate(K("hide", 3), a, b);
 
-                a = 0;
-                for (b = this.length; a < b; a++) {
-                    var d = c.data(this[a], "olddisplay");
-                    !d &&
-                        d !== "none" &&
-                        c.data(this[a], "olddisplay", c.css(this[a], "display"));
-                }
-                a = 0;
-                for (b = this.length; a < b; a++) this[a].style.display = "none";
-                return this;
-
+            a = 0;
+            for (b = this.length; a < b; a++) {
+                var d = c.data(this[a], "olddisplay");
+                !d &&
+                    d !== "none" &&
+                    c.data(this[a], "olddisplay", c.css(this[a], "display"));
+            }
+            a = 0;
+            for (b = this.length; a < b; a++) this[a].style.display = "none";
+            return this;
         },
         _toggle: c.fn.toggle,
         toggle: function (a, b) {
@@ -3726,16 +3727,15 @@
                 }
                 return false;
             }
-                e = b - this.startTime;
-                this.state = e / this.options.duration;
-                a = this.options.easing || (c.easing.swing ? "swing" : "linear");
-                this.pos = c.easing[
-                    (this.options.specialEasing &&
-                        this.options.specialEasing[this.prop]) ||
-                        a
-                ](this.state, e, 0, 1, this.options.duration);
-                this.now = this.start + (this.end - this.start) * this.pos;
-                this.update();
+            e = b - this.startTime;
+            this.state = e / this.options.duration;
+            a = this.options.easing || (c.easing.swing ? "swing" : "linear");
+            this.pos = c.easing[
+                (this.options.specialEasing && this.options.specialEasing[this.prop]) ||
+                    a
+            ](this.state, e, 0, 1, this.options.duration);
+            this.now = this.start + (this.end - this.start) * this.pos;
+            this.update();
 
             return true;
         },
@@ -3963,11 +3963,11 @@
                     else this[d] = f;
                 });
             return (j = wa(e))
-                    ? "pageXOffset" in j
-                        ? j[a ? "pageYOffset" : "pageXOffset"]
-                        : (c.support.boxModel && j.document.documentElement[d]) ||
-                          j.document.body[d]
-                    : e[d];
+                ? "pageXOffset" in j
+                    ? j[a ? "pageYOffset" : "pageXOffset"]
+                    : (c.support.boxModel && j.document.documentElement[d]) ||
+                      j.document.body[d]
+                : e[d];
         };
     });
     c.each(["Height", "Width"], function (a, b) {

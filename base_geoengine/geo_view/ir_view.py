@@ -8,7 +8,9 @@ from odoo import fields, models
 class IrUIView(models.Model):
     _inherit = "ir.ui.view"
 
-    type = fields.Selection(selection_add=[("geoengine", "GeoEngine")], ondelete={'geoengine': 'cascade'})
+    type = fields.Selection(
+        selection_add=[("geoengine", "GeoEngine")], ondelete={"geoengine": "cascade"}
+    )
 
     raster_layer_ids = fields.One2many(
         "geoengine.raster.layer", "view_id", "Raster layers", required=False

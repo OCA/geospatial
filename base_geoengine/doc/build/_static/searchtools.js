@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /*
  * Searchtools.js_t
  * ~~~~~~~~~~~~~~~~

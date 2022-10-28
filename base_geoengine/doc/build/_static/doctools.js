@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /*
  * Doctools.js
  * ~~~~~~~~~~~

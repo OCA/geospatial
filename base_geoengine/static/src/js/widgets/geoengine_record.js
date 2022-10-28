@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 odoo.define("base_geoengine.Record", function (require) {
     "use strict";
 

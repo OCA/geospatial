@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /* ---------------------------------------------------------
  * Odoo base_geoengine
  * Author B.Binet Copyright Camptocamp SA
