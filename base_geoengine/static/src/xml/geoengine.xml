@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <div t-name="GeoengineView" t-att-id="elem_id"
+         class="container-fluid o_geoengine_container"
+         style="height:100%;position:relative;">
+        <br/>
+        <div id="olmap" class="olmap">
+            <div id="map_infobox" class="map_overlay">
+
+                <div id="map_info_open">
+                    <span class="fa fa-edit"/>
+                </div>
+                <div id="map_info_filter_selection">
+                    <span class="fa fa-filter">Filter selection</span>
+                </div>
+                <div id="map_info"/>
+            </div>
+
+            <div class="layer-popup ol-popup">
+                <a href="javascript: void(0)" class="ol-popup-edit fa fa-edit"/>
+                <a href="javascript: void(0)" class="popup-closer ol-popup-closer"/>
+                <div class="popup-content">
+                    <div/>
+                </div>
+            </div>
+
+            <div id="map_legend" class="ol-control"/>
+        </div>
+    </div>
+
+    <t t-name="Geoengine.Record">
+        <div>
+            <t t-raw="widget.content"/>
+        </div>
+    </t>
+
+    <t t-name="FieldGeoPointXY">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td align="center" valign="middle">
+                    X:
+                </td>
+                <td width="47%" valign="top">
+                    <t t-call="FieldChar"/>
+                </td>
+                <td align="center" valign="middle">
+                    Y:
+                </td>
+                <td width="47%" valign="top">
+                    <t t-call="FieldChar"/>
+                </td>
+            </tr>
+        </table>
+    </t>
+
+    <t t-name="FieldGeoPointXY.readonly">
+        <div t-att-id="widget.name"
+             t-attf-class="field_#{widget.widget} #{_(['geo_point_xy']).contains(widget.widget) ? 'oe-number' : ''}">
+        </div>
+    </t>
+
+    <t t-name="FieldGeoRect">
+        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+            <tr>
+                <td colspan="4" valign="middle">
+                    Bottom-Left
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="middle">
+                    X:
+                </td>
+                <td width="47%" valign="top">
+                    <t t-call="FieldChar"/>
+                </td>
+                <td align="center" valign="middle">
+                    Y:
+                </td>
+                <td width="47%" valign="top">
+                    <t t-call="FieldChar"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" valign="middle">
+                    Up-Right
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="middle">
+                    X:
+                </td>
+                <td width="47%" valign="top">
+                    <t t-call="FieldChar"/>
+                </td>
+                <td align="center" valign="middle">
+                    Y:
+                </td>
+                <td width="47%" valign="top">
+                    <t t-call="FieldChar"/>
+                </td>
+            </tr>
+        </table>
+    </t>
+    <t t-name="FieldGeoRect.readonly">
+        <div t-att-id="widget.name"
+             t-attf-class="field_#{widget.widget} #{_(['geo_point_xy']).contains(widget.widget) ? 'oe-number' : ''}">
+        </div>
+    </t>
+
+    <t t-name="FieldGeoEngineEditMap">
+        <div t-att-id="widget.name" t-attf-class="field_#{widget.widget}"
+             border="1"/>
+    </t>
+
+</templates>
