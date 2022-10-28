@@ -13,10 +13,10 @@ from .geo_helper import geo_convertion_helper as convert
 
 logger = logging.getLogger(__name__)
 try:
+    import geojson
     from shapely.geometry import Point
     from shapely.geometry.base import BaseGeometry
     from shapely.wkb import loads as wkbloads
-    import geojson
 except ImportError:
     logger.warning("Shapely or geojson are not available in the sys path")
 

@@ -1,14 +1,14 @@
-odoo.define('base_geoengine.Record', function (require) {
+odoo.define("base_geoengine.Record", function (require) {
     "use strict";
 
-    var field_utils = require('web.field_utils');
-    var session = require('web.session');
-    var Widget = require('web.Widget');
+    var field_utils = require("web.field_utils");
+    var session = require("web.session");
+    var Widget = require("web.Widget");
 
-    var fields_registry = require('base_geoengine.template_widgets').registry;
+    var fields_registry = require("base_geoengine.template_widgets").registry;
 
     var GeoengineRecord = Widget.extend({
-        template: 'Geoengine.Record',
+        template: "Geoengine.Record",
 
         init: function (parent, record, options) {
             this._super(parent);
@@ -27,7 +27,8 @@ odoo.define('base_geoengine.Record', function (require) {
 
         _transformRecord: function (record) {
             var new_record = {};
-            _.each(_.extend(_.object(_.keys(this.fields), []), record),
+            _.each(
+                _.extend(_.object(_.keys(this.fields), []), record),
                 function (value, name) {
                     var r = _.clone(this.fields[name] || {});
                     r.raw_value = value;
@@ -46,7 +47,7 @@ odoo.define('base_geoengine.Record', function (require) {
                 user_context: session.user_context,
                 formats: formats,
             };
-            this.content = this.qweb.render('layer-box', qweb_context);
+            this.content = this.qweb.render("layer-box", qweb_context);
         },
 
         start: function () {
@@ -67,7 +68,6 @@ odoo.define('base_geoengine.Record', function (require) {
                 }
             });
         },
-
     });
 
     return GeoengineRecord;
