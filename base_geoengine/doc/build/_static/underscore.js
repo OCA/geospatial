@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 // Underscore.js 0.5.5
 // (c) 2009 Jeremy Ashkenas, DocumentCloud Inc.
 // Underscore is freely distributable under the terms of the MIT license.
@@ -364,7 +366,9 @@
         return Boolean(a && a.getTimezoneOffset && a.setUTCFullYear);
     };
     b.isRegExp = function (a) {
-        return Boolean(a && a.test && a.exec && (a.ignoreCase || a.ignoreCase === false));
+        return Boolean(
+            a && a.test && a.exec && (a.ignoreCase || a.ignoreCase === false)
+        );
     };
     b.isNaN = function (a) {
         return b.isNumber(a) && isNaN(a);

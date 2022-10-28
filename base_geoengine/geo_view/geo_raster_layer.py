@@ -74,4 +74,4 @@ class GeoRasterLayer(models.Model):
 
     @api.onchange("raster_type")
     def onchange_set_wmts_options(self):
-        """ Abstract method for WMTS modules to set default options """
+        """Abstract method for WMTS modules to set default options"""

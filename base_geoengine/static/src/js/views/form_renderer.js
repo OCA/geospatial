@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 odoo.define("base_geoengine.form_renderer", function (require) {
     "use strict";
 

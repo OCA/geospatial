@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /* ---------------------------------------------------------
  * Odoo base_geoengine
  * Contributor Yannick Vaucher 2018 Camptocamp SA
