@@ -1,12 +1,12 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* web_view_google_map
+# 	* web_view_google_map
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 13.0\n"
+"Project-Id-Version: Odoo Server 14.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -15,8 +15,8 @@ msgstr ""
 
 #. module: web_view_google_map
 #. openerp-web
-#: code:addons/web_view_google_map/static/src/js/widgets/gplaces_autocomplete.js:308
-#: code:addons/web_view_google_map/static/src/js/widgets/gplaces_autocomplete.js:460
+#: code:addons/web_view_google_map/static/src/js/widgets/gplaces_autocomplete.js:0
+#: code:addons/web_view_google_map/static/src/js/widgets/gplaces_autocomplete.js:0
 #, python-format
 msgid "<ul><li></li></ul>"
 msgstr ""
@@ -27,94 +27,50 @@ msgid "Action Window View"
 msgstr ""
 
 #. module: web_view_google_map
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Activity"
-msgstr ""
-
-#. module: web_view_google_map
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Calendar"
-msgstr ""
-
-#. module: web_view_google_map
-#: selection:ir.ui.view,type:0
-msgid "Diagram"
-msgstr ""
-
-#. module: web_view_google_map
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Form"
-msgstr ""
-
-#. module: web_view_google_map
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Gantt"
-msgstr ""
-
-#. module: web_view_google_map
-#: selection:ir.ui.view,type:0
-msgid "GeoEngine"
-msgstr ""
-
-#. module: web_view_google_map
-#: selection:ir.actions.act_window.view,view_mode:0
-msgid "Geoengine"
-msgstr ""
-
-#. module: web_view_google_map
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Graph"
-msgstr ""
-
-#. module: web_view_google_map
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Kanban"
+#: model:ir.model.fields,field_description:web_view_google_map.field_ir_actions_act_window_view__display_name
+#: model:ir.model.fields,field_description:web_view_google_map.field_ir_ui_view__display_name
+msgid "Display Name"
 msgstr ""
 
 #. module: web_view_google_map
 #. openerp-web
-#: code:addons/web_view_google_map/static/src/js/view/map/map_view.js:15
-#: selection:ir.actions.act_window.view,view_mode:0
-#: model_terms:ir.ui.view,arch_db:web_view_google_map.view_res_partner_map
-#: selection:ir.ui.view,type:0
+#: code:addons/web_view_google_map/static/src/js/view/map/map_view.js:0
+#: model_terms:ir.ui.view,arch_db:web_view_google_map.view_res_partner_google_map
 #, python-format
-msgid "Map"
+msgid "Google Map"
 msgstr ""
 
 #. module: web_view_google_map
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Pivot"
+#: model:ir.model.fields.selection,name:web_view_google_map.selection__ir_actions_act_window_view__view_mode__google_map
+#: model:ir.model.fields.selection,name:web_view_google_map.selection__ir_ui_view__type__google_map
+msgid "Google Maps"
 msgstr ""
 
 #. module: web_view_google_map
-#: selection:ir.ui.view,type:0
-msgid "QWeb"
+#: model:ir.model.fields,field_description:web_view_google_map.field_ir_actions_act_window_view__id
+#: model:ir.model.fields,field_description:web_view_google_map.field_ir_ui_view__id
+msgid "ID"
 msgstr ""
 
 #. module: web_view_google_map
-#: selection:ir.ui.view,type:0
-msgid "Search"
+#: model:ir.model.fields,field_description:web_view_google_map.field_ir_actions_act_window_view____last_update
+#: model:ir.model.fields,field_description:web_view_google_map.field_ir_ui_view____last_update
+msgid "Last Modified on"
 msgstr ""
 
 #. module: web_view_google_map
 #. openerp-web
-#: code:addons/web_view_google_map/static/src/js/widgets/gplaces_autocomplete.js:308
-#: code:addons/web_view_google_map/static/src/js/widgets/gplaces_autocomplete.js:460
+#: code:addons/web_view_google_map/static/src/js/view/map/map_renderer.js:0
+#, python-format
+msgid "Styled Map"
+msgstr ""
+
+#. module: web_view_google_map
+#. openerp-web
+#: code:addons/web_view_google_map/static/src/js/widgets/gplaces_autocomplete.js:0
+#: code:addons/web_view_google_map/static/src/js/widgets/gplaces_autocomplete.js:0
 #, python-format
 msgid "The following fields are invalid:"
-msgstr ""
-
-#. module: web_view_google_map
-#: selection:ir.actions.act_window.view,view_mode:0
-#: selection:ir.ui.view,type:0
-msgid "Tree"
 msgstr ""
 
 #. module: web_view_google_map
@@ -129,7 +85,6 @@ msgid "View Type"
 msgstr ""
 
 #. module: web_view_google_map
-#: model_terms:ir.ui.view,arch_db:web_view_google_map.view_res_partner_map
+#: model_terms:ir.ui.view,arch_db:web_view_google_map.view_res_partner_google_map
 msgid "at"
 msgstr ""
-
