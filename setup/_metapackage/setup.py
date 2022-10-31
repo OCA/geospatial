@@ -9,6 +9,7 @@ setuptools.setup(
     version=version,
     install_requires=[
         'odoo14-addon-base_google_map',
+        'odoo14-addon-web_view_google_map',
     ],
     classifiers=[
         'Programming Language :: Python',
