@@ -1,3 +1,4 @@
+/* eslint-disable */
 odoo.define("web_view_google_map.GplaceAutocompleteFields", function (require) {
     "use strict";
 

@@ -1,3 +1,4 @@
+/* eslint-disable */
 odoo.define("web_view_google_map.relational_fields", function (require) {
     "use strict";
 
