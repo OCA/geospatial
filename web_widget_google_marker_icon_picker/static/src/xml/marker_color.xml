@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="FieldMarkerColorPicker">
+        <a
+            role="button"
+            href="#"
+            class="dropdown-toggle o-no-caret"
+            data-toggle="dropdown"
+            aria-expanded="false"
+            t-att-title="color"
+        >
+            <img
+                t-att-src="'/web_widget_google_marker_icon_picker/static/src/img/markers/' + color + '.png'"
+                t-att-alt="color"
+            />
+        </a>
+    </t>
+    <t t-name="FieldMarkerColorPicker.marker_picker">
+        <div class="dropdown-menu" role="menu">
+            <div class="row">
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="aqua"
+                    title="Aqua"
+                    aria-label="Aqua"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/aqua.png"
+                        alt="Aqua"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="blueviolet"
+                    title="BlueViolet"
+                    aria-label="BlueViolet"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/blueviolet.png"
+                        alt="BlueViolet"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="blue"
+                    title="Blue"
+                    aria-label="Blue"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/blue.png"
+                        alt="blue"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="brown"
+                    title="Brown"
+                    aria-label="Brown"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/brown.png"
+                        alt="Brown"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="deepskyblue"
+                    title="DeepSkyBlue"
+                    aria-label="DeepSkyBlue"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/deepskyblue.png"
+                        alt="DeepSkyBlue"
+                    />
+                </a>
+            </div>
+            <div class="row">
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="fuchsia"
+                    title="Fuchsia"
+                    aria-label="Fuchsia"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/fuchsia.png"
+                        alt="Fuchsia"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="gold"
+                    title="Gold"
+                    aria-label="Gold"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/gold.png"
+                        alt="Gold"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="gray"
+                    title="Gray"
+                    aria-label="Gray"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/gray.png"
+                        alt="Gray"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="green"
+                    title="Green"
+                    aria-label="Green"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/green.png"
+                        alt="Green"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="indigo"
+                    title="Indigo"
+                    aria-label="Indigo"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/indigo.png"
+                        alt="Indigo"
+                    />
+                </a>
+            </div>
+            <div class="row">
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="limegreen"
+                    title="LimeGreen"
+                    aria-label="LimeGreen"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/limegreen.png"
+                        alt="LimeGreen"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="lime"
+                    title="Lime"
+                    aria-label="Lime"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/lime.png"
+                        alt="Lime"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="maroon"
+                    title="Maroon"
+                    aria-label="Maroon"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/maroon.png"
+                        alt="Maroon"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="navy"
+                    title="Navy"
+                    aria-label="Navy"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/navy.png"
+                        alt="Navy"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="olive"
+                    title="Olive"
+                    aria-label="Olive"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/olive.png"
+                        alt="Olive"
+                    />
+                </a>
+            </div>
+            <div class="row">
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="orange"
+                    title="Orange"
+                    aria-label="Orange"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/orange.png"
+                        alt="Orange"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="purple"
+                    title="Purple"
+                    aria-label="Purple"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/purple.png"
+                        alt="Purple"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="red"
+                    title="Red"
+                    aria-label="Red"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/red.png"
+                        alt="Red"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="teal"
+                    title="Teal"
+                    aria-label="Teal"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/teal.png"
+                        alt="Teal"
+                    />
+                </a>
+                <a
+                    class="list-group-item d-flex justify-content-between align-items-center"
+                    role="menuitem"
+                    href="#"
+                    data-color="yellow"
+                    title="Yellow"
+                    aria-label="Yellow"
+                >
+                    <img
+                        src="/web_widget_google_marker_icon_picker/static/src/img/markers/yellow.png"
+                        alt="Yellow"
+                    />
+                </a>
+            </div>
+        </div>
+    </t>
+</templates>
