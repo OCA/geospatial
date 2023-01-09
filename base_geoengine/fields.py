@@ -12,7 +12,7 @@ from .geo_db import create_geo_column
 
 logger = logging.getLogger(__name__)
 try:
-    from shapely.geometry import asShape
+    from shapely.geometry import shape
     from shapely.geometry import Point
     from shapely.geometry.base import BaseGeometry
     from shapely.wkb import loads as wkbloads
@@ -259,7 +259,7 @@ class GeoPoint(GeoField):
         if isinstance(geopoint, BaseGeometry):
             geo_point_instance = geopoint
         else:
-            geo_point_instance = asShape(geojson.loads(geopoint))
+            geo_point_instance = shape(geojson.loads(geopoint))
         params = {
             'coord_x': geo_point_instance.x,
             'coord_y': geo_point_instance.y,
