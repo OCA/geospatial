@@ -45,7 +45,7 @@ A geospatial API is provided, to add your own functionalites at your convenience
 
 * System: *  **PostGIS** http://postgis.refractions.net/
 
-* Python: *  **Shapely** http://pypi.python.org/pypi/Shapely
+* Python: *  **Shapely** http://pypi.python.org/pypi/Shapely (not yet compatible with v2.0)
 
 *  **geojson** http://pypi.python.org/pypi/geojson
 

@@ -45,7 +45,7 @@ On Ubuntu::
 
 The module also requires two additional python libs:
 
-* `Shapely <http://pypi.python.org/pypi/Shapely>`_
+* `Shapely<2 <http://pypi.python.org/pypi/Shapely>`_
 
 * `geojson <http://pypi.python.org/pypi/geojson>`_
 

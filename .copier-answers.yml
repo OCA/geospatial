@@ -51,7 +51,7 @@ repo_description: 'This project will enable real life GIS support on Odoo.
 
     * System: *  **PostGIS** http://postgis.refractions.net/
 
-    * Python: *  **Shapely** http://pypi.python.org/pypi/Shapely
+    * Python: *  **Shapely** http://pypi.python.org/pypi/Shapely  (not yet compatible with v2.0)
 
     *  **geojson** http://pypi.python.org/pypi/geojson'
 repo_name: Geospatial Addons for Odoo

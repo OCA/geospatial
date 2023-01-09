@@ -18,7 +18,7 @@
         "geo_view/geo_vector_layer_view.xml",
         "security/ir.model.access.csv",
     ],
-    "external_dependencies": {"python": ["shapely", "geojson", "simplejson"]},
+    "external_dependencies": {"python": ["shapely<2", "geojson", "simplejson"]},
     "qweb": ["static/src/xml/geoengine.xml"],
     "installable": True,
     "pre_init_hook": "init_postgis",

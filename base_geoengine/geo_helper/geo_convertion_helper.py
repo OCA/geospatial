@@ -5,11 +5,18 @@ import logging
 try:
     import geojson
     from shapely import wkb, wkt
-    from shapely.geometry import asShape
     from shapely.geometry.base import BaseGeometry
 except ImportError:
     logger = logging.getLogger(__name__)
     logger.warning("Shapely or geojson are not available in the sys path")
+
+try:
+    from shapely.geometry import asShape
+except ImportError:
+    logger = logging.getLogger(__name__)
+    logger.warning(
+        "Cannot import asShape. You may be using Shapely v2. Please install v1"
+    )
 
 
 def value_to_shape(value, use_wkb=False):
