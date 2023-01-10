@@ -7,7 +7,7 @@
  * License in __manifest__.py at root level of the module
  * ---------------------------------------------------------
  */
-odoo.define("base_geoengine.GeoengineView", function(require) {
+odoo.define("base_geoengine.GeoengineView", function (require) {
     "use strict";
 
     /* ---------------------------------------------------------
@@ -42,7 +42,7 @@ odoo.define("base_geoengine.GeoengineView", function(require) {
          * @param {Boolean} params.sidebar
          * @param {Boolean} [params.hasSelectors=true]
          */
-        init: function(viewInfo, params) {
+        init: function (viewInfo, params) {
             this._super.apply(this, arguments);
 
             this.controllerParams.hasSidebar = params.sidebar;

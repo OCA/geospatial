@@ -139,7 +139,7 @@ class GeoOperator(object):
 
     def get_rel_field(self, rel_col, rel_model):
         """Retrieves the expression to use in PostGIS statement for a spatial
-           rel search"""
+        rel search"""
         try:
             rel_model._fields[rel_col]
         except Exception:
@@ -172,8 +172,7 @@ class GeoOperator(object):
     def _get_postgis_comp_sql(
         self, table, col, value, rel_col=None, rel_model=None, op=""
     ):
-        """return raw sql for all search based on St_**(a, b) posgis operator
-        """
+        """return raw sql for all search based on St_**(a, b) posgis operator"""
         if rel_col and rel_model is not None:
             compare_to = self.get_rel_field(rel_col, rel_model)
         else:

@@ -4,7 +4,7 @@
  * License in __manifest__.py at root level of the module
  * ---------------------------------------------------------
  */
-odoo.define("base_geoengine._view_registry", function(require) {
+odoo.define("base_geoengine._view_registry", function (require) {
     "use strict";
 
     var GeoengineView = require("base_geoengine.GeoengineView");

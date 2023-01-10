@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars, no-empty-function, valid-jsdoc */
 /* ---------------------------------------------------------
  * Odoo base_geoengine
  * Author Benjamin Willig 2017 Acsone SA/NV
  * ---------------------------------------------------------
  */
 
-odoo.define("base_geoengine.template_widgets", function(require) {
+odoo.define("base_geoengine.template_widgets", function (require) {
     "use strict";
 
     var field_utils = require("web.field_utils");
@@ -25,7 +26,7 @@ odoo.define("base_geoengine.template_widgets", function(require) {
          * - $node: The field <field> tag as it appears in the view,
          *     encapsulated in a jQuery object.
          */
-        init: function(parent, field, $node) {},
+        init: function (parent, field, $node) {},
     };
 
     /**
@@ -40,7 +41,7 @@ odoo.define("base_geoengine.template_widgets", function(require) {
          * @constructor
          * Saves the field and $node parameters and sets the "value" property.
          */
-        init: function(parent, field, $node) {
+        init: function (parent, field, $node) {
             this._super(parent, field, $node);
             this.field = field;
             this.$node = $node;
@@ -51,7 +52,7 @@ odoo.define("base_geoengine.template_widgets", function(require) {
             this.set("value", field.raw_value);
         },
 
-        renderElement: function() {
+        renderElement: function () {
             var format = field_utils.format[this.field.type];
             this.$el.text(format(this.field.raw_value, this.format_descriptor));
         },

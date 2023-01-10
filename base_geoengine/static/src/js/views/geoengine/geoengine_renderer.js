@@ -4,7 +4,7 @@
  * License in __manifest__.py at root level of the module
  * ---------------------------------------------------------
  */
-odoo.define("base_geoengine.GeoengineRenderer", function(require) {
+odoo.define("base_geoengine.GeoengineRenderer", function (require) {
     "use strict";
 
     var BasicRenderer = require("web.BasicRenderer");
@@ -36,7 +36,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
      *
      * @returns {String} Selection label for value
      */
-    var _getSelectionLabel = function(field, value) {
+    var _getSelectionLabel = function (field, value) {
         for (var option in field.selection) {
             if (field.selection[option][0] === value) {
                 return field.selection[option][1];
@@ -44,7 +44,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
         }
     };
 
-    var _createFieldSpan = function(field, value) {
+    var _createFieldSpan = function (field, value) {
         var label = field.string;
         var val = value;
         if (field.type === "selection") {
@@ -68,7 +68,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
      *
      * @returns {String} HTML content
      */
-    var formatFeatureHTML = function(a, fields) {
+    var formatFeatureHTML = function (a, fields) {
         var str = [];
         var oid = "";
         for (var key in a) {
@@ -100,11 +100,11 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
      *
      * @returns {String} HTML content
      */
-    var formatFeatureListHTML = function(features) {
+    var formatFeatureListHTML = function (features) {
         var str = [];
         // Count unique record selected through all features
         var selected_ids = [];
-        features.forEach(function(x) {
+        features.forEach(function (x) {
             var rec_id = x.get("attributes").id;
             if (selected_ids.indexOf(rec_id) < 0) {
                 selected_ids.push(rec_id);
@@ -128,7 +128,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
          * @param {Object} params
          * @param {Boolean} params.hasSelectors
          */
-        init: function(parent, state, params) {
+        init: function (parent, state, params) {
             this._super.apply(this, arguments);
 
             this.qweb = new QWeb(session.debug, {_s: session.origin}, false);
@@ -151,7 +151,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             this.geometryFields = [];
             _.each(
                 this.mapOptions.geoengine_layers.actives,
-                function(item) {
+                function (item) {
                     this.geometryFields.push(item.geo_field_id[1]);
                 }.bind(this)
             );
@@ -163,7 +163,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
          *
          * Redraw the map and its vector layers
          */
-        on_attach_callback: function() {
+        on_attach_callback: function () {
             var map = this._renderMap();
             $("#olmap").data("map", map);
             this._renderVectorLayers();
@@ -177,17 +177,17 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
         /**
          * @override
          */
-        updateState: function() {
+        updateState: function () {
             var def = this._super.apply(this, arguments);
             this._renderVectorLayers();
             return def;
         },
 
-        willStart: function() {
+        willStart: function () {
             var arch = this.viewInfo.arch;
             _.each(
                 arch.children,
-                function(child) {
+                function (child) {
                     if (child.tag === "templates") {
                         this.qweb.add_template(utils.json_node_to_xml(child));
                     }
@@ -206,7 +206,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
          * @private
          * @returns {jQueryElement} a jquery element <tbody>
          */
-        _renderMap: function() {
+        _renderMap: function () {
             if (_.isUndefined(this.map)) {
                 this.zoomToExtentCtrl = new ol.control.ZoomToExtent();
                 var backgrounds = this.mapOptions.geoengine_layers.backgrounds;
@@ -243,7 +243,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
          * @private
          * returns {Deferred} this deferred is resolved immediately
          */
-        _renderView: function() {
+        _renderView: function () {
             var $map_div = $("<div>", {id: "olmap", class: "olmap"});
             var $map_infobox = $("<div>", {
                 id: "map_infobox",
@@ -271,7 +271,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             return this._super();
         },
 
-        _hidePopup: function() {
+        _hidePopup: function () {
             this.overlayPopup.setPosition(undefined);
         },
 
@@ -284,7 +284,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
          *
          * @returns {ol.layer.Vector}: One Vector layer containing the features
          */
-        _createVectorLayer: function(cfg, data) {
+        _createVectorLayer: function (cfg, data) {
             if (!data.length) {
                 return new ol.layer.Vector({
                     source: new ol.source.Vector(),
@@ -294,9 +294,9 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             var vectorSource = new ol.source.Vector();
             _.each(
                 data,
-                function(item) {
+                function (item) {
                     var attributes = _.clone(item.data);
-                    _.each(this.geometryFields, function(geo_field) {
+                    _.each(this.geometryFields, function (geo_field) {
                         delete attributes[geo_field];
                     });
 
@@ -332,7 +332,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
                 active_on_startup: cfg.active_on_startup,
                 style: styleInfo.style,
             });
-            lv.on("change:visible", function() {
+            lv.on("change:visible", function () {
                 if (lv.getVisible()) {
                     elLegend.show();
                 } else {
@@ -346,28 +346,24 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             return lv;
         },
 
-        _extractLayerValues: function(cfg, data) {
+        _extractLayerValues: function (cfg, data) {
             var values = [];
             var indicator = cfg.attribute_field_id[1];
-            _.each(data, function(item) {
+            _.each(data, function (item) {
                 values.push(item.data[indicator]);
             });
             return values;
         },
 
-        _styleVectorLayerColored: function(cfg, data) {
+        _styleVectorLayerColored: function (cfg, data) {
             var indicator = cfg.attribute_field_id[1];
             var values = this._extractLayerValues(cfg, data);
             var nb_class = cfg.nb_class || DEFAULT_NUM_CLASSES;
             var opacity = 0.8;
             var begin_color_hex = cfg.begin_color || DEFAULT_BEGIN_COLOR;
             var end_color_hex = cfg.end_color || DEFAULT_END_COLOR;
-            var begin_color = chroma(begin_color_hex)
-                .alpha(opacity)
-                .css();
-            var end_color = chroma(end_color_hex)
-                .alpha(opacity)
-                .css();
+            var begin_color = chroma(begin_color_hex).alpha(opacity).css();
+            var end_color = chroma(end_color_hex).alpha(opacity).css();
             var scale = chroma.scale([begin_color, end_color]);
             var serie = new geostats(values);
             var vals = null;
@@ -393,26 +389,18 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             }
             var colors = [];
             if (cfg.classification === "custom") {
-                _.each(vals, function(val) {
+                _.each(vals, function (val) {
                     if (val) {
-                        colors.push(
-                            chroma(val)
-                                .alpha(opacity)
-                                .css()
-                        );
+                        colors.push(chroma(val).alpha(opacity).css());
                     }
                 });
             } else {
-                _.each(scale.colors(), function(color) {
-                    colors.push(
-                        chroma(color)
-                            .alpha(opacity)
-                            .css()
-                    );
+                _.each(scale.colors(), function (color) {
+                    colors.push(chroma(color).alpha(opacity).css());
                 });
             }
             var styles_map = {};
-            _.each(colors, function(color) {
+            _.each(colors, function (color) {
                 if (color in styles_map) {
                     return;
                 }
@@ -442,7 +430,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
                 legend = serie.getHtmlLegend(null, cfg.name, 1);
             }
             return {
-                style: function(feature) {
+                style: function (feature) {
                     var value = feature.get("attributes")[indicator];
                     var color_idx = this._getClass(value, vals);
                     return styles_map[colors[color_idx]];
@@ -451,7 +439,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             };
         },
 
-        _styleVectorLayerProportion: function(cfg, data) {
+        _styleVectorLayerProportion: function (cfg, data) {
             var indicator = cfg.attribute_field_id[1];
             var values = this._extractLayerValues(cfg, data);
             var serie = new geostats(values);
@@ -463,9 +451,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             // TODO to be defined on cfg
             var opacity = 0.8;
             var color_hex = cfg.begin_color || DEFAULT_BEGIN_COLOR;
-            var color = chroma(color_hex)
-                .alpha(opacity)
-                .css();
+            var color = chroma(color_hex).alpha(opacity).css();
             var fill = new ol.style.Fill({
                 color: color,
             });
@@ -473,7 +459,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
                 color: "#333333",
                 width: 2,
             });
-            _.each(values, function(value) {
+            _.each(values, function (value) {
                 if (value in styles_map) {
                     return;
                 }
@@ -495,7 +481,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             });
 
             return {
-                style: function(feature) {
+                style: function (feature) {
                     var value = feature.get("attributes")[indicator];
                     return styles_map[value];
                 },
@@ -503,13 +489,11 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             };
         },
 
-        _styleVectorLayerDefault: function(cfg, data) {
+        _styleVectorLayerDefault: function (cfg, data) {
             // TODO to be defined on cfg
             var opacity = 0.8;
             var color_hex = cfg.begin_color || DEFAULT_BEGIN_COLOR;
-            var color = chroma(color_hex)
-                .alpha(opacity)
-                .css();
+            var color = chroma(color_hex).alpha(opacity).css();
             // Basic
             var fill = new ol.style.Fill({
                 color: color,
@@ -541,7 +525,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
                 }),
             ];
             return {
-                style: function(feature) {
+                style: function (feature) {
                     var label_text = feature.values_.attributes.label;
                     if (label_text === false) {
                         label_text = "";
@@ -553,7 +537,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             };
         },
 
-        _styleVectorLayer: function(cfg, data) {
+        _styleVectorLayer: function (cfg, data) {
             switch (cfg.geo_repr) {
                 case "colored":
                     return this._styleVectorLayerColored(cfg, data);
@@ -564,11 +548,11 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             }
         },
 
-        _getBasicCircleRadius: function() {
+        _getBasicCircleRadius: function () {
             return 5;
         },
 
-        _getClass: function(val, a) {
+        _getClass: function (val, a) {
             // Classification uniqueValues
             var idx = a.indexOf(val);
             if (idx > -1) {
@@ -598,19 +582,19 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
          *
          * @returns {Array} - array of vector layers
          */
-        _createVectorLayers: function(data) {
+        _createVectorLayers: function (data) {
             var out = [];
             var layers = this.mapOptions.geoengine_layers.actives;
             _.each(
                 layers,
-                function(item) {
+                function (item) {
                     out.push(this._createVectorLayer(item, data));
                 }.bind(this)
             );
             return out;
         },
 
-        _createPopupOverlay: function() {
+        _createPopupOverlay: function () {
             if (this.overlayPopup !== null) {
                 return this.overlayPopup;
             }
@@ -627,7 +611,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             return overlayPopup;
         },
 
-        _getGeoengineRecord: function(record) {
+        _getGeoengineRecord: function (record) {
             var record_options = {
                 fields: this.viewInfo.fields,
                 model: this.model,
@@ -636,7 +620,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             return new GeoengineRecord(this, record, record_options);
         },
 
-        _showFeaturePopup: function(feature) {
+        _showFeaturePopup: function (feature) {
             var template_name = "layer-box";
             if (this.qweb.templates[template_name]) {
                 var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
@@ -649,7 +633,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             }
         },
 
-        _renderVectorLayers: function() {
+        _renderVectorLayers: function () {
             var data = this.state.data;
 
             this.map.removeLayer(this.overlaysGroup);
@@ -663,7 +647,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
 
             this._createPopupOverlay();
 
-            _.each(vectorLayers, function(vlayer) {
+            _.each(vectorLayers, function (vlayer) {
                 // First vector always visible on startup
                 if (vlayer !== vectorLayers[0] && !vlayer.values_.active_on_startup) {
                     vlayer.setVisible(false);
@@ -689,7 +673,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             }
         },
 
-        _updateInfoBoxSingle: function(features) {
+        _updateInfoBoxSingle: function (features) {
             var $map_info = $("#map_info");
             var $map_infobox = $("#map_infobox");
             var $map_info_open = $("#map_info_open");
@@ -707,7 +691,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             $map_infobox.show();
         },
 
-        _updateInfoBoxMulti: function(features) {
+        _updateInfoBoxMulti: function (features) {
             var $map_info = $("#map_info");
             var $map_infobox = $("#map_infobox");
             var $map_info_open = $("#map_info_open");
@@ -716,7 +700,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             // Several selected features
             $map_info.html(formatFeatureListHTML(features));
             var selected_ids = [];
-            features.forEach(function(feature) {
+            features.forEach(function (feature) {
                 var attributes = feature.get("attributes");
                 selected_ids.push(attributes.id);
             });
@@ -726,7 +710,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             $map_infobox.show();
         },
 
-        _updateInfoBox: function(features) {
+        _updateInfoBox: function (features) {
             var nbFeatures = features.getLength();
 
             var $map_infobox = $("#map_infobox");
@@ -746,9 +730,9 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             }
         },
 
-        _getCustomSelectedStyleFunction: function() {
+        _getCustomSelectedStyleFunction: function () {
             var self = this;
-            return function(feature) {
+            return function (feature) {
                 var geometryType = feature.getGeometry().getType();
                 var styles = ol.style.Style.createDefaultEditing();
                 var geometryStyle = styles[geometryType];
@@ -771,7 +755,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             };
         },
 
-        _registerInteraction: function() {
+        _registerInteraction: function () {
             // Select interaction working on "click"
 
             var selectClick = new ol.interaction.Select({
@@ -780,7 +764,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             });
             selectClick.on(
                 "select",
-                function(e) {
+                function (e) {
                     var features = e.target.getFeatures();
                     this._updateInfoBox(features);
 
@@ -810,23 +794,20 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
             var selectedFeatures = selectClick.getFeatures();
             dragBox.on(
                 "boxend",
-                function() {
+                function () {
                     // Features that intersect the box are added to the collection
                     // of selected features, and their names are displayed in the
                     // "info" div
                     var extent = dragBox.getGeometry().getExtent();
-                    var layerVectors = this.map
-                        .getLayers()
-                        .item(1)
-                        .getLayers();
+                    var layerVectors = this.map.getLayers().item(1).getLayers();
                     var vectorSource = null;
-                    layerVectors.forEach(function(lv) {
+                    layerVectors.forEach(function (lv) {
                         // Enable selection only on visible layers
                         if (lv.getVisible()) {
                             vectorSource = lv.getSource();
                             vectorSource.forEachFeatureIntersectingExtent(
                                 extent,
-                                function(feature) {
+                                function (feature) {
                                     if (
                                         selectedFeatures.getArray().indexOf(feature) < 0
                                     ) {
@@ -849,7 +830,7 @@ odoo.define("base_geoengine.GeoengineRenderer", function(require) {
         // Handlers
         // --------------------------------------------------------------------
 
-        _onInfoBoxClicked: function(event) {
+        _onInfoBoxClicked: function (event) {
             if (!$(event.target).prop("special_click")) {
                 var id = $(event.currentTarget).data("id");
                 var ids = $(event.currentTarget).data("ids");

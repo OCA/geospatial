@@ -3,10 +3,10 @@
 import logging
 
 try:
-    from shapely import wkt, wkb
+    import geojson
+    from shapely import wkb, wkt
     from shapely.geometry import asShape
     from shapely.geometry.base import BaseGeometry
-    import geojson
 except ImportError:
     logger = logging.getLogger(__name__)
     logger.warning("Shapely or geojson are not available in the sys path")
