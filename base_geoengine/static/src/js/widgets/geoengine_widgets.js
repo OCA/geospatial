@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* ---------------------------------------------------------
  * Odoo base_geoengine
  * Author B.Binet Copyright Camptocamp SA
@@ -7,7 +8,7 @@
  * License in __manifest__.py at root level of the module
  * ---------------------------------------------------------
  */
-odoo.define("base_geoengine.geoengine_widgets", function(require) {
+odoo.define("base_geoengine.geoengine_widgets", function (require) {
     "use strict";
 
     var core = require("web.core");
@@ -40,7 +41,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
         /**
          * @override
          */
-        start: function() {
+        start: function () {
             var def = this._super();
 
             // Add a listener on parent tab if it exists in order to refresh
@@ -49,7 +50,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             core.bus.on(
                 "DOM_updated",
                 this,
-                function() {
+                function () {
                     this._addTabListener();
                 }.bind(this)
             );
@@ -58,7 +59,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
         },
 
         // FIXME still used?
-        validate: function() {
+        validate: function () {
             this.invalid = false;
         },
 
@@ -66,7 +67,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
         // Private
         // --------------------------------------------------------------------
 
-        _createVectorLayer: function() {
+        _createVectorLayer: function () {
             this.features = new ol.Collection();
             this.source = new ol.source.Vector({features: this.features});
             return new ol.layer.Vector({
@@ -91,7 +92,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             });
         },
 
-        _createLayers: function(field_infos) {
+        _createLayers: function (field_infos) {
             this.vectorLayer = this._createVectorLayer();
             this.rasterLayers = this.bgLayers.create([field_infos.edit_raster]);
             if (this.rasterLayers.length) {
@@ -99,7 +100,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             }
         },
 
-        _addTabListener: function() {
+        _addTabListener: function () {
             if (this.tabListenerInstalled) {
                 return;
             }
@@ -113,28 +114,28 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             }
             tab_link.on(
                 "shown.bs.tab",
-                function(e) {
+                function (e) {
                     this._render();
                 }.bind(this)
             );
             this.tabListenerInstalled = true;
         },
 
-        _parseValue: function(value) {
+        _parseValue: function (value) {
             return value;
         },
 
-        _updateMapEmpty: function() {
+        _updateMapEmpty: function () {
             var map_view = this.map.getView();
             // Default extent
             if (map_view) {
                 var extent = this.defaultExtent.replace(/\s/g, "").split(",");
-                extent = extent.map(coord => Number(coord));
+                extent = extent.map((coord) => Number(coord));
                 map_view.fit(extent, {maxZoom: this.defaultZoom || 5});
             }
         },
 
-        _updateMapZoom: function(zoom) {
+        _updateMapZoom: function (zoom) {
             var map_zoom = typeof zoom === "undefined" ? true : zoom;
 
             if (this.source) {
@@ -149,7 +150,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             }
         },
 
-        _setValue: function(value, zoom) {
+        _setValue: function (value, zoom) {
             this._super(value);
             this.value = value;
 
@@ -168,7 +169,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             }
         },
 
-        _isTabVisible: function() {
+        _isTabVisible: function () {
             var tab = this.$el.closest("div.tab-pane");
             if (!tab.length) {
                 return false;
@@ -176,7 +177,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             return tab.is(":visible");
         },
 
-        _onUIChange: function() {
+        _onUIChange: function () {
             var value = null;
             if (this._geometry) {
                 value = this.format.writeGeometry(this._geometry);
@@ -184,7 +185,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             this._setValue(value, false);
         },
 
-        _setupControls: function() {
+        _setupControls: function () {
             /* Add a draw interaction depending on geoType of the field
              * plus adds a modify interaction to be able to change line
              * and polygons.
@@ -208,11 +209,11 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
                 // FIXME: unsupported geo type
             }
 
-            var drawControl = function(options) {
+            var drawControl = function (options) {
                 ol.interaction.Draw.call(this, options);
             };
             ol.inherits(drawControl, ol.interaction.Draw);
-            drawControl.prototype.finishDrawing = function() {
+            drawControl.prototype.finishDrawing = function () {
                 this.source_.clear();
                 ol.interaction.Draw.prototype.finishDrawing.call(this);
             };
@@ -222,7 +223,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
                 type: handler,
             });
             this.map.addInteraction(this.drawControl);
-            var onchange_geom = function(e) {
+            var onchange_geom = function (e) {
                 // Trigger onchanges when drawing is done
                 if (e.type === "drawend") {
                     this._geometry = e.feature.getGeometry();
@@ -240,7 +241,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
                 // The SHIFT key must be pressed to delete vertices, so
                 // that new vertices can be drawn at the same position
                 // of existing vertices
-                deleteCondition: function(event) {
+                deleteCondition: function (event) {
                     return (
                         ol.events.condition.shiftKeyOnly(event) &&
                         ol.events.condition.singleClick(event)
@@ -251,11 +252,11 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             this.modifyControl.on("modifyend", onchange_geom);
 
             var self = this;
-            var ClearMapControl = function(opt_options) {
+            var ClearMapControl = function (opt_options) {
                 var options = opt_options || {};
                 var button = document.createElement("button");
                 button.innerHTML = '<i class="fa fa-trash"/>';
-                button.addEventListener("click", function() {
+                button.addEventListener("click", function () {
                     self.source.clear();
                     self._geometry = null;
                     self._onUIChange();
@@ -274,7 +275,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             this.map.addControl(this.clearmapControl);
         },
 
-        _renderMap: function() {
+        _renderMap: function () {
             if (!this.map) {
                 var $el = this.$el[0];
                 $($el).css({width: "100%", height: "100%"});
@@ -305,13 +306,13 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             }
         },
 
-        _render: function() {
+        _render: function () {
             this._rpc({
                 model: this.model,
                 method: "get_edit_info_for_geo_column",
                 args: [this.name],
             }).then(
-                function(result) {
+                function (result) {
                     this._createLayers(result);
                     this.geoType = result.geo_type;
                     this.projection = result.projection;
@@ -332,14 +333,14 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
     var FieldGeoPointXY = AbstractField.extend({
         template: "FieldGeoPointXY",
 
-        start: function() {
+        start: function () {
             this._super.apply(this, arguments);
             this.$input = this.$el.find("input");
             this.$input.change(this._onUIChange);
             this.setupFocus(this.$input);
         },
 
-        get_coords: function() {
+        get_coords: function () {
             /* Get coordinates and check it has the right format
              *
              * @return [x, y]
@@ -353,11 +354,11 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             return [x, y];
         },
 
-        make_GeoJSON: function(coords) {
+        make_GeoJSON: function (coords) {
             return {type: "Point", coordinates: coords};
         },
 
-        _setValue: function(value) {
+        _setValue: function (value) {
             this._super.apply(this, arguments);
 
             if (value) {
@@ -369,7 +370,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             }
         },
 
-        _onUIChange: function() {
+        _onUIChange: function () {
             var coords = this.get_coords();
             if (coords[0] && coords[1]) {
                 var json = this.make_GeoJSON(coords);
@@ -379,7 +380,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             }
         },
 
-        validate: function() {
+        validate: function () {
             this.invalid = false;
             try {
                 // Get coords to check if floats
@@ -395,12 +396,12 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             }
         },
 
-        update_dom: function() {
+        update_dom: function () {
             this._super.apply(this, arguments);
             this.set_readonly(this.readonly);
         },
 
-        set_readonly: function() {
+        set_readonly: function () {
             this.$input.prop("readonly", this.readonly);
         },
     });
@@ -408,7 +409,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
     var FieldGeoPointXYReadonly = FieldGeoPointXY.extend({
         template: "FieldGeoPointXY.readonly",
 
-        _setValue: function(value) {
+        _setValue: function (value) {
             this._super.apply(this, arguments);
             var show_value = "";
             if (value) {
@@ -420,7 +421,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             return show_value;
         },
 
-        validate: function() {
+        validate: function () {
             this.invalid = false;
         },
     });
@@ -428,14 +429,14 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
     var FieldGeoRect = AbstractField.extend({
         template: "FieldGeoRect",
 
-        start: function() {
+        start: function () {
             this._super.apply(this, arguments);
             this.$input = this.$el.find("input");
             this.$input.change(this._onUIChange);
             this.setupFocus(this.$input);
         },
 
-        get_coords: function() {
+        get_coords: function () {
             /* Get coordinates in the input fields
              *
              * @return [[x1, y1],[x2, y2]]
@@ -459,7 +460,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             ];
         },
 
-        make_GeoJSON: function(coords) {
+        make_GeoJSON: function (coords) {
             var p1 = coords[0];
             var p2 = [coords[0][0], coords[1][1]];
             var p3 = coords[1];
@@ -469,7 +470,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             return {type: "Polygon", coordinates: points};
         },
 
-        _setValue: function(value) {
+        _setValue: function (value) {
             this._super.apply(this, arguments);
 
             if (value) {
@@ -483,7 +484,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             }
         },
 
-        correct_bounds: function(coords) {
+        correct_bounds: function (coords) {
             /* Reverse bounds if the upper right
              * point is smaller than bottom left
              *
@@ -506,7 +507,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             ];
         },
 
-        _onUIChange: function() {
+        _onUIChange: function () {
             var coords = this.get_coords();
             if (this.all_are_set(coords)) {
                 coords = this.correct_bounds(coords);
@@ -517,7 +518,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             }
         },
 
-        all_are_set: function(coords) {
+        all_are_set: function (coords) {
             return (
                 coords[0][0] !== false &&
                 coords[0][1] !== false &&
@@ -526,7 +527,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             );
         },
 
-        none_are_set: function(coords) {
+        none_are_set: function (coords) {
             return (
                 coords[0][0] === false &&
                 coords[0][1] === false &&
@@ -535,7 +536,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             );
         },
 
-        validate: function() {
+        validate: function () {
             this.invalid = false;
             try {
                 // Get coords to check if floats
@@ -551,12 +552,12 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             }
         },
 
-        update_dom: function() {
+        update_dom: function () {
             this._super.apply(this, arguments);
             this.set_readonly(this.readonly);
         },
 
-        set_readonly: function() {
+        set_readonly: function () {
             this.$input.prop("readonly", this.readonly);
         },
     });
@@ -564,7 +565,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
     var FieldGeoRectReadonly = FieldGeoRect.extend({
         template: "FieldGeoRect.readonly",
 
-        _setValue: function(value) {
+        _setValue: function (value) {
             this._super.apply(this, arguments);
             var show_value = "";
             if (value) {
@@ -585,7 +586,7 @@ odoo.define("base_geoengine.geoengine_widgets", function(require) {
             return show_value;
         },
 
-        validate: function() {
+        validate: function () {
             this.invalid = false;
         },
     });
