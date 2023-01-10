@@ -12,7 +12,7 @@ _schema = logging.getLogger("odoo.schema")
 
 
 def init_postgis(cr):
-    """ Initialize postgis
+    """Initialize postgis
     Add PostGIS support to the database. PostGIS is a spatial database
     extender for PostgreSQL object-relational database. It adds support for
     geographic objects allowing location queries to be run in SQL.
@@ -54,7 +54,7 @@ def init_postgis(cr):
 
 
 def create_geo_column(cr, tablename, columnname, geotype, srid, dim, comment=None):
-    """ Create a geometry column with the given type.
+    """Create a geometry column with the given type.
 
     :params: srid: geometry's projection srid
     :params: dim: geometry's dimension (2D or 3D)
@@ -79,7 +79,7 @@ def _postgis_index_name(table, col_name):
 
 
 def create_geo_index(cr, columnname, tablename):
-    """ Create the given index unless it exists. """
+    """Create the given index unless it exists."""
     indexname = _postgis_index_name(tablename, columnname)
     if sql.index_exists(cr, indexname):
         return

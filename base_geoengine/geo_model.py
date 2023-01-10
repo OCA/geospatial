@@ -12,8 +12,7 @@ DEFAULT_EXTENT = (
 
 
 class GeoModel(models.AbstractModel):
-    """ Extend Base class for to allow definition of geo fields.
-    """
+    """Extend Base class for to allow definition of geo fields."""
 
     _inherit = "base"
 
@@ -57,7 +56,7 @@ class GeoModel(models.AbstractModel):
         self, view_id=None, view_type="form", toolbar=False, submenu=False
     ):
         """Returns information about the available fields of the class.
-           If view type == 'map' returns geographical columns available"""
+        If view type == 'map' returns geographical columns available"""
         view_obj = self.env["ir.ui.view"]
         field_obj = self.env["ir.model.fields"]
 
@@ -142,22 +141,22 @@ class GeoModel(models.AbstractModel):
         self, domain=None, geo_domain=None, offset=0, limit=None, order=None
     ):
         """Perform a geo search it allows direct domain:
-           geo_search(
-               domain=[('name', 'ilike', 'toto']),
-               geo_domain=[('the_point', 'geo_intersect',
-                             myshaply_obj or mywkt or mygeojson)])
+        geo_search(
+            domain=[('name', 'ilike', 'toto']),
+            geo_domain=[('the_point', 'geo_intersect',
+                          myshaply_obj or mywkt or mygeojson)])
 
-           We can also support indirect geo_domain (
-              ‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] })
+        We can also support indirect geo_domain (
+           ‘geom’, ‘geo_operator’, {‘res.zip.poly’: [‘id’, ‘in’, [1,2,3]] })
 
-           The supported operators are :
-            * geo_greater
-            * geo_lesser
-            * geo_equal
-            * geo_touch
-            * geo_within
-            * geo_contains
-            * geo_intersect"""
+        The supported operators are :
+         * geo_greater
+         * geo_lesser
+         * geo_equal
+         * geo_touch
+         * geo_within
+         * geo_contains
+         * geo_intersect"""
         # First we do a standard search in order to apply security rules
         # and do a search on standard attributes
         # Limit and offset are managed after, we may loose a lot of performance
