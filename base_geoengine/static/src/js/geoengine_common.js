@@ -7,7 +7,7 @@
  * License in __manifest__.py at root level of the module
  * ---------------------------------------------------------
  */
-odoo.define("base_geoengine.geoengine_common", function() {
+odoo.define("base_geoengine.geoengine_common", function () {
     "use strict";
 
     /* ---------------------------------------------------------
@@ -34,7 +34,7 @@ odoo.define("base_geoengine.geoengine_common", function() {
     };
 });
 
-odoo.define("base_geoengine.BackgroundLayers", function(require) {
+odoo.define("base_geoengine.BackgroundLayers", function (require) {
     "use strict";
 
     var Class = require("web.Class");
@@ -47,11 +47,11 @@ odoo.define("base_geoengine.BackgroundLayers", function(require) {
          *                            objects
          * @returns {Array} - backgound layers
          */
-        create: function(layersCfg) {
+        create: function (layersCfg) {
             var out = [];
             _.each(
                 layersCfg,
-                function(l) {
+                function (l) {
                     if (l.is_wmts) {
                         var source_opt = {
                             layer: l.name,
@@ -141,9 +141,11 @@ odoo.define("base_geoengine.BackgroundLayers", function(require) {
         },
 
         // To be overridden in geoengine extensions
-        handleCustomLayers: function(layer) {
+        /* eslint-disable no-unused-vars */
+        handleCustomLayers: function (layer) {
             return [];
         },
+        /* eslint-enable */
     });
 
     return BackgroundLayers;
