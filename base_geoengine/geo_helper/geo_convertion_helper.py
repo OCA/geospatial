@@ -5,7 +5,7 @@ import logging
 try:
     import geojson
     from shapely import wkb, wkt
-    from shapely.geometry import asShape
+    from shapely.geometry import shape
     from shapely.geometry.base import BaseGeometry
 except ImportError:
     logger = logging.getLogger(__name__)
@@ -21,7 +21,7 @@ def value_to_shape(value, use_wkb=False):
         # exception are ressource costly
         if "{" in value:
             geo_dict = geojson.loads(value)
-            return asShape(geo_dict)
+            return shape(geo_dict)
         elif use_wkb:
             return wkb.loads(value, hex=True)
         else:
