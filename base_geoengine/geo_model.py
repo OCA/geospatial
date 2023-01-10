@@ -2,7 +2,7 @@
 # Copyright 2016 Yannick Payot (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import _, api, models
-from odoo.exceptions import MissingError, except_orm
+from odoo.exceptions import MissingError, UserError
 
 from . import fields as geo_fields, geo_operators
 
@@ -41,11 +41,13 @@ class GeoModel(models.AbstractModel):
 
     @api.model
     def _get_geo_view(self):
-        geo_view = self.env["ir.ui.view"].search(
-            [("model", "=", self._name), ("type", "=", "geoengine")], limit=1
+        IrView = self.env["ir.ui.view"]
+        geo_view = IrView.sudo().search(
+            [("model", "=", self._name), ("type", "=", "geoengine")],
+            limit=1,
         )
         if not geo_view:
-            raise except_orm(
+            raise UserError(
                 _("No GeoEngine view defined for the model %s") % self._name,
                 _("Please create a view or modify view mode"),
             )
