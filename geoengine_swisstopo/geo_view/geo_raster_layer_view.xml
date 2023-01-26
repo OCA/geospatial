@@ -18,6 +18,9 @@
                   <field name="layername"/>
                   <field name="time"/>
                   <field name="format_suffix"/>
+                  <field name="projection"/>
+                  <field name="matrix_set"/>
+                  <field name="wmts_url"/>
                 </group>
             </xpath>
         </field>

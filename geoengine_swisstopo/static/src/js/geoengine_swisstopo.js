@@ -9,8 +9,6 @@ var RESOLUTIONS = [
   0.25, 0.1
 ];
 
-var BASE_URL = 'https://wmts{0-9}.geo.admin.ch/1.0.0/{Layer}/default/{Time}/21781/{TileMatrix}/{TileRow}/{TileCol}.{format}';
-
 var ATTRIBUTIONS = '<a target="_blank" href="https://www.swisstopo.admin.ch">swisstopo</a>';
 
 /**
@@ -89,25 +87,19 @@ odoo.define('geoengine_swisstopo.BackgroundLayers', function (require) {
             var out = this._super.apply(this, arguments);
             if (l.raster_type == 'swisstopo') {
                 var format = l.format_suffix || 'jpeg';
-                var layer = l.layername || 'ch.swisstopo.pixelkarte-farbe';
 
-                var url = BASE_URL.replace('{format}', format);
-                var projection = ol.proj.get(PROJECTION_CODE);
+                var projection = ol.proj.get(l.projection || 'EPSG:21731');
                 var source = new ol.source.WMTS({
                     attributions: [
                         new ol.Attribution({
                             html: ATTRIBUTIONS,
                         })
                     ],
-                    url: url,
-                    dimensions: {
-                        'Time': l.time || 'current',
-                    },
+                    url: l.wmts_url,
                     projection: projection,
                     requestEncoding: 'REST',
-                    layer: layer,
+                    version: '1.0.0',
                     style: 'default',
-                    matrixSet: '21781',
                     format: 'image/' + format,
                     tileGrid: this.createTileGrid(),
                     crossOrigin: 'anonymous',
