@@ -88,7 +88,7 @@ odoo.define('geoengine_swisstopo.BackgroundLayers', function (require) {
             if (l.raster_type == 'swisstopo') {
                 var format = l.format_suffix || 'jpeg';
 
-                var projection = ol.proj.get(l.projection || 'EPSG:21731');
+                var projection = ol.proj.get(l.projection || 'EPSG:21781');
                 var source = new ol.source.WMTS({
                     attributions: [
                         new ol.Attribution({
