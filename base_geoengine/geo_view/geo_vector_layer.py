@@ -58,6 +58,7 @@ class GeoVectorLayer(models.Model):
         "Geo field",
         domain=[("ttype", "ilike", "geo_")],
         required=True,
+        ondelete="cascade",
     )
     view_id = fields.Many2one(
         "ir.ui.view", "Related View", domain=[("type", "=", "geoengine")], required=True
