@@ -1,6 +1,6 @@
 * Nicolas Bessi <nicolas.bessi@camptocamp.com>
 * Frederic Junod <frederic.junod@camptocamp.com>
-* Yannick Vaucher <yannick.vaucher@camptocamp.com>
+* Yannick Payot <yannick.payot@camptocamp.com>
 * Sandy Carter <sandy.carter@savoirfairelinux.com>
 * Laurent Mignon <laurent.mignon@acsone.eu>
 * Jonathan Nemry <jonathan.nemry@acsone.eu>
