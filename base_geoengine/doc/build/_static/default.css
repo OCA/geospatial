@@ -68,7 +68,7 @@ div.sphinxsidebar {
 }
 
 div.sphinxsidebar h3 {
-    font-family: 'Trebuchet MS', sans-serif;
+    font-family: "Trebuchet MS", sans-serif;
     color: #ffffff;
     font-size: 1.4em;
     font-weight: normal;
@@ -81,7 +81,7 @@ div.sphinxsidebar h3 a {
 }
 
 div.sphinxsidebar h4 {
-    font-family: 'Trebuchet MS', sans-serif;
+    font-family: "Trebuchet MS", sans-serif;
     color: #ffffff;
     font-size: 1.3em;
     font-weight: normal;
@@ -113,8 +113,6 @@ div.sphinxsidebar input {
     font-size: 1em;
 }
 
-
-
 /* -- hyperlink styles ------------------------------------------------------ */
 
 a {
@@ -131,8 +129,6 @@ a:hover {
     text-decoration: underline;
 }
 
-
-
 /* -- body styles ----------------------------------------------------------- */
 
 div.body h1,
@@ -141,7 +137,7 @@ div.body h3,
 div.body h4,
 div.body h5,
 div.body h6 {
-    font-family: 'Trebuchet MS', sans-serif;
+    font-family: "Trebuchet MS", sans-serif;
     background-color: #f2f2f2;
     font-weight: normal;
     color: #20435c;
@@ -150,12 +146,25 @@ div.body h6 {
     padding: 3px 0 3px 10px;
 }
 
-div.body h1 { margin-top: 0; font-size: 200%; }
-div.body h2 { font-size: 160%; }
-div.body h3 { font-size: 140%; }
-div.body h4 { font-size: 120%; }
-div.body h5 { font-size: 110%; }
-div.body h6 { font-size: 100%; }
+div.body h1 {
+    margin-top: 0;
+    font-size: 200%;
+}
+div.body h2 {
+    font-size: 160%;
+}
+div.body h3 {
+    font-size: 140%;
+}
+div.body h4 {
+    font-size: 120%;
+}
+div.body h5 {
+    font-size: 110%;
+}
+div.body h6 {
+    font-size: 100%;
+}
 
 a.headerlink {
     color: #c60f0f;
@@ -169,7 +178,9 @@ a.headerlink:hover {
     color: white;
 }
 
-div.body p, div.body dd, div.body li {
+div.body p,
+div.body dd,
+div.body li {
     text-align: justify;
     line-height: 130%;
 }
@@ -186,7 +197,8 @@ div.admonition pre {
     margin-bottom: 5px;
 }
 
-div.admonition ul, div.admonition ol {
+div.admonition ul,
+div.admonition ol {
     margin-bottom: 5px;
 }
 

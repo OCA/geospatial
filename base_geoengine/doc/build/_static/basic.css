@@ -150,7 +150,8 @@ table.indextable td {
     vertical-align: top;
 }
 
-table.indextable dl, table.indextable dd {
+table.indextable dl,
+table.indextable dd {
     margin-top: 0;
     margin-bottom: 0;
 }
@@ -221,22 +222,28 @@ p.rubric {
     font-weight: bold;
 }
 
-img.align-left, .figure.align-left, object.align-left {
+img.align-left,
+.figure.align-left,
+object.align-left {
     clear: left;
     float: left;
     margin-right: 1em;
 }
 
-img.align-right, .figure.align-right, object.align-right {
+img.align-right,
+.figure.align-right,
+object.align-right {
     clear: right;
     float: right;
     margin-left: 1em;
 }
 
-img.align-center, .figure.align-center, object.align-center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+img.align-center,
+.figure.align-center,
+object.align-center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .align-left {
@@ -313,7 +320,8 @@ table.docutils {
     border-collapse: collapse;
 }
 
-table.docutils td, table.docutils th {
+table.docutils td,
+table.docutils th {
     padding: 1px 8px 1px 5px;
     border-top: 0;
     border-left: 0;
@@ -321,11 +329,13 @@ table.docutils td, table.docutils th {
     border-bottom: 1px solid #aaa;
 }
 
-table.field-list td, table.field-list th {
+table.field-list td,
+table.field-list th {
     border: 0 !important;
 }
 
-table.footnote td, table.footnote th {
+table.footnote td,
+table.footnote th {
     border: 0 !important;
 }
 
@@ -373,7 +383,8 @@ dd p {
     margin-top: 0px;
 }
 
-dd ul, dd table {
+dd ul,
+dd table {
     margin-bottom: 10px;
 }
 
@@ -383,7 +394,8 @@ dd {
     margin-left: 30px;
 }
 
-dt:target, .highlighted {
+dt:target,
+.highlighted {
     background-color: #fbe54e;
 }
 
@@ -419,7 +431,7 @@ dl.glossary dt {
     border: 3px solid red;
 }
 
-.footnote:target  {
+.footnote:target {
     background-color: #ffa;
 }
 
@@ -435,7 +447,8 @@ dl.glossary dt {
     margin-left: 1.5em;
 }
 
-.guilabel, .menuselection {
+.guilabel,
+.menuselection {
     font-family: sans-serif;
 }
 
@@ -447,7 +460,8 @@ dl.glossary dt {
     font-style: oblique;
 }
 
-abbr, acronym {
+abbr,
+acronym {
     border-bottom: dotted 1px;
     cursor: help;
 }
@@ -456,7 +470,7 @@ abbr, acronym {
 
 pre {
     overflow: auto;
-    overflow-y: hidden;  /* fixes display issues on Chrome browsers */
+    overflow-y: hidden; /* fixes display issues on Chrome browsers */
 }
 
 td.linenos pre {
@@ -484,12 +498,18 @@ tt.descclassname {
     background-color: transparent;
 }
 
-tt.xref, a tt {
+tt.xref,
+a tt {
     background-color: transparent;
     font-weight: bold;
 }
 
-h1 tt, h2 tt, h3 tt, h4 tt, h5 tt, h6 tt {
+h1 tt,
+h2 tt,
+h3 tt,
+h4 tt,
+h5 tt,
+h6 tt {
     background-color: transparent;
 }
 
