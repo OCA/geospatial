@@ -46,23 +46,23 @@ var ATTRIBUTIONS =
  */
 var EXTENT = [420000, 30000, 900000, 350000];
 
-odoo.define("geoengine_swisstopo.BackgroundLayers", function(require) {
+odoo.define("geoengine_swisstopo.BackgroundLayers", function (require) {
     "use strict";
 
     var BackgroundLayers = require("base_geoengine.BackgroundLayers");
 
     BackgroundLayers.include({
-        createTileGrid: function() {
+        createTileGrid: function () {
             return new ol.tilegrid.WMTS({
                 extent: EXTENT,
                 resolutions: RESOLUTIONS,
-                matrixIds: RESOLUTIONS.map(function(item, index) {
+                matrixIds: RESOLUTIONS.map(function (item, index) {
                     return String(index);
                 }),
             });
         },
 
-        handleCustomLayers: function(l) {
+        handleCustomLayers: function (l) {
             var out = this._super.apply(this, arguments);
             if (l.raster_type == "swisstopo") {
                 var format = l.format_suffix || "jpeg";
