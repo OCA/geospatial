@@ -8,7 +8,7 @@ from odoo import fields, _
 from odoo.tools import sql
 
 from .geo_helper import geo_convertion_helper as convert
-from .geo_db import create_geo_column
+from .geo_db import create_geo_column, create_geo_index
 
 logger = logging.getLogger(__name__)
 try:
@@ -145,7 +145,7 @@ class GeoField(fields.Field):
             index = cr.fetchone()
             if index:
                 return True
-            self._create_index(cr, model._table, self.name)
+            create_geo_index(cr, model._table, self.name)
         return True
 
     def update_db_column(self, model, column):
