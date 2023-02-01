@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="assets_backend" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script
+                type="text/javascript"
+                src="/base_geoengine/static/src/js/geoengine_common.js"
+            />
+            <script
+                type="text/javascript"
+                src="/base_geoengine/static/src/js/widgets/geoengine_record.js"
+            />
+            <script
+                type="text/javascript"
+                src="/base_geoengine/static/src/js/widgets/geoengine_template_widgets.js"
+            />
+            <script
+                type="text/javascript"
+                src="/base_geoengine/static/src/js/widgets/geoengine_widgets.js"
+            />
+            <script
+                type="text/javascript"
+                src="/base_geoengine/static/src/js/views/geoengine/geoengine_renderer.js"
+            />
+            <script
+                type="text/javascript"
+                src="/base_geoengine/static/src/js/views/geoengine/geoengine_controller.js"
+            />
+            <script
+                type="text/javascript"
+                src="/base_geoengine/static/src/js/views/geoengine/geoengine_view.js"
+            />
+            <script
+                type="text/javascript"
+                src="/base_geoengine/static/src/js/views/view_registry.js"
+            />
+            <script
+                type="text/javascript"
+                src="/base_geoengine/static/src/js/views/form_renderer.js"
+            />
+
+            <link rel="stylesheet" href="/base_geoengine/static/src/css/style.css" />
+        </xpath>
+    </template>
+</odoo>

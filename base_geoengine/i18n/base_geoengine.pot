@@ -1,0 +1,753 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* base_geoengine
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: base_geoengine
+#: code:addons/base_geoengine/geo_model.py:0
+#, python-format
+msgid "%s column does not exists or is not a geo field"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__active_on_startup
+msgid "Active On Startup"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_symbol__value
+msgid "All object equal to this value will use this symbol"
+msgstr ""
+
+#. module: base_geoengine
+#. openerp-web
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller.js:0
+#, python-format
+msgid "Archive"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_base
+msgid "Base"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__geo_repr__basic
+msgid "Basic"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__begin_color
+msgid "Begin color class"
+msgstr ""
+
+#. module: base_geoengine
+#. openerp-web
+#: code:addons/base_geoengine/static/src/xml/geoengine.xml:0
+#, python-format
+msgid "Bottom-Left"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_symbol__fieldname
+msgid "Category field"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Classification"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__classification
+msgid "Classification mode"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__type
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__code
+msgid "Code"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__geo_repr__colored
+msgid "Colored range/Chroma.js"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Colors"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_base_view_menu
+msgid "Configuration"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__gist_index
+msgid "Create gist index"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__create_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__create_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__create_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_symbol__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__create_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__create_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__create_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_symbol__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__classification__custom
+msgid "Custom"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__default_extent
+msgid "Default map extent"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__default_zoom
+msgid "Default map zoom"
+msgstr ""
+
+#. module: base_geoengine
+#. openerp-web
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller.js:0
+#, python-format
+msgid "Delete"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__params
+msgid "Dictiorary of values for dimensions as JSON"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__display_polygon_labels
+msgid "Display Labels on Polygon"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__display_name
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__display_name
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__display_name
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_symbol__display_name
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__display_name
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__d_wms
+msgid "Distant WMS"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__end_color
+msgid "End color class"
+msgstr ""
+
+#. module: base_geoengine
+#: code:addons/base_geoengine/geo_db.py:0
+#, python-format
+msgid ""
+"Error, can not automatically initialize spatial postgis support. Database user may have to be superuser and postgres/postgis extensions with their devel header have to be installed. If you do not want Odoo to connect with a super user you can manually prepare your database. To do this, open a client to your database using a super user and run:\n"
+"CREATE EXTENSION postgis;\n"
+"CREATE EXTENSION postgis_topology;\n"
+msgstr ""
+
+#. module: base_geoengine
+#. openerp-web
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller.js:0
+#, python-format
+msgid "Export"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__ttype
+msgid "Field Type"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_ir_model_fields
+msgid "Fields"
+msgstr ""
+
+#. module: base_geoengine
+#. openerp-web
+#: code:addons/base_geoengine/static/src/xml/geoengine.xml:0
+#, python-format
+msgid "Filter selection"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "General"
+msgstr ""
+
+#. module: base_geoengine
+#: code:addons/base_geoengine/fields.py:0
+#, python-format
+msgid "Geo Value %s must be of the same type %s as fields"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__geo_field_id
+msgid "Geo field"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_ui_view__type__geoengine
+msgid "GeoEngine"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_base_menu
+msgid "GeoEngine Backend"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geoengine_view_form
+msgid "GeoEngine Data"
+msgstr ""
+
+#. module: base_geoengine
+#. openerp-web
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_view.js:0
+#, python-format
+msgid "Geoengine"
+msgstr ""
+
+#. module: base_geoengine
+#: model:res.groups,name:base_geoengine.group_geoengine_admin
+msgid "Geoengine Admin"
+msgstr ""
+
+#. module: base_geoengine
+#: model:res.groups,name:base_geoengine.group_geoengine_user
+msgid "Geoengine User"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__has_type
+msgid "Has Type"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__id
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__id
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__id
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_symbol__id
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__id
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__id
+msgid "ID"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_symbol__img
+msgid "Img"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__classification__interval
+msgid "Interval"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__is_wmts
+msgid "Is Wmts"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__overlay
+msgid "Is overlay layer?"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__linestring
+msgid "LINESTRING"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer____last_update
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type____last_update
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer____last_update
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_symbol____last_update
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields____last_update
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__write_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__write_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__write_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_symbol__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__write_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__write_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__write_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_symbol__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__type_id
+msgid "Layer"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__name
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__name
+msgid "Layer Name"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__layer_opacity
+msgid "Layer Opacity"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "Layer data"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__readonly
+msgid "Layer is read only"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_layer__active_on_startup
+msgid "Layer will be shown on startup if checked."
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__dimensions
+msgid "List of dimensions separated by ','"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multilinestring
+msgid "MULTILINESTRING"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multipoint
+msgid "MULTIPOINT"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multipolygon
+msgid "MULTIPOLYGON"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__name
+msgid "Name"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_symbol__fieldname
+msgid "Name of the char field or selection field used for comparison"
+msgstr ""
+
+#. module: base_geoengine
+#: code:addons/base_geoengine/geo_model.py:0
+#, python-format
+msgid "No GeoEngine view defined for the model %s"
+msgstr ""
+
+#. module: base_geoengine
+#: code:addons/base_geoengine/geo_model.py:0
+#, python-format
+msgid "No raster layer for view %s"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__nb_class
+msgid "Number of class"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__odoo
+msgid "Odoo field"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "Odoo layer data (Not implemented)"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__field_id
+msgid "Odoo layer field to use"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__osm
+msgid "OpenStreetMap"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__point
+msgid "POINT"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__polygon
+msgid "POLYGON"
+msgstr ""
+
+#. module: base_geoengine
+#: code:addons/base_geoengine/geo_model.py:0
+#, python-format
+msgid "Please create a view or modify view mode"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__dim
+msgid "PostGIs Dimension"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__geo_type
+msgid "PostGIs type"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__projection
+msgid "Projection"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__geo_repr__proportion
+msgid "Proportional Symbol"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__classification__quantile
+msgid "Quantile"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_tree
+msgid "Raster"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geoengine_view_form
+msgid "Raster (Background layers)"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_rater_action
+#: model:ir.model,name:base_geoengine.model_geoengine_raster_layer
+msgid "Raster Layer"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_raster_layer_menu
+msgid "Raster Layer Management"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_geoengine_raster_layer_type
+msgid "Raster Layer Type"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "Raster Layer View"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__raster_type
+msgid "Raster layer type"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__raster_layer_ids
+msgid "Raster layers"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__view_id
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__view_id
+msgid "Related View"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Representation"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__geo_repr
+msgid "Representation mode"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__restricted_extent
+msgid "Restricted map extent"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__service
+msgid "Service"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__url
+msgid "Service URL"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__symbol_ids
+msgid "Symbol"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_symbol__img
+msgid ""
+"URL of the image to use. You can put an image in your module in static "
+"folder e.g. 'base_geoengine/static/img/map-marker.png'"
+msgstr ""
+
+#. module: base_geoengine
+#. openerp-web
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller.js:0
+#, python-format
+msgid "Unarchive"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__classification__unique
+msgid "Unique value"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__units
+msgid "Units"
+msgstr ""
+
+#. module: base_geoengine
+#. openerp-web
+#: code:addons/base_geoengine/static/src/xml/geoengine.xml:0
+#, python-format
+msgid "Up-Right"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__use_to_edit
+msgid "Use to edit"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_symbol__value
+msgid "Value"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_tree
+msgid "Vector"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geoengine_view_form
+msgid "Vector (Active layers)"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_raster_action
+#: model:ir.model,name:base_geoengine.model_geoengine_vector_layer
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_symbol__vector_layer_id
+msgid "Vector Layer"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_vector_layer_menu
+msgid "Vector Layer Management"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_geoengine_vector_symbol
+msgid "Vector Layer Symbol"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__vector_layer_ids
+msgid "Vector layers"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_ir_ui_view
+msgid "View"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_view_menu
+msgid "View Management"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__type
+msgid "View Type"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_action
+msgid "Views"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__wmts
+msgid "WMTS"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "WMTS options"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__attribute_field_id
+msgid "attribute field"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__dimensions
+msgid "dimensions"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__projection
+msgid "eg. EPSG:21781"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__request_encoding
+msgid "eg. REST"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__units
+msgid "eg. m"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__format_suffix
+msgid "eg. png"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__format_suffix
+msgid "formatSuffix"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_line
+msgid "geo_line"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_multi_line
+msgid "geo_multi_line"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_multi_point
+msgid "geo_multi_point"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_multi_polygon
+msgid "geo_multi_polygon"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_point
+msgid "geo_point"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_polygon
+msgid "geo_polygon"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_layer__begin_color
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_layer__end_color
+msgid "hex value"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__sequence
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__sequence
+msgid "layer priority lower on top"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__matrix_set
+msgid "matrixSet"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__max_extent
+msgid "max_extent"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "module/static/img/icon.png"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params
+msgid "params"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__projection
+msgid "projection"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__request_encoding
+msgid "requestEncoding"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__resolutions
+msgid "resolutions"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__srid
+msgid "srid"
+msgstr ""

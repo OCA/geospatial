@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="geo_raster_view_form">
+        <field name="name">geoengine.raster.layer.form</field>
+        <field name="model">geoengine.raster.layer</field>
+        <field name="arch" type="xml">
+            <form string="Raster Layer View">
+                <group string="General" col="4">
+                    <field name="name" colspan="4" />
+                    <field name="view_id" />
+                    <field name="raster_type" />
+                    <field name="sequence" />
+                    <field name="overlay" />
+                    <field name="use_to_edit" colspan="4" />
+                    <field
+                        name="url"
+                        colspan="4"
+                        widget="url"
+                        attrs="{'required': [('is_wmts', '=', True)]}"
+                    />
+                </group>
+                <field name="is_wmts" invisible="1" />
+                <group
+                    string="WMTS options"
+                    attrs="{'invisible': [('is_wmts', '=', False)]}"
+                    colspan="4"
+                >
+                  <field
+                        name="matrix_set"
+                        attrs="{'required': [('is_wmts', '=', True)]}"
+                    />
+                  <field name="format_suffix" />
+                  <field name="request_encoding" />
+                  <field name="projection" />
+                  <field name="units" />
+                  <field name="resolutions" />
+                  <field name="max_extent" />
+                  <field name="dimensions" />
+                  <field name="params" />
+                </group>
+                <field name="has_type" invisible="1" />
+                <group
+                    string="Layer data"
+                    attrs="{'invisible': [('has_type', '=', False)]}"
+                    colspan="4"
+                >
+                  <field
+                        name="type_id"
+                        widget="selection"
+                        attrs="{'required': [('has_type', '=', True)]}"
+                    />
+                </group>
+                <group
+                    string="Odoo layer data (Not implemented)"
+                    attrs="{'invisible': [('raster_type', '!=', 'odoo')]}"
+                    colspan="4"
+                >
+                    <field name="field_id" />
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="geo_raster_view_tree">
+        <field name="name">geoengine.raster.layer.tree</field>
+        <field name="model">geoengine.raster.layer</field>
+        <field name="arch" type="xml">
+            <tree string="Raster">
+                <field name="name" select="1" />
+                <field name="raster_type" select="1" />
+                <field name="sequence" />
+                <field name="overlay" select="1" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="geo_engine_view_rater_action" model="ir.actions.act_window">
+        <field name="name">Raster Layer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">geoengine.raster.layer</field>
+        <field name="view_id" ref="geo_raster_view_tree" />
+    </record>
+
+    <menuitem
+        name="Raster Layer Management"
+        id="geoengine_raster_layer_menu"
+        parent="geoengine_base_view_menu"
+        action="geo_engine_view_rater_action"
+        groups="group_geoengine_admin"
+    />
+
+</odoo>
