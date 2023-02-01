@@ -1,6 +1,6 @@
 /* ---------------------------------------------------------
  * Odoo base_geoengine
- * Author Yannick Vaucher Copyright 2018 Camptocamp SA
+ * Author Yannick Payot Copyright 2018 Camptocamp SA
  * License in __manifest__.py at root level of the module
  * ---------------------------------------------------------
  */
