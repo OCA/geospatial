@@ -78,6 +78,12 @@ msgid "Kanban"
 msgstr ""
 
 #. module: web_view_google_map
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Leaflet Map"
+msgstr ""
+
+#. module: web_view_google_map
 #. openerp-web
 #: code:addons/web_view_google_map/static/src/js/view/map/map_view.js:15
 #: selection:ir.actions.act_window.view,view_mode:0
