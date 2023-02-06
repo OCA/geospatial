@@ -28,6 +28,9 @@ class GeoField(fields.Field):
     """
 
     geo_type = None
+    srid = 3857
+    dim = 2
+    gist_index = True
 
     @property
     def column_format(self):
