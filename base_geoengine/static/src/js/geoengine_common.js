@@ -82,10 +82,10 @@ odoo.define("base_geoengine.BackgroundLayers", function (require) {
                             source_opt.projection = ol.proj.get(l.projection);
                             // FIXME if the projection def is not available...
                             if (source_opt.projection) {
-                                var projectionExtent = source_opt.projection.getExtent();
-                                tilegrid_opt.origin = ol.extent.getTopLeft(
-                                    projectionExtent
-                                );
+                                var projectionExtent =
+                                    source_opt.projection.getExtent();
+                                tilegrid_opt.origin =
+                                    ol.extent.getTopLeft(projectionExtent);
                             }
                         }
                         // FIXME deprecated?
