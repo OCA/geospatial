@@ -10,38 +10,44 @@ class NPA(models.Model):
     _name = "dummy.zip"
     _description = "Geoengine demo ZIP"
 
-    priority = fields.Integer('Priority', default=100)
-    name = fields.Char('ZIP', size=64, index=True, required=True)
-    city = fields.Char('City', size=64, index=True, required=True)
-    the_geom = fields.GeoMultiPolygon('NPA Shape')
+    priority = fields.Integer("Priority", default=100)
+    name = fields.Char("ZIP", size=64, index=True, required=True)
+    city = fields.Char("City", size=64, index=True, required=True)
+    the_geom = fields.GeoMultiPolygon("NPA Shape")
     total_sales = fields.Float(
-        compute='_compute_ZIP_total_sales',
-        string='Spatial! Total Sales',
+        compute="_compute_ZIP_total_sales",
+        string="Spatial! Total Sales",
     )
     retail_machine_ids = fields.One2many(
-        string='Retail machines',
-        comodel_name='geoengine.demo.automatic.retailing.machine',
-        inverse_name='zip_id',
+        string="Retail machines",
+        comodel_name="geoengine.demo.automatic.retailing.machine",
+        inverse_name="zip_id",
     )
 
     @api.multi
     def _compute_ZIP_total_sales(self):
         """Return the total of the invoiced sales for this npa"""
-        mach_obj = self.env['geoengine.demo.automatic.retailing.machine']
+        mach_obj = self.env["geoengine.demo.automatic.retailing.machine"]
         for rec in self:
             res = mach_obj.geo_search(
                 domain=[],
                 geo_domain=[
-                    ('the_point',
-                     'geo_intersect',
-                     {'dummy.zip.the_geom': [('id', '=', rec.id)]})])
+                    (
+                        "the_point",
+                        "geo_intersect",
+                        {"dummy.zip.the_geom": [("id", "=", rec.id)]},
+                    )
+                ],
+            )
 
             cursor = self.env.cr
             if res:
-                cursor.execute("SELECT sum(total_sales) from"
-                               " geoengine_demo_automatic_retailing_machine "
-                               "where id in %s;",
-                               (tuple(res),))
+                cursor.execute(
+                    "SELECT sum(total_sales) from"
+                    " geoengine_demo_automatic_retailing_machine "
+                    "where id in %s;",
+                    (tuple(res),),
+                )
                 res = cursor.fetchone()
                 if res:
                     rec.total_sales = res[0] or 0.0
