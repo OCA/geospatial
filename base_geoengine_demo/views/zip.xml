@@ -52,7 +52,6 @@
 <record id="action_zip_tree" model="ir.actions.act_window">
   <field name="name">ZIP Management</field>
   <field name="res_model">dummy.zip</field>
-  <field name="view_type">form</field>
   <field name="view_mode">tree,form,geoengine</field>
   <field ref="dummy_zip_tree" name="view_id" />
 </record>
