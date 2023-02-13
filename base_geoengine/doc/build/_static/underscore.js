@@ -364,7 +364,9 @@
         return Boolean(a && a.getTimezoneOffset && a.setUTCFullYear);
     };
     b.isRegExp = function (a) {
-        return Boolean(a && a.test && a.exec && (a.ignoreCase || a.ignoreCase === false));
+        return Boolean(
+            a && a.test && a.exec && (a.ignoreCase || a.ignoreCase === false)
+        );
     };
     b.isNaN = function (a) {
         return b.isNumber(a) && isNaN(a);
@@ -430,15 +432,16 @@
             return l(c.apply(b, d), this._chain);
         };
     });
-    b.each(["pop", "push", "reverse", "shift", "sort", "splice", "unshift"], function (
-        a
-    ) {
-        var c = Array.prototype[a];
-        i.prototype[a] = function () {
-            c.apply(this._wrapped, arguments);
-            return l(this._wrapped, this._chain);
-        };
-    });
+    b.each(
+        ["pop", "push", "reverse", "shift", "sort", "splice", "unshift"],
+        function (a) {
+            var c = Array.prototype[a];
+            i.prototype[a] = function () {
+                c.apply(this._wrapped, arguments);
+                return l(this._wrapped, this._chain);
+            };
+        }
+    );
     b.each(["concat", "join", "slice"], function (a) {
         var c = Array.prototype[a];
         i.prototype[a] = function () {
