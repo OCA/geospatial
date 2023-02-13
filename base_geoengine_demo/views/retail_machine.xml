@@ -60,7 +60,6 @@
   <field name="type">ir.actions.act_window</field>
   <field name="res_model">geoengine.demo.automatic.retailing.machine</field>
   <field name="view_mode">tree,form,geoengine</field>
-  <field name="view_type">form</field>
   <field name="view_id" ref="geo_retail_machine_view_tree" />
 </record>
 
