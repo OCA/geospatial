@@ -24,7 +24,6 @@ class NPA(models.Model):
         inverse_name="zip_id",
     )
 
-    @api.multi
     def _compute_ZIP_total_sales(self):
         """Return the total of the invoiced sales for this npa"""
         mach_obj = self.env["geoengine.demo.automatic.retailing.machine"]
