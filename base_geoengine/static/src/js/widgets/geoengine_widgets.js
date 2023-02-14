@@ -591,7 +591,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
         },
     });
 
-    registry.add("geo_edit_map", FieldGeoEngineEditMap);
+    // Registry.category("fields").add("geo_edit_map", FieldGeoEngineEditMap);
     //    .add('geo_point_xy', FieldGeoPointXY)
     //    .add('geo_point_xy', FieldGeoPointXYReadonly)
     //    .add('geo_rect', FieldGeoRect)

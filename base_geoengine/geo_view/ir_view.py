@@ -27,4 +27,4 @@ class IrUIView(models.Model):
         " 6186191.1800898",
     )
     default_zoom = fields.Integer("Default map zoom")
-    restricted_extent = fields.Char("Restricted map extent", size=128)
+    restricted_extent = fields.Char("Restricted map extent")
