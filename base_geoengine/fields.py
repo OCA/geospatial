@@ -28,6 +28,9 @@ class GeoField(fields.Field):
     """
 
     geo_type = None
+    dim = 2
+    srid = 3857
+    gist_index = True
 
     @property
     def column_format(self):
@@ -36,8 +39,6 @@ class GeoField(fields.Field):
     @property
     def column_type(self):
         return ("geometry", "geometry")
-
-    _slots = {"dim": 2, "srid": 3857, "gist_index": True}
 
     def convert_to_column(self, value, record, values=None):
         """Convert value to database format
@@ -212,7 +213,7 @@ class GeoLine(GeoField):
             {
                 "wkt1": point1.wkt,
                 "wkt2": point2.wkt,
-                "srid": srid or cls._slots["srid"],
+                "srid": srid or cls.srid,
             },
         )
         res = cr.fetchone()
@@ -236,7 +237,7 @@ class GeoPoint(GeoField):
                     ST_GeomFromText(%(wkt)s, 4326),
                     %(srid)s)
         """,
-            {"wkt": pt.wkt, "srid": cls._slots["srid"]},
+            {"wkt": pt.wkt, "srid": cls.srid},
         )
         res = cr.fetchone()
         return cls.load_geo(res[0])
