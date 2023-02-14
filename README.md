@@ -62,7 +62,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[base_geoengine](base_geoengine/) | 13.0.1.0.2 |  | Geospatial support for Odoo
+[base_geoengine](base_geoengine/) | 13.0.1.0.3 |  | Geospatial support for Odoo
 [geoengine_base_geolocalize](geoengine_base_geolocalize/) | 13.0.1.0.0 |  | Geospatial support for base_geolocalize
 [geoengine_partner](geoengine_partner/) | 13.0.1.0.0 |  | Geospatial support of partners
 [geoengine_swisstopo](geoengine_swisstopo/) | 13.0.1.0.0 |  | GeoEngine - Swisstopo layers
