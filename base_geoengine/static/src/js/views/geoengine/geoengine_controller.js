@@ -16,7 +16,7 @@ odoo.define("base_geoengine.GeoengineController", function (require) {
     var core = require("web.core");
     var BasicController = require("web.BasicController");
     var pyUtils = require("web.py_utils");
-    var Sidebar = require("web.Sidebar");
+    // Var Sidebar = require("web.Sidebar");
     var DataExport = require("web.DataExport");
 
     var _t = core._t;
