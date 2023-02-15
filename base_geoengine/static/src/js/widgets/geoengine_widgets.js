@@ -121,6 +121,8 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
             this.tabListenerInstalled = true;
         },
 
+        // Pas utilisé
+
         _parseValue: function (value) {
             return value;
         },
@@ -192,6 +194,8 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
              * As modify needs to get pointer position on map it requires
              * the map to be rendered before being created
              */
+
+            // Nécessaire ?
             var handler = null;
             if (this.geoType === "POLYGON") {
                 handler = "Polygon";
@@ -222,6 +226,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
                 source: this.source,
                 type: handler,
             });
+
             this.map.addInteraction(this.drawControl);
             var onchange_geom = function (e) {
                 // Trigger onchanges when drawing is done
@@ -234,6 +239,8 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
                 this._onUIChange();
             }.bind(this);
             this.drawControl.on("drawend", onchange_geom);
+
+            // A quoi ça
 
             this.features = this.source.getFeaturesCollection();
             this.modifyControl = new ol.interaction.Modify({
@@ -291,7 +298,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
 
                 this.format = new ol.format.GeoJSON({
                     internalProjection: this.map.getView().getProjection(),
-                    externalProjection: "EPSG:" + this.srid,
+                    externalProjection: "EPSG:3857",
                 });
 
                 $(document).trigger("FieldGeoEngineEditMap:ready", [this.map]);
