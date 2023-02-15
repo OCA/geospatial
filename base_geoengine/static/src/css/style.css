@@ -1,180 +1,352 @@
 /* OpenLayers Style */
-div.olmap {
-    /* For map size recomputation we have to define this size. */
-    height: 100%;
-    width: 100%;
-    z-index: 0;
-    padding: 0 !important;
-    margin: 0 !important;
-    cursor: default;
+:root,
+:host {
+    --ol-background-color: white;
+    --ol-accent-background-color: #f5f5f5;
+    --ol-subtle-background-color: rgba(128, 128, 128, 0.25);
+    --ol-partial-background-color: rgba(255, 255, 255, 0.75);
+    --ol-foreground-color: #333333;
+    --ol-subtle-foreground-color: #666666;
+    --ol-brand-color: #00aaff;
+}
+
+.ol-box {
+    box-sizing: border-box;
+    border-radius: 2px;
+    border: 1.5px solid var(--ol-background-color);
+    background-color: var(--ol-partial-background-color);
+}
+
+.ol-mouse-position {
+    top: 8px;
+    right: 8px;
+    position: absolute;
+}
+
+.ol-scale-line {
+    background: var(--ol-partial-background-color);
+    border-radius: 4px;
+    bottom: 8px;
+    left: 8px;
+    padding: 2px;
+    position: absolute;
+}
+
+.ol-scale-line-inner {
+    border: 1px solid var(--ol-subtle-foreground-color);
+    border-top: none;
+    color: var(--ol-foreground-color);
+    font-size: 10px;
+    text-align: center;
+    margin: 1px;
+    will-change: contents, width;
+    transition: all 0.25s;
+}
+
+.ol-scale-bar {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+}
+
+.ol-scale-bar-inner {
+    display: flex;
+}
+
+.ol-scale-step-marker {
+    width: 1px;
+    height: 15px;
+    background-color: var(--ol-foreground-color);
+    float: right;
+    z-index: 10;
+}
+
+.ol-scale-step-text {
+    position: absolute;
+    bottom: -5px;
+    font-size: 10px;
+    z-index: 11;
+    color: var(--ol-foreground-color);
+    text-shadow: -1.5px 0 var(--ol-partial-background-color),
+        0 1.5px var(--ol-partial-background-color),
+        1.5px 0 var(--ol-partial-background-color),
+        0 -1.5px var(--ol-partial-background-color);
+}
+
+.ol-scale-text {
+    position: absolute;
+    font-size: 12px;
+    text-align: center;
+    bottom: 25px;
+    color: var(--ol-foreground-color);
+    text-shadow: -1.5px 0 var(--ol-partial-background-color),
+        0 1.5px var(--ol-partial-background-color),
+        1.5px 0 var(--ol-partial-background-color),
+        0 -1.5px var(--ol-partial-background-color);
+}
+
+.ol-scale-singlebar {
+    position: relative;
+    height: 10px;
+    z-index: 9;
+    box-sizing: border-box;
+    border: 1px solid var(--ol-foreground-color);
+}
+
+.ol-scale-singlebar-even {
+    background-color: var(--ol-subtle-foreground-color);
+}
+
+.ol-scale-singlebar-odd {
+    background-color: var(--ol-background-color);
+}
+
+.ol-unsupported {
+    display: none;
+}
+
+.ol-viewport,
+.ol-unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.ol-viewport canvas {
+    all: unset;
+}
+
+.ol-selectable {
+    -webkit-touch-callout: default;
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+}
+
+.ol-grabbing {
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
+}
+
+.ol-grab {
+    cursor: move;
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
 }
 
 .ol-control {
-    background-image: none;
-}
-.ol-control button {
-    background-image: none;
-}
-
-.olmap svg {
-    width: initial;
-    height: initial;
+    position: absolute;
+    background-color: var(--ol-subtle-background-color);
+    border-radius: 4px;
 }
 
-.olmap:-moz-full-screen {
-    height: 100%;
-    width: 100%;
-}
-.olmap:-webkit-full-screen {
-    height: 100%;
-    width: 100%;
-}
-.olmap:-ms-fullscreen {
-    height: 100%;
-    width: 100%;
-}
-
-div.olControlPanel {
-    margin: 80px 10px;
-}
-
-div.ol-clear {
-    top: 65px;
+.ol-zoom {
+    top: 0.5em;
     left: 0.5em;
 }
-.olmap:fullscreen {
-    height: 100%;
-    width: 100%;
+
+.ol-rotate {
+    top: 0.5em;
+    right: 0.5em;
+    transition: opacity 0.25s linear, visibility 0s linear;
 }
 
-.olControlEditingToolbar .olControlSelectBoxItemInactive {
-    background-position: 0px -1px;
+.ol-rotate.ol-hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s linear, visibility 0s linear 0.25s;
 }
 
-.olControlEditingToolbar .olControlSelectBoxItemActive {
-    background-position: 0px -24px;
+.ol-zoom-extent {
+    top: 4.643em;
+    left: 0.5em;
 }
 
-.olDrowBox {
-    cursor: crosshair;
+.ol-full-screen {
+    right: 0.5em;
+    top: 0.5em;
 }
-.map_overlay {
-    position: absolute;
-    display: none;
-    background: white;
-    opacity: 0.9;
-    border: 2px solid black;
-    z-index: 3000;
-    padding: 0 0 5px 0;
-}
-#map_infobox {
-    bottom: 10px;
-    left: 10px;
-    width: 200px;
-    height: 150px;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-}
-#map_info {
-    cursor: pointer;
-    overflow-x: hidden;
-    overflow-y: auto;
-    padding: 10px;
-    height: 130px;
-}
-#map_info_open {
-    cursor: pointer;
-    background-color: #337ab7;
-    vertical-align: middle;
+
+.ol-control button {
+    display: block;
+    margin: 1px;
+    padding: 0;
+    color: var(--ol-subtle-foreground-color);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: inherit;
     text-align: center;
-    color: white;
-}
-#map_info_filter_selection {
-    cursor: pointer;
-    background-color: #337ab7;
-    vertical-align: middle;
-    text-align: center;
-    color: white;
+    height: 1.375em;
+    width: 1.375em;
+    line-height: 0.4em;
+    background-color: var(--ol-background-color);
+    border: none;
+    border-radius: 2px;
 }
 
-#map_measurementbox {
-    top: 18px;
-    left: 160px;
-    padding: 2px 5px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+.ol-control button::-moz-focus-inner {
+    border: none;
+    padding: 0;
 }
 
-#map_legend {
-    bottom: 6em;
-    right: 5em;
-    z-index: 3000;
+.ol-zoom-extent button {
+    line-height: 1.4em;
 }
 
-/* Button style */
-.openerp .oe_view_manager .oe_view_manager_switch .oe_vm_switch_geoengine:after {
-    content: "2";
+.ol-compass {
+    display: block;
+    font-weight: normal;
+    will-change: transform;
 }
 
-/* Edit Widget */
-.field_geo_edit_map {
-    border: 1px solid #999;
-    width: 100%;
-    height: 500px;
+.ol-touch .ol-control button {
+    font-size: 1.5em;
 }
 
-.ol-popup {
-    position: absolute;
-    background-color: white;
-    -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
-    filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
-    padding: 15px;
-    border-radius: 10px;
-    border: 1px solid #cccccc;
-    bottom: 12px;
-    left: -50px;
-    min-width: 280px;
+.ol-touch .ol-zoom-extent {
+    top: 5.5em;
 }
 
-.ol-popup:after,
-.ol-popup:before {
-    top: 100%;
-    border: solid transparent;
+.ol-control button:hover,
+.ol-control button:focus {
+    text-decoration: none;
+    outline: 1px solid var(--ol-subtle-foreground-color);
+    color: var(--ol-foreground-color);
+}
+
+.ol-zoom .ol-zoom-in {
+    border-radius: 2px 2px 0 0;
+}
+
+.ol-zoom .ol-zoom-out {
+    border-radius: 0 0 2px 2px;
+}
+
+.ol-attribution {
+    text-align: right;
+    bottom: 0.5em;
+    right: 0.5em;
+    max-width: calc(100% - 1.3em);
+    display: flex;
+    flex-flow: row-reverse;
+    align-items: center;
+}
+
+.ol-attribution a {
+    color: var(--ol-subtle-foreground-color);
+    text-decoration: none;
+}
+
+.ol-attribution ul {
+    margin: 0;
+    padding: 1px 0.5em;
+    color: var(--ol-foreground-color);
+    text-shadow: 0 0 2px var(--ol-background-color);
+    font-size: 12px;
+}
+
+.ol-attribution li {
+    display: inline;
+    list-style: none;
+}
+
+.ol-attribution li:not(:last-child):after {
     content: " ";
-    height: 0;
-    width: 0;
+}
+
+.ol-attribution img {
+    max-height: 2em;
+    max-width: inherit;
+    vertical-align: middle;
+}
+
+.ol-attribution button {
+    flex-shrink: 0;
+}
+
+.ol-attribution.ol-collapsed ul {
+    display: none;
+}
+
+.ol-attribution:not(.ol-collapsed) {
+    background: var(--ol-partial-background-color);
+}
+
+.ol-attribution.ol-uncollapsible {
+    bottom: 0;
+    right: 0;
+    border-radius: 4px 0 0;
+}
+
+.ol-attribution.ol-uncollapsible img {
+    margin-top: -0.2em;
+    max-height: 1.6em;
+}
+
+.ol-attribution.ol-uncollapsible button {
+    display: none;
+}
+
+.ol-zoomslider {
+    top: 4.5em;
+    left: 0.5em;
+    height: 200px;
+}
+
+.ol-zoomslider button {
+    position: relative;
+    height: 10px;
+}
+
+.ol-touch .ol-zoomslider {
+    top: 5.5em;
+}
+
+.ol-overviewmap {
+    left: 0.5em;
+    bottom: 0.5em;
+}
+
+.ol-overviewmap.ol-uncollapsible {
+    bottom: 0;
+    left: 0;
+    border-radius: 0 4px 0 0;
+}
+
+.ol-overviewmap .ol-overviewmap-map,
+.ol-overviewmap button {
+    display: block;
+}
+
+.ol-overviewmap .ol-overviewmap-map {
+    border: 1px solid var(--ol-subtle-foreground-color);
+    height: 150px;
+    width: 150px;
+}
+
+.ol-overviewmap:not(.ol-collapsed) button {
+    bottom: 0;
+    left: 0;
     position: absolute;
-    pointer-events: none;
 }
 
-.ol-popup:after {
-    border-top-color: white;
-    border-width: 10px;
-    left: 48px;
-    margin-left: -10px;
+.ol-overviewmap.ol-collapsed .ol-overviewmap-map,
+.ol-overviewmap.ol-uncollapsible button {
+    display: none;
 }
 
-.ol-popup:before {
-    border-top-color: #cccccc;
-    border-width: 11px;
-    left: 48px;
-    margin-left: -11px;
+.ol-overviewmap:not(.ol-collapsed) {
+    background: var(--ol-subtle-background-color);
 }
 
-.ol-popup-edit {
-    text-decoration: none;
-    position: absolute;
-    top: 5px;
-    right: 25px;
+.ol-overviewmap-box {
+    border: 1.5px dotted var(--ol-subtle-foreground-color);
 }
 
-.ol-popup-closer {
-    text-decoration: none;
-    position: absolute;
-    top: 2px;
-    right: 8px;
-}
-
-.ol-popup-closer:after {
-    content: "✖";
+.ol-overviewmap .ol-overviewmap-box:hover {
+    cursor: move;
 }
