@@ -31,6 +31,7 @@ class GeoModel(models.AbstractModel):
                     "dim": int(field.dim),
                     "srid": field.srid,
                 }
+                # TODO
                 if field.compute or field.related:
                     if not field.dim:
                         geo_type["dim"] = 2
@@ -130,7 +131,6 @@ class GeoModel(models.AbstractModel):
             raise MissingError(_("No raster layer for view %s") % (view.name,))
         return {
             "edit_raster": raster.read()[0],
-            "geo_type": field.geo_type,
             "srid": field.srid,
             "projection": view.projection,
             "restricted_extent": view.restricted_extent,

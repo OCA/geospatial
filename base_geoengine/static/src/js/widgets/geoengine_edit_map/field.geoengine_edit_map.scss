@@ -1,4 +1,10 @@
-.o_field_geo_edit_map {
+.o_field_geo_multi_polygon,
+.o_field_geo_point,
+.o_field_geo_line {
     width: 100%;
     height: 550px;
+}
+.ol_map {
+    width: 100%;
+    height: 100%;
 }
