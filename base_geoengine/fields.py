@@ -55,6 +55,13 @@ class GeoField(fields.Field):
 
     def convert_to_cache(self, value, record, validate=True):
         val = value
+        if isinstance(val, (bytes, str)):
+            try:
+                int(val, 16)
+            except Exception:
+                # not an hex value -> try to load from a sting
+                # representation of a geometry
+                value = convert.value_to_shape(value, use_wkb=False)
         if isinstance(value, BaseGeometry):
             val = value.wkb_hex
         return val
@@ -98,8 +105,12 @@ class GeoField(fields.Field):
         shape = convert.value_to_shape(value)
         if same_type and not shape.is_empty:
             if shape.geom_type.lower() != self.geo_type.lower():
-                msg = _("Geo Value %s must be of the same type %s as fields")
-                raise TypeError(msg % (shape.geom_type.lower(), self.geo_type.lower()))
+                msg = _(
+                    "Geo Value %(geom_type)s must be of the same type %(geo_type)s as fields",
+                    geom_type=shape.geom_type.lower(),
+                    geo_type=self.geo_type.lower(),
+                )
+                raise TypeError(msg)
         return shape
 
     def update_geo_db_column(self, model):
