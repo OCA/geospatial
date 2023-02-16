@@ -46,7 +46,9 @@ def geo_search(model, domain=None, geo_domain=None, offset=0, limit=None, order=
     domain = domain or []
     geo_domain = geo_domain or []
     model.env["ir.model.access"].check(model._name, "read")
+    # _where_calc = Computes the WHERE clause needed to implement an OpenERP domain. :param list domain: the domain to compute, active_test: whether the default filtering of records with
     query = model._where_calc(domain, active_test=True)
+    # Add what's missing in query to implement all appropriate ir.rules
     model._apply_ir_rules(query, "read")
     order_by = ""
     if order:
@@ -179,6 +181,9 @@ class GeoOperator(object):
             base = self.geo_field.entry_to_shape(value, same_type=False)
             srid = self.geo_field.srid
             compare_to = "ST_GeomFromText('{}',{})".format(base.wkt, srid)
+            return " {}(ST_SetSRID({}.{},{}), {})".format(
+                op, table, col, srid, compare_to
+            )
         return " {}({}.{}, {})".format(op, table, col, compare_to)
 
     def get_geo_greater_sql(self, table, col, value, rel_col=None, rel_model=None):
