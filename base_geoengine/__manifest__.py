@@ -22,6 +22,11 @@
         "web.assets_backend": [
             "base_geoengine/static/src/js/**/*",
             "base_geoengine/static/src/css/style.css",
+            "web/static/src/libs/fontawesome/css/font-awesome.css",
+            ("include", "web._assets_helpers"),
+            "web/static/src/scss/pre_variables.scss",
+            "web/static/lib/bootstrap/scss/_variables.scss",
+            ("include", "web._assets_bootstrap"),
         ]
     },
     "external_dependencies": {"python": ["shapely", "geojson", "simplejson"]},
