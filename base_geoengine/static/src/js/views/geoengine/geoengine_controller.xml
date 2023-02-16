@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="base_geoengine.GeoengineController" owl="1">
+        <Layout display="props.display" className="'h-100 overflow-auto'">
+            <GeoengineRenderer />
+        </Layout>
+    </t>
+</templates>
