@@ -13,13 +13,13 @@ class RetailMachine(models.Model):
     the_point = fields.GeoPoint("Coordinate")
     the_line = fields.GeoLine("Power supply line", index=True)
     total_sales = fields.Float("Total sale", index=True)
-    money_level = fields.Char("Money level", index=True)
-    state = fields.Selection([("hs", "HS"), ("ok", "OK")], "State", index=True)
+    money_level = fields.Char(index=True)
+    state = fields.Selection([("hs", "HS"), ("ok", "OK")], index=True)
     name = fields.Char("Serial number", required=True)
-    zip_id = fields.Many2one("dummy.zip", compute="_computed_zip_id", readonly=False)
-    
+    zip_id = fields.Many2one("dummy.zip", compute="_compute_zip_id", readonly=False)
+
     @api.depends("the_point")
-    def _computed_zip_id(self):
+    def _compute_zip_id(self):
         """Exemple of on change on the point
         Lookup in zips if the code is within an area.
         Change the zip_id field accordingly
