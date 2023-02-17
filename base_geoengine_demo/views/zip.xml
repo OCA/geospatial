@@ -17,16 +17,16 @@
         </group>
         <notebook colspan="4">
           <page string="Geometry">
-            <field name="the_geom"/>
+            <field name="the_geom" />
           </page>
           <page string="Geometry - Polygon">
-            <field name="the_geom_poly"/>
+            <field name="the_geom_poly" />
           </page>
           <page string="Geometry - MultiLine">
-            <field name="the_geom_multiLine"/>
+            <field name="the_geom_multiLine" />
           </page>
           <page string="Geometry - MultiPoint">
-            <field name="the_geom_multipoint"/>
+            <field name="the_geom_multipoint" />
           </page>
           <page string="Retail machines">
             <field name="retail_machine_ids" />
