@@ -5,7 +5,6 @@
         id="geoengine_demo_menu"
         groups="base_geoengine.group_geoengine_user"
         web_icon="base_geoengine_demo,images/map.png"
-        web_icon_hover="base_geoengine_demo,images/map-hover.png"
     />
     <menuitem
         name="GeoEngine Samples"
