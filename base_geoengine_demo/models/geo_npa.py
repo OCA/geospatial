@@ -1,6 +1,6 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class NPA(models.Model):
@@ -10,9 +10,9 @@ class NPA(models.Model):
     _name = "dummy.zip"
     _description = "Geoengine demo ZIP"
 
-    priority = fields.Integer("Priority", default=100)
+    priority = fields.Integer(default=100)
     name = fields.Char("ZIP", index=True, required=True)
-    city = fields.Char("City", index=True, required=True)
+    city = fields.Char(index=True, required=True)
     the_geom = fields.GeoMultiPolygon("NPA Shape")
     the_geom_poly = fields.GeoPolygon()
     the_geom_multiLine = fields.GeoMultiLine()
