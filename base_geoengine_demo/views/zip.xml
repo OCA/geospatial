@@ -17,7 +17,16 @@
         </group>
         <notebook colspan="4">
           <page string="Geometry">
-            <field name="the_geom" widget="geo_edit_map" />
+            <field name="the_geom"/>
+          </page>
+          <page string="Geometry - Polygon">
+            <field name="the_geom_poly"/>
+          </page>
+          <page string="Geometry - MultiLine">
+            <field name="the_geom_multiLine"/>
+          </page>
+          <page string="Geometry - MultiPoint">
+            <field name="the_geom_multipoint"/>
           </page>
           <page string="Retail machines">
             <field name="retail_machine_ids" />
@@ -68,7 +77,7 @@
 <record id="ir_ui_view_resbetterzipgeoview0" model="ir.ui.view">
   <field name="name">dummy.zip.geo_view</field>
   <field name="arch" type="xml">
-    <geoengine version="7.0">
+    <geoengine>
       <field name="name" />
       <field name="city" />
       <field name="total_sales" />
