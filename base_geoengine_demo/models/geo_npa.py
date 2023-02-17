@@ -11,9 +11,12 @@ class NPA(models.Model):
     _description = "Geoengine demo ZIP"
 
     priority = fields.Integer("Priority", default=100)
-    name = fields.Char("ZIP", size=64, index=True, required=True)
-    city = fields.Char("City", size=64, index=True, required=True)
+    name = fields.Char("ZIP", index=True, required=True)
+    city = fields.Char("City", index=True, required=True)
     the_geom = fields.GeoMultiPolygon("NPA Shape")
+    the_geom_poly = fields.GeoPolygon()
+    the_geom_multiLine = fields.GeoMultiLine()
+    the_geom_multipoint = fields.GeoMultiPoint()
     total_sales = fields.Float(
         compute="_compute_ZIP_total_sales",
         string="Spatial! Total Sales",

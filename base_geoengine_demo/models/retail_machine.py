@@ -13,20 +13,21 @@ class RetailMachine(models.Model):
     the_point = fields.GeoPoint("Coordinate")
     the_line = fields.GeoLine("Power supply line", index=True)
     total_sales = fields.Float("Total sale", index=True)
-    money_level = fields.Char("Money level", size=32, index=True)
+    money_level = fields.Char("Money level", index=True)
     state = fields.Selection([("hs", "HS"), ("ok", "OK")], "State", index=True)
-    name = fields.Char("Serial number", size=64, required=True)
-    zip_id = fields.Many2one("dummy.zip")
-
-    @api.onchange("the_point")
-    def onchange_geo_point(self):
+    name = fields.Char("Serial number", required=True)
+    zip_id = fields.Many2one("dummy.zip", compute="_computed_zip_id", readonly=False)
+    
+    @api.depends("the_point")
+    def _computed_zip_id(self):
         """Exemple of on change on the point
         Lookup in zips if the code is within an area.
         Change the zip_id field accordingly
         """
-        if self.the_point:
-            zip_match = self.env["dummy.zip"].geo_search(
-                geo_domain=[("the_geom", "geo_contains", self.the_point)], limit=1
-            )
-            if zip_match:
-                self.zip_id = zip_match[0]
+        for rec in self:
+            if rec.the_point:
+                zip_match = self.env["dummy.zip"].geo_search(
+                    geo_domain=[("the_geom", "geo_contains", rec.the_point)], limit=1
+                )
+                if zip_match:
+                    rec.zip_id = zip_match[0]
