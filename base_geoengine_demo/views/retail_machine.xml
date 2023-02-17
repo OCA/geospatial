@@ -12,10 +12,10 @@
         </group>
         <notebook>
           <page string="The point">
-            <field name="the_point" widget="geo_edit_map" />
+            <field name="the_point" />
           </page>
           <page string="The line">
-            <field name="the_line" widget="geo_edit_map" />
+            <field name="the_line"/>
           </page>
           <page string="attributes">
             <group>
