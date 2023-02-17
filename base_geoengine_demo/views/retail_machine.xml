@@ -15,7 +15,7 @@
             <field name="the_point" />
           </page>
           <page string="The line">
-            <field name="the_line"/>
+            <field name="the_line" />
           </page>
           <page string="attributes">
             <group>
