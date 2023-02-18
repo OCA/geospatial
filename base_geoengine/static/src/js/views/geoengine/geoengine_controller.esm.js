@@ -1,44 +1,33 @@
 /** @odoo-module */
-import {GeoengineRenderer} from "./geoengine_renderer.esm";
 import {Layout} from "@web/search/layout";
 import {useModel} from "@web/views/model";
-import {useService} from "@web/core/utils/hooks";
 import {usePager} from "@web/search/pager_hook";
 
-const {Component, onWillStart} = owl;
+const {Component} = owl;
 
 export class GeoengineController extends Component {
     setup() {
-        super.setup();
-        this.orm = useService("orm");
-        const {Model, resModel, fields, limit} = this.props;
-        this.model = useModel(Model, {
-            fields,
-            resModel,
-            limit,
+        this.model = useModel(this.props.Model, {
+            resModel: this.props.resModel,
+            fields: this.props.fields,
+            limit: this.props.limit,
         });
 
         usePager(() => {
-            const root = this.model.root;
-            const {count, limit, offset} = root;
+            const list = this.model.root;
+            const {count, limit, offset} = list;
             return {
                 offset: offset,
                 limit: limit,
                 total: count,
-                onUpdate: async ({offset, limit}) => {
-                    this.model.root.offset = offset;
-                    load;
-                    this.model.root.limit = limit;
-                    await this.model.root.load();
+                onUpdate: async ({off, lim}) => {
+                    await list.load({lim, off});
+                    this.render(true);
                 },
             };
-        });
-
-        onWillStart(async () => {
-            await this.model.load();
         });
     }
 }
 
 GeoengineController.template = "base_geoengine.GeoengineController";
-GeoengineController.components = {Layout, GeoengineRenderer};
+GeoengineController.components = {Layout};
