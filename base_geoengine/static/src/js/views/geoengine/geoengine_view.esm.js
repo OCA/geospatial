@@ -1,11 +1,11 @@
 /** @odoo-module */
 
-import {registry} from "@web/core/registry";
+import {_lt} from "@web/core/l10n/translation";
 import {GeoengineController} from "./geoengine_controller.esm";
 import {GeoengineRenderer} from "./geoengine_renderer.esm";
-import {_lt} from "@web/core/l10n/translation";
-import {GeoengineModel} from "./geoengine_model.esm";
 import {GeoengineArchParser} from "./geoengine_arch_parser.esm";
+import {RelationalModel} from "@web/views/relational_model";
+import {registry} from "@web/core/registry";
 
 export const geoengineView = {
     type: "geoengine",
@@ -15,12 +15,12 @@ export const geoengineView = {
     ArchParser: GeoengineArchParser,
     Controller: GeoengineController,
     Renderer: GeoengineRenderer,
-    Model: GeoengineModel,
+    Model: RelationalModel,
 
     props: (genericProps, view) => {
         const {ArchParser} = view;
-        const {arch} = genericProps;
-        const archInfo = new ArchParser().parse(arch);
+        const {arch, relatedModels, resModel} = genericProps;
+        const archInfo = new ArchParser().parse(arch, relatedModels, resModel);
 
         return {
             ...genericProps,
