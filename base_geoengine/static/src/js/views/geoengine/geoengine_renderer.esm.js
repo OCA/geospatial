@@ -1,6 +1,6 @@
 /** @odoo-module */
-import {useService} from "@web/core/utils/hooks";
 import {loadJS} from "@web/core/assets";
+import {useService} from "@web/core/utils/hooks";
 
 const {Component, onWillStart, onMounted, onRendered} = owl;
 
@@ -131,9 +131,7 @@ export class GeoengineRenderer extends Component {
     }
 
     setupControls() {
-        const fullscreen = new ol.control.FullScreen();
         const scaleLine = new ol.control.ScaleLine();
-        this.map.addControl(fullscreen);
         this.map.addControl(scaleLine);
     }
 }

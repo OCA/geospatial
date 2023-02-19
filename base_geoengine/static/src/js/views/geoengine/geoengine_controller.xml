@@ -2,7 +2,7 @@
 <templates>
     <t t-name="base_geoengine.GeoengineController" owl="1">
         <Layout display="props.display" className="'h-100'">
-            <div class="o_search_panel border-end pe-2 pb-5 ps-4 bg-view overflow-auto">
+            <div class="o_search_panel menu border-end bg-view">
                 <section class="o_search_panel_section">
                     <header
                         class="o_search_panel_section_header pt-4 pb-2 text-uppercase cursor-default"
@@ -30,8 +30,8 @@
                     </ul>
                 </section>
             </div>
-            <div>
-            <t t-component="props.Renderer" data="model.root" />
+            <div class="map_container">
+                <t t-component="props.Renderer" data="model.root" />
             </div>
         </Layout>
     </t>
