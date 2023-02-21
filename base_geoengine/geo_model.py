@@ -55,11 +55,7 @@ class GeoModel(models.AbstractModel):
         return geo_view
 
     @api.model
-    def fields_view_get(
-        self, view_id=None, view_type="form", toolbar=False, submenu=False
-    ):
-        """Returns information about the available fields of the class.
-        If view type == 'map' returns geographical columns available"""
+    def get_geoengine_layers(self, view_id=None, view_type="geoengine", **options):
         view_obj = self.env["ir.ui.view"]
         field_obj = self.env["ir.model.fields"]
 
@@ -70,47 +66,95 @@ class GeoModel(models.AbstractModel):
             out = (in_tuple[0], name, in_tuple[1])
             return out
 
-        if view_type == "geoengine":
-            if not view_id:
-                view = self._get_geo_view()
-            else:
-                view = view_obj.browse(view_id)
-            res = super().fields_view_get(
-                view_id=view.id, view_type="form", toolbar=toolbar, submenu=submenu
-            )
-            res["geoengine_layers"] = {
-                "backgrounds": [],
-                "actives": [],
-                "projection": view.projection,
-                "restricted_extent": view.restricted_extent,
-                "default_extent": view.default_extent or DEFAULT_EXTENT,
-                "default_zoom": view.default_zoom,
-            }
-            for layer in view.raster_layer_ids:
-                layer_dict = layer.read()[0]
-                res["geoengine_layers"]["backgrounds"].append(layer_dict)
-            for layer in view.vector_layer_ids:
-                layer_dict = layer.read()[0]
-                # get category groups for this vector layer
-                if layer.geo_repr == "basic" and layer.symbol_ids:
-                    layer_dict["symbols"] = layer.symbol_ids.read(
-                        ["img", "fieldname", "value"]
-                    )
-                layer_dict["attribute_field_id"] = set_field_real_name(
-                    layer_dict.get("attribute_field_id", False)
-                )
-                layer_dict["geo_field_id"] = set_field_real_name(
-                    layer_dict.get("geo_field_id", False)
-                )
-                res["geoengine_layers"]["actives"].append(layer_dict)
-                # adding geo column desc
-                geo_f_name = layer_dict["geo_field_id"][1]
-                res["fields"].update(self.fields_get([geo_f_name]))
+        if not view_id:
+            view = self._get_geo_view()
         else:
-            return super().fields_view_get(
-                view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu
+            view = view_obj.browse(view_id)
+        geoengine_layers = {
+            "backgrounds": [],
+            "actives": [],
+            "projection": view.projection,
+            "restricted_extent": view.restricted_extent,
+            "default_extent": view.default_extent or DEFAULT_EXTENT,
+            "default_zoom": view.default_zoom,
+        }
+
+        for layer in view.raster_layer_ids:
+            layer_dict = layer.read()[0]
+            geoengine_layers["backgrounds"].append(layer_dict)
+        for layer in view.vector_layer_ids:
+            layer_dict = layer.read()[0]
+            # get category groups for this vector layer
+            if layer.geo_repr == "basic" and layer.symbol_ids:
+                layer_dict["symbols"] = layer.symbol_ids.read(
+                    ["img", "fieldname", "value"]
+                )
+            layer_dict["attribute_field_id"] = set_field_real_name(
+                layer_dict.get("attribute_field_id", False)
             )
-        return res
+            layer_dict["geo_field_id"] = set_field_real_name(
+                layer_dict.get("geo_field_id", False)
+            )
+            geoengine_layers["actives"].append(layer_dict)
+            # adding geo column desc
+            layer_dict["geo_field_id"][1]
+        return geoengine_layers
+
+    # @api.model
+    # def _get_view(self, view_id=None, view_type='form', **options):
+    #     """Returns information about the available fields of the class.
+    #     If view type == 'map' returns geographical columns available"""
+    #     view_obj = self.env["ir.ui.view"]
+    #     field_obj = self.env["ir.model.fields"]
+
+    #     def set_field_real_name(in_tuple):
+    #         if not in_tuple:
+    #             return in_tuple
+    #         name = field_obj.browse(in_tuple[0]).name
+    #         out = (in_tuple[0], name, in_tuple[1])
+    #         return out
+
+    #     if view_type == "geoengine":
+    #         if not view_id:
+    #             view = self._get_geo_view()
+    #         else:
+    #             view = view_obj.browse(view_id)
+    #         res = super()._get_view(
+    #             view_id=view.id, view_type="form", **options
+    #         )
+    #         res["geoengine_layers"] = {
+    #             "backgrounds": [],
+    #             "actives": [],
+    #             "projection": view.projection,
+    #             "restricted_extent": view.restricted_extent,
+    #             "default_extent": view.default_extent or DEFAULT_EXTENT,
+    #             "default_zoom": view.default_zoom,
+    #         }
+    #         for layer in view.raster_layer_ids:
+    #             layer_dict = layer.read()[0]
+    #             res["geoengine_layers"]["backgrounds"].append(layer_dict)
+    #         for layer in view.vector_layer_ids:
+    #             layer_dict = layer.read()[0]
+    #             # get category groups for this vector layer
+    #             if layer.geo_repr == "basic" and layer.symbol_ids:
+    #                 layer_dict["symbols"] = layer.symbol_ids.read(
+    #                     ["img", "fieldname", "value"]
+    #                 )
+    #             layer_dict["attribute_field_id"] = set_field_real_name(
+    #                 layer_dict.get("attribute_field_id", False)
+    #             )
+    #             layer_dict["geo_field_id"] = set_field_real_name(
+    #                 layer_dict.get("geo_field_id", False)
+    #             )
+    #             res["geoengine_layers"]["actives"].append(layer_dict)
+    #             # adding geo column desc
+    #             geo_f_name = layer_dict["geo_field_id"][1]
+    #             res["fields"].update(self.fields_get([geo_f_name]))
+    #     else:
+    #         return super()._get_view(
+    #             view_id=view_id, view_type=view_type, **options
+    #         )
+    #     return res
 
     @api.model
     def get_edit_info_for_geo_column(self, column):
