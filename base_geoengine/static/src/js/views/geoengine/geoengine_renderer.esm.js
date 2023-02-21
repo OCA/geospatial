@@ -1,7 +1,8 @@
 /** @odoo-module */
 import {loadJS} from "@web/core/assets";
+import {LayersPanel} from "./layers_panel/layers_panel.esm";
+import {store} from "../../store.esm";
 import {useService} from "@web/core/utils/hooks";
-
 const {Component, onWillStart, onMounted, onRendered} = owl;
 
 export class GeoengineRenderer extends Component {
@@ -49,9 +50,13 @@ export class GeoengineRenderer extends Component {
     addFeatures() {
         this.props.data.records.forEach((record) => {
             const value = record._values;
+            const keys = Object.keys(value);
+            const geom = keys.find(
+                (key) => key.startsWith("the_") && value[key] !== false
+            );
             const ft = new ol.Feature({
-                geometry: new ol.format.GeoJSON().readGeometry(value.the_geom),
-                labelPoint: new ol.format.GeoJSON().readGeometry(value.the_geom),
+                geometry: new ol.format.GeoJSON().readGeometry(value[geom]),
+                labelPoint: new ol.format.GeoJSON().readGeometry(value[geom]),
             });
             this.source.addFeature(ft);
         });
@@ -114,8 +119,9 @@ export class GeoengineRenderer extends Component {
             this.map = new ol.Map({
                 target: "olmap",
                 layers: [
-                    new ol.layer.Tile({
-                        source: new ol.source.OSM(),
+                    new ol.layer.Group({
+                        title: "Base maps",
+                        layers: this.createBackgroundLayers(store.layers),
                     }),
                 ],
                 view: new ol.View({
@@ -127,7 +133,29 @@ export class GeoengineRenderer extends Component {
             this.updateMapZoom(10);
             this.setupControls();
             this.onHover();
+            store.setMap(this.map);
         }
+    }
+
+    createBackgroundLayers(backgrounds) {
+        const backgroundLayers = backgrounds.backgrounds.map((background) => {
+            if (background.raster_type === "osm") {
+                return new ol.layer.Tile({
+                    title: background.name,
+                    visible: !background.overlay,
+                    type: "base",
+                    source: new ol.source.OSM(),
+                });
+            }
+                return undefined;
+
+        });
+        // Pour le moment pour que ça marche car je prend pas en compte toute les types.
+        const index = backgroundLayers.findIndex((layer) => layer === undefined);
+        if (index !== -1) {
+            backgroundLayers.splice(index, 1);
+        }
+        return backgroundLayers;
     }
 
     setupControls() {
@@ -137,3 +165,4 @@ export class GeoengineRenderer extends Component {
 }
 
 GeoengineRenderer.template = "base_geoengine.GeoengineRenderer";
+GeoengineRenderer.components = {LayersPanel};
