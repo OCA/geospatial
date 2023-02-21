@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <templates xml:space="preserve">
     <t t-name="base_geoengine.GeoengineRenderer" owl="1">
-        <div id="olmap" />
+        <LayersPanel model="props.data.resModel" />
+        <div class="map_container">
+            <div id="olmap" />
+        </div>
     </t>
 </templates>

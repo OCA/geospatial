@@ -14,8 +14,8 @@ export const geoengineView = {
     multiRecord: true,
     ArchParser: GeoengineArchParser,
     Controller: GeoengineController,
-    Renderer: GeoengineRenderer,
     Model: RelationalModel,
+    Renderer: GeoengineRenderer,
 
     props: (genericProps, view) => {
         const {ArchParser} = view;

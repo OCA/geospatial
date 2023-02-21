@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="base_geoengine.LayersPanel" owl="1">
+        <div class="o_search_panel menu border-end bg-view">
+            <section class="o_search_panel_section">
+                <header
+                    class="o_search_panel_section_header pt-4 pb-2 text-uppercase cursor-default"
+                >
+                    <span>Vector</span>
+                </header>
+                <ul class="list-group d-block o_search_panel_field">
+                    <t
+                        t-foreach="geoengine_layers.actives"
+                        t-as="vector"
+                        t-key="vector.id"
+                    >
+                        <CheckBox
+                            value="vector.id === 1 ? true: false"
+                            t-on-change="() => this.onVectorChange(vector)"
+                        >
+                            <t t-esc="vector.name" />
+                        </CheckBox>
+                    </t>
+                </ul>
+            </section>
+            <section class="o_search_panel_section">
+                <header
+                    class="o_search_panel_section_header pt-4 pb-2 text-uppercase cursor-default"
+                >
+                    <span>Raster</span>
+                </header>
+                <ul class="list-group d-block o_search_panel_field">
+                    <t
+                        t-foreach="geoengine_layers.backgrounds"
+                        t-as="layer"
+                        t-key="layer.id"
+                    >
+                        <div class="form-check o_radio_item" aria-atomic="true">
+                            <input
+                                type="radio"
+                                t-att-checked="getVisibleLayer(layer)"
+                                class="form-check-input o_radio_input"
+                                t-att-id="layer.name"
+                                name="raster"
+                                t-att-value="layer.id"
+                                t-on-change="() => this.onRasterChange(layer)"
+                            />
+                            <label
+                                class="form-check-label o_form_label"
+                                t-att-for="layer.name"
+                                t-esc="layer.name"
+                            />
+                        </div>
+                    </t>
+                </ul>
+            </section>
+        </div>
+    </t>
+</templates>

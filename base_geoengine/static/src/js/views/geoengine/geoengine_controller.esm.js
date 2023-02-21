@@ -2,11 +2,13 @@
 import {Layout} from "@web/search/layout";
 import {useModel} from "@web/views/model";
 import {usePager} from "@web/search/pager_hook";
+import {useService} from "@web/core/utils/hooks";
 
 const {Component} = owl;
 
 export class GeoengineController extends Component {
     setup() {
+        this.orm = useService("orm");
         this.model = useModel(this.props.Model, {
             resModel: this.props.resModel,
             fields: this.props.fields,
