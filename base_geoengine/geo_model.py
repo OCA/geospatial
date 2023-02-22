@@ -41,8 +41,10 @@ class GeoModel(models.AbstractModel):
 
     @api.model
     def _get_geo_view(self):
-        geo_view = self.env["ir.ui.view"].search(
-            [("model", "=", self._name), ("type", "=", "geoengine")], limit=1
+        view_model = self.env["ir.ui.view"]
+        geo_view = view_model.sudo().search(
+            [("model", "=", self._name), ("type", "=", "geoengine")],
+            limit=1,
         )
         if not geo_view:
             raise except_orm(
