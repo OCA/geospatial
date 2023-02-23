@@ -15,7 +15,7 @@
                         t-key="vector.id"
                     >
                         <CheckBox
-                            value="vector.id === 1 ? true: false"
+                            value="vector.isVisible"
                             t-on-change="() => this.onVectorChange(vector)"
                         >
                             <t t-esc="vector.name" />
@@ -38,7 +38,7 @@
                         <div class="form-check o_radio_item" aria-atomic="true">
                             <input
                                 type="radio"
-                                t-att-checked="getVisibleLayer(layer)"
+                                t-att-checked="layer.isVisible"
                                 class="form-check-input o_radio_input"
                                 t-att-id="layer.name"
                                 name="raster"

@@ -2,32 +2,46 @@
 const {reactive} = owl;
 
 class Store {
-    addLayers(layers) {
-        this.backgrounds = layers;
-    }
-
-    get layers() {
-        return this.backgrounds;
-    }
-
-    setMap(map) {
-        this.map = map;
-    }
-
-    setVisibleLayer(givenLayer) {
-        this.map
-            .getLayers()
-            .getArray()
-            .find((layer) => layer.get("title") == "Base maps")
-            .getLayers()
-            .getArray()
-            .forEach((layer) => {
-                if (layer.get("title") === givenLayer.name) {
-                    layer.setVisible(true);
-                } else {
-                    layer.setVisible(false);
-                }
+    setRasters(rasters) {
+        const newRasters = rasters.map((raster) => {
+            Object.defineProperty(raster, "isVisible", {
+                value: false,
+                writable: true,
             });
+            raster.isVisible = !raster.overlay;
+            return raster;
+        });
+        this.rasters = newRasters;
+    }
+
+    onRasterLayerChanged(newRastersLayer) {
+        this.rasters = newRastersLayer;
+    }
+
+    onVectorLayerChanged(newVectorsLayers) {
+        this.vectors = newVectorsLayers;
+    }
+
+    getRasters() {
+        return this.rasters;
+    }
+
+    setVectors(vectors) {
+        const newVectors = vectors.map((vector) => {
+            Object.defineProperty(vector, "isVisible", {
+                value: false,
+                writable: true,
+            });
+            if (vector.active_on_startup) {
+                vector.isVisible = true;
+            }
+            return vector;
+        });
+        this.vectors = newVectors;
+    }
+
+    getVectors() {
+        return this.vectors;
     }
 }
 export const store = reactive(new Store());
