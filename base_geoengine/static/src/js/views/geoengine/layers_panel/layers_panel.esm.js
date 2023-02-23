@@ -16,20 +16,41 @@ export class LayersPanel extends Component {
                 []
             );
             this.geoengine_layers = result;
-            store.addLayers(this.geoengine_layers);
+            store.setRasters(this.geoengine_layers.backgrounds);
+            store.setVectors(this.geoengine_layers.actives);
         });
     }
 
     onRasterChange(layer) {
-        store.setVisibleLayer(layer);
+        const indexRaster = store
+            .getRasters()
+            .findIndex((raster) => raster.name === layer.name);
+        const newRasters = store.getRasters().map((item, index) => {
+            if (index !== indexRaster) {
+                item.isVisible = false;
+            } else {
+                item.isVisible = true;
+            }
+            return item;
+        });
+        store.onRasterLayerChanged(newRasters);
     }
 
-    onVectorChange(vector) {
-        console.log(vector);
+    onVectorChange(layer) {
+        const indexVector = store
+            .getVectors()
+            .findIndex((vector) => vector.name === layer.name);
+        const newVectors = store.getVectors().map((item, index) => {
+            if (index === indexVector) {
+                item.isVisible = !item.isVisible;
+            }
+            return item;
+        });
+        store.onVectorLayerChanged(newVectors);
     }
 
     getVisibleLayer(layer) {
-        return !layer.overlay;
+        return layer.isVisible;
     }
 }
 
