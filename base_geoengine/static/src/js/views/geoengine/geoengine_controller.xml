@@ -2,7 +2,11 @@
 <templates>
     <t t-name="base_geoengine.GeoengineController" owl="1">
         <Layout display="props.display" className="'h-100'">
-            <t t-component="props.Renderer" data="model.root" />
+            <t
+                t-component="props.Renderer"
+                archInfo="props.archInfo"
+                data="model.root"
+            />
         </Layout>
     </t>
 </templates>
