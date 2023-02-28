@@ -6,6 +6,7 @@
                 t-component="props.Renderer"
                 archInfo="props.archInfo"
                 data="model.root"
+                openRecord.bind="openRecord"
             />
         </Layout>
     </t>

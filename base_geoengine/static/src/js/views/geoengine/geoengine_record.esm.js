@@ -3,6 +3,7 @@ import {Field} from "@web/views/fields/field";
 import {GeoengineCompiler} from "./geoengine_compiler.esm";
 import {INFO_BOX_ATTRIBUTE} from "./geoengine_arch_parser.esm";
 import {registry} from "@web/core/registry";
+import {useService} from "@web/core/utils/hooks";
 import {useViewCompiler} from "@web/views/view_compiler";
 
 const {Component, onWillUpdateProps} = owl;
@@ -20,6 +21,8 @@ export class GeoengineRecord extends Component {
         const {archInfo, templates} = this.props;
         const {arch} = archInfo;
         const ViewCompiler = this.constructor.Compiler;
+
+        this.actionService = useService("action");
 
         this.templates = useViewCompiler(ViewCompiler, arch, templates);
 
