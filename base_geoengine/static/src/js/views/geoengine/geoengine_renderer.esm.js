@@ -1,9 +1,10 @@
 /** @odoo-module */
-import {loadCSS, loadJS} from "@web/core/assets";
+import {GeoengineRecord} from "./geoengine_record.esm";
+import {loadCSS, loadJS, templates} from "@web/core/assets";
 import {LayersPanel} from "./layers_panel/layers_panel.esm";
 import {store} from "../../store.esm";
 import {useService} from "@web/core/utils/hooks";
-const {Component, onWillStart, onMounted, onRendered, reactive} = owl;
+const {Component, onWillStart, onMounted, onRendered, reactive, mount} = owl;
 
 /* CONSTANTS */
 const DEFAULT_BEGIN_COLOR = "#FFFFFF";
@@ -20,7 +21,6 @@ export class GeoengineRenderer extends Component {
         super.setup();
         this.orm = useService("orm");
         this.store = reactive(store, () => this.onLayerChanged());
-
         onWillStart(() => Promise.all([this.loadJsFiles(), this.loadCssFiles()]));
 
         onMounted(async () => {
@@ -38,6 +38,7 @@ export class GeoengineRenderer extends Component {
             }
         });
     }
+
     async loadJsFiles() {
         const files = [
             "/base_geoengine/static/lib/ol-7.2.2/ol.js",
@@ -84,8 +85,6 @@ export class GeoengineRenderer extends Component {
                     }
                 });
             });
-
-        console.log(this.store.rasters);
     }
     styleVectorLayerColored(cfg, data) {
         var indicator = cfg.attribute_field_id[1];
@@ -120,7 +119,7 @@ export class GeoengineRenderer extends Component {
         if (cfg.classification === "custom") {
             colors = vals.map((val) => {
                 if (val) {
-                    chroma(val).alpha(opacity).css();
+                    return chroma(val).alpha(opacity).css();
                 }
             });
         } else {
@@ -425,8 +424,20 @@ export class GeoengineRenderer extends Component {
         });
     }
 
+    createOverlay() {
+        this.overlay = new ol.Overlay({
+            element: document.getElementById("popup"),
+            autoPan: {
+                animation: {
+                    duration: 250,
+                },
+            },
+        });
+    }
+
     renderMap() {
         if (!this.map) {
+            this.createOverlay();
             this.map = new ol.Map({
                 target: "olmap",
                 layers: [
@@ -435,12 +446,14 @@ export class GeoengineRenderer extends Component {
                         layers: this.createBackgroundLayers(this.store.getRasters()),
                     }),
                 ],
+                overlays: [this.overlay],
                 view: new ol.View({
                     center: [0, 0],
                     zoom: 2,
                 }),
             });
             this.setupControls();
+            this.registerInteraction();
             this.onHover();
         }
     }
@@ -469,7 +482,65 @@ export class GeoengineRenderer extends Component {
         const scaleLine = new ol.control.ScaleLine();
         this.map.addControl(scaleLine);
     }
+
+    registerInteraction() {
+        var selectClick = new ol.interaction.Select({
+            condition: ol.events.condition.click,
+            style: this.selectStyle,
+        });
+        selectClick.on("select", (e) => {
+            var features = e.target.getFeatures();
+            this.updateInfoBox(features);
+        });
+        this.map.addInteraction(selectClick);
+    }
+
+    updateInfoBox(features) {
+        var feature = features.item(0);
+        const popup = document.getElementById("popup");
+        if (popup.firstChild !== null) {
+            popup.removeChild(popup.firstChild);
+        }
+        if (feature !== undefined) {
+            var attributes = feature.get("attributes");
+            const record = this.props.data.records.find(
+                (record) => record._values.id === attributes.id
+            );
+            var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
+            this.overlay.setPosition(coord);
+            mount(GeoengineRecord, popup, {
+                env: this.env,
+                props: {
+                    archInfo: this.props.archInfo,
+                    record: record,
+                    templates: this.props.archInfo.templateDocs,
+                },
+                templates,
+            });
+        }
+    }
+
+    selectStyle(feature) {
+        const selected = new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: "#eeeeee",
+            }),
+            stroke: new ol.style.Stroke({
+                color: "rgba(255, 255, 255, 0.7)",
+                width: 2,
+            }),
+        });
+        var geometryType = feature.getGeometry().getType();
+        if (geometryType !== "Point") {
+            const color = feature.get("COLOR") || "#eeeeee";
+            selected.getFill().setColor(color);
+        } else {
+            const color = feature.get("COLOR") || "#ff0000";
+            selected.getFill().setColor(color);
+        }
+        return selected;
+    }
 }
 
 GeoengineRenderer.template = "base_geoengine.GeoengineRenderer";
-GeoengineRenderer.components = {LayersPanel};
+GeoengineRenderer.components = {LayersPanel, GeoengineRecord};

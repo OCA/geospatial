@@ -8,6 +8,7 @@ const {Component} = owl;
 export class GeoengineController extends Component {
     setup() {
         this.model = useModel(this.props.Model, {
+            activeFields: this.props.archInfo.activeFields,
             resModel: this.props.resModel,
             fields: this.props.fields,
             limit: this.props.limit,
@@ -15,10 +16,10 @@ export class GeoengineController extends Component {
 
         usePager(() => {
             const list = this.model.root;
-            const {count, lim, off} = list;
+            const {count, limit, offset} = list;
             return {
-                offset: off,
-                limit: lim,
+                offset: offset,
+                limit: limit,
                 total: count,
                 onUpdate: async ({offset, limit}) => {
                     await list.load({limit, offset});

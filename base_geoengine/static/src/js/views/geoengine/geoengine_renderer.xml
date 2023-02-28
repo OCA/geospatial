@@ -5,5 +5,6 @@
         <div class="map_container">
             <div id="olmap" />
         </div>
+        <div id="popup" class="ol-popup" />
     </t>
 </templates>
