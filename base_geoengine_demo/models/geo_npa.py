@@ -14,9 +14,9 @@ class NPA(models.Model):
     name = fields.Char("ZIP", index=True, required=True)
     city = fields.Char(index=True, required=True)
     the_geom = fields.GeoMultiPolygon("NPA Shape")
-    the_geom_poly = fields.GeoPolygon()
-    the_geom_multiLine = fields.GeoMultiLine()
-    the_geom_multipoint = fields.GeoMultiPoint()
+    # the_geom_poly = fields.GeoPolygon()
+    # the_geom_multiLine = fields.GeoMultiLine()
+    # the_geom_multipoint = fields.GeoMultiPoint()
     total_sales = fields.Float(
         compute="_compute_ZIP_total_sales",
         string="Spatial! Total Sales",
