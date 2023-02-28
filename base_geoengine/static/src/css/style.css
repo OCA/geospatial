@@ -26,8 +26,8 @@
 .ol-scale-line {
     background: var(--ol-partial-background-color);
     border-radius: 4px;
-    bottom: 118px;
-    left: 212px;
+    bottom: 8px;
+    left: 8px;
     padding: 2px;
     position: absolute;
 }
@@ -146,7 +146,7 @@
 
 .ol-zoom {
     top: 0.5em;
-    left: 16.5em;
+    left: 0.5em;
 }
 
 .ol-rotate {
@@ -167,7 +167,7 @@
 }
 
 .ol-full-screen {
-    right: 1.5em;
+    right: 0.5em;
     top: 0.5em;
 }
 
@@ -277,8 +277,8 @@
 }
 
 .ol-attribution.ol-uncollapsible {
-    bottom: 9em;
-    right: 1.5em;
+    bottom: 0;
+    right: 0;
     border-radius: 4px 0 0;
 }
 

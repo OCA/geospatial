@@ -397,33 +397,6 @@ export class GeoengineRenderer extends Component {
         }
     }
 
-    onHover() {
-        const selectStyle = new ol.style.Style({
-            fill: new ol.style.Fill({
-                color: "#eeeeee",
-            }),
-            stroke: new ol.style.Stroke({
-                color: "rgba(255, 255, 255, 0.8)",
-                width: 2,
-            }),
-        });
-        let selected = null;
-        this.map.on("pointermove", (e) => {
-            if (selected !== null) {
-                selected.setStyle(undefined);
-                selected = null;
-            }
-            this.map.forEachFeatureAtPixel(e.pixel, (f) => {
-                selected = f;
-                selectStyle
-                    .getFill()
-                    .setColor(f.get("COLOR") || "rgba(255, 255, 255, 0.4)");
-                f.setStyle(selectStyle);
-                return true;
-            });
-        });
-    }
-
     createOverlay() {
         this.overlay = new ol.Overlay({
             element: document.getElementById("popup"),
@@ -454,7 +427,6 @@ export class GeoengineRenderer extends Component {
             });
             this.setupControls();
             this.registerInteraction();
-            this.onHover();
         }
     }
 
@@ -484,61 +456,83 @@ export class GeoengineRenderer extends Component {
     }
 
     registerInteraction() {
-        var selectClick = new ol.interaction.Select({
+        var selectPointerMove = new ol.interaction.Select({
+            condition: ol.events.condition.pointerMove,
+            style: this.selectStyle,
+        });
+        this.selectClick = new ol.interaction.Select({
             condition: ol.events.condition.click,
             style: this.selectStyle,
         });
-        selectClick.on("select", (e) => {
-            var features = e.target.getFeatures();
+        this.selectClick.on("select", (e) => {
+            const features = e.target.getFeatures();
             this.updateInfoBox(features);
         });
-        this.map.addInteraction(selectClick);
+        this.map.addInteraction(this.selectClick);
+        this.map.addInteraction(selectPointerMove);
     }
 
     updateInfoBox(features) {
-        var feature = features.item(0);
-        const popup = document.getElementById("popup");
-        if (popup.firstChild !== null) {
-            popup.removeChild(popup.firstChild);
-        }
+        const feature = features.item(0);
         if (feature !== undefined) {
-            var attributes = feature.get("attributes");
-            const record = this.props.data.records.find(
-                (record) => record._values.id === attributes.id
-            );
-            var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
-            this.overlay.setPosition(coord);
-            mount(GeoengineRecord, popup, {
-                env: this.env,
-                props: {
-                    archInfo: this.props.archInfo,
-                    record: record,
-                    templates: this.props.archInfo.templateDocs,
-                },
-                templates,
-            });
+            const popup = document.getElementById("popup-content");
+            if (popup.firstChild !== null) {
+                popup.removeChild(popup.firstChild);
+            }
+            if (feature !== undefined) {
+                var attributes = feature.get("attributes");
+                this.record = this.props.data.records.find(
+                    (record) => record._values.id === attributes.id
+                );
+                var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
+                this.overlay.setPosition(coord);
+                mount(GeoengineRecord, popup, {
+                    env: this.env,
+                    props: {
+                        archInfo: this.props.archInfo,
+                        record: this.record,
+                        templates: this.props.archInfo.templateDocs,
+                    },
+                    templates,
+                });
+            }
+        } else {
+            this.hidePopup();
         }
     }
 
+    hidePopup() {
+        this.overlay.setPosition(undefined);
+    }
+
     selectStyle(feature) {
-        const selected = new ol.style.Style({
-            fill: new ol.style.Fill({
-                color: "#eeeeee",
-            }),
-            stroke: new ol.style.Stroke({
-                color: "rgba(255, 255, 255, 0.7)",
-                width: 2,
-            }),
-        });
         var geometryType = feature.getGeometry().getType();
-        if (geometryType !== "Point") {
-            const color = feature.get("COLOR") || "#eeeeee";
-            selected.getFill().setColor(color);
-        } else {
-            const color = feature.get("COLOR") || "#ff0000";
-            selected.getFill().setColor(color);
+        switch (geometryType) {
+            case "Point":
+                return new ol.style.Style({
+                    image: new ol.style.Circle({
+                        radius: 3 * 2,
+                        fill: new ol.style.Fill({
+                            color: [0, 153, 255, 1],
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: [255, 255, 255, 1],
+                            width: 3 / 2,
+                        }),
+                    }),
+                    zIndex: Infinity,
+                });
+            case "MultiPolygon":
+                return new ol.style.Style({
+                    fill: new ol.style.Fill({
+                        color: "rgba(255, 175, 126, 0.8)",
+                    }),
+                });
         }
-        return selected;
+    }
+
+    onInfoBoxClicked() {
+        this.props.openRecord(this.record);
     }
 }
 
