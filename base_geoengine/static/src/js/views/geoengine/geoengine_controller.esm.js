@@ -28,6 +28,10 @@ export class GeoengineController extends Component {
             };
         });
     }
+    async openRecord(record) {
+        const activeIds = this.model.root.records.map((datapoint) => datapoint.resId);
+        this.props.selectRecord(record.resId, {activeIds});
+    }
 }
 
 GeoengineController.template = "base_geoengine.GeoengineController";
