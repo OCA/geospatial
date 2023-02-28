@@ -4,6 +4,7 @@ import {_lt} from "@web/core/l10n/translation";
 import {GeoengineController} from "./geoengine_controller.esm";
 import {GeoengineRenderer} from "./geoengine_renderer.esm";
 import {GeoengineArchParser} from "./geoengine_arch_parser.esm";
+import {GeoengineCompiler} from "./geoengine_compiler.esm";
 import {RelationalModel} from "@web/views/relational_model";
 import {registry} from "@web/core/registry";
 
@@ -16,6 +17,7 @@ export const geoengineView = {
     Controller: GeoengineController,
     Model: RelationalModel,
     Renderer: GeoengineRenderer,
+    Compiler: GeoengineCompiler,
 
     props: (genericProps, view) => {
         const {ArchParser} = view;
