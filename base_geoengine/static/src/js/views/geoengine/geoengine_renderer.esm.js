@@ -1,9 +1,8 @@
 /** @odoo-module */
-import {GeoengineRecord} from "./geoengine_record.esm";
 import {loadCSS, loadJS, templates} from "@web/core/assets";
+import {GeoengineRecord} from "./geoengine_record.esm";
 import {LayersPanel} from "./layers_panel/layers_panel.esm";
 import {store} from "../../store.esm";
-import {useService} from "@web/core/utils/hooks";
 const {Component, onWillStart, onMounted, onRendered, reactive, mount} = owl;
 
 /* CONSTANTS */
@@ -19,7 +18,6 @@ const DEFAULT_NUM_CLASSES = 5;
 export class GeoengineRenderer extends Component {
     setup() {
         super.setup();
-        this.orm = useService("orm");
         this.store = reactive(store, () => this.onLayerChanged());
         onWillStart(() => Promise.all([this.loadJsFiles(), this.loadCssFiles()]));
 
@@ -90,7 +88,7 @@ export class GeoengineRenderer extends Component {
         var indicator = cfg.attribute_field_id[1];
         var values = this.extractLayerValues(cfg, data);
         var nb_class = cfg.nb_class || DEFAULT_NUM_CLASSES;
-        var opacity = 0.8;
+        var opacity = cfg.layer_opacity;
         var begin_color_hex = cfg.begin_color || DEFAULT_BEGIN_COLOR;
         var end_color_hex = cfg.end_color || DEFAULT_END_COLOR;
         var begin_color = chroma(begin_color_hex).alpha(opacity).css();
@@ -123,8 +121,22 @@ export class GeoengineRenderer extends Component {
                 }
             });
         } else {
-            colors = scale.colors().map((color) => chroma(color).alpha(opacity).css());
+            colors = scale
+                .colors(vals.length)
+                .map((color) => chroma(color).alpha(opacity).css());
         }
+        const styles_map = this.createStylesWithColors(colors);
+
+        return {
+            style: (feature) => {
+                const value = feature.get("attributes")[indicator];
+                const color_idx = this.getClass(value, vals);
+                return styles_map[colors[color_idx]];
+            },
+        };
+    }
+
+    createStylesWithColors(colors) {
         const styles_map = {};
         colors.forEach((color) => {
             if (color in styles_map) {
@@ -150,20 +162,7 @@ export class GeoengineRenderer extends Component {
             ];
             styles_map[color] = styles;
         });
-        var legend = null;
-        /* If (vals.length <= LEGEND_MAX_ITEMS) {
-            serie.setColors(colors);
-            legend = serie.getHtmlLegend(null, cfg.name, 1);
-        };*/
-
-        return {
-            style: (feature) => {
-                const value = feature.get("attributes")[indicator];
-                const color_idx = this.getClass(value, vals);
-                return styles_map[colors[color_idx]];
-            },
-            legend: legend,
-        };
+        return styles_map;
     }
 
     getClass(val, a) {
@@ -202,10 +201,8 @@ export class GeoengineRenderer extends Component {
         var maxSize = cfg.max_size || DEFAULT_MAX_SIZE;
         var minVal = serie.min();
         var maxVal = serie.max();
-        // TODO to be defined on cfg
-        var opacity = 0.8;
         var color_hex = cfg.begin_color || DEFAULT_BEGIN_COLOR;
-        var color = chroma(color_hex).alpha(opacity).css();
+        var color = chroma(color_hex).alpha(cfg.layer_opacity).css();
         var fill = new ol.style.Fill({
             color: color,
         });
@@ -243,9 +240,8 @@ export class GeoengineRenderer extends Component {
     }
 
     styleVectorLayerDefault(cfg) {
-        const opacity = 0.8;
         const color_hex = cfg.begin_color || DEFAULT_BEGIN_COLOR;
-        var color = chroma(color_hex).alpha(opacity).css();
+        var color = chroma(color_hex).alpha(cfg.layer_opacity).css();
         // Basic
         var fill = new ol.style.Fill({
             color: color,
@@ -326,8 +322,6 @@ export class GeoengineRenderer extends Component {
                     attributes: attributes,
                 });
 
-                /* Var id = String(attributes.id);
-                this.ids[id] = item.id;*/
                 this.vectorSource.addFeature(feature);
             }
         });
