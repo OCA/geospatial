@@ -84,9 +84,7 @@
         <field name="the_geom" />
         <templates>
           <t t-name="info_box">
-            <b>
-              <field name="city" />
-            </b>
+              <field name="city" widget="badge" />
             <ul>
               <li>ZIP : <field name="name" />
               </li>
