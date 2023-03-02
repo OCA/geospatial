@@ -57,3 +57,12 @@
     left: 48px;
     margin-left: -11px;
 }
+.ol-popup-closer {
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+}
+.ol-popup-closer:after {
+    content: "✖";
+}

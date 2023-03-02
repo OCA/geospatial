@@ -1,7 +1,7 @@
 /** @odoo-module */
 import {Field} from "@web/views/fields/field";
-import {GeoengineCompiler} from "./geoengine_compiler.esm";
-import {INFO_BOX_ATTRIBUTE} from "./geoengine_arch_parser.esm";
+import {GeoengineCompiler} from "../geoengine_compiler.esm";
+import {INFO_BOX_ATTRIBUTE} from "../geoengine_arch_parser.esm";
 import {registry} from "@web/core/registry";
 import {useViewCompiler} from "@web/views/view_compiler";
 
@@ -29,7 +29,6 @@ export class GeoengineRecord extends Component {
 
     createRecord(props) {
         const {record} = props;
-        // Record
         this.record = Object.create(null);
         for (const fieldName in record._values) {
             this.record[fieldName] = {

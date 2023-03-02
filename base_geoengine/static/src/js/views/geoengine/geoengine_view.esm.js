@@ -1,8 +1,8 @@
 /** @odoo-module */
 
 import {_lt} from "@web/core/l10n/translation";
-import {GeoengineController} from "./geoengine_controller.esm";
-import {GeoengineRenderer} from "./geoengine_renderer.esm";
+import {GeoengineController} from "./geoengine_controller/geoengine_controller.esm";
+import {GeoengineRenderer} from "./geoengine_renderer/geoengine_renderer.esm";
 import {GeoengineArchParser} from "./geoengine_arch_parser.esm";
 import {GeoengineCompiler} from "./geoengine_compiler.esm";
 import {RelationalModel} from "@web/views/relational_model";
