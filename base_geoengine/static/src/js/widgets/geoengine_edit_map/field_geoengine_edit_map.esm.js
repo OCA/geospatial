@@ -4,7 +4,7 @@ import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 
-const {Component, onWillStart, useRef, onMounted, onRendered} = owl;
+const {Component, onWillStart, onMounted, onRendered} = owl;
 
 export class FieldGeoEngineEditMap extends Component {
     setup() {

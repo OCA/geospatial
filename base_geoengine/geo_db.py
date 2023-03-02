@@ -37,7 +37,7 @@ def init_postgis(cr):
         CREATE EXTENSION postgis_topology;
     """
         )
-    except Exception:
+    except Exception as exc:
         raise MissingError(
             _(
                 "Error, can not automatically initialize spatial postgis"
@@ -50,7 +50,7 @@ def init_postgis(cr):
                 "CREATE EXTENSION postgis;\n"
                 "CREATE EXTENSION postgis_topology;\n"
             )
-        )
+        ) from exc
 
 
 def create_geo_column(cr, tablename, columnname, geotype, srid, dim, comment=None):
