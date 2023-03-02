@@ -97,7 +97,7 @@ class GeoModel(models.AbstractModel):
             )
             geoengine_layers["actives"].append(layer_dict)
             # adding geo column desc
-            layer_dict["geo_field_id"][1]
+            # layer_dict["geo_field_id"][1]
         return geoengine_layers
 
     # @api.model
