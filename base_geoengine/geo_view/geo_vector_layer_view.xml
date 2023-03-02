@@ -67,7 +67,7 @@
         <field name="name">geoengine.vector.layer.tree</field>
         <field name="model">geoengine.vector.layer</field>
         <field name="arch" type="xml">
-            <tree string="Vector">
+            <tree>
                 <field name="name" select="1" />
                 <field name="geo_repr" select="1" />
                 <field name="classification" select="1" />
