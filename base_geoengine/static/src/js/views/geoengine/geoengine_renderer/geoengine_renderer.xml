@@ -8,6 +8,11 @@
             </div>
         </div>
         <div id="popup" class="ol-popup">
+            <div
+                id="popup-closer"
+                class="ol-popup-closer text-primary"
+                t-on-click="clickToHidePopup"
+            />
             <div id="popup-content" />
             <div class="row d-flex justify-content-center">
                 <button

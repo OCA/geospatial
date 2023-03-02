@@ -8,13 +8,22 @@ import {_lt} from "@web/core/l10n/translation";
 export const INFO_BOX_ATTRIBUTE = "info_box";
 
 export class GeoengineArchParser extends XMLParser {
+    /**
+     * Allow you to browse and process the xml template of the geoengine view.
+     * @param {*} arch
+     * @param {*} models
+     * @param {*} modelName
+     * @returns
+     */
     parse(arch, models, modelName) {
         const xmlDoc = this.parseXML(arch);
         const templateDocs = {};
         const fieldNodes = {};
         const jsClass = xmlDoc.getAttribute("js_class");
         const activeFields = {};
+
         this.visitXML(xmlDoc, (node) => {
+            // Get the info box template
             if (node.hasAttribute("t-name")) {
                 templateDocs[node.getAttribute("t-name")] = node;
                 return;
