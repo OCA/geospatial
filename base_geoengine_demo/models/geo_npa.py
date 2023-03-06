@@ -22,8 +22,8 @@ class NPA(models.Model):
         string="Spatial! Total Sales",
     )
     retail_machine_ids = fields.One2many(
+        "geoengine.demo.automatic.retailing.machine",
         string="Retail machines",
-        comodel_name="geoengine.demo.automatic.retailing.machine",
         inverse_name="zip_id",
     )
 
