@@ -40,7 +40,7 @@
     <field name="name">dummy.zip.form</field>
     <field name="model">dummy.zip</field>
     <field name="arch" type="xml">
-      <tree string="Dummy">
+      <tree>
         <field name="name" />
         <field name="city" />
         <field name="priority" />
