@@ -34,7 +34,7 @@
     <field name="name">geoengine.demo.retail.machine.search</field>
     <field name="model">geoengine.demo.automatic.retailing.machine</field>
     <field name="arch" type="xml">
-      <tree string="Search Retail Machine">
+      <tree>
         <field name="name" />
         <field name="total_sales" />
         <field name="money_level" />
@@ -47,7 +47,7 @@
     <field name="name">geoengine.demo.retail.machine.tree</field>
     <field name="model">geoengine.demo.automatic.retailing.machine</field>
     <field name="arch" type="xml">
-      <tree string="Retail Machine">
+      <tree>
         <field name="name" />
         <field name="total_sales" />
         <field name="money_level" />
