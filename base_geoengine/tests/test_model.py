@@ -1,5 +1,7 @@
+import geojson
 from odoo_test_helper import FakeModelLoader
 from shapely import wkt
+from shapely.geometry import shape
 
 from odoo.tests.common import TransactionCase
 
@@ -140,7 +142,7 @@ class TestModel(TransactionCase):
         cls.loader.restore_registry()
         super(TestModel, cls).tearDownClass()
 
-    def test_create_multipolygon(self):
+    def test_create_multipolygon_wkt_format(self):
         """Create a multi polygon"""
         multi_polygon = """MULTIPOLYGON (((726469.938970306 5873145.03456248,
         726520.174105436 5872946.03059195,726394.076006275 5872675.04267336,
@@ -198,6 +200,7 @@ class TestModel(TransactionCase):
             )
         )
 
+    def test_create_multipolygon_geojson_format(self):
         multi_polygon_geojson = """{"type":"MultiPolygon","coordinates":[[[
         [726469.938970306,5873145.03456248],[726520.174105436,5872946.03059195],
         [726394.076006275,5872675.04267336],[726404.709252018,5872259.98652277],
@@ -246,6 +249,8 @@ class TestModel(TransactionCase):
         [726070.62161125,5873140.35732493],[726085.312084189,5873125.96087534],
         [726100.002508819,5873111.56442448],[726217.015284978,5873040.09276485],
         [726304.138055426,5873041.11333845],[726469.938970306,5873145.03456248]]]]}"""
+        geo_dict = geojson.loads(multi_polygon_geojson)
+        multi_polygon_loaded = shape(geo_dict)
         self.geo_model.geo_multi_polygon = multi_polygon_geojson
         self.assertTrue(
             self.geo_model.geo_multi_polygon.equals_exact(
@@ -253,7 +258,7 @@ class TestModel(TransactionCase):
             )
         )
 
-    def test_create_polygon(self):
+    def test_create_polygon_wkt_format(self):
         """Create a polygon"""
         polygon = """POLYGON((-95.80078125000001 40.09488212232117,
         -95.07568359375001 36.68604127658193,
@@ -265,16 +270,19 @@ class TestModel(TransactionCase):
             self.geo_model.geo_polygon.equals_exact(polygon_loaded, tolerance=0.2)
         )
 
+    def test_create_polygon_geojson_format(self):
         polygon_geojson = """{"type":"Polygon","coordinates":[[
         [-95.80078125000001,40.09488212232117],
         [-95.07568359375001,36.68604127658193],[-90.439453125,37.80544394934273],
         [-91.03271484375001,39.97712009843963],[-95.80078125000001,40.09488212232117]]]}"""
+        geo_dict = geojson.loads(polygon_geojson)
+        polygon_loaded = shape(geo_dict)
         self.geo_model.geo_polygon = polygon_geojson
         self.assertTrue(
             self.geo_model.geo_polygon.equals_exact(polygon_loaded, tolerance=0.2)
         )
 
-    def test_create_line(self):
+    def test_create_line_wkt_format(self):
         """Create a line"""
         line = """LINESTRING(-98.81103515625001 38.97649248553944,
         -90.06591796875 38.99357205820945)"""
@@ -284,15 +292,18 @@ class TestModel(TransactionCase):
             self.geo_model.geo_line.equals_exact(line_loaded, tolerance=0.2)
         )
 
+    def test_create_line_geosjon_format(self):
         line_geojson = """{"type":"LineString","coordinates":[
         [-98.81103515625001,38.97649248553944],
         [-90.06591796875,38.99357205820945]]}"""
+        geo_dict = geojson.loads(line_geojson)
+        line_loaded = shape(geo_dict)
         self.geo_model.geo_line = line_geojson
         self.assertTrue(
             self.geo_model.geo_line.equals_exact(line_loaded, tolerance=0.2)
         )
 
-    def test_create_point(self):
+    def test_create_point_wkt_format(self):
         """Create a point"""
         point = "POINT(-99.2724609375 38.25543637637949)"
         self.geo_model.geo_point = point
@@ -301,15 +312,18 @@ class TestModel(TransactionCase):
             self.geo_model.geo_point.equals_exact(point_loaded, tolerance=0.2)
         )
 
+    def test_create_point_geosjon_format(self):
         point_geosjon = (
             '{ "type": "Point", "coordinates": [-99.2724609375, 38.25543637637949] }'
         )
+        geo_dict = geojson.loads(point_geosjon)
+        point_loaded = shape(geo_dict)
         self.geo_model.geo_point = point_geosjon
         self.assertTrue(
             self.geo_model.geo_point.equals_exact(point_loaded, tolerance=0.2)
         )
 
-    def test_create_multi_line(self):
+    def test_create_multi_line_wkt_format(self):
         """Create multiline"""
         multi_line = (
             "MULTILINESTRING ((10 10, 20 20, 10 40),(40 40, 30 30, 40 20, 30 10))"
@@ -320,14 +334,17 @@ class TestModel(TransactionCase):
             self.geo_model.geo_multi_line.equals_exact(multi_line_loaded, tolerance=0.2)
         )
 
+    def test_create_multi_line_geojson_format(self):
         multi_line_geojson = """{"type":"MultiLineString","coordinates":[[
             [10,10],[20,20],[10,40]],[[40,40],[30,30],[40,20],[30,10]]]}"""
+        geo_dict = geojson.loads(multi_line_geojson)
+        multi_line_loaded = shape(geo_dict)
         self.geo_model.geo_multi_line = multi_line_geojson
         self.assertTrue(
             self.geo_model.geo_multi_line.equals_exact(multi_line_loaded, tolerance=0.2)
         )
 
-    def test_create_multi_point(self):
+    def test_create_multi_point_wkt_format(self):
         """Create multipoint"""
         multi_point = "MULTIPOINT ((10 40), (40 30), (20 20), (30 10))"
         self.geo_model.geo_multi_point = multi_point
@@ -338,9 +355,12 @@ class TestModel(TransactionCase):
             )
         )
 
+    def test_create_multo_point_geosjson_format(self):
         multi_point_geojson = (
             '{"type":"MultiPoint","coordinates":[[10,40],[40,30],[20,20],[30,10]]}'
         )
+        geo_dict = geojson.loads(multi_point_geojson)
+        multi_point_loaded = shape(geo_dict)
         self.geo_model.geo_multi_point = multi_point_geojson
         self.assertTrue(
             self.geo_model.geo_multi_point.equals_exact(
@@ -352,7 +372,7 @@ class TestModel(TransactionCase):
         self.geo_model.unlink()
         self.assertFalse(self.geo_model.exists())
 
-    def test_geo_search_intersect(self):
+    def test_geo_search_intersect_for_zip_1169(self):
         retails = self.env["retail.machine"]
         zip_item = self.env["dummy.zip"].search([("name", "ilike", "1169")])
 
@@ -367,6 +387,8 @@ class TestModel(TransactionCase):
         )
         self.assertEqual(len(result), 2)
 
+    def test_geo_search_intersect_for_zip_1149(self):
+        retails = self.env["retail.machine"]
         zip_item = self.env["dummy.zip"].search([("name", "ilike", "1146")])
         result = retails.geo_search(
             geo_domain=[
@@ -379,7 +401,7 @@ class TestModel(TransactionCase):
         )
         self.assertEqual(len(result), 3)
 
-    def test_geo_search_contains(self):
+    def test_geo_search_contains_for_retails_34(self):
         zip_item = self.env["dummy.zip"]
         retails = self.env["retail.machine"].search([("name", "ilike", "34")])
         result = []
@@ -390,6 +412,8 @@ class TestModel(TransactionCase):
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
         self.assertEqual(find.city, "Yens")
 
+    def test_geo_search_contains_for_retails_21(self):
+        zip_item = self.env["dummy.zip"]
         retails = self.env["retail.machine"].search([("name", "ilike", "21")])
         result = []
         for rec in retails:
@@ -399,7 +423,41 @@ class TestModel(TransactionCase):
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
         self.assertEqual(find.city, "Mollens (VD))")
 
-    def test_geo_search_touch(self):
+    def test_geo_search_within_for_retails_34(self):
+        retails = self.env["retail.machine"]
+        zip_item = self.env["dummy.zip"].search([("city", "ilike", "Yens")])
+        result = []
+        for rec in zip_item:
+            result = retails.geo_search(
+                domain=[("name", "ilike", "34")],
+                geo_domain=[("the_point", "geo_within", rec.the_geom)],
+            )
+        find = self.env["retail.machine"].search([("id", "=", result[0])])
+        self.assertEqual(find.name, "34")
+
+    def test_geo_search_within_for_retails_21(self):
+        retails = self.env["retail.machine"]
+        zip_item = self.env["dummy.zip"].search([("city", "ilike", "Mollens (VD))")])
+        result = []
+        for rec in zip_item:
+            result = retails.geo_search(
+                domain=[("name", "ilike", "21")],
+                geo_domain=[("the_point", "geo_within", rec.the_geom)],
+            )
+        find = self.env["retail.machine"].search([("id", "=", result[0])])
+        self.assertEqual(find.name, "21")
+
+    def test_geo_search_equals(self):
+        zip_item = self.env["dummy.zip"].search([("city", "ilike", "Mollens (VD))")])
+        result = []
+        result = zip_item.geo_search(
+            domain=[("city", "ilike", "Mollens (VD))")],
+            geo_domain=[("the_geom", "geo_equal", zip_item.the_geom)],
+        )
+        find = self.env["dummy.zip"].search([("id", "=", result[0])])
+        self.assertEqual(find.city, "Mollens (VD))")
+
+    def test_geo_search_touch_polygon(self):
         zip_item = self.env["dummy.zip"]
 
         self.env["dummy.zip"].create(
@@ -425,6 +483,8 @@ class TestModel(TransactionCase):
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
         self.assertEqual(find.city, "Poly1")
 
+    def test_geo_search_touch_multi_polygon(self):
+        zip_item = self.env["dummy.zip"]
         self.env["dummy.zip"].create(
             {
                 "name": "1192",
@@ -449,3 +509,57 @@ class TestModel(TransactionCase):
 
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
         self.assertEqual(find.city, "Multi1")
+
+    def test_geo_search_greater_multi_polygon(self):
+        zip_item = self.env["dummy.zip"]
+        mp1 = self.env["dummy.zip"].create(
+            {
+                "name": "1192",
+                "city": "Mp1",
+                "the_geom": """MULTIPOLYGON (((0 0, 0 5, 5 5, 5 0, 0 0)),
+                ((1 1, 2 1, 2 2, 1 2, 1 1)), ((3 3, 4 3, 4 4, 3 4, 3 3)))""",
+            }
+        )
+
+        self.env["dummy.zip"].create(
+            {
+                "name": "6708",
+                "city": "Mp2",
+                "the_geom": """MULTIPOLYGON (((-5 -5, -5 10, 10 10, 10 -5, -5 -5)),
+                ((-4 -4, -3 -4, -3 -3, -4 -3, -4 -4)), ((6 6, 7 6, 7 7, 6 7, 6 6)))""",
+            }
+        )
+
+        result = zip_item.geo_search(
+            domain=[("city", "ilike", "Mp2")],
+            geo_domain=[("the_geom", "geo_greater", mp1.the_geom)],
+        )
+
+        find = self.env["dummy.zip"].search([("id", "=", result[0])])
+        self.assertEqual(find.city, "Mp2")
+
+    def test_geo_search_lesser_multi_polygon(self):
+        zip_item = self.env["dummy.zip"]
+        self.env["dummy.zip"].create(
+            {
+                "name": "1192",
+                "city": "Mp1",
+                "the_geom": """MULTIPOLYGON (((0 0, 0 5, 5 5, 5 0, 0 0)),
+                ((1 1, 2 1, 2 2, 1 2, 1 1)), ((3 3, 4 3, 4 4, 3 4, 3 3)))""",
+            }
+        )
+
+        mp2 = self.env["dummy.zip"].create(
+            {
+                "name": "6708",
+                "city": "Mp2",
+                "the_geom": """MULTIPOLYGON (((-5 -5, -5 10, 10 10, 10 -5, -5 -5)),
+                ((-4 -4, -3 -4, -3 -3, -4 -3, -4 -4)), ((6 6, 7 6, 7 7, 6 7, 6 6)))""",
+            }
+        )
+        result = zip_item.geo_search(
+            domain=[("city", "ilike", "Mp1")],
+            geo_domain=[("the_geom", "geo_lesser", mp2.the_geom)],
+        )
+        find = self.env["dummy.zip"].search([("id", "=", result[0])])
+        self.assertEqual(find.city, "Mp1")
