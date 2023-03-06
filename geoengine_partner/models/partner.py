@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
 # Copyright 2011-2017 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo.addons.base_geoengine import geo_model
-from odoo.addons.base_geoengine import fields
+from odoo import fields, models
 
 
-class ResPartner(geo_model.GeoModel):
+class ResPartner(models.Model):
     """Add geo_point to partner using a function filed"""
+
     _inherit = "res.partner"
 
     geo_point = fields.GeoPoint("Address coordinates")
