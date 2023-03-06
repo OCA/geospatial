@@ -5,6 +5,8 @@ from shapely.geometry import shape
 
 from odoo.tests.common import TransactionCase
 
+from ..fields import GeoPoint
+
 
 class TestModel(TransactionCase):
     @classmethod
@@ -563,3 +565,25 @@ class TestModel(TransactionCase):
         )
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
         self.assertEqual(find.city, "Mp1")
+
+    def test_from_lat_lon(self):
+        latitude = 49.72842315886126
+        longitude = 5.400488376617026
+
+        # This is computed with postgis in postgres:
+
+        expected_coordinates = [601179.61612, 6399375.681364]
+
+        geo_point = GeoPoint.from_latlon(self.env.cr, latitude, longitude)
+
+        self.assertAlmostEqual(geo_point.x, expected_coordinates[0], 4)
+        self.assertAlmostEqual(geo_point.y, expected_coordinates[1], 4)
+
+    def test_to_lat_lon(self):
+
+        geo_point = '{ "type": "Point", "coordinates": [601179.61612, 6399375.681364] }'
+
+        longitude, latitude = GeoPoint.to_latlon(self.env.cr, geo_point)
+
+        self.assertAlmostEqual(latitude, 49.72842315886126, 4)
+        self.assertAlmostEqual(longitude, 5.400488376617026, 4)
