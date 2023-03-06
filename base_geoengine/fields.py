@@ -1,6 +1,7 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # Copyright 2016 Yannick Payot (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import json
 import logging
 from operator import attrgetter
 
@@ -13,7 +14,7 @@ from .geo_helper import geo_convertion_helper as convert
 logger = logging.getLogger(__name__)
 try:
     import geojson
-    from shapely.geometry import Point, asShape
+    from shapely.geometry import Point, shape
     from shapely.geometry.base import BaseGeometry
     from shapely.wkb import loads as wkbloads
 except ImportError:
@@ -264,7 +265,7 @@ class GeoPoint(GeoField):
         if isinstance(geopoint, BaseGeometry):
             geo_point_instance = geopoint
         else:
-            geo_point_instance = asShape(geojson.loads(geopoint))
+            geo_point_instance = shape(json.loads(geopoint))
         cr.execute(
             """
                     SELECT
@@ -278,7 +279,7 @@ class GeoPoint(GeoField):
             {
                 "coord_x": geo_point_instance.x,
                 "coord_y": geo_point_instance.y,
-                "srid": cls._slots["srid"],
+                "srid": cls.srid,
             },
         )
 
