@@ -34,12 +34,12 @@
     <field name="name">geoengine.demo.retail.machine.search</field>
     <field name="model">geoengine.demo.automatic.retailing.machine</field>
     <field name="arch" type="xml">
-      <tree>
+      <search>
         <field name="name" />
         <field name="total_sales" />
         <field name="money_level" />
         <field name="state" />
-      </tree>
+      </search>
     </field>
   </record>
 
