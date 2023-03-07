@@ -1,3 +1,5 @@
+import logging
+
 import geojson
 from odoo_test_helper import FakeModelLoader
 from shapely import wkt
@@ -6,6 +8,8 @@ from shapely.geometry import shape
 from odoo.tests.common import TransactionCase
 
 from ..fields import GeoPoint
+
+_logger = logging.getLogger(__name__)
 
 
 class TestModel(TransactionCase):
@@ -357,7 +361,7 @@ class TestModel(TransactionCase):
             )
         )
 
-    def test_create_multo_point_geosjson_format(self):
+    def test_create_multi_point_geosjson_format(self):
         multi_point_geojson = (
             '{"type":"MultiPoint","coordinates":[[10,40],[40,30],[20,20],[30,10]]}'
         )
@@ -374,43 +378,34 @@ class TestModel(TransactionCase):
         self.geo_model.unlink()
         self.assertFalse(self.geo_model.exists())
 
+    def test_geo_search_bad_right_request(self):
+        retails = self.env["retail.machine"]
+        with self.assertRaises(ValueError), retails.search(
+            [("the_point", "geo_greater", 10)]
+        ):
+            _logger.info("Success")
+
     def test_geo_search_intersect_for_zip_1169(self):
         retails = self.env["retail.machine"]
         zip_item = self.env["dummy.zip"].search([("name", "ilike", "1169")])
-
-        result = retails.geo_search(
-            geo_domain=[
-                (
-                    "the_point",
-                    "geo_intersect",
-                    {"dummy.zip.the_geom": [("id", "=", zip_item.id)]},
-                )
-            ]
-        )
-        self.assertEqual(len(result), 2)
+        result = retails.search([("the_point", "geo_intersect", zip_item.the_geom)])
+        self.assertEqual(len(result.ids), 2)
 
     def test_geo_search_intersect_for_zip_1149(self):
         retails = self.env["retail.machine"]
         zip_item = self.env["dummy.zip"].search([("name", "ilike", "1146")])
-        result = retails.geo_search(
-            geo_domain=[
-                (
-                    "the_point",
-                    "geo_intersect",
-                    {"dummy.zip.the_geom": [("id", "=", zip_item.id)]},
-                )
-            ]
-        )
-        self.assertEqual(len(result), 3)
+        result = retails.search([("the_point", "geo_intersect", zip_item.the_geom)])
+        self.assertEqual(len(result.ids), 3)
 
     def test_geo_search_contains_for_retails_34(self):
         zip_item = self.env["dummy.zip"]
         retails = self.env["retail.machine"].search([("name", "ilike", "34")])
         result = []
         for rec in retails:
-            result = zip_item.geo_search(
-                geo_domain=[("the_geom", "geo_contains", rec.the_point)],
+            result.extend(
+                zip_item.search([("the_geom", "geo_contains", rec.the_point)]).ids
             )
+
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
         self.assertEqual(find.city, "Yens")
 
@@ -419,9 +414,10 @@ class TestModel(TransactionCase):
         retails = self.env["retail.machine"].search([("name", "ilike", "21")])
         result = []
         for rec in retails:
-            result = zip_item.geo_search(
-                geo_domain=[("the_geom", "geo_contains", rec.the_point)],
+            result.extend(
+                zip_item.search([("the_geom", "geo_contains", rec.the_point)]).ids
             )
+
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
         self.assertEqual(find.city, "Mollens (VD))")
 
@@ -430,10 +426,12 @@ class TestModel(TransactionCase):
         zip_item = self.env["dummy.zip"].search([("city", "ilike", "Yens")])
         result = []
         for rec in zip_item:
-            result = retails.geo_search(
-                domain=[("name", "ilike", "34")],
-                geo_domain=[("the_point", "geo_within", rec.the_geom)],
+            result.extend(
+                retails.search(
+                    [("name", "ilike", "34"), ("the_point", "geo_within", rec.the_geom)]
+                ).ids
             )
+
         find = self.env["retail.machine"].search([("id", "=", result[0])])
         self.assertEqual(find.name, "34")
 
@@ -442,20 +440,23 @@ class TestModel(TransactionCase):
         zip_item = self.env["dummy.zip"].search([("city", "ilike", "Mollens (VD))")])
         result = []
         for rec in zip_item:
-            result = retails.geo_search(
-                domain=[("name", "ilike", "21")],
-                geo_domain=[("the_point", "geo_within", rec.the_geom)],
+            result.extend(
+                retails.search(
+                    [("name", "ilike", "21"), ("the_point", "geo_within", rec.the_geom)]
+                ).ids
             )
+
         find = self.env["retail.machine"].search([("id", "=", result[0])])
         self.assertEqual(find.name, "21")
 
     def test_geo_search_equals(self):
         zip_item = self.env["dummy.zip"].search([("city", "ilike", "Mollens (VD))")])
-        result = []
-        result = zip_item.geo_search(
-            domain=[("city", "ilike", "Mollens (VD))")],
-            geo_domain=[("the_geom", "geo_equal", zip_item.the_geom)],
-        )
+        result = zip_item.search(
+            [
+                ("city", "ilike", "Mollens (VD))"),
+                ("the_geom", "geo_equal", zip_item.the_geom),
+            ]
+        ).ids
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
         self.assertEqual(find.city, "Mollens (VD))")
 
@@ -477,10 +478,7 @@ class TestModel(TransactionCase):
                 "the_poly": "POLYGON ((1 0, 1 1, 2 1, 2 0, 1 0))",
             }
         )
-
-        result = zip_item.geo_search(
-            geo_domain=[("the_poly", "geo_touch", poly2.the_poly)]
-        )
+        result = zip_item.search([("the_poly", "geo_touch", poly2.the_poly)]).ids
 
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
         self.assertEqual(find.city, "Poly1")
@@ -504,10 +502,7 @@ class TestModel(TransactionCase):
                 ((3 0, 3 1, 4 1, 4 0, 3 0)))""",
             }
         )
-
-        result = zip_item.geo_search(
-            geo_domain=[("the_geom", "geo_touch", multi_poly_2.the_geom)]
-        )
+        result = zip_item.search([("the_geom", "geo_touch", multi_poly_2.the_geom)]).ids
 
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
         self.assertEqual(find.city, "Multi1")
@@ -531,11 +526,9 @@ class TestModel(TransactionCase):
                 ((-4 -4, -3 -4, -3 -3, -4 -3, -4 -4)), ((6 6, 7 6, 7 7, 6 7, 6 6)))""",
             }
         )
-
-        result = zip_item.geo_search(
-            domain=[("city", "ilike", "Mp2")],
-            geo_domain=[("the_geom", "geo_greater", mp1.the_geom)],
-        )
+        result = zip_item.search(
+            [("city", "ilike", "Mp2"), ("the_geom", "geo_greater", mp1.the_geom)]
+        ).ids
 
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
         self.assertEqual(find.city, "Mp2")
@@ -559,10 +552,10 @@ class TestModel(TransactionCase):
                 ((-4 -4, -3 -4, -3 -3, -4 -3, -4 -4)), ((6 6, 7 6, 7 7, 6 7, 6 6)))""",
             }
         )
-        result = zip_item.geo_search(
-            domain=[("city", "ilike", "Mp1")],
-            geo_domain=[("the_geom", "geo_lesser", mp2.the_geom)],
-        )
+        result = zip_item.search(
+            [("city", "ilike", "Mp1"), ("the_geom", "geo_lesser", mp2.the_geom)]
+        ).ids
+
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
         self.assertEqual(find.city, "Mp1")
 
