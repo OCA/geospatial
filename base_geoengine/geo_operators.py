@@ -38,8 +38,8 @@ expression.TERM_OPERATORS = tuple(term_operators_list)
 def __leaf_to_sql(self, leaf, model, alias):
     left, operator, right = leaf
 
-    current_field = model._fields[left]
-    if isinstance(current_field, GeoField):
+    current_field = model._fields.get(left)
+    if current_field and isinstance(current_field, GeoField):
         table_alias = '"%s"' % alias
         aliased_column = f"{table_alias}.{left}"
         if isinstance(right, BaseGeometry):
