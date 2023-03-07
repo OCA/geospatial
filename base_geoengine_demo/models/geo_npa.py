@@ -31,24 +31,14 @@ class NPA(models.Model):
         """Return the total of the invoiced sales for this npa"""
         mach_obj = self.env["geoengine.demo.automatic.retailing.machine"]
         for rec in self:
-            res = mach_obj.geo_search(
-                domain=[],
-                geo_domain=[
-                    (
-                        "the_point",
-                        "geo_intersect",
-                        {"dummy.zip.the_geom": [("id", "=", rec.id)]},
-                    )
-                ],
-            )
-
+            res = mach_obj.search([("the_point", "geo_intersect", rec.the_geom)])
             cursor = self.env.cr
-            if res:
+            if res.ids:
                 cursor.execute(
                     "SELECT sum(total_sales) from"
                     " geoengine_demo_automatic_retailing_machine "
                     "where id in %s;",
-                    (tuple(res),),
+                    (tuple(res.ids),),
                 )
                 res = cursor.fetchone()
                 if res:
