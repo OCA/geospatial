@@ -2,6 +2,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
 
+from shapely.geometry.base import BaseGeometry
+
+from odoo.osv import expression
+from odoo.osv.expression import TERM_OPERATORS
+
 from .fields import GeoField
 
 UNION_MAPPING = {"|": "OR", "&": "AND"}
@@ -9,6 +14,70 @@ UNION_MAPPING = {"|": "OR", "&": "AND"}
 logger = logging.getLogger("geoengine.sql.debug")
 
 # TODO Refactor geo_search and dry up the get_**_sql code
+
+original__leaf_to_sql = expression.expression._expression__leaf_to_sql
+
+GEO_OPERATORS = (
+    "geo_greater",
+    "geo_lesser",
+    "geo_equal",
+    "geo_touch",
+    "geo_within",
+    "geo_contains",
+    "geo_intersect",
+)
+term_operators_list = list(TERM_OPERATORS)
+for op in GEO_OPERATORS:
+    term_operators_list.append(op)
+
+expression.TERM_OPERATORS = tuple(term_operators_list)
+
+# TODO: check if left match with others
+
+
+def __leaf_to_sql(self, leaf, model, alias):
+    left, operator, right = leaf
+
+    current_field = model._fields[left]
+    if isinstance(current_field, GeoField):
+        table_alias = '"%s"' % alias
+        aliased_column = f"{table_alias}.{left}"
+        if isinstance(right, BaseGeometry):
+            base = current_field.entry_to_shape(right, same_type=False)
+            srid = current_field.srid
+            match operator:
+                case "geo_greater":
+                    query = f" ST_Area({aliased_column}) > ST_Area(ST_GeomFromText(%s))"
+                    params = [base.wkt]
+                case "geo_lesser":
+                    query = f" ST_Area({aliased_column}) < ST_Area(ST_GeomFromText(%s))"
+                    params = [base.wkt]
+                case "geo_equal":
+                    query = f" {aliased_column} = ST_GeomFromText(%s)"
+                    params = [base.wkt]
+                case "geo_touch":
+                    op = f"ST_Touches(ST_SetSRID({aliased_column},{srid})"
+                    query = f" {op}, ST_GeomFromText(%s, %s))"
+                    params = [base.wkt, srid]
+                case "geo_within":
+                    op = f"ST_Within(ST_SetSRID({aliased_column},{srid})"
+                    query = f" {op}, ST_GeomFromText(%s, %s))"
+                    params = [base.wkt, srid]
+                case "geo_contains":
+                    op = f"ST_Contains(ST_SetSRID({aliased_column},{srid})"
+                    query = f" {op}, ST_GeomFromText(%s, %s))"
+                    params = [base.wkt, srid]
+                case "geo_intersect":
+                    op = f"ST_Intersects(ST_SetSRID({aliased_column},{srid})"
+                    query = f" {op}, ST_GeomFromText(%s, %s))"
+                    params = [base.wkt, srid]
+            return query, params
+        else:
+            raise ValueError("Invalid field %r domain term %r" % (right, leaf))
+    return original__leaf_to_sql(self, leaf=leaf, model=model, alias=alias)
+
+
+expression.expression._expression__leaf_to_sql = __leaf_to_sql
 
 
 def _get_geo_func(model, domain):
