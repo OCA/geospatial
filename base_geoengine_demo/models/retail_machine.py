@@ -26,14 +26,22 @@ class RetailMachine(models.Model):
         """Check if the point is place in the corresponding area."""
         if self.the_point and self.zip_id:
             for rec in self:
-                zip_match = self.env["dummy.zip"].geo_search(
-                    geo_domain=[("the_geom", "geo_contains", rec.the_point)], limit=1
+                zip_match = (
+                    self.env["dummy.zip"]
+                    .search(
+                        [
+                            ("id", "=", self.zip_id.id),
+                            ("the_geom", "geo_contains", rec.the_point),
+                        ],
+                        limit=1,
+                    )
+                    .ids
                 )
                 if not zip_match:
                     raise ValidationError(
                         _(
                             "The point must be placed in the corresponding "
-                            + "area.(serial number: %s).",
+                            + "area. (serial number: %s).",
                             rec.name,
                         )
                     )
@@ -46,8 +54,10 @@ class RetailMachine(models.Model):
         """
         for rec in self:
             if rec.the_point:
-                zip_match = self.env["dummy.zip"].geo_search(
-                    geo_domain=[("the_geom", "geo_contains", rec.the_point)], limit=1
+                zip_match = (
+                    self.env["dummy.zip"]
+                    .search([("the_geom", "geo_contains", rec.the_point)], limit=1)
+                    .ids
                 )
                 if zip_match:
                     rec.zip_id = zip_match[0]
