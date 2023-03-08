@@ -29,7 +29,10 @@
             <field name="the_geom_multipoint" />
           </page>-->
             <page string="Retail machines">
-              <field name="retail_machine_ids" context="{'default_name': active_id}" />
+              <field
+                                name="retail_machine_ids"
+                                context="{'default_zip_id': active_id}"
+                            />
             </page>
           </notebook>
         </sheet>
