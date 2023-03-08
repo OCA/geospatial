@@ -53,7 +53,7 @@ def __leaf_to_sql(self, leaf, model, alias):
                     query = f" ST_Area({aliased_column}) < ST_Area(ST_GeomFromText(%s))"
                     params = [base.wkt]
                 case "geo_equal":
-                    query = f" {aliased_column} = ST_GeomFromText(%s)"
+                    query = f" {aliased_column} = ST_GeomFromText(%s, {srid})"
                     params = [base.wkt]
                 case "geo_touch":
                     op = f"ST_Touches(ST_SetSRID({aliased_column},{srid})"

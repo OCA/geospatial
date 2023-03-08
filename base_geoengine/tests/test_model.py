@@ -453,7 +453,7 @@ class TestModel(TransactionCase):
         zip_item = self.env["dummy.zip"].search([("city", "ilike", "Mollens (VD))")])
         result = zip_item.search(
             [
-                ("city", "ilike", "Mollens (VD))"),
+                ("name", "=", "1146"),
                 ("the_geom", "geo_equal", zip_item.the_geom),
             ]
         ).ids
