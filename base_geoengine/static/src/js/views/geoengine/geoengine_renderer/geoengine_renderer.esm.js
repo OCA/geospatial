@@ -287,7 +287,7 @@ export class GeoengineRenderer extends Component {
             this.geometryFields.forEach((geo_field) => delete attributes[geo_field]);
 
             if (cfg.display_polygon_labels === true) {
-                attributes.label = item[cfg.attribute_field_id[1]];
+                attributes.label = item._values[cfg.attribute_field_id[1]];
             } else {
                 attributes.label = "";
             }
@@ -374,6 +374,11 @@ export class GeoengineRenderer extends Component {
             style: (feature) => {
                 const value = feature.get("attributes")[indicator];
                 const color_idx = this.getClass(value, vals);
+                var label_text = feature.values_.attributes.label;
+                if (label_text === false) {
+                    label_text = "";
+                }
+                styles_map[colors[color_idx]][0].text_.text_ = label_text.toString();
                 return styles_map[colors[color_idx]];
             },
         };
@@ -418,7 +423,6 @@ export class GeoengineRenderer extends Component {
                 var value = feature.get("attributes")[indicator];
                 return styles_map[value];
             },
-            legend: "",
         };
     }
 
@@ -429,16 +433,7 @@ export class GeoengineRenderer extends Component {
 
         const {fill, stroke} = this.createFillAndStroke(color);
 
-        var olStyleText = new ol.style.Text({
-            text: "",
-            fill: new ol.style.Fill({
-                color: "#000000",
-            }),
-            stroke: new ol.style.Stroke({
-                color: "#FFFFFF",
-                width: 5,
-            }),
-        });
+        var olStyleText = this.createStyleText();
         var styles = [
             new ol.style.Style({
                 image: new ol.style.Circle({
@@ -460,9 +455,21 @@ export class GeoengineRenderer extends Component {
                 styles[0].text_.text_ = label_text;
                 return styles;
             },
-            legend: "",
         };
     }
+    createStyleText() {
+        return new ol.style.Text({
+            text: "",
+            fill: new ol.style.Fill({
+                color: "#000000",
+            }),
+            stroke: new ol.style.Stroke({
+                color: "#FFFFFF",
+                width: 5,
+            }),
+        });
+    }
+
     /**
      * Create feature style based on the color table.
      * @param {*} colors
@@ -475,6 +482,7 @@ export class GeoengineRenderer extends Component {
                 return;
             }
             const {fill, stroke} = this.createFillAndStroke(color);
+            var olStyleText = this.createStyleText();
             const styles = [
                 new ol.style.Style({
                     image: new ol.style.Circle({
@@ -484,6 +492,7 @@ export class GeoengineRenderer extends Component {
                     }),
                     fill: fill,
                     stroke: stroke,
+                    text: olStyleText,
                 }),
             ];
             styles_map[color] = styles;
