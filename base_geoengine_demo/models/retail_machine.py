@@ -61,3 +61,5 @@ class RetailMachine(models.Model):
                 )
                 if zip_match:
                     rec.zip_id = zip_match[0]
+            else:
+                rec.zip_id = 0
