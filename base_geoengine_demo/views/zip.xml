@@ -107,6 +107,8 @@
     <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
     <field name="geo_repr">basic</field>
     <field name="attribute_field_id" ref="field_dummy_zip__city" />
+    <field name="active_on_startup">True</field>
+    <field name="layer_opacity">0.8</field>
     <field name="begin_color">#FF680A</field>
   </record>
   <record id="geoengine_vector_layer_coloredrangetest0" model="geoengine.vector.layer">
@@ -116,6 +118,7 @@
     <field eval="6" name="sequence" />
     <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
     <field name="geo_repr">colored</field>
+    <field name="layer_opacity">0.8</field>
     <field eval="1" name="nb_class" />
     <field
             name="attribute_field_id"
@@ -134,6 +137,7 @@
     <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
     <field name="geo_repr">colored</field>
     <field eval="4" name="nb_class" />
+    <field name="layer_opacity">0.8</field>
     <field
             name="attribute_field_id"
             ref="base_geoengine_demo.field_dummy_zip__total_sales"
