@@ -39,7 +39,7 @@ class GeoField(fields.Field):
 
     @property
     def column_type(self):
-        return ("geometry", "geometry")
+        return ("geometry", f"geometry({self.geo_type}, {self.srid})")
 
     def convert_to_column(self, value, record, values=None):
         """Convert value to database format
@@ -52,7 +52,7 @@ class GeoField(fields.Field):
         if shape_to_write.is_empty:
             return None
         else:
-            return f"SRID={self.srid};{shape_to_write.wkt}"
+            return shape_to_write.wkt
 
     def convert_to_cache(self, value, record, validate=True):
         val = value
