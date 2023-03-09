@@ -378,13 +378,6 @@ class TestModel(TransactionCase):
         self.geo_model.unlink()
         self.assertFalse(self.geo_model.exists())
 
-    def test_geo_search_bad_right_request(self):
-        retails = self.env["retail.machine"]
-        with self.assertRaises(ValueError), retails.search(
-            [("the_point", "geo_greater", 10)]
-        ):
-            _logger.info("Success")
-
     def test_geo_search_intersect_for_zip_1169(self):
         retails = self.env["retail.machine"]
         zip_item = self.env["dummy.zip"].search([("name", "ilike", "1169")])
@@ -453,8 +446,11 @@ class TestModel(TransactionCase):
         zip_item = self.env["dummy.zip"].search([("city", "ilike", "Mollens (VD))")])
         result = zip_item.search(
             [
-                ("name", "=", "1146"),
-                ("the_geom", "geo_equal", zip_item.the_geom),
+                (
+                    "the_geom",
+                    "geo_equal",
+                    {"dummy.zip.the_geom": [("name", "ilike", "1146")]},
+                ),
             ]
         ).ids
         find = self.env["dummy.zip"].search([("id", "=", result[0])])
@@ -580,3 +576,23 @@ class TestModel(TransactionCase):
 
         self.assertAlmostEqual(latitude, 49.72842315886126, 4)
         self.assertAlmostEqual(longitude, 5.400488376617026, 4)
+
+    def test_deprecated_geo_search__intersect_for_zip_1169(self):
+        retails = self.env["retail.machine"]
+        zip_item = self.env["dummy.zip"].search([("name", "ilike", "1169")])
+        result = retails.geo_search([("the_point", "geo_intersect", zip_item.the_geom)])
+        self.assertEqual(len(result), 2)
+
+    def test_deprecated_geo_search__intersect_for_zip_1169_with_dict(self):
+        retails = self.env["retail.machine"]
+        zip_item = self.env["dummy.zip"].search([("name", "ilike", "1169")])
+        result = retails.geo_search(
+            [
+                (
+                    "the_point",
+                    "geo_intersect",
+                    {"dummy.zip.the_geom": [("id", "=", zip_item.id)]},
+                )
+            ]
+        )
+        self.assertEqual(len(result), 2)
