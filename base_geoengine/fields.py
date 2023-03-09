@@ -34,10 +34,6 @@ class GeoField(fields.Field):
     gist_index = True
 
     @property
-    def column_format(self):
-        return "ST_GeomFromText(%s, {})".format(self.srid)
-
-    @property
     def column_type(self):
         return ("geometry", f"geometry({self.geo_type}, {self.srid})")
 
