@@ -1,14 +1,18 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # Copyright 2016 Yannick Payot (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+import logging
+
 from odoo import _, api, models
 from odoo.exceptions import MissingError, UserError
 
-from . import fields as geo_fields, geo_operators
+from . import deprecated, fields as geo_fields
 
 DEFAULT_EXTENT = (
     "-123164.85222423, 5574694.9538936, " "1578017.6490538, 6186191.1800898"
 )
+
+_logger = logging.getLogger(__name__)
 
 
 class GeoModel(models.AbstractModel):
@@ -151,9 +155,12 @@ class GeoModel(models.AbstractModel):
         # and do a search on standard attributes
         # Limit and offset are managed after, we may loose a lot of performance
         # here
+        _logger.debug(
+            "geo_search is deprecated: uses search method defined on base model"
+        )
         domain = domain or []
         geo_domain = geo_domain or []
-        return geo_operators.geo_search(
+        return deprecated.geo_search(
             self,
             domain=domain,
             geo_domain=geo_domain,
