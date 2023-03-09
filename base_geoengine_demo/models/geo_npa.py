@@ -31,7 +31,15 @@ class NPA(models.Model):
         """Return the total of the invoiced sales for this npa"""
         mach_obj = self.env["geoengine.demo.automatic.retailing.machine"]
         for rec in self:
-            res = mach_obj.search([("the_point", "geo_intersect", rec.the_geom)])
+            res = mach_obj.search(
+                [
+                    (
+                        "the_point",
+                        "geo_intersect",
+                        {"dummy.zip.the_geom": [("id", "=", rec.id)]},
+                    )
+                ]
+            )
             cursor = self.env.cr
             if res.ids:
                 cursor.execute(
