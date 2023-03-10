@@ -5,8 +5,9 @@ import logging
 
 from odoo import _, api, models
 from odoo.exceptions import MissingError, UserError
+from odoo.osv.expression import AND
 
-from . import deprecated, fields as geo_fields
+from . import fields as geo_fields
 
 DEFAULT_EXTENT = (
     "-123164.85222423, 5574694.9538936, " "1578017.6490538, 6186191.1800898"
@@ -160,11 +161,13 @@ class GeoModel(models.AbstractModel):
         )
         domain = domain or []
         geo_domain = geo_domain or []
-        return deprecated.geo_search(
-            self,
-            domain=domain,
-            geo_domain=geo_domain,
-            offset=offset,
-            limit=limit,
-            order=order,
-        )
+        search_domain = domain or []
+        if domain and geo_domain:
+            search_domain = AND([domain, geo_domain])
+        elif geo_domain:
+            search_domain = geo_domain
+
+        if not search_domain:
+            raise ValueError("You must at least provide one of domain or geo_domain")
+
+        return self.search(search_domain, limit=limit, offset=offset, order=order)
