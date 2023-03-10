@@ -378,72 +378,143 @@ class TestModel(TransactionCase):
         self.geo_model.unlink()
         self.assertFalse(self.geo_model.exists())
 
-    def test_geo_search_intersect_for_zip_1169(self):
+    def test_search_intersect_for_zip_1169(self):
         retails = self.env["retail.machine"]
         zip_item = self.env["dummy.zip"].search([("name", "ilike", "1169")])
         result = retails.search([("the_point", "geo_intersect", zip_item.the_geom)])
         self.assertEqual(len(result.ids), 2)
+        result = retails.search(
+            [
+                (
+                    "the_point",
+                    "geo_intersect",
+                    {"dummy.zip.the_geom": [("id", "=", zip_item.id)]},
+                )
+            ]
+        )
+        self.assertEqual(len(result.ids), 2)
 
-    def test_geo_search_intersect_for_zip_1149(self):
+    def test_search_intersect_with_dict_id(self):
+        retails = self.env["retail.machine"]
+        result = retails.search(
+            [
+                (
+                    "the_point",
+                    "geo_intersect",
+                    {"dummy.zip.the_geom": [("id", "in", ["1"])]},
+                )
+            ]
+        )
+        self.assertEqual(len(result.ids), 3)
+        result = retails.search(
+            [
+                (
+                    "the_point",
+                    "geo_intersect",
+                    {"dummy.zip.the_geom": [("id", "in", ["2"])]},
+                )
+            ]
+        )
+        self.assertEqual(len(result.ids), 2)
+        result = retails.search(
+            [
+                (
+                    "the_point",
+                    "geo_intersect",
+                    {"dummy.zip.the_geom": [("id", "in", ["1", "2"])]},
+                )
+            ]
+        )
+        self.assertEqual(len(result.ids), 5)
+
+    def test_search_intersect_for_zip_1169_with_multiple_domain(self):
+        retails = self.env["retail.machine"]
+        result = retails.search(
+            [
+                (
+                    "the_point",
+                    "geo_intersect",
+                    {
+                        "dummy.zip.the_geom": [
+                            ("id", "in", ["1", "2"]),
+                            ("name", "ilike", "1169"),
+                        ]
+                    },
+                )
+            ]
+        )
+        self.assertEqual(len(result.ids), 2)
+
+    def test_search_intersect_for_zip_1149(self):
         retails = self.env["retail.machine"]
         zip_item = self.env["dummy.zip"].search([("name", "ilike", "1146")])
         result = retails.search([("the_point", "geo_intersect", zip_item.the_geom)])
         self.assertEqual(len(result.ids), 3)
 
-    def test_geo_search_contains_for_retails_34(self):
+    def test_search_contains_for_retails_34(self):
         zip_item = self.env["dummy.zip"]
-        retails = self.env["retail.machine"].search([("name", "ilike", "34")])
-        result = []
-        for rec in retails:
-            result.extend(
-                zip_item.search([("the_geom", "geo_contains", rec.the_point)]).ids
-            )
+        retails = self.env["retail.machine"].search([("name", "=", "34")])
+        result = zip_item.search([("the_geom", "geo_contains", retails.the_point)])
 
-        find = self.env["dummy.zip"].search([("id", "=", result[0])])
-        self.assertEqual(find.city, "Yens")
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.city, "Yens")
 
-    def test_geo_search_contains_for_retails_21(self):
+        result = zip_item.search(
+            [
+                (
+                    "the_geom",
+                    "geo_contains",
+                    {"retail.machine.the_point": [("id", "=", retails.id)]},
+                )
+            ]
+        )
+
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.city, "Yens")
+
+    def test_search_contains_for_retails_21(self):
         zip_item = self.env["dummy.zip"]
         retails = self.env["retail.machine"].search([("name", "ilike", "21")])
-        result = []
-        for rec in retails:
-            result.extend(
-                zip_item.search([("the_geom", "geo_contains", rec.the_point)]).ids
-            )
+        result = zip_item.search([("the_geom", "geo_contains", retails.the_point)])
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.city, "Mollens (VD))")
 
-        find = self.env["dummy.zip"].search([("id", "=", result[0])])
-        self.assertEqual(find.city, "Mollens (VD))")
-
-    def test_geo_search_within_for_retails_34(self):
+    def test_search_within_for_retails_34(self):
         retails = self.env["retail.machine"]
         zip_item = self.env["dummy.zip"].search([("city", "ilike", "Yens")])
-        result = []
-        for rec in zip_item:
-            result.extend(
-                retails.search(
-                    [("name", "ilike", "34"), ("the_point", "geo_within", rec.the_geom)]
-                ).ids
-            )
+        result = retails.search(
+            [("name", "ilike", "34"), ("the_point", "geo_within", zip_item.the_geom)]
+        )
 
-        find = self.env["retail.machine"].search([("id", "=", result[0])])
-        self.assertEqual(find.name, "34")
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.name, "34")
 
-    def test_geo_search_within_for_retails_21(self):
+        result = retails.search(
+            [
+                ("name", "ilike", "34"),
+                (
+                    "the_point",
+                    "geo_within",
+                    {"dummy.zip.the_geom": [("id", "=", zip_item.id)]},
+                ),
+            ]
+        )
+
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.name, "34")
+
+    def test_search_within_for_retails_21(self):
         retails = self.env["retail.machine"]
         zip_item = self.env["dummy.zip"].search([("city", "ilike", "Mollens (VD))")])
-        result = []
-        for rec in zip_item:
-            result.extend(
-                retails.search(
-                    [("name", "ilike", "21"), ("the_point", "geo_within", rec.the_geom)]
-                ).ids
-            )
+        result = retails.search(
+            [("name", "ilike", "21"), ("the_point", "geo_within", zip_item.the_geom)]
+        )
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.name, "21")
 
-        find = self.env["retail.machine"].search([("id", "=", result[0])])
-        self.assertEqual(find.name, "21")
-
-    def test_geo_search_equals(self):
+    def test_search_equals(self):
         zip_item = self.env["dummy.zip"].search([("city", "ilike", "Mollens (VD))")])
+
         result = zip_item.search(
             [
                 (
@@ -452,11 +523,12 @@ class TestModel(TransactionCase):
                     {"dummy.zip.the_geom": [("name", "ilike", "1146")]},
                 ),
             ]
-        ).ids
-        find = self.env["dummy.zip"].search([("id", "=", result[0])])
-        self.assertEqual(find.city, "Mollens (VD))")
+        )
 
-    def test_geo_search_touch_polygon(self):
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.city, "Mollens (VD))")
+
+    def test_search_touch_polygon(self):
         zip_item = self.env["dummy.zip"]
 
         self.env["dummy.zip"].create(
@@ -474,12 +546,19 @@ class TestModel(TransactionCase):
                 "the_poly": "POLYGON ((1 0, 1 1, 2 1, 2 0, 1 0))",
             }
         )
-        result = zip_item.search([("the_poly", "geo_touch", poly2.the_poly)]).ids
+        result = zip_item.search([("the_poly", "geo_touch", poly2.the_poly)])
 
-        find = self.env["dummy.zip"].search([("id", "=", result[0])])
-        self.assertEqual(find.city, "Poly1")
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.city, "Poly1")
 
-    def test_geo_search_touch_multi_polygon(self):
+        result = zip_item.search(
+            [("the_poly", "geo_touch", {"dummy.zip.the_poly": [("id", "=", poly2.id)]})]
+        )
+
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.city, "Poly1")
+
+    def test_search_touch_multi_polygon(self):
         zip_item = self.env["dummy.zip"]
         self.env["dummy.zip"].create(
             {
@@ -498,12 +577,12 @@ class TestModel(TransactionCase):
                 ((3 0, 3 1, 4 1, 4 0, 3 0)))""",
             }
         )
-        result = zip_item.search([("the_geom", "geo_touch", multi_poly_2.the_geom)]).ids
+        result = zip_item.search([("the_geom", "geo_touch", multi_poly_2.the_geom)])
 
-        find = self.env["dummy.zip"].search([("id", "=", result[0])])
-        self.assertEqual(find.city, "Multi1")
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.city, "Multi1")
 
-    def test_geo_search_greater_multi_polygon(self):
+    def test_search_greater_multi_polygon(self):
         zip_item = self.env["dummy.zip"]
         mp1 = self.env["dummy.zip"].create(
             {
@@ -524,12 +603,25 @@ class TestModel(TransactionCase):
         )
         result = zip_item.search(
             [("city", "ilike", "Mp2"), ("the_geom", "geo_greater", mp1.the_geom)]
-        ).ids
+        )
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.city, "Mp2")
 
-        find = self.env["dummy.zip"].search([("id", "=", result[0])])
-        self.assertEqual(find.city, "Mp2")
+        result = zip_item.search(
+            [
+                ("city", "ilike", "Mp2"),
+                (
+                    "the_geom",
+                    "geo_greater",
+                    {"dummy.zip.the_geom": [("id", "=", mp1.id)]},
+                ),
+            ]
+        )
 
-    def test_geo_search_lesser_multi_polygon(self):
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.city, "Mp2")
+
+    def test_search_lesser_multi_polygon(self):
         zip_item = self.env["dummy.zip"]
         self.env["dummy.zip"].create(
             {
@@ -550,10 +642,24 @@ class TestModel(TransactionCase):
         )
         result = zip_item.search(
             [("city", "ilike", "Mp1"), ("the_geom", "geo_lesser", mp2.the_geom)]
-        ).ids
+        )
 
-        find = self.env["dummy.zip"].search([("id", "=", result[0])])
-        self.assertEqual(find.city, "Mp1")
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.city, "Mp1")
+
+        result = zip_item.search(
+            [
+                ("city", "ilike", "Mp1"),
+                (
+                    "the_geom",
+                    "geo_lesser",
+                    {"dummy.zip.the_geom": [("id", "=", mp2.id)]},
+                ),
+            ]
+        )
+
+        self.assertEqual(1, len(result))
+        self.assertEqual(result.city, "Mp1")
 
     def test_from_lat_lon(self):
         latitude = 49.72842315886126
@@ -580,14 +686,16 @@ class TestModel(TransactionCase):
     def test_deprecated_geo_search__intersect_for_zip_1169(self):
         retails = self.env["retail.machine"]
         zip_item = self.env["dummy.zip"].search([("name", "ilike", "1169")])
-        result = retails.geo_search([("the_point", "geo_intersect", zip_item.the_geom)])
+        result = retails.geo_search(
+            geo_domain=[("the_point", "geo_intersect", zip_item.the_geom)]
+        )
         self.assertEqual(len(result), 2)
 
     def test_deprecated_geo_search__intersect_for_zip_1169_with_dict(self):
         retails = self.env["retail.machine"]
         zip_item = self.env["dummy.zip"].search([("name", "ilike", "1169")])
         result = retails.geo_search(
-            [
+            geo_domain=[
                 (
                     "the_point",
                     "geo_intersect",
