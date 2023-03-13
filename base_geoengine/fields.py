@@ -48,7 +48,7 @@ class GeoField(fields.Field):
         if shape_to_write.is_empty:
             return None
         else:
-            return shape_to_write.wkt
+            return f"SRID={self.srid};{shape_to_write.wkt}"
 
     def convert_to_cache(self, value, record, validate=True):
         val = value
