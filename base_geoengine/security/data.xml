@@ -11,4 +11,12 @@
         <field name="users" eval="[(4, ref('base.user_root'))]" />
     </record>
 
+    <record id="base.group_user" model="res.groups">
+        <field name="implied_ids" eval="[Command.link(ref('group_geoengine_user'))]" />
+    </record>
+
+    <record id="base.group_erp_manager" model="res.groups">
+        <field name="implied_ids" eval="[Command.link(ref('group_geoengine_admin'))]" />
+    </record>
+
 </odoo>
