@@ -52,17 +52,18 @@ class GeoVectorLayer(models.Model):
     attribute_field_id = fields.Many2one(
         "ir.model.fields", "Attribute field", domain=[("ttype", "in", SUPPORTED_ATT)]
     )
+    model_id = fields.Many2one("ir.model", "Model to use")
     geo_field_id = fields.Many2one(
         "ir.model.fields",
         "Geo field",
-        domain=[("ttype", "ilike", "geo_")],
+        domain="[('ttype', 'ilike', 'geo_'),('model_id', '=', model_id)]",
         required=True,
         ondelete="cascade",
     )
     view_id = fields.Many2one(
         "ir.ui.view", "Related View", domain=[("type", "=", "geoengine")], required=True
     )
-    sequence = fields.Integer("layer priority lower on top", default=6)
+    sequence = fields.Integer("Layer priority lower on top", default=6)
     readonly = fields.Boolean("Layer is read only")
     display_polygon_labels = fields.Boolean("Display Labels on Polygon")
     active_on_startup = fields.Boolean(
@@ -70,7 +71,6 @@ class GeoVectorLayer(models.Model):
     )
     layer_opacity = fields.Float()
     model_domain = fields.Char(default="[]")
-    model_id = fields.Many2one("ir.model", "Model to use")
     model_view_id = fields.Many2one(
         "ir.ui.view",
         "Model view",
