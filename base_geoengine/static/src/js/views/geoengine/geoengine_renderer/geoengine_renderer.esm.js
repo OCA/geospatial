@@ -3,6 +3,11 @@ import {loadCSS, loadJS, templates} from "@web/core/assets";
 import {GeoengineRecord} from "../geoengine_record/geoengine_record.esm";
 import {LayersPanel} from "../layers_panel/layers_panel.esm";
 import {store} from "../../../store.esm";
+import {useService} from "@web/core/utils/hooks";
+import {registry} from "@web/core/registry";
+import {RelationalModel} from "@web/views/relational_model";
+import pyUtils from "web.py_utils";
+
 const {Component, onWillStart, onMounted, onRendered, reactive, mount} = owl;
 
 /* CONSTANTS */
@@ -21,10 +26,19 @@ export class GeoengineRenderer extends Component {
 
         // When a change is issued in the store the onLayerChanged method is called.
         this.store = reactive(store, () => this.onLayerChanged());
+        this.orm = useService("orm");
+        this.view = useService("view");
+
+        this.services = {};
+        for (const key of RelationalModel.services) {
+            this.services[key] = useService(key);
+        }
+
+        this.cfg_models = [];
 
         onWillStart(() => Promise.all([this.loadJsFiles(), this.loadCssFiles()]));
 
-        onMounted(async () => {
+        onMounted(() => {
             // Retrives all vector layers in the store.
             this.geometryFields = this.store
                 .getVectors()
@@ -129,7 +143,6 @@ export class GeoengineRenderer extends Component {
             style: this.selectStyle,
         });
         this.selectClick.on("select", (e) => {
-            console.log(e);
             const features = e.target.getFeatures();
             this.updateInfoBox(features);
         });
@@ -146,24 +159,46 @@ export class GeoengineRenderer extends Component {
             }
             if (feature !== undefined) {
                 var attributes = feature.get("attributes");
-                this.record = this.props.data.records.find(
-                    (record) => record._values.id === attributes.id
-                );
+
+                if (this.cfg_models.includes(feature.get("model"))) {
+                    this.mountGeoengineRecord(
+                        popup,
+                        this.archInfo,
+                        this.archInfo.templateDocs,
+                        this.model.root,
+                        attributes
+                    );
+                } else {
+                    this.mountGeoengineRecord(
+                        popup,
+                        this.props.archInfo,
+                        this.props.archInfo.templateDocs,
+                        this.props.data,
+                        attributes
+                    );
+                }
+
                 var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
                 this.overlay.setPosition(coord);
-                mount(GeoengineRecord, popup, {
-                    env: this.env,
-                    props: {
-                        archInfo: this.props.archInfo,
-                        record: this.record,
-                        templates: this.props.archInfo.templateDocs,
-                    },
-                    templates,
-                });
             }
         } else {
             this.hidePopup();
         }
+    }
+
+    mountGeoengineRecord(popup, archInfo, templateDocs, model, attributes) {
+        this.record = model.records.find(
+            (record) => record._values.id === attributes.id
+        );
+        mount(GeoengineRecord, popup, {
+            env: this.env,
+            props: {
+                archInfo,
+                record: this.record,
+                templates: templateDocs,
+            },
+            templates,
+        });
     }
 
     clickToHidePopup() {
@@ -201,7 +236,7 @@ export class GeoengineRenderer extends Component {
     }
 
     onInfoBoxClicked() {
-        this.props.openRecord(this.record);
+        this.props.openRecord(this.record.resModel, this.record.resId);
     }
 
     onLayerChanged() {
@@ -234,19 +269,20 @@ export class GeoengineRenderer extends Component {
             });
     }
 
-    renderVectorLayers() {
+    async renderVectorLayers() {
         const data = this.props.data.records;
         this.map.getLayers().forEach((layer) => {
             if (layer.get("title") === "Overlays") {
                 this.map.removeLayer(layer);
             }
         });
-        const vectorLayers = this.createVectorLayers(data);
+        const vectorLayers = await this.createVectorLayers(data);
+        const result = await Promise.all(vectorLayers);
         this.overlaysGroup = new ol.layer.Group({
             title: "Overlays",
-            layers: vectorLayers,
+            layers: result,
         });
-        vectorLayers.forEach((vlayer) => {
+        result.forEach((vlayer) => {
             this.store.getVectors().forEach((vector) => {
                 if (vlayer.values_.title === vector.name) {
                     vlayer.setVisible(vector.isVisible);
@@ -255,8 +291,12 @@ export class GeoengineRenderer extends Component {
         });
         this.map.addLayer(this.overlaysGroup);
 
+        this.updateZoom(data, result);
+    }
+
+    updateZoom(data, result) {
         if (data.length) {
-            var extent = vectorLayers[0].getSource().getExtent();
+            var extent = result[0].getSource().getExtent();
             var infinite_extent = [Infinity, Infinity, -Infinity, -Infinity];
             if (extent !== infinite_extent) {
                 var map_view = this.map.getView();
@@ -273,47 +313,120 @@ export class GeoengineRenderer extends Component {
             .map((layer) => this.createVectorLayer(layer, data));
     }
 
-    createVectorLayer(cfg, data) {
+    async createVectorLayer(cfg, data) {
         if (!data.length) {
             return new ol.layer.Vector({
                 source: new ol.source.Vector(),
                 title: cfg.name,
             });
         }
+        const styleInfo = this.styleVectorLayer(cfg, data);
+        var lv = new ol.layer.Vector({
+            title: cfg.name,
+            active_on_startup: cfg.active_on_startup,
+            style: styleInfo.style,
+        });
+        if (cfg.model) {
+            this.cfg_models.push(cfg.model);
+            const fields_to_read = [cfg.geo_field_id[1]];
+            if (cfg.attribute_field_id) {
+                fields_to_read.push(cfg.attribute_field_id[1]);
+            }
+            const domain = this.evalModelDomain(cfg);
+            await this.loadView(cfg, domain);
+            this.orm.searchRead(cfg.model, [domain][0], fields_to_read).then((res) => {
+                this.addSourceToLayer(res, cfg, lv);
+            });
+        } else {
+            this.addSourceToLayer(data, cfg, lv);
+        }
+        if (cfg.layer_opacity) {
+            lv.setOpacity(cfg.layer_opacity);
+        }
+        return lv;
+    }
 
+    addSourceToLayer(res, cfg, lv) {
         this.vectorSource = new ol.source.Vector();
+        this.addFeatureToSource(res, cfg);
+        lv.setSource(this.vectorSource);
+    }
+
+    evalModelDomain(cfg) {
+        let domain = [];
+        if (cfg.model_domain.includes("active_ids")) {
+            domain = pyUtils.py_eval(cfg.model_domain, {
+                active_ids: this.props.data.records.map(
+                    (datapoint) => `${datapoint.resId}`
+                ),
+            });
+        } else {
+            domain = pyUtils.py_eval(cfg.model_domain);
+        }
+        return domain;
+    }
+
+    async loadView(cfg, domain) {
+        const viewRegistry = registry.category("views");
+        const fields = await this.view.loadFields(cfg.model, {
+            attributes: [
+                "store",
+                "searchable",
+                "type",
+                "string",
+                "relation",
+                "selection",
+                "related",
+            ],
+        });
+        const {relatedModels, views} = await this.view.loadViews({
+            resModel: cfg.model,
+            views: [[false, "geoengine"]],
+        });
+        const {ArchParser, Model} = viewRegistry.get("geoengine");
+        this.archInfo = new ArchParser().parse(
+            views.geoengine.arch,
+            relatedModels,
+            cfg.model
+        );
+        const searchParams = {
+            activeFields: this.archInfo.activeFields,
+            resModel: cfg.model,
+            fields: fields,
+        };
+        this.model = new Model(this.env, searchParams, this.services);
+        await this.model.load({domain});
+    }
+
+    addFeatureToSource(data, cfg) {
         data.forEach((item) => {
-            var attributes = _.clone(item._values);
+            var attributes =
+                item._values === undefined ? _.clone(item) : _.clone(item._values);
             this.geometryFields.forEach((geo_field) => delete attributes[geo_field]);
 
             if (cfg.display_polygon_labels === true) {
-                attributes.label = item._values[cfg.attribute_field_id[1]];
+                attributes.label =
+                    item._values === undefined
+                        ? item[cfg.attribute_field_id[1]]
+                        : item._values[cfg.attribute_field_id[1]];
             } else {
                 attributes.label = "";
             }
 
-            const json_geometry = item._values[cfg.geo_field_id[1]];
+            const json_geometry =
+                item._values === undefined
+                    ? item[cfg.geo_field_id[1]]
+                    : item._values[cfg.geo_field_id[1]];
             if (json_geometry) {
                 const feature = new ol.Feature({
                     geometry: new ol.format.GeoJSON().readGeometry(json_geometry),
                     attributes: attributes,
+                    model: cfg.model,
                 });
 
                 this.vectorSource.addFeature(feature);
             }
         });
-        const styleInfo = this.styleVectorLayer(cfg, data);
-        var lv = new ol.layer.Vector({
-            source: this.vectorSource,
-            title: cfg.name,
-            active_on_startup: cfg.active_on_startup,
-            style: styleInfo.style,
-        });
-        this.vectorSources.push(this.vectorSource);
-        if (cfg.layer_opacity) {
-            lv.setOpacity(cfg.layer_opacity);
-        }
-        return lv;
     }
 
     styleVectorLayer(cfg, data) {
