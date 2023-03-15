@@ -20,6 +20,11 @@
                     <field name="readonly" />
                     <field name="layer_opacity" />
                 </group>
+                <group string="Related Model" col="4" colspan="4">
+                    <field name="model_id" />
+                    <field name="model_domain" />
+                    <field name="model_view_id" domain="[('mode', '=', 'geoengine')]" />
+                </group>
                 <group string="Representation" col="4" colspan="4">
                     <field name="geo_repr" />
                 </group>
@@ -28,9 +33,9 @@
                     attrs="{'invisible': [('geo_repr', '!=', 'basic')]}"
                 >
                     <tree editable="bottom">
-                      <field name="img" placeholder="module/static/img/icon.png" />
-                      <field name="fieldname" />
-                      <field name="value" />
+                        <field name="img" placeholder="module/static/img/icon.png" />
+                        <field name="fieldname" />
+                        <field name="value" />
                     </tree>
                 </field>
                 <group
@@ -44,16 +49,17 @@
                     />
                 </group>
                 <group string="Colors" col="4" colspan="4">
-                    <field name="begin_color" />
+                    <field name="begin_color" widget="color" />
                     <group
                         colspan="4"
                         attrs="{'invisible': [('geo_repr', 'in', ['basic', 'proportion'])]}"
                     >
-                    <field
+                        <field
                             name="end_color"
                             attrs="{'invisible': [('classification', 'in', ['unique', False])], 'required': [('classification', 'in', ['interval', 'quantil'])]}"
+                            widget="color"
                         />
-                    <field
+                        <field
                             name="nb_class"
                             attrs="{'invisible': [('classification', 'in', ['unique', False])], 'required': [('classification', 'in', ['interval', 'quantil'])]}"
                         />
