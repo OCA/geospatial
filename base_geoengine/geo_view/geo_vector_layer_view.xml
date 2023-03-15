@@ -32,19 +32,6 @@
                     <group string="Representation" col="4" colspan="4">
                         <field name="geo_repr" />
                     </group>
-                    <field
-                        name="symbol_ids"
-                        attrs="{'invisible': [('geo_repr', '!=', 'basic')]}"
-                    >
-                        <tree editable="bottom">
-                            <field
-                                name="img"
-                                placeholder="module/static/img/icon.png"
-                            />
-                            <field name="fieldname" />
-                            <field name="value" />
-                        </tree>
-                    </field>
                     <group
                         string="Classification"
                         colspan="4"
