@@ -2,11 +2,14 @@
 import {Layout} from "@web/search/layout";
 import {useModel} from "@web/views/model";
 import {usePager} from "@web/search/pager_hook";
+import {useService} from "@web/core/utils/hooks";
 
 const {Component} = owl;
 
 export class GeoengineController extends Component {
     setup() {
+        this.actionService = useService("action");
+        this.view = useService("view");
         this.model = useModel(this.props.Model, {
             activeFields: this.props.archInfo.activeFields,
             resModel: this.props.resModel,
@@ -28,9 +31,15 @@ export class GeoengineController extends Component {
             };
         });
     }
-    async openRecord(record) {
-        const activeIds = this.model.root.records.map((datapoint) => datapoint.resId);
-        this.props.selectRecord(record.resId, {activeIds});
+
+    async openRecord(resModel, resId) {
+        const {views} = await this.view.loadViews({resModel, views: [[false, "form"]]});
+        this.actionService.doAction({
+            type: "ir.actions.act_window",
+            res_model: resModel,
+            views: [[views.form.id, "form"]],
+            res_id: resId,
+        });
     }
 }
 

@@ -53,7 +53,6 @@ export class LayersPanel extends Component {
      * @param {*} layer
      */
     onVectorChange(layer) {
-        console.log("je passe");
         const indexVector = store
             .getVectors()
             .findIndex((vector) => vector.name === layer.name);
