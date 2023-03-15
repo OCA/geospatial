@@ -343,6 +343,7 @@ export class GeoengineRenderer extends Component {
         if (cfg.layer_opacity) {
             lv.setOpacity(cfg.layer_opacity);
         }
+        lv.setZIndex(cfg.sequence);
         return lv;
     }
 
