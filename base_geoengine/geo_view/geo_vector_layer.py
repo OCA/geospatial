@@ -43,7 +43,6 @@ class GeoVectorLayer(models.Model):
         required=False,
     )
     name = fields.Char("Layer Name", translate=True, required=True)
-    symbol_ids = fields.One2many("geoengine.vector.symbol", "vector_layer_id")
     begin_color = fields.Char("Begin color class", required=False, help="hex value")
     end_color = fields.Char(
         "End color class", required=False, help="hex value", default="#FF680A"
