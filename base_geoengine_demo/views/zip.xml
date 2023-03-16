@@ -17,7 +17,7 @@
           </group>
           <notebook colspan="4">
             <page string="Geometry">
-              <field name="the_geom" />
+              <field name="the_geom" options="{'opacity': 0.8, 'color': '#0000FF' }" />
             </page>
             <!--<page string="Geometry - Polygon">
             <field name="the_geom_poly" />
