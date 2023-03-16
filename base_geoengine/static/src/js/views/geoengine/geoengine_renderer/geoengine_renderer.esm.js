@@ -114,14 +114,88 @@ export class GeoengineRenderer extends Component {
     }
 
     createBackgroundLayers(backgrounds) {
+        const source = [];
+        source.push(new ol.layer.Tile({source: new ol.source.OSM()}));
         const backgroundLayers = backgrounds.map((background) => {
-            if (background.raster_type === "osm") {
-                return new ol.layer.Tile({
-                    title: background.name,
-                    visible: !background.overlay,
-                    type: "base",
-                    source: new ol.source.OSM(),
-                });
+            switch (background.raster_type) {
+                case "osm":
+                    return new ol.layer.Tile({
+                        title: background.name,
+                        visible: !background.overlay,
+                        type: "base",
+                        source: new ol.source.OSM(),
+                    });
+                case "wmts":
+                    const tilegrid_opt = {};
+                    const source_opt = {
+                        layer: background.name,
+                        matrixSet: background.matrix_set,
+                        attributions: "OUI",
+                    };
+                    const layer_opt = {
+                        title: background.name,
+                        visible: !background.overlay,
+                        type: "base",
+                        style: "default",
+                    };
+                    const urls_wmts = background.url.split(",");
+                    if (urls_wmts.length > 1) {
+                        source_opt.urls = urls_wmts;
+                    } else {
+                        source_opt.url = urls_wmts[0];
+                    }
+                    if (background.format_suffix) {
+                        source_opt.format = background.format_suffix;
+                    }
+                    if (background.request_encoding) {
+                        source_opt.request_encoding = background.request_encoding;
+                    }
+                    if (background.projection) {
+                        source_opt.projection = ol.proj.get(background.projection);
+                        if (source_opt.projection) {
+                            const projectionExtent = source_opt.projection.getExtent();
+                            tilegrid_opt.origin =
+                                ol.extent.getTopLeft(projectionExtent);
+                        }
+                    }
+                    if (background.resolutions) {
+                        tilegrid_opt.resolutions = background.resolutions
+                            .split(",")
+                            .map(Number);
+                        const nbRes = tilegrid_opt.resolutions.length;
+                        const matrixIds = new Array(nbRes);
+                        for (let i = 0; i < nbRes; i++) {
+                            matrixIds[i] = i;
+                        }
+                        tilegrid_opt.matrixIds = matrixIds;
+                    }
+                    if (background.max_extent) {
+                        const extent = background.max_extent.split(",").map(Number);
+                        layer_opt.extent = extent;
+                        tilegrid_opt.extent = extent;
+                    }
+                    if (background.params) {
+                        source_opt.dimensions = JSON.parse(background.params);
+                    }
+                    source_opt.tileGrid = new ol.tilegrid.WMTS(tilegrid_opt);
+                    layer_opt.source = new ol.source.WMTS(source_opt);
+                    return new ol.layer.Tile(layer_opt);
+                case "d_wms":
+                    const source_opt_wms = {
+                        params: JSON.parse(background.params_wms),
+                        serverType: background.server_type,
+                    };
+                    const urls = background.url.split(",");
+                    if (urls.length > 1) {
+                        source_opt_wms.urls = urls;
+                    } else {
+                        source_opt_wms.url = urls[0];
+                    }
+                    return new ol.layer.Tile({
+                        title: background.name,
+                        visible: !background.overlay,
+                        source: new ol.source.TileWMS(source_opt_wms),
+                    });
             }
             return undefined;
         });
@@ -130,7 +204,7 @@ export class GeoengineRenderer extends Component {
         if (index !== -1) {
             backgroundLayers.splice(index, 1);
         }
-        return backgroundLayers;
+        return source.concat(backgroundLayers);
     }
 
     setupControls() {
