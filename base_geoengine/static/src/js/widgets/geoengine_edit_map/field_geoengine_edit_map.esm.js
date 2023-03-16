@@ -7,6 +7,7 @@
 import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
+import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
 const {Component, onWillStart, onMounted, onRendered} = owl;
 
@@ -18,9 +19,7 @@ export class FieldGeoEngineEditMap extends Component {
         this.id = `map_${Date.now()}`;
         this.orm = useService("orm");
 
-        onWillStart(async () => {
-            return loadJS(["/base_geoengine/static/lib/ol-7.2.2/ol.js"]);
-        });
+        onWillStart(() => Promise.all([this.loadJsFiles()]));
 
         // Is executed when component is mounted.
         onMounted(async () => {
@@ -45,29 +44,41 @@ export class FieldGeoEngineEditMap extends Component {
         });
     }
 
+    async loadJsFiles() {
+        const files = [
+            "/base_geoengine/static/lib/ol-7.2.2/ol.js",
+            "/base_geoengine/static/lib/chromajs-2.4.2/chroma.js",
+        ];
+        for (const file of files) {
+            await loadJS(file);
+        }
+    }
+
     /**
      * Displays geo data on the map using the collection of features.
      */
     createVectorLayer() {
         this.features = new ol.Collection();
         this.source = new ol.source.Vector({features: this.features});
+        const colorHex = this.props.color !== undefined ? this.props.color : "#ee9900";
+        const opacity = this.props.opacity !== undefined ? this.props.opacity : 1;
+        const color = chroma(colorHex).alpha(opacity).css();
+        const fill = new ol.style.Fill({
+            color: color,
+        });
+        const stroke = new ol.style.Stroke({
+            color,
+            width: 2,
+        });
         return new ol.layer.Vector({
             source: this.source,
             style: new ol.style.Style({
-                fill: new ol.style.Fill({
-                    color: "#ee9900",
-                    opacity: 0.7,
-                }),
-                stroke: new ol.style.Stroke({
-                    color: "#ee9900",
-                    width: 3,
-                    opacity: 1,
-                }),
+                fill,
+                stroke,
                 image: new ol.style.Circle({
-                    radius: 7,
-                    fill: new ol.style.Fill({
-                        color: "#ffcc33",
-                    }),
+                    radius: 5,
+                    fill,
+                    stroke,
                 }),
             }),
         });
@@ -214,6 +225,18 @@ export class FieldGeoEngineEditMap extends Component {
 }
 
 FieldGeoEngineEditMap.template = "base_geoengine.FieldGeoEngineEditMap";
+FieldGeoEngineEditMap.props = {
+    ...standardFieldProps,
+    opacity: {type: Number, optional: true},
+    color: {type: String, optional: true},
+};
+
+FieldGeoEngineEditMap.extractProps = ({attrs}) => {
+    return {
+        opacity: attrs.options.opacity,
+        color: attrs.options.color,
+    };
+};
 
 export class FieldGeoEngineEditMapMultiPolygon extends FieldGeoEngineEditMap {
     setup() {
