@@ -739,4 +739,9 @@ export class GeoengineRenderer extends Component {
 }
 
 GeoengineRenderer.template = "base_geoengine.GeoengineRenderer";
+GeoengineRenderer.props = {
+    archInfo: {type: Object, optional: false},
+    data: {type: Object, optional: false},
+    openRecord: {type: Function, optional: false},
+};
 GeoengineRenderer.components = {LayersPanel, GeoengineRecord};
