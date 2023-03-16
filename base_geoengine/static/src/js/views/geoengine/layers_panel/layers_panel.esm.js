@@ -81,4 +81,7 @@ export class LayersPanel extends Component {
 }
 
 LayersPanel.template = "base_geoengine.LayersPanel";
+LayersPanel.props = {
+    model: {type: String, optional: false},
+};
 LayersPanel.components = {CheckBox};
