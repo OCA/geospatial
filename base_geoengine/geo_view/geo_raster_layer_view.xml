@@ -6,58 +6,84 @@
         <field name="model">geoengine.raster.layer</field>
         <field name="arch" type="xml">
             <form string="Raster Layer View">
-                <group string="General" col="4">
-                    <field name="name" colspan="4" />
-                    <field name="view_id" />
-                    <field name="raster_type" />
-                    <field name="sequence" />
-                    <field name="overlay" />
-                    <field name="use_to_edit" colspan="4" />
-                    <field
-                        name="url"
+                <sheet>
+                    <group string="General" col="4">
+                        <field name="name" />
+                        <field name="view_id" />
+                        <field name="raster_type" />
+                        <field name="sequence" />
+                        <field name="overlay" />
+                        <field name="use_to_edit" />
+                        <field
+                            name="url"
+                            colspan="4"
+                            widget="url"
+                            attrs="{'required': [('is_wmts', '=', True)]}"
+                        />
+                    </group>
+                    <field name="is_wmts" invisible="1" />
+                    <group
+                        string="WMTS options"
+                        attrs="{'invisible': [('is_wmts', '=', False)]}"
                         colspan="4"
-                        widget="url"
-                        attrs="{'required': [('is_wmts', '=', True)]}"
-                    />
-                </group>
-                <field name="is_wmts" invisible="1" />
-                <group
-                    string="WMTS options"
-                    attrs="{'invisible': [('is_wmts', '=', False)]}"
-                    colspan="4"
-                >
-                  <field
-                        name="matrix_set"
-                        attrs="{'required': [('is_wmts', '=', True)]}"
-                    />
-                  <field name="format_suffix" />
-                  <field name="request_encoding" />
-                  <field name="projection" />
-                  <field name="units" />
-                  <field name="resolutions" />
-                  <field name="max_extent" />
-                  <field name="dimensions" />
-                  <field name="params" />
-                </group>
-                <field name="has_type" invisible="1" />
-                <group
-                    string="Layer data"
-                    attrs="{'invisible': [('has_type', '=', False)]}"
-                    colspan="4"
-                >
-                  <field
-                        name="type_id"
-                        widget="selection"
-                        attrs="{'required': [('has_type', '=', True)]}"
-                    />
-                </group>
-                <group
-                    string="Odoo layer data (Not implemented)"
-                    attrs="{'invisible': [('raster_type', '!=', 'odoo')]}"
-                    colspan="4"
-                >
-                    <field name="field_id" />
-                </group>
+                    >
+                        <field
+                            name="matrix_set"
+                            attrs="{'required': [('is_wmts', '=', True)]}"
+                        />
+                        <field
+                            name="format_suffix"
+                            attrs="{'required': [('is_wmts', '=', True)]}"
+                        />
+                        <field name="request_encoding" />
+                        <field
+                            name="projection"
+                            attrs="{'required': [('is_wmts', '=', True)]}"
+                        />
+                        <field name="units" />
+                        <field
+                            name="resolutions"
+                            attrs="{'required': [('is_wmts', '=', True)]}"
+                        />
+                        <field name="max_extent" />
+                        <field name="dimensions" />
+                        <field name="params" />
+                    </group>
+                    <field name="is_wms" invisible="1" />
+                    <group
+                        string="WMS options"
+                        attrs="{'invisible': [('is_wms', '=', False)]}"
+                        colspan="4"
+                    >
+                        <field
+                            name="params_wms"
+                            attrs="{'required': [('is_wms', '=', True)]}"
+                        />
+                        <field
+                            name="server_type"
+                            attrs="{'required': [('is_wms', '=', True)]}"
+                        />
+                    </group>
+                    <field name="has_type" invisible="1" />
+                    <group
+                        string="Layer data"
+                        attrs="{'invisible': [('has_type', '=', False)]}"
+                        colspan="4"
+                    >
+                        <field
+                            name="type_id"
+                            widget="selection"
+                            attrs="{'required': [('has_type', '=', True)]}"
+                        />
+                    </group>
+                    <group
+                        string="Odoo layer data (Not implemented)"
+                        attrs="{'invisible': [('raster_type', '!=', 'odoo')]}"
+                        colspan="4"
+                    >
+                        <field name="field_id" />
+                    </group>
+                </sheet>
             </form>
         </field>
     </record>
