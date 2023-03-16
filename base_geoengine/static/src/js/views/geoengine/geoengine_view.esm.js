@@ -1,5 +1,9 @@
 /** @odoo-module */
 
+/**
+ * Copyright 2023 ACSONE SA/NV
+ */
+
 import {_lt} from "@web/core/l10n/translation";
 import {GeoengineController} from "./geoengine_controller/geoengine_controller.esm";
 import {GeoengineRenderer} from "./geoengine_renderer/geoengine_renderer.esm";

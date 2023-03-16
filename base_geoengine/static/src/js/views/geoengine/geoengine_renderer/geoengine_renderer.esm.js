@@ -1,4 +1,9 @@
 /** @odoo-module */
+
+/**
+ * Copyright 2023 ACSONE SA/NV
+ */
+
 import {loadCSS, loadJS, templates} from "@web/core/assets";
 import {GeoengineRecord} from "../geoengine_record/geoengine_record.esm";
 import {LayersPanel} from "../layers_panel/layers_panel.esm";
