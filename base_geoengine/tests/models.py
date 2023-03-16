@@ -1,3 +1,4 @@
+# Copyright 2023 ACSONE SA/NV
 from odoo import fields, models
 
 

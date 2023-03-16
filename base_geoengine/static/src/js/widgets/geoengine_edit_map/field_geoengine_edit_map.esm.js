@@ -1,5 +1,9 @@
 /** @odoo-module **/
 
+/**
+ * Copyright 2023 ACSONE SA/NV
+ */
+
 import {loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
