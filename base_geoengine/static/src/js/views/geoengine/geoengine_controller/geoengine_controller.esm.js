@@ -1,4 +1,9 @@
 /** @odoo-module */
+
+/**
+ * Copyright 2023 ACSONE SA/NV
+ */
+
 import {Layout} from "@web/search/layout";
 import {useModel} from "@web/views/model";
 import {usePager} from "@web/search/pager_hook";

@@ -1,4 +1,9 @@
 /** @odoo-module */
+
+/**
+ * Copyright 2023 ACSONE SA/NV
+ */
+
 import {addFieldDependencies} from "@web/views/utils";
 import {Field} from "@web/views/fields/field";
 import {Widget} from "@web/views/widgets/widget";
