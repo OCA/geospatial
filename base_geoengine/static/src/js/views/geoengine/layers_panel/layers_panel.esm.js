@@ -1,4 +1,9 @@
 /** @odoo-module */
+
+/**
+ * Copyright 2023 ACSONE SA/NV
+ */
+
 import {CheckBox} from "@web/core/checkbox/checkbox";
 import {store} from "../../../store.esm";
 import {useService} from "@web/core/utils/hooks";

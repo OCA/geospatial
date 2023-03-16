@@ -1,3 +1,4 @@
+# Copyright 2023 ACSONE SA/NV
 import logging
 
 import geojson
