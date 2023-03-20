@@ -24,6 +24,7 @@ SUPPORTED_ATT = [
 class GeoVectorLayer(models.Model):
     _name = "geoengine.vector.layer"
     _description = "Vector Layer"
+    _order = "sequence ASC, name"
 
     geo_repr = fields.Selection(
         [
