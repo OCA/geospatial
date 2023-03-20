@@ -363,3 +363,7 @@
     margin-bottom: 0.125rem;
     margin-left: 1.5em;
 }
+
+#popup-closer {
+    cursor: pointer;
+}
