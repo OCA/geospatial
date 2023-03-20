@@ -4,3 +4,4 @@
 * Sandy Carter <sandy.carter@savoirfairelinux.com>
 * Daniel Reis <dreis@opensourceintegrators.com>
 * Alexandre Saunier <alexandre.saunier@camptocamp.com>
+* Samuel Kouff <s.kouff@student.helmo.be>
