@@ -30,6 +30,10 @@ expression.TERM_OPERATORS = tuple(term_operators_list)
 
 
 def __leaf_to_sql(self, leaf, model, alias):
+    """
+    This method has been monkey patched in order to be able to include
+    geo_operators into the Odoo search method.
+    """
     left, operator, right = leaf
 
     if isinstance(leaf, (list, tuple)):
@@ -90,6 +94,9 @@ def __leaf_to_sql(self, leaf, model, alias):
 
 
 def get_geo_func(current_operator, operator, left, right, params, table):
+    """
+    This method will call the SQL query corresponding to the requested geo operator
+    """
     match operator:
         case "geo_greater":
             query = current_operator.get_geo_greater_sql(table, left, right, params)

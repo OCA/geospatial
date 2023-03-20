@@ -17,3 +17,4 @@
 * Thomas Nowicki <thomas.nowicki@camptocamp.com>
 * Alexandre Saunier <alexandre.saunier@camptocamp.com>
 * Sandip Mangukiya <smangukiya@opensourceintegrators.com>
+* Samuel Kouff <s.kouff@student.helmo.be>
