@@ -413,7 +413,10 @@ export class GeoengineRenderer extends Component {
      */
     updateZoom(data, result) {
         if (data.length) {
-            var extent = result[0].getSource().getExtent();
+            var extent = result
+                .find((res) => res.values_.visible === true)
+                .getSource()
+                .getExtent();
             var infinite_extent = [Infinity, Infinity, -Infinity, -Infinity];
             if (extent !== infinite_extent) {
                 var map_view = this.map.getView();
