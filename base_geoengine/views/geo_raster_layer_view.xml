@@ -18,7 +18,7 @@
                             name="url"
                             colspan="4"
                             widget="url"
-                            attrs="{'required': [('is_wmts', '=', True)]}"
+                            attrs="{'required': ['|',('is_wmts', '=', True),('is_wms', '=', True)]}"
                         />
                     </group>
                     <field name="is_wmts" invisible="1" />
@@ -40,7 +40,7 @@
                             name="projection"
                             attrs="{'required': [('is_wmts', '=', True)]}"
                         />
-                        <field name="units" />
+                        <field name="units" /> <!-- Not used -->
                         <field
                             name="resolutions"
                             attrs="{'required': [('is_wmts', '=', True)]}"

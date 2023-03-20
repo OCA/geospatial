@@ -18,7 +18,7 @@ export class GeoengineArchParser extends XMLParser {
      * @param {*} arch
      * @param {*} models
      * @param {*} modelName
-     * @returns
+     * @returns {Object}
      */
     parse(arch, models, modelName) {
         const xmlDoc = this.parseXML(arch);
