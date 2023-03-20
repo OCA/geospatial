@@ -7,7 +7,8 @@
   his type. We can also provide an option attribute that allows us to pass an opacity and a color as
   parameters.
 
-.. code-block::xml
+.. code-block:: xml
+
     <form>
         <notebook colspan="4">
             <page string="Geometry">
@@ -17,11 +18,16 @@
     </form>
 
 * The method geo_search is now deprecated. We now need to use the standard odoo search method.
-  obj.search([("the_point","geo_intersect",{"dummy.zip.the_geom": [("id", "=", rec.id)]})])
+
+.. code-block:: python
+
+    obj.search([("the_point","geo_intersect",{"dummy.zip.the_geom": [("id", "=", rec.id)]})])
+
 * We can now pass to the geoengine view a template to display the information we want
   to see when clicking on a feature.
 
-.. code-block::xml
+.. code-block:: xml
+
     <geoengine>
         <field name="name" />
         <field name="city" />
@@ -42,7 +48,8 @@
 
 * We can now pass a model to use to a layer to display other information on the map.
 
-.. code-block::xml
+.. code-block:: xml
+
     <record id="geoengine_vector_layer_hs_retail_machines" model="geoengine.vector.layer">
         <field name="model_id" ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine"/>
         <field name="model_domain">[('state', '=', 'hs')]</field>
