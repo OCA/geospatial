@@ -85,7 +85,7 @@ export class FieldGeoEngineEditMap extends Component {
     }
 
     /**
-     * Call the method that create the layer to display the geo data on the map.
+     * Call the method that creates the layer to display the geo data on the map.
      */
     createLayers() {
         this.vectorLayer = this.createVectorLayer();
@@ -93,6 +93,7 @@ export class FieldGeoEngineEditMap extends Component {
 
     /**
      * Allows you to centre the area defined for the user.
+     * If there is an item to display.
      */
     updateMapZoom() {
         if (this.source) {
@@ -108,7 +109,8 @@ export class FieldGeoEngineEditMap extends Component {
     }
 
     /**
-     * Is executed after component is rendered.
+     * Allows you to centre the area defined for the user.
+     * If there is not item to display.
      */
     updateMapEmpty() {
         var map_view = this.map.getView();
@@ -123,12 +125,11 @@ export class FieldGeoEngineEditMap extends Component {
      * Based on the value passed in props, adds a new feature to the collection.
      * @param {*} value
      */
-
     setValue(value) {
         if (this.map) {
             /**
-             * If the value to be displayed is equal to the one passed in props do nothing
-             * otherwise clear the map and displaye the new value.
+             * If the value to be displayed is equal to the one passed in props, do nothing
+             * otherwise clear the map and display the new value.
              */
             if (this.displayValue == value) return;
             this.displayValue = value;
@@ -148,8 +149,8 @@ export class FieldGeoEngineEditMap extends Component {
     }
 
     /**
-     * Is triggered when the view changed. When we have finished drawing our geo data or when we clear
-     * the map.
+     * This is triggered when the view changed. When we have finished drawing our geo data, or
+     * when we clear the map.
      */
     onUIChange() {
         var value = null;
@@ -182,7 +183,7 @@ export class FieldGeoEngineEditMap extends Component {
     }
 
     /**
-     * Create the trash button that clear the map.
+     * Create the trash button that clears the map.
      * @returns the div in which the button is located.
      */
     createTrashControl() {
@@ -200,7 +201,7 @@ export class FieldGeoEngineEditMap extends Component {
     }
 
     /**
-     * Displays the map in the div provided
+     * Displays the map in the div provided.
      */
     renderMap() {
         this.map = new ol.Map({
@@ -220,7 +221,9 @@ export class FieldGeoEngineEditMap extends Component {
             internalProjection: this.map.getView().getProjection(),
             externalProjection: "EPSG:" + this.srid,
         });
-        this.setupControls();
+        if (!this.props.readonly) {
+            this.setupControls();
+        }
     }
 }
 

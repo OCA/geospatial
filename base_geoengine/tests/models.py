@@ -3,6 +3,8 @@ from odoo import fields, models
 
 
 class GeoModelTest(models.Model):
+    """GeoModel for testing"""
+
     _name = "geo.model.test"
     name = fields.Char("GeoModelTest")
     geo_multi_polygon = fields.GeoMultiPolygon()
@@ -14,6 +16,8 @@ class GeoModelTest(models.Model):
 
 
 class DummyZip(models.Model):
+    """DummyZip model for testing"""
+
     _name = "dummy.zip"
     _description = "Geoengine demo ZIP"
 
@@ -24,6 +28,8 @@ class DummyZip(models.Model):
 
 
 class RetailMachine(models.Model):
+    """RetailMachine model for testing"""
+
     _name = "retail.machine"
     _description = "Geoengine demo retailing machine"
 

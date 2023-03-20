@@ -18,9 +18,7 @@ const {Component, onWillStart, onMounted, onRendered, reactive, mount} = owl;
 /* CONSTANTS */
 const DEFAULT_BEGIN_COLOR = "#FFFFFF";
 const DEFAULT_END_COLOR = "#000000";
-// For prop symbols only
 const DEFAULT_MIN_SIZE = 5;
-// For prop symbols only
 const DEFAULT_MAX_SIZE = 15;
 // For choroplets only
 const DEFAULT_NUM_CLASSES = 5;
@@ -34,12 +32,15 @@ export class GeoengineRenderer extends Component {
         this.orm = useService("orm");
         this.view = useService("view");
 
+        // For related model we need to load all the service needed by RelationalModel
         this.services = {};
         for (const key of RelationalModel.services) {
             this.services[key] = useService(key);
         }
 
         this.cfg_models = [];
+
+        // Load all js and css files
 
         onWillStart(() => Promise.all([this.loadJsFiles(), this.loadCssFiles()]));
 
@@ -101,7 +102,10 @@ export class GeoengineRenderer extends Component {
             this.registerInteraction();
         }
     }
-
+    /**
+     * Create the info-box overlay that can be displayed over the map and
+     * attached to a single map location.
+     */
     createOverlay() {
         this.overlay = new ol.Overlay({
             element: document.getElementById("popup"),
@@ -130,7 +134,6 @@ export class GeoengineRenderer extends Component {
                     const source_opt = {
                         layer: background.name,
                         matrixSet: background.matrix_set,
-                        attributions: "OUI",
                     };
                     const layer_opt = {
                         title: background.name,
@@ -196,22 +199,24 @@ export class GeoengineRenderer extends Component {
                         visible: !background.overlay,
                         source: new ol.source.TileWMS(source_opt_wms),
                     });
+                default:
+                    return undefined;
             }
-            return undefined;
         });
-        // Pour le moment pour que ça marche car je prend pas en compte toute les types.
-        const index = backgroundLayers.findIndex((layer) => layer === undefined);
-        if (index !== -1) {
-            backgroundLayers.splice(index, 1);
-        }
         return source.concat(backgroundLayers);
     }
 
+    /**
+     * Add 'ScaleLine' control.
+     */
     setupControls() {
         const scaleLine = new ol.control.ScaleLine();
         this.map.addControl(scaleLine);
     }
-
+    /**
+     * Add 2 interactions. The first is for the hovering of the elements.
+     * The second is for the click on the feature.
+     */
     registerInteraction() {
         var selectPointerMove = new ol.interaction.Select({
             condition: ol.events.condition.pointerMove,
@@ -229,6 +234,40 @@ export class GeoengineRenderer extends Component {
         this.map.addInteraction(selectPointerMove);
     }
 
+    /**
+     * This is the style that is set when selecting or clicking on a feature.
+     * @param {*} feature
+     * @returns style
+     */
+    selectStyle(feature) {
+        var geometryType = feature.getGeometry().getType();
+        switch (geometryType) {
+            case "Point":
+                return new ol.style.Style({
+                    image: new ol.style.Circle({
+                        radius: 3 * 2,
+                        fill: new ol.style.Fill({
+                            color: [0, 153, 255, 1],
+                        }),
+                        stroke: new ol.style.Stroke({
+                            color: [255, 255, 255, 1],
+                            width: 3 / 2,
+                        }),
+                    }),
+                    zIndex: Infinity,
+                });
+            case "MultiPolygon":
+                return new ol.style.Style({
+                    fill: new ol.style.Fill({
+                        color: "rgba(255, 175, 126, 0.8)",
+                    }),
+                });
+        }
+    }
+    /**
+     * Allow you to display the info box on the map.
+     * @param {*} features
+     */
     updateInfoBox(features) {
         const feature = features.item(0);
         if (feature !== undefined) {
@@ -265,6 +304,14 @@ export class GeoengineRenderer extends Component {
         }
     }
 
+    /**
+     * Allow you to mount geoengine record. This displays the record in the info box template.
+     * @param {*} popup
+     * @param {*} archInfo
+     * @param {*} templateDocs
+     * @param {*} model
+     * @param {*} attributes
+     */
     mountGeoengineRecord(popup, archInfo, templateDocs, model, attributes) {
         this.record = model.records.find(
             (record) => record._values.id === attributes.id
@@ -280,44 +327,30 @@ export class GeoengineRenderer extends Component {
         });
     }
 
+    /**
+     * Allow you to hide the popup by clicking on the cross.
+     */
     clickToHidePopup() {
         this.selectClick.getFeatures().clear();
         this.hidePopup();
     }
+
     hidePopup() {
         this.overlay.setPosition(undefined);
     }
 
-    selectStyle(feature) {
-        var geometryType = feature.getGeometry().getType();
-        switch (geometryType) {
-            case "Point":
-                return new ol.style.Style({
-                    image: new ol.style.Circle({
-                        radius: 3 * 2,
-                        fill: new ol.style.Fill({
-                            color: [0, 153, 255, 1],
-                        }),
-                        stroke: new ol.style.Stroke({
-                            color: [255, 255, 255, 1],
-                            width: 3 / 2,
-                        }),
-                    }),
-                    zIndex: Infinity,
-                });
-            case "MultiPolygon":
-                return new ol.style.Style({
-                    fill: new ol.style.Fill({
-                        color: "rgba(255, 175, 126, 0.8)",
-                    }),
-                });
-        }
-    }
-
+    /**
+     * When you click on the arrow button, it calls the controller's
+     * openRecord method.
+     */
     onInfoBoxClicked() {
         this.props.openRecord(this.record.resModel, this.record.resId);
     }
 
+    /**
+     * Allows you to change the visibility of layers. This method is called
+     * when the user changes layers.
+     */
     onLayerChanged() {
         this.map
             .getLayers()
@@ -373,6 +406,11 @@ export class GeoengineRenderer extends Component {
         this.updateZoom(data, result);
     }
 
+    /**
+     * Adapts the zoom according to the result obtained.
+     * @param {*} data
+     * @param {*} result
+     */
     updateZoom(data, result) {
         if (data.length) {
             var extent = result[0].getSource().getExtent();
@@ -405,17 +443,9 @@ export class GeoengineRenderer extends Component {
             active_on_startup: cfg.active_on_startup,
             style: styleInfo.style,
         });
+        // If we want to use an other model in the layer
         if (cfg.model) {
-            this.cfg_models.push(cfg.model);
-            const fields_to_read = [cfg.geo_field_id[1]];
-            if (cfg.attribute_field_id) {
-                fields_to_read.push(cfg.attribute_field_id[1]);
-            }
-            const domain = this.evalModelDomain(cfg);
-            await this.loadView(cfg, domain);
-            this.orm.searchRead(cfg.model, [domain][0], fields_to_read).then((res) => {
-                this.addSourceToLayer(res, cfg, lv);
-            });
+            await this.useRelatedModel(cfg, lv);
         } else {
             this.addSourceToLayer(data, cfg, lv);
         }
@@ -426,14 +456,45 @@ export class GeoengineRenderer extends Component {
         return lv;
     }
 
+    /**
+     * This method is called when a layer uses another model.
+     * @param {*} cfg
+     * @param {*} lv
+     */
+    async useRelatedModel(cfg, lv) {
+        this.cfg_models.push(cfg.model);
+        const fields_to_read = [cfg.geo_field_id[1]];
+        if (cfg.attribute_field_id) {
+            fields_to_read.push(cfg.attribute_field_id[1]);
+        }
+        const domain = this.evalModelDomain(cfg);
+        await this.loadView(cfg, domain);
+        this.orm.searchRead(cfg.model, [domain][0], fields_to_read).then((res) => {
+            this.addSourceToLayer(res, cfg, lv);
+        });
+    }
+
+    /**
+     * Set source to the given layer.
+     * @param {*} res
+     * @param {*} cfg
+     * @param {*} lv
+     */
     addSourceToLayer(res, cfg, lv) {
         this.vectorSource = new ol.source.Vector();
         this.addFeatureToSource(res, cfg);
         lv.setSource(this.vectorSource);
     }
 
+    /**
+     * Evaluates the domain passed to the layer model.
+     * @param {*} cfg
+     * @returns {Array}
+     */
     evalModelDomain(cfg) {
         let domain = [];
+        // We can put active_ids in our domain to get all ids of all the
+        // element displayed.
         if (cfg.model_domain.includes("active_ids")) {
             domain = pyUtils.py_eval(cfg.model_domain, {
                 active_ids: this.props.data.records.map(
@@ -445,7 +506,11 @@ export class GeoengineRenderer extends Component {
         }
         return domain;
     }
-
+    /**
+     * Loads the view of the model that is passed to the layer.
+     * @param {*} cfg
+     * @param {*} domain
+     */
     async loadView(cfg, domain) {
         const viewRegistry = registry.category("views");
         const fields = await this.view.loadFields(cfg.model, {
@@ -529,6 +594,8 @@ export class GeoengineRenderer extends Component {
         var end_color_hex = cfg.end_color || DEFAULT_END_COLOR;
         var begin_color = chroma(begin_color_hex).alpha(opacity).css();
         var end_color = chroma(end_color_hex).alpha(opacity).css();
+        // Function that maps numeric values to a color palette.
+        // This scale function is only used when geo_repr is basic
         var scale = chroma.scale([begin_color, end_color]);
         var serie = new geostats(values);
         var vals = null;
@@ -536,6 +603,7 @@ export class GeoengineRenderer extends Component {
             case "unique":
             case "custom":
                 vals = serie.getClassUniqueValues();
+                // "RdYlBu" is a set of colors
                 scale = chroma.scale("RdYlBu").domain([0, vals.length], vals.length);
                 break;
             case "quantile":
@@ -664,7 +732,7 @@ export class GeoengineRenderer extends Component {
     }
 
     /**
-     * Create feature style based on the color table.
+     * Create a feature style based on the color table.
      * @param {*} colors
      * @returns
      */
@@ -703,7 +771,12 @@ export class GeoengineRenderer extends Component {
         });
         return {fill, stroke};
     }
-
+    /**
+     * Allows you to find the index of the color to be used according to its value.
+     * @param {*} val
+     * @param {*} a
+     * @returns {Number}
+     */
     getClass(val, a) {
         // Classification uniqueValues
         var idx = a.indexOf(val);
@@ -730,7 +803,7 @@ export class GeoengineRenderer extends Component {
      * Extracts the values of the field corresponding to the attribute field.
      * @param {*} cfg, the layer.
      * @param {*} data, all of the records
-     * @returns
+     * @returns {Array}
      */
     extractLayerValues(cfg, data) {
         var indicator = cfg.attribute_field_id[1];
