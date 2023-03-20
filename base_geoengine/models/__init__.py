@@ -18,14 +18,8 @@
 #
 ##############################################################################
 """Module that manages map view and vector/raster layer"""
-from . import geo_model
-from . import geo_operators
-from . import fields
-from . import geo_db
-from . import expressions
+from . import base
 from . import geo_raster_layer
 from . import geo_vector_layer
-from . import geo_vector_symbol
 from . import ir_view
 from . import ir_model
-from . import geo_convertion_helper
