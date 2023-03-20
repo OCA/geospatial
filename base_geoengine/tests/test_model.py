@@ -7,7 +7,7 @@ from shapely.geometry import shape
 
 from odoo.tests.common import TransactionCase
 
-from ..models.fields import GeoPoint
+from ..fields import GeoPoint
 
 
 class TestModel(TransactionCase):
