@@ -14,19 +14,33 @@ Geospatial support for Odoo
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github
-    :target: https://github.com/OCA/geospatial/tree/14.0/base_geoengine
+    :target: https://github.com/OCA/geospatial/tree/16.0/base_geoengine
     :alt: OCA/geospatial
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/geospatial-14-0/geospatial-14-0-base_geoengine
+    :target: https://translation.odoo-community.org/projects/geospatial-16-0/geospatial-16-0-base_geoengine
     :alt: Translate me on Weblate
-.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/115/14.0
-    :alt: Try me on Runbot
+.. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
+    :target: https://runboat.odoo-community.org/webui/builds.html?repo=OCA/geospatial&target_branch=16.0
+    :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
-Geospatial support based on PostGIS add the ability of server to server
-geojson to do geo CRUD and view definition.
+===================
+What is GeoEngine ?
+===================
+
+GeoEngine is an Odoo module that adds spatial/GIS capabilites to Odoo. It will allow you to :
+
+* Visualize and query your business information on map
+* Perform GeoBI and spatial query
+* Configure your spatial layers and spatial datasources
+* Extend Odoo models with spatial columns
+
+GeoEngine relies on `OpenLayers <http://openlayers.org>`_ and `PostgGIS <http://postgis.refractions.net/>`_ technologies.
+
+Postgis is used to store spatial information in databases. OpenLayer is used to represent spatial data in other words to show maps
+and the different spatial layers. The GeoEngine module acts as a data provider and as an OpenLayers configurator.
+It also provides a complete extension to Odoo ORM.
 
 **Table of contents**
 
@@ -49,36 +63,123 @@ The module also requires two additional python libs:
 
 * `geojson <http://pypi.python.org/pypi/geojson>`_
 
-for a complete documentation please refer to the `public documenation <http://oca.github.io/geospatial/index.html>`_
+When you will install the module this two additional libs will be installed.
+
+For a complete documentation please refer to the `public documenation <http://oca.github.io/geospatial/index.html>`_
 
 Usage
 =====
 
-Important changes in version 11
-===============================
+--------------
+Geoengine Demo
+--------------
+1. As a user/admin, when I am in the Geoengine Demo module and I go to the ZIP menu.
+When I click on an item in the list view, I get to the form view showing me the different
+information about the ZIP. We can see its ZIP, city, priority, total sales and his spatial 
+representation.
+2. As a user, I can't modify the information in the form view.
+3. As an admin, I can modify the information in the form view. I can click on the bin button to clear
+the map and I can draw a new shape.
+4. As a user, when I go the "Retail machines" tab and there are no items to display, it does not
+show me anything. 
+5. As an admin, when I go the "Retail machines" tab and there are no items to display, the list view of
+the retail machines suggests to me to add a new line.
+6. As a user/admin, if there are items to be displayed in the "Retail machines" tab then I can click on an 
+item and the retail machines form view will be displayed. We can see its spatial representation by going
+to "The point" tab and its attributes in "Attributes" tab.
+7. As a user/admin, when I go to the geoengine zip view by clicking on the map button at the top right of the
+screen. The geoengine view appears with the first 80 results displayed on the map. The vector layers
+selected are those defined as "active on startup" by the admin. The selected raster layer is the first
+one that is not an overlay layer. 
+8. As a user/admin, when I hover over an area on the map, the area changes its style. 
+9. As a user/admin, when I click on an area, a popup appears an I can see the different information about the
+area. If I click on the cross, the popup will disappear. If I click somewhere else on the map, the
+popup will also disappear. If I click on the about button, then the form view will be displayed.
+10. As a user/admin, when I use the paging system, then the results displayed on the map are different
+(corresponding to the request).
+11. As a user/admin, if we use the search bar, we can search results by his zip or his city.
 
-The geometry attributes must now be explicitly mentioned in the list of fields of
-the XML geoengine view definitions. For instance::
-
-  <record id="some_model_geo_view" model="ir.ui.view">
-    <field name="name">Some data view</field>
-    <field name="model">some.model</field>
-    <field name="arch" type="xml">
-      <geoengine>
-        <field name="name" select="1"/>
-        <field name="the_geom"/>
-      </geoengine>
-    </field>
-  </record>
+------------------
+Geoengine Backend
+------------------
+1. As an admin, if I go into the configuration of the raster layers and it has elements, I can click
+on one and see its information.
+2. As an admin, if I want to create a new raster layer, I can click on "NEW" and fill out the form. The
+required fields for OpenStreetMap type are "Layer Name" and "Related View". If we want to have a 
+WMTS (Web Map Tile Service) raster type. The required fields in addition to the precedents are "Service URL",
+"Matrix set","Format", "Projection" and "Resolutions". If we take WMS (Web Map Service) raster type, then the 
+required fields are "Layer Name", "Related View", "Service URL", "Params", "Server Type".
+3. As an admin,if I go into the configuration of the vector layers and it has elements, I can click
+on one and see its information.
+4. As an admin, if I want to create a new vector layer, I can click on "NEW" and fill out the form. The
+required fields are "Layer Name", "Related View", "Geo field" and "Representation mode".
 
 Known issues / Roadmap
 ======================
 
-* Google layers have been removed as it was not working anyway.
-* Switching from map to form view should be eased to open selected feature.
-  It should work using `do_switch_view` and this probably requires to set `self.dataset.index`
-* A good way to open a record from map should be done with double click.
-  However selection handlers have difficulties to work nice with click events.
+* Allow editing of a layer through a modal window from the geoengine view.
+
+Changelog
+=========
+
+=======================
+16.0.1.0.0 (2023-03-20)
+=======================
+* LayerSwitcher has been removed as it was not really practical. A LayerPanel is now active.
+* The geo_search method is now deprecated and replaced by the standard odoo search method.
+* The widget "geo_edit_map" attribute is no longer necessary as the field is automatically detected by
+  his type. We can also provide an option attribute that allows us to pass an opacity and a color as
+  parameters.
+
+.. code-block::xml
+    <form>
+        <notebook colspan="4">
+            <page string="Geometry">
+                <field name="the_geom" options="{'opacity': 0.8, 'color': '#0000FF' }" />
+            </page>
+        </notebook>
+    </form>
+
+* The method geo_search is now deprecated. We now need to use the standard odoo search method. 
+  obj.search([("the_point","geo_intersect",{"dummy.zip.the_geom": [("id", "=", rec.id)]})])
+* We can now pass to the geoengine view a template to display the information we want 
+  to see when clicking on a feature.
+
+.. code-block::xml
+    <geoengine>
+        <field name="name" />
+        <field name="city" />
+        <field name="total_sales" />
+        <field name="the_geom" />
+        <templates>
+            <t t-name="info_box">
+                <field name="city" widget="badge" />
+                <ul>
+                    <li>ZIP : <field name="name" />
+                    </li>
+                    <li>Total Sales: <field name="total_sales" />
+                    </li>
+                </ul>
+            </t>
+        </templates>
+    </geoengine>
+
+* We can now pass a model to use to a layer to display other information on the map.
+
+.. code-block::xml
+    <record id="geoengine_vector_layer_hs_retail_machines" model="geoengine.vector.layer">
+        <field name="model_id" ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine"/>
+        <field name="model_domain">[('state', '=', 'hs')]</field>
+        <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"/>
+        <field name="name">HS retail machines</field>
+        <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
+        <field name="geo_repr">basic</field>
+        <field name="attribute_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__name"/>
+        <field name="begin_color">#FF0000</field>
+        <field name="display_polygon_labels" eval="0" />
+        <field name="layer_opacity">0.8</field>
+    </record>
+
 
 Bug Tracker
 ===========
@@ -86,21 +187,23 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/geospatial/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/geospatial/issues/new?body=module:%20base_geoengine%0Aversion:%2014.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/geospatial/issues/new?body=module:%20base_geoengine%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
 Credits
 =======
 
+-------
 Authors
-~~~~~~~
+-------
 
 * Camptocamp
 * ACSONE SA/NV
 
+------------
 Contributors
-~~~~~~~~~~~~
+------------
 
 * Nicolas Bessi <nicolas.bessi@camptocamp.com>
 * Frederic Junod <frederic.junod@camptocamp.com>
@@ -121,9 +224,11 @@ Contributors
 * Thomas Nowicki <thomas.nowicki@camptocamp.com>
 * Alexandre Saunier <alexandre.saunier@camptocamp.com>
 * Sandip Mangukiya <smangukiya@opensourceintegrators.com>
+* Samuel Kouff <s.kouff@student.helmo.be>
 
+-----------
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -135,6 +240,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/geospatial <https://github.com/OCA/geospatial/tree/14.0/base_geoengine>`_ project on GitHub.
+This module is part of the `OCA/geospatial <https://github.com/OCA/geospatial/tree/16.0/base_geoengine>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

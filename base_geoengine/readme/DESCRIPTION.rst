@@ -11,8 +11,6 @@ GeoEngine is an Odoo module that adds spatial/GIS capabilites to Odoo. It will a
 
 GeoEngine relies on `OpenLayers <http://openlayers.org>`_ and `PostgGIS <http://postgis.refractions.net/>`_ technologies.
 
-Postgis is used to store spatial information in databases. OpenLayer is used to represent spatial data in other words to show maps. The GeoEngine module acts as a data provider and as an OpenLayers configurator.
+Postgis is used to store spatial information in databases. OpenLayer is used to represent spatial data in other words to show maps
+and the different spatial layers. The GeoEngine module acts as a data provider and as an OpenLayers configurator.
 It also provides a complete extension to Odoo ORM.
-
-Geospatial support based on PostGIS add the ability of server to server
-geojson to do geo CRUD and view definition.

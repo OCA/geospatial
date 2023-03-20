@@ -9,8 +9,8 @@ from operator import attrgetter
 from odoo import _, fields
 from odoo.tools import sql
 
+from . import geo_convertion_helper as convert
 from .geo_db import create_geo_column
-from .geo_helper import geo_convertion_helper as convert
 
 logger = logging.getLogger(__name__)
 try:

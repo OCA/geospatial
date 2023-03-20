@@ -41,7 +41,7 @@ class GeoRasterLayer(models.Model):
     format_suffix = fields.Char("Format", help="eg. png")
     request_encoding = fields.Char("Request encoding", help="eg. REST")
     projection = fields.Char(help="eg. EPSG:21781")
-    units = fields.Char(help="eg. m")
+    units = fields.Char(help="eg. m")  # Not used
     resolutions = fields.Char()
     max_extent = fields.Char("Max extent")
     dimensions = fields.Char(help="List of dimensions separated by ','")
@@ -53,7 +53,7 @@ class GeoRasterLayer(models.Model):
         help="The type of the remote WMS server: mapserver, geoserver, carmentaserver, or qgis",
     )
 
-    # technical field to display or not layer type
+    # technical field to display or not layer type -- Not used
     has_type = fields.Boolean(compute="_compute_has_type")
     type_id = fields.Many2one(
         "geoengine.raster.layer.type", "Layer", domain="[('service', '=', raster_type)]"

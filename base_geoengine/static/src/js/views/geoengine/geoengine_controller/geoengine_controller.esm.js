@@ -12,6 +12,9 @@ import {useService} from "@web/core/utils/hooks";
 const {Component} = owl;
 
 export class GeoengineController extends Component {
+    /**
+     * Setup the controller by using the useModel hook.
+     */
     setup() {
         this.actionService = useService("action");
         this.view = useService("view");
@@ -22,6 +25,10 @@ export class GeoengineController extends Component {
             limit: this.props.limit,
         });
 
+        /**
+         * Allow you to display records on the map thanks to the paging located
+         * at the top right of the screen.
+         */
         usePager(() => {
             const list = this.model.root;
             const {count, limit, offset} = list;
@@ -36,7 +43,11 @@ export class GeoengineController extends Component {
             };
         });
     }
-
+    /**
+     * Allow you to open the form editing view for the filled-in model.
+     * @param {*} resModel
+     * @param {*} resId
+     */
     async openRecord(resModel, resId) {
         const {views} = await this.view.loadViews({resModel, views: [[false, "form"]]});
         this.actionService.doAction({
