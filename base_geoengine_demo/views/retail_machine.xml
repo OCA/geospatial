@@ -17,7 +17,7 @@
             <page string="The line">
               <field name="the_line" />
             </page>
-            <page string="attributes">
+            <page string="Attributes">
               <group>
                 <field name="total_sales" />
                 <field name="money_level" />
@@ -113,7 +113,7 @@
             ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
         />
     <field name="name">Retail Machine Basic point</field>
-    <field eval="7" name="sequence" />
+    <field eval="5" name="sequence" />
     <field name="view_id" ref="ir_ui_view_retailmachineview0" />
     <field name="geo_repr">basic</field>
     <field eval="1" name="nb_class" />
@@ -200,6 +200,24 @@
             ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__total_sales"
         />
     <field name="begin_color">#4B69FD</field>
+  </record>
+  <record
+        id="geoengine_vector_layer_retailmachinecontainsgeom"
+        model="geoengine.vector.layer"
+    >
+    <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip__the_geom" />
+    <field name="name">Contains</field>
+    <field eval="4" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_retailmachineview0" />
+    <field name="geo_repr">basic</field>
+    <field eval="1" name="nb_class" />
+    <field name="layer_opacity">0.8</field>
+    <field name="begin_color">#0096FF</field>
+    <field name="attribute_field_id" ref="base_geoengine_demo.field_dummy_zip__city" />
+    <field name="model_id" ref="base_geoengine_demo.model_dummy_zip" />
+    <field
+            name="model_domain"
+        >[('the_geom', 'geo_contains', {"geoengine.demo.automatic.retailing.machine.the_point":[("id", "in", active_ids)]})]</field>
   </record>
   <record id="geoengine_raster_layer_retailmachineosm" model="geoengine.raster.layer">
     <field name="raster_type">osm</field>
