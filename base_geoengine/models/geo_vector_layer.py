@@ -2,7 +2,6 @@
 # Copyright 2016 Yannick Payot (Camptocamp SA)
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-import json
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
@@ -56,6 +55,7 @@ class GeoVectorLayer(models.Model):
         "ir.model.fields", "Attribute field", domain=[("ttype", "in", SUPPORTED_ATT)]
     )
     model_id = fields.Many2one("ir.model", "Model to use")
+    model_name = fields.Char(related="model_id.model", readonly=True)
     geo_field_id = fields.Many2one(
         "ir.model.fields",
         "Geo field",
@@ -103,11 +103,3 @@ class GeoVectorLayer(models.Model):
                         rec.model_view_id = view
             else:
                 rec.model_view_id = ""
-
-    @api.depends("model_id")
-    def _compute_geo_field_domain(self):
-        for rec in self:
-            domain = [("ttype", "ilike", "geo_")]
-            if rec.model_id:
-                domain = []
-            rec.geo_field_id_domain = json.dumps(domain)
