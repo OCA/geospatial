@@ -27,7 +27,13 @@
                             name="model_view_id"
                             domain="[('mode', '=', 'geoengine')]"
                         />
-                        <field name="model_domain" colspan="4" />
+                        <field name="model_name" invisible="1" />
+                        <field
+                            name="model_domain"
+                            colspan="4"
+                            widget="domain"
+                            options="{'model': 'model_name'}"
+                        />
                     </group>
                     <group string="Representation" col="4" colspan="4">
                         <field name="geo_repr" />

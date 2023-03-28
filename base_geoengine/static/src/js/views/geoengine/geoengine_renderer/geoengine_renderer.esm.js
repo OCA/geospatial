@@ -11,7 +11,7 @@ import {store} from "../../../store.esm";
 import {useService} from "@web/core/utils/hooks";
 import {registry} from "@web/core/registry";
 import {RelationalModel} from "@web/views/relational_model";
-import pyUtils from "web.py_utils";
+import {evaluateExpr} from "@web/core/py_js/py";
 
 const {Component, onWillStart, onMounted, onRendered, reactive, mount} = owl;
 
@@ -498,14 +498,24 @@ export class GeoengineRenderer extends Component {
         let domain = [];
         // We can put active_ids in our domain to get all ids of all the
         // element displayed.
-        if (cfg.model_domain.includes("active_ids")) {
-            domain = pyUtils.py_eval(cfg.model_domain, {
-                active_ids: this.props.data.records.map(
+        if (cfg.model_domain.includes("{ACTIVE_IDS}")) {
+            const start = cfg.model_domain.search("ACTIVE_IDS") - 2;
+            let newDomain =
+                cfg.model_domain.slice(0, start) + cfg.model_domain.slice(start + 2);
+            const end = newDomain.search("ACTIVE_IDS") + 10;
+            newDomain = newDomain.slice(0, end) + newDomain.slice(end + 2);
+            if (newDomain.includes("in active_ids")) {
+                newDomain = newDomain.replace("in active_ids", "in");
+            } else if (newDomain.includes("not in active_ids")) {
+                newDomain = newDomain.replace("not in active_ids", "not in");
+            }
+            domain = evaluateExpr(newDomain, {
+                ACTIVE_IDS: this.props.data.records.map(
                     (datapoint) => `${datapoint.resId}`
                 ),
             });
         } else {
-            domain = pyUtils.py_eval(cfg.model_domain);
+            domain = evaluateExpr(cfg.model_domain);
         }
         return domain;
     }
