@@ -217,7 +217,7 @@
     <field name="model_id" ref="base_geoengine_demo.model_dummy_zip" />
     <field
             name="model_domain"
-        >[('the_geom', 'geo_contains', {"geoengine.demo.automatic.retailing.machine.the_point":[("id", "in", active_ids)]})]</field>
+        >[('the_geom', 'geo_contains', {"geoengine.demo.automatic.retailing.machine.the_point":[("id", "in active_ids", "{ACTIVE_IDS}")]})]</field>
   </record>
   <record id="geoengine_raster_layer_retailmachineosm" model="geoengine.raster.layer">
     <field name="raster_type">osm</field>
