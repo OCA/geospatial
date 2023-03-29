@@ -176,12 +176,38 @@
         />
     <field
             name="model_domain"
-        >[('the_point', 'geo_intersect', {"dummy.zip.the_geom":[("id", "in", active_ids)]})]</field>
+        >[('the_point', 'geo_intersect', {"dummy.zip.the_geom":[("id", "in active_ids", "{ACTIVE_IDS}")]})]</field>
     <field
             name="geo_field_id"
             ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
         />
     <field name="name">Intersect point and geom</field>
+    <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
+    <field name="geo_repr">basic</field>
+    <field
+            name="attribute_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__name"
+        />
+    <field name="begin_color">#0000FF</field>
+    <field name="display_polygon_labels" eval="0" />
+    <field name="layer_opacity">0.8</field>
+  </record>
+  <record
+        id="geoengine_vector_layer_not_intersect_active_ids"
+        model="geoengine.vector.layer"
+    >
+    <field
+            name="model_id"
+            ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine"
+        />
+    <field
+            name="model_domain"
+        >[('the_point', 'geo_intersect', {"dummy.zip.the_geom":[("id", "not in active_ids", "{ACTIVE_IDS}")]})]</field>
+    <field
+            name="geo_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
+        />
+    <field name="name">Not intersect point and geom</field>
     <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
     <field name="geo_repr">basic</field>
     <field
