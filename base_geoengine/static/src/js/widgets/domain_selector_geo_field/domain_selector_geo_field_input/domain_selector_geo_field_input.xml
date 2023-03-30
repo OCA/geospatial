@@ -14,7 +14,7 @@
                 isDebugMode="false"
             />
             <button class="btn btn-link col-1" t-on-click.prevent="display">
-                <i class="fa fa-pencil-square edit" />
+                <i class="fa fa-pencil-square" />
             </button>
         </div>
     </t>

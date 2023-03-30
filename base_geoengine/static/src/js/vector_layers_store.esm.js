@@ -1,31 +1,7 @@
 /** @odoo-module */
 const {reactive} = owl;
 
-class Store {
-    /**
-     * Set raster layers to the store.
-     * @param {*} rasters
-     */
-    setRasters(rasters) {
-        const newRasters = rasters.map((raster) => {
-            Object.defineProperty(raster, "isVisible", {
-                value: false,
-                writable: true,
-            });
-            raster.isVisible = !raster.overlay;
-            return raster;
-        });
-        this.rasters = newRasters;
-    }
-
-    /**
-     * This is called when a raster layer is changed. This will notify observers of the change.
-     * @param {*} newRastersLayer
-     */
-    onRasterLayerChanged(newRastersLayer) {
-        this.rasters = newRastersLayer;
-    }
-
+class VectorLayersStore {
     /**
      * This is called when a vector layer is changed. This will notify observers of the change.
      * @param {*} newRastersLayer
@@ -34,9 +10,6 @@ class Store {
         this.vectors = newVectorsLayers;
     }
 
-    getRasters() {
-        return this.rasters;
-    }
     /**
      * Set vector layers to the store.
      * @param {*} rasters
@@ -44,6 +17,10 @@ class Store {
     setVectors(vectors) {
         const newVectors = vectors.map((vector) => {
             Object.defineProperty(vector, "isVisible", {
+                value: false,
+                writable: true,
+            });
+            Object.defineProperty(vector, "onDomainChanged", {
                 value: false,
                 writable: true,
             });
@@ -59,4 +36,5 @@ class Store {
         return this.vectors;
     }
 }
-export const store = reactive(new Store());
+
+export const vectorLayersStore = reactive(new VectorLayersStore());

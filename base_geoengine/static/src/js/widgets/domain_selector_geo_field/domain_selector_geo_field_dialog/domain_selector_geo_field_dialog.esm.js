@@ -13,12 +13,12 @@ import {_t} from "@web/core/l10n/translation";
  */
 export class DomainSelectorGeoFieldDialog extends DomainSelectorDialog {
     get dialogTitle() {
-        return _t("Subdomain");
+        return _t(this.props.title);
     }
 }
 
 DomainSelectorGeoFieldDialog.template = "base_geoengine.DomainSelectorGeoFieldDialog";
-DomainSelectorDialog.props = {
+DomainSelectorGeoFieldDialog.props = {
     close: Function,
     className: {type: String, optional: true},
     resModel: String,
@@ -26,7 +26,16 @@ DomainSelectorDialog.props = {
     isDebugMode: {type: Boolean, optional: true},
     defaultLeafValue: {type: Array, optional: true},
     initialValue: {type: String, optional: true},
-    onSelected: {type: Function, optional: true},
+    onSelected: Function,
     update: Function,
-    fieldName: String,
+    fieldName: {type: String, optional: true},
+    title: {type: String, optional: true},
+    model: {type: Object, optional: true},
+};
+
+DomainSelectorGeoFieldDialog.defaultProps = {
+    initialValue: "",
+    readonly: true,
+    isDebugMode: false,
+    title: "Domain",
 };

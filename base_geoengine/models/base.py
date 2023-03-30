@@ -96,6 +96,7 @@ class Base(models.AbstractModel):
             layer_dict["geo_field_id"] = set_field_real_name(
                 layer_dict.get("geo_field_id", False)
             )
+            layer_dict["resModel"] = layer._name
             layer_dict["model"] = layer.model_id.model
             layer_dict["model_domain"] = layer.model_domain
             geoengine_layers["actives"].append(layer_dict)
