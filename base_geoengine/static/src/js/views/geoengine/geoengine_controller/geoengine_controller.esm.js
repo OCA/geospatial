@@ -55,6 +55,7 @@ export class GeoengineController extends Component {
             res_model: resModel,
             views: [[views.form.id, "form"]],
             res_id: resId,
+            target: "new",
         });
     }
 }
