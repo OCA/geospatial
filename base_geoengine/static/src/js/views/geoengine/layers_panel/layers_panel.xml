@@ -1,25 +1,41 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <templates>
     <t t-name="base_geoengine.LayersPanel" owl="1">
-        <div class="o_search_panel menu border-end bg-view">
+        <div class="o_layer_panel menu border-end bg-view">
             <section class="o_search_panel_section">
                 <header
                     class="o_search_panel_section_header pt-4 pb-2 text-uppercase cursor-default"
                 >
                     <span>Vector</span>
                 </header>
-                <ul class="list-group d-block o_search_panel_field">
+                <ul class="list-group d-block o_search_panel_field row">
                     <t
                         t-foreach="geoengine_layers.actives"
                         t-as="vector"
                         t-key="vector.id"
                     >
-                        <CheckBox
-                            value="vector.isVisible"
-                            t-on-change="() => this.onVectorChange(vector)"
-                        >
-                            <t t-esc="vector.name" />
-                        </CheckBox>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <CheckBox
+                                value="vector.isVisible"
+                                t-on-change="() => this.onVectorChange(vector, 'onVisibleChanged', !vector.isVisible)"
+                            >
+                                <t t-esc="vector.name" />
+                            </CheckBox>
+                            <t t-if="vector.model_domain !== '[]'">
+                                <button
+                                    class="btn btn-edit"
+                                    t-on-click.prevent="() => this.onEditFilterButtonSelected(vector)"
+                                >
+                                    <i class="fa fa-filter text-primary" />
+                                </button>
+                            </t>
+                            <button
+                                class="btn btn-edit"
+                                t-on-click.prevent="() => this.onEditButtonSelected(vector)"
+                            >
+                                <i class="fa fa-edit text-primary" />
+                            </button>
+                        </div>
                     </t>
                 </ul>
             </section>
