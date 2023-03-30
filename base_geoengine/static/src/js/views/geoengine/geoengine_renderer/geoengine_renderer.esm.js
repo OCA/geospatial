@@ -7,7 +7,8 @@
 import {loadCSS, loadJS, templates} from "@web/core/assets";
 import {GeoengineRecord} from "../geoengine_record/geoengine_record.esm";
 import {LayersPanel} from "../layers_panel/layers_panel.esm";
-import {store} from "../../../store.esm";
+import {rasterLayersStore} from "../../../raster_layers_store.esm";
+import {vectorLayersStore} from "../../../vector_layers_store.esm";
 import {useService} from "@web/core/utils/hooks";
 import {registry} from "@web/core/registry";
 import {RelationalModel} from "@web/views/relational_model";
@@ -27,8 +28,13 @@ export class GeoengineRenderer extends Component {
     setup() {
         super.setup();
 
-        // When a change is issued in the store the onLayerChanged method is called.
-        this.store = reactive(store, () => this.onLayerChanged());
+        // When a change is issued in the rasterLayersStore or the vectorLayersStore the LayerChanged method is called.
+        this.rasterLayersStore = reactive(rasterLayersStore, () =>
+            this.onRasterLayerChanged()
+        );
+        this.vectorLayersStore = reactive(vectorLayersStore, () =>
+            this.onVectorLayerChanged()
+        );
         this.orm = useService("orm");
         this.view = useService("view");
 
@@ -46,7 +52,7 @@ export class GeoengineRenderer extends Component {
 
         onMounted(() => {
             // Retrives all vector layers in the store.
-            this.geometryFields = this.store
+            this.geometryFields = this.vectorLayersStore
                 .getVectors()
                 .map((layer) => layer.geo_field_id[1]);
 
@@ -89,7 +95,9 @@ export class GeoengineRenderer extends Component {
                 layers: [
                     new ol.layer.Group({
                         title: "Base maps",
-                        layers: this.createBackgroundLayers(this.store.getRasters()),
+                        layers: this.createBackgroundLayers(
+                            this.rasterLayersStore.getRasters()
+                        ),
                     }),
                 ],
                 overlays: [this.overlay],
@@ -349,9 +357,9 @@ export class GeoengineRenderer extends Component {
 
     /**
      * Allows you to change the visibility of layers. This method is called
-     * when the user changes layers.
+     * when the user changes raster layers.
      */
-    onLayerChanged() {
+    onRasterLayerChanged() {
         this.map
             .getLayers()
             .getArray()
@@ -359,26 +367,47 @@ export class GeoengineRenderer extends Component {
             .getLayers()
             .getArray()
             .forEach((layer) => {
-                this.store.getRasters().forEach((raster) => {
+                this.rasterLayersStore.getRasters().forEach((raster) => {
                     if (raster.name === layer.get("title")) {
                         layer.setVisible(raster.isVisible);
                     }
                 });
             });
+    }
 
-        this.map
+    /**
+     * Allows you to change the visibility of layers. This method is called
+     * when the user changes vector layers.
+     */
+    async onVectorLayerChanged() {
+        await this.map
             .getLayers()
             .getArray()
             .find((layer) => layer.get("title") === "Overlays")
             .getLayers()
             .getArray()
             .forEach((layer) => {
-                this.store.getVectors().forEach((vector) => {
+                this.vectorLayersStore.getVectors().forEach((vector) => {
                     if (vector.name === layer.get("title")) {
                         layer.setVisible(vector.isVisible);
+                        if (vector.onDomainChanged) {
+                            this.onVectorLayerModelDomainChanged(vector, layer);
+                        }
                     }
                 });
             });
+    }
+
+    onVectorLayerModelDomainChanged(cfg, layer) {
+        layer.setSource(null);
+        const fields_to_read = [cfg.geo_field_id[1]];
+        if (cfg.attribute_field_id) {
+            fields_to_read.push(cfg.attribute_field_id[1]);
+        }
+        const domain = this.evalModelDomain(cfg);
+        this.orm.searchRead(cfg.model, [domain][0], fields_to_read).then((res) => {
+            this.addSourceToLayer(res, cfg, layer);
+        });
     }
 
     async renderVectorLayers() {
@@ -395,7 +424,7 @@ export class GeoengineRenderer extends Component {
             layers: result,
         });
         result.forEach((vlayer) => {
-            this.store.getVectors().forEach((vector) => {
+            this.vectorLayersStore.getVectors().forEach((vector) => {
                 if (vlayer.values_.title === vector.name) {
                     vlayer.setVisible(vector.isVisible);
                 }
@@ -428,7 +457,7 @@ export class GeoengineRenderer extends Component {
     }
 
     createVectorLayers(data) {
-        return this.store
+        return this.vectorLayersStore
             .getVectors()
             .map((layer) => this.createVectorLayer(layer, data));
     }
