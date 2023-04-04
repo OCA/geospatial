@@ -27,7 +27,6 @@ DomainSelectorGeoFieldDialog.props = {
     defaultLeafValue: {type: Array, optional: true},
     initialValue: {type: String, optional: true},
     onSelected: Function,
-    update: Function,
     fieldName: {type: String, optional: true},
     title: {type: String, optional: true},
     model: {type: Object, optional: true},
