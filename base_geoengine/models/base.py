@@ -61,16 +61,17 @@ class Base(models.AbstractModel):
         return geo_view
 
     @api.model
+    def set_field_real_name(self, in_tuple):
+        field_obj = self.env["ir.model.fields"]
+        if not in_tuple:
+            return in_tuple
+        name = field_obj.browse(in_tuple[0]).name
+        out = (in_tuple[0], name, in_tuple[1])
+        return out
+
+    @api.model
     def get_geoengine_layers(self, view_id=None, view_type="geoengine", **options):
         view_obj = self.env["ir.ui.view"]
-        field_obj = self.env["ir.model.fields"]
-
-        def set_field_real_name(in_tuple):
-            if not in_tuple:
-                return in_tuple
-            name = field_obj.browse(in_tuple[0]).name
-            out = (in_tuple[0], name, in_tuple[1])
-            return out
 
         if not view_id:
             view = self._get_geo_view()
@@ -90,10 +91,10 @@ class Base(models.AbstractModel):
             geoengine_layers["backgrounds"].append(layer_dict)
         for layer in view.vector_layer_ids:
             layer_dict = layer.read()[0]
-            layer_dict["attribute_field_id"] = set_field_real_name(
+            layer_dict["attribute_field_id"] = self.set_field_real_name(
                 layer_dict.get("attribute_field_id", False)
             )
-            layer_dict["geo_field_id"] = set_field_real_name(
+            layer_dict["geo_field_id"] = self.set_field_real_name(
                 layer_dict.get("geo_field_id", False)
             )
             layer_dict["resModel"] = layer._name

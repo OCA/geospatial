@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
     <t t-name="base_geoengine.GeoengineRenderer" owl="1">
         <div class="row view w-100">
-            <LayersPanel model="props.data.resModel" />
+            <LayersPanel model="props.data.resModel" vectorModel="vectorModel.root" />
             <div class="map_container col">
                 <div id="olmap" />
             </div>
