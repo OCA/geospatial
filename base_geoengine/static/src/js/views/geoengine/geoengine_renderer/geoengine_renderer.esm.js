@@ -45,10 +45,13 @@ export class GeoengineRenderer extends Component {
         }
 
         this.cfg_models = [];
+        this.vectorModel = {};
 
         // Load all js and css files
 
-        onWillStart(() => Promise.all([this.loadJsFiles(), this.loadCssFiles()]));
+        onWillStart(() =>
+            Promise.all([this.loadJsFiles(), this.loadCssFiles(), this.loadModels()])
+        );
 
         onMounted(() => {
             // Retrives all vector layers in the store.
@@ -85,6 +88,10 @@ export class GeoengineRenderer extends Component {
                 loadCSS(file)
             )
         );
+    }
+
+    async loadModels() {
+        await this.loadView("geoengine.vector.layer", [], "form");
     }
 
     renderMap() {
@@ -267,7 +274,9 @@ export class GeoengineRenderer extends Component {
             case "MultiPolygon":
                 return new ol.style.Style({
                     fill: new ol.style.Fill({
-                        color: "rgba(255, 175, 126, 0.8)",
+                        color: chroma(feature.values_.attributes.color)
+                            .alpha(0.4)
+                            .css(),
                     }),
                 });
         }
@@ -387,27 +396,75 @@ export class GeoengineRenderer extends Component {
             .getLayers()
             .getArray()
             .forEach((layer) => {
-                this.vectorLayersStore.getVectors().forEach((vector) => {
+                this.vectorLayersStore.getVectors().forEach(async (vector) => {
                     if (vector.name === layer.get("title")) {
-                        layer.setVisible(vector.isVisible);
-                        if (vector.onDomainChanged) {
-                            this.onVectorLayerModelDomainChanged(vector, layer);
-                        }
+                        this.onVisibleChanged(vector, layer);
+                        this.onVectorLayerModelDomainChanged(vector, layer);
+                        await this.onLayerChanged(vector, layer);
+                        this.onSequenceChanged(vector, layer);
                     }
                 });
             });
     }
 
-    onVectorLayerModelDomainChanged(cfg, layer) {
-        layer.setSource(null);
-        const fields_to_read = [cfg.geo_field_id[1]];
-        if (cfg.attribute_field_id) {
-            fields_to_read.push(cfg.attribute_field_id[1]);
+    /**
+     * This method assigns a new priority to the layer according on the new sequence.
+     * @param {*} vector
+     * @param {*} layer
+     */
+    onSequenceChanged(vector, layer) {
+        if (vector.onSequenceChanged) {
+            layer.setZIndex(vector.sequence);
         }
-        const domain = this.evalModelDomain(cfg);
-        this.orm.searchRead(cfg.model, [domain][0], fields_to_read).then((res) => {
-            this.addSourceToLayer(res, cfg, layer);
-        });
+    }
+
+    /**
+     * This method assing a new source to the layer according on the layer edited.
+     * @param {*} vector
+     * @param {*} layer
+     */
+    async onLayerChanged(vector, layer) {
+        if (vector.onLayerChanged) {
+            layer.setSource(null);
+            const data = this.props.data.records;
+            const styleInfo = this.styleVectorLayer(vector, data);
+            layer.setStyle(styleInfo.style);
+            if (vector.model) {
+                await this.useRelatedModel(vector, layer);
+            } else {
+                this.addSourceToLayer(data, vector, layer);
+            }
+        }
+    }
+
+    /**
+     * This method assigns the visibility received by the layer.
+     * @param {*} vector
+     * @param {*} layer
+     */
+    onVisibleChanged(vector, layer) {
+        if (vector.onVisibleChanged) {
+            layer.setVisible(vector.isVisible);
+        }
+    }
+
+    /**
+     * This method assigns a new source with the revalued domain.
+     * @param {*} cfg
+     * @param {*} layer
+     */
+    onVectorLayerModelDomainChanged(cfg, layer) {
+        if (cfg.onDomainChanged) {
+            layer.setSource(null);
+            const fields_to_read = [cfg.geo_field_id[1]];
+            if (cfg.attribute_field_id) {
+                fields_to_read.push(cfg.attribute_field_id[1]);
+            }
+            const domain = this.evalModelDomain(cfg);
+            this.orm.searchRead(cfg.model, [domain][0], fields_to_read).then((res) => {
+                this.addSourceToLayer(res, cfg, layer);
+            });
+        }
     }
 
     async renderVectorLayers() {
@@ -500,7 +557,7 @@ export class GeoengineRenderer extends Component {
             fields_to_read.push(cfg.attribute_field_id[1]);
         }
         const domain = this.evalModelDomain(cfg);
-        await this.loadView(cfg, domain);
+        await this.loadView(cfg.model, domain, "geoengine");
         this.orm.searchRead(cfg.model, [domain][0], fields_to_read).then((res) => {
             this.addSourceToLayer(res, cfg, lv);
         });
@@ -550,12 +607,12 @@ export class GeoengineRenderer extends Component {
     }
     /**
      * Loads the view of the model that is passed to the layer.
-     * @param {*} cfg
+     * @param {*} model
      * @param {*} domain
      */
-    async loadView(cfg, domain) {
+    async loadView(model, domain, view) {
         const viewRegistry = registry.category("views");
-        const fields = await this.view.loadFields(cfg.model, {
+        const fields = await this.view.loadFields(model, {
             attributes: [
                 "store",
                 "searchable",
@@ -567,22 +624,29 @@ export class GeoengineRenderer extends Component {
             ],
         });
         const {relatedModels, views} = await this.view.loadViews({
-            resModel: cfg.model,
-            views: [[false, "geoengine"]],
+            resModel: model,
+            views: [[false, view]],
         });
-        const {ArchParser, Model} = viewRegistry.get("geoengine");
-        this.archInfo = new ArchParser().parse(
-            views.geoengine.arch,
-            relatedModels,
-            cfg.model
-        );
+        const {ArchParser, Model} = viewRegistry.get(view);
+        this.archInfo = new ArchParser().parse(views[view].arch, relatedModels, model);
         const searchParams = {
             activeFields: this.archInfo.activeFields,
-            resModel: cfg.model,
+            resModel: model,
             fields: fields,
         };
-        this.model = new Model(this.env, searchParams, this.services);
-        await this.model.load({domain});
+        if (model === "geoengine.vector.layer") {
+            this.vectorModel = new RelationalModel(
+                this.env,
+                searchParams,
+                this.services
+            );
+            await this.vectorModel.load({
+                domain: [["view_id.model", "=", `${this.props.data.resModel}`]],
+            });
+        } else {
+            this.model = new Model(this.env, searchParams, this.services);
+            await this.model.load();
+        }
     }
 
     addFeatureToSource(data, cfg) {
@@ -599,6 +663,7 @@ export class GeoengineRenderer extends Component {
             } else {
                 attributes.label = "";
             }
+            attributes.color = cfg.begin_color;
 
             const json_geometry =
                 item._values === undefined
