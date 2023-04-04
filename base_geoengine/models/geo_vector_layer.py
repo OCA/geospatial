@@ -19,6 +19,8 @@ SUPPORTED_ATT = [
     "selection",
 ]
 
+NUMBER_ATT = ["float", "integer", "integer_big"]
+
 
 class GeoVectorLayer(models.Model):
     _name = "geoengine.vector.layer"
@@ -35,6 +37,7 @@ class GeoVectorLayer(models.Model):
         string="Representation mode",
         required=True,
     )
+
     classification = fields.Selection(
         [
             ("unique", "Unique value"),
@@ -91,6 +94,24 @@ class GeoVectorLayer(models.Model):
                         _(
                             "The geo_field_id must be a field in %s model",
                             rec.model_id.display_name,
+                        )
+                    )
+
+    @api.constrains("geo_repr", "attribute_field_id")
+    def _check_geo_repr(self):
+        for rec in self:
+            if (
+                rec.attribute_field_id
+                and rec.attribute_field_id.ttype not in NUMBER_ATT
+            ):
+                if (
+                    rec.geo_repr == "colored"
+                    and rec.classification != "unique"
+                    or rec.geo_repr == "proportion"
+                ):
+                    raise ValidationError(
+                        _(
+                            "You need to select a numeric field",
                         )
                     )
 
