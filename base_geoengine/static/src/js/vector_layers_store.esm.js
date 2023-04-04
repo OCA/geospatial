@@ -3,24 +3,12 @@ const {reactive} = owl;
 
 class VectorLayersStore {
     /**
-     * This is called when a vector layer is changed. This will notify observers of the change.
-     * @param {*} newRastersLayer
-     */
-    onVectorLayerChanged(newVectorsLayers) {
-        this.vectors = newVectorsLayers;
-    }
-
-    /**
      * Set vector layers to the store.
      * @param {*} rasters
      */
     setVectors(vectors) {
         const newVectors = vectors.map((vector) => {
             Object.defineProperty(vector, "isVisible", {
-                value: false,
-                writable: true,
-            });
-            Object.defineProperty(vector, "onDomainChanged", {
                 value: false,
                 writable: true,
             });
@@ -34,6 +22,10 @@ class VectorLayersStore {
 
     getVectors() {
         return this.vectors;
+    }
+
+    getVector(resId) {
+        return this.vectors.find((el) => el.resId === resId);
     }
 }
 

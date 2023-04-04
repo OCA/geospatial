@@ -8,36 +8,43 @@
                 >
                     <span>Vector</span>
                 </header>
-                <ul class="list-group d-block o_search_panel_field row">
-                    <t
-                        t-foreach="geoengine_layers.actives"
-                        t-as="vector"
-                        t-key="vector.id"
-                    >
-                        <div class="d-flex justify-content-between align-items-center">
-                            <CheckBox
-                                value="vector.isVisible"
-                                t-on-change="() => this.onVectorChange(vector, 'onVisibleChanged', !vector.isVisible)"
+                <div t-ref="root" class="root">
+                    <ul class="list p-0">
+                        <li
+                            t-foreach="state.geoengineLayers.actives"
+                            t-as="vector"
+                            t-key="vector.resId"
+                            class="item d-flex align-items-center"
+                            t-att-data-id="vector.id"
+                        >
+                            <i class="fa fa-sort m-3" />
+                            <div
+                                class="d-flex justify-content-between align-items-center"
                             >
-                                <t t-esc="vector.name" />
-                            </CheckBox>
-                            <t t-if="vector.model_domain !== '[]'">
+                                <CheckBox
+                                    value="vector.isVisible"
+                                    t-on-change="() => this.onVectorChange(vector, 'onVisibleChanged', !vector.isVisible)"
+                                >
+                                    <t t-esc="vector.name" />
+                                </CheckBox>
+                                <t t-if="vector.model_domain !== '[]'">
+                                    <button
+                                        class="btn btn-edit"
+                                        t-on-click.prevent="() => this.onEditFilterButtonSelected(vector)"
+                                    >
+                                        <i class="fa fa-filter text-primary" />
+                                    </button>
+                                </t>
                                 <button
                                     class="btn btn-edit"
-                                    t-on-click.prevent="() => this.onEditFilterButtonSelected(vector)"
+                                    t-on-click.prevent="() => this.onEditButtonSelected(vector)"
                                 >
-                                    <i class="fa fa-filter text-primary" />
+                                    <i class="fa fa-edit text-primary" />
                                 </button>
-                            </t>
-                            <button
-                                class="btn btn-edit"
-                                t-on-click.prevent="() => this.onEditButtonSelected(vector)"
-                            >
-                                <i class="fa fa-edit text-primary" />
-                            </button>
-                        </div>
-                    </t>
-                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </section>
             <section class="o_search_panel_section">
                 <header
@@ -45,11 +52,12 @@
                 >
                     <span>Raster</span>
                 </header>
-                <ul class="list-group d-block o_search_panel_field">
-                    <t
-                        t-foreach="geoengine_layers.backgrounds"
+                <ul class="raster list-group d-block o_search_panel_field">
+                    <li
+                        t-foreach="state.geoengineLayers.backgrounds"
                         t-as="layer"
                         t-key="layer.id"
+                        class=""
                     >
                         <div class="form-check o_radio_item" aria-atomic="true">
                             <input
@@ -67,7 +75,7 @@
                                 t-esc="layer.name"
                             />
                         </div>
-                    </t>
+                    </li>
                 </ul>
             </section>
         </div>

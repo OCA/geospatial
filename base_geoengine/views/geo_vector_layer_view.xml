@@ -84,11 +84,11 @@
                             attrs="{'required': [('geo_repr', 'in', ['choropleth', 'proportion', 'colored'])]}"
                         />
                         <field name="display_polygon_labels" />
-                        <field name="sequence" />
+                        <field name="sequence" readonly="1" />
                         <field name="readonly" />
                         <field name="layer_opacity" />
                     </group>
-                    <group string="Related Model" col="4">
+                    <!-- <group string="Related Model" col="4">
                         <field name="model_id" />
                         <field
                             name="model_view_id"
@@ -101,7 +101,7 @@
                             widget="domain"
                             options="{'model': 'model_name'}"
                         />
-                    </group>
+                    </group> -->
                     <group string="Representation" col="4" colspan="4">
                         <field name="geo_repr" />
                     </group>
@@ -136,6 +136,15 @@
             </form>
         </field>
     </record>
+
+    <record id="geo_vector_geoengine_view_action" model="ir.actions.act_window">
+        <field name="name">Vector Layer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">geoengine.vector.layer</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="geo_vector_geoengine_view_form" />
+    </record>
+
 
     <record model="ir.ui.view" id="geo_vector_view_tree">
         <field name="name">geoengine.vector.layer.tree</field>
