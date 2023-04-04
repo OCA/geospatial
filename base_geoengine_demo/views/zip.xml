@@ -104,6 +104,7 @@
   <record id="geoengine_vector_layer_basictest0" model="geoengine.vector.layer">
     <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip__the_geom" />
     <field name="name">Basic ZIP</field>
+    <field eval="1" name="sequence" />
     <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
     <field name="geo_repr">basic</field>
     <field name="attribute_field_id" ref="field_dummy_zip__city" />
@@ -115,7 +116,7 @@
     <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip__the_geom" />
     <field name="name">Colored range ZIP (total_sales)</field>
     <field name="classification">unique</field>
-    <field eval="6" name="sequence" />
+    <field eval="2" name="sequence" />
     <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
     <field name="geo_repr">colored</field>
     <field name="layer_opacity">0.8</field>
@@ -133,7 +134,7 @@
     <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip__the_geom" />
     <field name="name">Colored range ZIP Eq Interval (total_sales)</field>
     <field name="classification">interval</field>
-    <field eval="6" name="sequence" />
+    <field eval="3" name="sequence" />
     <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
     <field name="geo_repr">colored</field>
     <field eval="4" name="nb_class" />
@@ -156,6 +157,7 @@
             ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
         />
     <field name="name">HS retail machines</field>
+    <field eval="4" name="sequence" />
     <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
     <field name="geo_repr">basic</field>
     <field
@@ -182,6 +184,7 @@
             ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
         />
     <field name="name">Intersect point and geom</field>
+    <field eval="5" name="sequence" />
     <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
     <field name="geo_repr">basic</field>
     <field
@@ -208,6 +211,7 @@
             ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
         />
     <field name="name">Not intersect point and geom</field>
+    <field eval="6" name="sequence" />
     <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
     <field name="geo_repr">basic</field>
     <field
