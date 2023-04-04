@@ -29,5 +29,9 @@ class RasterLayersStore {
     getRasters() {
         return this.rasters;
     }
+
+    getRaster(id) {
+        return this.rasters.find((el) => el.id === id);
+    }
 }
 export const rasterLayersStore = reactive(new RasterLayersStore());
