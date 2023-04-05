@@ -629,6 +629,19 @@ export class GeoengineRenderer extends Component {
         });
         const {ArchParser, Model} = viewRegistry.get(view);
         this.archInfo = new ArchParser().parse(views[view].arch, relatedModels, model);
+
+        if (model === "geoengine.vector.layer") {
+            const notAllowedField = Object.keys(fields).filter(
+                (field) =>
+                    fields[field] !== undefined &&
+                    fields[field].relation !== undefined &&
+                    fields[field].relation === "ir.ui.view"
+            );
+            notAllowedField.forEach((field) => {
+                delete field[field];
+                delete this.archInfo.activeFields[field];
+            });
+        }
         const searchParams = {
             activeFields: this.archInfo.activeFields,
             resModel: model,
@@ -640,9 +653,7 @@ export class GeoengineRenderer extends Component {
                 searchParams,
                 this.services
             );
-            await this.vectorModel.load({
-                domain: [["view_id.model", "=", `${this.props.data.resModel}`]],
-            });
+            await this.vectorModel.load();
         } else {
             this.model = new Model(this.env, searchParams, this.services);
             await this.model.load();
