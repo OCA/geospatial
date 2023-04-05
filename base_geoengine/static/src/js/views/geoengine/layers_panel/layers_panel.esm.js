@@ -22,6 +22,7 @@ export class LayersPanel extends Component {
         this.actionService = useService("action");
         this.view = useService("view");
         this.rpc = useService("rpc");
+        this.user = useService("user");
         this.state = useState({geoengineLayers: {}});
         this.addDialog = useOwnedDialogs();
         let dataRowId = "";
@@ -31,6 +32,9 @@ export class LayersPanel extends Component {
          * in the database and add them to the store.
          */
         onWillStart(async () => {
+            this.isGeoengineAdmin = await this.user.hasGroup(
+                "base_geoengine.group_geoengine_admin"
+            );
             const result = await this.orm.call(
                 this.props.model,
                 "get_geoengine_layers",
@@ -66,17 +70,36 @@ export class LayersPanel extends Component {
 
     async sort(dataRowId, {previous}) {
         const refId = previous ? previous.dataset.id : null;
+        this.resquence(dataRowId, refId);
+        if (this.isGeoengineAdmin) {
+            await this.resequenceAndUpdate(dataRowId, refId);
+        } else {
+            this.state.geoengineLayers.actives.forEach((element, index) => {
+                this.onVectorChange(element, "onSequenceChanged", index + 1);
+            });
+        }
+    }
+
+    resquence(dataRowId, refId) {
+        const fromIndex = this.state.geoengineLayers.actives.findIndex(
+            (r) => r.id === dataRowId
+        );
+        let toIndex = 0;
+        if (refId !== null) {
+            const targetIndex = this.state.geoengineLayers.actives.findIndex(
+                (r) => r.id === refId
+            );
+            toIndex = fromIndex > targetIndex ? targetIndex + 1 : targetIndex;
+        }
+        const [record] = this.state.geoengineLayers.actives.splice(fromIndex, 1);
+        this.state.geoengineLayers.actives.splice(toIndex, 0, record);
+    }
+
+    async resequenceAndUpdate(dataRowId, refId) {
         this.resequencePromise = this.props.vectorModel.resequence(dataRowId, refId, {
             handleField: "sequence",
         });
         await this.resequencePromise;
-        this.state.geoengineLayers.actives.sort(
-            (a, b) =>
-                this.props.vectorModel.records.find((el) => el.resId === a.resId).data
-                    .sequence -
-                this.props.vectorModel.records.find((el) => el.resId === b.resId).data
-                    .sequence
-        );
         this.props.vectorModel.records.forEach((element) => {
             this.onVectorChange(element, "onSequenceChanged", element.data.sequence);
         });
@@ -137,7 +160,12 @@ export class LayersPanel extends Component {
                 Object.assign(vectorLayer, {...value, onLayerChanged: true});
                 break;
             case "onSequenceChanged":
-                Object.assign(vectorLayer, {sequence: value, onSequenceChanged: true});
+                if (vectorLayer !== undefined) {
+                    Object.assign(vectorLayer, {
+                        sequence: value,
+                        onSequenceChanged: true,
+                    });
+                }
                 break;
         }
     }
@@ -149,10 +177,20 @@ export class LayersPanel extends Component {
             readonly: false,
             isDebugMode: Boolean(this.env.debug),
             model: vector,
-            onSelected: (value) =>
-                this.onVectorChange(vector, "onDomainChanged", value),
+            onSelected: (value) => this.onEditFilterDomainChanged(vector, value),
             title: this.env._t("Domain editing"),
         });
+    }
+
+    async onEditFilterDomainChanged(vector, value) {
+        if (this.isGeoengineAdmin) {
+            const record = this.props.vectorModel.records.find(
+                (el) => el.resId === vector.resId
+            );
+            await record.update({model_domain: value});
+            await record.save();
+        }
+        this.onVectorChange(vector, "onDomainChanged", value);
     }
 
     async onEditButtonSelected(vector) {

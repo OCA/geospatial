@@ -27,15 +27,15 @@
                                 >
                                     <t t-esc="vector.name" />
                                 </CheckBox>
-                                <t t-if="vector.model_domain !== '[]'">
-                                    <button
-                                        class="btn btn-edit"
-                                        t-on-click.prevent="() => this.onEditFilterButtonSelected(vector)"
-                                    >
-                                        <i class="fa fa-filter text-primary" />
-                                    </button>
-                                </t>
                                 <button
+                                    t-if="vector.model_domain !== '[]'"
+                                    class="btn btn-edit"
+                                    t-on-click.prevent="() => this.onEditFilterButtonSelected(vector)"
+                                >
+                                    <i class="fa fa-filter text-primary" />
+                                </button>
+                                <button
+                                    t-if="isGeoengineAdmin"
                                     class="btn btn-edit"
                                     t-on-click.prevent="() => this.onEditButtonSelected(vector)"
                                 >
