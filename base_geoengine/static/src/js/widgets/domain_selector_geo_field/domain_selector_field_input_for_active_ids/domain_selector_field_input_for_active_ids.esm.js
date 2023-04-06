@@ -5,8 +5,8 @@
  */
 
 const {Component, onRendered} = owl;
+
 /**
- * This class is extended from DomainSelectorFieldInput.
  * It allows you to set a default value for the field and a readonly property for the active_ids value.
  */
 export class DomainSelectorFieldInputForActiveIds extends Component {

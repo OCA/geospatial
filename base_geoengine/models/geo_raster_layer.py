@@ -85,7 +85,3 @@ class GeoRasterLayer(models.Model):
     def _compute_is_wms(self):
         for rec in self:
             rec.is_wms = rec.raster_type == "d_wms"
-
-    @api.onchange("raster_type")
-    def onchange_set_wmts_options(self):
-        """Abstract method for WMTS modules to set default options"""

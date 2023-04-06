@@ -26,6 +26,13 @@ Geoengine Demo
 10. As a user/admin, when I use the paging system, then the results displayed on the map are different
     (corresponding to the request).
 11. As a user/admin, if we use the search bar, we can search results by his zip or his city.
+12. As an admin, if I change the sequence of layers with the handle button then the change are persisted in database.
+13. As a user, if I change the sequence of layers with the handle button then the change are not persisted in database.
+    There are just the changes in the display.
+14. As an admin, if I change the domain of a layer with the filter button then the change are persisted in database.
+15. As a user, if I change the domain of a layer with the filter button then the change are not persisted in database.
+    There are just the changes in the display.
+16. As an admin, I have the possibility to edit the layer with its corresponding button.
 
 ------------------
 Geoengine Backend

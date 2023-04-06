@@ -98,6 +98,13 @@ Geoengine Demo
 10. As a user/admin, when I use the paging system, then the results displayed on the map are different
     (corresponding to the request).
 11. As a user/admin, if we use the search bar, we can search results by his zip or his city.
+12. As an admin, if I change the sequence of layers with the handle button then the change are persisted in database. 
+13. As a user, if I change the sequence of layers with the handle button then the change are not persisted in database.
+    There are just the changes in the display.
+14. As an admin, if I change the domain of a layer with the filter button then the change are persisted in database.
+15. As a user, if I change the domain of a layer with the filter button then the change are not persisted in database. 
+    There are just the changes in the display.
+16. As an admin, I have the possibility to edit the layer with its corresponding button.
 
 ------------------
 Geoengine Backend
@@ -144,7 +151,7 @@ Changelog
 * The method geo_search is now deprecated. We now need to use the standard odoo search method.
 
 .. code-block:: python
-    
+
     obj.search([("the_point","geo_intersect",{"dummy.zip.the_geom": [("id", "=", rec.id)]})])
 
 * We can now pass to the geoengine view a template to display the information we want
@@ -186,6 +193,25 @@ Changelog
         <field name="display_polygon_labels" eval="0" />
         <field name="layer_opacity">0.8</field>
     </record>
+
+=======================
+16.0.1.0.0 (2023-04-05)
+=======================
+
+* There is some new features in the LayerPanel.
+
+1. If you are logged in as an admin, you have the possibility to edit the layer by clicking on the edit button. This will open a dialog box.
+   Changes will appear in real time on the view. 
+2. If you are logged in as an admin, you can also change the domain of the layer. If you are logged in as a user, changes will not be
+   persisted in the database. Changes will appear in real time on the view.
+3. If you are logged in as an admin, you can also change the sequence of the layers by sliding them over each other. If you are logged in as a user, changes will not be
+   persisted in the database.
+
+* Widget domain is now implemented for geo field This means that the geo-operators are also implemented and that there is the possibility to add a sub-domain.
+  If we want to add a domain that includes all the records that are displayed in the geoengine view (active_ids). We can use the two new operators : 
+  "in active_ids" and "not in active_ids". These will automatically replace the marker with ids. Note that the widget will indicate that the domain is invalid 
+  because of the marker.
+
 
 Bug Tracker
 ===========
