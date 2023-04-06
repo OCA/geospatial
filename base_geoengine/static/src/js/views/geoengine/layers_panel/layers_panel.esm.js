@@ -57,6 +57,9 @@ export class LayersPanel extends Component {
             vectorLayersStore.setVectors(this.state.geoengineLayers.actives);
         });
 
+        /**
+         * Allows you to change the priority of the layer by sliding them over each other
+         */
         useSortable({
             ref: useRef("root"),
             elements: ".item",
@@ -80,6 +83,11 @@ export class LayersPanel extends Component {
         }
     }
 
+    /**
+     * Resequence the order of layers but not update them (When a user modify them).
+     * @param {*} dataRowId
+     * @param {*} refId
+     */
     resquence(dataRowId, refId) {
         const fromIndex = this.state.geoengineLayers.actives.findIndex(
             (r) => r.id === dataRowId
@@ -94,7 +102,11 @@ export class LayersPanel extends Component {
         const [record] = this.state.geoengineLayers.actives.splice(fromIndex, 1);
         this.state.geoengineLayers.actives.splice(toIndex, 0, record);
     }
-
+    /**
+     * Resequence the order of layers and update them (When an admin modify them).
+     * @param {*} dataRowId
+     * @param {*} refId
+     */
     async resequenceAndUpdate(dataRowId, refId) {
         this.resequencePromise = this.props.vectorModel.resequence(dataRowId, refId, {
             handleField: "sequence",

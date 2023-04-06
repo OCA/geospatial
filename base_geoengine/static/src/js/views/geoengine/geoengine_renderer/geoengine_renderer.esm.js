@@ -27,6 +27,7 @@ const DEFAULT_NUM_CLASSES = 5;
 export class GeoengineRenderer extends Component {
     setup() {
         super.setup();
+        this.models = [];
 
         // When a change is issued in the rasterLayersStore or the vectorLayersStore the LayerChanged method is called.
         this.rasterLayersStore = reactive(rasterLayersStore, () =>
@@ -47,10 +48,14 @@ export class GeoengineRenderer extends Component {
         this.cfg_models = [];
         this.vectorModel = {};
 
-        // Load all js and css files
+        // Load all js and css files. Also load the vector model needed for the layer panel.
 
         onWillStart(() =>
-            Promise.all([this.loadJsFiles(), this.loadCssFiles(), this.loadModels()])
+            Promise.all([
+                this.loadJsFiles(),
+                this.loadCssFiles(),
+                this.loadVectorModel(),
+            ])
         );
 
         onMounted(() => {
@@ -90,8 +95,8 @@ export class GeoengineRenderer extends Component {
         );
     }
 
-    async loadModels() {
-        await this.loadView("geoengine.vector.layer", [], "form");
+    async loadVectorModel() {
+        await this.loadView("geoengine.vector.layer", "form");
     }
 
     renderMap() {
@@ -145,23 +150,9 @@ export class GeoengineRenderer extends Component {
                         source: new ol.source.OSM(),
                     });
                 case "wmts":
-                    const tilegrid_opt = {};
-                    const source_opt = {
-                        layer: background.name,
-                        matrixSet: background.matrix_set,
-                    };
-                    const layer_opt = {
-                        title: background.name,
-                        visible: !background.overlay,
-                        type: "base",
-                        style: "default",
-                    };
-                    const urls_wmts = background.url.split(",");
-                    if (urls_wmts.length > 1) {
-                        source_opt.urls = urls_wmts;
-                    } else {
-                        source_opt.url = urls_wmts[0];
-                    }
+                    const {source_opt, tilegrid_opt, layer_opt} =
+                        this.createOptions(background);
+                    this.getUrl(background, source_opt);
                     if (background.format_suffix) {
                         source_opt.format = background.format_suffix;
                     }
@@ -221,6 +212,30 @@ export class GeoengineRenderer extends Component {
         return source.concat(backgroundLayers);
     }
 
+    getUrl(background, source_opt) {
+        const urls_wmts = background.url.split(",");
+        if (urls_wmts.length > 1) {
+            source_opt.urls = urls_wmts;
+        } else {
+            source_opt.url = urls_wmts[0];
+        }
+    }
+
+    createOptions(background) {
+        const tilegrid_opt = {};
+        const source_opt = {
+            layer: background.name,
+            matrixSet: background.matrix_set,
+        };
+        const layer_opt = {
+            title: background.name,
+            visible: !background.overlay,
+            type: "base",
+            style: "default",
+        };
+        return {source_opt, tilegrid_opt, layer_opt};
+    }
+
     /**
      * Add 'ScaleLine' control.
      */
@@ -229,7 +244,7 @@ export class GeoengineRenderer extends Component {
         this.map.addControl(scaleLine);
     }
     /**
-     * Add 2 interactions. The first is for the hovering of the elements.
+     * Add 2 interactions. The first is for the hovering elements.
      * The second is for the click on the feature.
      */
     registerInteraction() {
@@ -296,13 +311,16 @@ export class GeoengineRenderer extends Component {
                 var attributes = feature.get("attributes");
 
                 if (this.cfg_models.includes(feature.get("model"))) {
-                    this.mountGeoengineRecord(
-                        popup,
-                        this.archInfo,
-                        this.archInfo.templateDocs,
-                        this.model.root,
-                        attributes
+                    const model = this.models.find(
+                        (el) => el.model.resModel === feature.get("model")
                     );
+                    this.mountGeoengineRecord({
+                        popup,
+                        archInfo: model.archInfo,
+                        templateDocs: model.archInfo.templateDocs,
+                        model: model.model,
+                        attributes,
+                    });
                 } else {
                     this.mountGeoengineRecord(
                         popup,
@@ -408,7 +426,7 @@ export class GeoengineRenderer extends Component {
     }
 
     /**
-     * This method assigns a new priority to the layer according on the new sequence.
+     * This method assigns a new priority to the layer according to the new sequence.
      * @param {*} vector
      * @param {*} layer
      */
@@ -557,7 +575,7 @@ export class GeoengineRenderer extends Component {
             fields_to_read.push(cfg.attribute_field_id[1]);
         }
         const domain = this.evalModelDomain(cfg);
-        await this.loadView(cfg.model, domain, "geoengine");
+        await this.loadView(cfg.model, "geoengine");
         this.orm.searchRead(cfg.model, [domain][0], fields_to_read).then((res) => {
             this.addSourceToLayer(res, cfg, lv);
         });
@@ -606,11 +624,11 @@ export class GeoengineRenderer extends Component {
         return domain;
     }
     /**
-     * Loads the view of the model that is passed to the layer.
+     * Loads the model's view that is passed to the layer.
      * @param {*} model
      * @param {*} domain
      */
-    async loadView(model, domain, view) {
+    async loadView(model, view) {
         const viewRegistry = registry.category("views");
         const fields = await this.view.loadFields(model, {
             attributes: [
@@ -628,7 +646,7 @@ export class GeoengineRenderer extends Component {
             views: [[false, view]],
         });
         const {ArchParser, Model} = viewRegistry.get(view);
-        this.archInfo = new ArchParser().parse(views[view].arch, relatedModels, model);
+        const archInfo = new ArchParser().parse(views[view].arch, relatedModels, model);
 
         if (model === "geoengine.vector.layer") {
             const notAllowedField = Object.keys(fields).filter(
@@ -639,13 +657,14 @@ export class GeoengineRenderer extends Component {
             );
             notAllowedField.forEach((field) => {
                 delete field[field];
-                delete this.archInfo.activeFields[field];
+                delete archInfo.activeFields[field];
             });
         }
         const searchParams = {
-            activeFields: this.archInfo.activeFields,
+            activeFields: archInfo.activeFields,
             resModel: model,
             fields: fields,
+            limit: 10000,
         };
         if (model === "geoengine.vector.layer") {
             this.vectorModel = new RelationalModel(
@@ -655,8 +674,12 @@ export class GeoengineRenderer extends Component {
             );
             await this.vectorModel.load();
         } else {
-            this.model = new Model(this.env, searchParams, this.services);
-            await this.model.load();
+            const toLoadModel = new Model(this.env, searchParams, this.services);
+            await toLoadModel.load().then(() => {
+                if (this.models.find((e) => e.model.resModel === model) === undefined) {
+                    this.models.push({model: toLoadModel.root, archInfo});
+                }
+            });
         }
     }
 
