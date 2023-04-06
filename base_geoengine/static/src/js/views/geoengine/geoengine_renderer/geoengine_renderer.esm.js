@@ -47,10 +47,14 @@ export class GeoengineRenderer extends Component {
         this.cfg_models = [];
         this.vectorModel = {};
 
-        // Load all js and css files
+        // Load all js and css files. Also load the vector model needed for the layer panel.
 
         onWillStart(() =>
-            Promise.all([this.loadJsFiles(), this.loadCssFiles(), this.loadModels()])
+            Promise.all([
+                this.loadJsFiles(),
+                this.loadCssFiles(),
+                this.loadVectorModel(),
+            ])
         );
 
         onMounted(() => {
@@ -90,8 +94,8 @@ export class GeoengineRenderer extends Component {
         );
     }
 
-    async loadModels() {
-        await this.loadView("geoengine.vector.layer", [], "form");
+    async loadVectorModel() {
+        await this.loadView("geoengine.vector.layer", "form");
     }
 
     renderMap() {
@@ -145,23 +149,9 @@ export class GeoengineRenderer extends Component {
                         source: new ol.source.OSM(),
                     });
                 case "wmts":
-                    const tilegrid_opt = {};
-                    const source_opt = {
-                        layer: background.name,
-                        matrixSet: background.matrix_set,
-                    };
-                    const layer_opt = {
-                        title: background.name,
-                        visible: !background.overlay,
-                        type: "base",
-                        style: "default",
-                    };
-                    const urls_wmts = background.url.split(",");
-                    if (urls_wmts.length > 1) {
-                        source_opt.urls = urls_wmts;
-                    } else {
-                        source_opt.url = urls_wmts[0];
-                    }
+                    const {source_opt, tilegrid_opt, layer_opt} =
+                        this.createOptions(background);
+                    this.getUrl(background, source_opt);
                     if (background.format_suffix) {
                         source_opt.format = background.format_suffix;
                     }
@@ -221,6 +211,30 @@ export class GeoengineRenderer extends Component {
         return source.concat(backgroundLayers);
     }
 
+    getUrl(background, source_opt) {
+        const urls_wmts = background.url.split(",");
+        if (urls_wmts.length > 1) {
+            source_opt.urls = urls_wmts;
+        } else {
+            source_opt.url = urls_wmts[0];
+        }
+    }
+
+    createOptions(background) {
+        const tilegrid_opt = {};
+        const source_opt = {
+            layer: background.name,
+            matrixSet: background.matrix_set,
+        };
+        const layer_opt = {
+            title: background.name,
+            visible: !background.overlay,
+            type: "base",
+            style: "default",
+        };
+        return {source_opt, tilegrid_opt, layer_opt};
+    }
+
     /**
      * Add 'ScaleLine' control.
      */
@@ -229,7 +243,7 @@ export class GeoengineRenderer extends Component {
         this.map.addControl(scaleLine);
     }
     /**
-     * Add 2 interactions. The first is for the hovering of the elements.
+     * Add 2 interactions. The first is for the hovering elements.
      * The second is for the click on the feature.
      */
     registerInteraction() {
@@ -408,7 +422,7 @@ export class GeoengineRenderer extends Component {
     }
 
     /**
-     * This method assigns a new priority to the layer according on the new sequence.
+     * This method assigns a new priority to the layer according to the new sequence.
      * @param {*} vector
      * @param {*} layer
      */
@@ -557,7 +571,7 @@ export class GeoengineRenderer extends Component {
             fields_to_read.push(cfg.attribute_field_id[1]);
         }
         const domain = this.evalModelDomain(cfg);
-        await this.loadView(cfg.model, domain, "geoengine");
+        await this.loadView(cfg.model, "geoengine");
         this.orm.searchRead(cfg.model, [domain][0], fields_to_read).then((res) => {
             this.addSourceToLayer(res, cfg, lv);
         });
@@ -606,11 +620,11 @@ export class GeoengineRenderer extends Component {
         return domain;
     }
     /**
-     * Loads the view of the model that is passed to the layer.
+     * Loads the model's view that is passed to the layer.
      * @param {*} model
      * @param {*} domain
      */
-    async loadView(model, domain, view) {
+    async loadView(model, view) {
         const viewRegistry = registry.category("views");
         const fields = await this.view.loadFields(model, {
             attributes: [

@@ -71,7 +71,6 @@ export class DomainSelectorGeoFieldInput extends Component {
             const obj = {};
             const jsDomain = evaluate(domain.ast, {});
             obj[this.key] = jsDomain;
-            // This is the update method passed in props of the DomainSelectorGeoFieldDialog.
             this.props.update({value: obj});
         }
     }
