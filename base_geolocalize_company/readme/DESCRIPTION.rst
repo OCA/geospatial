@@ -6,4 +6,4 @@ It adds a new tab named 'Company Assignation' and allow to enter manually
 
 .. figure:: ../static/description/view_res_company_form.png
 
-This module is only useful in a multi-company context.
+This module is useful in a multi-company context.

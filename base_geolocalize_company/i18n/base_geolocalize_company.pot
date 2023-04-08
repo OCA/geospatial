@@ -1,32 +1,19 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* base_geolocalize_company
+#   * base_geolocalize_company
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"POT-Creation-Date: 2023-04-09 13:16+0000\n"
+"PO-Revision-Date: 2023-04-09 13:16+0000\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: base_geolocalize_company
-#: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
-msgid "<span class=\"oe_inline\"> ( On  </span>"
-msgstr ""
-
-#. module: base_geolocalize_company
-#: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
-msgid "<span> : Lat : </span>"
-msgstr ""
-
-#. module: base_geolocalize_company
-#: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
-msgid "<span> ;  Long:  </span>"
-msgstr ""
 
 #. module: base_geolocalize_company
 #: model:ir.model,name:base_geolocalize_company.model_res_company
@@ -35,7 +22,12 @@ msgstr ""
 
 #. module: base_geolocalize_company
 #: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
-msgid "Company Assignation"
+msgid "Compute Localization"
+msgstr ""
+
+#. module: base_geolocalize_company
+#: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
+msgid "Compute based on address"
 msgstr ""
 
 #. module: base_geolocalize_company
@@ -44,13 +36,13 @@ msgid "Geo Latitude"
 msgstr ""
 
 #. module: base_geolocalize_company
-#: model:ir.model.fields,field_description:base_geolocalize_company.field_res_company__partner_longitude
-msgid "Geo Longitude"
+#: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
+msgid "Geo Location"
 msgstr ""
 
 #. module: base_geolocalize_company
-#: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
-msgid "Geolocate"
+#: model:ir.model.fields,field_description:base_geolocalize_company.field_res_company__partner_longitude
+msgid "Geo Longitude"
 msgstr ""
 
 #. module: base_geolocalize_company
@@ -63,3 +55,32 @@ msgstr ""
 msgid "Geolocation Date"
 msgstr ""
 
+#. module: base_geolocalize_company
+#: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
+msgid "Lat:"
+msgstr ""
+
+#. module: base_geolocalize_company
+#: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
+msgid "Long:"
+msgstr ""
+
+#. module: base_geolocalize_company
+#: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
+msgid "Partner Assignment"
+msgstr ""
+
+#. module: base_geolocalize_company
+#: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
+msgid "Refresh"
+msgstr ""
+
+#. module: base_geolocalize_company
+#: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
+msgid "Refresh Localization"
+msgstr ""
+
+#. module: base_geolocalize_company
+#: model_terms:ir.ui.view,arch_db:base_geolocalize_company.view_res_company_form
+msgid "Updated on:"
+msgstr ""
