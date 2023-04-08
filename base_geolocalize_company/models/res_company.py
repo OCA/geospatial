@@ -12,20 +12,21 @@ class ResCompany(models.Model):
         string="Geo Latitude",
         readonly=False,
         related="partner_id.partner_latitude",
-        digits=(16, 5), store=True
+        digits=(16, 5),
+        store=True,
     )
     partner_longitude = fields.Float(
         string="Geo Longitude",
         readonly=False,
         related="partner_id.partner_longitude",
         digits=(16, 5),
-        store=True
+        store=True,
     )
     date_localization = fields.Date(
         string="Geolocation Date",
         readonly=False,
         related="partner_id.date_localization",
-        store=True
+        store=True,
     )
 
     def geo_localize(self):
