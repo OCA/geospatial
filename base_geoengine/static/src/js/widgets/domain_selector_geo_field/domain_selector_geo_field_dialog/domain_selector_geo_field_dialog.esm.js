@@ -5,7 +5,7 @@
  */
 
 import {DomainSelectorDialog} from "@web/core/domain_selector_dialog/domain_selector_dialog";
-import {_t} from "../l10n/translation";
+import {_t} from "@web/core/l10n/translation";
 
 /**
  * This class is extended from DomainSelectorGeoField in order to be able to
