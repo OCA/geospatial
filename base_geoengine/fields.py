@@ -124,23 +124,37 @@ class GeoField(fields.Field):
         check_data = cr.fetchone()
         if not check_data:
             raise TypeError(
-                "geometry_columns table seems to be corrupted."
-                " SRID check is not possible"
+                _(
+                    "geometry_columns table seems to be corrupted."
+                    " SRID check is not possible"
+                )
             )
         if check_data[0] != self.srid:
             raise TypeError(
-                "Reprojection of column is not implemented."
-                " We can not change srid %s to %s" % (self.srid, check_data[0])
+                _(
+                    "Reprojection of column is not implemented."
+                    " We can not change srid %(srid)s to %(data)s",
+                    srid=self.srid,
+                    data=check_data[0],
+                )
             )
         elif check_data[1] != self.geo_type:
             raise TypeError(
-                "Geo type modification is not implemented."
-                " We can not change type %s to %s" % (check_data[1], self.geo_type)
+                _(
+                    "Geo type modification is not implemented."
+                    " We can not change type %(data)s to %(geo_type)s",
+                    data=check_data[1],
+                    geo_type=self.geo_type,
+                )
             )
         elif check_data[2] != self.dim:
             raise TypeError(
-                "Geo dimention modification is not implemented."
-                " We can not change dimention %s to %s" % (check_data[2], self.dim)
+                _(
+                    "Geo dimention modification is not implemented."
+                    " We can not change dimention %(data)s to %(dim)s",
+                    data=check_data[2],
+                    dim=self.dim,
+                )
             )
         if self.gist_index:
             cr.execute(
