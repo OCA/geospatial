@@ -23,7 +23,7 @@ export class LayersPanel extends Component {
         this.view = useService("view");
         this.rpc = useService("rpc");
         this.user = useService("user");
-        this.state = useState({geoengineLayers: {}});
+        this.state = useState({geoengineLayers: {}, isFolded: false});
         this.addDialog = useOwnedDialogs();
         let dataRowId = "";
 
@@ -55,6 +55,7 @@ export class LayersPanel extends Component {
             // Set layers in the store
             rasterLayersStore.setRasters(this.state.geoengineLayers.backgrounds);
             vectorLayersStore.setVectors(this.state.geoengineLayers.actives);
+            this.numberOfLayers = vectorLayersStore.count + rasterLayersStore.count;
         });
 
         /**
@@ -123,10 +124,10 @@ export class LayersPanel extends Component {
      * @param {*} layer
      */
     onRasterChange(layer) {
-        const indexRaster = rasterLayersStore
-            .getRasters()
-            .findIndex((raster) => raster.name === layer.name);
-        const newRasters = rasterLayersStore.getRasters().map((item, index) => {
+        const indexRaster = rasterLayersStore.rastersLayers.findIndex(
+            (raster) => raster.name === layer.name
+        );
+        const newRasters = rasterLayersStore.rastersLayers.map((item, index) => {
             if (index !== indexRaster) {
                 item.isVisible = false;
             } else {
@@ -218,6 +219,10 @@ export class LayersPanel extends Component {
             onRecordSaved: (record) =>
                 this.onVectorChange(vector, "onLayerChanged", record.data),
         });
+    }
+
+    fold() {
+        this.state.isFolded = !this.state.isFolded;
     }
 }
 
