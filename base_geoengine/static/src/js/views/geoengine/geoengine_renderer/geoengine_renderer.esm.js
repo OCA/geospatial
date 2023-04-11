@@ -7,6 +7,7 @@
 import {loadCSS, loadJS, templates} from "@web/core/assets";
 import {GeoengineRecord} from "../geoengine_record/geoengine_record.esm";
 import {LayersPanel} from "../layers_panel/layers_panel.esm";
+import {RecordsPanel} from "../records_panel/records_panel.esm";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {vectorLayersStore} from "../../../vector_layers_store.esm";
 import {useService} from "@web/core/utils/hooks";
@@ -59,9 +60,9 @@ export class GeoengineRenderer extends Component {
 
         onMounted(() => {
             // Retrives all vector layers in the store.
-            this.geometryFields = this.vectorLayersStore
-                .getVectors()
-                .map((layer) => layer.geo_field_id[1]);
+            this.geometryFields = this.vectorLayersStore.vectorsLayers.map(
+                (layer) => layer.geo_field_id[1]
+            );
 
             this.vectorSources = [];
             this.renderMap();
@@ -107,7 +108,7 @@ export class GeoengineRenderer extends Component {
                     new ol.layer.Group({
                         title: "Base maps",
                         layers: this.createBackgroundLayers(
-                            this.rasterLayersStore.getRasters()
+                            this.rasterLayersStore.rastersLayers
                         ),
                     }),
                 ],
@@ -390,7 +391,7 @@ export class GeoengineRenderer extends Component {
             .getLayers()
             .getArray()
             .forEach((layer) => {
-                this.rasterLayersStore.getRasters().forEach((raster) => {
+                this.rasterLayersStore.rastersLayers.forEach((raster) => {
                     if (raster.name === layer.get("title")) {
                         layer.setVisible(raster.isVisible);
                     }
@@ -949,4 +950,4 @@ GeoengineRenderer.props = {
     data: {type: Object, optional: false},
     openRecord: {type: Function, optional: false},
 };
-GeoengineRenderer.components = {LayersPanel, GeoengineRecord};
+GeoengineRenderer.components = {LayersPanel, GeoengineRecord, RecordsPanel};
