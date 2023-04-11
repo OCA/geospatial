@@ -2,6 +2,8 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
 
+from odoo import _
+
 try:
     import geojson
     from shapely import wkb, wkt
@@ -9,7 +11,7 @@ try:
     from shapely.geometry.base import BaseGeometry
 except ImportError:
     logger = logging.getLogger(__name__)
-    logger.warning("Shapely or geojson are not available in the sys path")
+    logger.warning(_("Shapely or geojson are not available in the sys path"))
 
 
 def value_to_shape(value, use_wkb=False):
@@ -33,6 +35,8 @@ def value_to_shape(value, use_wkb=False):
             return wkt.loads(value.wkt)
     else:
         raise TypeError(
-            "Write/create/search geo type must be wkt/geojson "
-            "string or must respond to wkt"
+            _(
+                "Write/create/search geo type must be wkt/geojson "
+                "string or must respond to wkt"
+            )
         )
