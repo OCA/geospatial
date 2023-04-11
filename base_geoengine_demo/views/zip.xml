@@ -85,6 +85,7 @@
         <field name="city" />
         <field name="total_sales" />
         <field name="the_geom" />
+        <field name="display_name" />
         <templates>
           <t t-name="info_box">
             <field name="city" widget="badge" />
