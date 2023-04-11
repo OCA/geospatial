@@ -20,12 +20,16 @@ class VectorLayersStore {
         this.vectors = newVectors;
     }
 
-    getVectors() {
+    get vectorsLayers() {
         return this.vectors;
     }
 
     getVector(resId) {
         return this.vectors.find((el) => el.resId === resId);
+    }
+
+    get count() {
+        return this.vectors.length;
     }
 }
 
