@@ -69,7 +69,7 @@ class GeoVectorLayer(models.Model):
     view_id = fields.Many2one(
         "ir.ui.view", "Related View", domain=[("type", "=", "geoengine")], required=True
     )
-    sequence = fields.Integer("Layer priority lower on top", default=6)
+    sequence = fields.Integer("Layer Priority", default=6)
     readonly = fields.Boolean("Layer is read only")
     display_polygon_labels = fields.Boolean("Display Labels on Polygon")
     active_on_startup = fields.Boolean(

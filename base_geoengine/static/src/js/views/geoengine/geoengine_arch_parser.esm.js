@@ -63,7 +63,7 @@ export class GeoengineArchParser extends XMLParser {
         });
         const infoBox = templateDocs[INFO_BOX_ATTRIBUTE];
         if (!infoBox) {
-            throw new Error(_lt(`Missing ${INFO_BOX_ATTRIBUTE} templates.`));
+            throw new Error(_lt(`Missing ${INFO_BOX_ATTRIBUTE} template.`));
         }
 
         for (const [key, field] of Object.entries(fieldNodes)) {

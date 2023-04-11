@@ -59,7 +59,7 @@ class GeoRasterLayer(models.Model):
         "geoengine.raster.layer.type", "Layer", domain="[('service', '=', raster_type)]"
     )
     type = fields.Char(related="type_id.code")
-    sequence = fields.Integer("layer priority lower on top", default=6)
+    sequence = fields.Integer("Layer priority", default=6)
     overlay = fields.Boolean("Is overlay layer?")
     field_id = fields.Many2one(
         "ir.model.fields",
