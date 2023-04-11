@@ -82,6 +82,7 @@
         <field name="state" />
         <field name="the_point" />
         <field name="the_line" />
+        <field name="display_name" />
         <templates>
           <t t-name="info_box">
             <b>
