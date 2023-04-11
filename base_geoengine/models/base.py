@@ -155,7 +155,7 @@ class Base(models.AbstractModel):
         # Limit and offset are managed after, we may loose a lot of performance
         # here
         _logger.debug(
-            "geo_search is deprecated: uses search method defined on base model"
+            _("geo_search is deprecated: uses search method defined on base model")
         )
         domain = domain or []
         geo_domain = geo_domain or []
@@ -166,6 +166,6 @@ class Base(models.AbstractModel):
             search_domain = geo_domain
 
         if not search_domain:
-            raise ValueError("You must at least provide one of domain or geo_domain")
+            raise ValueError(_("You must at least provide one of domain or geo_domain"))
 
         return self.search(search_domain, limit=limit, offset=offset, order=order)
