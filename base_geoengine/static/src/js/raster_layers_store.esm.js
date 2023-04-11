@@ -26,12 +26,16 @@ class RasterLayersStore {
         this.rasters = newRastersLayer;
     }
 
-    getRasters() {
+    get rastersLayers() {
         return this.rasters;
     }
 
     getRaster(id) {
         return this.rasters.find((el) => el.id === id);
+    }
+
+    get count() {
+        return this.rasters.length;
     }
 }
 export const rasterLayersStore = reactive(new RasterLayersStore());
