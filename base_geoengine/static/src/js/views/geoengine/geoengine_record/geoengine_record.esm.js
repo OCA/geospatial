@@ -28,9 +28,7 @@ export class GeoengineRecord extends Component {
         const {archInfo, templates} = this.props;
         const {arch} = archInfo;
         const ViewCompiler = this.constructor.Compiler;
-
         this.templates = useViewCompiler(ViewCompiler, arch, templates);
-
         this.createRecord(this.props);
         onWillUpdateProps(this.createRecord);
     }
