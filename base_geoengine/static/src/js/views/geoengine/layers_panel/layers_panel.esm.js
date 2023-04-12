@@ -220,7 +220,9 @@ export class LayersPanel extends Component {
                 this.onVectorChange(vector, "onLayerChanged", record.data),
         });
     }
-
+    /**
+     * This method allows you to open/close the panel.
+     */
     fold() {
         this.state.isFolded = !this.state.isFolded;
     }

@@ -11,6 +11,10 @@ export class SearchBarRecords extends Component {
         this.searchComponentRef = useRef("searchComponent");
     }
 
+    /**
+     * When a key is pressed, the props onInputKeyup method is called.
+     * @param {*} ev
+     */
     onInputKeyup(ev) {
         this.props.onInputKeyup(this.searchComponentRef.el.value);
         ev.preventDefault();
