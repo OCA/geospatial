@@ -98,13 +98,19 @@ Geoengine Demo
 10. As a user/admin, when I use the paging system, then the results displayed on the map are different
     (corresponding to the request).
 11. As a user/admin, if we use the search bar, we can search results by his zip or his city.
-12. As an admin, if I change the sequence of layers with the handle button then the change are persisted in database. 
+12. As an admin, if I change the sequence of layers with the handle button then the change are persisted in database.
 13. As a user, if I change the sequence of layers with the handle button then the change are not persisted in database.
     There are just the changes in the display.
 14. As an admin, if I change the domain of a layer with the filter button then the change are persisted in database.
-15. As a user, if I change the domain of a layer with the filter button then the change are not persisted in database. 
+15. As a user, if I change the domain of a layer with the filter button then the change are not persisted in database.
     There are just the changes in the display.
 16. As an admin, I have the possibility to edit the layer with its corresponding button.
+17. As a user/admin, I can open/close LayerPanel with its button.
+18. As a user/admin, I can open/close RecordsPanel with its button.
+19. As a user/admin, when I click on a record in RecordsPanel, a move is made on the map to the selected record. 
+20. As a user/admin, when I click on a record in RecordsPanel, I can also click on the left magnifying glass to zoom on the record.
+21. As a user/admin, when I click on a record in RecordsPanel, I can also click on the right magnifying glass to get the original zoom. 
+22. As a user/admin, I can use the search bar to search in the RecordsPanel.
 
 ------------------
 Geoengine Backend
@@ -120,11 +126,6 @@ Geoengine Backend
    on one and see its information.
 4. As an admin, if I want to create a new vector layer, I can click on "NEW" and fill out the form. The
    required fields are "Layer Name", "Related View", "Geo field" and "Representation mode".
-
-Known issues / Roadmap
-======================
-
-* Allow editing of a layer through a modal window from the geoengine view.
 
 Changelog
 =========
@@ -201,17 +202,27 @@ Changelog
 * There is some new features in the LayerPanel.
 
 1. If you are logged in as an admin, you have the possibility to edit the layer by clicking on the edit button. This will open a dialog box.
-   Changes will appear in real time on the view. 
+   Changes will appear in real time on the view.
 2. If you are logged in as an admin, you can also change the domain of the layer. If you are logged in as a user, changes will not be
    persisted in the database. Changes will appear in real time on the view.
 3. If you are logged in as an admin, you can also change the sequence of the layers by sliding them over each other. If you are logged in as a user, changes will not be
    persisted in the database.
 
 * Widget domain is now implemented for geo field This means that the geo-operators are also implemented and that there is the possibility to add a sub-domain.
-  If we want to add a domain that includes all the records that are displayed in the geoengine view (active_ids). We can use the two new operators : 
-  "in active_ids" and "not in active_ids". These will automatically replace the marker with ids. Note that the widget will indicate that the domain is invalid 
+  If we want to add a domain that includes all the records that are displayed in the geoengine view (active_ids). We can use the two new operators :
+  "in active_ids" and "not in active_ids". These will automatically replace the marker with ids. Note that the widget will indicate that the domain is invalid
   because of the marker.
 
+
+=======================
+16.0.1.0.0 (2023-04-12)
+=======================
+
+* Creation of the RecordsPanel. This panel allows you to retrieve all active records. You can click on record to get the movement to the selected record.
+  Two magnifying glass are also available. You can click on the left one to zoom on the record. You can click on the right one to get the original zoom.
+* A search bar is also available. It allows you to perform a search into the RecordsPanel.
+* A button to open/close the panels is also available.
+* The module has been translated in French.
 
 Bug Tracker
 ===========

@@ -80,3 +80,14 @@
   If we want to add a domain that includes all the records that are displayed in the geoengine view (active_ids). We can use the two new operators :
   "in active_ids" and "not in active_ids". These will automatically replace the marker with ids. Note that the widget will indicate that the domain is invalid
   because of the marker.
+
+
+=======================
+16.0.1.0.0 (2023-04-12)
+=======================
+
+* Creation of the RecordsPanel. This panel allows you to retrieve all active records. You can click on record to get the movement to the selected record.
+  Two magnifying glass are also available. You can click on the left one to zoom on the record. You can click on the right one to get the original zoom.
+* A search bar is also available. It allows you to perform a search into the RecordsPanel.
+* A button to open/close the panels is also available.
+* The module has been translated in French.

@@ -33,6 +33,12 @@ Geoengine Demo
 15. As a user, if I change the domain of a layer with the filter button then the change are not persisted in database.
     There are just the changes in the display.
 16. As an admin, I have the possibility to edit the layer with its corresponding button.
+17. As a user/admin, I can open/close LayerPanel with its button.
+18. As a user/admin, I can open/close RecordsPanel with its button.
+19. As a user/admin, when I click on a record in RecordsPanel, a move is made on the map to the selected record.
+20. As a user/admin, when I click on a record in RecordsPanel, I can also click on the left magnifying glass to zoom on the record.
+21. As a user/admin, when I click on a record in RecordsPanel, I can also click on the right magnifying glass to get the original zoom.
+22. As a user/admin, I can use the search bar to search in the RecordsPanel.
 
 ------------------
 Geoengine Backend

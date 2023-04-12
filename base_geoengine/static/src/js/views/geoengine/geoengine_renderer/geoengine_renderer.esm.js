@@ -370,6 +370,10 @@ export class GeoengineRenderer extends Component {
         });
     }
 
+    /**
+     * When you click on a record in the RecordsPanel, this method is called to display the popup.
+     * @param {*} record
+     */
     onDisplayPopupRecord(record) {
         const popup = this.getPopup();
         const feature = this.vectorSource.getFeatureById(record.resId);
