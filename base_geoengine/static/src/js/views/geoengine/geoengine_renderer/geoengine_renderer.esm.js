@@ -28,6 +28,11 @@ const DEFAULT_NUM_CLASSES = 5;
 export class GeoengineRenderer extends Component {
     setup() {
         super.setup();
+        
+        this.state = useState({selectedFeatures: [], isModified: false, isFit: false});
+        this.models = [];
+        this.cfg_models = [];
+        this.vectorModel = {};
 
         // When a change is issued in the rasterLayersStore or the vectorLayersStore the LayerChanged method is called.
         this.rasterLayersStore = reactive(rasterLayersStore, () =>
@@ -36,6 +41,7 @@ export class GeoengineRenderer extends Component {
         this.vectorLayersStore = reactive(vectorLayersStore, () =>
             this.onVectorLayerChanged()
         );
+
         this.orm = useService("orm");
         this.view = useService("view");
 
@@ -45,12 +51,7 @@ export class GeoengineRenderer extends Component {
             this.services[key] = useService(key);
         }
 
-        this.cfg_models = [];
-        this.vectorModel = {};
-
-        // Load all js and css files. Also load the vector model needed for the layer panel.
-
-        onWillStart(() =>
+        onWillStart(async () =>
             Promise.all([
                 this.loadJsFiles(),
                 this.loadCssFiles(),
@@ -118,10 +119,24 @@ export class GeoengineRenderer extends Component {
                     zoom: 2,
                 }),
             });
+            this.addMoveEndListenerToMap();
+            this.format = new ol.format.GeoJSON({
+                dataProjection: this.map.getView().getProjection(),
+            });
             this.setupControls();
             this.registerInteraction();
         }
     }
+
+    addMoveEndListenerToMap() {
+        this.map.on("moveend", () => {
+            const newZoom = this.map.getView().getZoom();
+            if (newZoom !== localStorage.getItem("ol-zoom")) {
+                localStorage.setItem("ol-zoom", newZoom);
+            }
+        });
+    }
+
     /**
      * Create the info-box overlay that can be displayed over the map and
      * attached to a single map location.
@@ -366,6 +381,10 @@ export class GeoengineRenderer extends Component {
         });
     }
 
+    /**
+     * When you click on a record in the RecordsPanel, this method is called to display the popup.
+     * @param {*} record
+     */
     onDisplayPopupRecord(record) {
         const popup = this.getPopup();
         const feature = this.vectorSource.getFeatureById(record.resId);
