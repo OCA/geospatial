@@ -9,7 +9,7 @@ import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
-const {Component, onWillStart, onMounted, onRendered} = owl;
+const {Component, onWillStart, onMounted, onRendered, useEffect} = owl;
 
 export class FieldGeoEngineEditMap extends Component {
     setup() {
@@ -38,7 +38,16 @@ export class FieldGeoEngineEditMap extends Component {
             this.setValue(this.props.value);
         });
 
-        // Is executed after component is rendered.
+        useEffect(
+            () => {
+                if (!this.props.readonly && this.map !== undefined) {
+                    this.setupControls();
+                }
+            },
+            () => [this.props.value]
+        );
+
+        // Is executed after component is rendered. When we use pagination.
         onRendered(() => {
             this.setValue(this.props.value);
         });
@@ -151,11 +160,12 @@ export class FieldGeoEngineEditMap extends Component {
     /**
      * This is triggered when the view changed. When we have finished drawing our geo data, or
      * when we clear the map.
+     * @param {*} geometry
      */
-    onUIChange() {
+    onUIChange(geometry) {
         var value = null;
-        if (this.geometry) {
-            value = this.format.writeGeometry(this.geometry);
+        if (geometry) {
+            value = this.format.writeGeometry(geometry);
         }
         this.props.update(value);
     }
@@ -164,16 +174,42 @@ export class FieldGeoEngineEditMap extends Component {
      * Allow you to setup the trash button and the draw interaction.
      */
     setupControls() {
-        const drawInteraction = new ol.interaction.Draw({
-            type: this.geoType,
-            source: this.source,
-        });
-        this.map.addInteraction(drawInteraction);
+        if (!this.props.value) {
+            void (
+                this.selectInteraction !== undefined &&
+                this.map.removeInteraction(this.selectInteraction)
+            );
+            void (
+                this.modifyInteraction !== undefined &&
+                this.map.removeInteraction(this.modifyInteraction)
+            );
+            this.drawInteraction = new ol.interaction.Draw({
+                type: this.geoType,
+                source: this.source,
+            });
+            this.map.addInteraction(this.drawInteraction);
 
-        drawInteraction.on("drawend", (e) => {
-            this.geometry = e.feature.getGeometry();
-            this.onUIChange();
-        });
+            this.drawInteraction.on("drawend", (e) => {
+                this.onUIChange(e.feature.getGeometry());
+            });
+        } else {
+            void (
+                this.drawInteraction !== undefined &&
+                this.map.removeInteraction(this.drawInteraction)
+            );
+            this.selectInteraction = new ol.interaction.Select();
+            this.modifyInteraction = new ol.interaction.Modify({
+                features: this.selectInteraction.getFeatures(),
+            });
+            this.map.addInteraction(this.selectInteraction);
+            this.map.addInteraction(this.modifyInteraction);
+
+            this.modifyInteraction.on("modifyend", (e) => {
+                e.features.getArray().forEach((item) => {
+                    this.onUIChange(item.getGeometry());
+                });
+            });
+        }
 
         const element = this.createTrashControl();
 
@@ -191,8 +227,7 @@ export class FieldGeoEngineEditMap extends Component {
         button.innerHTML = '<i class="fa fa-trash"/>';
         button.addEventListener("click", () => {
             this.source.clear();
-            this.geometry = null;
-            this.onUIChange();
+            this.onUIChange(null);
         });
         const element = document.createElement("div");
         element.className = "ol-clear ol-unselectable ol-control";
@@ -221,6 +256,7 @@ export class FieldGeoEngineEditMap extends Component {
             internalProjection: this.map.getView().getProjection(),
             externalProjection: "EPSG:" + this.srid,
         });
+
         if (!this.props.readonly) {
             this.setupControls();
         }
