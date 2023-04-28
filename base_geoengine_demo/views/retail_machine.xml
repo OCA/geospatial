@@ -75,7 +75,7 @@
   <record id="ir_ui_view_retailmachineview0" model="ir.ui.view">
     <field name="name">Retail machine view</field>
     <field name="arch" type="xml">
-      <geoengine>
+      <geoengine editable="1">
         <field name="name" select="1" />
         <field name="total_sales" select="1" />
         <field name="money_level" />
