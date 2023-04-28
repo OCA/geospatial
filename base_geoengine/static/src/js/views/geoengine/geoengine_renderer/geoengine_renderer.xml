@@ -10,7 +10,7 @@
                 list="props.data"
                 onDisplayPopupRecord.bind="onDisplayPopupRecord"
                 zoomOnFeature.bind="zoomOnFeature"
-                zoomOutOnFeature.bind="updateZoom"
+                zoomOutOnFeature.bind="getOriginalZoom"
             />
         </div>
         <div id="popup" class="ol-popup">
