@@ -149,6 +149,25 @@
     left: 0.5em;
 }
 
+.draw-control {
+    top: 4em;
+    left: 0.5em;
+}
+
+.select-control {
+    top: 8em;
+    left: 0.5em;
+}
+
+.edit-control {
+    top: 6em;
+    left: 0.5em;
+}
+
+.selected-control > i {
+    color: blue;
+}
+
 .ol-rotate {
     top: 0.5em;
     right: 0.5em;
