@@ -9,7 +9,6 @@ import {Field} from "@web/views/fields/field";
 import {Widget} from "@web/views/widgets/widget";
 import {XMLParser} from "@web/core/utils/xml";
 import {_lt} from "@web/core/l10n/translation";
-
 export const INFO_BOX_ATTRIBUTE = "info_box";
 
 export class GeoengineArchParser extends XMLParser {
@@ -26,8 +25,14 @@ export class GeoengineArchParser extends XMLParser {
         const fieldNodes = {};
         const jsClass = xmlDoc.getAttribute("js_class");
         const activeFields = {};
+        const geoengineAttr = {};
 
         this.visitXML(xmlDoc, (node) => {
+            if (["geoengine"].includes(node.tagName)) {
+                geoengineAttr.editable = Boolean(
+                    Number(xmlDoc.getAttribute("editable"))
+                );
+            }
             // Get the info box template
             if (node.hasAttribute("t-name")) {
                 templateDocs[node.getAttribute("t-name")] = node;
@@ -75,6 +80,7 @@ export class GeoengineArchParser extends XMLParser {
             templateDocs,
             activeFields,
             fieldNodes,
+            ...geoengineAttr,
         };
     }
 }
