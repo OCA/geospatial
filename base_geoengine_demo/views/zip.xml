@@ -80,7 +80,7 @@
   <record id="ir_ui_view_resbetterzipgeoview0" model="ir.ui.view">
     <field name="name">dummy.zip.geo_view</field>
     <field name="arch" type="xml">
-      <geoengine>
+      <geoengine editable="1">
         <field name="name" />
         <field name="city" />
         <field name="total_sales" />
