@@ -31,6 +31,8 @@
                 openRecord.bind="openRecord"
                 updateRecord.bind="updateRecord"
                 onClickDiscard.bind="onClickDiscard"
+                createRecord.bind="createRecord"
+                onDrawStart.bind="onDrawStart"
             />
         </Layout>
     </t>
