@@ -36,6 +36,7 @@ class Base(models.AbstractModel):
                     "type": field.type,
                     "dim": int(field.dim),
                     "srid": field.srid,
+                    "geo_type": field.geo_type,
                 }
                 # TODO
                 if field.compute or field.related:

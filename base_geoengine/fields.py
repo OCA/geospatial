@@ -36,7 +36,7 @@ class GeoField(fields.Field):
 
     @property
     def column_type(self):
-        return ("geometry", f"geometry({self.geo_type}, {self.srid})")
+        return ("geometry", f"geometry({self.geo_type.upper()}, {self.srid})")
 
     def convert_to_column(self, value, record, values=None):
         """Convert value to database format
@@ -138,13 +138,13 @@ class GeoField(fields.Field):
                     data=check_data[0],
                 )
             )
-        elif check_data[1] != self.geo_type:
+        elif check_data[1] != self.geo_type.upper():
             raise TypeError(
                 _(
                     "Geo type modification is not implemented."
                     " We can not change type %(data)s to %(geo_type)s",
                     data=check_data[1],
-                    geo_type=self.geo_type,
+                    geo_type=self.geo_type.upper(),
                 )
             )
         elif check_data[2] != self.dim:
@@ -183,7 +183,7 @@ class GeoField(fields.Field):
                 model._cr,
                 model._table,
                 self.name,
-                self.geo_type,
+                self.geo_type.upper(),
                 self.srid,
                 self.dim,
                 self.string,
@@ -214,7 +214,7 @@ class GeoLine(GeoField):
     """Field for POSTGIS geometry Line type"""
 
     type = "geo_line"
-    geo_type = "LINESTRING"
+    geo_type = "LineString"
 
     @classmethod
     def from_points(cls, cr, point1, point2, srid=None):
@@ -249,7 +249,7 @@ class GeoPoint(GeoField):
     """Field for POSTGIS geometry Point type"""
 
     type = "geo_point"
-    geo_type = "POINT"
+    geo_type = "Point"
 
     @classmethod
     def from_latlon(cls, cr, latitude, longitude):
@@ -303,28 +303,28 @@ class GeoPolygon(GeoField):
     """Field for POSTGIS geometry Polygon type"""
 
     type = "geo_polygon"
-    geo_type = "POLYGON"
+    geo_type = "Polygon"
 
 
 class GeoMultiLine(GeoField):
     """Field for POSTGIS geometry MultiLine type"""
 
     type = "geo_multi_line"
-    geo_type = "MULTILINESTRING"
+    geo_type = "MultiLineString"
 
 
 class GeoMultiPoint(GeoField):
     """Field for POSTGIS geometry MultiPoint type"""
 
     type = "geo_multi_point"
-    geo_type = "MULTIPOINT"
+    geo_type = "MultiPoint"
 
 
 class GeoMultiPolygon(GeoField):
     """Field for POSTGIS geometry MultiPolygon type"""
 
     type = "geo_multi_polygon"
-    geo_type = "MULTIPOLYGON"
+    geo_type = "MultiPolygon"
 
 
 fields.GeoLine = GeoLine

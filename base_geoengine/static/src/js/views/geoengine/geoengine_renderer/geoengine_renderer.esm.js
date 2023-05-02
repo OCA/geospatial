@@ -53,6 +53,7 @@ export class GeoengineRenderer extends Component {
 
         this.orm = useService("orm");
         this.view = useService("view");
+        this.user = useService("user");
 
         // For related model we need to load all the service needed by RelationalModel
         this.services = {};
@@ -65,6 +66,9 @@ export class GeoengineRenderer extends Component {
                 this.loadJsFiles(),
                 this.loadCssFiles(),
                 this.loadVectorModel(),
+                (this.isGeoengineAdmin = await this.user.hasGroup(
+                    "base_geoengine.group_geoengine_admin"
+                )),
             ])
         );
 
@@ -272,7 +276,7 @@ export class GeoengineRenderer extends Component {
      * Add 'ScaleLine' control.
      */
     setupControls() {
-        if (this.props.editable) {
+        if (this.props.editable && this.isGeoengineAdmin) {
             this.createDrawControl();
             this.createSelectControl();
             this.createEditControl();
@@ -311,10 +315,7 @@ export class GeoengineRenderer extends Component {
                         (el) => el.resId === resId
                     );
                     await record.switchMode("edit");
-                    const format = new ol.format.GeoJSON({
-                        dataProjection: this.map.getView().getProjection(),
-                    });
-                    const value = format.writeGeometry(
+                    const value = this.format.writeGeometry(
                         ev.features.getArray()[0].getGeometry()
                     );
                     this.props.updateRecord(value);
@@ -344,14 +345,24 @@ export class GeoengineRenderer extends Component {
                 this.props.onClickDiscard();
             }
             if (this.drawInteraction === undefined) {
+                const key = Object.keys(this.props.data.fields).find(
+                    (el) => this.props.data.fields[el].geo_type !== undefined
+                );
                 this.drawInteraction = new ol.interaction.Draw({
-                    type: "MultiPolygon",
+                    type: this.props.data.fields[key].geo_type.geo_type,
                     source: new ol.source.Vector(),
                 });
                 this.map.addInteraction(this.drawInteraction);
+                this.drawInteraction.on("drawstart", () => {
+                    this.props.onDrawStart();
+                });
 
-                this.drawInteraction.on("drawend", (e) => {
-                    console.log(e);
+                this.drawInteraction.on("drawend", (ev) => {
+                    this.props.createRecord(
+                        this.props.data.resModel,
+                        key,
+                        new ol.format.GeoJSON().writeGeometry(ev.feature.getGeometry())
+                    );
                 });
             }
         });
@@ -1185,12 +1196,14 @@ export class GeoengineRenderer extends Component {
 
 GeoengineRenderer.template = "base_geoengine.GeoengineRenderer";
 GeoengineRenderer.props = {
-    isSavedOrDiscarded: {type: Boolean, optional: false},
-    archInfo: {type: Object, optional: false},
-    data: {type: Object, optional: false},
-    openRecord: {type: Function, optional: false},
+    isSavedOrDiscarded: {type: Boolean},
+    archInfo: {type: Object},
+    data: {type: Object},
+    openRecord: {type: Function},
     editable: {type: Boolean, optional: true},
-    updateRecord: {type: Function, optional: false},
-    onClickDiscard: {type: Function, optional: false},
+    updateRecord: {type: Function},
+    onClickDiscard: {type: Function},
+    createRecord: {type: Function},
+    onDrawStart: {type: Function},
 };
 GeoengineRenderer.components = {LayersPanel, GeoengineRecord, RecordsPanel};
