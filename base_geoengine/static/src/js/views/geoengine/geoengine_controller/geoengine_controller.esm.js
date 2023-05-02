@@ -7,7 +7,9 @@
 import {Layout} from "@web/search/layout";
 import {useModel} from "@web/views/model";
 import {usePager} from "@web/search/pager_hook";
-import {useService} from "@web/core/utils/hooks";
+import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
+import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
+import {WarningDialog} from "@web/core/errors/error_dialogs";
 
 const {Component, useState} = owl;
 
@@ -19,6 +21,7 @@ export class GeoengineController extends Component {
         this.state = useState({isSavedOrDiscarded: false});
         this.actionService = useService("action");
         this.view = useService("view");
+        this.addDialog = useOwnedDialogs();
         this.editable = this.props.archInfo.editable;
         this.model = useModel(this.props.Model, {
             activeFields: this.props.archInfo.activeFields,
