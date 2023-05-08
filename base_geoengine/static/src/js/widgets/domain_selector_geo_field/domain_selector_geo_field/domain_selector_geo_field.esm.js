@@ -49,6 +49,15 @@ Object.assign(DomainSelectorGeoField, {
             },
             {
                 category: "geospatial",
+                label: _lt("geo_lesser"),
+                value: "geo_lesser",
+                onDidChange: onDidChange(() => ({value: ""})),
+                matches({operator}) {
+                    return operator === this.value;
+                },
+            },
+            {
+                category: "geospatial",
                 label: _lt("geo_equal"),
                 value: "geo_equal",
                 onDidChange: onDidChange(() => ({value: ""})),
