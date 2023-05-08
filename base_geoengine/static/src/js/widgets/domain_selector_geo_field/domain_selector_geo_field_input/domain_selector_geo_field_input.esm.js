@@ -35,10 +35,10 @@ export class DomainSelectorGeoFieldInput extends Component {
          */
         onWillStart(async () => {
             if (this.props.value instanceof Object) {
-                this.key = Object.keys(this.props.value)[0];
-                const index = this.key.lastIndexOf(".");
-                this.state.fieldName = this.key.substring(index + 1);
-                this.state.resModel = this.key.substring(0, index);
+                this.defaultKey = Object.keys(this.props.value)[0];
+                const index = this.defaultKey.lastIndexOf(".");
+                this.state.fieldName = this.defaultKey.substring(index + 1);
+                this.state.resModel = this.defaultKey.substring(0, index);
                 this.loadDomain();
             } else {
                 this.state.value = this.props.value;
@@ -54,11 +54,10 @@ export class DomainSelectorGeoFieldInput extends Component {
      */
     loadDomain(nextProps) {
         const props = nextProps === undefined ? this.props : nextProps;
-        const key =
-            this.key === undefined
-                ? this.state.resModel + "." + this.state.fieldName
-                : this.key;
-        this.state.domain = new Domain(props.value[key]);
+        if (this.defaultKey !== undefined) {
+            this.key = this.defaultKey;
+        }
+        this.state.domain = new Domain(props.value[this.key]);
     }
 
     /**
@@ -66,13 +65,15 @@ export class DomainSelectorGeoFieldInput extends Component {
      * @param {*} value
      */
     update(value) {
+        this.key = this.state.resModel + "." + this.state.fieldName;
+        const obj = {};
+        let jsDomain = [];
         if (value !== undefined) {
             const domain = new Domain(value);
-            const obj = {};
-            const jsDomain = evaluate(domain.ast, {});
-            obj[this.key] = jsDomain;
-            this.props.update({value: obj});
+            jsDomain = evaluate(domain.ast, {});
         }
+        obj[this.key] = jsDomain;
+        this.props.update({value: obj});
     }
 
     /**
@@ -108,7 +109,8 @@ export class DomainSelectorGeoFieldInput extends Component {
      */
     onModelChange(newModel) {
         this.state.resModel = newModel.technical;
-        this.state.fieldName = "";
+        this.state.fieldName =
+            this.state.fieldName.length === 0 ? "id" : this.state.fieldName;
         this.state.subField = "";
         this.update();
     }
