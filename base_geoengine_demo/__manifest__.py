@@ -12,8 +12,8 @@
         "views/menus.xml",
         "views/zip.xml",
         "views/retail_machine.xml",
-        "data/retail_machine_geom.xml",
         "data/npa_geom.xml",
+        "data/retail_machine_geom.xml",
         "security/ir.model.access.csv",
     ],
     "external_dependencies": {
