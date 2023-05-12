@@ -33,7 +33,7 @@ Object.assign(DomainSelectorGeoField, {
                 category: "geospatial",
                 label: _lt("geo_contains"),
                 value: "geo_contains",
-                onDidChange: onDidChange(() => ({value: ""})),
+                onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
                     return operator === this.value;
                 },
@@ -42,7 +42,7 @@ Object.assign(DomainSelectorGeoField, {
                 category: "geospatial",
                 label: _lt("geo_greater"),
                 value: "geo_greater",
-                onDidChange: onDidChange(() => ({value: ""})),
+                onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
                     return operator === this.value;
                 },
@@ -51,7 +51,7 @@ Object.assign(DomainSelectorGeoField, {
                 category: "geospatial",
                 label: _lt("geo_lesser"),
                 value: "geo_lesser",
-                onDidChange: onDidChange(() => ({value: ""})),
+                onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
                     return operator === this.value;
                 },
@@ -60,7 +60,7 @@ Object.assign(DomainSelectorGeoField, {
                 category: "geospatial",
                 label: _lt("geo_equal"),
                 value: "geo_equal",
-                onDidChange: onDidChange(() => ({value: ""})),
+                onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
                     return operator === this.value;
                 },
@@ -69,7 +69,7 @@ Object.assign(DomainSelectorGeoField, {
                 category: "geospatial",
                 label: _lt("geo_touch"),
                 value: "geo_touch",
-                onDidChange: onDidChange(() => ({value: ""})),
+                onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
                     return operator === this.value;
                 },
@@ -78,7 +78,7 @@ Object.assign(DomainSelectorGeoField, {
                 category: "geospatial",
                 label: _lt("geo_within"),
                 value: "geo_within",
-                onDidChange: onDidChange(() => ({value: ""})),
+                onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
                     return operator === this.value;
                 },
@@ -87,7 +87,7 @@ Object.assign(DomainSelectorGeoField, {
                 category: "geospatial",
                 label: _lt("geo_intersect"),
                 value: "geo_intersect",
-                onDidChange: onDidChange(() => ({value: ""})),
+                onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
                     return operator === this.value;
                 },
