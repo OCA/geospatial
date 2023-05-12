@@ -54,11 +54,6 @@ class GeoVectorLayer(models.Model):
         "End color class", required=False, help="hex value", default="#FF680A"
     )
     nb_class = fields.Integer("Number of class", default=1)
-    attribute_field_id = fields.Many2one(
-        "ir.model.fields", "Attribute field", domain=[("ttype", "in", SUPPORTED_ATT)]
-    )
-    model_id = fields.Many2one("ir.model", "Model to use")
-    model_name = fields.Char(related="model_id.model", readonly=True)
     geo_field_id = fields.Many2one(
         "ir.model.fields",
         "Geo field",
@@ -66,6 +61,18 @@ class GeoVectorLayer(models.Model):
         ondelete="cascade",
         domain=[("ttype", "ilike", "geo_")],
     )
+    attribute_field_id = fields.Many2one(
+        "ir.model.fields", "Attribute field", domain=[("ttype", "in", SUPPORTED_ATT)]
+    )
+    model_id = fields.Many2one(
+        "ir.model",
+        "Model to use",
+        store=True,
+        readonly=False,
+        compute="_compute_model_id",
+    )
+    model_name = fields.Char(related="model_id.model", readonly=True)
+
     view_id = fields.Many2one(
         "ir.ui.view", "Related View", domain=[("type", "=", "geoengine")], required=True
     )
@@ -75,7 +82,7 @@ class GeoVectorLayer(models.Model):
     active_on_startup = fields.Boolean(
         help="Layer will be shown on startup if checked."
     )
-    layer_opacity = fields.Float()
+    layer_opacity = fields.Float(default=1.0)
     model_domain = fields.Char(default="[]")
     model_view_id = fields.Many2one(
         "ir.ui.view",
@@ -115,6 +122,18 @@ class GeoVectorLayer(models.Model):
                         )
                     )
 
+    @api.constrains("attribute_field_id", "geo_field_id")
+    def _check_if_attribute_in_geo_field(self):
+        for rec in self:
+            if rec.attribute_field_id and rec.geo_field_id:
+                if rec.attribute_field_id.model != rec.geo_field_id.model:
+                    raise ValidationError(
+                        _(
+                            "You need to provide an attribute that exists in %s model",
+                            rec.geo_field_id.model_id.display_name,
+                        )
+                    )
+
     @api.depends("model_id")
     def _compute_model_view_id(self):
         for rec in self:
@@ -124,3 +143,14 @@ class GeoVectorLayer(models.Model):
                         rec.model_view_id = view
             else:
                 rec.model_view_id = ""
+
+    @api.depends("geo_field_id", "view_id")
+    def _compute_model_id(self):
+        for rec in self:
+            if rec.view_id and rec.geo_field_id:
+                if rec.view_id.model != rec.geo_field_id.model:
+                    rec.model_id = rec.geo_field_id.model_id
+                else:
+                    rec.model_id = ""
+            else:
+                rec.model_id = ""
