@@ -44,7 +44,7 @@
                                         <t t-esc="vector.name" />
                                     </CheckBox>
                                     <button
-                                        t-if="vector.model_domain !== '[]'"
+                                        t-if="vector.model_id !== false"
                                         class="btn btn-edit"
                                         t-on-click.prevent="() => this.onEditFilterButtonSelected(vector)"
                                     >
