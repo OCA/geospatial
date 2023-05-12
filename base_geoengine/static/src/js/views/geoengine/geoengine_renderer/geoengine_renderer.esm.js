@@ -922,12 +922,10 @@ export class GeoengineRenderer extends Component {
                 this.services
             );
             await this.vectorModel.load();
-        } else {
+        } else if (this.models.find((e) => e.model.resModel === model) === undefined) {
             const toLoadModel = new Model(this.env, searchParams, this.services);
             await toLoadModel.load().then(() => {
-                if (this.models.find((e) => e.model.resModel === model) === undefined) {
-                    this.models.push({model: toLoadModel.root, archInfo});
-                }
+                this.models.push({model: toLoadModel.root, archInfo});
             });
         }
     }

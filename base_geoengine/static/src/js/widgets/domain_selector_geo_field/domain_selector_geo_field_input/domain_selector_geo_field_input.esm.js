@@ -109,8 +109,7 @@ export class DomainSelectorGeoFieldInput extends Component {
      */
     onModelChange(newModel) {
         this.state.resModel = newModel.technical;
-        this.state.fieldName =
-            this.state.fieldName.length === 0 ? "id" : this.state.fieldName;
+        this.state.fieldName = "id";
         this.state.subField = "";
         this.update();
     }
