@@ -14,8 +14,8 @@
                 >
                     <group>
                         <field name="projection" />
-                        <field name="restricted_extent" colspan="4" />
-                        <field name="default_extent" colspan="4" />
+                        <field name="restricted_extent" />
+                        <field name="default_extent" />
                         <field name="default_zoom" />
                     </group>
                     <separator string="Vector (Active layers)" colspan="4" />
