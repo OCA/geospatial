@@ -37,7 +37,7 @@ Object.assign(DomainSelectorNumberFieldExtend, {
                 category: "active_ids",
                 label: _lt("in active_ids"),
                 value: "in active_ids",
-                onDidChange: onDidChange(() => ({value: ""})),
+                onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
                     return operator === this.value;
                 },
@@ -46,7 +46,7 @@ Object.assign(DomainSelectorNumberFieldExtend, {
                 category: "active_ids",
                 label: _lt("not in active_ids"),
                 value: "not in active_ids",
-                onDidChange: onDidChange(() => ({value: ""})),
+                onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
                     return operator === this.value;
                 },
@@ -66,7 +66,7 @@ Object.assign(DomainSelectorNumberFieldExtend, {
             "set",
             "not set",
         ].map((key) => dso.get(key));
-        return addOperators.concat(operators);
+        return operators.concat(addOperators);
     },
 });
 dsf.remove("integer");
