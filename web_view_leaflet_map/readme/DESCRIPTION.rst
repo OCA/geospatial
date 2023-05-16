@@ -6,9 +6,9 @@ You can see a simple usage in the module ``web_view_leaflet_map_partner`` in the
 same OCA repository that displays your contact in a map, if latitude and longitude are
 defined. (To define latitude and longitude, refer to the Odoo module ``base_geolocalize``)
 
-.. figure:: ../static/description/view_res_partner_map_1.png
+.. figure:: ../static/description/res_partner_map_1.png
 
-.. figure:: ../static/description/view_res_partner_map_2.png
+.. figure:: ../static/description/res_partner_map_2.png
 
 
 **Important Note**
