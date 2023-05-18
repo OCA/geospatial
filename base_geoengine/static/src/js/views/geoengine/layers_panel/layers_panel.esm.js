@@ -146,6 +146,11 @@ export class LayersPanel extends Component {
      * @param {*} value
      */
     async onVectorChange(layer, action, value) {
+        vectorLayersStore.vectorsLayers.forEach((layer) => {
+            layer.onDomainChanged = false;
+            layer.onLayerChanged = false;
+            layer.onSequenceChanged = false;
+        });
         const vectorLayer = vectorLayersStore.getVector(layer.resId);
         switch (action) {
             case "onDomainChanged":

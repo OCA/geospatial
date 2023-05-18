@@ -27,5 +27,6 @@
                 >OPEN</button>
             </div>
         </div>
+        <div id="map-legend" class="ol-control" />
     </t>
 </templates>

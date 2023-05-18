@@ -12,7 +12,9 @@ const {Component, onRendered} = owl;
 export class DomainSelectorFieldInputForActiveIds extends Component {
     setup() {
         onRendered(() => {
-            this.props.update({value: this.props.value});
+            if (this.props.value !== "{ACTIVE_IDS}") {
+                this.props.update({value: "{ACTIVE_IDS}"});
+            }
         });
     }
 }
