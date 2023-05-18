@@ -12,6 +12,7 @@ import {DomainSelectorFieldInputWithTags} from "@web/core/domain_selector/fields
 import {onDidChange} from "../domain_selector_operators.esm";
 const dso = registry.category("domain_selector/operator");
 const dsf = registry.category("domain_selector/fields");
+dsf.remove("integer");
 
 const {Component} = owl;
 
@@ -69,9 +70,4 @@ Object.assign(DomainSelectorNumberFieldExtend, {
         return operators.concat(addOperators);
     },
 });
-dsf.remove("integer");
-dsf.remove("float");
-dsf.remove("monetary");
 dsf.add("integer", DomainSelectorNumberFieldExtend);
-dsf.add("float", DomainSelectorNumberFieldExtend);
-dsf.add("monetary", DomainSelectorNumberFieldExtend);
