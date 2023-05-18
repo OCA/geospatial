@@ -164,6 +164,20 @@
     left: 0.5em;
 }
 
+#map-legend {
+    bottom: 17em;
+    right: 24em;
+    z-index: 1054;
+    background-color: transparent;
+}
+
+.legend {
+    margin-bottom: 15px;
+    display: none;
+    background-color: #f5f5f5;
+    border-radius: 5px;
+}
+
 .selected-control > i {
     color: #71639e;
 }
