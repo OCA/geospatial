@@ -5,6 +5,7 @@
             type="text"
             class="o_input o_domain_leaf_value_input"
             t-att-value="props.value"
+            t-on-change="onChange"
             readonly="1"
         />
     </t>
