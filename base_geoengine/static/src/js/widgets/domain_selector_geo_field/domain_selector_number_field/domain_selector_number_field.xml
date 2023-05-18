@@ -7,7 +7,7 @@
         </t>
          <t t-elif="props.operator.category === 'active_ids'">
             <DomainSelectorFieldInputForActiveIds
-                value="'{ACTIVE_IDS}'"
+                value="props.value"
                 update="props.update"
             />
         </t>
