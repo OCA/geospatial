@@ -10,9 +10,8 @@ import {DomainSelectorFieldInput} from "@web/core/domain_selector/fields/domain_
 import {DomainSelectorFieldInputForActiveIds} from "../domain_selector_field_input_for_active_ids/domain_selector_field_input_for_active_ids.esm";
 import {DomainSelectorFieldInputWithTags} from "@web/core/domain_selector/fields/domain_selector_field_input_with_tags";
 import {onDidChange} from "../domain_selector_operators.esm";
+
 const dso = registry.category("domain_selector/operator");
-const dsf = registry.category("domain_selector/fields");
-dsf.remove("integer");
 
 import {Component} from "@odoo/owl";
 
@@ -70,4 +69,6 @@ Object.assign(DomainSelectorNumberFieldExtend, {
         return operators.concat(addOperators);
     },
 });
-dsf.add("integer", DomainSelectorNumberFieldExtend);
+registry
+    .category("domain_selector/fields")
+    .add("integer", DomainSelectorNumberFieldExtend, {force: true});

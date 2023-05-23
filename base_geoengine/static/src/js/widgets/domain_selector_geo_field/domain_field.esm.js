@@ -2,7 +2,7 @@
 
 import {DomainField} from "@web/views/fields/domain/domain_field";
 import {registry} from "@web/core/registry";
-registry.category("fields").remove("domain");
+
 export class DomainFieldExtend extends DomainField {
     async loadCount(props) {
         if (!this.getResModel(props)) {
@@ -31,4 +31,4 @@ export class DomainFieldExtend extends DomainField {
     }
 }
 
-registry.category("fields").add("domain", DomainFieldExtend);
+registry.category("fields").add("domain", DomainFieldExtend, {force: true});
