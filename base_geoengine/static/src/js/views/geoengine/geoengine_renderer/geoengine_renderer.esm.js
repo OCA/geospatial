@@ -36,8 +36,6 @@ const LEGEND_MAX_ITEMS = 10;
 
 export class GeoengineRenderer extends Component {
     setup() {
-        super.setup();
-
         this.state = useState({selectedFeatures: [], isModified: false, isFit: false});
         this.models = [];
         this.cfg_models = [];

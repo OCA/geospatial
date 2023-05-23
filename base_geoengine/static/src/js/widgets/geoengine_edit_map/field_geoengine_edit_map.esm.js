@@ -13,8 +13,6 @@ import {Component, onMounted, onRendered, onWillStart, useEffect} from "@odoo/ow
 
 export class FieldGeoEngineEditMap extends Component {
     setup() {
-        super.setup();
-
         // Allows you to have a unique id if you put the same field in the view several times
         this.id = `map_${Date.now()}`;
         this.orm = useService("orm");
