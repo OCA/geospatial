@@ -4,7 +4,7 @@
  * Copyright 2023 ACSONE SA/NV
  */
 
-const {Component, onRendered} = owl;
+import {Component, onRendered} from "@odoo/owl";
 
 /**
  * It allows you to set a default value for the field and a readonly property for the active_ids value.

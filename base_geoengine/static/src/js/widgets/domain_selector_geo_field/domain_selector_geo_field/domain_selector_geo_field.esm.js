@@ -7,8 +7,8 @@
 import {_lt} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 import {DomainSelectorGeoFieldInput} from "../domain_selector_geo_field_input/domain_selector_geo_field_input.esm";
-import {Component} from "@odoo/owl";
 import {onDidChange} from "../domain_selector_operators.esm";
+import {Component} from "@odoo/owl";
 
 const dsf = registry.category("domain_selector/fields");
 

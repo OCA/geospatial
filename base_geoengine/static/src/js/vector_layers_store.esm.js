@@ -1,5 +1,5 @@
 /** @odoo-module */
-const {reactive} = owl;
+import {reactive} from "@odoo/owl";
 
 class VectorLayersStore {
     /**
