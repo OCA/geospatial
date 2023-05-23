@@ -14,7 +14,7 @@ const dso = registry.category("domain_selector/operator");
 const dsf = registry.category("domain_selector/fields");
 dsf.remove("integer");
 
-const {Component} = owl;
+import {Component} from "@odoo/owl";
 
 /**
  * This method is extended from DomainSelectorNumberField to add some operators
