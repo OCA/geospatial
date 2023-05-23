@@ -12,7 +12,7 @@ import {DomainSelectorGeoFieldDialog} from "../../../widgets/domain_selector_geo
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
 import {useSortable} from "@web/core/utils/sortable";
 
-const {Component, onWillStart, useState, useRef} = owl;
+import {Component, onWillStart, useRef, useState} from "@odoo/owl";
 
 export class LayersPanel extends Component {
     setup() {
