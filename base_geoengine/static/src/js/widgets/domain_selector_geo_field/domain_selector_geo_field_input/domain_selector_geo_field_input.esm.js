@@ -11,7 +11,7 @@ import {evaluate} from "@web/core/py_js/py_interpreter";
 import {useOwnedDialogs} from "@web/core/utils/hooks";
 import {DomainSelectorGeoFieldDialog} from "../domain_selector_geo_field_dialog/domain_selector_geo_field_dialog.esm";
 
-const {Component, onWillStart, useState, onWillUpdateProps} = owl;
+import {Component, onWillStart, onWillUpdateProps, useState} from "@odoo/owl";
 
 /**
  * This class correspond to the value of the right operand when a geo_field has
