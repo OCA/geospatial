@@ -10,8 +10,7 @@ import {usePager} from "@web/search/pager_hook";
 import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
 import {WarningDialog} from "@web/core/errors/error_dialogs";
-
-const {Component, useState} = owl;
+import {Component, useState} from "@odoo/owl";
 
 export class GeoengineController extends Component {
     /**

@@ -9,6 +9,7 @@ import {Field} from "@web/views/fields/field";
 import {Widget} from "@web/views/widgets/widget";
 import {XMLParser} from "@web/core/utils/xml";
 import {_lt} from "@web/core/l10n/translation";
+
 export const INFO_BOX_ATTRIBUTE = "info_box";
 
 export class GeoengineArchParser extends XMLParser {
