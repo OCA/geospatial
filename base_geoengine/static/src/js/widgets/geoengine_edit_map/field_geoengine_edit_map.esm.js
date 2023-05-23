@@ -9,7 +9,7 @@ import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 
-const {Component, onWillStart, onMounted, onRendered, useEffect} = owl;
+import {Component, onMounted, onRendered, onWillStart, useEffect} from "@odoo/owl";
 
 export class FieldGeoEngineEditMap extends Component {
     setup() {
