@@ -16,8 +16,6 @@ import {
 
 export class RecordsPanel extends Component {
     setup() {
-        super.setup();
-
         this.state = useState({
             isFolded: false,
             isClicked: 0,
