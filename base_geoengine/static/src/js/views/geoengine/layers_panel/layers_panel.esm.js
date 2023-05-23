@@ -30,16 +30,7 @@ export class LayersPanel extends Component {
          * in the database and add them to the store.
          */
         onWillStart(async () => {
-            this.isGeoengineAdmin = await this.user.hasGroup(
-                "base_geoengine.group_geoengine_admin"
-            );
-            const result = await this.orm.call(
-                this.props.model,
-                "get_geoengine_layers",
-                []
-            );
-            this.state.geoengineLayers = result;
-
+            await Promise.all([this.loadIsAdmin(), this.loadLayers()]);
             /**
              * Get resId of records to allow resequence of elements.
              */
@@ -68,6 +59,22 @@ export class LayersPanel extends Component {
             },
             onDrop: (params) => this.sort(dataRowId, params),
         });
+    }
+
+    async loadIsAdmin() {
+        return this.user
+            .hasGroup("base_geoengine.group_geoengine_admin")
+            .then((result) => {
+                this.isGeoengineAdmin = result;
+            });
+    }
+
+    async loadLayers() {
+        return this.orm
+            .call(this.props.model, "get_geoengine_layers", [])
+            .then((result) => {
+                this.state.geoengineLayers = result;
+            });
     }
 
     async sort(dataRowId, {previous}) {
