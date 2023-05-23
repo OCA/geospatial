@@ -4,7 +4,7 @@
  * Copyright 2023 ACSONE SA/NV
  */
 
-import {loadCSS, loadJS, templates} from "@web/core/assets";
+import {loadBundle, templates} from "@web/core/assets";
 import {GeoengineRecord} from "../geoengine_record/geoengine_record.esm";
 import {LayersPanel} from "../layers_panel/layers_panel.esm";
 import {RecordsPanel} from "../records_panel/records_panel.esm";
@@ -62,8 +62,14 @@ export class GeoengineRenderer extends Component {
 
         onWillStart(async () =>
             Promise.all([
-                this.loadJsFiles(),
-                this.loadCssFiles(),
+                loadBundle({
+                    jsLibs: [
+                        "/base_geoengine/static/lib/ol-7.2.2/ol.js",
+                        "/base_geoengine/static/lib/chromajs-2.4.2/chroma.js",
+                        "/base_geoengine/static/lib/geostats-2.0.0/geostats.js",
+                    ],
+                    cssLibs: ["/base_geoengine/static/lib/geostats-2.0.0/geostats.css"],
+                }),
                 this.loadVectorModel(),
                 (this.isGeoengineAdmin = await this.user.hasGroup(
                     "base_geoengine.group_geoengine_admin"
@@ -94,25 +100,6 @@ export class GeoengineRenderer extends Component {
                 this.renderVectorLayers();
             }
         });
-    }
-
-    async loadJsFiles() {
-        const files = [
-            "/base_geoengine/static/lib/ol-7.2.2/ol.js",
-            "/base_geoengine/static/lib/chromajs-2.4.2/chroma.js",
-            "/base_geoengine/static/lib/geostats-2.0.0/geostats.js",
-        ];
-        for (const file of files) {
-            await loadJS(file);
-        }
-    }
-
-    async loadCssFiles() {
-        await Promise.all(
-            ["/base_geoengine/static/lib/geostats-2.0.0/geostats.css"].map((file) =>
-                loadCSS(file)
-            )
-        );
     }
 
     async loadVectorModel() {
