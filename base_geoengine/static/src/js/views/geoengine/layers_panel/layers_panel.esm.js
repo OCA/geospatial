@@ -16,8 +16,6 @@ import {Component, onWillStart, useRef, useState} from "@odoo/owl";
 
 export class LayersPanel extends Component {
     setup() {
-        super.setup();
-
         this.orm = useService("orm");
         this.actionService = useService("action");
         this.view = useService("view");
