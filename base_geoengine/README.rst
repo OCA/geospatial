@@ -19,15 +19,11 @@ Geospatial support for Odoo
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/geospatial-16-0/geospatial-16-0-base_geoengine
     :alt: Translate me on Weblate
-.. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/webui/builds.html?repo=OCA/geospatial&target_branch=16.0
-    :alt: Try me on Runboat
+.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
+    :target: https://runbot.odoo-community.org/runbot/115/16.0
+    :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
-
-===================
-What is GeoEngine ?
-===================
 
 GeoEngine is an Odoo module that adds spatial/GIS capabilites to Odoo. It will allow you to :
 
@@ -55,6 +51,8 @@ To install this module, you need to have `PostGIS <http://postgis.net/>`_ instal
 
 On Ubuntu::
 
+.. code-block:: bash
+
   sudo apt-get install postgis
 
 The module also requires two additional python libs:
@@ -70,9 +68,9 @@ For a complete documentation please refer to the `public documenation <http://oc
 Usage
 =====
 
---------------
 Geoengine Demo
---------------
+==============
+
 1. As a user/admin, when I am in the Geoengine Demo module and I go to the ZIP menu.
    When I click on an item in the list view, I get to the form view showing me the different
    information about the ZIP. We can see its ZIP, city, priority, total sales and his spatial
@@ -114,9 +112,9 @@ Geoengine Demo
 23. As an admin,If the geoengine view is in edit mode, I can create new records by drawing them in the view.
 24. As an admin, If the geoengine view is in edit mode, I can modify its spatial representation.
 
-------------------
 Geoengine Backend
-------------------
+=================
+
 1. As an admin, if I go into the configuration of the raster layers and it has elements, I can click
    on one and see its information.
 2. As an admin, if I want to create a new raster layer, I can click on "NEW" and fill out the form. The
@@ -132,9 +130,9 @@ Geoengine Backend
 Changelog
 =========
 
-=======================
 16.0.1.0.0 (2023-03-20)
-=======================
+========================
+
 * LayerSwitcher has been removed as it was not really practical. A LayerPanel is now active.
 * The geo_search method is now deprecated and replaced by the standard odoo search method.
 * The widget "geo_edit_map" attribute is no longer necessary as the field is automatically detected by
@@ -197,9 +195,6 @@ Changelog
         <field name="layer_opacity">0.8</field>
     </record>
 
-=======================
-16.0.1.0.0 (2023-04-05)
-=======================
 
 * There is some new features in the LayerPanel.
 
@@ -214,22 +209,11 @@ Changelog
   If we want to add a domain that includes all the records that are displayed in the geoengine view (active_ids). We can use the two new operators :
   "in active_ids" and "not in active_ids". These will automatically replace the marker with ids. Note that the widget will indicate that the domain is invalid
   because of the marker.
-
-
-=======================
-16.0.1.0.0 (2023-04-12)
-=======================
-
 * Creation of the RecordsPanel. This panel allows you to retrieve all active records. You can click on record to get the movement to the selected record.
   Two magnifying glass are also available. You can click on the left one to zoom on the record. You can click on the right one to get the original zoom.
 * A search bar is also available. It allows you to perform a search into the RecordsPanel.
 * A button to open/close the panels is also available.
 * The module has been translated in French.
-
-=======================
-16.0.1.0.0 (2023-05-08)
-=======================
-
 * Now you can now make the geoengine view editable. Simply add editable attribute in the geoengine view.
 
 .. code-block:: xml
@@ -268,16 +252,14 @@ Do not contact contributors directly about support or help with technical issues
 Credits
 =======
 
---------
 Authors
---------
+~~~~~~~
 
 * Camptocamp
 * ACSONE SA/NV
 
-------------
 Contributors
-------------
+~~~~~~~~~~~~
 
 * Nicolas Bessi <nicolas.bessi@camptocamp.com>
 * Frederic Junod <frederic.junod@camptocamp.com>
@@ -300,9 +282,8 @@ Contributors
 * Sandip Mangukiya <smangukiya@opensourceintegrators.com>
 * Samuel Kouff <s.kouff@student.helmo.be>
 
------------
 Maintainers
------------
+~~~~~~~~~~~
 
 This module is maintained by the OCA.
 

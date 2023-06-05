@@ -1,6 +1,6 @@
---------------
 Geoengine Demo
---------------
+==============
+
 1. As a user/admin, when I am in the Geoengine Demo module and I go to the ZIP menu.
    When I click on an item in the list view, I get to the form view showing me the different
    information about the ZIP. We can see its ZIP, city, priority, total sales and his spatial
@@ -42,9 +42,9 @@ Geoengine Demo
 23. As an admin,If the geoengine view is in edit mode, I can create new records by drawing them in the view.
 24. As an admin, If the geoengine view is in edit mode, I can modify its spatial representation.
 
-------------------
 Geoengine Backend
-------------------
+=================
+
 1. As an admin, if I go into the configuration of the raster layers and it has elements, I can click
    on one and see its information.
 2. As an admin, if I want to create a new raster layer, I can click on "NEW" and fill out the form. The
