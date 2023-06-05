@@ -1,7 +1,3 @@
-===================
-What is GeoEngine ?
-===================
-
 GeoEngine is an Odoo module that adds spatial/GIS capabilites to Odoo. It will allow you to :
 
 * Visualize and query your business information on map
