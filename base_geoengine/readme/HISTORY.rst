@@ -1,6 +1,6 @@
-=======================
 16.0.1.0.0 (2023-03-20)
-=======================
+========================
+
 * LayerSwitcher has been removed as it was not really practical. A LayerPanel is now active.
 * The geo_search method is now deprecated and replaced by the standard odoo search method.
 * The widget "geo_edit_map" attribute is no longer necessary as the field is automatically detected by
@@ -63,9 +63,6 @@
         <field name="layer_opacity">0.8</field>
     </record>
 
-=======================
-16.0.1.0.0 (2023-04-05)
-=======================
 
 * There is some new features in the LayerPanel.
 
@@ -80,22 +77,11 @@
   If we want to add a domain that includes all the records that are displayed in the geoengine view (active_ids). We can use the two new operators :
   "in active_ids" and "not in active_ids". These will automatically replace the marker with ids. Note that the widget will indicate that the domain is invalid
   because of the marker.
-
-
-=======================
-16.0.1.0.0 (2023-04-12)
-=======================
-
 * Creation of the RecordsPanel. This panel allows you to retrieve all active records. You can click on record to get the movement to the selected record.
   Two magnifying glass are also available. You can click on the left one to zoom on the record. You can click on the right one to get the original zoom.
 * A search bar is also available. It allows you to perform a search into the RecordsPanel.
 * A button to open/close the panels is also available.
 * The module has been translated in French.
-
-=======================
-16.0.1.0.0 (2023-05-08)
-=======================
-
 * Now you can now make the geoengine view editable. Simply add editable attribute in the geoengine view.
 
 .. code-block:: xml
