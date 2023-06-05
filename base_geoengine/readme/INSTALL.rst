@@ -3,6 +3,8 @@ To install this module, you need to have `PostGIS <http://postgis.net/>`_ instal
 
 On Ubuntu::
 
+.. code-block:: bash
+
   sudo apt-get install postgis
 
 The module also requires two additional python libs:
