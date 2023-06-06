@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="base_geoengine.GeoengineController" owl="1">
+        <Layout display="props.display" className="'h-100'">
+            <t t-set-slot="layout-buttons">
+                <t t-if="model.root.editedRecord">
+                    <button
+                        type="button"
+                        class="btn btn-primary o_list_button_save"
+                        data-hotkey="s"
+                        t-on-click.stop="onClickSave"
+                    >
+                        Save
+                    </button>
+                    <button
+                        type="button"
+                        class="btn btn-secondary o_list_button_discard"
+                        data-hotkey="j"
+                        t-on-click="onClickDiscard"
+                    >
+                        Discard
+                    </button>
+                </t>
+            </t>
+            <t
+                t-component="props.Renderer"
+                isSavedOrDiscarded="state.isSavedOrDiscarded"
+                archInfo="props.archInfo"
+                data="model.root"
+                editable="editable"
+                openRecord.bind="openRecord"
+                updateRecord.bind="updateRecord"
+                onClickDiscard.bind="onClickDiscard"
+                createRecord.bind="createRecord"
+                onDrawStart.bind="onDrawStart"
+            />
+        </Layout>
+    </t>
+</templates>

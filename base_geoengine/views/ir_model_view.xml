@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="view_model_fields_form_geo">
+        <!-- must be unique in this module. -->
+        <field name="name">ir.model.fields.form.geo</field>
+        <field name="model">ir.model.fields</field>
+        <field name="inherit_id" ref="base.view_model_fields_form" />
+        <field name="arch" type="xml">
+            <sheet position="inside">
+                  <group>
+                      <!-- nasty attrs but ilike operator does not work as expected -->
+                      <field
+                        name="srid"
+                        attrs="{'readonly': [('ttype', 'not in', ['geo_polygon', 'geo_multi_polygon', 'geo_point', 'geo_multi_point', 'geo_line', 'geo_multi_line'])]}"
+                    />
+                      <field
+                        name="geo_type"
+                        attrs="{'readonly': [('ttype', 'not in', ['geo_polygon', 'geo_multi_polygon', 'geo_point', 'geo_multi_point', 'geo_line', 'geo_multi_line'])]}"
+                    />
+                      <field
+                        name="dim"
+                        attrs="{'readonly': [('ttype', 'not in', ['geo_polygon', 'geo_multi_polygon', 'geo_point', 'geo_multi_point', 'geo_line', 'geo_multi_line'])]}"
+                    />
+                      <field
+                        name="gist_index"
+                        attrs="{'readonly': [('ttype', 'not in', ['geo_polygon', 'geo_multi_polygon', 'geo_point', 'geo_multi_point', 'geo_line', 'geo_multi_line'])]}"
+                    />
+                  </group>
+            </sheet>
+        </field>
+    </record>
+
+</odoo>

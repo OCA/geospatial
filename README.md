@@ -9,7 +9,7 @@
 
 # geospatial
 
-TODO: add repo description.
+This project will enable real life GIS support on Odoo.
 
 <!-- /!\ do not modify below this line -->
 
