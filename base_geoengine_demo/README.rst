@@ -19,14 +19,14 @@ Geo spatial support Demo
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
     :target: https://translation.odoo-community.org/projects/geospatial-16-0/geospatial-16-0-base_geoengine_demo
     :alt: Translate me on Weblate
-.. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/webui/builds.html?repo=OCA/geospatial&target_branch=16.0
-    :alt: Try me on Runboat
+.. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
+    :target: https://runbot.odoo-community.org/runbot/115/16.0
+    :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
 
 Demonstration for the Geospatial support based on PostGIS.
-Read the ``base_geoengine`` descriptipon for more details.
+Read the ``base_geoengine`` description for more details.
 
 **Table of contents**
 
@@ -36,7 +36,7 @@ Read the ``base_geoengine`` descriptipon for more details.
 Installation
 ============
 
-Please refer the ``base_geoengine`` installations instructions
+Please refer to the ``base_geoengine`` installation instructions
 to learn how to properly install this demonstration module.
 
 Usage
