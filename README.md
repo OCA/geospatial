@@ -22,6 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [base_geoengine](base_geoengine/) | 16.0.1.0.0 |  | Geospatial support for Odoo
+[base_geoengine_demo](base_geoengine_demo/) | 16.0.1.0.0 |  | Geo spatial support Demo
 
 [//]: # (end addons)
 
