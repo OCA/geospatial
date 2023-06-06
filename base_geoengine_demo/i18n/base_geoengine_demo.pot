@@ -1,17 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* base_geoengine_demo
+# 	* base_geoengine_demo
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 12.0\n"
+"Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: <>\n"
+"Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: base_geoengine_demo
+#: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_ahocevar0
+msgid "Ahocevar"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.geo_retail_machine_view_form
+msgid "Attributes"
+msgstr ""
 
 #. module: base_geoengine_demo
 #: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_basictest0
@@ -25,12 +35,17 @@ msgstr ""
 
 #. module: base_geoengine_demo
 #: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_coloredrangetest0
-msgid "Colored range ZIP"
+msgid "Colored range ZIP (total_sales)"
 msgstr ""
 
 #. module: base_geoengine_demo
 #: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_coloredrangezipquantile0
-msgid "Colored range ZIP Eq Interval"
+msgid "Colored range ZIP Eq Interval (total_sales)"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinecontainsgeom
+msgid "Contains"
 msgstr ""
 
 #. module: base_geoengine_demo
@@ -58,7 +73,6 @@ msgstr ""
 
 #. module: base_geoengine_demo
 #: model_terms:ir.ui.view,arch_db:base_geoengine_demo.dummy_zip_form
-#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.dummy_zip_tree
 msgid "Dummy"
 msgstr ""
 
@@ -88,14 +102,29 @@ msgid "Geometry"
 msgstr ""
 
 #. module: base_geoengine_demo
-#: selection:geoengine.demo.automatic.retailing.machine,state:0
+#: model:ir.model.fields.selection,name:base_geoengine_demo.selection__geoengine_demo_automatic_retailing_machine__state__hs
 msgid "HS"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_hs_retail_machines
+msgid "HS retail machines"
 msgstr ""
 
 #. module: base_geoengine_demo
 #: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__id
 #: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__id
 msgid "ID"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_retailmachineview0
+msgid "ID:"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_intersect_active_ids
+msgid "Intersect point and geom"
 msgstr ""
 
 #. module: base_geoengine_demo
@@ -118,7 +147,12 @@ msgstr ""
 
 #. module: base_geoengine_demo
 #: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__money_level
-msgid "Money level"
+msgid "Money Level"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_retailmachineview0
+msgid "Money level:"
 msgstr ""
 
 #. module: base_geoengine_demo
@@ -127,7 +161,12 @@ msgid "NPA Shape"
 msgstr ""
 
 #. module: base_geoengine_demo
-#: selection:geoengine.demo.automatic.retailing.machine,state:0
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_not_intersect_active_ids
+msgid "Not intersect point and geom"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields.selection,name:base_geoengine_demo.selection__geoengine_demo_automatic_retailing_machine__state__ok
 msgid "OK"
 msgstr ""
 
@@ -144,7 +183,6 @@ msgstr ""
 #. module: base_geoengine_demo
 #: model:ir.ui.menu,name:base_geoengine_demo.geoengine_retail_machine_menu
 #: model_terms:ir.ui.view,arch_db:base_geoengine_demo.geo_retail_machine_view_form
-#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.geo_retail_machine_view_tree
 msgid "Retail Machine"
 msgstr ""
 
@@ -190,11 +228,6 @@ msgid "Retail machines"
 msgstr ""
 
 #. module: base_geoengine_demo
-#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.geo_retail_machine_view_search
-msgid "Search Retail Machine"
-msgstr ""
-
-#. module: base_geoengine_demo
 #: model_terms:ir.ui.view,arch_db:base_geoengine_demo.dummy_zip_search
 msgid "Search ZIP"
 msgstr ""
@@ -202,6 +235,11 @@ msgstr ""
 #. module: base_geoengine_demo
 #: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__name
 msgid "Serial number"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_retailmachineview0
+msgid "Serial number :"
 msgstr ""
 
 #. module: base_geoengine_demo
@@ -215,6 +253,11 @@ msgid "State"
 msgstr ""
 
 #. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_retailmachineview0
+msgid "State:"
+msgstr ""
+
+#. module: base_geoengine_demo
 #: model_terms:ir.ui.view,arch_db:base_geoengine_demo.geo_retail_machine_view_form
 msgid "The line"
 msgstr ""
@@ -222,6 +265,20 @@ msgstr ""
 #. module: base_geoengine_demo
 #: model_terms:ir.ui.view,arch_db:base_geoengine_demo.geo_retail_machine_view_form
 msgid "The point"
+msgstr ""
+
+#. module: base_geoengine_demo
+#. odoo-python
+#: code:addons/base_geoengine_demo/models/retail_machine.py:0
+#, python-format
+msgid ""
+"The point must be placed in the corresponding area. (serial number: %s)."
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_resbetterzipgeoview0
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_retailmachineview0
+msgid "Total Sales:"
 msgstr ""
 
 #. module: base_geoengine_demo
@@ -233,6 +290,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__name
 #: model:ir.ui.menu,name:base_geoengine_demo.zip_retail_machine
 msgid "ZIP"
+msgstr ""
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_resbetterzipgeoview0
+msgid "ZIP :"
 msgstr ""
 
 #. module: base_geoengine_demo
@@ -256,12 +318,6 @@ msgid "Zip"
 msgstr ""
 
 #. module: base_geoengine_demo
-#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.geo_retail_machine_view_form
-msgid "attributes"
+#: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_wmts
+msgid "sgmc2"
 msgstr ""
-
-#. module: base_geoengine_demo
-#: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_basic0
-msgid "basic"
-msgstr ""
-
