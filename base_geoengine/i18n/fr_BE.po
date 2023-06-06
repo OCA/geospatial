@@ -10,6 +10,7 @@ msgstr ""
 "PO-Revision-Date: 2023-05-15 06:18+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -172,11 +173,21 @@ msgstr "Fin de la classe de couleur"
 #: code:addons/base_geoengine/geo_db.py:0
 #, python-format
 msgid ""
-"Error, can not automatically initialize spatial postgis support. Database user may have to be superuser and postgres/postgis extensions with their devel header have to be installed. If you do not want Odoo to connect with a super user you can manually prepare your database. To do this, open a client to your database using a super user and run:\n"
+"Error, can not automatically initialize spatial postgis support. Database "
+"user may have to be superuser and postgres/postgis extensions with their "
+"devel header have to be installed. If you do not want Odoo to connect with a "
+"super user you can manually prepare your database. To do this, open a client "
+"to your database using a super user and run:\n"
 "CREATE EXTENSION postgis;\n"
 "CREATE EXTENSION postgis_topology;\n"
 msgstr ""
-"Erreur, impossible d'initialiser automatiquement le support spatial postigs. L'utilisateur de la base de données doit être un super utilisateur et les extensions postgres/postgis doivent être installées avec leurs en-tête devel. Si vous ne voulez pas qu'Odoo se connecte avec un super utilisateur, vous pouvez préparer manuellement votre base de données. Pour ce faire, ouvrez un client à votre base de données en utilisant un super utilisateur et exécutez:\n"
+"Erreur, impossible d'initialiser automatiquement le support spatial postigs. "
+"L'utilisateur de la base de données doit être un super utilisateur et les "
+"extensions postgres/postgis doivent être installées avec leurs en-tête "
+"devel. Si vous ne voulez pas qu'Odoo se connecte avec un super utilisateur, "
+"vous pouvez préparer manuellement votre base de données. Pour ce faire, "
+"ouvrez un client à votre base de données en utilisant un super utilisateur "
+"et exécutez:\n"
 "CREATE EXTENSION postgis;\n"
 "CREATE EXTENSION postgis_topology;\n"
 
@@ -206,8 +217,7 @@ msgstr "Général"
 #. odoo-python
 #: code:addons/base_geoengine/fields.py:0
 #, python-format
-msgid ""
-"Geo Value %(geom_type)s must be of the same type %(geo_type)s as fields"
+msgid "Geo Value %(geom_type)s must be of the same type %(geo_type)s as fields"
 msgstr ""
 "La valeur géographique %(geom_type)s doit être du même type %(geo_type)s "
 "queles champs"
@@ -220,8 +230,8 @@ msgid ""
 "Geo dimention modification is not implemented. We can not change dimention "
 "%(data)s to %(dim)s"
 msgstr ""
-"La modification de la dimension de la géométrie n'est pas implémentée. Nous ne pouvons pas modifier la dimension "
-"%(data)s to %(dim)s"
+"La modification de la dimension de la géométrie n'est pas implémentée. Nous "
+"ne pouvons pas modifier la dimension %(data)s to %(dim)s"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__geo_field_id
@@ -233,11 +243,11 @@ msgstr "Champ géographique"
 #: code:addons/base_geoengine/fields.py:0
 #, python-format
 msgid ""
-"Geo type modification is not implemented. We can not change type %(data)s to"
-" %(geo_type)s"
+"Geo type modification is not implemented. We can not change type %(data)s to "
+"%(geo_type)s"
 msgstr ""
-"La modification du type de la géométrie n'est pas implémentée. Nous ne pouvons pas changer le type %(data)s to"
-" %(geo_type)s"
+"La modification du type de la géométrie n'est pas implémentée. Nous ne "
+"pouvons pas changer le type %(data)s to %(geo_type)s"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_ui_view__type__geoengine
@@ -653,8 +663,6 @@ msgstr "Sauvegarder"
 
 #. module: base_geoengine
 #. odoo-javascript
-#: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
-#: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
 #: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
 #, python-format
 msgid "Search..."
