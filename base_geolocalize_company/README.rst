@@ -14,13 +14,13 @@ Base Geolocalize Company
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github
-    :target: https://github.com/OCA/geospatial/tree/12.0/base_geolocalize_company
+    :target: https://github.com/OCA/geospatial/tree/16.0/base_geolocalize_company
     :alt: OCA/geospatial
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/geospatial-12-0/geospatial-12-0-base_geolocalize_company
+    :target: https://translation.odoo-community.org/projects/geospatial-16-0/geospatial-16-0-base_geolocalize_company
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runbot-Try%20me-875A7B.png
-    :target: https://runbot.odoo-community.org/runbot/115/12.0
+    :target: https://runbot.odoo-community.org/runbot/115/16.0
     :alt: Try me on Runbot
 
 |badge1| |badge2| |badge3| |badge4| |badge5| 
@@ -31,9 +31,9 @@ Geolocalization on Companies (``res.company``) level.
 It adds a new tab named 'Company Assignation' and allow to enter manually
 (or automatically via the 'Geolocate' button) latitude and longitude.
 
-.. figure:: https://raw.githubusercontent.com/OCA/geospatial/12.0/base_geolocalize_company/static/description/view_res_company_form.png
+.. figure:: https://raw.githubusercontent.com/OCA/geospatial/16.0/base_geolocalize_company/static/description/view_res_company_form.png
 
-This module is only useful in a multi-company context.
+This module is useful in a multi-company context.
 
 **Table of contents**
 
@@ -46,7 +46,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/geospatial/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us smashing it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/geospatial/issues/new?body=module:%20base_geolocalize_company%0Aversion:%2012.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/geospatial/issues/new?body=module:%20base_geolocalize_company%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -84,6 +84,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-legalsylvain| 
 
-This module is part of the `OCA/geospatial <https://github.com/OCA/geospatial/tree/12.0/base_geolocalize_company>`_ project on GitHub.
+This module is part of the `OCA/geospatial <https://github.com/OCA/geospatial/tree/16.0/base_geolocalize_company>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
