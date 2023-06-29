@@ -6,5 +6,3 @@
   if longitude and latitude are available. We could imagine other kind of usages,
   with Polylines, Polygons, etc...
   See all the leaflet options : https://leafletjs.com/reference.html
-
-* The module could not work properly on mobile devices.

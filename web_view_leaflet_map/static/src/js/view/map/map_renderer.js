@@ -72,7 +72,7 @@ odoo.define("web_view_leaflet_map.MapRenderer", function (require) {
                 record.data[this.field_longitude]
             );
             // Display only records that have a valid position
-            if (latlng.lat != 0 && latlng.lng != 0) {
+            if (latlng.lat !== 0 && latlng.lng !== 0) {
                 // Create marker
                 var markerOptions = this._prepareMarkerOptions(record);
                 var marker = L.marker(latlng, markerOptions).addTo(

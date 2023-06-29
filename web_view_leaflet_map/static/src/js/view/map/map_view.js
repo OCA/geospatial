@@ -9,7 +9,7 @@ odoo.define("web_view_leaflet_map.MapView", function (require) {
     var MapView = BasicView.extend({
         accesskey: "m",
         display_name: _lt("Map"),
-        icon: "fa-map-o",
+        icon: "fa fa-map-o",
         config: _.extend({}, BasicView.prototype.config, {
             Renderer: MapRenderer,
         }),
