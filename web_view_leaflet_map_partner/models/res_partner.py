@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = "res.partner"
 
     display_address = fields.Char(compute="_compute_display_address")
 

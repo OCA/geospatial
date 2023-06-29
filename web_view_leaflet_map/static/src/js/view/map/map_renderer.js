@@ -83,17 +83,14 @@ odoo.define("web_view_leaflet_map.MapRenderer", function (require) {
                 var popup = L.popup().setContent(this._preparePopUpData(record));
 
                 marker.bindPopup(popup).on("popupopen", () => {
-                    $(".o_map_selector")
-                        .parent()
-                        .parent()
-                        .click(
-                            {
-                                model_name: record.model,
-                                res_id: record.data.id,
-                                current_object: self,
-                            },
-                            self._onClickLeafletPopup
-                        );
+                    $(".o_map_selector").parent().parent().click(
+                        {
+                            model_name: record.model,
+                            res_id: record.data.id,
+                            current_object: self,
+                        },
+                        self._onClickLeafletPopup
+                    );
                 });
             }
         },
