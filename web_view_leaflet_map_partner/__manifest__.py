@@ -1,7 +1,7 @@
 {
     "name": "Leaflet Map View for Partners (OpenStreetMap)",
     "summary": "TODO",
-    "version": "12.0.1.0.1",
+    "version": "16.0.1.0.0",
     "development_status": "Alpha",
     "author": "GRAP, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/geospatial",
