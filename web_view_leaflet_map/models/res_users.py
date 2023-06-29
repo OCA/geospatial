@@ -6,7 +6,7 @@ from odoo import api, models
 
 
 class ResUsers(models.Model):
-    _inherit = 'res.users'
+    _inherit = "res.users"
 
     @api.model
     def get_default_leaflet_position(self, model_name):

@@ -8,7 +8,6 @@
     overflow-x: visible;
     height: 100%;
     width: 100%;
-
 }
 
 .o_leaflet_map_container {
@@ -20,11 +19,9 @@
     cursor: pointer;
 }
 
-
 .o_map_selector:hover {
     background-color: #eee;
 }
-
 
 .leaflet_marker_icon {
     background-color: white;
@@ -57,6 +54,7 @@
     This directive force to display the elements for the leaflet elements.
     See : https://github.com/odoo/odoo/blob/12.0/addons/web/static/src/scss/ui.scss#L13
 */
-.leaflet-container [aria-hidden="true"], [aria-hidden="1"] {
-    display: inline!important;
+.leaflet-container [aria-hidden="true"],
+[aria-hidden="1"] {
+    display: inline !important;
 }
