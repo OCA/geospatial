@@ -6,7 +6,7 @@
     "name": "Leaflet Map View (OpenStreetMap)",
     "summary": "Integrate leaflet.js librairy with odoo"
     " and add new 'leaflet_map' view, to display markers.",
-    "version": "12.0.1.0.1",
+    "version": "16.0.1.0.0",
     "development_status": "Alpha",
     "author": "GRAP, Odoo Community Association (OCA)",
     "maintainers": ["legalsylvain"],
@@ -18,11 +18,20 @@
     ],
     "data": [
         "data/ir_config_parameter.xml",
-        "views/templates.xml",
     ],
     "demo": [
         "demo/ir_config_parameter.xml",
     ],
+    "assets": {
+        "web.assets_backend": [
+            "web_view_leaflet_map/static/src/js/view/view_registry.js",
+            "web_view_leaflet_map/static/src/js/view/map/map_renderer.js",
+            "web_view_leaflet_map/static/src/js/view/map/map_view.js",
+            "web_view_leaflet_map/static/src/css/web_view_leaflet_map.css",
+            "/web_view_leaflet_map/static/lib/leaflet/leaflet.css",
+            "/web_view_leaflet_map/static/lib/leaflet/leaflet.js",
+        ],
+    },
     "installable": True,
     "uninstall_hook": "uninstall_hook",
 }
