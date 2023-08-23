@@ -9,7 +9,7 @@ var RESOLUTIONS = [
   0.25, 0.1
 ];
 
-var BASE_URL = 'https://wmts{0-9}.geo.admin.ch/1.0.0/{Layer}/default/{Time}/21781/{TileMatrix}/{TileRow}/{TileCol}.{format}';
+var BASE_URL = 'https://wmts{0-9}.geo.admin.ch/1.0.0/{Layer}/default/{Time}/{TileMatrix}/{TileMatrixSet}/{TileRow}/{TileCol}.{format}';
 
 var ATTRIBUTIONS = '<a target="_blank" href="https://www.swisstopo.admin.ch">swisstopo</a>';
 
@@ -67,7 +67,6 @@ odoo.define('geoengine_swisstopo.projection_EPSG_21781', function (require) {
     });
 });
 
-
 odoo.define('geoengine_swisstopo.BackgroundLayers', function (require) {
     "use strict";
 
@@ -92,7 +91,7 @@ odoo.define('geoengine_swisstopo.BackgroundLayers', function (require) {
                 var layer = l.layername || 'ch.swisstopo.pixelkarte-farbe';
 
                 var url = BASE_URL.replace('{format}', format);
-                var projection = ol.proj.get(PROJECTION_CODE);
+                var projection = ol.proj.get('EPSG:4326');
                 var source = new ol.source.WMTS({
                     attributions: [
                         new ol.Attribution({
@@ -107,7 +106,7 @@ odoo.define('geoengine_swisstopo.BackgroundLayers', function (require) {
                     requestEncoding: 'REST',
                     layer: layer,
                     style: 'default',
-                    matrixSet: '21781',
+                    matrixSet: "4326",
                     format: 'image/' + format,
                     tileGrid: this.createTileGrid(),
                     crossOrigin: 'anonymous',
