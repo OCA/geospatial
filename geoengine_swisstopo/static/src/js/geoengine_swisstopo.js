@@ -16,22 +16,28 @@ var ATTRIBUTIONS = '<a target="_blank" href="https://www.swisstopo.admin.ch">swi
  */
 var EXTENT = [420000, 30000, 900000, 350000];
 
-var PROJECTION_CODE = "EPSG:21781";
+var PROJECTION_CODE_1 = "EPSG:21781";
+var PROJECTION_CODE_2 = "EPSG:2056";
+var PROJECTION_CODE_3 = "EPSG:4326";
 
-var init_EPSG_21781 = function (self) {
+var init_EPSG_PROJ = function (self) {
     // Adding proj4
     self.jsLibs.push(
         '/geoengine_swisstopo/static/lib/proj4.js'
     );
 };
 
-var define_EPSG_21781 = function () {
+var define_EPSG_SUISSE = function () {
     // add swiss projection to allow conversions
-    if (!ol.proj.get(PROJECTION_CODE)) {
+    if (!ol.proj.get(PROJECTION_CODE_1)) {
         proj4.defs('EPSG:21781', '+proj=somerc +lat_0=46.95240555555556 ' +
             '+lon_0=7.439583333333333 +k_0=1 +x_0=600000 +y_0=200000 +ellps=bessel ' +
             '+towgs84=674.4,15.1,405.3,0,0,0,0 +units=m +no_defs');
     }
+    if (!ol.proj.get(PROJECTION_CODE_2)) {
+        proj4.defs("EPSG:2056","+proj=somerc +lat_0=46.9524055555556 +lon_0=7.43958333333333 +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs +type=crs");
+    }
+    proj4.defs("EPSG:4326","+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees");
 };
 
 
@@ -44,10 +50,10 @@ odoo.define('geoengine_swisstopo.projection_EPSG_21781', function (require) {
     GeoengineWidgets.FieldGeoEngineEditMap.include({
         init: function (parent) {
             this._super.apply(this, arguments);
-            init_EPSG_21781(this);
+            init_EPSG_PROJ(this);
         },
         _render: function (parent) {
-            define_EPSG_21781();
+            define_EPSG_SUISSE();
             this._super.apply(this, arguments);
         },
 
@@ -55,10 +61,10 @@ odoo.define('geoengine_swisstopo.projection_EPSG_21781', function (require) {
     GeoengineView.include({
         init: function (parent) {
             this._super.apply(this, arguments);
-            init_EPSG_21781(this);
+            init_EPSG_PROJ(this);
         },
         _render: function (parent) {
-            define_EPSG_21781();
+            define_EPSG_SUISSE();
             this._super.apply(this, arguments);
         },
 

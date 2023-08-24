@@ -75,7 +75,7 @@ class GeoRasterLayer(models.Model):
     @api.depends('raster_type', 'is_wmts')
     def _compute_has_type(self):
         for rec in self:
-            rec.has_type = rec.raster_type == 'is_wmts'
+            rec.has_type = rec.raster_type
 
     @api.multi
     @api.depends('raster_type')

@@ -6,9 +6,8 @@ from odoo import api, fields, models
 
 BASE_URL = (
     "https://wmts{{0-9}}.geo.admin.ch/1.0.0/{layername}/default/"
-    "{time}/{matrix_set}/{{TileSetId}}/{{TileRow}}/{{TileCol}}.{ext}"
+    "{time}/{matrix_set}/{{TileMatrix}}/{{TileRow}}/{{TileCol}}.{ext}"
 )
-
 
 class GeoRasterLayer(models.Model):
     _inherit = 'geoengine.raster.layer'
