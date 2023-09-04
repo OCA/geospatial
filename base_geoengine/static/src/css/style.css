@@ -19,7 +19,7 @@ div.olmap {
 .olmap svg{
     width: initial;
     height: initial;
-    
+
 }
 
 .olmap:-moz-full-screen {
@@ -177,4 +177,9 @@ div.ol-clear {
 
 .ol-popup-closer:after {
     content: "✖";
+}
+
+/* Make map fullscreen even in mobile */
+div.o_geo_view {
+    height: 100%;
 }
