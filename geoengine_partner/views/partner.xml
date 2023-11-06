@@ -20,7 +20,7 @@
     <record id="ir_ui_view_geo_partner" model="ir.ui.view">
         <field name="name">Partner view</field>
         <field name="arch" type="xml">
-            <geoengine>
+            <geoengine editable="1">
                 <field name="name" select="1" />
                 <field name="title" />
                 <field name="function" />
@@ -56,9 +56,11 @@
             ref="geoengine_partner.field_res_partner__geo_point"
         />
         <field name="name">Partner location</field>
-        <field eval="6" name="sequence" />
+        <field eval="1" name="sequence" />
         <field name="view_id" ref="ir_ui_view_geo_partner" />
         <field name="geo_repr">basic</field>
+        <field name="active_on_startup" eval="True" />
+        <field name="layer_opacity">0.8</field>
         <field eval="1" name="nb_class" />
         <field name="begin_color">#FF680A</field>
     </record>
