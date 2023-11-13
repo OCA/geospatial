@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="geo_partner_view_form">
+        <field name="name">geo_partner_form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="geoengine_partner.geo_partner_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='geoengine_map']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//page[@name='geo_location']/group" position="after">
+                <field
+                    name="geo_point"
+                    groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"
+                />
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
