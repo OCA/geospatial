@@ -254,11 +254,12 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
             _setValue: function (value, zoom) {
                 this._super(value);
                 this.value = value;
+                let geometry = this.format.readGeometry(value);
 
                 if (this.map) {
-                    var ft = new ol.Feature({
-                        geometry: new ol.format.GeoJSON().readGeometry(value),
-                        labelPoint: new ol.format.GeoJSON().readGeometry(value),
+                    let ft = new ol.Feature({
+                        geometry: geometry,
+                        labelPoint: geometry,
                     });
                     this.source[this.name].clear();
                     this.source[this.name].addFeature(ft);
@@ -272,13 +273,10 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
                         this.vectorFields,
                         function (fieldName) {
                             var value = this.record.data[fieldName];
+                            var geometry = this.format.readGeometry(value);
                             var ft = new ol.Feature({
-                                geometry: new ol.format.GeoJSON().readGeometry(
-                                    value
-                                ),
-                                labelPoint: new ol.format.GeoJSON().readGeometry(
-                                    value
-                                ),
+                                geometry: geometry,
+                                labelPoint: geometry,
                             });
                             this.source[fieldName].clear();
                             this.source[fieldName].addFeature(ft);
@@ -401,14 +399,15 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
                     var projection = new ol.proj.get(this.projectionCode);
                     var $el = this.$el[0];
                     $($el).css({ width: "100%", height: "100%" });
+                    let view = new ol.View({
+                        center: [0, 0],
+                        zoom: 5,
+                        projection: projection,
+                    });
                     this.map = new ol.Map({
                         layers: this.rasterLayers,
                         target: $el,
-                        view: new ol.View({
-                            center: [0, 0],
-                            zoom: 5,
-                            projection: projection,
-                        }),
+                        view: view,
                     });
 
                     this._createVectorLayers();
