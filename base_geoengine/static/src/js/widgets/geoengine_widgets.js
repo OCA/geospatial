@@ -10,13 +10,13 @@
 odoo.define("base_geoengine.geoengine_widgets", function (require) {
     "use strict";
 
-    var core = require("web.core");
-    var AbstractField = require("web.AbstractField");
-    var geoengine_common = require("base_geoengine.geoengine_common");
-    var BackgroundLayers = require("base_geoengine.BackgroundLayers");
-    var registry = require("web.field_registry");
+    const core = require("web.core");
+    const AbstractField = require("web.AbstractField");
+    const geoengine_common = require("base_geoengine.geoengine_common");
+    const BackgroundLayers = require("base_geoengine.BackgroundLayers");
+    const registry = require("web.field_registry");
 
-    var FieldGeoEngineEditMap = AbstractField.extend(
+    const FieldGeoEngineEditMap = AbstractField.extend(
         geoengine_common.GeoengineMixin,
         {
             // eslint-disable-line max-len
@@ -43,7 +43,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
              * @override
              */
             start: function () {
-                var def = this._super();
+                let def = this._super();
 
                 // Add a listener on parent tab if it exists in order to refresh
                 // geoengine view we need to trigger it on DOM update for changes
@@ -95,7 +95,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
             },
 
             _createFeatureStyles: function () {
-                var styles = {
+                let styles = {
                     edit: new ol.style.Style({
                         fill: new ol.style.Fill({
                             opacity: 0.7,
@@ -144,7 +144,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
                 this.vectorLayers = [];
                 this.source = {};
                 this.features = {};
-                var styles = this._createFeatureStyles();
+                let styles = this._createFeatureStyles();
                 this.vectorLayers.push(
                     this._createVectorLayer(this.name, styles.edit)
                 );
@@ -169,7 +169,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
             _addVectorLayers: function () {
                 // first create the readonly layers to have a
                 // lower zIndex
-                var readonlyLayers = this.vectorLayers.slice(1);
+                let readonlyLayers = this.vectorLayers.slice(1);
                 if (readonlyLayers) {
                     this.readonlyOverlaysGroup = new ol.layer.Group({
                         title: "Readonly Overlays",
@@ -220,10 +220,10 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
             },
 
             _updateMapEmpty: function () {
-                var map_view = this.map.getView();
+                let map_view = this.map.getView();
                 // Default extent
                 if (map_view) {
-                    var extent = this.defaultExtent
+                    let extent = this.defaultExtent
                         .replace(/\s/g, "")
                         .split(",");
                     extent = extent.map((coord) => Number(coord));
@@ -232,18 +232,18 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
             },
 
             _updateMapZoom: function (zoom) {
-                var map_zoom = typeof zoom === "undefined" ? true : zoom;
+                let map_zoom = typeof zoom === "undefined" ? true : zoom;
 
                 if (this.source[this.name]) {
-                    var extent = this.source[this.name].getExtent();
-                    var infinite_extent = [
+                    let extent = this.source[this.name].getExtent();
+                    let infinite_extent = [
                         Infinity,
                         Infinity,
                         -Infinity,
                         -Infinity,
                     ];
                     if (map_zoom && extent !== infinite_extent) {
-                        var map_view = this.map.getView();
+                        let map_view = this.map.getView();
                         if (map_view) {
                             map_view.fit(extent, { maxZoom: 15 });
                         }
@@ -286,7 +286,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
             },
 
             _isTabVisible: function () {
-                var tab = this.$el.closest("div.tab-pane");
+                let tab = this.$el.closest("div.tab-pane");
                 if (!tab.length) {
                     return false;
                 }
@@ -294,7 +294,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
             },
 
             _onUIChange: function () {
-                var value = null;
+                let value = null;
                 if (this._geometry) {
                     value = this.format.writeGeometry(this._geometry);
                 }
@@ -308,7 +308,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
                  * As modify needs to get pointer position on map it requires
                  * the map to be rendered before being created
                  */
-                var handler = null;
+                let handler = null;
                 if (this.geoType === "POLYGON") {
                     handler = "Polygon";
                 } else if (this.geoType === "MULTIPOLYGON") {
@@ -325,7 +325,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
                     // FIXME: unsupported geo type
                 }
 
-                var drawControl = function (options) {
+                let drawControl = function (options) {
                     ol.interaction.Draw.call(this, options);
                 };
                 ol.inherits(drawControl, ol.interaction.Draw);
@@ -396,8 +396,8 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
 
             _renderMap: function () {
                 if (!this.map) {
-                    var projection = new ol.proj.get(this.projectionCode);
-                    var $el = this.$el[0];
+                    let projection = new ol.proj.get(this.projectionCode);
+                    let $el = this.$el[0];
                     $($el).css({ width: "100%", height: "100%" });
                     let view = new ol.View({
                         center: [0, 0],
@@ -414,7 +414,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
                     this._addVectorLayers();
                     this.format = new ol.format.GeoJSON({
                         featureProjection: projection,
-                        defaultDataProjection: "EPSG:" + this.srid,
+                        defaultDataProjection: `EPSG:${this.srid}`,
                     });
 
                     $(document).trigger("FieldGeoEngineEditMap:ready", [
@@ -459,7 +459,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
 
     // TODO migrate the following widgets
 
-    var FieldGeoPointXY = AbstractField.extend({
+    let FieldGeoPointXY = AbstractField.extend({
         template: "FieldGeoPointXY",
 
         start: function () {
@@ -474,10 +474,10 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
              *
              * @return [x, y]
              */
-            var x = openerp.web.parse_value(this.$input.eq(0).val(), {
+            let x = openerp.web.parse_value(this.$input.eq(0).val(), {
                 type: "float",
             });
-            var y = openerp.web.parse_value(this.$input.eq(1).val(), {
+            let y = openerp.web.parse_value(this.$input.eq(1).val(), {
                 type: "float",
             });
             return [x, y];
@@ -491,7 +491,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
             this._super.apply(this, arguments);
 
             if (value) {
-                var geo_obj = JSON.parse(value);
+                let geo_obj = JSON.parse(value);
                 this.$input.eq(0).val(geo_obj.coordinates[0]);
                 this.$input.eq(1).val(geo_obj.coordinates[1]);
             } else {
@@ -500,9 +500,9 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
         },
 
         _onUIChange: function () {
-            var coords = this.get_coords();
+            let coords = this.get_coords();
             if (coords[0] && coords[1]) {
-                var json = this.make_GeoJSON(coords);
+                let json = this.make_GeoJSON(coords);
                 this.value = JSON.stringify(json);
             } else {
                 this.value = false;
@@ -513,7 +513,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
             this.invalid = false;
             try {
                 // Get coords to check if floats
-                var coords = this.get_coords();
+                let coords = this.get_coords();
 
                 // Make sure the two coordinates are set or None
                 this.invalid =
@@ -535,14 +535,14 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
         },
     });
 
-    var FieldGeoPointXYReadonly = FieldGeoPointXY.extend({
+    let FieldGeoPointXYReadonly = FieldGeoPointXY.extend({
         template: "FieldGeoPointXY.readonly",
 
         _setValue: function (value) {
             this._super.apply(this, arguments);
-            var show_value = "";
+            let show_value = "";
             if (value) {
-                var geo_obj = JSON.parse(value);
+                let geo_obj = JSON.parse(value);
                 show_value =
                     "(" +
                     geo_obj.coordinates[0] +
@@ -559,7 +559,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
         },
     });
 
-    var FieldGeoRect = AbstractField.extend({
+    let FieldGeoRect = AbstractField.extend({
         template: "FieldGeoRect",
 
         start: function () {
@@ -574,16 +574,16 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
              *
              * @return [[x1, y1],[x2, y2]]
              */
-            var x1 = openerp.web.parse_value(this.$input.eq(0).val(), {
+            let x1 = openerp.web.parse_value(this.$input.eq(0).val(), {
                 type: "float",
             });
-            var y1 = openerp.web.parse_value(this.$input.eq(1).val(), {
+            let y1 = openerp.web.parse_value(this.$input.eq(1).val(), {
                 type: "float",
             });
-            var x2 = openerp.web.parse_value(this.$input.eq(2).val(), {
+            let x2 = openerp.web.parse_value(this.$input.eq(2).val(), {
                 type: "float",
             });
-            var y2 = openerp.web.parse_value(this.$input.eq(3).val(), {
+            let y2 = openerp.web.parse_value(this.$input.eq(3).val(), {
                 type: "float",
             });
 
@@ -594,12 +594,12 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
         },
 
         make_GeoJSON: function (coords) {
-            var p1 = coords[0];
-            var p2 = [coords[0][0], coords[1][1]];
-            var p3 = coords[1];
-            var p4 = [coords[1][0], coords[0][1]];
+            let p1 = coords[0];
+            let p2 = [coords[0][0], coords[1][1]];
+            let p3 = coords[1];
+            let p4 = [coords[1][0], coords[0][1]];
             // Create a loop in clockwise
-            var points = [[p1, p2, p3, p4, p1]];
+            let points = [[p1, p2, p3, p4, p1]];
             return { type: "Polygon", coordinates: points };
         },
 
@@ -607,7 +607,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
             this._super.apply(this, arguments);
 
             if (value) {
-                var geo_obj = JSON.parse(value);
+                let geo_obj = JSON.parse(value);
                 this.$input.eq(0).val(geo_obj.coordinates[0][0][0]);
                 this.$input.eq(1).val(geo_obj.coordinates[0][0][1]);
                 this.$input.eq(2).val(geo_obj.coordinates[0][2][0]);
@@ -623,16 +623,16 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
              *
              * @return [[x1, y1],[x2, y2]]
              */
-            var x1 = coords[0][0],
+            let x1 = coords[0][0],
                 y1 = coords[0][1],
                 x2 = coords[1][0],
                 y2 = coords[1][1];
 
-            var minx = Math.min(x1, x2);
-            var maxx = Math.max(x1, x2);
+            let minx = Math.min(x1, x2);
+            let maxx = Math.max(x1, x2);
 
-            var miny = Math.min(y1, y2);
-            var maxy = Math.max(y1, y2);
+            let miny = Math.min(y1, y2);
+            let maxy = Math.max(y1, y2);
 
             return [
                 [minx, miny],
@@ -641,10 +641,10 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
         },
 
         _onUIChange: function () {
-            var coords = this.get_coords();
+            let coords = this.get_coords();
             if (this.all_are_set(coords)) {
                 coords = this.correct_bounds(coords);
-                var json = this.make_GeoJSON(coords);
+                let json = this.make_GeoJSON(coords);
                 this.value = JSON.stringify(json);
             } else {
                 this.value = false;
@@ -673,7 +673,7 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
             this.invalid = false;
             try {
                 // Get coords to check if floats
-                var coords = this.get_coords();
+                let coords = this.get_coords();
 
                 // Make sure all the coordinates are set
                 // if not None or if required
@@ -695,14 +695,14 @@ odoo.define("base_geoengine.geoengine_widgets", function (require) {
         },
     });
 
-    var FieldGeoRectReadonly = FieldGeoRect.extend({
+    let FieldGeoRectReadonly = FieldGeoRect.extend({
         template: "FieldGeoRect.readonly",
 
         _setValue: function (value) {
             this._super.apply(this, arguments);
-            var show_value = "";
+            let show_value = "";
             if (value) {
-                var geo_obj = JSON.parse(value);
+                let geo_obj = JSON.parse(value);
                 show_value =
                     "(" +
                     geo_obj.coordinates[0][0][0] +

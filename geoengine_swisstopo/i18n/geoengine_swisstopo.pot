@@ -80,6 +80,6 @@ msgstr ""
 
 #. module: geoengine_swisstopo
 #: model_terms:ir.ui.view,arch_db:geoengine_swisstopo.geo_raster_view_form
-msgid "for registration info and available layers. As for now only projection EPSG:21781 is supported."
+msgid "for registration info and available layers."
 msgstr ""
 

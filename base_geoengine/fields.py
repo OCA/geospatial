@@ -48,7 +48,7 @@ class GeoField(fields.Field):
         """Convert value to database format
 
         value can be geojson, wkt, shapely geometry object.
-        If geo_direct_write in context you can pass diretly WKT"""
+        If geo_direct_write in context you can pass directly WKT"""
         if not value:
             return None
         shape_to_write = self.entry_to_shape(value, same_type=True)
