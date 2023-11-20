@@ -12,7 +12,6 @@
 # serve to show the default.
 
 import sys
-import imp
 import os
 import sphinx_bootstrap_theme
 

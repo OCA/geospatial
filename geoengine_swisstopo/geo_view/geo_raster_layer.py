@@ -5,8 +5,8 @@ from odoo import fields, models
 
 
 class GeoRasterLayer(models.Model):
-    _inherit = 'geoengine.raster.layer'
+    _inherit = "geoengine.raster.layer"
 
-    raster_type = fields.Selection(selection_add=[('swisstopo', 'Swisstopo')])
-    layername = fields.Char('Layer Machine Name')
-    time = fields.Char('Time Dimension')
+    raster_type = fields.Selection(selection_add=[("swisstopo", "Swisstopo")])
+    layername = fields.Char("Layer Machine Name")
+    time = fields.Char("Time Dimension")

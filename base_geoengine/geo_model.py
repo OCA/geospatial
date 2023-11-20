@@ -131,7 +131,7 @@ class GeoModel(models.AbstractModel):
             'default_extent': view.default_extent or DEFAULT_EXTENT,
             'default_zoom': view.default_zoom,
         }
-        logger.debug("Parameters for geo field {}:\n{}".format(column, res))
+        logger.debug(f"Parameters for geo field {column}:\n{res}")
         return res
 
     @api.model

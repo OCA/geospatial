@@ -5,7 +5,7 @@
 from io import StringIO
 import logging
 import geojson
-import mock
+from unittest import mock
 import simplejson
 
 from shapely.wkt import loads as wktloads
