@@ -26,6 +26,7 @@ addon | version | maintainers | summary
 [base_geolocalize_company](base_geolocalize_company/) | 16.0.1.0.1 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) | Add latitude and longitude fields on company model
 [geoengine_base_geolocalize](geoengine_base_geolocalize/) | 16.0.1.0.1 |  | Geospatial support for base_geolocalize
 [geoengine_partner](geoengine_partner/) | 16.0.1.0.1 |  | Geospatial support of partners
+[web_view_leaflet_map](web_view_leaflet_map/) | 16.0.1.0.0 | [![legalsylvain](https://github.com/legalsylvain.png?size=30px)](https://github.com/legalsylvain) [![yibudak](https://github.com/yibudak.png?size=30px)](https://github.com/yibudak) | Integrate leaflet.js librairy with odoo and add new 'leaflet_map' view, to display markers.
 
 [//]: # (end addons)
 
