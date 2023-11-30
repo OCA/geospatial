@@ -16,7 +16,7 @@ odoo.define('web_view_leaflet_map.MapView', function (require) {
             Renderer: MapRenderer,
         }),
         viewType: 'leaflet_map',
-
+        searchMenuTypes: ["filter", "favorite"],
         init: function (viewInfo, params) {
             this._super.apply(this, arguments);
 
