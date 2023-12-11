@@ -13,6 +13,8 @@ setuptools.setup(
         'odoo-addon-base_geolocalize_company>=16.0dev,<16.1dev',
         'odoo-addon-geoengine_base_geolocalize>=16.0dev,<16.1dev',
         'odoo-addon-geoengine_partner>=16.0dev,<16.1dev',
+        'odoo-addon-web_view_leaflet_map>=16.0dev,<16.1dev',
+        'odoo-addon-web_view_leaflet_map_partner>=16.0dev,<16.1dev',
     ],
     classifiers=[
         'Programming Language :: Python',
