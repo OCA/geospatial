@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2022 - Today: GRAP (http://www.grap.coop)
+@author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo noupdate="1">
+    <record
+        id="config_parameter_leaflet_tile_url"
+        model="ir.config_parameter"
+        forcecreate="True"
+    >
+        <field name="key">leaflet.tile_url</field>
+        <field name="value">https://tile.openstreetmap.org/{z}/{x}/{y}.png</field>
+    </record>
+</odoo>

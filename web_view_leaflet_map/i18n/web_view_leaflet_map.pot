@@ -1,0 +1,129 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* web_view_leaflet_map
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_view_leaflet_map
+#: model:ir.model,name:web_view_leaflet_map.model_ir_actions_act_window_view
+msgid "Action Window View"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Activity"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Calendar"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.ui.view,type:0
+msgid "Diagram"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Form"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Gantt"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.ui.view,type:0
+msgid "GeoEngine"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.actions.act_window.view,view_mode:0
+msgid "Geoengine"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Graph"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: model:ir.model,name:web_view_leaflet_map.model_ir_http
+msgid "HTTP Routing"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Kanban"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Leaflet Map"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#. openerp-web
+#: code:addons/web_view_leaflet_map/static/src/js/view/map/map_view.js:12
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+#, python-format
+msgid "Map"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Pivot"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.ui.view,type:0
+msgid "QWeb"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.ui.view,type:0
+msgid "Search"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: selection:ir.actions.act_window.view,view_mode:0
+#: selection:ir.ui.view,type:0
+msgid "Tree"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: model:ir.model,name:web_view_leaflet_map.model_res_users
+msgid "Users"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: model:ir.model,name:web_view_leaflet_map.model_ir_ui_view
+msgid "View"
+msgstr ""
+
+#. module: web_view_leaflet_map
+#: model:ir.model.fields,field_description:web_view_leaflet_map.field_ir_actions_act_window_view__view_mode
+#: model:ir.model.fields,field_description:web_view_leaflet_map.field_ir_ui_view__type
+msgid "View Type"
+msgstr ""
+

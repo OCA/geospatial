@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils: https://docutils.sourceforge.io/" />
+<title>Leaflet Map View (OpenStreetMap)</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 8954 2022-01-20 10:10:25Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See https://docutils.sourceforge.io/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+.subscript {
+  vertical-align: sub;
+  font-size: smaller }
+
+.superscript {
+  vertical-align: super;
+  font-size: smaller }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+object[type="image/svg+xml"], object[type="application/x-shockwave-flash"] {
+  overflow: hidden;
+}
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title, .code .error {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left, object.align-left, table.align-left {
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right, object.align-right, table.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+img.align-center, .figure.align-center, object.align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+table.align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: inherit }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+.align-top    {
+  vertical-align: top }
+
+.align-middle {
+  vertical-align: middle }
+
+.align-bottom {
+  vertical-align: bottom }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block, pre.math, pre.code {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+pre.code .ln { color: grey; } /* line numbers */
+pre.code, code { background-color: #eeeeee }
+pre.code .comment, code .comment { color: #5C6576 }
+pre.code .keyword, code .keyword { color: #3B0D06; font-weight: bold }
+pre.code .literal.string, code .literal.string { color: #0C5404 }
+pre.code .name.builtin, code .name.builtin { color: #352B84 }
+pre.code .deleted, code .deleted { background-color: #DEB0A1}
+pre.code .inserted, code .inserted { background-color: #A3D289}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+/* "booktabs" style (no vertical lines) */
+table.docutils.booktabs {
+  border: 0px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
+  border-collapse: collapse;
+}
+table.docutils.booktabs * {
+  border: 0px;
+}
+table.docutils.booktabs th {
+  border-bottom: thin solid;
+  text-align: left;
+}
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+</head>
+<body>
+<div class="document" id="leaflet-map-view-openstreetmap">
+<h1 class="title">Leaflet Map View (OpenStreetMap)</h1>
+
+<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! This file is generated by oca-gen-addon-readme !!
+!! changes will be overwritten.                   !!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!! source digest: sha256:b9e0beff8f439a6c89a4b788c6c59e63b150e687eb60845e5cd811768148f875
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Alpha" src="https://img.shields.io/badge/maturity-Alpha-red.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/geospatial/tree/16.0/web_view_leaflet_map"><img alt="OCA/geospatial" src="https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/geospatial-16-0/geospatial-16-0-web_view_leaflet_map"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/geospatial&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p>This module extends odoo views, to add a new kind of view, named <tt class="docutils literal">leaflet_map</tt>
+that is using the Leaflet javascript library to use maps. (<a class="reference external" href="https://leafletjs.com/">https://leafletjs.com/</a>)
+This library is for exemple, used in the OpenStreetMap project. (<a class="reference external" href="https://www.openstreetmap.org/">https://www.openstreetmap.org/</a>)</p>
+<p>You can see a simple usage in the module <tt class="docutils literal">web_view_leaflet_map_partner</tt> in the
+same OCA repository that displays your contact in a map, if latitude and longitude are
+defined. (To define latitude and longitude, refer to the Odoo module <tt class="docutils literal">base_geolocalize</tt>)</p>
+<div class="figure">
+<img alt="https://raw.githubusercontent.com/OCA/geospatial/16.0/web_view_leaflet_map/static/description/view_res_partner_map_1.png" src="https://raw.githubusercontent.com/OCA/geospatial/16.0/web_view_leaflet_map/static/description/view_res_partner_map_1.png" />
+</div>
+<div class="figure">
+<img alt="https://raw.githubusercontent.com/OCA/geospatial/16.0/web_view_leaflet_map/static/description/view_res_partner_map_2.png" src="https://raw.githubusercontent.com/OCA/geospatial/16.0/web_view_leaflet_map/static/description/view_res_partner_map_2.png" />
+</div>
+<p><strong>Important Note</strong></p>
+<p>The javascript library is opensource and distributed under BSD 2 Licence.
+See : <a class="reference external" href="https://github.com/Leaflet/Leaflet/blob/main/LICENSE">https://github.com/Leaflet/Leaflet/blob/main/LICENSE</a>
+You can so use it freely.</p>
+<p>However, display maps requires to display layers provided by tiles servers, that
+requires ressources.</p>
+<p><strong>For testing purpose</strong></p>
+<p>you can use the openStreetMap url <tt class="docutils literal"><span class="pre">https://tile.openstreetmap.org/{z}/{x}/{y}.png</span></tt> or other, listed in that page : <a class="reference external" href="https://wiki.openstreetmap.org/wiki/Tile_servers">https://wiki.openstreetmap.org/wiki/Tile_servers</a></p>
+<p>Apart from very limited testing purposes, you should not use the tiles supplied by OpenStreetMap.org itself. OpenStreetMap is a volunteer-run non-profit body and cannot supply tiles for large-scale commercial use.</p>
+<p><strong>Regular / High Usage</strong></p>
+<ul class="simple">
+<li>you can contact one of the following companies : <a class="reference external" href="https://switch2osm.org/providers/">https://switch2osm.org/providers/</a></li>
+<li>You can also install yourself your own tiles servers. See documentation : <a class="reference external" href="https://switch2osm.org/serving-tiles/">https://switch2osm.org/serving-tiles/</a></li>
+</ul>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This is an alpha version, the data model and design can change at any time without warning.
+Only for development or testing purpose, do not use in production.
+<a class="reference external" href="https://odoo-community.org/page/development-status">More details on development status</a></p>
+</div>
+<p><strong>Table of contents</strong></p>
+<div class="contents local topic" id="contents">
+<ul class="simple">
+<li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a></li>
+<li><a class="reference internal" href="#development" id="toc-entry-2">Development</a></li>
+<li><a class="reference internal" href="#known-issues-roadmap" id="toc-entry-3">Known issues / Roadmap</a></li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-4">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-5">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-6">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-7">Contributors</a></li>
+<li><a class="reference internal" href="#other-credits" id="toc-entry-8">Other credits</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-9">Maintainers</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="configuration">
+<h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
+<ul class="simple">
+<li>Go to Settings &gt; Technical &gt; Parameters &gt; System Parameters</li>
+<li>Create or edit the parameter with the key <tt class="docutils literal">leaflet.tile_url</tt></li>
+<li>As a value, set the url of the tiles server you chose. (See description)</li>
+</ul>
+</div>
+<div class="section" id="development">
+<h1><a class="toc-backref" href="#toc-entry-2">Development</a></h1>
+<p>Create a new view :</p>
+<pre class="code xml literal-block">
+<span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;view_my_model_map&quot;</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.ui.view&quot;</span><span class="nt">&gt;</span><span class="w">
+    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;model&quot;</span><span class="nt">&gt;</span>my.model<span class="nt">&lt;/field&gt;</span><span class="w">
+    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;arch&quot;</span><span class="w"> </span><span class="na">type=</span><span class="s">&quot;xml&quot;</span><span class="nt">&gt;</span><span class="w">
+        </span><span class="nt">&lt;leaflet_map</span><span class="w">
+                </span><span class="na">field_latitude=</span><span class="s">&quot;FIELD_LATITUDE&quot;</span><span class="w">
+                </span><span class="na">field_longitude=</span><span class="s">&quot;FIELD_LONGITUDE&quot;</span><span class="w">
+                </span><span class="na">field_title=</span><span class="s">&quot;FIELD_TITLE&quot;</span><span class="w">
+                </span><span class="na">field_address=</span><span class="s">&quot;FIELD_ADDRESS&quot;</span><span class="w">
+                </span><span class="na">field_marker_icon_image=</span><span class="s">&quot;FIELD_MARKER_ICON_IMAGE&quot;</span><span class="w">
+            </span><span class="nt">&gt;</span><span class="w">
+            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;__last_update&quot;</span><span class="nt">/&gt;</span><span class="w">
+            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;FIELD_LATITUDE&quot;</span><span class="nt">/&gt;</span><span class="w">
+            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;FIELD_LONGITUDE&quot;</span><span class="nt">/&gt;</span><span class="w">
+            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;FIELD_TITLE&quot;</span><span class="nt">/&gt;</span><span class="w">
+            </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;FIELD_ADDRESS&quot;</span><span class="nt">/&gt;</span><span class="w">
+        </span><span class="nt">&lt;/leaflet_map&gt;</span><span class="w">
+    </span><span class="nt">&lt;/field&gt;</span><span class="w">
+</span><span class="nt">&lt;/record&gt;</span>
+</pre>
+<ol class="arabic simple">
+<li>FIELD_LATITUDE and FIELD_LONGITUDE are the name of the fields that contains GPS coordinates of the model.</li>
+<li>FIELD_TITLE will be used when the popup is displayed, as a title.</li>
+<li>FIELD_ADDRESS will be used when the popup is displayed to display the adress.</li>
+<li>(optional) FIELD_MARKER_ICON_IMAGE, is the name of the image field to place as an icon
+of the marker.
+Note: You can set extra settings <tt class="docutils literal">marker_icon_size_x</tt>, <tt class="docutils literal">marker_icon_size_y</tt>, to define
+the size of the image, and <tt class="docutils literal">marker_popup_anchor_x</tt>, <tt class="docutils literal">marker_popup_anchor_y</tt> to define
+the position of the popup.</li>
+</ol>
+<p>Map options :</p>
+<ul class="simple">
+<li><tt class="docutils literal">default_zoom</tt> : define the default zoom value. (7 if not defined)</li>
+<li><tt class="docutils literal">max_zoom</tt> : define the max zoom value. (19 if not defined)</li>
+<li><tt class="docutils literal">zoom_snap</tt> : define the zoom level in each change. (1 if not defined)</li>
+</ul>
+<ul class="simple">
+<li>Create or update an action for the model</li>
+</ul>
+<pre class="code xml literal-block">
+<span class="nt">&lt;record</span><span class="w"> </span><span class="na">id=</span><span class="s">&quot;my_module.action_my_model&quot;</span><span class="w"> </span><span class="na">model=</span><span class="s">&quot;ir.actions.act_window&quot;</span><span class="nt">&gt;</span><span class="w">
+    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;view_mode&quot;</span><span class="nt">&gt;</span>tree,form,leaflet_map<span class="nt">&lt;/field&gt;</span><span class="w">
+</span><span class="nt">&lt;/record&gt;</span>
+</pre>
+<p><strong>Library Update</strong></p>
+<p>For the time being, the module embed the lealflet.js library version 1.8.0 ( released on April 18, 2022.)</p>
+<p>If a new release is out:</p>
+<ul class="simple">
+<li>please download it here <a class="reference external" href="https://leafletjs.com/download.html">https://leafletjs.com/download.html</a></li>
+<li>update the javascript, css and images, present in the folder <tt class="docutils literal">static/lib/leaflet</tt></li>
+<li>test the features</li>
+<li>make a Pull Request</li>
+</ul>
+<p><strong>Default position in the map</strong></p>
+<p>By default, the position of the map is defined by the user, in the function
+<tt class="docutils literal">get_default_leaflet_position</tt>. It returns the position of the current company, if defined.
+you can overload this function globally, or per model.</p>
+</div>
+<div class="section" id="known-issues-roadmap">
+<h1><a class="toc-backref" href="#toc-entry-3">Known issues / Roadmap</a></h1>
+<ul class="simple">
+<li>For the time being, at the start of the map loading, the call of <tt class="docutils literal">invalidateSize()</tt>
+is required. We should investigate why and try to remove that call.
+see <a class="reference external" href="https://github.com/Leaflet/Leaflet/issues/3002#issuecomment-93836022">https://github.com/Leaflet/Leaflet/issues/3002#issuecomment-93836022</a></li>
+<li>For the time being, the map has “Markers” and allow to display odoo items
+if longitude and latitude are available. We could imagine other kind of usages,
+with Polylines, Polygons, etc…
+See all the leaflet options : <a class="reference external" href="https://leafletjs.com/reference.html">https://leafletjs.com/reference.html</a></li>
+</ul>
+</div>
+<div class="section" id="bug-tracker">
+<h1><a class="toc-backref" href="#toc-entry-4">Bug Tracker</a></h1>
+<p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/geospatial/issues">GitHub Issues</a>.
+In case of trouble, please check there if your issue has already been reported.
+If you spotted it first, help us to smash it by providing a detailed and welcomed
+<a class="reference external" href="https://github.com/OCA/geospatial/issues/new?body=module:%20web_view_leaflet_map%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<p>Do not contact contributors directly about support or help with technical issues.</p>
+</div>
+<div class="section" id="credits">
+<h1><a class="toc-backref" href="#toc-entry-5">Credits</a></h1>
+<div class="section" id="authors">
+<h2><a class="toc-backref" href="#toc-entry-6">Authors</a></h2>
+<ul class="simple">
+<li>GRAP</li>
+</ul>
+</div>
+<div class="section" id="contributors">
+<h2><a class="toc-backref" href="#toc-entry-7">Contributors</a></h2>
+<ul class="simple">
+<li>Sylvain LE GAL (<a class="reference external" href="https://www.twitter.com/legalsylvain">https://www.twitter.com/legalsylvain</a>)</li>
+</ul>
+</div>
+<div class="section" id="other-credits">
+<h2><a class="toc-backref" href="#toc-entry-8">Other credits</a></h2>
+<p>The module embed the Leaflet.js library.</p>
+</div>
+<div class="section" id="maintainers">
+<h2><a class="toc-backref" href="#toc-entry-9">Maintainers</a></h2>
+<p>This module is maintained by the OCA.</p>
+<a class="reference external image-reference" href="https://odoo-community.org"><img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" /></a>
+<p>OCA, or the Odoo Community Association, is a nonprofit organization whose
+mission is to support the collaborative development of Odoo features and
+promote its widespread use.</p>
+<p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
+<p><a class="reference external image-reference" href="https://github.com/legalsylvain"><img alt="legalsylvain" src="https://github.com/legalsylvain.png?size=40px" /></a></p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/geospatial/tree/16.0/web_view_leaflet_map">OCA/geospatial</a> project on GitHub.</p>
+<p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
+</div>
+</div>
+</div>
+</body>
+</html>
