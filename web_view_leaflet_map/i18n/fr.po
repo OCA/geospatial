@@ -22,92 +22,27 @@ msgid "Action Window View"
 msgstr "Vue de la Fenêtre d'Action"
 
 #. module: web_view_leaflet_map
-#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
-msgid "Activity"
-msgstr "Activité"
-
-#. module: web_view_leaflet_map
-#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
-msgid "Calendar"
-msgstr "Calendrier"
-
-#. module: web_view_leaflet_map
-#: selection:ir.ui.view,type:0
-msgid "Diagram"
-msgstr "Diagramme"
-
-#. module: web_view_leaflet_map
-#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
-msgid "Form"
-msgstr "Formulaire"
-
-#. module: web_view_leaflet_map
-#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
-msgid "Gantt"
-msgstr ""
-
-#. module: web_view_leaflet_map
-#: selection:ir.ui.view,type:0
-msgid "GeoEngine"
-msgstr ""
-
-#. module: web_view_leaflet_map
-#: selection:ir.actions.act_window.view,view_mode:0
-msgid "Geoengine"
-msgstr ""
-
-#. module: web_view_leaflet_map
-#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
-msgid "Graph"
-msgstr "Graphique"
-
-#. module: web_view_leaflet_map
 #: model:ir.model,name:web_view_leaflet_map.model_ir_http
 msgid "HTTP Routing"
 msgstr "Routage HTTP"
 
 #. module: web_view_leaflet_map
-#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
-msgid "Kanban"
-msgstr ""
-
-#. module: web_view_leaflet_map
-#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
+#: model:ir.model.fields.selection,name:web_view_leaflet_map.selection__ir_actions_act_window_view__view_mode__leaflet_map
+#: model:ir.model.fields.selection,name:web_view_leaflet_map.selection__ir_ui_view__type__leaflet_map
 msgid "Leaflet Map"
 msgstr "Carte Leaflet"
 
 #. module: web_view_leaflet_map
-#. openerp-web
-#: code:addons/web_view_leaflet_map/static/src/js/view/map/map_view.js:12
-#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
+#. odoo-javascript
+#: code:addons/web_view_leaflet_map/static/src/js/view/map/map_view.js:0
 #, python-format
 msgid "Map"
 msgstr "Carte"
 
 #. module: web_view_leaflet_map
-#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
-msgid "Pivot"
-msgstr "Tableau croisé dynamique"
-
-#. module: web_view_leaflet_map
-#: selection:ir.ui.view,type:0
-msgid "QWeb"
-msgstr ""
-
-#. module: web_view_leaflet_map
-#: selection:ir.ui.view,type:0
-msgid "Search"
-msgstr "Rechercher"
-
-#. module: web_view_leaflet_map
-#: selection:ir.actions.act_window.view,view_mode:0 selection:ir.ui.view,type:0
-msgid "Tree"
-msgstr "Arborescence"
-
-#. module: web_view_leaflet_map
 #: model:ir.model,name:web_view_leaflet_map.model_res_users
-msgid "Users"
-msgstr "Utilisateurs"
+msgid "User"
+msgstr ""
 
 #. module: web_view_leaflet_map
 #: model:ir.model,name:web_view_leaflet_map.model_ir_ui_view
@@ -119,3 +54,30 @@ msgstr "Vue"
 #: model:ir.model.fields,field_description:web_view_leaflet_map.field_ir_ui_view__type
 msgid "View Type"
 msgstr "Type de Vue"
+
+#~ msgid "Activity"
+#~ msgstr "Activité"
+
+#~ msgid "Calendar"
+#~ msgstr "Calendrier"
+
+#~ msgid "Diagram"
+#~ msgstr "Diagramme"
+
+#~ msgid "Form"
+#~ msgstr "Formulaire"
+
+#~ msgid "Graph"
+#~ msgstr "Graphique"
+
+#~ msgid "Pivot"
+#~ msgstr "Tableau croisé dynamique"
+
+#~ msgid "Search"
+#~ msgstr "Rechercher"
+
+#~ msgid "Tree"
+#~ msgstr "Arborescence"
+
+#~ msgid "Users"
+#~ msgstr "Utilisateurs"
