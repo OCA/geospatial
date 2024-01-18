@@ -10,10 +10,14 @@ import {LayersPanel} from "../layers_panel/layers_panel.esm";
 import {RecordsPanel} from "../records_panel/records_panel.esm";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {vectorLayersStore} from "../../../vector_layers_store.esm";
-import {useService} from "@web/core/utils/hooks";
+import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
 import {registry} from "@web/core/registry";
 import {RelationalModel} from "@web/views/relational_model";
 import {evaluateExpr} from "@web/core/py_js/py";
+
+import {ConfirmationDialog} from "@web/core/confirmation_dialog/confirmation_dialog";
+import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
+
 import {
     Component,
     mount,
@@ -53,6 +57,8 @@ export class GeoengineRenderer extends Component {
         this.orm = useService("orm");
         this.view = useService("view");
         this.user = useService("user");
+
+        this.addDialog = useOwnedDialogs();
 
         // For related model we need to load all the service needed by RelationalModel
         this.services = {};
@@ -563,7 +569,10 @@ export class GeoengineRenderer extends Component {
     onDisplayPopupRecord(record) {
         const popup = this.getPopup();
         const feature = this.vectorSource.getFeatureById(record.resId);
-        if (feature !== undefined) {
+
+        if (feature) {
+            this.overlay.setVisible(false);
+
             this.mountGeoengineRecord({
                 popup,
                 archInfo: this.props.archInfo,
@@ -579,13 +588,54 @@ export class GeoengineRenderer extends Component {
                     duration: 500,
                 });
             }
+        } else {
+            this.overlay.setVisible(false);
+            const body = "No geometry. Would you like to add geometry?";
+            this.openConformationDialog(body, () => this.openEditRecord(record));
         }
+    }
+
+    /**
+     * Opens an Edit Record dialog
+     * @param {*} record
+     */
+    openEditRecord(record) {
+        const formDialogProps = {
+            resModel: record.resModel,
+            resId: record.resId,
+            title: this.env._t("Edit Record"),
+            context: {},
+            onRecordSaved: async () => {
+                const offset = record.model.root.count + 1;
+                await record.model.root.load({offset});
+                this.render(true);
+            },
+        };
+
+        this.addDialog(FormViewDialog, formDialogProps);
+    }
+
+    /**
+     * Opens a Conformation dialog
+     * @param {*} body
+     * @param {*} callback
+     */
+    openConformationDialog(body, callback) {
+        const conformationDialogProps = {
+            body: this.env._t(body),
+            confirm: callback,
+            cancel: () => {
+                return;
+            },
+        };
+
+        this.addDialog(ConfirmationDialog, conformationDialogProps);
     }
 
     zoomOnFeature(record) {
         const feature = this.vectorSource.getFeatureById(record.resId);
         var map_view = this.map.getView();
-        if (map_view) {
+        if (map_view && feature) {
             map_view.fit(feature.getGeometry(), {maxZoom: 14});
         }
     }
