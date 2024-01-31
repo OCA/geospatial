@@ -9,7 +9,7 @@ import {GeoengineController} from "./geoengine_controller/geoengine_controller.e
 import {GeoengineRenderer} from "./geoengine_renderer/geoengine_renderer.esm";
 import {GeoengineArchParser} from "./geoengine_arch_parser.esm";
 import {GeoengineCompiler} from "./geoengine_compiler.esm";
-import {RelationalModel} from "@web/views/relational_model";
+import {RelationalModel} from "@web/model/relational_model/relational_model";
 import {registry} from "@web/core/registry";
 
 export const geoengineView = {

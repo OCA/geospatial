@@ -5,7 +5,7 @@
  */
 
 import {Layout} from "@web/search/layout";
-import {useModel} from "@web/views/model";
+import {useModel} from "@web/model/model";
 import {usePager} from "@web/search/pager_hook";
 import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";

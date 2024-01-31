@@ -12,7 +12,7 @@ import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {vectorLayersStore} from "../../../vector_layers_store.esm";
 import {useService} from "@web/core/utils/hooks";
 import {registry} from "@web/core/registry";
-import {RelationalModel} from "@web/views/relational_model";
+import {RelationalModel} from "@web/model/relational_model/relational_model";
 import {evaluateExpr} from "@web/core/py_js/py";
 import {
     Component,

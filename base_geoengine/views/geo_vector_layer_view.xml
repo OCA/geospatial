@@ -13,7 +13,7 @@
                         <field name="geo_field_id" />
                         <field
                             name="attribute_field_id"
-                            attrs="{'required': [('geo_repr', 'in', ['choropleth', 'proportion', 'colored'])]}"
+                            required="geo_repr in ['choropleth', 'proportion', 'colored']"
                         />
                         <field name="active_on_startup" />
                         <field name="display_polygon_labels" />
@@ -41,27 +41,30 @@
                     <group
                         string="Classification"
                         colspan="4"
-                        attrs="{'invisible': [('geo_repr', '=', 'basic')]}"
+                        invisible="geo_repr == 'basic'"
                     >
                         <field
                             name="classification"
-                            attrs="{'invisible': [('geo_repr', '=', 'basic')], 'required': [('geo_repr', 'in', ['choropleth', 'proportion', 'colored'])]}"
+                            invisible="geo_repr == 'basic'"
+                            required="geo_repr in ['choropleth', 'proportion', 'colored']"
                         />
                     </group>
                     <group string="Colors" col="4" colspan="4">
                         <field name="begin_color" widget="color" />
                         <group
                             colspan="4"
-                            attrs="{'invisible': [('geo_repr', 'in', ['basic', 'proportion'])]}"
+                            invisible="geo_repr in ['basic', 'proportion']"
                         >
                             <field
                                 name="end_color"
-                                attrs="{'invisible': [('classification', 'in', ['unique', False])], 'required': [('classification', 'in', ['interval', 'quantil'])]}"
+                                invisible="classification in ['unique', False]"
+                                required="classification in ['interval', 'quantil']"
                                 widget="color"
                             />
                             <field
                                 name="nb_class"
-                                attrs="{'invisible': [('classification', 'in', ['unique', False])], 'required': [('classification', 'in', ['interval', 'quantil'])]}"
+                                invisible="classification in ['unique', False]"
+                                required="classification in ['interval', 'quantil']"
                             />
                         </group>
                     </group>
@@ -81,7 +84,7 @@
                         <field name="geo_field_id" />
                         <field
                             name="attribute_field_id"
-                            attrs="{'required': [('geo_repr', 'in', ['choropleth', 'proportion', 'colored'])]}"
+                            required="geo_repr in ['choropleth', 'proportion', 'colored']"
                         />
                         <field name="display_polygon_labels" />
                         <field name="sequence" readonly="1" />
@@ -108,27 +111,30 @@
                     <group
                         string="Classification"
                         colspan="4"
-                        attrs="{'invisible': [('geo_repr', '=', 'basic')]}"
+                        invisible="geo_repr == 'basic'"
                     >
                         <field
                             name="classification"
-                            attrs="{'invisible': [('geo_repr', '=', 'basic')], 'required': [('geo_repr', 'in', ['choropleth', 'proportion', 'colored'])]}"
+                            invisible="geo_repr == 'basic'"
+                            required="geo_repr in ['choropleth', 'proportion', 'colored']"
                         />
                     </group>
                     <group string="Colors" col="4" colspan="4">
                         <field name="begin_color" widget="color" />
                         <group
                             colspan="4"
-                            attrs="{'invisible': [('geo_repr', 'in', ['basic', 'proportion'])]}"
+                            invisible="geo_repr in ['basic', 'proportion']"
                         >
                             <field
                                 name="end_color"
-                                attrs="{'invisible': [('classification', 'in', ['unique', False])], 'required': [('classification', 'in', ['interval', 'quantil'])]}"
+                                invisible="classification in ['unique', False]"
+                                required="classification in ['interval', 'quantil']"
                                 widget="color"
                             />
                             <field
                                 name="nb_class"
-                                attrs="{'invisible': [('classification', 'in', ['unique', False])], 'required': [('classification', 'in', ['interval', 'quantil'])]}"
+                                invisible="classification in ['unique', False]"
+                                required="classification in ['interval', 'quantil']"
                             />
                         </group>
                     </group>

@@ -7,10 +7,15 @@
 import {addFieldDependencies} from "@web/views/utils";
 import {Field} from "@web/views/fields/field";
 import {Widget} from "@web/views/widgets/widget";
-import {XMLParser} from "@web/core/utils/xml";
+import {parseXML} from "@web/core/utils/xml";
 import {_lt} from "@web/core/l10n/translation";
 
 export const INFO_BOX_ATTRIBUTE = "info_box";
+
+class XMLParser {
+    parse() {}
+    visitXML(xml, callback) {}
+}
 
 export class GeoengineArchParser extends XMLParser {
     /**
@@ -21,7 +26,7 @@ export class GeoengineArchParser extends XMLParser {
      * @returns {Object}
      */
     parse(arch, models, modelName) {
-        const xmlDoc = this.parseXML(arch);
+        const xmlDoc = parseXML(arch);
         const templateDocs = {};
         const fieldNodes = {};
         const jsClass = xmlDoc.getAttribute("js_class");
