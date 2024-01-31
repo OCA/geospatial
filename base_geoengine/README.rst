@@ -17,29 +17,33 @@ Geospatial support for Odoo
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github
-    :target: https://github.com/OCA/geospatial/tree/16.0/base_geoengine
+    :target: https://github.com/OCA/geospatial/tree/17.0/base_geoengine
     :alt: OCA/geospatial
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/geospatial-16-0/geospatial-16-0-base_geoengine
+    :target: https://translation.odoo-community.org/projects/geospatial-17-0/geospatial-17-0-base_geoengine
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/geospatial&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/geospatial&target_branch=17.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-GeoEngine is an Odoo module that adds spatial/GIS capabilites to Odoo. It will allow you to :
+GeoEngine is an Odoo module that adds spatial/GIS capabilites to Odoo.
+It will allow you to :
 
-* Visualize and query your business information on map
-* Perform GeoBI and spatial query
-* Configure your spatial layers and spatial datasources
-* Extend Odoo models with spatial columns
+-  Visualize and query your business information on map
+-  Perform GeoBI and spatial query
+-  Configure your spatial layers and spatial datasources
+-  Extend Odoo models with spatial columns
 
-GeoEngine relies on `OpenLayers <http://openlayers.org>`_ and `PostgGIS <http://postgis.refractions.net/>`_ technologies.
+GeoEngine relies on `OpenLayers <http://openlayers.org>`__ and
+`PostgGIS <http://postgis.refractions.net/>`__ technologies.
 
-Postgis is used to store spatial information in databases. OpenLayer is used to represent spatial data in other words to show maps
-and the different spatial layers. The GeoEngine module acts as a data provider and as an OpenLayers configurator.
-It also provides a complete extension to Odoo ORM.
+Postgis is used to store spatial information in databases. OpenLayer is
+used to represent spatial data in other words to show maps and the
+different spatial layers. The GeoEngine module acts as a data provider
+and as an OpenLayers configurator. It also provides a complete extension
+to Odoo ORM.
 
 **Table of contents**
 
@@ -49,198 +53,249 @@ It also provides a complete extension to Odoo ORM.
 Installation
 ============
 
+To install this module, you need to have
+`PostGIS <http://postgis.net/>`__ installed.
 
-To install this module, you need to have `PostGIS <http://postgis.net/>`_ installed.
+On Ubuntu:
 
-On Ubuntu::
+::
 
-.. code-block:: bash
+   .. code-block:: bash
 
-  sudo apt-get install postgis
+..
+
+   sudo apt-get install postgis
 
 The module also requires two additional python libs:
 
-* `Shapely <http://pypi.python.org/pypi/Shapely>`_
+-  `Shapely <http://pypi.python.org/pypi/Shapely>`__
+-  `geojson <http://pypi.python.org/pypi/geojson>`__
 
-* `geojson <http://pypi.python.org/pypi/geojson>`_
+When you will install the module this two additional libs will be
+installed.
 
-When you will install the module this two additional libs will be installed.
-
-For a complete documentation please refer to the `public documenation <http://oca.github.io/geospatial/index.html>`_
+For a complete documentation please refer to the `public
+documenation <http://oca.github.io/geospatial/index.html>`__
 
 Usage
 =====
 
 Geoengine Demo
-==============
+--------------
 
-1. As a user/admin, when I am in the Geoengine Demo module and I go to the ZIP menu.
-   When I click on an item in the list view, I get to the form view showing me the different
-   information about the ZIP. We can see its ZIP, city, priority, total sales and his spatial
-   representation.
-2. As a user, I can't modify the information in the form view.
-3. As an admin, I can modify the information in the form view. I can click on the bin button to clear
-   the map and I can draw a new shape.
-4. As a user, when I go the "Retail machines" tab and there are no items to display, it does not
-   show me anything.
-5. As an admin, when I go the "Retail machines" tab and there are no items to display, the list view of
-   the retail machines suggests to me to add a new line.
-6. As a user/admin, if there are items to be displayed in the "Retail machines" tab then I can click on an
-   item and the retail machines form view will be displayed. We can see its spatial representation by going
-   to "The point" tab and its attributes in "Attributes" tab.
-7. As a user/admin, when I go to the geoengine zip view by clicking on the map button at the top right of the
-   screen. The geoengine view appears with the first 80 results displayed on the map. The vector layers
-   selected are those defined as "active on startup" by the admin. The selected raster layer is the first
-   one that is not an overlay layer.
-8. As a user/admin, when I hover over an area on the map, the area changes its style.
-9. As a user/admin, when I click on an area, a popup appears an I can see the different information about the
-   area. If I click on the cross, the popup will disappear. If I click somewhere else on the map, the
-   popup will also disappear. If I click on the about button, then the form view will be displayed.
-10. As a user/admin, when I use the paging system, then the results displayed on the map are different
-    (corresponding to the request).
-11. As a user/admin, if we use the search bar, we can search results by his zip or his city.
-12. As an admin, if I change the sequence of layers with the handle button then the change are persisted in database.
-13. As a user, if I change the sequence of layers with the handle button then the change are not persisted in database.
-    There are just the changes in the display.
-14. As an admin, if I change the domain of a layer with the filter button then the change are persisted in database.
-15. As a user, if I change the domain of a layer with the filter button then the change are not persisted in database.
-    There are just the changes in the display.
-16. As an admin, I have the possibility to edit the layer with its corresponding button.
+1.  As a user/admin, when I am in the Geoengine Demo module and I go to
+    the ZIP menu. When I click on an item in the list view, I get to the
+    form view showing me the different information about the ZIP. We can
+    see its ZIP, city, priority, total sales and his spatial
+    representation.
+2.  As a user, I can't modify the information in the form view.
+3.  As an admin, I can modify the information in the form view. I can
+    click on the bin button to clear the map and I can draw a new shape.
+4.  As a user, when I go the "Retail machines" tab and there are no
+    items to display, it does not show me anything.
+5.  As an admin, when I go the "Retail machines" tab and there are no
+    items to display, the list view of the retail machines suggests to
+    me to add a new line.
+6.  As a user/admin, if there are items to be displayed in the "Retail
+    machines" tab then I can click on an item and the retail machines
+    form view will be displayed. We can see its spatial representation
+    by going to "The point" tab and its attributes in "Attributes" tab.
+7.  As a user/admin, when I go to the geoengine zip view by clicking on
+    the map button at the top right of the screen. The geoengine view
+    appears with the first 80 results displayed on the map. The vector
+    layers selected are those defined as "active on startup" by the
+    admin. The selected raster layer is the first one that is not an
+    overlay layer.
+8.  As a user/admin, when I hover over an area on the map, the area
+    changes its style.
+9.  As a user/admin, when I click on an area, a popup appears an I can
+    see the different information about the area. If I click on the
+    cross, the popup will disappear. If I click somewhere else on the
+    map, the popup will also disappear. If I click on the about button,
+    then the form view will be displayed.
+10. As a user/admin, when I use the paging system, then the results
+    displayed on the map are different (corresponding to the request).
+11. As a user/admin, if we use the search bar, we can search results by
+    his zip or his city.
+12. As an admin, if I change the sequence of layers with the handle
+    button then the change are persisted in database.
+13. As a user, if I change the sequence of layers with the handle button
+    then the change are not persisted in database. There are just the
+    changes in the display.
+14. As an admin, if I change the domain of a layer with the filter
+    button then the change are persisted in database.
+15. As a user, if I change the domain of a layer with the filter button
+    then the change are not persisted in database. There are just the
+    changes in the display.
+16. As an admin, I have the possibility to edit the layer with its
+    corresponding button.
 17. As a user/admin, I can open/close LayerPanel with its button.
 18. As a user/admin, I can open/close RecordsPanel with its button.
-19. As a user/admin, when I click on a record in RecordsPanel, a move is made on the map to the selected record.
-20. As a user/admin, when I click on a record in RecordsPanel, I can also click on the left magnifying glass to zoom on the record.
-21. As a user/admin, when I click on a record in RecordsPanel, I can also click on the right magnifying glass to get the original zoom.
-22. As a user/admin, I can use the search bar to search in the RecordsPanel.
-23. As an admin,If the geoengine view is in edit mode, I can create new records by drawing them in the view.
-24. As an admin, If the geoengine view is in edit mode, I can modify its spatial representation.
+19. As a user/admin, when I click on a record in RecordsPanel, a move is
+    made on the map to the selected record.
+20. As a user/admin, when I click on a record in RecordsPanel, I can
+    also click on the left magnifying glass to zoom on the record.
+21. As a user/admin, when I click on a record in RecordsPanel, I can
+    also click on the right magnifying glass to get the original zoom.
+22. As a user/admin, I can use the search bar to search in the
+    RecordsPanel.
+23. As an admin,If the geoengine view is in edit mode, I can create new
+    records by drawing them in the view.
+24. As an admin, If the geoengine view is in edit mode, I can modify its
+    spatial representation.
 
 Geoengine Backend
-=================
+-----------------
 
-1. As an admin, if I go into the configuration of the raster layers and it has elements, I can click
-   on one and see its information.
-2. As an admin, if I want to create a new raster layer, I can click on "NEW" and fill out the form. The
-   required fields for OpenStreetMap type are "Layer Name" and "Related View". If we want to have a
-   WMTS (Web Map Tile Service) raster type. The required fields in addition to the precedents are "Service URL",
-   "Matrix set","Format", "Projection" and "Resolutions". If we take WMS (Web Map Service) raster type, then the
-   required fields are "Layer Name", "Related View", "Service URL", "Params", "Server Type".
-3. As an admin,if I go into the configuration of the vector layers and it has elements, I can click
-   on one and see its information.
-4. As an admin, if I want to create a new vector layer, I can click on "NEW" and fill out the form. The
-   required fields are "Layer Name", "Related View", "Geo field" and "Representation mode".
+1. As an admin, if I go into the configuration of the raster layers and
+   it has elements, I can click on one and see its information.
+2. As an admin, if I want to create a new raster layer, I can click on
+   "NEW" and fill out the form. The required fields for OpenStreetMap
+   type are "Layer Name" and "Related View". If we want to have a WMTS
+   (Web Map Tile Service) raster type. The required fields in addition
+   to the precedents are "Service URL", "Matrix set","Format",
+   "Projection" and "Resolutions". If we take WMS (Web Map Service)
+   raster type, then the required fields are "Layer Name", "Related
+   View", "Service URL", "Params", "Server Type".
+3. As an admin,if I go into the configuration of the vector layers and
+   it has elements, I can click on one and see its information.
+4. As an admin, if I want to create a new vector layer, I can click on
+   "NEW" and fill out the form. The required fields are "Layer Name",
+   "Related View", "Geo field" and "Representation mode".
+
+Known issues / Roadmap
+======================
+
+
 
 Changelog
 =========
 
 16.0.1.0.0 (2023-03-20)
-========================
+-----------------------
 
-* LayerSwitcher has been removed as it was not really practical. A LayerPanel is now active.
-* The geo_search method is now deprecated and replaced by the standard odoo search method.
-* The widget "geo_edit_map" attribute is no longer necessary as the field is automatically detected by
-  his type. We can also provide an option attribute that allows us to pass an opacity and a color as
-  parameters.
+-  LayerSwitcher has been removed as it was not really practical. A
+   LayerPanel is now active.
+-  The geo_search method is now deprecated and replaced by the standard
+   odoo search method.
+-  The widget "geo_edit_map" attribute is no longer necessary as the
+   field is automatically detected by his type. We can also provide an
+   option attribute that allows us to pass an opacity and a color as
+   parameters.
 
-.. code-block:: xml
+.. code:: xml
 
-    <form>
-        <notebook colspan="4">
-            <page string="Geometry">
-                <field name="the_geom" options="{'opacity': 0.8, 'color': '#0000FF' }" />
-            </page>
-        </notebook>
-    </form>
+   <form>
+       <notebook colspan="4">
+           <page string="Geometry">
+               <field name="the_geom" options="{'opacity': 0.8, 'color': '#0000FF' }" />
+           </page>
+       </notebook>
+   </form>
 
-* The method geo_search is now deprecated. We now need to use the standard odoo search method.
+-  The method geo_search is now deprecated. We now need to use the
+   standard odoo search method.
 
-.. code-block:: python
+.. code:: python
 
-    obj.search([("the_point","geo_intersect",{"dummy.zip.the_geom": [("id", "=", rec.id)]})])
+   obj.search([("the_point","geo_intersect",{"dummy.zip.the_geom": [("id", "=", rec.id)]})])
 
-* We can now pass to the geoengine view a template to display the information we want
-  to see when clicking on a feature.
+-  We can now pass to the geoengine view a template to display the
+   information we want to see when clicking on a feature.
 
-.. code-block:: xml
+.. code:: xml
 
-    <geoengine>
-        <field name="name" />
-        <field name="city" />
-        <field name="total_sales" />
-        <field name="the_geom" />
-        <templates>
-            <t t-name="info_box">
-                <field name="city" widget="badge" />
-                <ul>
-                    <li>ZIP : <field name="name" />
-                    </li>
-                    <li>Total Sales: <field name="total_sales" />
-                    </li>
-                </ul>
-            </t>
-        </templates>
-    </geoengine>
+   <geoengine>
+       <field name="name" />
+       <field name="city" />
+       <field name="total_sales" />
+       <field name="the_geom" />
+       <templates>
+           <t t-name="info_box">
+               <field name="city" widget="badge" />
+               <ul>
+                   <li>ZIP : <field name="name" />
+                   </li>
+                   <li>Total Sales: <field name="total_sales" />
+                   </li>
+               </ul>
+           </t>
+       </templates>
+   </geoengine>
 
-* We can now pass a model to use to a layer to display other information on the map.
+-  We can now pass a model to use to a layer to display other
+   information on the map.
 
-.. code-block:: xml
+.. code:: xml
 
-    <record id="geoengine_vector_layer_hs_retail_machines" model="geoengine.vector.layer">
-        <field name="model_id" ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine"/>
-        <field name="model_domain">[('state', '=', 'hs')]</field>
-        <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"/>
-        <field name="name">HS retail machines</field>
-        <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
-        <field name="geo_repr">basic</field>
-        <field name="attribute_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__name"/>
-        <field name="begin_color">#FF0000</field>
-        <field name="display_polygon_labels" eval="0" />
-        <field name="layer_opacity">0.8</field>
-    </record>
+   <record id="geoengine_vector_layer_hs_retail_machines" model="geoengine.vector.layer">
+       <field name="model_id" ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine"/>
+       <field name="model_domain">[('state', '=', 'hs')]</field>
+       <field name="geo_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"/>
+       <field name="name">HS retail machines</field>
+       <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
+       <field name="geo_repr">basic</field>
+       <field name="attribute_field_id" ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__name"/>
+       <field name="begin_color">#FF0000</field>
+       <field name="display_polygon_labels" eval="0" />
+       <field name="layer_opacity">0.8</field>
+   </record>
 
+-  There is some new features in the LayerPanel.
 
-* There is some new features in the LayerPanel.
+1. If you are logged in as an admin, you have the possibility to edit
+   the layer by clicking on the edit button. This will open a dialog
+   box. Changes will appear in real time on the view.
+2. If you are logged in as an admin, you can also change the domain of
+   the layer. If you are logged in as a user, changes will not be
+   persisted in the database. Changes will appear in real time on the
+   view.
+3. If you are logged in as an admin, you can also change the sequence of
+   the layers by sliding them over each other. If you are logged in as a
+   user, changes will not be persisted in the database.
 
-1. If you are logged in as an admin, you have the possibility to edit the layer by clicking on the edit button. This will open a dialog box.
-   Changes will appear in real time on the view.
-2. If you are logged in as an admin, you can also change the domain of the layer. If you are logged in as a user, changes will not be
-   persisted in the database. Changes will appear in real time on the view.
-3. If you are logged in as an admin, you can also change the sequence of the layers by sliding them over each other. If you are logged in as a user, changes will not be
-   persisted in the database.
+-  Widget domain is now implemented for geo field This means that the
+   geo-operators are also implemented and that there is the possibility
+   to add a sub-domain. If we want to add a domain that includes all the
+   records that are displayed in the geoengine view (active_ids). We can
+   use the two new operators : "in active_ids" and "not in active_ids".
+   These will automatically replace the marker with ids. Note that the
+   widget will indicate that the domain is invalid because of the
+   marker.
+-  Creation of the RecordsPanel. This panel allows you to retrieve all
+   active records. You can click on record to get the movement to the
+   selected record. Two magnifying glass are also available. You can
+   click on the left one to zoom on the record. You can click on the
+   right one to get the original zoom.
+-  A search bar is also available. It allows you to perform a search
+   into the RecordsPanel.
+-  A button to open/close the panels is also available.
+-  The module has been translated in French.
+-  Now you can now make the geoengine view editable. Simply add editable
+   attribute in the geoengine view.
 
-* Widget domain is now implemented for geo field This means that the geo-operators are also implemented and that there is the possibility to add a sub-domain.
-  If we want to add a domain that includes all the records that are displayed in the geoengine view (active_ids). We can use the two new operators :
-  "in active_ids" and "not in active_ids". These will automatically replace the marker with ids. Note that the widget will indicate that the domain is invalid
-  because of the marker.
-* Creation of the RecordsPanel. This panel allows you to retrieve all active records. You can click on record to get the movement to the selected record.
-  Two magnifying glass are also available. You can click on the left one to zoom on the record. You can click on the right one to get the original zoom.
-* A search bar is also available. It allows you to perform a search into the RecordsPanel.
-* A button to open/close the panels is also available.
-* The module has been translated in French.
-* Now you can now make the geoengine view editable. Simply add editable attribute in the geoengine view.
+.. code:: xml
 
-.. code-block:: xml
+   <geoengine editable="1">
+       <field name="name" />
+       <field name="city" />
+       <field name="total_sales" />
+       <field name="the_geom" />
+       <field name="display_name" />
+       <templates>
+         <t t-name="info_box">
+           <field name="city" widget="badge" />
+           <ul>
+             <li>ZIP : <field name="name" />
+             </li>
+             <li>Total Sales: <field name="total_sales" />
+             </li>
+           </ul>
+         </t>
+       </templates>
+     </geoengine>
 
-    <geoengine editable="1">
-        <field name="name" />
-        <field name="city" />
-        <field name="total_sales" />
-        <field name="the_geom" />
-        <field name="display_name" />
-        <templates>
-          <t t-name="info_box">
-            <field name="city" widget="badge" />
-            <ul>
-              <li>ZIP : <field name="name" />
-              </li>
-              <li>Total Sales: <field name="total_sales" />
-              </li>
-            </ul>
-          </t>
-        </templates>
-      </geoengine>
-
-    Thanks to that, you can create new records by drawing them directly in the geoengine view. You can also edit record in the same view.
+   Thanks to that, you can create new records by drawing them directly in the geoengine view. You can also edit record in the same view.
 
 Bug Tracker
 ===========
@@ -248,7 +303,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/geospatial/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/geospatial/issues/new?body=module:%20base_geoengine%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/geospatial/issues/new?body=module:%20base_geoengine%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -256,37 +311,37 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Camptocamp
 * ACSONE SA/NV
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* Nicolas Bessi <nicolas.bessi@camptocamp.com>
-* Frederic Junod <frederic.junod@camptocamp.com>
-* Yannick Payot <yannick.payot@camptocamp.com>
-* Sandy Carter <sandy.carter@savoirfairelinux.com>
-* Laurent Mignon <laurent.mignon@acsone.eu>
-* Jonathan Nemry <jonathan.nemry@acsone.eu>
-* David Lasley <dave@dlasley.net>
-* Daniel Reis <dgreis@sapo.pt>
-* Matthieu Dietrich <matthieu.dietrich@camptocamp.com>
-* Alan Ramos <alan.ramos@jarsa.com.mx>
-* Damien Crier <damien.crier@camptocamp.com>
-* Cyril Gaudin <cyril.gaudin@camptocamp.com>
-* Pierre Verkest <pverkest@anybox.fr>
-* Benjamin Willig <benjamin.willig@acsone.eu>
-* Devendra Kavthekar <dkatodoo@gmail.com>
-* Emanuel Cino <ecino@compassion.ch>
-* Thomas Nowicki <thomas.nowicki@camptocamp.com>
-* Alexandre Saunier <alexandre.saunier@camptocamp.com>
-* Sandip Mangukiya <smangukiya@opensourceintegrators.com>
-* Samuel Kouff <s.kouff@student.helmo.be>
+-  Nicolas Bessi <nicolas.bessi@camptocamp.com>
+-  Frederic Junod <frederic.junod@camptocamp.com>
+-  Yannick Payot <yannick.payot@camptocamp.com>
+-  Sandy Carter <sandy.carter@savoirfairelinux.com>
+-  Laurent Mignon <laurent.mignon@acsone.eu>
+-  Jonathan Nemry <jonathan.nemry@acsone.eu>
+-  David Lasley <dave@dlasley.net>
+-  Daniel Reis <dgreis@sapo.pt>
+-  Matthieu Dietrich <matthieu.dietrich@camptocamp.com>
+-  Alan Ramos <alan.ramos@jarsa.com.mx>
+-  Damien Crier <damien.crier@camptocamp.com>
+-  Cyril Gaudin <cyril.gaudin@camptocamp.com>
+-  Pierre Verkest <pverkest@anybox.fr>
+-  Benjamin Willig <benjamin.willig@acsone.eu>
+-  Devendra Kavthekar <dkatodoo@gmail.com>
+-  Emanuel Cino <ecino@compassion.ch>
+-  Thomas Nowicki <thomas.nowicki@camptocamp.com>
+-  Alexandre Saunier <alexandre.saunier@camptocamp.com>
+-  Sandip Mangukiya <smangukiya@opensourceintegrators.com>
+-  Samuel Kouff <s.kouff@student.helmo.be>
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -298,6 +353,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/geospatial <https://github.com/OCA/geospatial/tree/16.0/base_geoengine>`_ project on GitHub.
+This module is part of the `OCA/geospatial <https://github.com/OCA/geospatial/tree/17.0/base_geoengine>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

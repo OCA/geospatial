@@ -3,20 +3,18 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-class GeoOperator(object):
+class GeoOperator:
     def __init__(self, geo_field):
         self.geo_field = geo_field
 
     def _get_direct_como_op_sql(self, table, col, value, params, op=""):
         """provide raw sql for geater and lesser operators"""
         if isinstance(value, (int, float)):
-            return " ST_Area({}.{}) {} {}".format(table, col, op, value)
+            return f" ST_Area({table}.{col}) {op} {value}"
         else:
             base = self.geo_field.entry_to_shape(value, same_type=False)
             params.append(base.wkt)
-            return " ST_Area({}.{}) {} ST_Area(ST_GeomFromText(%s))".format(
-                table, col, op
-            )
+            return f" ST_Area({table}.{col}) {op} ST_Area(ST_GeomFromText(%s))"
 
     def _get_postgis_comp_sql(self, table, col, value, params, op=""):
         """return raw sql for all search based on St_**(a, b) posgis operator"""
@@ -50,7 +48,7 @@ class GeoOperator(object):
         base = self.geo_field.entry_to_shape(value, same_type=False)
         compare_to = "ST_GeomFromText(%s)"
         params.append(base.wkt)
-        return " {}.{} = {}".format(table, col, compare_to)
+        return f" {table}.{col} = {compare_to}"
 
     def get_geo_intersect_sql(self, table, col, value, params):
         """Returns raw sql for geo_intersec operator

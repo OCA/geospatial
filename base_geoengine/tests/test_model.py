@@ -673,7 +673,6 @@ class TestModel(TransactionCase):
         self.assertAlmostEqual(geo_point.y, expected_coordinates[1], 4)
 
     def test_to_lat_lon(self):
-
         geo_point = '{ "type": "Point", "coordinates": [601179.61612, 6399375.681364] }'
 
         longitude, latitude = GeoPoint.to_latlon(self.env.cr, geo_point)
