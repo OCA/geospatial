@@ -97,23 +97,23 @@ def get_geo_func(current_operator, operator, left, right, params, table):
     """
     This method will call the SQL query corresponding to the requested geo operator
     """
-    match operator:
-        case "geo_greater":
-            query = current_operator.get_geo_greater_sql(table, left, right, params)
-        case "geo_lesser":
-            query = current_operator.get_geo_lesser_sql(table, left, right, params)
-        case "geo_equal":
-            query = current_operator.get_geo_equal_sql(table, left, right, params)
-        case "geo_touch":
-            query = current_operator.get_geo_touch_sql(table, left, right, params)
-        case "geo_within":
-            query = current_operator.get_geo_within_sql(table, left, right, params)
-        case "geo_contains":
-            query = current_operator.get_geo_contains_sql(table, left, right, params)
-        case "geo_intersect":
-            query = current_operator.get_geo_intersect_sql(table, left, right, params)
-        case _:
-            raise NotImplementedError(f"The operator {operator} is not supported")
+
+    if operator == "geo_greater":
+        query = current_operator.get_geo_greater_sql(table, left, right, params)
+    elif operator == "geo_lesser":
+        query = current_operator.get_geo_lesser_sql(table, left, right, params)
+    elif operator == "geo_equal":
+        query = current_operator.get_geo_equal_sql(table, left, right, params)
+    elif operator == "geo_touch":
+        query = current_operator.get_geo_touch_sql(table, left, right, params)
+    elif operator == "geo_within":
+        query = current_operator.get_geo_within_sql(table, left, right, params)
+    elif operator == "geo_contains":
+        query = current_operator.get_geo_contains_sql(table, left, right, params)
+    elif operator == "geo_intersect":
+        query = current_operator.get_geo_intersect_sql(table, left, right, params)
+    else:
+        raise NotImplementedError(f"The operator {operator} is not supported")
     return query
 
 
