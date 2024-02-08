@@ -603,7 +603,11 @@ export class GeoengineRenderer extends Component {
             .getSource()
             .getExtent();
         var infinite_extent = [Infinity, Infinity, -Infinity, -Infinity];
-        if (extent !== infinite_extent) {
+        if (JSON.stringify(extent) === JSON.stringify(infinite_extent)) {
+            extent = [-13360714.671289, 5314503.622, 8284735.328607, 7099727.320865]
+        }
+
+        if (JSON.stringify(extent) !== JSON.stringify(infinite_extent)) {
             var map_view = this.map.getView();
             if (map_view) {
                 map_view.fit(extent, {maxZoom: 15});
