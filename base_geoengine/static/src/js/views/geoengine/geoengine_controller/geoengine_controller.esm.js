@@ -5,12 +5,16 @@
  */
 
 import {Layout} from "@web/search/layout";
-import {useModel} from "@web/model/model";
+import { _t } from "@web/core/l10n/translation";
+import {useModelWithSampleData} from "@web/model/model";
+import { extractFieldsFromArchInfo } from "@web/model/relational_model/utils";
 import {usePager} from "@web/search/pager_hook";
 import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
 import {WarningDialog} from "@web/core/errors/error_dialogs";
-import {Component, useState} from "@odoo/owl";
+import {Component, useState, useRef} from "@odoo/owl";
+import { session } from "@web/session";
+import { standardViewProps } from "@web/views/standard_view_props";
 
 export class GeoengineController extends Component {
     /**
@@ -22,13 +26,8 @@ export class GeoengineController extends Component {
         this.view = useService("view");
         this.addDialog = useOwnedDialogs();
         this.editable = this.props.archInfo.editable;
-        this.model = useModel(this.props.Model, {
-            activeFields: this.props.archInfo.activeFields,
-            resModel: this.props.resModel,
-            fields: this.props.fields,
-            limit: this.props.limit,
-        });
-
+        this.archInfo = this.props.archInfo
+        this.model = useState(useModelWithSampleData(this.props.Model, this.modelParams));
         /**
          * Allow you to display records on the map thanks to the paging located
          * at the top right of the screen.
@@ -47,6 +46,41 @@ export class GeoengineController extends Component {
             };
         });
     }
+    get modelParams() {
+        const { resModel, archInfo, limit, defaultGroupBy } = this.props;
+        const { activeFields, fields } = extractFieldsFromArchInfo(
+            this.archInfo,
+            this.props.fields
+        );
+
+        const modelConfig = this.props.state?.modelState?.config || {
+            resModel: resModel,
+            fields,
+            activeFields,
+            openGroupsByDefault: true,
+        };
+
+        return {
+            config: modelConfig,
+            state: this.props.state?.modelState,
+            limit: archInfo.limit || limit,
+            countLimit: archInfo.countLimit,
+            defaultOrderBy: archInfo.defaultOrder,
+            defaultGroupBy: this.props.searchMenuTypes.includes("groupBy") ? defaultGroupBy : false,
+            groupsLimit: archInfo.groupsLimit,
+            multiEdit: archInfo.multiEdit,
+            activeIdsLimit: session.active_ids_limit,
+            hooks: {
+                createRecord: this.createRecord.bind(this),
+                onSaveRecord: this.onSaveRecord.bind(this),
+                onClickSave: this.onClickSave.bind(this),
+                onClickDiscard: this.onClickDiscard.bind(this),
+                updateRecord: this.updateRecord.bind(this),
+                onDrawStart: this.onDrawStart.bind(this),
+            },
+        };
+    }
+
     /**
      * Allow you to open the form editing view for the filled-in model.
      * @param {*} resModel
@@ -77,7 +111,7 @@ export class GeoengineController extends Component {
 
         this.addDialog(FormViewDialog, {
             resModel: resModel,
-            title: this.env._t("New record"),
+            title: _t("New record"),
             viewId: views.form.id,
             context,
             onRecordSaved: async () => await this.onSaveRecord(),
@@ -105,7 +139,7 @@ export class GeoengineController extends Component {
      * This method is called when you click on discard button after edit a spatial representation.
      */
     async onClickDiscard() {
-        await this.model.root.editedRecord.discard();
+        await this.model.root.editedRecord?.discard();
         this.state.isSavedOrDiscarded = true;
     }
 
@@ -130,8 +164,8 @@ export class GeoengineController extends Component {
         const {count, records} = this.model.root;
         if (records.length < count) {
             this.addDialog(WarningDialog, {
-                title: this.env._t("Warning"),
-                message: this.env._t(
+                title: _t("Warning"),
+                message: _t(
                     "You are about to create a new record without having displayed all the others. A risk of overlap could occur. Would you like to continue ?"
                 ),
             });
@@ -141,3 +175,9 @@ export class GeoengineController extends Component {
 
 GeoengineController.template = "base_geoengine.GeoengineController";
 GeoengineController.components = {Layout};
+GeoengineController.props = {
+    ...standardViewProps,
+    Model: Function,
+    Renderer: Function,
+    archInfo: Object,
+}

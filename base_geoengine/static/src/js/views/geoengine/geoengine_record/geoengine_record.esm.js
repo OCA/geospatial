@@ -50,7 +50,7 @@ export class GeoengineRecord extends Component {
     }
 }
 
-GeoengineRecord.template = "base_geoengine_GeoengineRecord";
+GeoengineRecord.template = "base_geoengine.GeoengineRecord";
 GeoengineRecord.Compiler = GeoengineCompiler;
 GeoengineRecord.components = {Field};
 GeoengineRecord.INFO_BOX_ATTRIBUTE = INFO_BOX_ATTRIBUTE;

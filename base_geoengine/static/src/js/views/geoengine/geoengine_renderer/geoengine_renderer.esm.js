@@ -4,6 +4,9 @@
  * Copyright 2023 ACSONE SA/NV
  */
 
+
+
+
 import {loadBundle, templates} from "@web/core/assets";
 import {GeoengineRecord} from "../geoengine_record/geoengine_record.esm";
 import {LayersPanel} from "../layers_panel/layers_panel.esm";
@@ -14,6 +17,9 @@ import {useService} from "@web/core/utils/hooks";
 import {registry} from "@web/core/registry";
 import {RelationalModel} from "@web/model/relational_model/relational_model";
 import {evaluateExpr} from "@web/core/py_js/py";
+import {parseXML} from "@web/core/utils/xml";
+import { addFieldDependencies, extractFieldsFromArchInfo } from "@web/model/relational_model/utils";
+import {useModel, useModelWithSampleData} from "@web/model/model";
 import {
     Component,
     mount,
@@ -53,6 +59,7 @@ export class GeoengineRenderer extends Component {
         this.orm = useService("orm");
         this.view = useService("view");
         this.user = useService("user");
+        this.fields = useService("field");
 
         // For related model we need to load all the service needed by RelationalModel
         this.services = {};
@@ -562,8 +569,8 @@ export class GeoengineRenderer extends Component {
      */
     onDisplayPopupRecord(record) {
         const popup = this.getPopup();
-        const feature = this.vectorSource.getFeatureById(record.resId);
-        if (feature !== undefined) {
+        const feature = this.vectorSource.getFeatureById(record.id);
+        if (feature) {
             this.mountGeoengineRecord({
                 popup,
                 archInfo: this.props.archInfo,
@@ -914,7 +921,7 @@ export class GeoengineRenderer extends Component {
      */
     async loadView(model, view) {
         const viewRegistry = registry.category("views");
-        const fields = await this.view.loadFields(model, {
+        const fields = await this.fields.loadFields(model, {
             attributes: [
                 "store",
                 "searchable",
@@ -930,7 +937,9 @@ export class GeoengineRenderer extends Component {
             views: [[false, view]],
         });
         const {ArchParser, Model} = viewRegistry.get(view);
-        const archInfo = new ArchParser().parse(views[view].arch, relatedModels, model);
+
+        const xmlDoc = parseXML(views[view].arch);
+        const archInfo = new ArchParser().parse(xmlDoc, relatedModels, model);
 
         if (model === "geoengine.vector.layer") {
             const notAllowedField = Object.keys(fields).filter(
@@ -941,22 +950,39 @@ export class GeoengineRenderer extends Component {
             );
             notAllowedField.forEach((field) => {
                 delete field[field];
-                delete archInfo.activeFields[field];
             });
         }
-        const searchParams = {
-            activeFields: archInfo.activeFields,
+
+        const { activeFields, arch_fields } = extractFieldsFromArchInfo(archInfo, fields);
+        addFieldDependencies(activeFields, arch_fields, this.progressBarAggregateFields(archInfo));
+
+        const modelConfig = {
+            model,
+            activeFields,
+            openGroupsByDefault: true,
+            domain: [],
+            orderBy: [],
+            groupBy: {},
             resModel: model,
             fields: fields,
-            limit: 10000,
         };
+
+        const searchParams = {
+            config: modelConfig,
+            limit: 10000,
+            groupsLimit: Number.MAX_SAFE_INTEGER,
+            countLimit: archInfo.countLimit,
+            orderBy: [],
+            resModel: model,
+        };
+
         if (model === "geoengine.vector.layer") {
-            this.vectorModel = new RelationalModel(
+            this.vectorModel = new Model(
                 this.env,
                 searchParams,
                 this.services
             );
-            await this.vectorModel.load();
+            await this.vectorModel.load(searchParams);
         } else if (this.models.find((e) => e.model.resModel === model) === undefined) {
             const toLoadModel = new Model(this.env, searchParams, this.services);
             await toLoadModel.load().then(() => {
@@ -965,10 +991,19 @@ export class GeoengineRenderer extends Component {
         }
     }
 
+    progressBarAggregateFields(archInfo) {
+        const res = [];
+        const { progressAttributes } = archInfo;
+        if (progressAttributes && progressAttributes.sumField) {
+            res.push(progressAttributes.sumField);
+        }
+        return res;
+    }
+
     addFeatureToSource(data, cfg, vectorSource) {
         data.forEach((item) => {
             var attributes =
-                item._values === undefined ? _.clone(item) : _.clone(item._values);
+                item._values === undefined ? Object.assign({}, item || {}) : Object.assign({}, item._values || {});
             this.geometryFields.forEach((geo_field) => delete attributes[geo_field]);
 
             if (cfg.display_polygon_labels === true) {

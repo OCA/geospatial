@@ -4,6 +4,7 @@
  * Copyright 2023 ACSONE SA/NV
  */
 
+import { _t } from "@web/core/l10n/translation";
 import {CheckBox} from "@web/core/checkbox/checkbox";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {vectorLayersStore} from "../../../vector_layers_store.esm";
@@ -46,19 +47,13 @@ export class LayersPanel extends Component {
             vectorLayersStore.setVectors(this.state.geoengineLayers.actives);
             this.numberOfLayers = vectorLayersStore.count + rasterLayersStore.count;
         });
-
         /**
          * Allows you to change the priority of the layer by sliding them over each other
          */
-        useSortable({
-            ref: useRef("root"),
-            elements: ".item",
-            handle: ".fa-sort",
-            onDragStart({element}) {
-                dataRowId = element.dataset.id;
-            },
-            onDrop: (params) => this.sort(dataRowId, params),
-        });
+    }
+
+    sortStart({ element }) {
+        element.classList.add("shadow");
     }
 
     async loadIsAdmin() {
@@ -201,7 +196,7 @@ export class LayersPanel extends Component {
             isDebugMode: Boolean(this.env.debug),
             model: vector,
             onSelected: (value) => this.onEditFilterDomainChanged(vector, value),
-            title: this.env._t("Domain editing"),
+            title: _t("Domain editing"),
         });
     }
 
@@ -223,7 +218,7 @@ export class LayersPanel extends Component {
 
         this.addDialog(FormViewDialog, {
             resModel: vector.resModel,
-            title: this.env._t("Editing vector layer"),
+            title: _t("Editing vector layer"),
             viewId: view.view_id[0],
             resId: vector.resId,
             onRecordSaved: (record) =>
