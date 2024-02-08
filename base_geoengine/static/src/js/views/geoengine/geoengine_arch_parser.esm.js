@@ -4,17 +4,15 @@
  * Copyright 2023 ACSONE SA/NV
  */
 
-
 import {Field} from "@web/views/fields/field";
 import {Widget} from "@web/views/widgets/widget";
 import {visitXML} from "@web/core/utils/xml";
 import {_lt} from "@web/core/l10n/translation";
-import { archParseBoolean, getActiveActions, processButton } from "@web/views/utils";
+import {archParseBoolean, getActiveActions, processButton} from "@web/views/utils";
 
 export const INFO_BOX_ATTRIBUTE = "info_box";
 
 export class GeoengineArchParser {
-
     parse(xmlDoc, models, modelName) {
         const templateDocs = {};
         const fieldNodes = {};
@@ -27,12 +25,25 @@ export class GeoengineArchParser {
         const countLimit = xmlDoc.getAttribute("count_limit");
 
         const activeActions = getActiveActions(xmlDoc);
-        activeActions.archiveGroup = archParseBoolean(xmlDoc.getAttribute("archivable"), true);
-        activeActions.createGroup = archParseBoolean(xmlDoc.getAttribute("group_create"), true);
-        activeActions.deleteGroup = archParseBoolean(xmlDoc.getAttribute("group_delete"), true);
-        activeActions.editGroup = archParseBoolean(xmlDoc.getAttribute("group_edit"), true);
+        activeActions.archiveGroup = archParseBoolean(
+            xmlDoc.getAttribute("archivable"),
+            true
+        );
+        activeActions.createGroup = archParseBoolean(
+            xmlDoc.getAttribute("group_create"),
+            true
+        );
+        activeActions.deleteGroup = archParseBoolean(
+            xmlDoc.getAttribute("group_delete"),
+            true
+        );
+        activeActions.editGroup = archParseBoolean(
+            xmlDoc.getAttribute("group_edit"),
+            true
+        );
         activeActions.quickCreate =
-        activeActions.create && archParseBoolean(xmlDoc.getAttribute("quick_create"), true);
+            activeActions.create &&
+            archParseBoolean(xmlDoc.getAttribute("quick_create"), true);
         const className = xmlDoc.getAttribute("class") || null;
         const defaultGroupBy = xmlDoc.getAttribute("default_group_by");
 
@@ -58,7 +69,6 @@ export class GeoengineArchParser {
                 const name = fieldInfo.name;
                 fieldNodes[name] = fieldInfo;
                 node.setAttribute("field_id", name);
-
             }
 
             if (node.tagName === "widget") {

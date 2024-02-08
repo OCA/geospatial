@@ -5,16 +5,16 @@
  */
 
 import {Layout} from "@web/search/layout";
-import { _t } from "@web/core/l10n/translation";
+import {_t} from "@web/core/l10n/translation";
 import {useModelWithSampleData} from "@web/model/model";
-import { extractFieldsFromArchInfo } from "@web/model/relational_model/utils";
+import {extractFieldsFromArchInfo} from "@web/model/relational_model/utils";
 import {usePager} from "@web/search/pager_hook";
 import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
 import {WarningDialog} from "@web/core/errors/error_dialogs";
 import {Component, useState, useRef} from "@odoo/owl";
-import { session } from "@web/session";
-import { standardViewProps } from "@web/views/standard_view_props";
+import {session} from "@web/session";
+import {standardViewProps} from "@web/views/standard_view_props";
 
 export class GeoengineController extends Component {
     /**
@@ -26,8 +26,10 @@ export class GeoengineController extends Component {
         this.view = useService("view");
         this.addDialog = useOwnedDialogs();
         this.editable = this.props.archInfo.editable;
-        this.archInfo = this.props.archInfo
-        this.model = useState(useModelWithSampleData(this.props.Model, this.modelParams));
+        this.archInfo = this.props.archInfo;
+        this.model = useState(
+            useModelWithSampleData(this.props.Model, this.modelParams)
+        );
         /**
          * Allow you to display records on the map thanks to the paging located
          * at the top right of the screen.
@@ -47,8 +49,8 @@ export class GeoengineController extends Component {
         });
     }
     get modelParams() {
-        const { resModel, archInfo, limit, defaultGroupBy } = this.props;
-        const { activeFields, fields } = extractFieldsFromArchInfo(
+        const {resModel, archInfo, limit, defaultGroupBy} = this.props;
+        const {activeFields, fields} = extractFieldsFromArchInfo(
             this.archInfo,
             this.props.fields
         );
@@ -66,7 +68,9 @@ export class GeoengineController extends Component {
             limit: archInfo.limit || limit,
             countLimit: archInfo.countLimit,
             defaultOrderBy: archInfo.defaultOrder,
-            defaultGroupBy: this.props.searchMenuTypes.includes("groupBy") ? defaultGroupBy : false,
+            defaultGroupBy: this.props.searchMenuTypes.includes("groupBy")
+                ? defaultGroupBy
+                : false,
             groupsLimit: archInfo.groupsLimit,
             multiEdit: archInfo.multiEdit,
             activeIdsLimit: session.active_ids_limit,
@@ -180,4 +184,4 @@ GeoengineController.props = {
     Model: Function,
     Renderer: Function,
     archInfo: Object,
-}
+};

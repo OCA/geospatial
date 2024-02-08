@@ -56,7 +56,10 @@ class Base(models.AbstractModel):
         )
         if not geo_view:
             raise UserError(
-                _("No GeoEngine view defined for the model %s. Please create a view or modify view mode") % self._name,
+                _(
+                    "No GeoEngine view defined for the model %s. Please create a view or modify view mode"
+                )
+                % self._name,
             )
         return geo_view
 

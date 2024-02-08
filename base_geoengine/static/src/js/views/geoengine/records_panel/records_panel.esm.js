@@ -47,9 +47,7 @@ export class RecordsPanel extends Component {
      * @param {*} record
      */
     onDisplayPopupRecord(record) {
-        const rec = this.props.list.records.find(
-            (val) => val.id === record.id
-        );
+        const rec = this.props.list.records.find((val) => val.id === record.id);
         this.state.isClicked = record.id;
         this.props.onDisplayPopupRecord(rec);
     }

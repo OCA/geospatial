@@ -4,9 +4,6 @@
  * Copyright 2023 ACSONE SA/NV
  */
 
-
-
-
 import {loadBundle, templates} from "@web/core/assets";
 import {GeoengineRecord} from "../geoengine_record/geoengine_record.esm";
 import {LayersPanel} from "../layers_panel/layers_panel.esm";
@@ -18,7 +15,10 @@ import {registry} from "@web/core/registry";
 import {RelationalModel} from "@web/model/relational_model/relational_model";
 import {evaluateExpr} from "@web/core/py_js/py";
 import {parseXML} from "@web/core/utils/xml";
-import { addFieldDependencies, extractFieldsFromArchInfo } from "@web/model/relational_model/utils";
+import {
+    addFieldDependencies,
+    extractFieldsFromArchInfo,
+} from "@web/model/relational_model/utils";
 import {useModel, useModelWithSampleData} from "@web/model/model";
 import {
     Component,
@@ -953,8 +953,12 @@ export class GeoengineRenderer extends Component {
             });
         }
 
-        const { activeFields, arch_fields } = extractFieldsFromArchInfo(archInfo, fields);
-        addFieldDependencies(activeFields, arch_fields, this.progressBarAggregateFields(archInfo));
+        const {activeFields, arch_fields} = extractFieldsFromArchInfo(archInfo, fields);
+        addFieldDependencies(
+            activeFields,
+            arch_fields,
+            this.progressBarAggregateFields(archInfo)
+        );
 
         const modelConfig = {
             model,
@@ -977,11 +981,7 @@ export class GeoengineRenderer extends Component {
         };
 
         if (model === "geoengine.vector.layer") {
-            this.vectorModel = new Model(
-                this.env,
-                searchParams,
-                this.services
-            );
+            this.vectorModel = new Model(this.env, searchParams, this.services);
             await this.vectorModel.load(searchParams);
         } else if (this.models.find((e) => e.model.resModel === model) === undefined) {
             const toLoadModel = new Model(this.env, searchParams, this.services);
@@ -993,7 +993,7 @@ export class GeoengineRenderer extends Component {
 
     progressBarAggregateFields(archInfo) {
         const res = [];
-        const { progressAttributes } = archInfo;
+        const {progressAttributes} = archInfo;
         if (progressAttributes && progressAttributes.sumField) {
             res.push(progressAttributes.sumField);
         }
@@ -1003,7 +1003,9 @@ export class GeoengineRenderer extends Component {
     addFeatureToSource(data, cfg, vectorSource) {
         data.forEach((item) => {
             var attributes =
-                item._values === undefined ? Object.assign({}, item || {}) : Object.assign({}, item._values || {});
+                item._values === undefined
+                    ? Object.assign({}, item || {})
+                    : Object.assign({}, item._values || {});
             this.geometryFields.forEach((geo_field) => delete attributes[geo_field]);
 
             if (cfg.display_polygon_labels === true) {

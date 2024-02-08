@@ -4,7 +4,7 @@
  * Copyright 2023 ACSONE SA/NV
  */
 
-import { _t } from "@web/core/l10n/translation";
+import {_t} from "@web/core/l10n/translation";
 import {CheckBox} from "@web/core/checkbox/checkbox";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {vectorLayersStore} from "../../../vector_layers_store.esm";
@@ -24,7 +24,7 @@ export class LayersPanel extends Component {
         this.user = useService("user");
         this.state = useState({geoengineLayers: {}, isFolded: false});
         this.addDialog = useOwnedDialogs();
-        let dataRowId = "";
+        const dataRowId = "";
 
         /**
          * Call the model method "get_geoengine_layers" to get all the layers
@@ -52,7 +52,7 @@ export class LayersPanel extends Component {
          */
     }
 
-    sortStart({ element }) {
+    sortStart({element}) {
         element.classList.add("shadow");
     }
 
