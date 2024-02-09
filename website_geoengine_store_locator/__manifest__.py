@@ -9,7 +9,23 @@
     "license": "AGPL-3",
     "website": "https://github.com/OCA/geospatial",
     "depends": ["base_geoengine", "website", "partner_store"],
-    "data": [],
+    "data": [
+        'templates/snippets/s_openstreetmap.xml',
+        'views/snippets.xml',
+    ],
+    'assets': {
+        'web.assets_frontend': [
+            'website_geoengine_store_locator/static/src/scss/snippets/s_openstreetmap/frontend.scss',
+            'website_geoengine_store_locator/static/src/js/utils.js',
+            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/frontend.js',
+        ],
+        'website.assets_wysiwyg': [
+            ('include', 'web._assets_helpers'),
+            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/snippet.options.js',
+            
+        ]
+    },
+    "maintainers": ["Wouitmil"],
     "installable": True,
     "application": True,
 }
