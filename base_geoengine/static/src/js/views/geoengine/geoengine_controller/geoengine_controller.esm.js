@@ -15,6 +15,8 @@ import {WarningDialog} from "@web/core/errors/error_dialogs";
 import {Component, useState, useRef} from "@odoo/owl";
 import {session} from "@web/session";
 import {standardViewProps} from "@web/views/standard_view_props";
+import { SearchBar } from "@web/search/search_bar/search_bar";
+import { useSearchBarToggler } from "@web/search/search_bar/search_bar_toggler";
 
 export class GeoengineController extends Component {
     /**
@@ -30,6 +32,7 @@ export class GeoengineController extends Component {
         this.model = useState(
             useModelWithSampleData(this.props.Model, this.modelParams)
         );
+        this.searchBarToggler = useSearchBarToggler();
         /**
          * Allow you to display records on the map thanks to the paging located
          * at the top right of the screen.
@@ -178,7 +181,7 @@ export class GeoengineController extends Component {
 }
 
 GeoengineController.template = "base_geoengine.GeoengineController";
-GeoengineController.components = {Layout};
+GeoengineController.components = {Layout, SearchBar};
 GeoengineController.props = {
     ...standardViewProps,
     Model: Function,
