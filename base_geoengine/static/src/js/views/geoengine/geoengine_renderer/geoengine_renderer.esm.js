@@ -1160,7 +1160,11 @@ export class GeoengineRenderer extends Component {
 
     styleVectorLayerDefault(cfg) {
         const color_hex = cfg.begin_color || DEFAULT_BEGIN_COLOR;
-        var color = chroma(color_hex).alpha(cfg.layer_opacity).css();
+        var opacity = cfg.layer_opacity
+        if (cfg.layer_transparent) {
+            opacity = 0.0
+        }
+        var color = chroma(color_hex).alpha(opacity).css();
         // Basic
 
         const {fill, stroke} = this.createFillAndStroke(color);
