@@ -6,12 +6,12 @@
             <div class="map_container">
                 <div id="olmap" />
             </div>
-            <RecordsPanel
+            <!-- <RecordsPanel
                 list="props.data"
                 onDisplayPopupRecord.bind="onDisplayPopupRecord"
                 zoomOnFeature.bind="zoomOnFeature"
                 zoomOutOnFeature.bind="getOriginalZoom"
-            />
+            /> -->
         </div>
         <div id="popup" class="ol-popup">
             <div
@@ -20,12 +20,12 @@
                 t-on-click="clickToHidePopup"
             />
             <div id="popup-content" />
-            <div class="row d-flex justify-content-center">
+            <!-- <div class="row d-flex justify-content-center">
                 <button
                     t-on-click="onInfoBoxClicked"
                     class="btn btn-secondary border w-50"
                 >OPEN</button>
-            </div>
+            </div> -->
         </div>
         <div id="map-legend" class="ol-control" />
     </t>
