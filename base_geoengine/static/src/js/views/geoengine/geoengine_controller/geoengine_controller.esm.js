@@ -93,12 +93,12 @@ export class GeoengineController extends Component {
      * @param {*} resModel
      * @param {*} resId
      */
-    async openRecord(resModel, resId) {
+    async openRecord(resModel, resId, viewId) {
         const {views} = await this.view.loadViews({resModel, views: [[false, "form"]]});
         this.actionService.doAction({
             type: "ir.actions.act_window",
             res_model: resModel,
-            views: [[views.form.id, "form"]],
+            views: viewId || [[views.form.id, "form"]],
             res_id: resId,
             target: "new",
             context: {edit: false, create: false},

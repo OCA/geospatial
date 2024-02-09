@@ -633,7 +633,13 @@ export class GeoengineRenderer extends Component {
      * openRecord method.
      */
     onInfoBoxClicked() {
-        this.props.openRecord(this.record.resModel, this.record.resId);
+        var viewIds = this.env?.config?.views
+        var formViewId = null
+
+        if (viewIds){
+            formViewId = viewIds.filter(subList => subList.includes("form"));
+        }
+        this.props.openRecord(this.record.resModel, this.record.resId, formViewId);
     }
 
     /**
