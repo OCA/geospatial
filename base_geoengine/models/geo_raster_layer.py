@@ -70,6 +70,7 @@ class GeoRasterLayer(models.Model):
         "ir.ui.view", "Related View", domain=[("type", "=", "geoengine")], required=True
     )
     use_to_edit = fields.Boolean("Use to edit")
+    opacity = fields.Float(default=1.0)
 
     @api.depends("raster_type", "is_wmts")
     def _compute_has_type(self):

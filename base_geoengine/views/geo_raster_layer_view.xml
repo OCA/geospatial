@@ -20,6 +20,7 @@
                             widget="url"
                             required="is_wmts or is_wms"
                         />
+                        <field name="opacity" />
                     </group>
                     <field name="is_wmts" invisible="1" />
                     <group string="WMTS options" invisible="not is_wmts" colspan="4">

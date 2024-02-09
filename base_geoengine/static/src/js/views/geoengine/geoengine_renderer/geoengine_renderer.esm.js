@@ -177,6 +177,7 @@ export class GeoengineRenderer extends Component {
                         title: background.name,
                         visible: !background.overlay,
                         type: "base",
+                        opacity: background.opacity,
                         source: new ol.source.OSM(),
                     });
                 case "wmts":
@@ -233,6 +234,7 @@ export class GeoengineRenderer extends Component {
                     return new ol.layer.Tile({
                         title: background.name,
                         visible: !background.overlay,
+                        opacity: background.opacity,
                         source: new ol.source.TileWMS(source_opt_wms),
                     });
                 default:
