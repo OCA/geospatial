@@ -123,7 +123,12 @@ export class LayersPanel extends Component {
      * the method notifies the store of the change.
      * @param {*} layer
      */
-    onRasterChange(layer) {
+    onRasterChange(layer, value) {
+        const rasterLayer = rasterLayersStore.getRaster(layer.id)
+        if (value) {
+            Object.assign(rasterLayer, {...value});
+        }
+
         const indexRaster = rasterLayersStore.rastersLayers.findIndex(
             (raster) => raster.name === layer.name
         );
@@ -225,12 +230,42 @@ export class LayersPanel extends Component {
                 this.onVectorChange(vector, "onLayerChanged", record.data),
         });
     }
+
+    async onEditRasterButtonSelected(layer) {
+        const view = await this.rpc("/web/action/load", {
+            action_id: "base_geoengine.geo_engine_form_view_raster_action",
+        });
+        this.addDialog(FormViewDialog, {
+            resModel: "geoengine.raster.layer",
+            title: _t("Editing Raster Layer"),
+            viewId: view.view_id[0],
+            resId: layer.id,
+            onRecordSaved: (record) =>
+                this.onRasterChange(layer, record.data),
+        });
+    }
     /**
      * This method allows you to open/close the panel.
      */
     fold() {
         this.state.isFolded = !this.state.isFolded;
     }
+
+    async openNewRaster() {
+        // Commented this for now
+        // Unable to dynamically add new raster or reload the UI after saving
+        // this.actionService.doAction({
+        //     type: "ir.actions.act_window",
+        //     res_model: "geoengine.raster.layer",
+        //     views: [[false, "form"]],
+        //     target: "new",
+        //     context: {edit: false, create: false},
+        // });
+
+        // for now, redirect to raster tree
+        this.actionService.doAction("base_geoengine.geo_engine_view_rater_action")
+    }
+
 }
 
 LayersPanel.template = "base_geoengine.LayersPanel";

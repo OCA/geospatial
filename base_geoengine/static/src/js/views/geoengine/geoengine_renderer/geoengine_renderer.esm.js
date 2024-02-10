@@ -657,6 +657,7 @@ export class GeoengineRenderer extends Component {
                 this.rasterLayersStore.rastersLayers.forEach((raster) => {
                     if (raster.name === layer.get("title")) {
                         layer.setVisible(raster.isVisible);
+                        layer.setOpacity(raster.opacity);
                     }
                 });
             });
