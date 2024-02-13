@@ -2,15 +2,8 @@
 <odoo>
 
 <template name="Openstreet Map" id="s_openstreetmap">
-    <section class="s_openstreetmap pb56 pt56" data-map-type="m" data-map-zoom="12" t-att-data-map-address="' '.join(filter(None, (user_id.company_id.street, user_id.company_id.city, user_id.company_id.state_id.display_name, user_id.company_id.country_id.display_name)))">
+    <section class="s_openstreetmap pb56 pt56" data-map-type="m" data-map-zoom="12" data-map-address="route de la chaux 4 1030 bussigny">
         <div class="map_container o_not_editable">
-            <div class="css_non_editable_mode_hidden">
-                <div class="missing_option_warning alert alert-info rounded-0 fade show d-none d-print-none">
-                    An address must be specified for a map to be embedded
-                </div>
-            </div>
-            <!-- GMap iframe will be injected in JS -->
-            <div class="s_openstreetmap_color_filter"/>
         </div>
     </section>
 </template>
@@ -48,9 +41,6 @@
                 <we-button data-select-data-attribute="3">1000 km</we-button>
                 <we-button data-select-data-attribute="2">2000 km</we-button>
             </we-select>
-            <we-colorpicker string="Color filter" data-select-style="true"
-                data-css-property="background-color" data-color-prefix="bg-" data-apply-to=".s_openstreetmap_color_filter"/>
-            <we-checkbox string="Description" data-no-preview="true" data-show-description="true"/>
         </div>
     </xpath>
 </template>

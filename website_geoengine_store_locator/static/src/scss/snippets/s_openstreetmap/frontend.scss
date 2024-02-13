@@ -47,7 +47,12 @@ $s-map-desc-hover-alpha: 0.55 !default;
 }
 
 .editor_enable .s_openstreetmap {
-    iframe {
-        pointer-events: none;
+//    any thing needed while editing widget
+    .description {
+        background: rgba($s-map-desc-bg, $s-map-desc-alpha);
+        color: color-contrast(rgba($s-map-desc-bg, $s-map-desc-alpha));
+    }
+    .s_openstreetmap_color_filter {
+        pointer-events: auto;
     }
 }

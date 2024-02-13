@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="product_public_category_form_view" model="ir.ui.view">
+        <field name="name">public.category.form</field>
+        <field name="model">product.public.category</field>
+        <field name="inherit_id" ref="website_sale.product_public_category_form_view" />
+        <field name="arch" type="xml">
+            <field name="sequence" position="after">
+                <field
+                    name="published_in_product_category_snippet"
+                    widget="boolean_toggle"
+                />
+            </field>
+        </field>
+    </record>
+    <record id="product_public_category_tree_view" model="ir.ui.view">
+        <field name="name">product.public.category.tree</field>
+        <field name="model">product.public.category</field>
+        <field name="inherit_id" ref="website_sale.product_public_category_tree_view" />
+        <field name="arch" type="xml">
+            <field name="website_id" position="after">
+                <field
+                    name="published_in_product_category_snippet"
+                    widget="boolean_toggle"
+                />
+            </field>
+        </field>
+    </record>
+</odoo>

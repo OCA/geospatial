@@ -1,0 +1,76 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* website_snippet_product_category
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2022-03-02 12:17+0000\n"
+"Last-Translator: Noel estudillo <noelestudilloviera@gmail.com>\n"
+"Language-Team: none\n"
+"Language: ca\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.3.2\n"
+
+#. module: website_snippet_product_category
+#. odoo-javascript
+#: code:addons/website_snippet_product_category/static/src/js/frontend.js:0
+#, python-format
+msgid ""
+"An error occured with this product categories block. If the problem "
+"persists, please consider deleting it and adding a new one"
+msgstr ""
+"S'ha produït un error amb aquest bloc de categories de productes. Si el "
+"problema continua, penseu en suprimir-lo i afegir-ne un de nou"
+
+#. module: website_snippet_product_category
+#: model:product.public.category,name:website_snippet_product_category.public_category_boxes_metal
+msgid "Metal Box"
+msgstr "Caixa de metall"
+
+#. module: website_snippet_product_category
+#. odoo-javascript
+#: code:addons/website_snippet_product_category/static/src/js/frontend.js:0
+#, python-format
+msgid "No categories were found. Make sure you have categories defined."
+msgstr ""
+"No s'han trobat categories. Assegureu-vos que teniu categories definides."
+
+#. module: website_snippet_product_category
+#: model:ir.model.fields,field_description:website_snippet_product_category.field_product_public_category__published_in_product_category_snippet
+msgid "Published in product category snippet"
+msgstr "Publicat al fragment de categoria de producte"
+
+#. module: website_snippet_product_category
+#: model:website.menu,name:website_snippet_product_category.snippet_product_category_demo_page_link
+msgid "Snippet Product Category Demo"
+msgstr "Demostració de la categoria de producte del fragment"
+
+#. module: website_snippet_product_category
+#: model:product.public.category,name:website_snippet_product_category.public_category_boxes_metal_spec_a
+msgid "Spec A"
+msgstr "Especificació A"
+
+#. module: website_snippet_product_category
+#: model:product.public.category,name:website_snippet_product_category.public_category_boxes_metal_spec_b
+msgid "Spec B"
+msgstr "Especificació B"
+
+#. module: website_snippet_product_category
+#: model:product.public.category,name:website_snippet_product_category.public_category_boxes_metal_subspec_b_a
+msgid "SubSpec B - A"
+msgstr "Subespecificació B-A"
+
+#. module: website_snippet_product_category
+#: model:ir.model,name:website_snippet_product_category.model_product_public_category
+msgid "Website Product Category"
+msgstr "Categoria de producte del lloc web"
+
+#. module: website_snippet_product_category
+#: model:product.public.category,name:website_snippet_product_category.public_category_boxes_wooden
+msgid "Wooden Box"
+msgstr "Caixa de fusta"
