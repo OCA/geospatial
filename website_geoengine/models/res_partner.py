@@ -6,7 +6,7 @@ class ResPartner(models.Model):
     _inherit = "res.partner"
 
 
-    @http.route(['/geodatas/res_partners'], type='json', auth="user",  website=True, cors='*', crsf=False)
+    @http.route(['/geodatas/res_partner/stores'], type='json', auth="user",  website=True, cors='*', crsf=False)
     def fetchGeoData(self):
 
         return """  {
