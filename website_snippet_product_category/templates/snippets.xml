@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="snippets" inherit_id="website.snippets">
+        <xpath
+            expr="//div[@id='snippet_feature']//div[hasclass('o_panel_body')]"
+            position="inside"
+        >
+            <t
+                t-snippet="website_snippet_product_category.s_product_category"
+                t-thumbnail="/website_snippet_product_category/static/src/img/s_product_category.png"
+            />
+        </xpath>
+    </template>
+    <!-- Snippet Product Category -->
+    <template id="s_product_category" name="Product Category">
+        <section class="s_product_category py-4">
+            <div class="js_product_category col-12" />
+        </section>
+    </template>
+    <template id="s_product_category_items_recursive">
+        <t
+            t-foreach="categories"
+            t-as="category"
+            t-if="categories and cur_level &lt;= 4"
+        >
+            <div
+                t-attf-class="categ_tree_level {{'pb-2 main_tree_level text-primary text-uppercase' if cur_level == 1 else ''}} {{cur_level &gt; 2 and 'pl-'+str(min((cur_level-2)*2, 5))}}"
+                t-att-data-tree-level="cur_level"
+                t-if="category.published_in_product_category_snippet"
+            >
+                <div class="d-flex d-flex-row">
+                    <div
+                        t-if="category.image_128"
+                        t-field="category.image_128"
+                        class="categ_img pr-1"
+                        t-options="{'widget': 'image','resize': '24x24' }"
+                    />
+                    <a
+                        t-att-href="keep('/shop/category/' + slug(category), category=0)"
+                        class="categ_link w-100"
+                        t-field="category.name"
+                        t-att-title="category.name"
+                    />
+                </div>
+            </div>
+            <t
+                t-call="website_snippet_product_category.s_product_category_items_recursive"
+            >
+                <t t-set="categories" t-value="category.child_id" />
+                <t t-set="cur_level" t-value="cur_level+1" />
+            </t>
+        </t>
+    </template>
+    <template id="s_product_category_items">
+        <div class="container o_not_editable">
+            <div class="row">
+                <input
+                    type="hidden"
+                    name="object_count"
+                    t-if="object"
+                    t-att-value="len(object)"
+                />
+                <div
+                    t-foreach="object"
+                    t-as="categories"
+                    class="p-2 col-12 col-md-3 col-lg-2 categ_container"
+                >
+                    <div class="categ_scroll_wrapper px-2 h-100">
+                        <div class="categ_scroll">
+                            <t
+                                t-call="website_snippet_product_category.s_product_category_items_recursive"
+                            >
+                                <t t-set="cur_level" t-value="1" />
+                            </t>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="s_product_category_options" inherit_id="website.snippet_options">
+        <xpath expr="." position="inside">
+            <div
+                data-js="js_product_category"
+                data-selector=".js_product_category"
+                data-template="website_snippet_product_category.s_product_category_items"
+            />
+        </xpath>
+    </template>
+</odoo>
