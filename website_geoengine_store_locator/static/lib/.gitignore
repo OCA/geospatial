@@ -1,0 +1,6 @@
+/package-lock.json
+/node_modules/*
+!/node_modules/ol/
+/node_modules/ol/*
+!/node_modules/ol/ol.css
+!/node_modules/ol/dist/
