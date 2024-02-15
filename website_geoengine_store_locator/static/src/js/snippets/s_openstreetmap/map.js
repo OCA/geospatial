@@ -15,17 +15,6 @@ class OpenLayerMap {
         const stores = new ol.layer.Vector({
             source: storesSource,
         });
-        // I set an example of how to use the ajax call with mapType as parameter but of course, this as no sense ;-)
-        ajax.jsonRpc('/geodatas/res_partner/stores' , 'call',  {'mapType': dataset.mapType}).then((response) => {     
-                storesSource.addFeatures(
-                    new ol.format.GeoJSON({
-                        dataProjection: "EPSG:4326",
-                        featureProjection: "EPSG:3857",
-                    }).readFeatures(response)
-                );
-        });
-        console.log("after ajax")
-
         const mapElement = element.querySelector(".map_container");
         const map = new ol.Map({
             target: mapElement,
@@ -41,6 +30,32 @@ class OpenLayerMap {
                 center: ol.proj.fromLonLat([6, 46]),
                 zoom: 8,
             }),
+        });
+
+        fetch("/geodatas/res_partner/stores", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: "{}",
+        }).then((response) => {
+            response.json().then((data) => {
+                storesSource.addFeatures(
+                    new ol.format.GeoJSON({
+                        dataProjection: "EPSG:4326",
+                        featureProjection: "EPSG:3857",
+                    }).readFeatures(data.result)
+                );
+                const extent = storesSource.getExtent();
+                const addWidth = (extent[2] - extent[0]) / 10;
+                const addHeight = (extent[3] - extent[1]) / 10;
+                map.getView().fit([
+                    extent[0] - addWidth,
+                    extent[1] - addHeight,
+                    extent[2] + addWidth,
+                    extent[3] + addHeight,
+                ]);
+            });
         });
 
         if (interactive) {
