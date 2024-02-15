@@ -10,22 +10,22 @@
     "website": "https://github.com/OCA/geospatial",
     "depends": ["base_geoengine", "website", "partner_store"],
     "data": [
-        'templates/snippets/s_openstreetmap.xml',
-        'views/snippets.xml',
+        "templates/snippets/s_openstreetmap.xml",
+        "views/snippets.xml",
     ],
-    'assets': {
-        'web.assets_frontend': [
-            'website_geoengine_store_locator/static/src/scss/snippets/s_openstreetmap/frontend.scss',
-            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/popover.js',
-            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/sampleData.js',
-            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/search.js',
-            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/frontend.js',
-            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/map.js'
+    "assets": {
+        "web.assets_frontend": [
+            "/website_geoengine_store_locator/static/lib/node_modules/ol/dist/ol.js",
+            "website_geoengine_store_locator/static/src/scss/snippets/s_openstreetmap/frontend.scss",
+            "website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/frontend.js",
+            "website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/popover.js",
+            "website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/sampleData.js",
+            "website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/search.js",
+            "website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/map.js",
         ],
-        'website.assets_wysiwyg': [
-            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/snippet.options.js', 
+        "website.assets_wysiwyg": [
+            "website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/snippet.options.js",
         ],
-
     },
     "maintainers": ["Wouitmil"],
     "installable": True,

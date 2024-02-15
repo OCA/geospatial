@@ -1,14 +1,35 @@
 /** @odoo-module */
 
 class Popover {
-
-    map = undefined
-    element = undefined
-    popup = undefined
+    /**
+     * The base element
+     * @param {HTMLElement} element
+     */
+    element = undefined;
+    /**
+     * The jQuery base element
+     */
+    jqueryElement = undefined;
+    /**
+     * The map
+     * @param {ol.Map} map
+     */
+    map = undefined;
+    /**
+     * The popup overlay
+     * @param {ol.Overlay} popup
+     */
+    popup = undefined;
+    /**
+     * The popover
+     * @param {jQuery} popover
+     */
+    popover = undefined;
 
     constructor(element, map) {
-        this.map = map
+        this.map = map;
         this.element = element;
+        this.jqueryElement = $(element);
         this.popup = new ol.Overlay({
             element: this.element,
             positioning: "bottom-center",
@@ -17,16 +38,16 @@ class Popover {
         map.addOverlay(this.popup);
         map.on("click", this.mapOnClick.bind(this));
         map.on("pointermove", this.mapOnPointerMove.bind(this));
-        map.on("movestart", this.disposePopover.bind(this));
     }
 
     /**
      * Dispose the popover
      */
     disposePopover() {
-        if (this.element) {
-            this.element.dispose();
-            this.element = undefined;
+        console.log("disposePopover");
+        if (this.popover) {
+            this.popover.popover("dispose");
+            this.popover = undefined;
         }
     }
 
@@ -35,30 +56,30 @@ class Popover {
      * @param {ol.MapBrowserEvent} evt
      */
     mapOnClick(evt) {
-
         const feature = this.map.forEachFeatureAtPixel(evt.pixel, function (feature) {
             return feature;
         });
-        console.log(feature)
         this.disposePopover();
         if (!feature) {
             return;
         }
+
         this.popup.setPosition(evt.coordinate);
-        //this.popup.setElement(feature)
-
-
-        this.popover = this.element.popover( {
-            placement: "top",
-            html: true,
-            content: `
+        if (!this.popover) {
+            //this.popover = this.jqueryElement.popover({
+            this.popover = $(this.element).popover({
+                placement: "top",
+                html: true,
+                trigger: "focus",
+                content: `
           ${feature.get("store_category")}<br/>
           <b>${feature.get("name")}</b><br/>
           ${feature.get("address")}<br/>
           ${feature.get("contact")}<br/>
           ${feature.get("opening_hours")}`,
-        });
-        this.popover.show();
+            });
+        }
+        this.popover.popover("show");
     }
 
     /**
