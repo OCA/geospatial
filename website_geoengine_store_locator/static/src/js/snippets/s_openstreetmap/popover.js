@@ -1,10 +1,18 @@
 /** @odoo-module */
 
 class Popover {
-    constructor(element, map) {
-        const element = document.getElementById("popup");
+
+    _map = undefined
+    popover = undefined
+    _popup = undefined
+
+    constructor(elt, map) {
+        console.log("constructor popover")
+        this._map = map
+        this.el = elt
+        this._popup = document.getElementById("popup");
         this.popup = new ol.Overlay({
-            element: element,
+            element: this._popup,
             positioning: "bottom-center",
             stopEvent: false,
         });
@@ -19,7 +27,7 @@ class Popover {
      */
     disposePopover() {
         if (this.popover) {
-            this.popover.dispose();
+            this.popover.toggle();
             this.popover = undefined;
         }
     }
@@ -29,15 +37,20 @@ class Popover {
      * @param {ol.MapBrowserEvent} evt
      */
     mapOnClick(evt) {
-        const feature = map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+        
+        const feature = this._map.forEachFeatureAtPixel(evt.pixel, function (feature) {
             return feature;
         });
-        disposePopover();
+        console.log(feature)
+        this.disposePopover();
         if (!feature) {
             return;
         }
-        popup.setPosition(evt.coordinate);
-        this.popover = new bootstrap.Popover(element, {
+        this.popup.setPosition(evt.coordinate);
+        //this.popup.setElement(feature)
+
+        
+        this.popover = $(this._popup).popover( {
             placement: "top",
             html: true,
             content: `
@@ -55,9 +68,9 @@ class Popover {
      * @param {ol.MapBrowserEvent} e
      */
     mapOnPointerMove(e) {
-        const pixel = map.getEventPixel(e.originalEvent);
-        const hit = map.hasFeatureAtPixel(pixel);
-        map.getTarget().style.cursor = hit ? "pointer" : "";
+        const pixel = this._map.getEventPixel(e.originalEvent);
+        const hit = this._map.hasFeatureAtPixel(pixel);
+        this._map.getTarget().style.cursor = hit ? "pointer" : "";
     }
 }
 

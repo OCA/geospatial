@@ -4,6 +4,7 @@ import publicWidget from "web.public.widget";
 import {shops} from "./sampleData.js";
 import Search from "./search";
 import Popover from "./popover";
+import OpenLayerMap from "./map";
 
 publicWidget.registry.OpenStreetMap = publicWidget.Widget.extend({
     selector: ".s_openstreetmap",
@@ -17,40 +18,9 @@ publicWidget.registry.OpenStreetMap = publicWidget.Widget.extend({
      * @override
      */
     start() {
-        if (!this.el.querySelector(".s_openstreetmap_embedded")) {
-            const dataset = this.el.dataset;
-            console.log(
-                "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&"
-            );
-            console.log(dataset);
-
-            const stores = new ol.layer.Vector({
-                source: new ol.source.Vector({
-                    features: new ol.format.GeoJSON({
-                        dataProjection: "EPSG:4326",
-                        featureProjection: "EPSG:3857",
-                    }).readFeatures(shops),
-                }),
-            });
-
-            const map = new ol.Map({
-                target: document.getElementById("map"),
-                layers: [
-                    new ol.layer.Tile({
-                        // https://www.thunderforest.com/docs/apikeys/
-                        source: new ol.source.OSM(),
-                    }),
-                    stores,
-                ],
-                view: new ol.View({
-                    projection: "EPSG:3857",
-                    center: ol.proj.fromLonLat([6, 46]),
-                    zoom: 6,
-                }),
-            });
-
-            const popup = new Popover(document.getElementById("popup"), map);
-            const search = new searchFeature(document.getElementById("search"), stores);
+        if (!this.el.querySelector(".ol-viewport")) {
+            this.element = this.el
+            this.map = new OpenLayerMap(this.element);
         }
         return this._super(...arguments);
     },

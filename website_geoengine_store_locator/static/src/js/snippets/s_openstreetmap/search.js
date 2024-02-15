@@ -82,7 +82,9 @@
     }
 
     class Search {
+        _element = undefined;
         constructor(element, stores) {
+            this._element = element;
             this.stores = stores;
             element.addEventListener("keyup", this.onKeyUp.bind(this));
             this.update();
@@ -96,8 +98,8 @@
                 this.update();
         }
 
-        update(text) {
-            this.search = normalize(element.value).split(" ");
+        update(t) {
+            this.search = normalize(this._element.value).split(" ");
             this.stores.setStyle(this.styleFunction.bind(this));
         }
     /**
@@ -105,7 +107,7 @@
      * @param {ol.Feature} feature
      * @returns {boolean}
      */
-    function searchFeature(feature) {
+        searchFeature(feature) {
         for (let word of this.search) {
             let found = false;
             for (let properties of ["name", "contact"]) {
@@ -129,7 +131,9 @@
      * @param {ol.Feature} feature
      * @returns {ol.style.Style}
      */
-    function styleFunction(feature) {
+    styleFunction(feature) {
+        let foundStyle;
+        let notFoundStyle
         if (!foundStyle) {
             foundStyle = new ol.style.Style({
                 image: buildIcon(
@@ -151,7 +155,7 @@
                 }),
             });
         }
-        if (searchFeature(feature)) {
+        if (this.searchFeature(feature)) {
             return foundStyle;
         }
         return notFoundStyle;

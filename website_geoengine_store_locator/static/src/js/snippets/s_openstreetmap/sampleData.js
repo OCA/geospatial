@@ -1,7 +1,7 @@
 /** @odoo-module */
 
 /** example data */
-const shops = {
+export const shops = {
     type: "FeatureCollection",
     features: [
         {
@@ -35,4 +35,4 @@ const shops = {
     ],
 };
 
-export shops;
+//export shops;

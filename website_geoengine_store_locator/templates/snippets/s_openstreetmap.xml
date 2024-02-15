@@ -2,8 +2,8 @@
 <odoo>
 
 <template name="Openstreet Map" id="s_openstreetmap">
-    <section class="s_openstreetmap pb56 pt56" data-map-type="m" data-map-zoom="12" data-map-address="route de la chaux 4 1030 bussigny">
-        <div class="map_container o_not_editable">
+    <section class="s_openstreetmap pb56 pt56"  data-vjs="001" data-map-type="mapnik" data-map-zoom="12" data-map-address="route de la chaux 4 1030 bussigny">
+        <div id="map" class="map_container o_not_editable">
             <input type="text" id="search" class="search" />
             <div id="popup"></div>
         </div>
