@@ -135,22 +135,31 @@ function buildIcon(
     );
     const negateHeight = height < 0;
 
-    const icon = new StyleIconHit({
-        img: canvas,
-        anchor: [0.5, negateHeight ? 0 : 1],
-    });
+    const icon =
+        radius >= Math.abs(height)
+            ? new StyleIconHit({
+                  img: canvas,
+                  anchor: [0.5, 0.5 + height / radius / 2],
+              })
+            : new StyleIconHit({
+                  img: canvas,
+                  anchor: [0.5, negateHeight ? 0 : 1],
+              });
 
-    if (radius >= Math.abs(height)) {
-        return new ol.style.Icon({
-            img: canvas,
-            anchor: [0.5, 0.5 + height / radius / 2],
-        });
-    } else {
-        return new ol.style.Icon({
-            img: canvas,
-            anchor: [0.5, negateHeight ? 0 : 1],
-        });
-    }
+    icon.setHitDetectionImage(
+        buildCanvas(
+            height,
+            radius,
+            fillColor,
+            strokeWidth,
+            strokeColor,
+            0,
+            centerFillColor,
+            centerStrokeWidth,
+            centerStrokeColor
+        )
+    );
+    return icon;
 }
 
 /**

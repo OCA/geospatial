@@ -12,13 +12,16 @@ class OpenLayerMap {
         const dataset = element.dataset;
         console.log(dataset);
 
-        const stores = new ol.layer.Vector({
-            source: new ol.source.Vector({
-                features: new ol.format.GeoJSON({
-                    dataProjection: "EPSG:4326",
-                    featureProjection: "EPSG:3857",
-                }).readFeatures(shops),
-            }),
+        const stores = new ol.layer.Vector();
+        fetch("/geodatas/res_partner/stores").then((response) => {
+            stores.setSource(
+                new ol.source.Vector({
+                    features: new ol.format.GeoJSON({
+                        dataProjection: "EPSG:4326",
+                        featureProjection: "EPSG:3857",
+                    }).readFeatures(response.json()),
+                })
+            );
         });
 
         const mapElement = element.querySelector(".map_container");
