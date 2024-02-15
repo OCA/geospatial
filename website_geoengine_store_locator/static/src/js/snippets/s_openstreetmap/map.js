@@ -21,8 +21,9 @@ class OpenLayerMap {
             }),
         });
 
+        const mapElement = element.querySelector(".map_container");
         const map = new ol.Map({
-            target: element.querySelector(".map_container"),
+            target: mapElement,
             layers: [
                 new ol.layer.Tile({
                     // https://www.thunderforest.com/docs/apikeys/
@@ -38,13 +39,8 @@ class OpenLayerMap {
         });
 
         if (interactive) {
-            const popup = new Popover(
-                element.querySelector(".map_container").querySelector(".popup"),
-                map);
-            const search = new Search(
-                element.querySelector(".map_container").querySelector(".search"),
-                stores
-            );
+            const popup = new Popover(mapElement.querySelector("#popup"), map);
+            const search = new Search(mapElement.querySelector("#search"), stores);
         }
         return this;
     }

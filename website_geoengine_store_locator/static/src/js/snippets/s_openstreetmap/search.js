@@ -13,7 +13,7 @@
  * @param {string} centerStrokeColor the stroke color of the center point
  * @returns
  */
-function buildIcon(
+function buildCanvas(
     height,
     radius,
     fillColor,
@@ -24,10 +24,17 @@ function buildIcon(
     centerStrokeWidth,
     centerStrokeColor
 ) {
+    const negateHeight = height < 0;
+    height = Math.abs(height);
+
     const canvas = document.createElement("canvas");
     canvas.width = radius * 2 + strokeWidth;
-    canvas.height = radius + height + strokeWidth;
+    canvas.height =
+        height < radius ? radius * 2 + strokeWidth : radius + height + strokeWidth;
     const context = canvas.getContext("2d");
+    if (negateHeight) {
+        context.setTransform(1, 0, 0, -1, 0, canvas.height);
+    }
 
     const circleCenter = [canvas.width / 2, radius + strokeWidth / 2];
     const linesStart = [canvas.width / 2, radius + height + strokeWidth / 2];
@@ -43,17 +50,22 @@ function buildIcon(
     context.lineJoin = "round";
 
     context.beginPath();
-    context.moveTo(line2End[0], line2End[1]);
-    context.lineTo(linesStart[0], linesStart[1]);
-    context.lineTo(line1End[0], line1End[1]);
-    context.arc(
-        circleCenter[0],
-        circleCenter[1],
-        radius,
-        Math.PI / 2 + alpha,
-        Math.PI / 2 - alpha
-    );
-    context.lineTo(line2End[0], line2End[1]);
+    if (alpha != 0) {
+        context.moveTo(line2End[0], line2End[1]);
+        context.lineTo(linesStart[0], linesStart[1]);
+        context.lineTo(line1End[0], line1End[1]);
+        context.arc(
+            circleCenter[0],
+            circleCenter[1],
+            radius,
+            Math.PI / 2 + alpha,
+            Math.PI / 2 - alpha
+        );
+        context.lineTo(line2End[0], line2End[1]);
+    } else {
+        context.moveTo(circleCenter[0] + radius, circleCenter[1]);
+        context.arc(circleCenter[0], circleCenter[1], radius, 0, Math.PI * 2);
+    }
     context.stroke();
     context.moveTo(circleCenter[0] + centerRadius, circleCenter[1]);
     context.arc(circleCenter[0], circleCenter[1], centerRadius, 0, Math.PI * 2, true);
@@ -68,11 +80,76 @@ function buildIcon(
     context.closePath();
     context.stroke();
     context.fill("evenodd");
+    return canvas;
+}
 
-    return new ol.style.Icon({
+/**
+ * A class to create an icon with a hit detection image
+ */
+class StyleIconHit extends ol.style.Icon {
+    setHitDetectionImage(canvas) {
+        this.canvasHit = canvas;
+    }
+    getHitDetectionImage() {
+        return this.canvasHit;
+    }
+}
+/**
+ * Create a standard symbol for a POI
+ * @param {number} height the height of the circle center
+ * @param {number} radius the radius of the top circle
+ * @param {string} fillColor the fill color of the symbol
+ * @param {number} strokeWidth the stroke width of the symbol
+ * @param {string} strokeColor the stroke color of the symbol
+ * @param {number} centerRadius the radius of the center point
+ * @param {string} centerFillColor the fill color of the center point
+ * @param {number} centerStrokeWidth the stroke width of the center point
+ * @param {string} centerStrokeColor the stroke color of the center point
+ * @returns
+ */
+function buildIcon(
+    height,
+    radius,
+    fillColor,
+    strokeWidth,
+    strokeColor,
+    centerRadius,
+    centerFillColor,
+    centerStrokeWidth,
+    centerStrokeColor
+) {
+    const canvas = buildCanvas(
+        height,
+        radius,
+        fillColor,
+        strokeWidth,
+        strokeColor,
+        centerRadius,
+        centerFillColor,
+        centerStrokeWidth,
+        centerStrokeColor
+    );
+    const negateHeight = height < 0;
+
+    const icon = new StyleIconHit({
         img: canvas,
-        anchor: [0.5, 1],
+        anchor: [0.5, negateHeight ? 0 : 1],
     });
+
+    if (radius < height) {
+        if (negateHeight) {
+            height = -height;
+        }
+        return new ol.style.Icon({
+            img: canvas,
+            anchor: [0.5, 0.5 + height / radius / 2],
+        });
+    } else {
+        return new ol.style.Icon({
+            img: canvas,
+            anchor: [0.5, negateHeight ? 0 : 1],
+        });
+    }
 }
 
 /**
@@ -88,6 +165,15 @@ function normalize(string) {
             .normalize("NFKD")
             .replace(/\p{Diacritic}/gu, "")
     );
+}
+
+/**
+ * A class to create a circle with no hit detection
+ */
+class StyleCircleNoHit extends ol.style.Circle {
+    getHitDetectionImage() {
+        return document.createElement("canvas");
+    }
 }
 
 class Search {
@@ -150,7 +236,7 @@ class Search {
         if (!foundStyle) {
             foundStyle = new ol.style.Style({
                 image: buildIcon(
-                    25,
+                    -0,
                     10,
                     "rgba(0, 0, 255, 0.2)",
                     1.5,
@@ -164,7 +250,7 @@ class Search {
         }
         if (!notFoundStyle) {
             notFoundStyle = new ol.style.Style({
-                image: new ol.style.Circle({
+                image: new StyleCircleNoHit({
                     radius: 3,
                     fill: new ol.style.Fill({color: [100, 100, 100, 0.5]}),
                 }),
