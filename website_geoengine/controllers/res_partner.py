@@ -1,13 +1,11 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 from odoo import http, models
 
+class ResPartner(http.Controller):
+ 
 
-class ResPartner(models.Model):
-    _inherit = "res.partner"
-
-
-    @http.route(['/geodatas/res_partner/stores'], type='json', auth="user",  website=True, cors='*', crsf=False)
-    def fetchGeoData(self):
+    @http.route('/geodatas/res_partner/stores', type='json', auth="public", website=True, sitemap=False, csrf=False, methods=['GET'])
+    def geodatas_partner_stores(self, **kw):
 
         return """  {
             "type": "FeatureCollection",
