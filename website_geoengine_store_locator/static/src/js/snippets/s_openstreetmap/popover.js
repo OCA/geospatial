@@ -2,17 +2,15 @@
 
 class Popover {
 
-    _map = undefined
-    popover = undefined
-    _popup = undefined
+    map = undefined
+    element = undefined
+    popup = undefined
 
-    constructor(elt, map) {
-        console.log("constructor popover")
-        this._map = map
-        this.el = elt
-        this._popup = document.getElementById("popup");
+    constructor(element, map) {
+        this.map = map
+        this.element = element;
         this.popup = new ol.Overlay({
-            element: this._popup,
+            element: this.element,
             positioning: "bottom-center",
             stopEvent: false,
         });
@@ -26,9 +24,9 @@ class Popover {
      * Dispose the popover
      */
     disposePopover() {
-        if (this.popover) {
-            this.popover.toggle();
-            this.popover = undefined;
+        if (this.element) {
+            this.element.dispose();
+            this.element = undefined;
         }
     }
 
@@ -37,8 +35,8 @@ class Popover {
      * @param {ol.MapBrowserEvent} evt
      */
     mapOnClick(evt) {
-        
-        const feature = this._map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+
+        const feature = this.map.forEachFeatureAtPixel(evt.pixel, function (feature) {
             return feature;
         });
         console.log(feature)
@@ -49,8 +47,8 @@ class Popover {
         this.popup.setPosition(evt.coordinate);
         //this.popup.setElement(feature)
 
-        
-        this.popover = $(this._popup).popover( {
+
+        this.popover = this.element.popover( {
             placement: "top",
             html: true,
             content: `
@@ -68,9 +66,9 @@ class Popover {
      * @param {ol.MapBrowserEvent} e
      */
     mapOnPointerMove(e) {
-        const pixel = this._map.getEventPixel(e.originalEvent);
-        const hit = this._map.hasFeatureAtPixel(pixel);
-        this._map.getTarget().style.cursor = hit ? "pointer" : "";
+        const pixel = this.map.getEventPixel(e.originalEvent);
+        const hit = this.map.hasFeatureAtPixel(pixel);
+        this.map.getTarget().style.cursor = hit ? "pointer" : "";
     }
 }
 

@@ -4,19 +4,15 @@ import {shops} from "./sampleData.js";
 import Search from "./search";
 import Popover from "./popover";
 
+/**
+ * The base class that manage all the map
+ */
 class OpenLayerMap {
-
-    stores = undefined
-    map = undefined
-    popup = undefined
-    search = undefined
-    dataset = undefined
-
-
     constructor(element, interactive = true) {
+        const dataset = element.dataset;
+        console.log(dataset);
 
-        this.dataset = element.dataset;
-        this.stores = new ol.layer.Vector({
+        const stores = new ol.layer.Vector({
             source: new ol.source.Vector({
                 features: new ol.format.GeoJSON({
                     dataProjection: "EPSG:4326",
@@ -25,14 +21,14 @@ class OpenLayerMap {
             }),
         });
 
-        this.map = new ol.Map({
+        const map = new ol.Map({
             target: element.querySelector(".map_container"),
             layers: [
                 new ol.layer.Tile({
                     // https://www.thunderforest.com/docs/apikeys/
                     source: new ol.source.OSM(),
                 }),
-                this.stores,
+                stores,
             ],
             view: new ol.View({
                 projection: "EPSG:3857",
@@ -40,21 +36,18 @@ class OpenLayerMap {
                 zoom: 8,
             }),
         });
-    
-        if (interactive) 
-        {
-            console.log(element.querySelector(".map_container"))
-            console.log(element.querySelector(".map_container").querySelector("div"))
 
-            this.popup = new Popover(element.querySelector(".map_container").querySelector("div"), this.map);
-            this.search = new Search(element.querySelector(".map_container").querySelector(".search"), this.stores);
-        } 
+        if (interactive) {
+            const popup = new Popover(
+                element.querySelector(".map_container").querySelector(".popup"),
+                map);
+            const search = new Search(
+                element.querySelector(".map_container").querySelector(".search"),
+                stores
+            );
+        }
         return this;
-  
     }
-    
-  
-
 }
 
 export default OpenLayerMap;

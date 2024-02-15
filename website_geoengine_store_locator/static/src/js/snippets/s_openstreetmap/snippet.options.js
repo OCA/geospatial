@@ -44,11 +44,6 @@ odoo.define("website_snippet_OpenStreetMap.snippet_options", function (require) 
             //await this._super(...arguments);
             return this._super(...arguments);
         }
-        
-     
-     
-
 
     });
 });
-    

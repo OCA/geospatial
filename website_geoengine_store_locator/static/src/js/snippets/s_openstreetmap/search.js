@@ -1,116 +1,127 @@
 /** @odoo-module **/
 
-    /**
-     * Create a standard symbol for a POI
-     * @param {number} height the height of the circle center
-     * @param {number} radius the radius of the top circle
-     * @param {string} fillColor the fill color of the symbol
-     * @param {number} strokeWidth the stroke width of the symbol
-     * @param {string} strokeColor the stroke color of the symbol
-     * @param {number} centerRadius the radius of the center point
-     * @param {string} centerFillColor the fill color of the center point
-     * @param {number} centerStrokeWidth the stroke width of the center point
-     * @param {string} centerStrokeColor the stroke color of the center point
-     * @returns
-     */
-      function buildIcon(
-        height,
+/**
+ * Create a standard symbol for a POI
+ * @param {number} height the height of the circle center
+ * @param {number} radius the radius of the top circle
+ * @param {string} fillColor the fill color of the symbol
+ * @param {number} strokeWidth the stroke width of the symbol
+ * @param {string} strokeColor the stroke color of the symbol
+ * @param {number} centerRadius the radius of the center point
+ * @param {string} centerFillColor the fill color of the center point
+ * @param {number} centerStrokeWidth the stroke width of the center point
+ * @param {string} centerStrokeColor the stroke color of the center point
+ * @returns
+ */
+function buildIcon(
+    height,
+    radius,
+    fillColor,
+    strokeWidth,
+    strokeColor,
+    centerRadius,
+    centerFillColor,
+    centerStrokeWidth,
+    centerStrokeColor
+) {
+    const canvas = document.createElement("canvas");
+    canvas.width = radius * 2 + strokeWidth;
+    canvas.height = radius + height + strokeWidth;
+    const context = canvas.getContext("2d");
+
+    const circleCenter = [canvas.width / 2, radius + strokeWidth / 2];
+    const linesStart = [canvas.width / 2, radius + height + strokeWidth / 2];
+    const alpha = Math.acos(radius / height);
+    const linesWeight = Math.sin(alpha) * radius;
+    const linesHeight = height - Math.cos(alpha) * radius;
+    const line1End = [canvas.width / 2 - linesWeight, linesStart[1] - linesHeight];
+    const line2End = [canvas.width / 2 + linesWeight, linesStart[1] - linesHeight];
+
+    context.fillStyle = fillColor;
+    context.strokeStyle = strokeColor;
+    context.lineWidth = strokeWidth;
+    context.lineJoin = "round";
+
+    context.beginPath();
+    context.moveTo(line2End[0], line2End[1]);
+    context.lineTo(linesStart[0], linesStart[1]);
+    context.lineTo(line1End[0], line1End[1]);
+    context.arc(
+        circleCenter[0],
+        circleCenter[1],
         radius,
-        fillColor,
-        strokeWidth,
-        strokeColor,
-        centerRadius,
-        centerFillColor,
-        centerStrokeWidth,
-        centerStrokeColor
-      ) {
-        const canvas = document.createElement("canvas");
-        canvas.width = radius * 2 + strokeWidth;
-        canvas.height = radius + height + strokeWidth;
-        const context = canvas.getContext("2d");
+        Math.PI / 2 + alpha,
+        Math.PI / 2 - alpha
+    );
+    context.lineTo(line2End[0], line2End[1]);
+    context.stroke();
+    context.moveTo(circleCenter[0] + centerRadius, circleCenter[1]);
+    context.arc(circleCenter[0], circleCenter[1], centerRadius, 0, Math.PI * 2, true);
+    context.closePath();
+    context.fill();
 
-        const circleCenter = [canvas.width / 2, radius + strokeWidth / 2];
-        const linesStart = [canvas.width / 2, radius + height + strokeWidth / 2];
-        const alpha = Math.acos(radius / height);
-        const linesWeight = Math.sin(alpha) * radius;
-        const linesHeight = height - Math.cos(alpha) * radius;
-        const line1End = [canvas.width / 2 - linesWeight, linesStart[1] - linesHeight];
-        const line2End = [canvas.width / 2 + linesWeight, linesStart[1] - linesHeight];
+    context.fillStyle = centerFillColor;
+    context.strokeStyle = centerStrokeColor;
+    context.lineWidth = centerStrokeWidth;
+    context.beginPath();
+    context.arc(circleCenter[0], circleCenter[1], centerRadius, 0, Math.PI * 2);
+    context.closePath();
+    context.stroke();
+    context.fill("evenodd");
 
-        context.fillStyle = fillColor;
-        context.strokeStyle = strokeColor;
-        context.lineWidth = strokeWidth;
-        context.lineJoin = "round";
+    return new ol.style.Icon({
+        img: canvas,
+        anchor: [0.5, 1],
+    });
+}
 
-        context.beginPath();
-        context.moveTo(line2End[0], line2End[1]);
-        context.lineTo(linesStart[0], linesStart[1]);
-        context.lineTo(line1End[0], line1End[1]);
-        context.arc(circleCenter[0], circleCenter[1], radius, Math.PI / 2 + alpha, Math.PI / 2 - alpha);
-        context.lineTo(line2End[0], line2End[1]);
-        context.stroke();
-        context.moveTo(circleCenter[0] + centerRadius, circleCenter[1]);
-        context.arc(circleCenter[0], circleCenter[1], centerRadius, 0, Math.PI * 2, true);
-        context.closePath();
-        context.fill();
+/**
+ * Normalize a string by removing accents and lowercasing it for the search.
+ * @param {string} string
+ * @returns
+ */
+function normalize(string) {
+    return (
+        string
+            .toLowerCase()
+            // remove accents
+            .normalize("NFKD")
+            .replace(/\p{Diacritic}/gu, "")
+    );
+}
 
-        context.fillStyle = centerFillColor;
-        context.strokeStyle = centerStrokeColor;
-        context.lineWidth = centerStrokeWidth;
-        context.beginPath();
-        context.arc(circleCenter[0], circleCenter[1], centerRadius, 0, Math.PI * 2);
-        context.closePath();
-        context.stroke();
-        context.fill("evenodd");
-
-        return new ol.style.Icon({
-          img: canvas,
-          anchor: [0.5, 1],
-        });
-      }
-
+class Search {
     /**
-     * Normalize a string by removing accents and lowercasing it for the search.
-     * @param {string} string
-     * @returns
+     * The search input element
+     * @type {HTMLInputElement}
      */
-    function normalize(string) {
-        return (
-            string
-                .toLowerCase()
-                // remove accents
-                .normalize("NFKD")
-                .replace(/\p{Diacritic}/gu, "")
-        );
+    element = undefined;
+
+    constructor(element, stores) {
+        this.element = element;
+        this.stores = stores;
+        element.addEventListener("keyup", this.onKeyUp.bind(this));
+        this.update();
     }
 
-    class Search {
-        _element = undefined;
-        constructor(element, stores) {
-            this._element = element;
-            this.stores = stores;
-            element.addEventListener("keyup", this.onKeyUp.bind(this));
-            this.update();
-        }
+    /**
+     * The function called on input key up event
+     * @param {KeyboardEvent} event
+     */
+    onKeyUp(event) {
+        this.update();
+    }
 
-        /**
-         * The function called on input key up event
-         * @param {KeyboardEvent} e
-         */
-        onKeyUp(e) {
-                this.update();
-        }
-
-        update(t) {
-            this.search = normalize(this._element.value).split(" ");
-            this.stores.setStyle(this.styleFunction.bind(this));
-        }
+    update() {
+        this.search = normalize(this.element.value).split(" ");
+        this.stores.setStyle(this.styleFunction.bind(this));
+    }
     /**
      * Check if a feature matches the search
      * @param {ol.Feature} feature
      * @returns {boolean}
      */
-        searchFeature(feature) {
+    searchFeature(feature) {
         for (let word of this.search) {
             let found = false;
             for (let properties of ["name", "contact"]) {
@@ -128,7 +139,6 @@
         return true;
     }
 
-
     /**
      * Style function for the stores
      * @param {ol.Feature} feature
@@ -136,7 +146,7 @@
      */
     styleFunction(feature) {
         let foundStyle;
-        let notFoundStyle
+        let notFoundStyle;
         if (!foundStyle) {
             foundStyle = new ol.style.Style({
                 image: buildIcon(
@@ -146,9 +156,9 @@
                     1.5,
                     "rgb(0, 0, 255)",
                     5,
-                    "rgba(0, 0, 0, 0)"
+                    "rgba(0, 0, 0, 0)",
                     1.5,
-                    "rgb(0, 0, 255)",
+                    "rgb(0, 0, 255)"
                 ),
             });
         }

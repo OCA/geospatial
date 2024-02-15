@@ -1,9 +1,6 @@
 /** @odoo-module **/
 
 import publicWidget from "web.public.widget";
-import {shops} from "./sampleData.js";
-import Search from "./search";
-import Popover from "./popover";
 import OpenLayerMap from "./map";
 
 publicWidget.registry.OpenStreetMap = publicWidget.Widget.extend({
