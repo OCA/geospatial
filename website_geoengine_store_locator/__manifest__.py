@@ -19,7 +19,6 @@
             "website_geoengine_store_locator/static/src/scss/snippets/s_openstreetmap/frontend.scss",
             "website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/frontend.js",
             "website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/popover.js",
-            "website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/sampleData.js",
             "website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/search.js",
             "website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/map.js",
         ],

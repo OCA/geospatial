@@ -4,9 +4,6 @@ odoo.define("website_snippet_OpenStreetMap.snippet_options", function (require) 
     const options = require("web_editor.snippets.options");
 
     //const publicWidget = require("web.public.widget");
-    //const {shops} = require("./sampleData.js");
-    //const Search = require("./search");
-    //const OpenLayerMap = require("website_geoengine.openlayer_map");
 
     console.log(options)
 
@@ -41,7 +38,6 @@ odoo.define("website_snippet_OpenStreetMap.snippet_options", function (require) 
         },
         saveSnippet: function (previewMode, widgetValue, params) {
             console.log("save")
-            //await this._super(...arguments);
             return this._super(...arguments);
         }
 
