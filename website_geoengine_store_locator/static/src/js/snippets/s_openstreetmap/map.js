@@ -1,6 +1,5 @@
 /** @odoo-module alias=website_geoengine.openlayer_map */
 
-import {shops} from "./sampleData.js";
 import Search from "./search";
 import Popover from "./popover";
 
@@ -12,16 +11,25 @@ class OpenLayerMap {
         const dataset = element.dataset;
         console.log(dataset);
 
-        const stores = new ol.layer.Vector();
-        fetch("/geodatas/res_partner/stores").then((response) => {
-            stores.setSource(
-                new ol.source.Vector({
-                    features: new ol.format.GeoJSON({
+        const storesSource = new ol.source.Vector();
+        const stores = new ol.layer.Vector({
+            source: storesSource,
+        });
+        fetch("/geodatas/res_partner/stores", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: "{}",
+        }).then((response) => {
+            response.json().then((data) => {
+                storesSource.addFeatures(
+                    new ol.format.GeoJSON({
                         dataProjection: "EPSG:4326",
                         featureProjection: "EPSG:3857",
-                    }).readFeatures(response.json()),
-                })
-            );
+                    }).readFeatures(data.result)
+                );
+            });
         });
 
         const mapElement = element.querySelector(".map_container");

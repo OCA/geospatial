@@ -38,6 +38,7 @@ class Popover {
         map.addOverlay(this.popup);
         map.on("click", this.mapOnClick.bind(this));
         map.on("pointermove", this.mapOnPointerMove.bind(this));
+        map.getView().on("change:center", this.mapOnMove.bind(this));
     }
 
     /**
@@ -51,31 +52,40 @@ class Popover {
         }
     }
 
+    mapOnMove(event) {
+        if (!this.feature) {
+            return;
+        }
+        //this.popup.setPosition(this.feature.getGeometry().getFirstCoordinate());
+        $(this.element).popover("show");
+    }
+
     /**
      * The function called on map click event
      * @param {ol.MapBrowserEvent} event
      */
     mapOnClick(event) {
-        const feature = this.map.forEachFeatureAtPixel(event.pixel, function (feature) {
+        this.feature = this.map.forEachFeatureAtPixel(event.pixel, function (feature) {
             return feature;
         });
+
         this.disposePopover();
-        if (!feature) {
+        if (!this.feature) {
             return;
         }
 
-        this.popup.setPosition(feature.getGeometry().getFirstCoordinate());
+        this.popup.setPosition(this.feature.getGeometry().getFirstCoordinate());
         if (!this.popover) {
             this.popover = $(this.element).popover({
                 placement: "top",
                 html: true,
                 trigger: "focus",
                 content: `
-          ${feature.get("store_category")}<br/>
-          <b>${feature.get("name")}</b><br/>
-          ${feature.get("address")}<br/>
-          ${feature.get("contact")}<br/>
-          ${feature.get("opening_hours")}`,
+          ${this.feature.get("store_category")}<br/>
+          <b>${this.feature.get("name")}</b><br/>
+          ${this.feature.get("address")}<br/>
+          ${this.feature.get("contact")}<br/>
+          ${this.feature.get("opening_hours")}`,
             });
         }
         this.popover.popover("show");
