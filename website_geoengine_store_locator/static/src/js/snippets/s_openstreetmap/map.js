@@ -2,6 +2,7 @@
 
 import Search from "./search";
 import Popover from "./popover";
+import ajax from "web.ajax";
 
 /**
  * The base class that manage all the map
@@ -9,28 +10,21 @@ import Popover from "./popover";
 class OpenLayerMap {
     constructor(element, interactive = true) {
         const dataset = element.dataset;
-        console.log(dataset);
 
         const storesSource = new ol.source.Vector();
         const stores = new ol.layer.Vector({
             source: storesSource,
         });
-        fetch("/geodatas/res_partner/stores", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: "{}",
-        }).then((response) => {
-            response.json().then((data) => {
+        // I set an example of how to use the ajax call with mapType as parameter but of course, this as no sense ;-)
+        ajax.jsonRpc('/geodatas/res_partner/stores' , 'call',  {'mapType': dataset.mapType}).then((response) => {     
                 storesSource.addFeatures(
                     new ol.format.GeoJSON({
                         dataProjection: "EPSG:4326",
                         featureProjection: "EPSG:3857",
-                    }).readFeatures(data.result)
+                    }).readFeatures(response)
                 );
-            });
         });
+        console.log("after ajax")
 
         const mapElement = element.querySelector(".map_container");
         const map = new ol.Map({

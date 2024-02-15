@@ -81,15 +81,18 @@ class Popover {
                 html: true,
                 trigger: "focus",
                 content: `
-          ${this.feature.get("store_category")}<br/>
           <b>${this.feature.get("name")}</b><br/>
-          ${this.feature.get("address")}<br/>
-          ${this.feature.get("contact")}<br/>
+          ${this.feature.get("street")}<br/>
+          ${this.feature.get("street2")}<br/>
+          ${this.feature.get("zip")} ${this.feature.get("city")}<br/>
+          ${this.feature.get("tags")}<br/>
           ${this.feature.get("opening_hours")}`,
             });
         }
         this.popover.popover("show");
-    }
+    }                       
+
+
 
     /**
      * The function called on map pointer move event
