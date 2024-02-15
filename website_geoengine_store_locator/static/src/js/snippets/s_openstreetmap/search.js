@@ -28,17 +28,21 @@ function buildCanvas(
     height = Math.abs(height);
 
     const canvas = document.createElement("canvas");
-    canvas.width = radius * 2 + strokeWidth;
-    canvas.height =
-        height < radius ? radius * 2 + strokeWidth : radius + height + strokeWidth;
+    canvas.width = Math.ceil(radius * 2 + strokeWidth);
+    canvas.height = Math.ceil(
+        height < radius ? radius * 2 + strokeWidth : radius + height + strokeWidth
+    );
     const context = canvas.getContext("2d");
     if (negateHeight) {
         context.setTransform(1, 0, 0, -1, 0, canvas.height);
     }
 
-    const circleCenter = [canvas.width / 2, radius + strokeWidth / 2];
+    const alpha = radius < height ? Math.acos(radius / height) : 0;
+    const circleCenter = [
+        canvas.width / 2,
+        alpha == 0 ? canvas.width / 2 : radius + strokeWidth / 2,
+    ];
     const linesStart = [canvas.width / 2, radius + height + strokeWidth / 2];
-    const alpha = Math.acos(radius / height);
     const linesWeight = Math.sin(alpha) * radius;
     const linesHeight = height - Math.cos(alpha) * radius;
     const line1End = [canvas.width / 2 - linesWeight, linesStart[1] - linesHeight];
@@ -136,10 +140,7 @@ function buildIcon(
         anchor: [0.5, negateHeight ? 0 : 1],
     });
 
-    if (radius < height) {
-        if (negateHeight) {
-            height = -height;
-        }
+    if (radius >= Math.abs(height)) {
         return new ol.style.Icon({
             img: canvas,
             anchor: [0.5, 0.5 + height / radius / 2],
@@ -217,11 +218,9 @@ class Search {
                 }
             }
             if (!found) {
-                console.log("not found", feature.get("name"));
                 return false;
             }
         }
-        console.log("found", feature.get("name"));
         return true;
     }
 
@@ -236,7 +235,7 @@ class Search {
         if (!foundStyle) {
             foundStyle = new ol.style.Style({
                 image: buildIcon(
-                    -0,
+                    20,
                     10,
                     "rgba(0, 0, 255, 0.2)",
                     1.5,
