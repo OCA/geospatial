@@ -28,7 +28,9 @@ class ResPartner(http.Controller):
                         "street": "Rue de Busigny 28",
                         "street2": "",
                         "tags": "big,blue,dev",
-                        "openning_hours": "Mo-Fr 08:00-12:00,13:00-17:00",
+                        "store_category": "BS",
+                        "opening_hours": "Mo-Fr 08:00-12:00,13:00-17:00",
+                        
                     },
                 },
                 {
@@ -42,7 +44,8 @@ class ResPartner(http.Controller):
                         "street": "Rue Denis-Georges Bayar 58",
                         "street2": "RDC",
                         "tags": "small,red,archi",
-                        "openning_hours": "Mo-Fr 09:00-12:00,13:00-18:00",
+                        "store_category": "GS",
+                        "opening_hours": "Mo-Fr 09:00-12:00,13:00-18:00",
                     },
                 },
             ],
