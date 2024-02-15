@@ -5,7 +5,6 @@ import OpenLayerMap from "./map";
 
 publicWidget.registry.OpenStreetMap = publicWidget.Widget.extend({
     selector: ".s_openstreetmap",
-    //    jsLibs: ["/website_geoengine_store_locator/static/lib/node_modules/ol/dist/ol.js"],
     cssLibs: [
         "/website_geoengine_store_locator/static/styles.css",
         "/website_geoengine_store_locator/static/lib/node_modules/ol/ol.css",

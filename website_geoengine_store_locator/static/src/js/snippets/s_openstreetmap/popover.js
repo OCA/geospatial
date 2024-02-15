@@ -53,10 +53,10 @@ class Popover {
 
     /**
      * The function called on map click event
-     * @param {ol.MapBrowserEvent} evt
+     * @param {ol.MapBrowserEvent} event
      */
-    mapOnClick(evt) {
-        const feature = this.map.forEachFeatureAtPixel(evt.pixel, function (feature) {
+    mapOnClick(event) {
+        const feature = this.map.forEachFeatureAtPixel(event.pixel, function (feature) {
             return feature;
         });
         this.disposePopover();
@@ -64,9 +64,8 @@ class Popover {
             return;
         }
 
-        this.popup.setPosition(evt.coordinate);
+        this.popup.setPosition(feature.getGeometry().getFirstCoordinate());
         if (!this.popover) {
-            //this.popover = this.jqueryElement.popover({
             this.popover = $(this.element).popover({
                 placement: "top",
                 html: true,
