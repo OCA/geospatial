@@ -3,95 +3,50 @@ odoo.define("website_snippet_OpenStreetMap.snippet_options", function (require) 
 
     const options = require("web_editor.snippets.options");
 
-    const wUtils = require('openstreetmap.utils');
+    //const publicWidget = require("web.public.widget");
+    //const {shops} = require("./sampleData.js");
+    //const Search = require("./search");
+    //const OpenLayerMap = require("website_geoengine.openlayer_map");
+
+    console.log(options)
+
 
     options.registry.OpenStreetMap = options.Class.extend({
 
-        /**
-             * @override
-             */
-        onBuilt: function () {
-            // The iframe is added here to the snippet when it is dropped onto the
-            // page. However, in the case where a custom snippet saved by the user
-            // is dropped, the iframe already exists and doesn't need to be added
-            // again.
-            console.log("Parma")
-            if (!this.$target[0].querySelector('.s_openstreetmap_embedded')) {
-                const iframeEl = wUtils.generateOSMapIframe();
-                this.$target[0].querySelector('.s_openstreetmap_color_filter').before(iframeEl);
-                this._updateSource();
-            }
+        onBuilt() {
+            console.log("onBuilt")
+            this._super.apply(this, arguments);
+            console.log(this.$target[0].id)
+            this.$target[0].id = this.generateUniqueId();
+            console.log(this.$target[0].dataset)
+            //TODO FIND A WAY TO INITIALIZE THE MAP
+            //var map = new OpenLayerMap(this.$target[0].id);
         },
 
-        //--------------------------------------------------------------------------
-        // Options
-        //--------------------------------------------------------------------------
+        init: function () {
+            this._super.apply(this, arguments);
 
-        /**
-         * @see this.selectClass for parameters
-         */
+        },
+
         async selectDataAttribute(previewMode, widgetValue, params) {
-            console.log("Parla")
             await this._super(...arguments);
+            console.log("Options modified: "+params.attributeName)
+            console.log(params)
             if (['mapAddress', 'mapType', 'mapZoom'].includes(params.attributeName)) {
-                this._updateSource();
+                console.log("Change in map options")
             }
         },
-        /**
-         * @see this.selectClass for parameters
-         */
-        showDescription: async function (previewMode, widgetValue, params) {
-            const descriptionEl = this.$target[0].querySelector('.description');
-            if (widgetValue && !descriptionEl) {
-                this.$target.append($(`
-                    <div class="description">
-                        <font>${_t('Visit us:')}</font>
-                        <span>${_t('Our office is open Monday – Friday 8:30 a.m. – 4:00 p.m.')}</span>
-                    </div>`)
-                );
-            } else if (!widgetValue && descriptionEl) {
-                descriptionEl.remove();
-            }
+        generateUniqueId: function () {
+            return 'snippet-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
         },
-
-        //--------------------------------------------------------------------------
-        // Private
-        //--------------------------------------------------------------------------
-
-        /**
-         * @override
-         */
-        _computeWidgetState: function (methodName, params) {
-            console.log("Parna")
-            if (methodName === 'showDescription') {
-                return !!this.$target[0].querySelector('.description');
-            }
+        saveSnippet: function (previewMode, widgetValue, params) {
+            console.log("save")
+            //await this._super(...arguments);
             return this._super(...arguments);
-        },
-        /**
-         * @private
-         */
-        _updateSource: function () {
-            console.log("Parsa")
-            const dataset = this.$target[0].dataset;
-            const $embedded = this.$target.find('.s_openstreetmap_embedded');
-            const $info = this.$target.find('.missing_option_warning');
-            if (dataset.mapAddress) {
-                
-                const url = wUtils.generateOSMapLink(dataset);
-                console.log(url)
-                if (url !== $embedded.attr('src')) {
-                    $embedded.attr('src', url);
-                }
-                $embedded.removeClass('d-none');
-                $info.addClass('d-none');
-            } else {
-                $embedded.attr('src', 'about:blank');
-                $embedded.addClass('d-none');
-                $info.removeClass('d-none');
-            }
-        },
-
+        }
+        
+     
+     
 
 
     });

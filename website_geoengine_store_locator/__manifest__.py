@@ -16,14 +16,16 @@
     'assets': {
         'web.assets_frontend': [
             'website_geoengine_store_locator/static/src/scss/snippets/s_openstreetmap/frontend.scss',
-            'website_geoengine_store_locator/static/src/js/utils.js',
+            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/popover.js',
+            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/sampleData.js',
+            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/search.js',
             'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/frontend.js',
+            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/map.js'
         ],
         'website.assets_wysiwyg': [
-            ('include', 'web._assets_helpers'),
-            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/snippet.options.js',
-            
-        ]
+            'website_geoengine_store_locator/static/src/js/snippets/s_openstreetmap/snippet.options.js', 
+        ],
+
     },
     "maintainers": ["Wouitmil"],
     "installable": True,
