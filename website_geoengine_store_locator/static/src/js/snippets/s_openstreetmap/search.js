@@ -220,7 +220,16 @@ class Search {
     searchFeature(feature) {
         for (let word of this.search) {
             let found = false;
-            for (let properties of ["name", "contact"]) {
+
+            for (let properties of [
+                "name",
+                "street",
+                "street2",
+                "zip",
+                "city",
+                "tags",
+                "opening_hours",
+            ]) {
                 if (normalize(feature.get(properties)).includes(word)) {
                     found = true;
                     break;
