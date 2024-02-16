@@ -164,17 +164,17 @@ function buildIcon(
 
 /**
  * Normalize a string by removing accents and lowercasing it for the search.
- * @param {string} string
+ * @param {string} text
  * @returns
  */
-function normalize(string) {
-    return (
-        string
+function normalize(text) {
+    return text ? (
+        text
             .toLowerCase()
             // remove accents
             .normalize("NFKD")
             .replace(/\p{Diacritic}/gu, "")
-    );
+    ):'';
 }
 
 /**
