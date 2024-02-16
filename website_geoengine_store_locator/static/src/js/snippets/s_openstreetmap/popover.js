@@ -90,9 +90,7 @@ class Popover {
             });
         }
         this.popover.popover("show");
-    }                       
-
-
+    }
 
     /**
      * The function called on map pointer move event
