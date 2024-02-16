@@ -15,8 +15,10 @@ publicWidget.registry.OpenStreetMap = publicWidget.Widget.extend({
      */
     start() {
         if (!this.el.querySelector(".ol-viewport")) {
+            const dataset = this.el.dataset;
+            console.log(dataset);
             this.element = this.el;
-            this.map = new OpenLayerMap(this.element);
+            this.map = new OpenLayerMap(this.element, dataset.mapType);
         }
         return this._super(...arguments);
     },

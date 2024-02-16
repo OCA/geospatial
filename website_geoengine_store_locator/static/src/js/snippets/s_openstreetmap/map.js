@@ -8,7 +8,7 @@ import ajax from "web.ajax";
  * The base class that manage all the map
  */
 class OpenLayerMap {
-    constructor(element, interactive = true) {
+    constructor(element, mapType = "mapnik", interactive = true) {
         const dataset = element.dataset;
 
         const storesSource = new ol.source.Vector();
@@ -21,7 +21,19 @@ class OpenLayerMap {
             layers: [
                 new ol.layer.Tile({
                     // https://www.thunderforest.com/docs/apikeys/
-                    source: new ol.source.OSM(),
+                    source: new ol.source.OSM({
+                        url: {
+                            mapnik: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                            cyclemap:
+                                "https://tile.thunderforest.com/cycle/{z}/{x}/{y}@2x.png?apikey=...",
+                            cyclosm:
+                                "https://{a-c}.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png",
+                            mobility:
+                                "https://tile.thunderforest.com/transport/{z}/{x}/{y}@2x.png?apikey=...",
+                            topo: "https://tile.tracestrack.com/topo__/{z}/{x}/{y}.png?key=...",
+                            hot: "https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png",
+                        }[mapType],
+                    }),
                 }),
                 stores,
             ],
