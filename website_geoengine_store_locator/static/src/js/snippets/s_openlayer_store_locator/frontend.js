@@ -11,6 +11,7 @@ publicWidget.registry.OpenLayerStoreLocator = publicWidget.Widget.extend({
     cssLibs: [
         "/website_geoengine_store_locator/static/styles.css",
         "/website_geoengine_store_locator/static/lib/node_modules/ol/ol.css",
+        "/website_geoengine_store_locator/static/lib/node_modules/jquery-flexdatalist/jquery.flexdatalist.css",
     ],
 
     /**
@@ -40,7 +41,7 @@ publicWidget.registry.OpenLayerStoreLocator = publicWidget.Widget.extend({
             console.log(result);
         }, function (error) {
             console.log(error);
-        });        
+        });
 
         if (!this.el.querySelector(".ol-viewport")) {
             const dataset = this.el.dataset;
