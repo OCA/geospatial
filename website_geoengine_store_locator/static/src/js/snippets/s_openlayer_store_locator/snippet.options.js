@@ -10,14 +10,16 @@ options.registry.OpenLayerStoreLocator = options.Class.extend({
     jsLibs: [
         '/web/static/lib/Chart/Chart.js',
         '/website_geoengine_store_locator/static/lib/node_modules/ol/dist/ol.js',
+        "/website_geoengine_store_locator/static/lib/node_modules/jquery-flexdatalist/jquery.flexdatalist.js",
     ],
     cssLibs: [
         "/website_geoengine_store_locator/static/styles.css",
         "/website_geoengine_store_locator/static/lib/node_modules/ol/ol.css",
+        "/website_geoengine_store_locator/static/lib/node_modules/jquery-flexdatalist/jquery.flexdatalist.css",
     ],
 
     init() {
-        console.log("init") 
+        console.log("init")
         return this._super.apply(this, arguments);
     },
 
@@ -56,10 +58,10 @@ options.registry.OpenLayerStoreLocator = options.Class.extend({
                 center: ol.proj.fromLonLat([6, 46]),
                 zoom: 8,
             }),
-        });        
-        
+        });
+
     },
-    
+
 
     async selectDataAttribute (previewMode, widgetValue, params) {
         //await this._super(...arguments);
@@ -69,12 +71,12 @@ options.registry.OpenLayerStoreLocator = options.Class.extend({
             console.log("Change in map options")
         }
     },
-    
+
     cleanForSave() {
         console.log("cleanForSave")
         console.log(this.mapElement)
         this.mapElement.innerHTML = "<input type=\"text\" id=\"search\" class=\"search\" /><div id=\"popup\"></div>";
-        
+
         console.log("cleanForSaved")
     },
 
