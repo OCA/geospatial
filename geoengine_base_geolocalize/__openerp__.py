@@ -19,7 +19,7 @@
 #
 ##############################################################################
 {'name': 'Geospatial support for base_geolocalize',
- 'version': '8.0.0.1.0',
+ 'version': '9.0.0.1.0',
  'category': 'GeoBI',
  'author': "ACSONE SA/NV, Odoo Community Association (OCA)",
  'license': 'AGPL-3',
@@ -35,8 +35,8 @@
  'data': [
      'views/res_partner_view.xml'
  ],
- 'installable': False,
+ 'installable': True,
  'application': True,
- 'autoinstall': True,
- 'active': False,
+ 'autoinstall': False,
+ 'active': True,
  }
