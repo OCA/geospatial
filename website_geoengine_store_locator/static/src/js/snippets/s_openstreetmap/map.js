@@ -1,4 +1,4 @@
-/** @odoo-module alias=website_geoengine.openlayer_map */
+/** @odoo-module alias=website_geoengine_store_locator.openlayer_map */
 
 import Search from "./search";
 import Popover from "./popover";
