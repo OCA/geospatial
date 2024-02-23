@@ -71,6 +71,8 @@ class ResPartner(geo_model.GeoModel):
 
     @api.one
     def geo_localize(self):
+        # overwriting completely the standard geo_localize in base_geolocation
+        # wich uses google API key. this uses openstreetmap.
         self.geocode_address()
         return True
 
