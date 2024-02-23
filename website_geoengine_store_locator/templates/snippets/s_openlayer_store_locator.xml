@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-<template name="Openstreet Map" id="s_openstreetmap">
-    <section class="s_openstreetmap pb56 pt56"  data-vjs="001" data-map-type="mapnik" data-map-zoom="12" data-map-address="route de la chaux 4 1030 bussigny">
+<template name="OpenLayer Store Locator" id="s_openlayer_store_locator">
+    <section class="s_openlayer_store_locator pb56 pt56"  data-vjs="001" data-map-type="mapnik" data-map-zoom="12" data-map-address="route de la chaux 4 1030 bussigny">
         <div id="map" class="map_container o_not_editable">
             <input type="text" id="search" class="search" />
             <div id="popup"></div>
@@ -11,9 +11,9 @@
 </template>
 
 <!-- Snippet's Options -->
-<template id="s_openstreetmap_options" inherit_id="website.snippet_options">
+<template id="s_openlayer_store_locator_options" inherit_id="website.snippet_options">
     <xpath expr="//div[@data-js='Box']" position="before">
-        <div data-js="OpenStreetMap" data-selector=".s_openstreetmap">
+        <div data-js="OpenLayerStoreLocator" data-selector=".s_openlayer_store_locator">
             <we-input class="o_we_large" string="Address" data-select-data-attribute="" data-attribute-name="mapAddress" placeholder="e.g. De Brouckere, Brussels, Belgium"/>
             <we-select string="Type"  data-attribute-name="mapType">
                 <we-button data-select-data-attribute="mapnik">Standard</we-button>

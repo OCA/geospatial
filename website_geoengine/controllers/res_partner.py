@@ -14,39 +14,6 @@ class ResPartner(http.Controller):
         methods=["POST"],
     )
     def geodatas_partner_stores(self, **kw):
-        return {
-            "type": "FeatureCollection",
-            "features": [
-                {
-                    "type": "Feature",
-                    "geometry": {"type": "Point", "coordinates": [6.5, 46.5]},
-                    "properties": {
-                        "id": 1,
-                        "name": "Stéphane Bruner",
-                        "zip": "5000",
-                        "city": "Lausanne",
-                        "street": "Rue de Busigny 28",
-                        "street2": "",
-                        "tags": "big,blue,dev",
-                        "store_category": "BS",
-                        "opening_hours": "Mo-Fr 08:00-12:00,13:00-17:00",
-                        
-                    },
-                },
-                {
-                    "type": "Feature",
-                    "geometry": {"type": "Point", "coordinates": [4.9, 50.5]},
-                    "properties": {
-                        "id": 2,
-                        "name": "Hadrien Huvelle",
-                        "zip": "5000",
-                        "city": "Namur",
-                        "street": "Rue Denis-Georges Bayar 58",
-                        "street2": "RDC",
-                        "tags": "small,red,archi",
-                        "store_category": "GS",
-                        "opening_hours": "Mo-Fr 09:00-12:00,13:00-18:00",
-                    },
-                },
-            ],
-        }
+        return http.request.env["res.partner"].fetch_partner_geoengine(tag={}, lang="en_US")
+    
+    
