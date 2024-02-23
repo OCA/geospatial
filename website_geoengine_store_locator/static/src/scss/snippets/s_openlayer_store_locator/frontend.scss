@@ -4,7 +4,7 @@ $s-map-desc-alpha: 0.80 !default;
 $s-map-desc-hover-bg: map-get($theme-colors, 'primary') !default;
 $s-map-desc-hover-alpha: 0.55 !default;
 
-.s_openstreetmap {
+.s_openlayer_store_locator {
     position: relative;
     min-height: 100px;
 
@@ -39,20 +39,20 @@ $s-map-desc-hover-alpha: 0.55 !default;
         background: rgba($s-map-desc-hover-bg, $s-map-desc-hover-alpha);
         color: color-contrast(rgba($s-map-desc-hover-bg, $s-map-desc-hover-alpha));
     }
-    .s_openstreetmap_color_filter {
+    .s_openlayer_store_locator_color_filter {
         @include o-position-absolute(0, 0, 0, 0);
         position: absolute !important;
         pointer-events: none;
     }
 }
 
-.editor_enable .s_openstreetmap {
+.editor_enable .s_openlayer_store_locator {
 //    any thing needed while editing widget
     .description {
         background: rgba($s-map-desc-bg, $s-map-desc-alpha);
         color: color-contrast(rgba($s-map-desc-bg, $s-map-desc-alpha));
     }
-    .s_openstreetmap_color_filter {
+    .s_openlayer_store_locator_color_filter {
         pointer-events: auto;
     }
 }

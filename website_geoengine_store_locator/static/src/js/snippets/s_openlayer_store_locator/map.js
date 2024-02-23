@@ -4,6 +4,7 @@ import Search from "./search";
 import Popover from "./popover";
 import ajax from "web.ajax";
 
+
 /**
  * The base class that manage all the map
  */
@@ -20,7 +21,6 @@ class OpenLayerMap {
             target: mapElement,
             layers: [
                 new ol.layer.Tile({
-                    // https://www.thunderforest.com/docs/apikeys/
                     source: new ol.source.OSM({
                         url: {
                             mapnik: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -65,11 +65,18 @@ class OpenLayerMap {
         });
 
         if (interactive) {
-            const popup = new Popover(mapElement.querySelector("#popup"), map);
-            const search = new Search(mapElement.querySelector("#search"), stores);
+            if(mapElement)
+            {
+                const popup = new Popover(mapElement.querySelector("#popup"), map);
+                const search = new Search(mapElement.querySelector("#search"), stores);
+            }
         }
         return this;
     }
+}
+
+export function openLayerMap (element, mapType, interactive){
+    return new OpenLayerMap(element, mapType, interactive);
 }
 
 export default OpenLayerMap;
