@@ -67,8 +67,8 @@ class OpenLayerMap {
         if (interactive) {
             if(mapElement)
             {
-                const popup = new Popover(mapElement.querySelector("#popup"), map);
-                const search = new Search(mapElement.querySelector("#search"), stores);
+                //const popup = new Popover(mapElement.querySelector("#popup"), map);
+                //const search = new Search(mapElement.querySelector("#search"), stores);
             }
         }
         return this;
