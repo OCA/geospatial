@@ -71,4 +71,17 @@
         <field eval="0" name="overlay" />
     </record>
 
+    <record id="contacts.action_contacts" model="ir.actions.act_window">
+        <field name="view_mode">kanban,tree,form,activity,geoengine</field>
+    </record>
+
+
+
+    <record id="action_contacts_view_map" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3" />
+        <field name="view_mode">geoengine</field>
+        <field name="view_id" ref="ir_ui_view_geo_partner" />
+        <field name="act_window_id" ref="contacts.action_contacts" />
+    </record>
+
 </odoo>
