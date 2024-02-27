@@ -19,29 +19,7 @@ publicWidget.registry.OpenLayerStoreLocator = publicWidget.Widget.extend({
      */
     start() {
         const lang = (document.documentElement.getAttribute('lang') || 'en_US').replace('-', '_');
-        rpc.query({
-            model: "res.partner",
-            method: "get_search_tags",
-            args: ['es', lang]
-        }).then(function (result) {
-            console.log(result);
-        }, function (error) {
-            console.log(error);
-        });
 
-
-        rpc.query({
-            model: "res.partner",
-            method: "fetch_partner_geoengine",
-            args: [{
-                'tag': 'Test',
-                'name': 'Onestein'
-            }, lang]
-        }).then(function (result) {
-            console.log(result);
-        }, function (error) {
-            console.log(error);
-        });
 
         if (!this.el.querySelector(".ol-viewport")) {
             const dataset = this.el.dataset;
