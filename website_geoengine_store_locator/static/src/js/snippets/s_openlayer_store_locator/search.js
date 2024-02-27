@@ -1,5 +1,7 @@
 /** @odoo-module **/
 
+import rpc from "web.rpc";
+
 /**
  * Create a standard symbol for a POI
  * @param {number} height the height of the circle center
@@ -162,30 +164,6 @@ function buildIcon(
     return icon;
 }
 
-/**
- * Normalize a string by removing accents and lowercasing it for the search.
- * @param {string} text
- * @returns
- */
-function normalize(text) {
-    return text ? (
-        text
-            .toLowerCase()
-            // remove accents
-            .normalize("NFKD")
-            .replace(/\p{Diacritic}/gu, "")
-    ):'';
-}
-
-/**
- * A class to create a circle with no hit detection
- */
-class StyleCircleNoHit extends ol.style.Circle {
-    getHitDetectionImage() {
-        return document.createElement("canvas");
-    }
-}
-
 class Search {
     /**
      * The search input element
@@ -193,65 +171,15 @@ class Search {
      */
     element = undefined;
 
-    constructor(element, stores) {
+    constructor(element, map, stores) {
         this.element = element;
+        this.jquery_element = $(element);
+        this.jquery_element.val("");
+
+        this.map = map;
         this.stores = stores;
-        element.addEventListener("keyup", this.onKeyUp.bind(this));
-        this.update();
-    }
-
-    /**
-     * The function called on input key up event
-     * @param {KeyboardEvent} event
-     */
-    onKeyUp(event) {
-        this.update();
-    }
-
-    update() {
-        this.search = normalize(this.element.value).split(" ");
-        this.stores.setStyle(this.styleFunction.bind(this));
-    }
-    /**
-     * Check if a feature matches the search
-     * @param {ol.Feature} feature
-     * @returns {boolean}
-     */
-    searchFeature(feature) {
-        for (let word of this.search) {
-            let found = false;
-
-            for (let properties of [
-                "name",
-                "street",
-                "street2",
-                "zip",
-                "city",
-                "tags",
-                "opening_hours",
-            ]) {
-                if (normalize(feature.get(properties)).includes(word)) {
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Style function for the stores
-     * @param {ol.Feature} feature
-     * @returns {ol.style.Style}
-     */
-    styleFunction(feature) {
-        let foundStyle;
-        let notFoundStyle;
-        if (!foundStyle) {
-            foundStyle = new ol.style.Style({
+        this.stores.setStyle(
+            new ol.style.Style({
                 image: buildIcon(
                     20,
                     10,
@@ -263,20 +191,106 @@ class Search {
                     2,
                     "rgb(0, 0, 0)"
                 ),
-            });
-        }
-        if (!notFoundStyle) {
-            notFoundStyle = new ol.style.Style({
-                image: new StyleCircleNoHit({
-                    radius: 3,
-                    fill: new ol.style.Fill({color: [100, 100, 100, 0.5]}),
-                }),
-            });
-        }
-        if (this.searchFeature(feature)) {
-            return foundStyle;
-        }
-        return notFoundStyle;
+            })
+        );
+        this.format = new ol.format.GeoJSON({
+            dataProjection: "EPSG:4326",
+            featureProjection: "EPSG:3857",
+        });
+
+        this.lang = (document.documentElement.getAttribute("lang") || "en_US").replace(
+            "-",
+            "_"
+        );
+
+        this.jquery_element.flexdatalist({
+            minLength: 3,
+            multiple: true,
+            focusFirstResult: true,
+            maxShownResults: 10,
+            searchIn: ["value"],
+            // combo box
+            visibleProperties: ["text"],
+            // tag list in field
+            textProperty: "text",
+            // the managed value
+            valueProperty: "text",
+            cache: false,
+        });
+        this.jquery_input_element = element.querySelector("ul input");
+        this.jquery_element.on("before:flexdatalist.search", this.loadDatas.bind(this));
+        this.jquery_element.on("change:flexdatalist", () => {
+            console.log("select");
+            const value = this.jquery_element.flexdatalist("value");
+            if (value.length == 0) {
+                this.stores.getSource().clear();
+                return;
+            }
+            const arg = {};
+            for (let item of value) {
+                const value_split = item.split(":");
+                arg[value_split[0]] = value_split[1];
+            }
+            const args = [];
+            args.push(arg);
+            args.push(this.lang);
+            rpc.query({
+                model: "res.partner",
+                method: "fetch_partner_geoengine",
+                args: args,
+            }).then(
+                (result) => {
+                    console.log(result);
+                    const storesSource = this.stores.getSource();
+                    storesSource.clear();
+                    for (let feature of result) {
+                        console.log(this.format.readFeature(feature));
+                        storesSource.addFeature(this.format.readFeature(feature));
+                    }
+                    const extent = storesSource.getExtent();
+                    const addWidth = (extent[2] - extent[0]) / 10;
+                    const addHeight = (extent[3] - extent[1]) / 10;
+                    if (addWidth == 0 && addHeight == 0) {
+                        this.map.getView().setCenter([extent[0], extent[1]]);
+                    } else {
+                        this.map
+                            .getView()
+                            .fit([
+                                extent[0] - addWidth,
+                                extent[1] - addHeight,
+                                extent[2] + addWidth,
+                                extent[3] + addHeight,
+                            ]);
+                    }
+                },
+                (error) => {
+                    console.log(error);
+                }
+            );
+        });
+    }
+
+    loadDatas(event, text) {
+        rpc.query({
+            model: "res.partner",
+            method: "get_search_tags",
+            args: [text, this.lang],
+        }).then(
+            (result) => {
+                const data = [];
+                for (let item of result) {
+                    data.push({
+                        value: item[1],
+                        text: `${item[0]}:${item[1]}`,
+                    });
+                }
+                this.jquery_element.flexdatalist("data", data);
+                $(this.element.parentElement.querySelector("ul input")).keyup();
+            },
+            (error) => {
+                console.error(error);
+            }
+        );
     }
 }
 
