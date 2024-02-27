@@ -8,14 +8,14 @@ import ajax from "web.ajax";
  * The base class that manage all the map
  */
 class OpenLayerMap {
-    constructor(element, mapType = "mapnik", interactive = true) {
+    constructor(element, mapType = "mapnik") {
         const dataset = element.dataset;
 
         const storesSource = new ol.source.Vector();
         const stores = new ol.layer.Vector({
             source: storesSource,
         });
-        const mapElement = element.querySelector(".map_container");
+        const mapElement = element.querySelector(".map");
         const map = new ol.Map({
             target: mapElement,
             layers: [
@@ -40,21 +40,16 @@ class OpenLayerMap {
                 projection: "EPSG:3857",
                 center: ol.proj.fromLonLat([6, 46]),
                 zoom: 8,
+                minResolution: 0.299,
             }),
         });
 
-        if (interactive) {
-            if (mapElement) {
-                new Popover(mapElement.querySelector("#popup"), map);
-                new Search(mapElement.querySelector("#search"), map, stores);
-            }
+        if (mapElement) {
+            new Popover(element.querySelector("#popup"), map);
+            new Search(element.querySelector("#search"), map, stores);
         }
         return this;
     }
-}
-
-export function openLayerMap(element, mapType, interactive) {
-    return new OpenLayerMap(element, mapType, interactive);
 }
 
 export default OpenLayerMap;

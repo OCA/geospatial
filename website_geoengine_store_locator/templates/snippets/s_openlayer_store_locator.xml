@@ -3,9 +3,10 @@
 
 <template name="OpenLayer Store Locator" id="s_openlayer_store_locator">
     <section class="s_openlayer_store_locator pb56 pt56"  data-vjs="001" data-map-type="mapnik" data-map-zoom="12" data-map-address="route de la chaux 4 1030 bussigny">
-        <div id="map" class="map_container o_not_editable">
+        <div class="map_container o_not_editable">
+            <div class="map" id="map"></div>
             <div class="search">
-                <input type="text" id="search" />
+                <input type="text" id="search" class="flexdatalist" placeholder="Search store"/>
             </div>
             <div id="popup"></div>
         </div>

@@ -229,7 +229,7 @@ class Search {
             const arg = {};
             for (let item of value) {
                 const value_split = item.split(":");
-                arg[value_split[0]] = value_split[1];
+                arg[value_split[0]] = value_split[1].trim();
             }
             const args = [];
             args.push(arg);
@@ -281,7 +281,7 @@ class Search {
                 for (let item of result) {
                     data.push({
                         value: item[1],
-                        text: `${item[0]}:${item[1]}`,
+                        text: `${item[0]}: ${item[1]}`,
                     });
                 }
                 this.jquery_element.flexdatalist("data", data);

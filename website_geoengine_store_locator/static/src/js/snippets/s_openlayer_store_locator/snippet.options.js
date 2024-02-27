@@ -1,15 +1,14 @@
 /** @odoo-module **/
-import core from 'web.core';
-import options from 'web_editor.snippets.options';
+import core from "web.core";
+import options from "web_editor.snippets.options";
 //import {openLayerMap} from './map';
 //console.log(openLayerMap)
 const _t = core._t;
 
 options.registry.OpenLayerStoreLocator = options.Class.extend({
-
     jsLibs: [
-        '/web/static/lib/Chart/Chart.js',
-        '/website_geoengine_store_locator/static/lib/node_modules/ol/dist/ol.js',
+        "/web/static/lib/Chart/Chart.js",
+        "/website_geoengine_store_locator/static/lib/node_modules/ol/dist/ol.js",
         "/website_geoengine_store_locator/static/lib/node_modules/jquery-flexdatalist/jquery.flexdatalist.js",
     ],
     cssLibs: [
@@ -19,20 +18,20 @@ options.registry.OpenLayerStoreLocator = options.Class.extend({
     ],
 
     init() {
-        console.log("init")
+        console.log("init");
         return this._super.apply(this, arguments);
     },
 
     async onBuilt() {
         this._super.apply(this, arguments);
-        this.element= this.$target[0]
-        this.mapType = this.element.dataset['mapType'];
+        this.element = this.$target[0];
+        this.mapType = this.element.dataset["mapType"];
 
         const storesSource = new ol.source.Vector();
         const stores = new ol.layer.Vector({
             source: storesSource,
         });
-       this.mapElement = this.element.querySelector(".map_container")
+        this.mapElement = this.element.querySelector(".map");
         const map = new ol.Map({
             target: this.mapElement,
             layers: [
@@ -59,30 +58,20 @@ options.registry.OpenLayerStoreLocator = options.Class.extend({
                 zoom: 8,
             }),
         });
-
     },
 
-
-    async selectDataAttribute (previewMode, widgetValue, params) {
-        //await this._super(...arguments);
-        console.log("Options modified: "+params.attributeName)
-        console.log(params)
-        if (['mapAddress', 'mapType', 'mapZoom'].includes(params.attributeName)) {
-            console.log("Change in map options")
+    async selectDataAttribute(previewMode, widgetValue, params) {
+        await this._super(...arguments);
+        if (["mapAddress", "mapType", "mapZoom"].includes(params.attributeName)) {
+            console.log("Change in map options");
         }
     },
 
     cleanForSave() {
-        console.log("cleanForSave")
-        console.log(this.mapElement)
-        this.mapElement.innerHTML = "<input type=\"text\" id=\"search\" class=\"search\" /><div id=\"popup\"></div>";
-
-        console.log("cleanForSaved")
+        this.mapElement.innerHTML = '';
     },
-
 });
 
 export default {
-    OpenLayerStoreLocator: options.registry.OpenLayerStoreLocator
+    OpenLayerStoreLocator: options.registry.OpenLayerStoreLocator,
 };
-
