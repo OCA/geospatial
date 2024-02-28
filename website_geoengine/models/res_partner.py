@@ -23,7 +23,7 @@ class ResPartner(models.Model):
             names as (SELECT DISTINCT 'name' as column, name as value FROM res_partner WHERE type='store'),
             cities as (SELECT DISTINCT 'city' as column, city as value FROM res_partner WHERE type='store'),
             zips as (SELECT DISTINCT 'zip' as column, zip as value FROM res_partner WHERE type='store'),
-            streets as (SELECT DISTINCT 'street' as column, street as value FROM res_partner WHERE type='store'),
+            streets as (SELECT DISTINCT 'street' as column, concat(street, street2) as value FROM res_partner WHERE type='store'),
             tags as (
                 SELECT DISTINCT 
                     'tag' as column, 
@@ -54,8 +54,8 @@ class ResPartner(models.Model):
         #todo base domaine: is_store
         domain = [("type", "=", "store")]
         domain = []
-        for field in tags:
-            value = tags[field]
+        for tag in tags:
+            field, value = tag.values()
             _logger.info(f"fetch_partner_geoengine: {field}: {value}")
             if field not in self.AUTHORIZED_FIELDS:
                 raise ValidationError(_("Unauthorized field"))

@@ -227,11 +227,12 @@ class Search {
                 this.stores.getSource().clear();
                 return;
             }
-            const arg = {};
+            const arg = [];
             for (let item of value) {
                 const value_split = item.split(":");
-                arg[value_split[0]] = value_split[1].trim();
+                arg.push({'field': value_split[0], 'value': value_split[1].trim()})
             }
+
             const args = {
                 'tags': arg,
                 'lang': this.lang
@@ -283,6 +284,7 @@ class Search {
                 }
                 this.jquery_element.flexdatalist("data", data);
                 $(this.element.parentElement.querySelector("ul input")).keyup();
+
             },
             (error) => {
                 console.error(error);
