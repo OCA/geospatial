@@ -4,16 +4,17 @@ from odoo import http, models
 
 class ResPartner(http.Controller):
 
-    @http.route(
-        "/geodatas/res_partner/stores",
-        type="json",
-        auth="public",
-        website=True,
-        sitemap=False,
-        csrf=False,
-        methods=["POST"],
-    )
-    def geodatas_partner_stores(self, **kw):
-        return http.request.env["res.partner"].fetch_partner_geoengine(tag={}, lang="en_US")
+
+    @http.route('/website-geoengine/tags', type='json', auth='public', cors="*")
+    def tags(self, **kw):
+        tags = kw.get("tags", {})
+        lang = kw.get("lang", "en_US")
+        return http.request.env["res.partner"].get_search_tags(tags, lang)
+
+    @http.route('/website-geoengine/partners', type='json', auth='public', cors="*")
+    def partners(self, **kw):
+        tags = kw.get("tags", {})
+        lang = kw.get("lang", "en_US")
+        return http.request.env["res.partner"].fetch_partner_geoengine(tags, lang)
     
     

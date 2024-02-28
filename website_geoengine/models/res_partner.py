@@ -57,15 +57,15 @@ class ResPartner(models.Model):
                     "type": "Feature",
                     "geometry": {"type": "Point", "coordinates": [partner.partner_longitude, partner.partner_latitude]},
                     "properties": {
-                        "id": partner.id,
-                        "name": partner.name,
-                        "zip": partner.zip,
-                        "city": partner.city,
-                        "street": partner.street,
-                        "street2": partner.street2,
-                        "tags": partner.category_id.mapped('name'),
+                        "id": partner.id or None,
+                        "name": partner.name or '',
+                        "zip": partner.zip or '',
+                        "city": partner.city or '',
+                        "street": partner.street or '',
+                        "street2": partner.street2 or '',
+                        "tags": partner.category_id.mapped('name') or '',
                         
-                        "opening_hours": partner.opening_hours,
+                        "opening_hours": partner.opening_hours or '',
                     },
                 }
             )
