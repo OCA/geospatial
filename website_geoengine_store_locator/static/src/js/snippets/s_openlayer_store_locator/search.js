@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
 //import rpc from "web.rpc";
-import session from 'web.session';
+import session from "web.session";
 
 /**
  * Create a standard symbol for a POI
@@ -265,15 +265,15 @@ class Search {
             const arg = [];
             for (let item of value) {
                 const value_split = item.split(":");
-                arg.push({'field': value_split[0], 'value': value_split[1].trim()})
+                arg.push({field: value_split[0], value: value_split[1].trim()});
             }
-
             const args = {
-                'tags': arg,
-                'lang': this.lang
+                tags: arg,
+                lang: this.lang,
             };
 
-            session.rpc('/website-geoengine/partners', args).then((result) => {
+            session.rpc("/website-geoengine/partners", args).then(
+                (result) => {
                     console.log(result);
                     const storesSource = this.stores.getSource();
                     storesSource.clear();
@@ -311,13 +311,13 @@ class Search {
         this.last_search_text = text;
 
         this.jquery_element.flexdatalist("data", []);
-        this.jquery_element.flexdatalist("noResultsText", 'Loading...');
+        this.jquery_element.flexdatalist("noResultsText", "Loading...");
 
-        rpc.query({
-            model: "res.partner",
-            method: "get_search_tags",
-            args: [text, this.lang],
-        }).then(
+        const args = {
+            tags: text,
+            lang: this.lang,
+        };
+        session.rpc("/website-geoengine/tags", args).then(
             (result) => {
                 const data = [];
                 for (let item of result) {
@@ -328,11 +328,17 @@ class Search {
                 }
                 this.jquery_element.flexdatalist("data", data);
                 $(this.element.parentElement.querySelector("ul input")).keyup();
-                this.jquery_element.flexdatalist("noResultsText", 'No results found for "{keyword}"');
+                this.jquery_element.flexdatalist(
+                    "noResultsText",
+                    'No results found for "{keyword}"'
+                );
             },
             (error) => {
                 console.error(error);
-                this.jquery_element.flexdatalist("noResultsText", 'Error while loading data');
+                this.jquery_element.flexdatalist(
+                    "noResultsText",
+                    "Error while loading data"
+                );
             }
         );
     }
