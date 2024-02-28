@@ -20,11 +20,24 @@ class ResPartner(models.Model):
         #TODO FILTER res_partner on is_store = True AND is_published = True AND website_published = True. And filter category_ids on partners as well
         sql = f"""
         WITH
-            names as (SELECT DISTINCT 'name' as column, name as value FROM res_partner),
-            cities as (SELECT DISTINCT 'city' as column, city as value FROM res_partner),
-            zips as (SELECT DISTINCT 'zip' as column, zip as value FROM res_partner),
-            streets as (SELECT DISTINCT 'street' as column, street as value FROM res_partner),
-            tags as (SELECT DISTINCT 'tag' as column, name->>'{lang}' as value FROM res_partner_category),
+            names as (SELECT DISTINCT 'name' as column, name as value FROM res_partner WHERE type='store'),
+            cities as (SELECT DISTINCT 'city' as column, city as value FROM res_partner WHERE type='store'),
+            zips as (SELECT DISTINCT 'zip' as column, zip as value FROM res_partner WHERE type='store'),
+            streets as (SELECT DISTINCT 'street' as column, street as value FROM res_partner WHERE type='store'),
+            tags as (
+                SELECT DISTINCT 
+                    'tag' as column, 
+                    res_partner_category.name->>'{lang}' as value 
+                FROM 
+                    res_partner_category, 
+                    res_partner_res_partner_category_rel, 
+                    res_partner 
+                WHERE 
+                    res_partner_res_partner_category_rel.partner_id = res_partner.id 
+                    AND 
+                    res_partner_res_partner_category_rel.category_id = res_partner_category.id 
+                    AND res_partner.type='store'
+            ),
             all_tags as (SELECT * FROM names UNION SELECT * FROM cities UNION SELECT * FROM zips UNION SELECT * FROM streets UNION SELECT * FROM tags )
 
         
@@ -39,7 +52,7 @@ class ResPartner(models.Model):
         _logger.info(f"fetch_partner_geoengine: {lang}")
 
         #todo base domaine: is_store
-        domain = [("is_store", "!=", False)]
+        domain = [("type", "=", "store")]
         domain = []
         for field in tags:
             value = tags[field]
