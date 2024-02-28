@@ -48,7 +48,7 @@ class ResPartner(models.Model):
                 raise ValidationError(_("Unauthorized field"))
             domain.append((field.replace('tag', 'category_id.name'), "ilike", value))
         
-        partners = self.search(domain)
+        partners = self.sudo().search(domain)
         features = []
 
         for partner in partners:
