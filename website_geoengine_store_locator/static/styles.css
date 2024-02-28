@@ -9,7 +9,6 @@
     min-width: 15rem;
 }
 .search input {
-    width: 12rem;
     border-color: lightgrey;
     border-width: 1px;
     border-style: solid;
@@ -18,6 +17,7 @@
 .search input:focus {
     outline: none;
 }
+/* Hide the old field */
 .search > .flexdatalist-alias.search-flexdatalist {
     visibility: hidden;
 }

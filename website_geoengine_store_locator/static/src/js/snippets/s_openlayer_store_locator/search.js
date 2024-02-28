@@ -171,6 +171,41 @@ class Search {
      * @type {HTMLInputElement}
      */
     element = undefined;
+    /**
+     * The search input JQuery element
+     * @type {JQuery<HTMLElement>}
+     */
+    jquery_element = undefined;
+    /**
+     * The map
+     * @type {ol.Map}
+     */
+    map = undefined;
+    /**
+     * The stores layer
+     * @type {ol.layer.Vector}
+     */
+    stores = undefined;
+    /**
+     * The format to read the features
+     * @type {ol.format.GeoJSON}
+     */
+    format = undefined;
+    /**
+     * The language of the user
+     * @type {string}
+     */
+    lang = undefined;
+    /**
+     * The input element of the flexdatalist
+     * @type {HTMLInputElement}
+     */
+    jquery_input_element = undefined;
+    /**
+     * The last search text
+     * @type {string}
+     */
+    last_search_text = "";
 
     constructor(element, map, stores) {
         this.element = element;
@@ -270,11 +305,20 @@ class Search {
     }
 
     loadDatas(event, text) {
-        const args = {
-            'tags': text,
-            'lang': this.lang
+        if (text == this.last_search_text) {
+            return;
         }
-        session.rpc('/website-geoengine/tags', args).then((result) => {
+        this.last_search_text = text;
+
+        this.jquery_element.flexdatalist("data", []);
+        this.jquery_element.flexdatalist("noResultsText", 'Loading...');
+
+        rpc.query({
+            model: "res.partner",
+            method: "get_search_tags",
+            args: [text, this.lang],
+        }).then(
+            (result) => {
                 const data = [];
                 for (let item of result) {
                     data.push({
@@ -284,10 +328,11 @@ class Search {
                 }
                 this.jquery_element.flexdatalist("data", data);
                 $(this.element.parentElement.querySelector("ul input")).keyup();
-
+                this.jquery_element.flexdatalist("noResultsText", 'No results found for "{keyword}"');
             },
             (error) => {
                 console.error(error);
+                this.jquery_element.flexdatalist("noResultsText", 'Error while loading data');
             }
         );
     }
