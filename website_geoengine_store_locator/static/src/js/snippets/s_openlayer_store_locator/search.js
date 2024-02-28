@@ -281,6 +281,9 @@ class Search {
                         console.log(this.format.readFeature(feature));
                         storesSource.addFeature(this.format.readFeature(feature));
                     }
+                    if (storesSource.getFeatures().length == 0) {
+                        return;
+                    }
                     const extent = storesSource.getExtent();
                     const addWidth = (extent[2] - extent[0]) / 10;
                     const addHeight = (extent[3] - extent[1]) / 10;
