@@ -1,6 +1,7 @@
 /** @odoo-module **/
 
-import rpc from "web.rpc";
+//import rpc from "web.rpc";
+import session from 'web.session';
 
 /**
  * Create a standard symbol for a POI
@@ -231,15 +232,12 @@ class Search {
                 const value_split = item.split(":");
                 arg[value_split[0]] = value_split[1].trim();
             }
-            const args = [];
-            args.push(arg);
-            args.push(this.lang);
-            rpc.query({
-                model: "res.partner",
-                method: "fetch_partner_geoengine",
-                args: args,
-            }).then(
-                (result) => {
+            const args = {
+                'tags': arg,
+                'lang': this.lang
+            };
+
+            session.rpc('/website-geoengine/partners', args).then((result) => {
                     console.log(result);
                     const storesSource = this.stores.getSource();
                     storesSource.clear();
@@ -271,12 +269,11 @@ class Search {
     }
 
     loadDatas(event, text) {
-        rpc.query({
-            model: "res.partner",
-            method: "get_search_tags",
-            args: [text, this.lang],
-        }).then(
-            (result) => {
+        const args = {
+            'tags': text,
+            'lang': this.lang
+        }
+        session.rpc('/website-geoengine/tags', args).then((result) => {
                 const data = [];
                 for (let item of result) {
                     data.push({
