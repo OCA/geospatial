@@ -19,6 +19,11 @@ msgid "Bing"
 msgstr ""
 
 #. module: geoengine_swisstopo
+#: model:ir.model.fields,field_description:geoengine_swisstopo.field_geoengine_raster_layer__capabilities
+msgid "Capabilities"
+msgstr ""
+
+#. module: geoengine_swisstopo
 #: selection:geoengine.raster.layer,raster_type:0
 msgid "Distant WMS"
 msgstr ""
@@ -29,8 +34,18 @@ msgid "GeoAdmin API documentation"
 msgstr ""
 
 #. module: geoengine_swisstopo
+#: selection:geoengine.raster.layer,matrix_set:0
+msgid "LV03/CH1903 (EPSG:21781)"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: selection:geoengine.raster.layer,matrix_set:0
+msgid "LV95/CH1903+ (EPSG:2056)"
+msgstr ""
+
+#. module: geoengine_swisstopo
 #: model:ir.model.fields,field_description:geoengine_swisstopo.field_geoengine_raster_layer__layername
-msgid "Layer Machine Name"
+msgid "Layer Name"
 msgstr ""
 
 #. module: geoengine_swisstopo
@@ -41,6 +56,11 @@ msgstr ""
 #. module: geoengine_swisstopo
 #: selection:geoengine.raster.layer,raster_type:0
 msgid "OpenStreetMap"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: model:ir.model.fields,field_description:geoengine_swisstopo.field_geoengine_raster_layer__projection
+msgid "Projection"
 msgstr ""
 
 #. module: geoengine_swisstopo
@@ -59,6 +79,11 @@ msgid "See"
 msgstr ""
 
 #. module: geoengine_swisstopo
+#: selection:geoengine.raster.layer,matrix_set:0
+msgid "Spherical Mercator (EPSG:3857, as used in OSM, Bing, Google Map)"
+msgstr ""
+
+#. module: geoengine_swisstopo
 #: selection:geoengine.raster.layer,raster_type:0
 msgid "Swisstopo"
 msgstr ""
@@ -69,13 +94,28 @@ msgid "Swisstopo WMTS options"
 msgstr ""
 
 #. module: geoengine_swisstopo
+#: model:ir.model.fields,field_description:geoengine_swisstopo.field_geoengine_raster_layer__matrix_set
+msgid "TileMatrixSet"
+msgstr ""
+
+#. module: geoengine_swisstopo
 #: model:ir.model.fields,field_description:geoengine_swisstopo.field_geoengine_raster_layer__time
-msgid "Time Dimension"
+msgid "Time Dimension (optional)"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: selection:geoengine.raster.layer,matrix_set:0
+msgid "WGS84 (EPSG:4326, lat-lon)"
 msgstr ""
 
 #. module: geoengine_swisstopo
 #: selection:geoengine.raster.layer,raster_type:0
 msgid "WMTS"
+msgstr ""
+
+#. module: geoengine_swisstopo
+#: model:ir.model.fields,help:geoengine_swisstopo.field_geoengine_raster_layer__projection
+msgid "eg. EPSG:3857"
 msgstr ""
 
 #. module: geoengine_swisstopo
