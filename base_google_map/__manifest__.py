@@ -4,7 +4,7 @@
 {
     'name': 'Google Maps Integration',
     'summary': 'View modes and widgets to integrate Google Maps in your UI',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.1.0',
     'author': 'Open Source Integrators, Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/geospatial',
     'license': 'AGPL-3',

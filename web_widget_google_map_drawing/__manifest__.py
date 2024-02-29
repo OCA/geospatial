@@ -3,7 +3,7 @@
 {
     'name': 'Google Map View Drawing Mixin',
     'summary': 'Add drawing tools to Google Map view in Odoo',
-    'version': '12.0.1.0.0',
+    'version': '12.0.1.1.0',
     'author': 'Yopi Angi, Odoo Community Association (OCA)',
     'website': 'https://github.com/OCA/geospatial',
     'license': 'AGPL-3',
