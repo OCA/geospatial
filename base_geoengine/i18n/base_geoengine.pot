@@ -144,7 +144,7 @@ msgstr ""
 
 #. module: base_geoengine
 #: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__params
-msgid "Dictiorary of values for dimensions as JSON"
+msgid "Dictionary of values for dimensions as JSON"
 msgstr ""
 
 #. module: base_geoengine
@@ -283,6 +283,16 @@ msgstr ""
 #. module: base_geoengine
 #: selection:ir.model.fields,geo_type:0
 msgid "LINESTRING"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,matrix_set:0
+msgid "LV03/CH1903 (EPSG:21781)"
+msgstr ""
+
+#. module: base_geoengine
+#: selection:geoengine.raster.layer,matrix_set:0
+msgid "LV95/CH1903+ (EPSG:2056)"
 msgstr ""
 
 #. module: base_geoengine
@@ -434,6 +444,7 @@ msgid "PostGIs type"
 msgstr ""
 
 #. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__projection
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__projection
 msgid "Projection"
 msgstr ""
@@ -521,6 +532,11 @@ msgid "Service URL"
 msgstr ""
 
 #. module: base_geoengine
+#: selection:geoengine.raster.layer,matrix_set:0
+msgid "Spherical Mercator (EPSG:3857, as used in OSM, Bing, Google Map)"
+msgstr ""
+
+#. module: base_geoengine
 #: selection:geoengine.raster.layer,raster_type:0
 msgid "Swisstopo"
 msgstr ""
@@ -528,6 +544,11 @@ msgstr ""
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__symbol_ids
 msgid "Symbol"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__matrix_set
+msgid "TileMatrixSet"
 msgstr ""
 
 #. module: base_geoengine
@@ -618,6 +639,11 @@ msgid "Views"
 msgstr ""
 
 #. module: base_geoengine
+#: selection:geoengine.raster.layer,matrix_set:0
+msgid "WGS84 (EPSG:4326, lat-lon)"
+msgstr ""
+
+#. module: base_geoengine
 #: selection:geoengine.raster.layer,raster_type:0
 msgid "WMTS"
 msgstr ""
@@ -664,7 +690,7 @@ msgstr ""
 
 #. module: base_geoengine
 #: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__projection
-msgid "eg. EPSG:21781"
+msgid "eg. EPSG:3857"
 msgstr ""
 
 #. module: base_geoengine
@@ -755,11 +781,6 @@ msgid "many2one"
 msgstr ""
 
 #. module: base_geoengine
-#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__matrix_set
-msgid "matrixSet"
-msgstr ""
-
-#. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__max_extent
 msgid "max_extent"
 msgstr ""
@@ -782,11 +803,6 @@ msgstr ""
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params
 msgid "params"
-msgstr ""
-
-#. module: base_geoengine
-#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__projection
-msgid "projection"
 msgstr ""
 
 #. module: base_geoengine
