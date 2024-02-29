@@ -127,7 +127,7 @@ class ResConfigSettings(models.TransientModel):
 
     @api.multi
     def set_values(self):
-        super(ResConfigSettings, self).set_values()
+        super().set_values()
         ICPSudo = self.env['ir.config_parameter'].sudo()
         lang_localization = self._set_google_maps_lang_localization()
         region_localization = self._set_google_maps_region_localization()
@@ -148,7 +148,7 @@ class ResConfigSettings(models.TransientModel):
 
     @api.model
     def get_values(self):
-        res = super(ResConfigSettings, self).get_values()
+        res = super().get_values()
         ICPSudo = self.env['ir.config_parameter'].sudo()
 
         lang_localization = self._get_google_maps_lang_localization()

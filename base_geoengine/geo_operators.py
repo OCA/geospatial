@@ -126,7 +126,7 @@ def geo_search(model, domain=None, geo_domain=None, offset=0,
         return []
 
 
-class GeoOperator(object):
+class GeoOperator:
 
     def __init__(self, geo_field):
         self.geo_field = geo_field

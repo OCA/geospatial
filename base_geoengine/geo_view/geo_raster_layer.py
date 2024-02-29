@@ -41,17 +41,12 @@ class GeoRasterLayer(models.Model):
     matrix_set = fields.Char("matrixSet")
     format_suffix = fields.Char("formatSuffix", help="eg. png")
     request_encoding = fields.Char("requestEncoding", help="eg. REST")
-    projection = fields.Char("projection", help="eg. EPSG:21781")
+    projection = fields.Char("projection", help="eg. EPSG:3857")
     units = fields.Char(help="eg. m")
     resolutions = fields.Char("resolutions")
     max_extent = fields.Char("max_extent")
-    dimensions = fields.Char(
-        "dimensions",
-        help="List of dimensions separated by ','")
-    params = fields.Char(
-        "params",
-        help="Dictiorary of values for dimensions as JSON"
-    )
+    dimensions = fields.Char("dimensions", help="List of dimensions separated by ','")
+    params = fields.Char("params", help="Dictionary of values for dimensions as JSON")
 
     # technical field to display or not layer type
     has_type = fields.Boolean(compute='_compute_has_type')
@@ -86,4 +81,3 @@ class GeoRasterLayer(models.Model):
     @api.onchange('raster_type')
     def onchange_set_wmts_options(self):
         """ Abstract method for WMTS modules to set default options """
-        pass

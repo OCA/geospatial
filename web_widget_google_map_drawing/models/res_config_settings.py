@@ -10,14 +10,14 @@ class ResConfigSettings(models.TransientModel):
 
     @api.multi
     def set_values(self):
-        super(ResConfigSettings, self).set_values()
+        super().set_values()
         ICPSudo = self.env['ir.config_parameter'].sudo()
         libraries = self._set_google_maps_drawing()
         ICPSudo.set_param('google.maps_libraries', libraries)
 
     @api.model
     def get_values(self):
-        res = super(ResConfigSettings, self).get_values()
+        res = super().get_values()
         lib_drawing = self._get_google_maps_drawing()
         res['google_maps_drawing'] = lib_drawing
         return res

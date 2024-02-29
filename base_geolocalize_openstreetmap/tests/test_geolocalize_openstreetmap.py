@@ -6,7 +6,7 @@ import odoo.tests.common as common
 
 class TestGeolocalizeOpenstreetmap(common.TransactionCase):
     def setUp(self):
-        super(TestGeolocalizeOpenstreetmap, self).setUp()
+        super().setUp()
         self.expected_latitude = 50.4311411
         self.expected_longitude = 4.6132813
 
