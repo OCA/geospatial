@@ -441,7 +441,7 @@ var GeoengineView = View.extend(geoengine_common.GeoengineMixin, {
             OpenLayers.ImgPath = "//dr0duaxde13i9.cloudfront.net/theme/dark/";
             this.map = new OpenLayers.Map("the_map", {
                 layers: this.createBackgroundLayers(this.fields_view.geoengine_layers.backgrounds),
-                displayProjection: new OpenLayers.Projection("EPSG:4326"), // Fred should manage projection here
+                displayProjection: new OpenLayers.Projection("EPSG:3857"), // Fred should manage projection here
                 theme: null,
                 controls: [
                     new OpenLayers.Control.KeyboardDefaults(),
