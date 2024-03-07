@@ -19,3 +19,12 @@
 #
 ##############################################################################
 from . import models
+
+
+def pre_init_hook(cr):
+    cr.execute("select find_srid('public', 'res_partner', 'geo_point')")
+    srid = cr.fetchone()[0]
+    if srid != 3857:
+        cr.execute(
+            "ALTER TABLE res_partner DROP COLUMN geo_point"
+        )

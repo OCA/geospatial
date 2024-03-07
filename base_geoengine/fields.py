@@ -42,7 +42,7 @@ class GeoField(Field):
 
     _slots = {
         'dim': 2,
-        'srid': 900913,
+        'srid': 3857,
         'gist_index': True,
     }
 
