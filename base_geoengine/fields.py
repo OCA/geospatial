@@ -10,7 +10,7 @@ from odoo import _, fields
 from odoo.tools import sql
 
 from . import geo_convertion_helper as convert
-from .geo_db import create_geo_column
+from .geo_db import create_geo_column, create_geo_index
 
 logger = logging.getLogger(__name__)
 try:
@@ -157,14 +157,7 @@ class GeoField(fields.Field):
                 )
             )
         if self.gist_index:
-            cr.execute(
-                "SELECT indexname FROM pg_indexes WHERE indexname = %s",
-                (self._postgis_index_name(model._table, self.name),),
-            )
-            index = cr.fetchone()
-            if index:
-                return True
-            self._create_index(cr, model._table, self.name)
+            create_geo_index(cr, model._table, self.name)
         return True
 
     def update_db_column(self, model, column):
@@ -188,6 +181,8 @@ class GeoField(fields.Field):
                 self.dim,
                 self.string,
             )
+            if self.gist_index:
+                create_geo_index(model._cr, model._table, self.name)
             return
 
         if column["udt_name"] == self.column_type[0]:
