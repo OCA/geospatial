@@ -61,7 +61,7 @@ odoo.define("web_view_leaflet_map.MapRenderer", function (require) {
             return this._super.apply(this, arguments).then(function () {
                 window.setTimeout(function () {
                     self.leaflet_map.invalidateSize();
-                }, 1);
+                }, 100);
             });
         },
 
