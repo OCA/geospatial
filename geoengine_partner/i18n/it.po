@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-01-26 08:36+0000\n"
+"PO-Revision-Date: 2024-04-04 11:40+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -60,7 +60,7 @@ msgstr "Sfondo partner"
 #. module: geoengine_partner
 #: model:geoengine.vector.layer,name:geoengine_partner.geoengine_vector_layer_res_partner
 msgid "Partner location"
-msgstr "Posizine partner"
+msgstr "Posizione partner"
 
 #. module: geoengine_partner
 #: model_terms:ir.ui.view,arch_db:geoengine_partner.ir_ui_view_geo_partner
