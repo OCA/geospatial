@@ -10,7 +10,6 @@ import ajax from "web.ajax";
 class OpenLayerMap {
     constructor(element, mapType = "mapnik") {
         const dataset = element.dataset;
-
         const storesSource = new ol.source.Vector();
         const stores = new ol.layer.Vector({
             source: storesSource,
@@ -46,7 +45,12 @@ class OpenLayerMap {
 
         if (mapElement) {
             new Popover(element.querySelector("#popup"), map);
-            new Search(element.querySelector("#search"), map, stores);
+            new Search(
+                element.querySelector("#search"),
+                map,
+                stores,
+                dataset["maxResults"]
+            );
         }
         return this;
     }

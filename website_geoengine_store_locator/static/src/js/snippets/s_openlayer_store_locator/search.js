@@ -207,12 +207,13 @@ class Search {
      */
     last_search_text = "";
 
-    constructor(element, map, stores) {
+    constructor(element, map, stores, maxResults = 200) {
         this.element = element;
         this.jquery_element = $(element);
         this.jquery_element.val("");
 
         this.map = map;
+        this.maxResults = maxResults;
         this.stores = stores;
         this.stores.setStyle(
             new ol.style.Style({
@@ -256,7 +257,6 @@ class Search {
         this.jquery_input_element = element.querySelector("ul input");
         this.jquery_element.on("before:flexdatalist.search", this.loadDatas.bind(this));
         this.jquery_element.on("change:flexdatalist", () => {
-            console.log("select");
             const value = this.jquery_element.flexdatalist("value");
             if (value.length == 0) {
                 this.stores.getSource().clear();
@@ -270,11 +270,16 @@ class Search {
             const args = {
                 tags: arg,
                 lang: this.lang,
+                maxResults: this.maxResults,
             };
 
             session.rpc("/website-geoengine/partners", args).then(
                 (result) => {
                     console.log(result);
+                    if ("error" in result) {
+                        alert(result["message"]);
+                        return;
+                    }
                     const storesSource = this.stores.getSource();
                     storesSource.clear();
                     for (let feature of result) {

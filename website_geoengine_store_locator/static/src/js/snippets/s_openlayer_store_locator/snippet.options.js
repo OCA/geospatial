@@ -62,13 +62,16 @@ options.registry.OpenLayerStoreLocator = options.Class.extend({
 
     async selectDataAttribute(previewMode, widgetValue, params) {
         await this._super(...arguments);
-        if (["mapAddress", "mapType", "mapZoom"].includes(params.attributeName)) {
-            console.log("Change in map options");
+        if (params.attributeName === "maxResults" && previewMode === false) {
+            return (this.$target.get(0).dataset.maxResults = widgetValue);
+        }
+        if (["mapType", "mapZoom"].includes(params.attributeName)) {
+            console.log("Change in map options not implemented yet");
         }
     },
 
     cleanForSave() {
-        this.mapElement.innerHTML = '';
+        this.mapElement.innerHTML = "";
     },
 });
 
