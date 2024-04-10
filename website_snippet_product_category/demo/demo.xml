@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="website_sale.public_category_desks" model="product.public.category">
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+    <record
+        id="website_sale.public_category_furnitures"
+        model="product.public.category"
+    >
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+    <record id="website_sale.public_category_boxes" model="product.public.category">
+        <field name="published_in_product_category_snippet" eval="True" />
+        <field
+            name="image_128"
+            type="base64"
+            file="website_snippet_product_category/static/img/boxes_32.png"
+        />
+    </record>
+    <record id="website_sale.public_category_drawers" model="product.public.category">
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+    <record id="website_sale.public_category_cabinets" model="product.public.category">
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+    <record id="website_sale.public_category_bins" model="product.public.category">
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+    <record id="website_sale.public_category_lamps" model="product.public.category">
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+    <record id="website_sale.services" model="product.public.category">
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+    <record
+        id="website_sale.public_category_multimedia"
+        model="product.public.category"
+    >
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+    <record id="public_category_boxes_metal" model="product.public.category">
+        <field name="name">Metal Box</field>
+        <field name="parent_id" ref="website_sale.public_category_boxes" />
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+    <record id="public_category_boxes_wooden" model="product.public.category">
+        <field name="name">Wooden Box</field>
+        <field name="parent_id" ref="website_sale.public_category_boxes" />
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+    <record id="public_category_boxes_metal_spec_a" model="product.public.category">
+        <field name="name">Spec A</field>
+        <field name="parent_id" ref="public_category_boxes_metal" />
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+    <record id="public_category_boxes_metal_spec_b" model="product.public.category">
+        <field name="name">Spec B</field>
+        <field name="parent_id" ref="public_category_boxes_metal" />
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+    <record
+        id="public_category_boxes_metal_subspec_b_a"
+        model="product.public.category"
+    >
+        <field name="name">SubSpec B - A</field>
+        <field name="parent_id" ref="public_category_boxes_metal_spec_b" />
+        <field name="published_in_product_category_snippet" eval="True" />
+    </record>
+</odoo>
