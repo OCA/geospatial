@@ -207,14 +207,17 @@ class Search {
      */
     last_search_text = "";
 
-    constructor(element, map, stores, maxResults = 200) {
+    constructor(element, map, mapElement, stores, maxResults = 200, mapZoom = -1) {
         this.element = element;
         this.jquery_element = $(element);
         this.jquery_element.val("");
 
         this.map = map;
+        this.mapElement = mapElement;
         this.maxResults = maxResults;
+        this.mapZoom = mapZoom;
         this.stores = stores;
+        this.message = null;
         this.stores.setStyle(
             new ol.style.Style({
                 image: buildIcon(
@@ -265,51 +268,78 @@ class Search {
             const arg = [];
             for (let item of value) {
                 const value_split = item.split(":");
-                arg.push({field: value_split[0], value: value_split[1].trim()});
-            }
-            const args = {
-                tags: arg,
-                lang: this.lang,
-                maxResults: this.maxResults,
-            };
-
-            session.rpc("/website-geoengine/partners", args).then(
-                (result) => {
-                    console.log(result);
-                    if ("error" in result) {
-                        alert(result["message"]);
-                        return;
-                    }
-                    const storesSource = this.stores.getSource();
-                    storesSource.clear();
-                    for (let feature of result) {
-                        console.log(this.format.readFeature(feature));
-                        storesSource.addFeature(this.format.readFeature(feature));
-                    }
-                    if (storesSource.getFeatures().length == 0) {
-                        return;
-                    }
-                    const extent = storesSource.getExtent();
-                    const addWidth = (extent[2] - extent[0]) / 10;
-                    const addHeight = (extent[3] - extent[1]) / 10;
-                    if (addWidth == 0 && addHeight == 0) {
-                        this.map.getView().setCenter([extent[0], extent[1]]);
-                    } else {
-                        this.map
-                            .getView()
-                            .fit([
-                                extent[0] - addWidth,
-                                extent[1] - addHeight,
-                                extent[2] + addWidth,
-                                extent[3] + addHeight,
-                            ]);
-                    }
-                },
-                (error) => {
-                    console.log(error);
+                if (value_split.length == 2) {
+                    arg.push({field: value_split[0], value: value_split[1].trim()});
                 }
-            );
+            }
+
+            this.loadPartners(arg);
         });
+
+        this.loadPartners([], true);
+    }
+
+    loadPartners(tags, firstTime = false) {
+        if (this.message != null) {
+            this.mapElement.removeChild(this.message[0]);
+            this.message = null;
+        }
+
+        const args = {
+            tags: tags,
+            lang: this.lang,
+            maxResults: this.maxResults,
+        };
+
+        session.rpc("/website-geoengine/partners", args).then(
+            (result) => {
+                if ("error" in result) {
+                    this.message = $("<div>", {});
+                    this.message.addClass('message');
+                    this.message.click(() => {
+                        this.mapElement.removeChild(this.message[0]);
+                        this.message = null;
+                    });
+                    if (firstTime) {
+                        this.message.text("Use the search field to find a store");
+                    } else {
+                        this.message.text(
+                            "Too many results, please refine your search"
+                        );
+                    }
+                    $(this.mapElement).append(this.message);
+                    this.map.getView().setZoom(this.mapZoom);
+                    return;
+                }
+                const storesSource = this.stores.getSource();
+                storesSource.clear();
+                for (let feature of result) {
+                    console.log(this.format.readFeature(feature));
+                    storesSource.addFeature(this.format.readFeature(feature));
+                }
+                if (storesSource.getFeatures().length == 0) {
+                    return;
+                }
+                const extent = storesSource.getExtent();
+                const addWidth = (extent[2] - extent[0]) / 10;
+                const addHeight = (extent[3] - extent[1]) / 10;
+                if (addWidth == 0 && addHeight == 0) {
+                    this.map.getView().setCenter([extent[0], extent[1]]);
+                } else {
+                    this.map
+                        .getView()
+                        .fit([
+                            extent[0] - addWidth,
+                            extent[1] - addHeight,
+                            extent[2] + addWidth,
+                            extent[3] + addHeight,
+                        ]);
+                }
+            },
+            (error) => {
+                console.log(error);
+            }
+        );
     }
 
     loadDatas(event, text) {
@@ -317,6 +347,11 @@ class Search {
             return;
         }
         this.last_search_text = text;
+
+        if (this.message != null) {
+            this.mapElement.removeChild(this.message[0]);
+            this.message = null;
+        }
 
         this.jquery_element.flexdatalist("data", []);
         this.jquery_element.flexdatalist("noResultsText", "Loading...");

@@ -48,8 +48,10 @@ class OpenLayerMap {
             new Search(
                 element.querySelector("#search"),
                 map,
+                mapElement,
                 stores,
-                dataset["maxResults"]
+                dataset.maxResults,
+                dataset.mapZoom
             );
         }
         return this;

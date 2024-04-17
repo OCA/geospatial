@@ -33,3 +33,14 @@
     border-style: solid;
     padding: 0.2rem 0.4rem;
 }
+.message {
+    position: absolute;
+    width: 20%;
+    z-index: 999;
+    top: 1rem;
+    left: 40%;
+    background: white;
+    border: rgb(211, 211, 211) solid 1px;
+    padding: .5rem;
+    text-align: center;
+}
