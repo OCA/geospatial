@@ -41,7 +41,7 @@ class GeoRasterLayer(models.Model):
     def _get_projection(self):
         for record in self:
             if record.raster_type == "swisstopo":
-                record.projection = f"EPSG:{record.matrix_set}"
+                record.projection = "EPSG:{}".format(record.matrix_set)
             else:
                 record.projection = False
 
