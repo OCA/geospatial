@@ -66,7 +66,7 @@ def create_geo_column(cr, tablename, columnname, geotype, srid, dim, comment=Non
     if comment:
         # pylint: disable=E8103
         cr.execute(
-            'COMMENT ON COLUMN "{}"."{}" IS %s'.format(tablename, columnname),
+            f'COMMENT ON COLUMN "{tablename}"."{columnname}" IS %s',
             (comment,),
         )
     _schema.debug(
@@ -75,7 +75,7 @@ def create_geo_column(cr, tablename, columnname, geotype, srid, dim, comment=Non
 
 
 def _postgis_index_name(table, col_name):
-    return "{}_{}_gist_index".format(table, col_name)
+    return f"{table}_{col_name}_gist_index"
 
 
 def create_geo_index(cr, columnname, tablename):
@@ -84,9 +84,5 @@ def create_geo_index(cr, columnname, tablename):
     if sql.index_exists(cr, indexname):
         return
     # pylint: disable=E8103
-    cr.execute(
-        "CREATE INDEX {} ON {} USING GIST ( {} )".format(
-            indexname, tablename, columnname
-        )
-    )
+    cr.execute(f"CREATE INDEX {indexname} ON {tablename} USING GIST ( {columnname} )")
     _schema.debug("Table %r: created index %r", tablename, indexname)
