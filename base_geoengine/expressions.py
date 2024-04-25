@@ -36,7 +36,7 @@ def __leaf_to_sql(self, leaf, model, alias):
     """
     left, operator, right = leaf
 
-    if isinstance(leaf, (list, tuple)):
+    if isinstance(leaf, list | tuple):
         current_field = model._fields.get(left)
         current_operator = GeoOperator(current_field)
         if current_field and isinstance(current_field, GeoField):

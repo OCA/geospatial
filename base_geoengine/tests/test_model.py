@@ -13,7 +13,7 @@ from ..fields import GeoPoint
 class TestModel(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        super(TestModel, cls).setUpClass()
+        super().setUpClass()
         cls.loader = FakeModelLoader(cls.env, cls.__module__)
         cls.loader.backup_registry()
 
@@ -144,7 +144,7 @@ class TestModel(TransactionCase):
     @classmethod
     def tearDownClass(cls):
         cls.loader.restore_registry()
-        super(TestModel, cls).tearDownClass()
+        super().tearDownClass()
 
     def test_create_multipolygon_wkt_format(self):
         """Create a multi polygon"""
@@ -673,7 +673,6 @@ class TestModel(TransactionCase):
         self.assertAlmostEqual(geo_point.y, expected_coordinates[1], 4)
 
     def test_to_lat_lon(self):
-
         geo_point = '{ "type": "Point", "coordinates": [601179.61612, 6399375.681364] }'
 
         longitude, latitude = GeoPoint.to_latlon(self.env.cr, geo_point)

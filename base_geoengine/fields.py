@@ -53,7 +53,7 @@ class GeoField(fields.Field):
 
     def convert_to_cache(self, value, record, validate=True):
         val = value
-        if isinstance(val, (bytes, str)):
+        if isinstance(val, bytes | str):
             try:
                 int(val, 16)
             except Exception:
