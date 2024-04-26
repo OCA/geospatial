@@ -4,16 +4,15 @@
  * Copyright 2023 ACSONE SA/NV
  */
 
-import {registry} from "@web/core/registry";
-import {_lt} from "@web/core/l10n/translation";
-import {DomainSelectorFieldInput} from "@web/core/domain_selector/fields/domain_selector_field_input";
+import {Component} from "@odoo/owl";
+import {DomainSelectorFieldInput} from "../domain_selector_field_input/domain_selector_field_input.esm";
 import {DomainSelectorFieldInputForActiveIds} from "../domain_selector_field_input_for_active_ids/domain_selector_field_input_for_active_ids.esm";
-import {DomainSelectorFieldInputWithTags} from "@web/core/domain_selector/fields/domain_selector_field_input_with_tags";
+import {DomainSelectorFieldInputWithTags} from "../domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.esm";
+import {_lt} from "@web/core/l10n/translation";
 import {onDidChange} from "../domain_selector_operators.esm";
+import {registry} from "@web/core/registry";
 
 const dso = registry.category("domain_selector/operator");
-
-import {Component} from "@odoo/owl";
 
 /**
  * This method is extended from DomainSelectorNumberField to add some operators

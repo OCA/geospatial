@@ -4,14 +4,13 @@
  * Copyright 2023 ACSONE SA/NV
  */
 
+import {Component, onWillStart, onWillUpdateProps, useState} from "@odoo/owl";
+import {Domain} from "@web/core/domain";
+import {DomainSelectorGeoFieldDialog} from "../domain_selector_geo_field_dialog/domain_selector_geo_field_dialog.esm";
 import {ModelFieldSelector} from "@web/core/model_field_selector/model_field_selector";
 import {ModelSelector} from "@web/core/model_selector/model_selector";
-import {Domain} from "@web/core/domain";
 import {evaluate} from "@web/core/py_js/py_interpreter";
 import {useOwnedDialogs} from "@web/core/utils/hooks";
-import {DomainSelectorGeoFieldDialog} from "../domain_selector_geo_field_dialog/domain_selector_geo_field_dialog.esm";
-
-import {Component, onWillStart, onWillUpdateProps, useState} from "@odoo/owl";
 
 /**
  * This class correspond to the value of the right operand when a geo_field has
@@ -91,7 +90,7 @@ export class DomainSelectorGeoFieldInput extends Component {
      */
     display() {
         const initialValue =
-            this.state.domain !== undefined ? this.state.domain.toString() : "[]";
+            this.state.domain === undefined ? "[]" : this.state.domain.toString();
         this.addDialog(DomainSelectorGeoFieldDialog, {
             resModel: this.state.resModel,
             initialValue,

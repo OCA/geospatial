@@ -5,14 +5,14 @@
  */
 
 import {CheckBox} from "@web/core/checkbox/checkbox";
-import {rasterLayersStore} from "../../../raster_layers_store.esm";
-import {vectorLayersStore} from "../../../vector_layers_store.esm";
-import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
+import {Component, onWillStart, useRef, useState} from "@odoo/owl";
 import {DomainSelectorGeoFieldDialog} from "../../../widgets/domain_selector_geo_field/domain_selector_geo_field_dialog/domain_selector_geo_field_dialog.esm";
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
-import {useSortable} from "@web/core/utils/sortable";
-
-import {Component, onWillStart, useRef, useState} from "@odoo/owl";
+import {_t} from "@web/core/l10n/translation";
+import {rasterLayersStore} from "../../../raster_layers_store.esm";
+import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
+import {useSortable} from "@web/core/utils/sortable_owl";
+import {vectorLayersStore} from "../../../vector_layers_store.esm";
 
 export class LayersPanel extends Component {
     setup() {
@@ -23,7 +23,6 @@ export class LayersPanel extends Component {
         this.user = useService("user");
         this.state = useState({geoengineLayers: {}, isFolded: false});
         this.addDialog = useOwnedDialogs();
-        let dataRowId = "";
 
         /**
          * Call the model method "get_geoengine_layers" to get all the layers
@@ -46,19 +45,30 @@ export class LayersPanel extends Component {
             vectorLayersStore.setVectors(this.state.geoengineLayers.actives);
             this.numberOfLayers = vectorLayersStore.count + rasterLayersStore.count;
         });
-
         /**
          * Allows you to change the priority of the layer by sliding them over each other
          */
+        let dataRowId = "";
         useSortable({
             ref: useRef("root"),
             elements: ".item",
             handle: ".fa-sort",
-            onDragStart({element}) {
+            onDragStart: (params) => {
+                const {element} = params;
                 dataRowId = element.dataset.id;
+                this.sortStart(params);
             },
+            onDragEnd: (params) => this.sortStop(params),
             onDrop: (params) => this.sort(dataRowId, params),
         });
+    }
+
+    sortStart({element}) {
+        element.classList.add("shadow");
+    }
+
+    sortStop({element}) {
+        element.classList.remove("shadow");
     }
 
     async loadIsAdmin() {
@@ -127,16 +137,22 @@ export class LayersPanel extends Component {
      * This is called when a raster layer is changed. The raster layer is set to visible and then
      * the method notifies the store of the change.
      * @param {*} layer
+     * @param {*} value
      */
-    onRasterChange(layer) {
+    onRasterChange(layer, value) {
+        const rasterLayer = rasterLayersStore.getRaster(layer.id);
+        if (value) {
+            Object.assign(rasterLayer, {...value});
+        }
+
         const indexRaster = rasterLayersStore.rastersLayers.findIndex(
             (raster) => raster.name === layer.name
         );
         const newRasters = rasterLayersStore.rastersLayers.map((item, index) => {
-            if (index !== indexRaster) {
-                item.isVisible = false;
-            } else {
+            if (index === indexRaster) {
                 item.isVisible = true;
+            } else {
+                item.isVisible = false;
             }
             return item;
         });
@@ -151,23 +167,25 @@ export class LayersPanel extends Component {
      * @param {*} value
      */
     async onVectorChange(layer, action, value) {
-        vectorLayersStore.vectorsLayers.forEach((layer) => {
-            layer.onDomainChanged = false;
-            layer.onLayerChanged = false;
-            layer.onSequenceChanged = false;
+        vectorLayersStore.vectorsLayers.forEach((lay) => {
+            lay.onDomainChanged = false;
+            lay.onLayerChanged = false;
+            lay.onSequenceChanged = false;
         });
         const vectorLayer = vectorLayersStore.getVector(layer.resId);
         switch (action) {
-            case "onDomainChanged":
+            case "onDomainChanged": {
                 Object.assign(vectorLayer, {
                     model_domain: value,
                     onDomainChanged: true,
                 });
                 break;
-            case "onVisibleChanged":
+            }
+            case "onVisibleChanged": {
                 Object.assign(vectorLayer, {isVisible: value, onVisibleChanged: true});
                 break;
-            case "onLayerChanged":
+            }
+            case "onLayerChanged": {
                 const geo_field_id = await this.orm.call(
                     vectorLayer.resModel,
                     "set_field_real_name",
@@ -182,7 +200,8 @@ export class LayersPanel extends Component {
                 value.attribute_field_id = attribute_field_id;
                 Object.assign(vectorLayer, {...value, onLayerChanged: true});
                 break;
-            case "onSequenceChanged":
+            }
+            case "onSequenceChanged": {
                 if (vectorLayer !== undefined) {
                     Object.assign(vectorLayer, {
                         sequence: value,
@@ -190,6 +209,7 @@ export class LayersPanel extends Component {
                     });
                 }
                 break;
+            }
         }
     }
 
@@ -201,7 +221,7 @@ export class LayersPanel extends Component {
             isDebugMode: Boolean(this.env.debug),
             model: vector,
             onSelected: (value) => this.onEditFilterDomainChanged(vector, value),
-            title: this.env._t("Domain editing"),
+            title: _t("Domain editing"),
         });
     }
 
@@ -223,11 +243,24 @@ export class LayersPanel extends Component {
 
         this.addDialog(FormViewDialog, {
             resModel: vector.resModel,
-            title: this.env._t("Editing vector layer"),
+            title: _t("Editing vector layer"),
             viewId: view.view_id[0],
             resId: vector.resId,
             onRecordSaved: (record) =>
                 this.onVectorChange(vector, "onLayerChanged", record.data),
+        });
+    }
+
+    async onEditRasterButtonSelected(layer) {
+        const view = await this.rpc("/web/action/load", {
+            action_id: "base_geoengine.geo_engine_form_view_raster_action",
+        });
+        this.addDialog(FormViewDialog, {
+            resModel: "geoengine.raster.layer",
+            title: _t("Editing Raster Layer"),
+            viewId: view.view_id[0],
+            resId: layer.id,
+            onRecordSaved: (record) => this.onRasterChange(layer, record.data),
         });
     }
     /**
@@ -235,6 +268,21 @@ export class LayersPanel extends Component {
      */
     fold() {
         this.state.isFolded = !this.state.isFolded;
+    }
+
+    async openNewRaster() {
+        // Commented this for now
+        // Unable to dynamically add new raster or reload the UI after saving
+        // this.actionService.doAction({
+        //     type: "ir.actions.act_window",
+        //     res_model: "geoengine.raster.layer",
+        //     views: [[false, "form"]],
+        //     target: "new",
+        //     context: {edit: false, create: false},
+        // });
+
+        // for now, redirect to raster tree
+        this.actionService.doAction("base_geoengine.geo_engine_view_rater_action");
     }
 }
 

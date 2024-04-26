@@ -10,6 +10,7 @@ import {INFO_BOX_ATTRIBUTE} from "../geoengine_arch_parser.esm";
 import {registry} from "@web/core/registry";
 import {useViewCompiler} from "@web/views/view_compiler";
 import {Component, onWillUpdateProps} from "@odoo/owl";
+import {useService} from "@web/core/utils/hooks";
 
 const formatters = registry.category("formatters");
 
@@ -25,10 +26,12 @@ export class GeoengineRecord extends Component {
      * Setup the record by compiling the arch and the info-box template.
      */
     setup() {
-        const {archInfo, templates} = this.props;
-        const {arch} = archInfo;
-        const ViewCompiler = this.constructor.Compiler;
-        this.templates = useViewCompiler(ViewCompiler, arch, templates);
+        this.user = useService("user");
+        const {Compiler, templates} = this.props;
+        const ViewCompiler = Compiler || this.constructor.Compiler;
+
+        this.templates = useViewCompiler(ViewCompiler, templates);
+
         this.createRecord(this.props);
         onWillUpdateProps(this.createRecord);
     }
@@ -48,9 +51,21 @@ export class GeoengineRecord extends Component {
             };
         }
     }
+
+    get renderingContext() {
+        return {
+            context: this.props.record.context,
+            JSON,
+            record: this.props.record,
+            read_only_mode: this.props.readonly,
+            selection_mode: this.props.forceGlobalClick,
+            user_context: this.user.context,
+            __comp__: Object.assign(Object.create(this), {this: this}),
+        };
+    }
 }
 
-GeoengineRecord.template = "base_geoengine_GeoengineRecord";
+GeoengineRecord.template = "base_geoengine.GeoengineRecord";
 GeoengineRecord.Compiler = GeoengineCompiler;
 GeoengineRecord.components = {Field};
 GeoengineRecord.INFO_BOX_ATTRIBUTE = INFO_BOX_ATTRIBUTE;
