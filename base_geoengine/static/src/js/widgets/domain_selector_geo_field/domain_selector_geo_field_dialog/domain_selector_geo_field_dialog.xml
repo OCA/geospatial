@@ -4,7 +4,6 @@
         t-name="base_geoengine.DomainSelectorGeoFieldDialog"
         t-inherit="web.DomainSelectorDialog"
         t-inherit-mode="primary"
-        owl="1"
     >
     </t>
 </templates>

@@ -1,5 +1,6 @@
 .scroller {
-    overflow-y: scroll;
+    overflow-x: clip;
+    overflow-y: auto;
     scrollbar-width: auto;
 }
 
