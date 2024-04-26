@@ -314,8 +314,8 @@ msgstr "¿Es una capa de superposición?"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__linestring
-msgid "LINESTRING"
-msgstr "SECUENCIA DE LÍNEAS"
+msgid "LineString"
+msgstr "Secuencia de líneas"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer____last_update
@@ -393,18 +393,18 @@ msgstr "Lista de dimensiones separadas por ','"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multilinestring
-msgid "MULTILINESTRING"
-msgstr "CADENA MULTILÍNEA"
+msgid "MultiLineString"
+msgstr "Cadena multilínea"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multipoint
-msgid "MULTIPOINT"
-msgstr "PUNTO MÚLTIPLE"
+msgid "MultiPoint"
+msgstr "Punto Múltiple"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multipolygon
-msgid "MULTIPOLYGON"
-msgstr "MULTIPOLÍGONO"
+msgid "MultiPolygon"
+msgstr "Multipolígono"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__matrix_set
@@ -508,17 +508,17 @@ msgstr "OpenStreetMap"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__point
-msgid "POINT"
-msgstr "PUNTO"
+msgid "Point"
+msgstr "Punto"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__polygon
-msgid "POLYGON"
-msgstr "POLÍGONO"
+msgid "Polygon"
+msgstr "Polígono"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params
-#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params_wms
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
 msgid "Params"
 msgstr "Parámetros"
 

@@ -6,7 +6,7 @@ import string
 
 from odoo.osv import expression
 from odoo.osv.expression import TERM_OPERATORS
-from odoo.tools import Query
+from odoo.tools import SQL, Query
 
 from .fields import GeoField
 from .geo_operators import GeoOperator
@@ -35,7 +35,6 @@ def __leaf_to_sql(self, leaf, model, alias):
     geo_operators into the Odoo search method.
     """
     left, operator, right = leaf
-
     if isinstance(leaf, list | tuple):
         current_field = model._fields.get(left)
         current_operator = GeoOperator(current_field)
@@ -89,7 +88,7 @@ def __leaf_to_sql(self, leaf, model, alias):
                 query = get_geo_func(
                     current_operator, operator, left, right, params, model._table
                 )
-            return query, params
+            return SQL(query, *params)
         return original__leaf_to_sql(self, leaf=leaf, model=model, alias=alias)
 
 

@@ -23,3 +23,6 @@ export class SearchBarRecords extends Component {
 }
 
 SearchBarRecords.template = "base_geoengine.SearchBarRecords";
+SearchBarRecords.props = {
+    onInputKeyup: {type: Function},
+};

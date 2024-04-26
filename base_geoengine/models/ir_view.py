@@ -28,3 +28,8 @@ class IrUIView(models.Model):
     )
     default_zoom = fields.Integer("Default map zoom")
     restricted_extent = fields.Char("Restricted map extent")
+
+    def _is_qweb_based_view(self, view_type):
+        if view_type == "geoengine":
+            return True
+        return super()._is_qweb_based_view(view_type)
