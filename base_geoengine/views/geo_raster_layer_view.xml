@@ -7,6 +7,7 @@
         <field name="arch" type="xml">
             <form string="Raster Layer View">
                 <sheet>
+                    <field name="id" invisible="1" />
                     <group string="General" col="4">
                         <field name="name" />
                         <field name="view_id" />
@@ -18,67 +19,34 @@
                             name="url"
                             colspan="4"
                             widget="url"
-                            attrs="{'required': ['|',('is_wmts', '=', True),('is_wms', '=', True)]}"
+                            required="is_wmts or is_wms"
                         />
+                        <field name="opacity" />
                     </group>
                     <field name="is_wmts" invisible="1" />
-                    <group
-                        string="WMTS options"
-                        attrs="{'invisible': [('is_wmts', '=', False)]}"
-                        colspan="4"
-                    >
-                        <field
-                            name="matrix_set"
-                            attrs="{'required': [('is_wmts', '=', True)]}"
-                        />
-                        <field
-                            name="format_suffix"
-                            attrs="{'required': [('is_wmts', '=', True)]}"
-                        />
+                    <group string="WMTS options" invisible="not is_wmts" colspan="4">
+                        <field name="matrix_set" required="is_wmts" />
+                        <field name="format_suffix" required="is_wmts" />
                         <field name="request_encoding" />
-                        <field
-                            name="projection"
-                            attrs="{'required': [('is_wmts', '=', True)]}"
-                        />
+                        <field name="projection" required="is_wmts" />
                         <field name="units" /> <!-- Not used -->
-                        <field
-                            name="resolutions"
-                            attrs="{'required': [('is_wmts', '=', True)]}"
-                        />
+                        <field name="resolutions" required="is_wmts" />
                         <field name="max_extent" />
                         <field name="dimensions" />
                         <field name="params" />
                     </group>
                     <field name="is_wms" invisible="1" />
-                    <group
-                        string="WMS options"
-                        attrs="{'invisible': [('is_wms', '=', False)]}"
-                        colspan="4"
-                    >
-                        <field
-                            name="params_wms"
-                            attrs="{'required': [('is_wms', '=', True)]}"
-                        />
-                        <field
-                            name="server_type"
-                            attrs="{'required': [('is_wms', '=', True)]}"
-                        />
+                    <group string="WMS options" invisible="not is_wms" colspan="4">
+                        <field name="params_wms" required="is_wms" string="Params" />
+                        <field name="server_type" required="is_wms" />
                     </group>
                     <field name="has_type" invisible="1" />
-                    <group
-                        string="Layer data"
-                        attrs="{'invisible': [('has_type', '=', False)]}"
-                        colspan="4"
-                    >
-                        <field
-                            name="type_id"
-                            widget="selection"
-                            attrs="{'required': [('has_type', '=', True)]}"
-                        />
+                    <group string="Layer data" invisible="not has_type" colspan="4">
+                        <field name="type_id" widget="selection" required="has_type" />
                     </group>
                     <group
                         string="Odoo layer data (Not implemented)"
-                        attrs="{'invisible': [('raster_type', '!=', 'odoo')]}"
+                        invisible="raster_type != 'odoo'"
                         colspan="4"
                     >
                         <field name="field_id" />
@@ -106,6 +74,14 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">geoengine.raster.layer</field>
         <field name="view_id" ref="geo_raster_view_tree" />
+    </record>
+
+    <record id="geo_engine_form_view_raster_action" model="ir.actions.act_window">
+        <field name="name">Raster Layer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">geoengine.raster.layer</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="geo_raster_view_form" />
     </record>
 
     <menuitem

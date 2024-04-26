@@ -27,12 +27,12 @@ GEO_TYPES_ONDELETE = {
 }
 
 POSTGIS_GEO_TYPES = [
-    ("POINT", "POINT"),
-    ("MULTIPOINT", "MULTIPOINT"),
-    ("LINESTRING", "LINESTRING"),
-    ("MULTILINESTRING", "MULTILINESTRING"),
-    ("POLYGON", "POLYGON"),
-    ("MULTIPOLYGON", "MULTIPOLYGON"),
+    ("Point", "Point"),
+    ("MultiPoint", "MultiPoint"),
+    ("LineString", "LineString"),
+    ("MultiLineString", "MultiLineString"),
+    ("Polygon", "Polygon"),
+    ("MultiPolygon", "MultiPolygon"),
 ]
 
 

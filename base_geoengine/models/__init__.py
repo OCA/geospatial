@@ -18,6 +18,7 @@
 #
 ##############################################################################
 """Module that manages map view and vector/raster layer"""
+
 from . import base
 from . import geo_raster_layer
 from . import geo_vector_layer

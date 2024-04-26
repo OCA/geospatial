@@ -311,8 +311,8 @@ msgstr "È livello in sovraimpressione?"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__linestring
-msgid "LINESTRING"
-msgstr "LINESTRING"
+msgid "LineString"
+msgstr ""
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer____last_update
@@ -390,18 +390,18 @@ msgstr "Elenco dimensioni separate da ','"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multilinestring
-msgid "MULTILINESTRING"
-msgstr "MULTILINESTRING"
+msgid "MultiLineString"
+msgstr ""
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multipoint
-msgid "MULTIPOINT"
-msgstr "MULTIPOINT"
+msgid "MultiPoint"
+msgstr ""
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multipolygon
-msgid "MULTIPOLYGON"
-msgstr "MULTIPOLYGON"
+msgid "MultiPolygon"
+msgstr ""
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__matrix_set
@@ -505,17 +505,17 @@ msgstr "OpenStreetMap"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__point
-msgid "POINT"
-msgstr "POINT"
+msgid "Point"
+msgstr ""
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__polygon
-msgid "POLYGON"
-msgstr "POLYGON"
+msgid "Polygon"
+msgstr ""
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params
-#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params_wms
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
 msgid "Params"
 msgstr "Parametri"
 

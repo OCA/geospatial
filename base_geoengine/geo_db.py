@@ -1,6 +1,7 @@
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 """Helper to setup Postgis"""
+
 import logging
 
 from odoo import _
@@ -11,12 +12,13 @@ logger = logging.getLogger("geoengine.sql")
 _schema = logging.getLogger("odoo.schema")
 
 
-def init_postgis(cr):
+def init_postgis(env):
     """Initialize postgis
     Add PostGIS support to the database. PostGIS is a spatial database
     extender for PostgreSQL object-relational database. It adds support for
     geographic objects allowing location queries to be run in SQL.
     """
+    cr = env.cr
     cr.execute(
         """
         SELECT

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <templates>
-    <t t-name="base_geoengine.RecordsPanel" owl="1">
+    <t t-name="base_geoengine.RecordsPanel">
         <div
-            class="menu border-end scroller"
-            t-attf-class="{{ state.isFolded ? 'o_layer_panel_fold ' : 'o_layer_panel bg-view' }}"
+            class="menu border-end"
+            t-attf-class="{{ state.isFolded ? 'o_layer_panel_fold' : 'o_layer_panel bg-view scroller' }}"
         >
             <div
                 class="w-100 d-flex"

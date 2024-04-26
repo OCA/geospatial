@@ -91,6 +91,7 @@ class GeoVectorLayer(models.Model):
         compute="_compute_model_view_id",
         readonly=False,
     )
+    layer_transparent = fields.Boolean()
 
     @api.constrains("geo_field_id", "model_id")
     def _check_geo_field_id(self):

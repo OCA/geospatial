@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <templates>
-    <t t-name="base_geoengine.LayersPanel" owl="1">
+    <t t-name="base_geoengine.LayersPanel">
         <div
             class="menu border-end"
             t-attf-class="{{ state.isFolded ? 'o_layer_panel_fold ' : 'o_layer_panel bg-view' }}"
@@ -67,6 +67,14 @@
                         class="o_search_panel_section_header pt-4 pb-2 text-uppercase cursor-default"
                     >
                         <span class="fs-6 fw-bold">Rasters</span>
+
+                        <button
+                            t-if="isGeoengineAdmin"
+                            class="btn btn-edit"
+                            t-on-click="openNewRaster"
+                        >
+                            <i class="fa fa-plus text-primary" />
+                        </button>
                     </header>
                     <ul class="raster list-group d-block o_search_panel_field">
                         <li
@@ -89,6 +97,13 @@
                                     t-att-for="layer.name"
                                     t-esc="layer.name"
                                 />
+                                <button
+                                    t-if="isGeoengineAdmin"
+                                    class="btn btn-edit"
+                                    t-on-click.prevent="() => this.onEditRasterButtonSelected(layer)"
+                                >
+                                    <i class="fa fa-edit text-primary" />
+                                </button>
                             </div>
                         </li>
                     </ul>

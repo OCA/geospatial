@@ -389,7 +389,7 @@
     left: 0.5em;
 }
 
-.form-check {
+.o_layer_panel .form-check {
     display: block;
     min-height: 1.625rem;
     padding-left: 0;

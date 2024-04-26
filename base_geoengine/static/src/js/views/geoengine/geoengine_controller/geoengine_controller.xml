@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <templates>
-    <t t-name="base_geoengine.GeoengineController" owl="1">
+    <t t-name="base_geoengine.GeoengineController">
         <Layout display="props.display" className="'h-100'">
+            <t t-set-slot="layout-actions">
+                <SearchBar
+                    t-if="searchBarToggler.state.showSearchBar"
+                    autofocus="firstLoad"
+                />
+            </t>
             <t t-set-slot="layout-buttons">
                 <t t-if="model.root.editedRecord">
                     <button
@@ -16,7 +22,7 @@
                         type="button"
                         class="btn btn-secondary o_list_button_discard"
                         data-hotkey="j"
-                        t-on-click="onClickDiscard"
+                        t-on-click.stop="onClickDiscard"
                     >
                         Discard
                     </button>

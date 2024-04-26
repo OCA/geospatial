@@ -4,7 +4,7 @@ import {reactive} from "@odoo/owl";
 class VectorLayersStore {
     /**
      * Set vector layers to the store.
-     * @param {*} rasters
+     * @param {*} vectors
      */
     setVectors(vectors) {
         const newVectors = vectors.map((vector) => {

@@ -3,8 +3,8 @@
 /**
  * Copyright 2023 ACSONE SA/NV
  */
-import {useService} from "@web/core/utils/hooks";
 import {SearchBarRecords} from "./search_bar_records/search_bar_records.esm";
+import {useService} from "@web/core/utils/hooks";
 
 import {
     Component,
@@ -47,9 +47,7 @@ export class RecordsPanel extends Component {
      * @param {*} record
      */
     onDisplayPopupRecord(record) {
-        const rec = this.props.list.records.find(
-            (val) => val._values.id === record.resId
-        );
+        const rec = this.props.list.records.find((val) => val.id === record.id);
         this.state.isClicked = record.resId;
         this.props.onDisplayPopupRecord(rec);
     }
@@ -67,7 +65,7 @@ export class RecordsPanel extends Component {
      * This method allows you to filter items according to the value passed in parameter.
      * @param {*} value
      * @param {*} items
-     * @returns
+     * @returns {*}
      */
     filterItems(value, items) {
         const lowerValue = value.toLowerCase();
@@ -78,4 +76,10 @@ export class RecordsPanel extends Component {
 }
 
 RecordsPanel.template = "base_geoengine.RecordsPanel";
+RecordsPanel.props = {
+    list: {type: Object},
+    onDisplayPopupRecord: {type: Function},
+    zoomOnFeature: {type: Function},
+    zoomOutOnFeature: {type: Function},
+};
 RecordsPanel.components = {SearchBarRecords};
