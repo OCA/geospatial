@@ -51,9 +51,7 @@ class ResPartner(models.Model):
         _logger.info(f"fetch_partner_geoengine: {tags}")
         _logger.info(f"fetch_partner_geoengine: {lang}")
 
-        # todo base domaine: is_store
         domain = [("type", "=", "store")]
-        domain = []
         for tag in tags:
             field, value = tag.values()
             _logger.info(f"fetch_partner_geoengine: {field}: {value}")
