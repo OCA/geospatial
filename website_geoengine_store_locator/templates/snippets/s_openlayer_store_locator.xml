@@ -36,38 +36,6 @@
                     data-attribute-name="maxResults"
                     placeholder="200"
                 />
-            <we-select string="Type" data-attribute-name="mapType">
-                <we-button data-select-data-attribute="mapnik">Standard</we-button>
-                <we-button data-select-data-attribute="cyclemap">Cycle Map</we-button>
-                <we-button data-select-data-attribute="cyclosm">CyclOSM</we-button>
-                <we-button data-select-data-attribute="hot">Humanitarian</we-button>
-            </we-select>
-            <we-select
-                    string="Zoom"
-                    data-select-data-attribute="12"
-                    data-attribute-name="mapZoom"
-                >
-                <we-button data-select-data-attribute="21">2.5 m</we-button>
-                <we-button data-select-data-attribute="20">5 m</we-button>
-                <we-button data-select-data-attribute="19">10 m</we-button>
-                <we-button data-select-data-attribute="18">20 m</we-button>
-                <we-button data-select-data-attribute="17">50 m</we-button>
-                <we-button data-select-data-attribute="16">100 m</we-button>
-                <we-button data-select-data-attribute="15">200 m</we-button>
-                <we-button data-select-data-attribute="14">400 m</we-button>
-                <we-button data-select-data-attribute="13">1 km</we-button>
-                <we-button data-select-data-attribute="12">2 km</we-button>
-                <we-button data-select-data-attribute="11">4 km</we-button>
-                <we-button data-select-data-attribute="10">8 km</we-button>
-                <we-button data-select-data-attribute="9">15 km</we-button>
-                <we-button data-select-data-attribute="8">30 km</we-button>
-                <we-button data-select-data-attribute="7">50 km</we-button>
-                <we-button data-select-data-attribute="6">100 km</we-button>
-                <we-button data-select-data-attribute="5">200 km</we-button>
-                <we-button data-select-data-attribute="4">400 km</we-button>
-                <we-button data-select-data-attribute="3">1000 km</we-button>
-                <we-button data-select-data-attribute="2">2000 km</we-button>
-            </we-select>
         </div>
     </xpath>
 </template>
