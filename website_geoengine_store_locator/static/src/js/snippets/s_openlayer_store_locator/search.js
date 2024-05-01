@@ -262,7 +262,8 @@ class Search {
         this.jquery_element.on("change:flexdatalist", () => {
             const value = this.jquery_element.flexdatalist("value");
             if (value.length == 0) {
-                this.stores.getSource().clear();
+                // Initial state
+                this.loadPartners([], true);
                 return;
             }
             const arg = [];
@@ -293,9 +294,11 @@ class Search {
 
         session.rpc("/website-geoengine/partners", args).then(
             (result) => {
+                const storesSource = this.stores.getSource();
+                storesSource.clear();
                 if ("error" in result) {
                     this.message = $("<div>", {});
-                    this.message.addClass('message');
+                    this.message.addClass("message");
                     this.message.click(() => {
                         this.mapElement.removeChild(this.message[0]);
                         this.message = null;
@@ -311,8 +314,6 @@ class Search {
                     this.map.getView().setZoom(this.mapZoom);
                     return;
                 }
-                const storesSource = this.stores.getSource();
-                storesSource.clear();
                 for (let feature of result) {
                     console.log(this.format.readFeature(feature));
                     storesSource.addFeature(this.format.readFeature(feature));
