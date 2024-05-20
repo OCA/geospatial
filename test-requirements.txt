@@ -1,0 +1,2 @@
+odoo-addon-base_geoengine @ git+https://github.com/OCA/geospatial.git@refs/pull/368/head#subdirectory=base_geoengine
+odoo-addon-geoengine_partner @ git+https://github.com/OCA/geospatial.git@refs/pull/369/head#subdirectory=geoengine_partner
