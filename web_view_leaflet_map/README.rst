@@ -195,6 +195,10 @@ Contributors
 ------------
 
 -  Sylvain LE GAL (https://www.twitter.com/legalsylvain)
+-  `APSL-Nagarro <https://apsl.tech>`__:
+
+   -  Miquel Pascual <mpascual@apsl.net>
+   -  Antoni Marroig <amarroig@apsl.net>
 
 Other credits
 -------------

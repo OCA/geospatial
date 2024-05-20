@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_view_leaflet_map.MapRenderer">
+        <div class="d-flex view w-100">
+            <div class="map_container">
+                <div id="olmap" />
+            </div>
+        </div>
+    </t>
+</templates>
