@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2023-11-02 13:38+0000\n"
+"PO-Revision-Date: 2024-06-19 12:51+0000\n"
 "Last-Translator: jakobkrabbe <jakob@syscare.se>\n"
 "Language-Team: none\n"
 "Language: sv\n"
@@ -308,7 +308,6 @@ msgstr "Är överläggslager?"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__linestring
-#, fuzzy
 msgid "LINESTRING"
 msgstr "LINESTRING"
 
@@ -389,17 +388,17 @@ msgstr "Lista över dimensioner avgränsade med ','"
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multilinestring
 msgid "MULTILINESTRING"
-msgstr ""
+msgstr "MULTILINJESTRING"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multipoint
 msgid "MULTIPOINT"
-msgstr ""
+msgstr "MULTIPOINT"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multipolygon
 msgid "MULTIPOLYGON"
-msgstr ""
+msgstr "MULTIPOLYGON"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__matrix_set
@@ -499,7 +498,7 @@ msgstr "Odoo lagerfält att använda"
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__osm
 msgid "OpenStreetMap"
-msgstr ""
+msgstr "OpenStreetMap"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__point
@@ -509,13 +508,13 @@ msgstr "PEKA"
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__polygon
 msgid "POLYGON"
-msgstr ""
+msgstr "POLYGON"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params_wms
 msgid "Params"
-msgstr ""
+msgstr "Parametrar"
 
 #. module: base_geoengine
 #. odoo-python
@@ -615,7 +614,7 @@ msgstr "Relaterad vy"
 #: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_geoengine_view_form
 #: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
 msgid "Representation"
-msgstr ""
+msgstr "Representation"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__geo_repr
@@ -672,12 +671,12 @@ msgstr "Servertyp"
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__service
 msgid "Service"
-msgstr ""
+msgstr "Service"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__url
 msgid "Service URL"
-msgstr ""
+msgstr "URL för tjänsten"
 
 #. module: base_geoengine
 #. odoo-python
@@ -785,7 +784,7 @@ msgstr "WMS alternativ"
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__wmts
 msgid "WMTS"
-msgstr ""
+msgstr "WMTS"
 
 #. module: base_geoengine
 #: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
@@ -832,120 +831,120 @@ msgstr "Du måste åtminstone tillhandahålla en av domän eller geo_domän"
 #: code:addons/base_geoengine/models/geo_vector_layer.py:0
 #, python-format
 msgid "You need to provide an attribute that exists in %s model"
-msgstr ""
+msgstr "Du behöver ange ett attribut som finns i %s model"
 
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/models/geo_vector_layer.py:0
 #, python-format
 msgid "You need to select a numeric field"
-msgstr ""
+msgstr "Du måste välja ett numeriskt fält"
 
 #. module: base_geoengine
 #: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__projection
 msgid "eg. EPSG:21781"
-msgstr ""
+msgstr "t.ex. EPSG:21781"
 
 #. module: base_geoengine
 #: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__request_encoding
 msgid "eg. REST"
-msgstr ""
+msgstr "t.ex. REST"
 
 #. module: base_geoengine
 #: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__units
 msgid "eg. m"
-msgstr ""
+msgstr "t.ex. m"
 
 #. module: base_geoengine
 #: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__format_suffix
 msgid "eg. png"
-msgstr ""
+msgstr "t.ex. png"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
 #, python-format
 msgid "geo_contains"
-msgstr ""
+msgstr "geo_innehåller"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
 #, python-format
 msgid "geo_equal"
-msgstr ""
+msgstr "geo_jämlik"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
 #, python-format
 msgid "geo_greater"
-msgstr ""
+msgstr "geo_större"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
 #, python-format
 msgid "geo_intersect"
-msgstr ""
+msgstr "geo_intersect"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
 #, python-format
 msgid "geo_lesser"
-msgstr ""
+msgstr "geo_lesser"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_line
 msgid "geo_line"
-msgstr ""
+msgstr "geo_linje"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_multi_line
 msgid "geo_multi_line"
-msgstr ""
+msgstr "geo_multi_line"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_multi_point
 msgid "geo_multi_point"
-msgstr ""
+msgstr "geo_multi_punkt"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_multi_polygon
 msgid "geo_multi_polygon"
-msgstr ""
+msgstr "geo_multi_polygon"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_point
 msgid "geo_point"
-msgstr ""
+msgstr "geo_punkt"
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_polygon
 msgid "geo_polygon"
-msgstr ""
+msgstr "geo_polygon"
 
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/models/base.py:0
 #, python-format
 msgid "geo_search is deprecated: uses search method defined on base model"
-msgstr ""
+msgstr "geo_search är föråldrad: använder sökmetod som definieras i basmodellen"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
 #, python-format
 msgid "geo_touch"
-msgstr ""
+msgstr "geo_touch"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
 #, python-format
 msgid "geo_within"
-msgstr ""
+msgstr "geo_inom"
 
 #. module: base_geoengine
 #. odoo-python
@@ -954,28 +953,29 @@ msgstr ""
 msgid ""
 "geometry_columns table seems to be corrupted. SRID check is not possible"
 msgstr ""
+"geometry_columns-tabellen verkar vara skadad. SRID-kontroll är inte möjlig"
 
 #. module: base_geoengine
 #: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_layer__begin_color
 #: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_layer__end_color
 msgid "hex value"
-msgstr ""
+msgstr "hex-värde"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_number_field/domain_selector_number_field.esm.js:0
 #, python-format
 msgid "in active_ids"
-msgstr ""
+msgstr "i aktiva_id"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_number_field/domain_selector_number_field.esm.js:0
 #, python-format
 msgid "not in active_ids"
-msgstr ""
+msgstr "inte i active_ids"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__srid
 msgid "srid"
-msgstr ""
+msgstr "srid"
