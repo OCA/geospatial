@@ -9,17 +9,12 @@ odoo.define("base_geoengine.GeoengineController", function (require) {
 
     /**
      * The Geoengine Controller controls the geo renderer and the geo model.
-     * Its role is to allow these two components to communicate properly, and
-     * also, to render and bind all extra actions in the 'Sidebar'.
+     * Its role is to allow these two components to communicate properly.
      */
 
-    var core = require("web.core");
     var BasicController = require("web.BasicController");
     var pyUtils = require("web.py_utils");
-    var Sidebar = require("web.Sidebar");
     var DataExport = require("web.DataExport");
-
-    var _t = core._t;
 
     var GeoengineController = BasicController.extend({
         custom_events: _.extend({}, BasicController.prototype.custom_events, {
@@ -31,13 +26,11 @@ odoo.define("base_geoengine.GeoengineController", function (require) {
          * @override
          * @param {Object} parent node
          * @param {Boolean} params.editable
-         * @param {Boolean} params.hasSidebar
          * @param {Object} params.toolbarActions
          * @param {Boolean} params.noLeaf
          */
         init: function (parent, model, renderer, params) {
             this._super.apply(this, arguments);
-            this.hasSidebar = params.hasSidebar;
             this.toolbarActions = params.toolbarActions || {};
             this.noLeaf = params.noLeaf;
             this.selectedRecords = params.selectedRecords || [];
@@ -104,55 +97,6 @@ odoo.define("base_geoengine.GeoengineController", function (require) {
             return _.map(this.selectedRecords, function (db_id) {
                 return self.model.get(db_id, {raw: true});
             });
-        },
-
-        /**
-         * Render the sidebar (the 'action' menu in the control panel, right of
-         * the main buttons)
-         *
-         * @param {jQuery.Element} $node
-         */
-        renderSidebar: function ($node) {
-            if (this.hasSidebar && !this.sidebar) {
-                var other = [
-                    {
-                        label: _t("Export"),
-                        callback: this._onExportData.bind(this),
-                    },
-                ];
-                if (this.archiveEnabled) {
-                    other.push({
-                        label: _t("Archive"),
-                        callback: this._onToggleArchiveState.bind(this, true),
-                    });
-                    other.push({
-                        label: _t("Unarchive"),
-                        callback: this._onToggleArchiveState.bind(this, false),
-                    });
-                }
-                if (this.is_action_enabled("delete")) {
-                    other.push({
-                        label: _t("Delete"),
-                        callback: this._onDeleteSelectedRecords.bind(this),
-                    });
-                }
-                this.sidebar = new Sidebar(this, {
-                    editable: this.is_action_enabled("edit"),
-                    env: {
-                        context: this.model
-                            .get(this.handle, {
-                                raw: true,
-                            })
-                            .getContext(),
-                        activeIds: this.getSelectedIds(),
-                        model: this.modelName,
-                    },
-                    actions: _.extend(this.toolbarActions, {other: other}),
-                });
-                this.sidebar.appendTo($node);
-
-                this._toggleSidebar();
-            }
         },
 
         /**
@@ -244,50 +188,9 @@ odoo.define("base_geoengine.GeoengineController", function (require) {
                 .then(this.update.bind(this, {}, {reload: false}));
         },
 
-        /**
-         * @override
-         * @private
-         */
-        _getSidebarEnv: function () {
-            var env = this._super.apply(this, arguments);
-            var record = this.model.get(this.handle);
-            return _.extend(env, {domain: record.getDomain()});
-        },
-
-        /**
-         * Display the sidebar (the 'action' menu in the control panel)
-         * if we have some selected records.
-         */
-        _toggleSidebar: function () {
-            if (this.sidebar) {
-                this.sidebar.do_toggle(this.selectedRecords.length > 0);
-            }
-        },
-
-        /**
-         * @override
-         * @returns {Deferred}
-         */
-        _update: function () {
-            this._toggleSidebar();
-            return this._super.apply(this, arguments);
-        },
-
         // --------------------------------------------------------------------
         // Handlers
         // --------------------------------------------------------------------
-
-        /**
-         * When the current selection changes (by clicking on the checkboxes on
-         * the left), we need to display (or hide) the 'sidebar'.
-         *
-         * @private
-         * @param {OdooEvent} event
-         */
-        _onSelectionChanged: function (event) {
-            this.selectedRecords = event.data.selection;
-            this._toggleSidebar();
-        },
 
         /**
          * Called when clicking on 'Archive' or 'Unarchive' in the sidebar.
