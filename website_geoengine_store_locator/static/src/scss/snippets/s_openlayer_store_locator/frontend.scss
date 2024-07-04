@@ -1,7 +1,6 @@
-
-$s-map-desc-bg: map-get($theme-colors, 'primary') !default;
-$s-map-desc-alpha: 0.80 !default;
-$s-map-desc-hover-bg: map-get($theme-colors, 'primary') !default;
+$s-map-desc-bg: map-get($theme-colors, "primary") !default;
+$s-map-desc-alpha: 0.8 !default;
+$s-map-desc-hover-bg: map-get($theme-colors, "primary") !default;
 $s-map-desc-hover-alpha: 0.55 !default;
 
 .s_openlayer_store_locator {
@@ -51,7 +50,7 @@ $s-map-desc-hover-alpha: 0.55 !default;
 }
 
 .editor_enable .s_openlayer_store_locator {
-//    any thing needed while editing widget
+    //    any thing needed while editing widget
     .description {
         background: rgba($s-map-desc-bg, $s-map-desc-alpha);
         color: color-contrast(rgba($s-map-desc-bg, $s-map-desc-alpha));

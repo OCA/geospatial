@@ -4,7 +4,7 @@
 }
 .search {
     position: absolute;
-    top: .5rem;
+    top: 0.5rem;
     left: 3rem;
     min-width: 15rem;
 }
@@ -41,6 +41,6 @@
     left: 40%;
     background: white;
     border: rgb(211, 211, 211) solid 1px;
-    padding: .5rem;
+    padding: 0.5rem;
     text-align: center;
 }

@@ -97,7 +97,7 @@ def get_geo_func(current_operator, operator, left, right, params, table):
     """
     This method will call the SQL query corresponding to the requested geo operator
     """
-    
+
     if operator == "geo_greater":
         query = current_operator.get_geo_greater_sql(table, left, right, params)
     elif operator == "geo_lesser":

@@ -8,7 +8,7 @@
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
     "website": "https://github.com/OCA/geospatial",
-    "depends": ["base_geoengine", "website", "partner_store", 'website_geoengine'],
+    "depends": ["base_geoengine", "website", "partner_store", "website_geoengine"],
     "data": [
         "templates/snippets/s_openlayer_store_locator.xml",
         "views/snippets.xml",
