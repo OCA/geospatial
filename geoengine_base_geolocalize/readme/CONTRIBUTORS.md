@@ -1,0 +1,3 @@
+- Laurent Mignon \<<laurent.mignon@acsone.eu>\>
+- [APSL-Nagarro](https://www.apsl.tech):
+  - Antoni Marroig \<<amarroig@apsl.net>\>
