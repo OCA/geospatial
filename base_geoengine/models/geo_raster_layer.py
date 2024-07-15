@@ -49,7 +49,9 @@ class GeoRasterLayer(models.Model):
     params = fields.Char(help="Dictiorary of values for dimensions as JSON")
 
     # wms options
-    params_wms = fields.Char(help="Need to provide at least a LAYERS param")
+    params_wms = fields.Char(
+        "Params WMS", help="Need to provide at least a LAYERS param"
+    )
     server_type = fields.Char(
         help="The type of the remote WMS server: mapserver, \
             geoserver, carmentaserver, or qgis",
