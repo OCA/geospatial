@@ -1,5 +1,5 @@
-# Copyright 2011-2017 Camptocamp SA
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
+# Copyright 2024 Camptocamp
+# License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Geospatial Website store locator",
     "version": "16.0.1.0.0",
