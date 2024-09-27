@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="geo_vector_view_form">
+        <field name="name">geoengine.vector.layer.form</field>
+        <field name="model">geoengine.vector.layer</field>
+        <field name="arch" type="xml">
+            <form string="Vector">
+                <sheet>
+                    <group string="General" col="4">
+                        <field name="name" />
+                        <field name="view_id" />
+                        <field name="geo_field_id" />
+                        <field
+                            name="attribute_field_id"
+                            required="geo_repr in ['choropleth', 'proportion', 'colored']"
+                        />
+                        <field name="active_on_startup" />
+                        <field name="display_polygon_labels" />
+                        <field name="sequence" />
+                        <field name="readonly" />
+                        <field name="layer_opacity" />
+                    </group>
+                    <group string="Related Model" col="4">
+                        <field name="model_id" />
+                        <field
+                            name="model_view_id"
+                            domain="[('type', '=', 'geoengine')]"
+                        />
+                        <field name="model_name" invisible="1" />
+                        <field
+                            name="model_domain"
+                            colspan="4"
+                            widget="domain"
+                            options="{'model': 'model_name'}"
+                        />
+                    </group>
+                    <group string="Representation" col="4" colspan="4">
+                        <field name="geo_repr" />
+                    </group>
+                    <group
+                        string="Classification"
+                        colspan="4"
+                        invisible="geo_repr == 'basic'"
+                    >
+                        <field
+                            name="classification"
+                            invisible="geo_repr == 'basic'"
+                            required="geo_repr in ['choropleth', 'proportion', 'colored']"
+                        />
+                    </group>
+                    <group string="Colors" col="4" colspan="4">
+                        <field name="begin_color" widget="color" />
+                        <group
+                            colspan="4"
+                            invisible="geo_repr in ['basic', 'proportion']"
+                        >
+                            <field
+                                name="end_color"
+                                invisible="classification in ['unique', False]"
+                                required="classification in ['interval', 'quantil']"
+                                widget="color"
+                            />
+                            <field
+                                name="nb_class"
+                                invisible="classification in ['unique', False]"
+                                required="classification in ['interval', 'quantil']"
+                            />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="geo_vector_geoengine_view_form">
+        <field name="name">geoengine.vector.layer.geoengine.form</field>
+        <field name="model">geoengine.vector.layer</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="General" col="4">
+                        <field name="name" />
+                        <field name="geo_field_id" />
+                        <field
+                            name="attribute_field_id"
+                            required="geo_repr in ['choropleth', 'proportion', 'colored']"
+                        />
+                        <field name="display_polygon_labels" />
+                        <field name="sequence" readonly="1" />
+                        <field name="readonly" />
+                        <field name="layer_opacity" />
+                        <field name="layer_transparent" />
+                    </group>
+                    <!-- <group string="Related Model" col="4">
+                        <field name="model_id" />
+                        <field
+                            name="model_view_id"
+                            domain="[('mode', '=', 'geoengine')]"
+                        />
+                        <field name="model_name" invisible="1" />
+                        <field
+                            name="model_domain"
+                            colspan="4"
+                            widget="domain"
+                            options="{'model': 'model_name'}"
+                        />
+                    </group> -->
+                    <group string="Representation" col="4" colspan="4">
+                        <field name="geo_repr" />
+                    </group>
+                    <group
+                        string="Classification"
+                        colspan="4"
+                        invisible="geo_repr == 'basic'"
+                    >
+                        <field
+                            name="classification"
+                            invisible="geo_repr == 'basic'"
+                            required="geo_repr in ['choropleth', 'proportion', 'colored']"
+                        />
+                    </group>
+                    <group string="Colors" col="4" colspan="4">
+                        <field name="begin_color" widget="color" />
+                        <group
+                            colspan="4"
+                            invisible="geo_repr in ['basic', 'proportion']"
+                        >
+                            <field
+                                name="end_color"
+                                invisible="classification in ['unique', False]"
+                                required="classification in ['interval', 'quantil']"
+                                widget="color"
+                            />
+                            <field
+                                name="nb_class"
+                                invisible="classification in ['unique', False]"
+                                required="classification in ['interval', 'quantil']"
+                            />
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="geo_vector_geoengine_view_action" model="ir.actions.act_window">
+        <field name="name">Vector Layer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">geoengine.vector.layer</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="geo_vector_geoengine_view_form" />
+    </record>
+
+
+    <record model="ir.ui.view" id="geo_vector_view_tree">
+        <field name="name">geoengine.vector.layer.tree</field>
+        <field name="model">geoengine.vector.layer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" select="1" />
+                <field name="geo_repr" select="1" />
+                <field name="classification" select="1" />
+                <field name="geo_field_id" select="1" />
+                <field name="attribute_field_id" select="1" />
+                <field name="active_on_startup" />
+                <field name="sequence" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="geo_engine_view_raster_action" model="ir.actions.act_window">
+        <field name="name">Vector Layer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">geoengine.vector.layer</field>
+        <field name="view_id" ref="geo_vector_view_tree" />
+    </record>
+
+    <menuitem
+        name="Vector Layer Management"
+        id="geoengine_vector_layer_menu"
+        parent="geoengine_base_view_menu"
+        action="geo_engine_view_raster_action"
+        groups="group_geoengine_admin"
+    />
+
+</odoo>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="geo_raster_view_form">
+        <field name="name">geoengine.raster.layer.form</field>
+        <field name="model">geoengine.raster.layer</field>
+        <field name="arch" type="xml">
+            <form string="Raster Layer View">
+                <sheet>
+                    <field name="id" invisible="1" />
+                    <group string="General" col="4">
+                        <field name="name" />
+                        <field name="view_id" />
+                        <field name="raster_type" />
+                        <field name="sequence" />
+                        <field name="overlay" />
+                        <field name="use_to_edit" />
+                        <field
+                            name="url"
+                            colspan="4"
+                            widget="url"
+                            required="is_wmts or is_wms"
+                        />
+                        <field name="opacity" />
+                    </group>
+                    <field name="is_wmts" invisible="1" />
+                    <group string="WMTS options" invisible="not is_wmts" colspan="4">
+                        <field name="matrix_set" required="is_wmts" />
+                        <field name="format_suffix" required="is_wmts" />
+                        <field name="request_encoding" />
+                        <field name="projection" required="is_wmts" />
+                        <field name="units" /> <!-- Not used -->
+                        <field name="resolutions" required="is_wmts" />
+                        <field name="max_extent" />
+                        <field name="dimensions" />
+                        <field name="params" />
+                    </group>
+                    <field name="is_wms" invisible="1" />
+                    <group string="WMS options" invisible="not is_wms" colspan="4">
+                        <field name="params_wms" required="is_wms" string="Params" />
+                        <field name="server_type" required="is_wms" />
+                    </group>
+                    <field name="has_type" invisible="1" />
+                    <group string="Layer data" invisible="not has_type" colspan="4">
+                        <field name="type_id" widget="selection" required="has_type" />
+                    </group>
+                    <group
+                        string="Odoo layer data (Not implemented)"
+                        invisible="raster_type != 'odoo'"
+                        colspan="4"
+                    >
+                        <field name="field_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="geo_raster_view_tree">
+        <field name="name">geoengine.raster.layer.tree</field>
+        <field name="model">geoengine.raster.layer</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" select="1" />
+                <field name="raster_type" select="1" />
+                <field name="sequence" />
+                <field name="overlay" select="1" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="geo_engine_view_rater_action" model="ir.actions.act_window">
+        <field name="name">Raster Layer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">geoengine.raster.layer</field>
+        <field name="view_id" ref="geo_raster_view_tree" />
+    </record>
+
+    <record id="geo_engine_form_view_raster_action" model="ir.actions.act_window">
+        <field name="name">Raster Layer</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">geoengine.raster.layer</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="geo_raster_view_form" />
+    </record>
+
+    <menuitem
+        name="Raster Layer Management"
+        id="geoengine_raster_layer_menu"
+        parent="geoengine_base_view_menu"
+        action="geo_engine_view_rater_action"
+        groups="group_geoengine_admin"
+    />
+
+</odoo>

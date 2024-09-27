@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="base_geoengine.DomainSelectorNumberFieldExtend">
+        <t t-if="props.operator.category === 'in'">
+            <DomainSelectorFieldInputWithTags t-props="props" />
+        </t>
+         <t t-elif="props.operator.category === 'active_ids'">
+            <DomainSelectorFieldInputForActiveIds
+                value="props.value"
+                update="props.update"
+            />
+        </t>
+        <t t-else="">
+            <div class="o_ds_value_cell">
+                <DomainSelectorFieldInput t-props="props" />
+            </div>
+        </t>
+    </t>
+</templates>

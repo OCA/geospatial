@@ -1,0 +1,21 @@
+.scroller {
+    overflow-x: clip;
+    overflow-y: auto;
+    scrollbar-width: auto;
+}
+
+.record {
+    cursor: pointer;
+}
+
+.record:hover {
+    background-color: #f6f7fa;
+}
+
+.btn-record {
+    font-weight: normal;
+}
+
+.btn-search {
+    font-size: 1.2em;
+}

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="base_geoengine.RecordsPanel">
+        <div
+            class="menu border-end"
+            t-attf-class="{{ state.isFolded ? 'o_layer_panel_fold' : 'o_layer_panel bg-view scroller' }}"
+        >
+            <div
+                class="w-100 d-flex"
+                t-attf-class="{{ state.isFolded ? 'justify-content-center' : 'justify-content-start'}}"
+            >
+                <button
+                    class="btn p-0 mb-3"
+                    t-attf-class="{{state.isFolded ? 'unfold text-900': 'fold'}}"
+                    t-on-click="fold"
+                >
+                    <i class="fa fa-arrows-h" />
+                </button>
+            </div>
+            <div t-if="!state.isFolded">
+                <section class="o_search_panel_section">
+                    <header
+                        class="o_search_panel_section_header text-uppercase cursor-default mb-2"
+                    >
+                        <span class="fs-6 fw-bold">
+                            <t t-esc="state.modelDescription" />
+                        </span>
+                    </header>
+                    <SearchBarRecords onInputKeyup.bind="onInputKeyup" />
+                    <ul class="raster list-group d-block o_search_panel_field">
+                        <li
+                            class="mb-1 record d-flex justify-content-between"
+                            t-foreach="state.records"
+                            t-as="record"
+                            t-key="record.resId"
+                        >
+                            <button
+                                class="btn btn-record"
+                                t-on-click="() => this.onDisplayPopupRecord(record)"
+                            >
+                                <span>
+                                    <t t-esc="record.data.display_name" />
+                                </span>
+                            </button>
+                            <t t-if="state.isClicked === record.resId">
+                                <div>
+                                    <button
+                                        class="btn btn-search p-0"
+                                        t-on-click="() => this.props.zoomOnFeature(record)"
+                                    >
+                                        <i
+                                            class="fa fa-search-plus me-2 text-primary"
+                                        />
+                                    </button>
+                                    <button
+                                        class="btn btn-search p-0"
+                                        t-on-click="() => this.props.zoomOutOnFeature(record)"
+                                    >
+                                        <i
+                                            class="fa fa-search-minus me-2 text-primary"
+                                        />
+                                    </button>
+                                </div>
+                            </t>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <div t-else="" class="d-flex justify-content-center text-900">
+                <span class="title-panel">Records (<t
+                        t-esc="props.list.records.length"
+                    />)</span>
+            </div>
+        </div>
+    </t>
+</templates>
