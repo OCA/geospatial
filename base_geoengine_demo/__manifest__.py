@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Geo spatial support Demo",
-    "version": "16.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "GeoBI",
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "license": "AGPL-3",
