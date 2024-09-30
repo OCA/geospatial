@@ -57,8 +57,6 @@ class NPA(models.Model):
             else:
                 rec.total_sales = 0.0
 
-    def name_get(self):
-        res = []
+    def _compute_display_name(self):
         for rec in self:
-            res.append((rec.id, f"{rec.name} {rec.city}"))
-        return res
+            rec.display_name = f"{rec.name} {rec.city}"
