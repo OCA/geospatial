@@ -60,5 +60,5 @@ class NPA(models.Model):
     def name_get(self):
         res = []
         for rec in self:
-            res.append((rec.id, "%s %s" % (rec.name, rec.city)))
+            res.append((rec.id, f"{rec.name} {rec.city}"))
         return res
