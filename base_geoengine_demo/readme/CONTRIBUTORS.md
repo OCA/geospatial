@@ -5,3 +5,5 @@
 - Daniel Reis \<<dreis@opensourceintegrators.com>\>
 - Alexandre Saunier \<<alexandre.saunier@camptocamp.com>\>
 - Samuel Kouff \<<s.kouff@student.helmo.be>\>
+- [APSL-Nagarro](https://www.apsl.tech):
+  - Antoni Marroig \<<amarroig@apsl.net>\>
