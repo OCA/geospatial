@@ -131,12 +131,6 @@ msgid "Intersect point and geom"
 msgstr "Punto de intersección y geom"
 
 #. module: base_geoengine_demo
-#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip____last_update
-#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine____last_update
-msgid "Last Modified on"
-msgstr "Última Modificación el"
-
-#. module: base_geoengine_demo
 #: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__write_uid
 #: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__write_uid
 msgid "Last Updated by"
@@ -325,3 +319,6 @@ msgstr "CP"
 #: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_wmts
 msgid "sgmc2"
 msgstr "sgmc2"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última Modificación el"
