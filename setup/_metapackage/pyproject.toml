@@ -1,8 +1,9 @@
 [project]
 name = "odoo-addons-oca-geospatial"
-version = "17.0.20240927.0"
+version = "17.0.20241017.0"
 dependencies = [
     "odoo-addon-base_geoengine>=17.0dev,<17.1dev",
+    "odoo-addon-geoengine_partner>=17.0dev,<17.1dev",
 ]
 classifiers=[
     "Programming Language :: Python",
