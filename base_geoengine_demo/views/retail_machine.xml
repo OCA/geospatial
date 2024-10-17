@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <record model="ir.ui.view" id="geo_retail_machine_view_form">
+    <field name="name">geoengine.demo.retail.machine.form</field>
+    <field name="model">geoengine.demo.automatic.retailing.machine</field>
+    <field name="arch" type="xml">
+      <form string="Retail Machine">
+        <sheet>
+          <group>
+            <field name="name" />
+            <field name="zip_id" />
+          </group>
+          <notebook>
+            <page string="The point">
+              <field name="the_point" />
+            </page>
+            <page string="The line">
+              <field name="the_line" />
+            </page>
+            <page string="Attributes">
+              <group>
+                <field name="total_sales" />
+                <field name="money_level" />
+                <field name="state" />
+              </group>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="geo_retail_machine_view_search">
+    <field name="name">geoengine.demo.retail.machine.search</field>
+    <field name="model">geoengine.demo.automatic.retailing.machine</field>
+    <field name="arch" type="xml">
+      <search>
+        <field name="name" />
+        <field name="total_sales" />
+        <field name="money_level" />
+        <field name="state" />
+      </search>
+    </field>
+  </record>
+
+  <record model="ir.ui.view" id="geo_retail_machine_view_tree">
+    <field name="name">geoengine.demo.retail.machine.tree</field>
+    <field name="model">geoengine.demo.automatic.retailing.machine</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name" />
+        <field name="total_sales" />
+        <field name="money_level" />
+        <field name="state" />
+      </tree>
+    </field>
+  </record>
+  <record id="geoengine_view_retail_machine_action" model="ir.actions.act_window">
+    <field name="name">Retail Machines</field>
+    <field name="type">ir.actions.act_window</field>
+    <field name="res_model">geoengine.demo.automatic.retailing.machine</field>
+    <field name="view_mode">tree,form,geoengine</field>
+    <field name="view_id" ref="geo_retail_machine_view_tree" />
+  </record>
+
+  <menuitem
+        name="Retail Machine"
+        id="geoengine_retail_machine_menu"
+        action="geoengine_view_retail_machine_action"
+        parent="geoengine_demo_retail_menu"
+        groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"
+    />
+
+  <!-- GeoEngine views -->
+  <record id="ir_ui_view_retailmachineview0" model="ir.ui.view">
+    <field name="name">Retail machine view</field>
+    <field name="arch" type="xml">
+      <geoengine editable="1">
+        <field name="name" select="1" />
+        <field name="total_sales" select="1" />
+        <field name="money_level" />
+        <field name="state" />
+        <field name="the_point" />
+        <field name="the_line" />
+        <field name="display_name" />
+        <templates>
+          <t t-name="info_box">
+            <b>
+              ID: <field name="zip_id" />
+            </b>
+            <ul>
+              <li>Serial number : <field name="name" />
+              </li>
+              <li>Total Sales: <field name="total_sales" />
+              </li>
+              <li>Money level: <field name="money_level" />
+              </li>
+              <li>State: <field name="state" />
+              </li>
+            </ul>
+          </t>
+        </templates>
+      </geoengine>
+    </field>
+    <field eval="16" name="priority" />
+    <field name="model">geoengine.demo.automatic.retailing.machine</field>
+  </record>
+  <record
+        id="geoengine_vector_layer_retailmachinebasicpoint0"
+        model="geoengine.vector.layer"
+    >
+    <field
+            name="geo_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
+        />
+    <field name="name">Retail Machine Basic point</field>
+    <field eval="2" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_retailmachineview0" />
+    <field name="geo_repr">basic</field>
+    <field eval="1" name="nb_class" />
+    <field name="active_on_startup">True</field>
+    <field name="layer_opacity">0.8</field>
+    <field name="begin_color">#FF680A</field>
+  </record>
+  <record
+        id="geoengine_vector_layer_retailmachinebasicline0"
+        model="geoengine.vector.layer"
+    >
+    <field
+            name="geo_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_line"
+        />
+    <field name="name">Retail Machine Basic Line</field>
+    <field eval="3" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_retailmachineview0" />
+    <field name="geo_repr">basic</field>
+    <field eval="1" name="nb_class" />
+    <field name="layer_opacity">0.8</field>
+    <field name="begin_color">#FF680A</field>
+  </record>
+  <record
+        id="geoengine_vector_layer_retailmachinestatecolored0"
+        model="geoengine.vector.layer"
+    >
+    <field
+            name="geo_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
+        />
+    <field name="name">Retail Machine State colored</field>
+    <field name="classification">unique</field>
+    <field eval="4" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_retailmachineview0" />
+    <field name="geo_repr">colored</field>
+    <field eval="1" name="nb_class" />
+    <field name="layer_opacity">0.8</field>
+    <field
+            name="attribute_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__state"
+        />
+    <field name="begin_color">#FF680A</field>
+  </record>
+  <record
+        id="geoengine_vector_layer_retailmachinecoloredontotalsales0"
+        model="geoengine.vector.layer"
+    >
+    <field
+            name="geo_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
+        />
+    <field name="name">Retail Machine Colored on total sales quantile</field>
+    <field name="classification">quantile</field>
+    <field eval="5" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_retailmachineview0" />
+    <field name="geo_repr">colored</field>
+    <field name="layer_opacity">0.8</field>
+    <field eval="5" name="nb_class" />
+    <field
+            name="attribute_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__total_sales"
+        />
+    <field name="begin_color">#4B69FD</field>
+    <field name="end_color">#FF680A</field>
+  </record>
+  <record
+        id="geoengine_vector_layer_retailmachinecoloredontotalsales1"
+        model="geoengine.vector.layer"
+    >
+    <field
+            name="geo_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
+        />
+    <field name="name">Retail Machine Colored on total sales proportion</field>
+    <field name="classification">quantile</field>
+    <field eval="6" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_retailmachineview0" />
+    <field name="geo_repr">proportion</field>
+    <field eval="1" name="nb_class" />
+    <field name="layer_opacity">0.8</field>
+    <field
+            name="attribute_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__total_sales"
+        />
+    <field name="begin_color">#4B69FD</field>
+  </record>
+  <record
+        id="geoengine_vector_layer_retailmachinecontainsgeom"
+        model="geoengine.vector.layer"
+    >
+    <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip__the_geom" />
+    <field name="name">Contains</field>
+    <field eval="1" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_retailmachineview0" />
+    <field name="geo_repr">basic</field>
+    <field eval="1" name="nb_class" />
+    <field name="layer_opacity">0.8</field>
+    <field name="begin_color">#0096FF</field>
+    <field name="attribute_field_id" ref="base_geoengine_demo.field_dummy_zip__city" />
+    <field name="model_id" ref="base_geoengine_demo.model_dummy_zip" />
+    <field
+            name="model_domain"
+        >[('the_geom', 'geo_contains', {"geoengine.demo.automatic.retailing.machine.the_point":[("id", "in active_ids", "{ACTIVE_IDS}")]})]</field>
+  </record>
+  <record id="geoengine_raster_layer_retailmachineosm" model="geoengine.raster.layer">
+    <field name="raster_type">osm</field>
+    <field name="name">Retail Machine Open Street Map</field>
+    <field name="view_id" ref="ir_ui_view_retailmachineview0" />
+    <field eval="0" name="overlay" />
+  </record>
+  <record id="geoengine_raster_layer_ahocevar0" model="geoengine.raster.layer">
+    <field name="raster_type">d_wms</field>
+    <field name="name">Ahocevar</field>
+    <field name="url">https://ahocevar.com/geoserver/wms</field>
+    <field name="view_id" ref="ir_ui_view_retailmachineview0" />
+    <field name="params_wms">{"LAYERS": "topp:states", "TILED": true}</field>
+    <field name="server_type">geoserver</field>
+    <field eval="1" name="overlay" />
+  </record>
+
+</odoo>

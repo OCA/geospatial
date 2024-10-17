@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+  <record model="ir.ui.view" id="dummy_zip_form">
+    <field name="name">dummy.zip.form</field>
+    <field name="model">dummy.zip</field>
+    <field name="arch" type="xml">
+      <form string="Dummy">
+        <sheet>
+          <group>
+            <group>
+              <field name="name" />
+              <field name="city" />
+              <field name="priority" />
+              <field name="total_sales" />
+            </group>
+          </group>
+          <notebook colspan="4">
+            <page string="Geometry">
+              <field name="the_geom" options="{'opacity': 0.8, 'color': '#0000FF' }" />
+            </page>
+            <!--<page string="Geometry - Polygon">
+            <field name="the_geom_poly" />
+          </page>
+          <page string="Geometry - MultiLine">
+            <field name="the_geom_multiLine" />
+          </page>
+          <page string="Geometry - MultiPoint">
+            <field name="the_geom_multipoint" />
+          </page>-->
+            <page string="Retail machines">
+              <field name="retail_machine_ids" context="{'default_zip_id': id}" />
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record model="ir.ui.view" id="dummy_zip_tree">
+    <field name="name">dummy.zip.form</field>
+    <field name="model">dummy.zip</field>
+    <field name="arch" type="xml">
+      <tree>
+        <field name="name" />
+        <field name="city" />
+        <field name="priority" />
+        <field name="total_sales" />
+      </tree>
+    </field>
+  </record>
+  <record model="ir.ui.view" id="dummy_zip_search">
+    <field name="name">dummy.zip.search</field>
+    <field name="model">dummy.zip</field>
+    <field name="arch" type="xml">
+      <search string="Search ZIP">
+        <field name="name" />
+        <field name="city" />
+      </search>
+    </field>
+  </record>
+  <record id="action_zip_tree" model="ir.actions.act_window">
+    <field name="name">ZIP Management</field>
+    <field name="res_model">dummy.zip</field>
+    <field name="view_mode">tree,form,geoengine</field>
+    <field ref="dummy_zip_tree" name="view_id" />
+  </record>
+
+  <menuitem
+        name="ZIP"
+        id="zip_retail_machine"
+        parent="geoengine_demo_retail_menu"
+        action="action_zip_tree"
+        groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"
+    />
+
+  <!-- GeoEngine views -->
+  <record id="ir_ui_view_resbetterzipgeoview0" model="ir.ui.view">
+    <field name="name">dummy.zip.geo_view</field>
+    <field name="arch" type="xml">
+      <geoengine editable="1">
+        <field name="name" />
+        <field name="city" />
+        <field name="total_sales" />
+        <field name="the_geom" />
+        <field name="display_name" />
+        <templates>
+          <t t-name="info_box">
+            <field name="city" widget="badge" />
+            <ul>
+              <li>ZIP : <field name="name" />
+              </li>
+              <li>Total Sales: <field name="total_sales" />
+              </li>
+            </ul>
+          </t>
+        </templates>
+      </geoengine>
+    </field>
+    <field eval="16" name="priority" />
+    <field name="model">dummy.zip</field>
+  </record>
+  <record id="geoengine_vector_layer_basictest0" model="geoengine.vector.layer">
+    <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip__the_geom" />
+    <field name="name">Basic ZIP</field>
+    <field eval="1" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
+    <field name="geo_repr">basic</field>
+    <field name="attribute_field_id" ref="field_dummy_zip__city" />
+    <field name="active_on_startup">True</field>
+    <field name="layer_opacity">0.8</field>
+    <field name="begin_color">#FF680A</field>
+  </record>
+  <record id="geoengine_vector_layer_coloredrangetest0" model="geoengine.vector.layer">
+    <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip__the_geom" />
+    <field name="name">Colored range ZIP (total_sales)</field>
+    <field name="classification">unique</field>
+    <field eval="2" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
+    <field name="geo_repr">colored</field>
+    <field name="layer_opacity">0.8</field>
+    <field eval="1" name="nb_class" />
+    <field
+            name="attribute_field_id"
+            ref="base_geoengine_demo.field_dummy_zip__total_sales"
+        />
+    <field name="begin_color">#FF680A</field>
+  </record>
+  <record
+        id="geoengine_vector_layer_coloredrangezipquantile0"
+        model="geoengine.vector.layer"
+    >
+    <field name="geo_field_id" ref="base_geoengine_demo.field_dummy_zip__the_geom" />
+    <field name="name">Colored range ZIP Eq Interval (total_sales)</field>
+    <field name="classification">interval</field>
+    <field eval="3" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
+    <field name="geo_repr">colored</field>
+    <field eval="4" name="nb_class" />
+    <field name="layer_opacity">0.8</field>
+    <field
+            name="attribute_field_id"
+            ref="base_geoengine_demo.field_dummy_zip__total_sales"
+        />
+    <field name="begin_color">#FF680A</field>
+    <field name="end_color">#00680A</field>
+  </record>
+  <record id="geoengine_vector_layer_hs_retail_machines" model="geoengine.vector.layer">
+    <field
+            name="model_id"
+            ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine"
+        />
+    <field name="model_domain">[('state', '=', 'hs')]</field>
+    <field
+            name="geo_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
+        />
+    <field name="name">HS retail machines</field>
+    <field eval="4" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
+    <field name="geo_repr">basic</field>
+    <field
+            name="attribute_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__name"
+        />
+    <field name="begin_color">#FF0000</field>
+    <field name="display_polygon_labels" eval="0" />
+    <field name="layer_opacity">0.8</field>
+  </record>
+  <record
+        id="geoengine_vector_layer_intersect_active_ids"
+        model="geoengine.vector.layer"
+    >
+    <field
+            name="model_id"
+            ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine"
+        />
+    <field
+            name="model_domain"
+        >[('the_point', 'geo_intersect', {"dummy.zip.the_geom":[("id", "in active_ids", "{ACTIVE_IDS}")]})]</field>
+    <field
+            name="geo_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
+        />
+    <field name="name">Intersect point and geom</field>
+    <field eval="5" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
+    <field name="geo_repr">basic</field>
+    <field
+            name="attribute_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__name"
+        />
+    <field name="begin_color">#0000FF</field>
+    <field name="display_polygon_labels" eval="0" />
+    <field name="layer_opacity">0.8</field>
+  </record>
+  <record
+        id="geoengine_vector_layer_not_intersect_active_ids"
+        model="geoengine.vector.layer"
+    >
+    <field
+            name="model_id"
+            ref="base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine"
+        />
+    <field
+            name="model_domain"
+        >[('the_point', 'geo_intersect', {"dummy.zip.the_geom":[("id", "not in active_ids", "{ACTIVE_IDS}")]})]</field>
+    <field
+            name="geo_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point"
+        />
+    <field name="name">Not intersect point and geom</field>
+    <field eval="6" name="sequence" />
+    <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
+    <field name="geo_repr">basic</field>
+    <field
+            name="attribute_field_id"
+            ref="base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__name"
+        />
+    <field name="begin_color">#0000FF</field>
+    <field name="display_polygon_labels" eval="0" />
+    <field name="layer_opacity">0.8</field>
+  </record>
+  <record id="geoengine_raster_layer_test0" model="geoengine.raster.layer">
+    <field name="raster_type">osm</field>
+    <field name="name">ZIP OSM</field>
+    <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
+    <field eval="0" name="overlay" />
+  </record>
+  <record id="geoengine_raster_layer_osm0" model="geoengine.raster.layer">
+    <field name="raster_type">osm</field>
+    <field name="name">ZIP OSM Light</field>
+    <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
+    <field eval="1" name="overlay" />
+  </record>
+  <record id="geoengine_raster_layer_wmts" model="geoengine.raster.layer">
+    <field name="raster_type">wmts</field>
+    <field name="name">sgmc2</field>
+    <field name="view_id" ref="ir_ui_view_resbetterzipgeoview0" />
+    <field eval="1" name="overlay" />
+    <field name="url">https://mrdata.usgs.gov/mapcache/wmts</field>
+    <field name="matrix_set">GoogleMapsCompatible</field>
+    <field name="format_suffix">image/png</field>
+    <field name="projection">EPSG:3857</field>
+    <field name="resolutions">156543.03392804097,78271.51696402048,39135.75848201024,
+    19567.87924100512,9783.93962050256,4891.96981025128,2445.98490512564,
+    1222.99245256282,611.49622628141,305.748113140705,152.8740565703525,
+    76.43702828517625,38.21851414258813,19.109257071294063,9.554628535647032,
+    4.777314267823516,2.388657133911758,1.194328566955879,0.5971642834779395</field>
+  </record>
+
+</odoo>

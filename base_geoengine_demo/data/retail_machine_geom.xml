@@ -1,0 +1,299 @@
+<odoo>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_1'>
+  <field name='name'>1</field>
+  <field name='total_sales'>1057</field>
+  <field name='money_level'>low</field>
+  <field name='the_point'>POINT(746676.106813609 5865349.7175855)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_2'>
+  <field name='name'>2</field>
+  <field name='total_sales'>793</field>
+  <field name='money_level'>low</field>
+  <field name='the_point'>POINT(731452.399608894 5875278.22228421)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_3'>
+  <field name='name'>3</field>
+  <field name='total_sales'>602</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(751499.582114456 5874026.56366551)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_4'>
+  <field name='name'>4</field>
+  <field name='total_sales'>1961</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(745960.395951149 5867509.0212169)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_5'>
+  <field name='name'>5</field>
+  <field name='total_sales'>137</field>
+  <field name='money_level'>normal</field>
+  <field name='the_point'>POINT(719165.34879289 5868468.8889722)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_6'>
+  <field name='name'>6</field>
+  <field name='total_sales'>1775</field>
+  <field name='money_level'>normal</field>
+  <field name='the_point'>POINT(796631.483314155 5877146.3173041)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_7'>
+  <field name='name'>7</field>
+  <field name='total_sales'>1823</field>
+  <field name='money_level'>low</field>
+  <field name='the_point'>POINT(744207.562113926 5862158.8522559)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_8'>
+  <field name='name'>8</field>
+  <field name='total_sales'>1495</field>
+  <field name='money_level'>normal</field>
+  <field name='the_point'>POINT(728142.898042652 5866838.99329031)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_9'>
+  <field name='name'>9</field>
+  <field name='total_sales'>1726</field>
+  <field name='money_level'>normal</field>
+  <field name='the_point'>POINT(709526.951732539 5873457.99642278)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_10'>
+  <field name='name'>10</field>
+  <field name='total_sales'>1163</field>
+  <field name='money_level'>normal</field>
+  <field name='the_point'>POINT(748413.595135886 5867583.63114271)</field>
+  <field name='state'>hs</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_11'>
+  <field name='name'>11</field>
+  <field name='total_sales'>1436</field>
+  <field name='money_level'>low</field>
+  <field name='the_point'>POINT(734100.000861888 5873871.68411856)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_12'>
+  <field name='name'>12</field>
+  <field name='total_sales'>1510</field>
+  <field name='money_level'>normal</field>
+  <field name='the_point'>POINT(749985.608379851 5876684.76044986)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_13'>
+  <field name='name'>13</field>
+  <field name='total_sales'>825</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(728127.253023865 5868904.60669031)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_14'>
+  <field name='name'>14</field>
+  <field name='total_sales'>1595</field>
+  <field name='money_level'>low</field>
+  <field name='the_point'>POINT(750929.318847417 5880128.29446443)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_15'>
+  <field name='name'>15</field>
+  <field name='total_sales'>1844</field>
+  <field name='money_level'>normal</field>
+  <field name='the_point'>POINT(756379.955216861 5877311.278397)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_16'>
+  <field name='name'>16</field>
+  <field name='total_sales'>1631</field>
+  <field name='money_level'>low</field>
+  <field name='the_point'>POINT(712393.718760016 5876658.79056831)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_17'>
+  <field name='name'>17</field>
+  <field name='total_sales'>1215</field>
+  <field name='money_level'>low</field>
+  <field name='the_point'>POINT(721448.876996648 5866320.20613774)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_18'>
+  <field name='name'>18</field>
+  <field name='total_sales'>892</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(708451.36372351 5872547.88349207)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_19'>
+  <field name='name'>19</field>
+  <field name='total_sales'>174</field>
+  <field name='money_level'>normal</field>
+  <field name='the_point'>POINT(707954.938488574 5878918.67400707)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_20'>
+  <field name='name'>20</field>
+  <field name='total_sales'>1236</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(708699.576340978 5877843.08599804)</field>
+  <field name='state'>hs</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_21'>
+  <field name='name'>21</field>
+  <field name='total_sales'>1533</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(706962.088018701 5873623.47150109)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_22'>
+  <field name='name'>22</field>
+  <field name='total_sales'>1306</field>
+  <field name='money_level'>low</field>
+  <field name='the_point'>POINT(721606.632449323 5872547.88349207)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_23'>
+  <field name='name'>23</field>
+  <field name='total_sales'>1781</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(708037.67602773 5873788.9465794)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_24'>
+  <field name='name'>24</field>
+  <field name='total_sales'>422</field>
+  <field name='money_level'>low</field>
+  <field name='the_point'>POINT(714573.941621058 5869569.33208245)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_25'>
+  <field name='name'>25</field>
+  <field name='total_sales'>1682</field>
+  <field name='money_level'>low</field>
+  <field name='the_point'>POINT(739146.990750407 5869900.28223908)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_26'>
+  <field name='name'>26</field>
+  <field name='total_sales'>1190</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(735837.489184165 5871389.55794388)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_27'>
+  <field name='name'>27</field>
+  <field name='total_sales'>1908</field>
+  <field name='money_level'>normal</field>
+  <field name='the_point'>POINT(738733.303054627 5871306.82040473)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_28'>
+  <field name='name'>28</field>
+  <field name='total_sales'>1525</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(753626.060102717 5867169.94344693)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_29'>
+  <field name='name'>29</field>
+  <field name='total_sales'>237</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(755198.073346683 5862536.6412542)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_30'>
+  <field name='name'>30</field>
+  <field name='total_sales'>102</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(755032.59826837 5864687.81727226)</field>
+  <field name='state'>hs</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_31'>
+  <field name='name'>31</field>
+  <field name='total_sales'>354</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(794289.702174877 5880477.93049565)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_32'>
+  <field name='name'>32</field>
+  <field name='total_sales'>1</field>
+  <field name='money_level'>normal</field>
+  <field name='the_point'>POINT(744663.892381878 5881830.6670982)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_33'>
+  <field name='name'>33</field>
+  <field name='total_sales'>492</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(711652.69365366 5866548.27641024)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_34'>
+  <field name='name'>34</field>
+  <field name='total_sales'>734</field>
+  <field name='money_level'>low</field>
+  <field name='the_point'>POINT(711341.795470746 5866150.25857961)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_35'>
+  <field name='name'>35</field>
+  <field name='total_sales'>1566</field>
+  <field name='money_level'>high</field>
+  <field name='the_point'>POINT(797961.475992502 5871689.19018651)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_36'>
+  <field name='name'>36</field>
+  <field name='total_sales'>84</field>
+  <field name='money_level'>low</field>
+  <field name='the_point'>POINT(756005.288824753 5871660.13883109)</field>
+  <field name='state'>ok</field>
+</record>
+
+<record model='geoengine.demo.automatic.retailing.machine' id='machine_37'>
+  <field name='name'>37</field>
+  <field name='total_sales'>1088</field>
+  <field name='money_level'>normal</field>
+  <field name='the_point'>POINT(744811.699001938 5873153.83171856)</field>
+  <field name='state'>ok</field>
+</record>
+
+</odoo>

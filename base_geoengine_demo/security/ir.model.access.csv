@@ -1,0 +1,5 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_geo_user_zip","geoengine.user.zip","base_geoengine_demo.model_dummy_zip","base_geoengine.group_geoengine_user",1,0,0,0
+"access_geo_admin_zip","geoengine.admin.zip","base_geoengine_demo.model_dummy_zip","base_geoengine.group_geoengine_admin",1,1,1,1
+"access_geo_user_retail_machine","geoengine.user.retail","base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine","base_geoengine.group_geoengine_user",1,1,1,1
+"access_geo_admin_retail_machine","geoengine.admin.retail","base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine","base_geoengine.group_geoengine_user",1,1,1,1
