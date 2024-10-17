@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="web_view_leaflet_map.MapController">
+        <Layout display="props.display" className="'h-100'">
+            <t t-component="props.Renderer" archInfo="archInfo" data="model.root" />
+        </Layout>
+    </t>
+</templates>

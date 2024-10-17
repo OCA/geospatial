@@ -1,0 +1,4 @@
+- Sylvain LE GAL (<https://www.twitter.com/legalsylvain>)
+- [APSL-Nagarro](https://apsl.tech):
+  - Miquel Pascual  \<<mpascual@apsl.net>\>
+  - Antoni Marroig \<<amarroig@apsl.net>\>
