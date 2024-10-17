@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="geo_partner_view_form">
+        <field name="name">geo_partner_form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <notebook>
+                <page
+                    string="Geoengine Map"
+                    name="geoengine_map"
+                    groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"
+                >
+                    <field name="geo_point" />
+                </page>
+            </notebook>
+        </field>
+    </record>
+
+    <record id="ir_ui_view_geo_partner" model="ir.ui.view">
+        <field name="name">Partner view</field>
+        <field name="arch" type="xml">
+            <geoengine editable="1">
+                <field name="name" select="1" />
+                <field name="title" />
+                <field name="function" />
+                <field name="website" />
+                <field name="zip" />
+                <field name="city" />
+                <field name="country_id" />
+                <field name="geo_point" />
+                <templates>
+                  <t t-name="info_box">
+                    <b>
+                      Name: <field name="name" />
+                    </b>
+                    <ul>
+                      <li>Title: <field name="title" /> </li>
+                      <li>Function: <field name="function" /> </li>
+                      <li>Website: <field name="website" /> </li>
+                      <li>ZIP: <field name="zip" /> </li>
+                      <li>City: <field name="city" /> </li>
+                      <li>Country: <field name="country_id" /> </li>
+                    </ul>
+                  </t>
+                </templates>
+            </geoengine>
+        </field>
+        <field eval="16" name="priority" />
+        <field name="model">res.partner</field>
+    </record>
+
+    <record id="geoengine_vector_layer_res_partner" model="geoengine.vector.layer">
+        <field
+            name="geo_field_id"
+            ref="geoengine_partner.field_res_partner__geo_point"
+        />
+        <field name="name">Partner location</field>
+        <field eval="1" name="sequence" />
+        <field name="view_id" ref="ir_ui_view_geo_partner" />
+        <field name="geo_repr">basic</field>
+        <field name="active_on_startup" eval="True" />
+        <field name="layer_opacity">0.8</field>
+        <field eval="1" name="nb_class" />
+        <field name="begin_color">#FF680A</field>
+    </record>
+    <record id="geoengine_raster_layer_res_partner_osm" model="geoengine.raster.layer">
+        <field name="raster_type">osm</field>
+        <field name="name">Partner background</field>
+        <field name="view_id" ref="ir_ui_view_geo_partner" />
+        <field eval="0" name="overlay" />
+    </record>
+
+</odoo>
