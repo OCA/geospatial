@@ -369,22 +369,28 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:e5af47c08dbb573c870e80a506feaccced35a36e61e63c6d39644fa84a357de1
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/geospatial/tree/16.0/web_leaflet_lib"><img alt="OCA/geospatial" src="https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/geospatial-16-0/geospatial-16-0-web_leaflet_lib"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/geospatial&amp;target_branch=16.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/licence-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/OCA/geospatial/tree/17.0/web_leaflet_lib"><img alt="OCA/geospatial" src="https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github" /></a> <a class="reference external image-reference" href="https://translation.odoo-community.org/projects/geospatial-17-0/geospatial-17-0-web_leaflet_lib"><img alt="Translate me on Weblate" src="https://img.shields.io/badge/weblate-Translate%20me-F47D42.png" /></a> <a class="reference external image-reference" href="https://runboat.odoo-community.org/builds?repo=OCA/geospatial&amp;target_branch=17.0"><img alt="Try me on Runboat" src="https://img.shields.io/badge/runboat-Try%20me-875A7B.png" /></a></p>
 <p>This module extends odoo to include Leaflet Javacript library.</p>
 <p>This module is used by <tt class="docutils literal">web_view_leaflet_map</tt>.</p>
 <p><strong>Important Note</strong></p>
-<p>The javascript library is opensource and distributed under BSD 2 Licence.
-See : <a class="reference external" href="https://github.com/Leaflet/Leaflet/blob/main/LICENSE">https://github.com/Leaflet/Leaflet/blob/main/LICENSE</a>
-You can so use it freely.</p>
-<p>However, display maps requires to display layers provided by tiles servers, that
-requires ressources.</p>
+<p>The javascript library is opensource and distributed under BSD 2
+Licence. See : <a class="reference external" href="https://github.com/Leaflet/Leaflet/blob/main/LICENSE">https://github.com/Leaflet/Leaflet/blob/main/LICENSE</a> You
+can so use it freely.</p>
+<p>However, display maps requires to display layers provided by tiles
+servers, that requires ressources.</p>
 <p><strong>For testing purpose</strong></p>
-<p>You can use the openStreetMap url <tt class="docutils literal"><span class="pre">https://tile.openstreetmap.org/{z}/{x}/{y}.png</span></tt> or other, listed in that page : <a class="reference external" href="https://wiki.openstreetmap.org/wiki/Tile_servers">https://wiki.openstreetmap.org/wiki/Tile_servers</a></p>
-<p>Apart from very limited testing purposes, you should not use the tiles supplied by OpenStreetMap.org itself. OpenStreetMap is a volunteer-run non-profit body and cannot supply tiles for large-scale commercial use.</p>
+<p>You can use the openStreetMap url
+<tt class="docutils literal"><span class="pre">https://tile.openstreetmap.org/{z}/{x}/{y}.png</span></tt> or other, listed in
+that page : <a class="reference external" href="https://wiki.openstreetmap.org/wiki/Tile_servers">https://wiki.openstreetmap.org/wiki/Tile_servers</a></p>
+<p>Apart from very limited testing purposes, you should not use the tiles
+supplied by OpenStreetMap.org itself. OpenStreetMap is a volunteer-run
+non-profit body and cannot supply tiles for large-scale commercial use.</p>
 <p><strong>Regular / High Usage</strong></p>
 <ul class="simple">
-<li>you can contact one of the following companies : <a class="reference external" href="https://switch2osm.org/providers/">https://switch2osm.org/providers/</a></li>
-<li>You can also install yourself your own tiles servers. See documentation : <a class="reference external" href="https://switch2osm.org/serving-tiles/">https://switch2osm.org/serving-tiles/</a></li>
+<li>you can contact one of the following companies :
+<a class="reference external" href="https://switch2osm.org/providers/">https://switch2osm.org/providers/</a></li>
+<li>You can also install yourself your own tiles servers. See
+documentation : <a class="reference external" href="https://switch2osm.org/serving-tiles/">https://switch2osm.org/serving-tiles/</a></li>
 </ul>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
@@ -405,7 +411,8 @@ requires ressources.</p>
 <ul class="simple">
 <li>Go to Settings &gt; Technical &gt; Parameters &gt; System Parameters</li>
 <li>Create or edit the parameter with the key <tt class="docutils literal">leaflet.tile_url</tt></li>
-<li>As a value, set the url of the tiles server you chose. (See description)</li>
+<li>As a value, set the url of the tiles server you chose. (See
+description)</li>
 </ul>
 </div>
 <div class="section" id="bug-tracker">
@@ -413,7 +420,7 @@ requires ressources.</p>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/geospatial/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-<a class="reference external" href="https://github.com/OCA/geospatial/issues/new?body=module:%20web_leaflet_lib%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
+<a class="reference external" href="https://github.com/OCA/geospatial/issues/new?body=module:%20web_leaflet_lib%0Aversion:%2017.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**">feedback</a>.</p>
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
@@ -445,7 +452,7 @@ mission is to support the collaborative development of Odoo features and
 promote its widespread use.</p>
 <p>Current <a class="reference external" href="https://odoo-community.org/page/maintainer-role">maintainer</a>:</p>
 <p><a class="reference external image-reference" href="https://github.com/legalsylvain"><img alt="legalsylvain" src="https://github.com/legalsylvain.png?size=40px" /></a></p>
-<p>This module is part of the <a class="reference external" href="https://github.com/OCA/geospatial/tree/16.0/web_leaflet_lib">OCA/geospatial</a> project on GitHub.</p>
+<p>This module is part of the <a class="reference external" href="https://github.com/OCA/geospatial/tree/17.0/web_leaflet_lib">OCA/geospatial</a> project on GitHub.</p>
 <p>You are welcome to contribute. To learn how please visit <a class="reference external" href="https://odoo-community.org/page/Contribute">https://odoo-community.org/page/Contribute</a>.</p>
 </div>
 </div>
