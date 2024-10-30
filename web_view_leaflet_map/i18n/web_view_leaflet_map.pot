@@ -19,11 +19,6 @@ msgid "Action Window View"
 msgstr ""
 
 #. module: web_view_leaflet_map
-#: model:ir.model,name:web_view_leaflet_map.model_ir_http
-msgid "HTTP Routing"
-msgstr ""
-
-#. module: web_view_leaflet_map
 #: model:ir.model.fields.selection,name:web_view_leaflet_map.selection__ir_actions_act_window_view__view_mode__leaflet_map
 #: model:ir.model.fields.selection,name:web_view_leaflet_map.selection__ir_ui_view__type__leaflet_map
 msgid "Leaflet Map"
@@ -49,5 +44,6 @@ msgstr ""
 #. module: web_view_leaflet_map
 #: model:ir.model.fields,field_description:web_view_leaflet_map.field_ir_actions_act_window_view__view_mode
 #: model:ir.model.fields,field_description:web_view_leaflet_map.field_ir_ui_view__type
+#: model:ir.model.fields,field_description:web_view_leaflet_map.field_website_page__type
 msgid "View Type"
 msgstr ""

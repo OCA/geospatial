@@ -107,11 +107,13 @@ msgstr "Personalizzato"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__default_extent
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__default_extent
 msgid "Default map extent"
 msgstr "Estensione predefinita della mappa"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__default_zoom
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__default_zoom
 msgid "Default map zoom"
 msgstr "Zoom predefinito della mappa"
 
@@ -173,7 +175,11 @@ msgstr "Classe colore fine"
 #: code:addons/base_geoengine/geo_db.py:0
 #, python-format
 msgid ""
-"Error, can not automatically initialize spatial postgis support. Database user may have to be superuser and postgres/postgis extensions with their devel header have to be installed. If you do not want Odoo to connect with a super user you can manually prepare your database. To do this, open a client to your database using a super user and run:\n"
+"Error, can not automatically initialize spatial postgis support. Database "
+"user may have to be superuser and postgres/postgis extensions with their "
+"devel header have to be installed. If you do not want Odoo to connect with a "
+"super user you can manually prepare your database. To do this, open a client "
+"to your database using a super user and run:\n"
 "CREATE EXTENSION postgis;\n"
 "CREATE EXTENSION postgis_topology;\n"
 msgstr ""
@@ -212,8 +218,7 @@ msgstr "Generale"
 #. odoo-python
 #: code:addons/base_geoengine/fields.py:0
 #, python-format
-msgid ""
-"Geo Value %(geom_type)s must be of the same type %(geo_type)s as fields"
+msgid "Geo Value %(geom_type)s must be of the same type %(geo_type)s as fields"
 msgstr ""
 "Il valore geo %(geom_type)s deve essere dello stesso tipo %(geo_type)s come "
 "i campi"
@@ -239,8 +244,8 @@ msgstr "Campo geo"
 #: code:addons/base_geoengine/fields.py:0
 #, python-format
 msgid ""
-"Geo type modification is not implemented. We can not change type %(data)s to"
-" %(geo_type)s"
+"Geo type modification is not implemented. We can not change type %(data)s to "
+"%(geo_type)s"
 msgstr ""
 "La modifica del tipo geo non è implementata. Non si può cambiare il tipo "
 "%(data)s a %(geo_type)s"
@@ -539,6 +544,7 @@ msgstr "Tipo PostGIs"
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__projection
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__projection
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__projection
 msgid "Projection"
 msgstr "Proiezione"
 
@@ -585,6 +591,7 @@ msgstr "Tipo livello raster"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__raster_layer_ids
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__raster_layer_ids
 msgid "Raster layers"
 msgstr "Livelli raster"
 
@@ -647,6 +654,7 @@ msgstr "Risoluzione"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__restricted_extent
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__restricted_extent
 msgid "Restricted map extent"
 msgstr "Estensione ristretta della mappa"
 
@@ -659,8 +667,6 @@ msgstr "Salva"
 
 #. module: base_geoengine
 #. odoo-javascript
-#: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
-#: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
 #: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
 #, python-format
 msgid "Search..."
@@ -749,6 +755,7 @@ msgstr "Gestione livello vettoriale"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__vector_layer_ids
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__vector_layer_ids
 msgid "Vector layers"
 msgstr "Livelli vettoriali"
 
@@ -771,6 +778,7 @@ msgstr "Gestione vista"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__type
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__type
 msgid "View Type"
 msgstr "Tipo vista"
 

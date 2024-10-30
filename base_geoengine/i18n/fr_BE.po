@@ -107,11 +107,13 @@ msgstr "Personnalisable"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__default_extent
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__default_extent
 msgid "Default map extent"
 msgstr "Étendue de la carte par défaut"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__default_zoom
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__default_zoom
 msgid "Default map zoom"
 msgstr "Zoom par défaut de la carte"
 
@@ -543,6 +545,7 @@ msgstr "Type PostGIs"
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__projection
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__projection
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__projection
 msgid "Projection"
 msgstr ""
 
@@ -589,6 +592,7 @@ msgstr "Type de couche d'arrière-plan"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__raster_layer_ids
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__raster_layer_ids
 msgid "Raster layers"
 msgstr "Couches d'arrière-plan"
 
@@ -651,6 +655,7 @@ msgstr "Résolutions"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__restricted_extent
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__restricted_extent
 msgid "Restricted map extent"
 msgstr "Limitation de l'étendue de la carte"
 
@@ -752,6 +757,7 @@ msgstr "Gestion des couches vectorielles"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__vector_layer_ids
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__vector_layer_ids
 msgid "Vector layers"
 msgstr "Couches vectorielles"
 
@@ -774,6 +780,7 @@ msgstr "Gestion des vues"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__type
+#: model:ir.model.fields,field_description:base_geoengine.field_website_page__type
 msgid "View Type"
 msgstr "Type de vue"
 
