@@ -3,7 +3,10 @@
     <t t-name="base_geoengine.GeoengineRenderer">
         <div class="d-flex view w-100">
             <LayersPanel model="props.data.resModel" vectorModel="vectorModel.root" />
-            <div class="map_container">
+            <div
+                class="map_container"
+                style="/*rtl:ignore*/ direction: ltr /*rtl:ignore*/;"
+            >
                 <div id="olmap" />
             </div>
             <RecordsPanel
@@ -13,7 +16,7 @@
                 zoomOutOnFeature.bind="getOriginalZoom"
             />
         </div>
-        <div id="popup" class="ol-popup">
+        <div id="popup" class="ol-popup text-start">
             <div
                 id="popup-closer"
                 class="ol-popup-closer text-primary"
