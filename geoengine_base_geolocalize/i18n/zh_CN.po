@@ -1,0 +1,28 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* geoengine_base_geolocalize
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-11-25 09:06+0000\n"
+"Last-Translator: xtanuiha <feihu.zhang@live.com>\n"
+"Language-Team: none\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: geoengine_base_geolocalize
+#: model:ir.model.fields,field_description:geoengine_base_geolocalize.field_res_partner__geo_point
+#: model:ir.model.fields,field_description:geoengine_base_geolocalize.field_res_users__geo_point
+msgid "Address coordinates"
+msgstr "地址坐标"
+
+#. module: geoengine_base_geolocalize
+#: model:ir.model,name:geoengine_base_geolocalize.model_res_partner
+msgid "Contact"
+msgstr "联系人"
