@@ -3,7 +3,7 @@
     <menuitem
         name="GeoEngine Backend"
         id="geoengine_base_menu"
-        web_icon="base_geoengine,images/map.png"
+        web_icon="base_geoengine,static/img/map.png"
         groups="group_geoengine_admin"
     />
 </odoo>
