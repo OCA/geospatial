@@ -84,6 +84,9 @@ class GeoField(fields.Field):
             return False
         return geojson.dumps(shape)
 
+    def convert_to_export(self, value, record):
+        return str(value) if value else ""
+
     #
     # Field description
     #
