@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record model="ir.ui.view" id="geoengine_view_form">
         <field name="name">geoengine.view.form</field>
         <field name="model">ir.ui.view</field>
@@ -45,5 +44,4 @@
         action="geo_engine_view_action"
         groups="group_geoengine_admin"
     />
-
 </odoo>

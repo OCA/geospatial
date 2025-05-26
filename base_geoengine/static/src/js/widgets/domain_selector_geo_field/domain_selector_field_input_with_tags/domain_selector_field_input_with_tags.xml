@@ -6,7 +6,8 @@
             <div class="o_domain_leaf_value_input">
                 <t t-foreach="props.value" t-as="tag" t-key="tag_index">
                     <span class="badge rounded-pill">
-                        <t t-esc="tag" /> <i
+                        <t t-esc="tag" />
+                        <i
                             class="o_domain_leaf_value_remove_tag_button fa fa-times"
                             role="img"
                             aria-label="Remove tag"
