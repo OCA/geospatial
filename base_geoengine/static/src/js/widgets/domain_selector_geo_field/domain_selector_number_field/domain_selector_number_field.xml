@@ -5,7 +5,7 @@
         <t t-if="props.operator.category === 'in'">
             <DomainSelectorFieldInputWithTags t-props="props" />
         </t>
-         <t t-elif="props.operator.category === 'active_ids'">
+        <t t-elif="props.operator.category === 'active_ids'">
             <DomainSelectorFieldInputForActiveIds
                 value="props.value"
                 update="props.update"

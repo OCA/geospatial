@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record id="group_geoengine_user" model="res.groups">
         <field name="name">Geoengine User</field>
     </record>
@@ -18,5 +17,4 @@
     <record id="base.group_erp_manager" model="res.groups">
         <field name="implied_ids" eval="[Command.link(ref('group_geoengine_admin'))]" />
     </record>
-
 </odoo>

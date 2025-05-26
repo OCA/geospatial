@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record model="ir.ui.view" id="geo_vector_view_form">
         <field name="name">geoengine.vector.layer.form</field>
         <field name="model">geoengine.vector.layer</field>
@@ -152,7 +151,6 @@
         <field name="view_id" ref="geo_vector_geoengine_view_form" />
     </record>
 
-
     <record model="ir.ui.view" id="geo_vector_view_tree">
         <field name="name">geoengine.vector.layer.tree</field>
         <field name="model">geoengine.vector.layer</field>
@@ -183,5 +181,4 @@
         action="geo_engine_view_raster_action"
         groups="group_geoengine_admin"
     />
-
 </odoo>
