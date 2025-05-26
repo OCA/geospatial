@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-
     <record model="ir.ui.view" id="geo_raster_view_form">
         <field name="name">geoengine.raster.layer.form</field>
         <field name="model">geoengine.raster.layer</field>
@@ -29,7 +28,8 @@
                         <field name="format_suffix" required="is_wmts" />
                         <field name="request_encoding" />
                         <field name="projection" required="is_wmts" />
-                        <field name="units" /> <!-- Not used -->
+                        <field name="units" />
+                        <!-- Not used -->
                         <field name="resolutions" required="is_wmts" />
                         <field name="max_extent" />
                         <field name="dimensions" />
@@ -91,5 +91,4 @@
         action="geo_engine_view_rater_action"
         groups="group_geoengine_admin"
     />
-
 </odoo>
