@@ -9,12 +9,12 @@ import {GeoengineCompiler} from "./geoengine_compiler.esm";
 import {GeoengineController} from "./geoengine_controller/geoengine_controller.esm";
 import {GeoengineRenderer} from "./geoengine_renderer/geoengine_renderer.esm";
 import {RelationalModel} from "@web/model/relational_model/relational_model";
-import {_lt} from "@web/core/l10n/translation";
+import {_t} from "@web/core/l10n/translation";
 import {registry} from "@web/core/registry";
 
 export const geoengineView = {
     type: "geoengine",
-    display_name: _lt("Geoengine"),
+    display_name: _t("Geoengine"),
     icon: "fa fa-map-o",
     multiRecord: true,
     ArchParser: GeoengineArchParser,

@@ -43,7 +43,7 @@ class GeoField(fields.Field):
             postgis_geom_type += "ZM"
         return ("geometry", f"geometry({postgis_geom_type}, {self.srid})")
 
-    def convert_to_column(self, value, record, values=None):
+    def convert_to_column(self, value, record, values=None, validate=True):
         """Convert value to database format
 
         value can be geojson, wkt, shapely geometry object.
@@ -79,7 +79,7 @@ class GeoField(fields.Field):
             return False
         return convert.value_to_shape(value, use_wkb=True)
 
-    def convert_to_read(self, value, record, use_name_get=True):
+    def convert_to_read(self, value, record, use_display_name=True):
         if not isinstance(value, BaseGeometry):
             # read hexadecimal value from database
             shape = self.load_geo(value)
