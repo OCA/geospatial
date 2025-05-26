@@ -9,6 +9,7 @@ export class DomainSelectorFieldInput extends Component {
         const parser = parsers.get(this.props.field.type, (val) => val);
         try {
             return parser(value);
+            // eslint-disable-next-line no-unused-vars
         } catch (_) {
             return value;
         }

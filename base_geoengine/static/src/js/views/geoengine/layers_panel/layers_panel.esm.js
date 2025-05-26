@@ -10,7 +10,9 @@ import {DomainSelectorGeoFieldDialog} from "../../../widgets/domain_selector_geo
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
 import {_t} from "@web/core/l10n/translation";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
+import {rpc} from "@web/core/network/rpc";
 import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
+import {user} from "@web/core/user";
 import {useSortable} from "@web/core/utils/sortable_owl";
 import {vectorLayersStore} from "../../../vector_layers_store.esm";
 
@@ -19,8 +21,6 @@ export class LayersPanel extends Component {
         this.orm = useService("orm");
         this.actionService = useService("action");
         this.view = useService("view");
-        this.rpc = useService("rpc");
-        this.user = useService("user");
         this.state = useState({geoengineLayers: {}, isFolded: false});
         this.addDialog = useOwnedDialogs();
 
@@ -72,11 +72,9 @@ export class LayersPanel extends Component {
     }
 
     async loadIsAdmin() {
-        return this.user
-            .hasGroup("base_geoengine.group_geoengine_admin")
-            .then((result) => {
-                this.isGeoengineAdmin = result;
-            });
+        return user.hasGroup("base_geoengine.group_geoengine_admin").then((result) => {
+            this.isGeoengineAdmin = result;
+        });
     }
 
     async loadLayers() {
@@ -237,7 +235,7 @@ export class LayersPanel extends Component {
     }
 
     async onEditButtonSelected(vector) {
-        const view = await this.rpc("/web/action/load", {
+        const view = await rpc("/web/action/load", {
             action_id: "base_geoengine.geo_vector_geoengine_view_action",
         });
 
@@ -252,7 +250,7 @@ export class LayersPanel extends Component {
     }
 
     async onEditRasterButtonSelected(layer) {
-        const view = await this.rpc("/web/action/load", {
+        const view = await rpc("/web/action/load", {
             action_id: "base_geoengine.geo_engine_form_view_raster_action",
         });
         this.addDialog(FormViewDialog, {

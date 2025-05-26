@@ -60,12 +60,12 @@
         <field name="name">geoengine.raster.layer.tree</field>
         <field name="model">geoengine.raster.layer</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" select="1" />
                 <field name="raster_type" select="1" />
                 <field name="sequence" />
                 <field name="overlay" select="1" />
-            </tree>
+            </list>
         </field>
     </record>
 

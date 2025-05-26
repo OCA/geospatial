@@ -21,6 +21,7 @@ export class DomainFieldExtend extends DomainField {
                 [domain],
                 {context: this.getContext(props)}
             );
+            // eslint-disable-next-line no-unused-vars
         } catch (_e) {
             // WOWL TODO: rethrow error when not the expected type
             Object.assign(this.state, {recordCount: 0, isValid: false});

@@ -6,8 +6,9 @@
 
 import {Field} from "@web/views/fields/field";
 import {Widget} from "@web/views/widgets/widget";
-import {_lt} from "@web/core/l10n/translation";
-import {archParseBoolean, getActiveActions} from "@web/views/utils";
+import {_t} from "@web/core/l10n/translation";
+import {getActiveActions} from "@web/views/utils";
+import {exprToBoolean} from "@web/core/utils/strings";
 import {visitXML} from "@web/core/utils/xml";
 
 export const INFO_BOX_ATTRIBUTE = "info_box";
@@ -24,25 +25,12 @@ export class GeoengineArchParser {
         const countLimit = xmlDoc.getAttribute("count_limit");
 
         const activeActions = getActiveActions(xmlDoc);
-        activeActions.archiveGroup = archParseBoolean(
-            xmlDoc.getAttribute("archivable"),
-            true
-        );
-        activeActions.createGroup = archParseBoolean(
-            xmlDoc.getAttribute("group_create"),
-            true
-        );
-        activeActions.deleteGroup = archParseBoolean(
-            xmlDoc.getAttribute("group_delete"),
-            true
-        );
-        activeActions.editGroup = archParseBoolean(
-            xmlDoc.getAttribute("group_edit"),
-            true
-        );
+        activeActions.archiveGroup = exprToBoolean(xmlDoc.getAttribute("archivable"));
+        activeActions.createGroup = exprToBoolean(xmlDoc.getAttribute("group_create"));
+        activeActions.deleteGroup = exprToBoolean(xmlDoc.getAttribute("group_delete"));
+        activeActions.editGroup = exprToBoolean(xmlDoc.getAttribute("group_edit"));
         activeActions.quickCreate =
-            activeActions.create &&
-            archParseBoolean(xmlDoc.getAttribute("quick_create"), true);
+            activeActions.create && exprToBoolean(xmlDoc.getAttribute("quick_create"));
         const className = xmlDoc.getAttribute("class") || null;
         const defaultGroupBy = xmlDoc.getAttribute("default_group_by");
 
@@ -78,7 +66,7 @@ export class GeoengineArchParser {
         });
         const infoBox = templateDocs[INFO_BOX_ATTRIBUTE];
         if (!infoBox) {
-            throw new Error(_lt(`Missing ${INFO_BOX_ATTRIBUTE} template.`));
+            throw new Error(_t(`Missing ${INFO_BOX_ATTRIBUTE} template.`));
         }
 
         for (const [key, field] of Object.entries(fieldNodes)) {

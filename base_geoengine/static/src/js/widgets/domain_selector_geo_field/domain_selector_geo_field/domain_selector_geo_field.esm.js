@@ -6,7 +6,7 @@
 
 import {Component} from "@odoo/owl";
 import {DomainSelectorGeoFieldInput} from "../domain_selector_geo_field_input/domain_selector_geo_field_input.esm";
-import {_lt} from "@web/core/l10n/translation";
+import {_t} from "@web/core/l10n/translation";
 import {onDidChange} from "../domain_selector_operators.esm";
 import {registry} from "@web/core/registry";
 
@@ -31,7 +31,7 @@ Object.assign(DomainSelectorGeoField, {
         return [
             {
                 category: "geospatial",
-                label: _lt("geo_contains"),
+                label: _t("geo_contains"),
                 value: "geo_contains",
                 onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
@@ -40,7 +40,7 @@ Object.assign(DomainSelectorGeoField, {
             },
             {
                 category: "geospatial",
-                label: _lt("geo_greater"),
+                label: _t("geo_greater"),
                 value: "geo_greater",
                 onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
@@ -49,7 +49,7 @@ Object.assign(DomainSelectorGeoField, {
             },
             {
                 category: "geospatial",
-                label: _lt("geo_lesser"),
+                label: _t("geo_lesser"),
                 value: "geo_lesser",
                 onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
@@ -58,7 +58,7 @@ Object.assign(DomainSelectorGeoField, {
             },
             {
                 category: "geospatial",
-                label: _lt("geo_equal"),
+                label: _t("geo_equal"),
                 value: "geo_equal",
                 onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
@@ -67,7 +67,7 @@ Object.assign(DomainSelectorGeoField, {
             },
             {
                 category: "geospatial",
-                label: _lt("geo_touch"),
+                label: _t("geo_touch"),
                 value: "geo_touch",
                 onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
@@ -76,7 +76,7 @@ Object.assign(DomainSelectorGeoField, {
             },
             {
                 category: "geospatial",
-                label: _lt("geo_within"),
+                label: _t("geo_within"),
                 value: "geo_within",
                 onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
@@ -85,7 +85,7 @@ Object.assign(DomainSelectorGeoField, {
             },
             {
                 category: "geospatial",
-                label: _lt("geo_intersect"),
+                label: _t("geo_intersect"),
                 value: "geo_intersect",
                 onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
