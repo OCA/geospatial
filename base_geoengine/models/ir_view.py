@@ -33,3 +33,8 @@ class IrUIView(models.Model):
         if view_type == "geoengine":
             return True
         return super()._is_qweb_based_view(view_type)
+
+    def _get_view_info(self):
+        res = super()._get_view_info()
+        res.update({"geoengine": {"icon": "fa fa-globe"}})
+        return res

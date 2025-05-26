@@ -1,12 +1,19 @@
 /** @odoo-module */
 
+/* global document */
+/* global ol */
+/* global localStorage */
+/* global chroma */
+/* global geostats */
+/* global console */
+
 /**
  * Copyright 2023 ACSONE SA/NV
  */
 
 import {
+    App,
     Component,
-    mount,
     onMounted,
     onPatched,
     onWillStart,
@@ -23,10 +30,12 @@ import {
     extractFieldsFromArchInfo,
 } from "@web/model/relational_model/utils";
 import {evaluateExpr} from "@web/core/py_js/py";
-import {loadBundle, templates} from "@web/core/assets";
+import {loadBundle} from "@web/core/assets";
+import {getTemplate} from "@web/core/templates";
 import {parseXML} from "@web/core/utils/xml";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {registry} from "@web/core/registry";
+import {user} from "@web/core/user";
 import {useService} from "@web/core/utils/hooks";
 import {vectorLayersStore} from "../../../vector_layers_store.esm";
 
@@ -57,7 +66,6 @@ export class GeoengineRenderer extends Component {
 
         this.orm = useService("orm");
         this.view = useService("view");
-        this.user = useService("user");
         this.fields = useService("field");
 
         // For related model we need to load all the service needed by RelationalModel
@@ -68,16 +76,9 @@ export class GeoengineRenderer extends Component {
 
         onWillStart(async () =>
             Promise.all([
-                loadBundle({
-                    jsLibs: [
-                        "/base_geoengine/static/lib/ol-7.2.2/ol.js",
-                        "/base_geoengine/static/lib/chromajs-2.4.2/chroma.js",
-                        "/base_geoengine/static/lib/geostats-2.0.0/geostats.js",
-                    ],
-                    cssLibs: ["/base_geoengine/static/lib/geostats-2.0.0/geostats.css"],
-                }),
+                loadBundle("base_geoengine.assets_jsLibs_geoengine"),
                 this.loadVectorModel(),
-                (this.isGeoengineAdmin = await this.user.hasGroup(
+                (this.isGeoengineAdmin = await user.hasGroup(
                     "base_geoengine.group_geoengine_admin"
                 )),
             ])
@@ -557,15 +558,16 @@ export class GeoengineRenderer extends Component {
             record === undefined
                 ? model.records.find((element) => element._values.id === attributes.id)
                 : record;
-        mount(GeoengineRecord, popup, {
+        const app = new App(GeoengineRecord, {
             env: this.env,
             props: {
                 archInfo,
                 record: this.record,
                 templates: templateDocs,
             },
-            templates,
+            getTemplate,
         });
+        app.mount(popup);
     }
 
     /**

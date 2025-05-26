@@ -8,7 +8,7 @@ import {Component} from "@odoo/owl";
 import {DomainSelectorFieldInput} from "../domain_selector_field_input/domain_selector_field_input.esm";
 import {DomainSelectorFieldInputForActiveIds} from "../domain_selector_field_input_for_active_ids/domain_selector_field_input_for_active_ids.esm";
 import {DomainSelectorFieldInputWithTags} from "../domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.esm";
-import {_lt} from "@web/core/l10n/translation";
+import {_t} from "@web/core/l10n/translation";
 import {onDidChange} from "../domain_selector_operators.esm";
 import {registry} from "@web/core/registry";
 
@@ -34,7 +34,7 @@ Object.assign(DomainSelectorNumberFieldExtend, {
         const addOperators = [
             {
                 category: "active_ids",
-                label: _lt("in active_ids"),
+                label: _t("in active_ids"),
                 value: "in active_ids",
                 onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
@@ -43,7 +43,7 @@ Object.assign(DomainSelectorNumberFieldExtend, {
             },
             {
                 category: "active_ids",
-                label: _lt("not in active_ids"),
+                label: _t("not in active_ids"),
                 value: "not in active_ids",
                 onDidChange: onDidChange((fieldChange) => fieldChange()),
                 matches({operator}) {
