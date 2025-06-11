@@ -272,15 +272,17 @@ var geostats = function(a) {
 	};
 
 	/** return min value */
-	this.min = function() {
+	this.min = function(exclude = []) {
 		
 		if (this._nodata())
 			return;
 		
-		this.stat_min = this.serie[0];
+		if(!exclude.includes(this.serie[0])) this.stat_min = this.serie[0];
+		else this.stat_min = 999999999999;
+		
 		
 		for (var i = 0; i < this.pop(); i++) {
-			if (this.serie[i] < this.stat_min) {
+			if (this.serie[i] < this.stat_min && !exclude.includes(this.serie[i])) {
 				this.stat_min = this.serie[i];
 			}
 		}
@@ -289,14 +291,16 @@ var geostats = function(a) {
 	};
 
 	/** return max value */
-	this.max = function() {
+	this.max = function(exclude = []) {
 		
 		if (this._nodata())
 			return;
 		
-		this.stat_max = this.serie[0];
+		if(!exclude.includes(this.serie[0])) this.stat_max = this.serie[0];
+		else this.stat_max = -999999999999;
+		
 		for (var i = 0; i < this.pop(); i++) {
-			if (this.serie[i] > this.stat_max) {
+			if (this.serie[i] > this.stat_max && !exclude.includes(this.serie[i])) {
 				this.stat_max = this.serie[i];
 			}
 		}
@@ -471,6 +475,22 @@ var geostats = function(a) {
 		
 	};
 	
+	/** data test */
+	this._classificationCheck = function(nbClass) {
+
+		if(nbClass >= this.pop()) {
+			var errnum ='Error. ' + nbClass + ' classes are defined for only ' + this.pop() + ' values in serie ! For the current serie, no more than ' + (this.pop() - 1 ) + ' classes can be defined.';
+			
+			if(this.silent) this.log(errnum, true);
+			else {
+				alert(errnum);
+				throw new TypeError(errnum);
+			}
+			
+		}
+		
+	};
+	
 	/** ensure nbClass is an integer */
 	this._nbClassInt = function(nbClass) {
 		
@@ -582,7 +602,7 @@ var geostats = function(a) {
 		
 		if (this._nodata())
 	        return;
-
+		
 		var tmpMin = (typeof forceMin === "undefined") ? this.min() : forceMin;
 		var tmpMax = (typeof forceMax === "undefined") ? this.max() : forceMax;
 		
@@ -634,6 +654,8 @@ var geostats = function(a) {
 		
 		if (this._nodata())
 			return;
+		
+		this._classificationCheck(nbClass); // be sure number of classes is valid
 
 		var tmp = this.sorted();
 		var bounds = this.getQuantiles(nbClass);
@@ -663,7 +685,7 @@ var geostats = function(a) {
 		
 		if (this._nodata())
 	        return;
-
+		
 	    var tmpMax = this.max();
 		var tmpMin = this.min();
 		var tmpStdDev = this.stddev();
@@ -747,7 +769,7 @@ var geostats = function(a) {
 		
 		if (this._nodata())
 	        return;
-
+		
 	    if(this._hasNegativeValue() || this._hasZeroValue()) {
 	    	if(this.silent) this.log("[silent mode] " + _t('geometric progression can\'t be applied with a serie containing negative or zero values.'), true);
 			else throw new TypeError(_t('geometric progression can\'t be applied with a serie containing negative or zero values.'));
@@ -799,7 +821,7 @@ var geostats = function(a) {
 		
 		if (this._nodata())
 	        return;
-	    
+			    
 	    var denominator = 0;
 	    
 	    // we compute the (french) "Raison"
@@ -816,7 +838,9 @@ var geostats = function(a) {
 	    for (var i = 0; i <= nbClass; i++) {
 	    	if(i == 0) {
 	    		a[i] = tmpMin;
-	    	} else {
+			} else if(i == nbClass) {
+				a[i] = tmpMax;
+			} else {
 	    		a[i] = a[i-1] + (i * interval);
 	    	}
 	    }
@@ -841,6 +865,8 @@ var geostats = function(a) {
 		
 		if (this._nodata())
 			return;
+		
+		this._classificationCheck(nbClass); // be sure number of classes is valid
 		
 		var dataList = this.sorted();
 
@@ -961,11 +987,13 @@ var geostats = function(a) {
 		if (this._nodata())
 			return;
 		
+		this._classificationCheck(nbClass); // be sure number of classes is valid
+		
 		var dataList = this.sorted();
 		
 		// Compute the matrices required for Jenks breaks. These matrices
 		// can be used for any classing of data with `classes <= n_classes`
-		jenksMatrices = function(data, n_classes) {
+		var jenksMatrices = function(data, n_classes) {
 
 			// in the original implementation, these matrices are referred to
 			// as `LC` and `OP`
@@ -1092,7 +1120,7 @@ var geostats = function(a) {
 
 	
 	/**
-	 * Quantile classification Return an array with bounds : ie array(0, 0.75,
+	 * Unique classification Return as many entries as unique values : ie array('blue', 'red', yellow')
 	 * 1.5, 2.25, 3);
 	 */
 	this.getClassUniqueValues = function() {
