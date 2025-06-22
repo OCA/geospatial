@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ogcapi_user_api_user,ogcapi.user.api,ogcapi.model_ogcapi_api,base_geoengine.group_geoengine_user,1,0,0,0
+access_ogcapi_admin_api_user,ogcapi.admin.api,ogcapi.model_ogcapi_api,base_geoengine.group_geoengine_admin,1,1,1,1
+access_ogcapi_user_collection_user,ogcapi.user.collection,ogcapi.model_ogcapi_collection,base_geoengine.group_geoengine_user,1,0,0,0
+access_ogcapi_admin_collection_user,ogcapi.admin.collection,ogcapi.model_ogcapi_collection,base_geoengine.group_geoengine_admin,1,1,1,1
+access_ogcapi_user_keyword_user,ogcapi.user.keyword,ogcapi.model_ogcapi_keyword,base_geoengine.group_geoengine_user,1,0,0,0
+access_ogcapi_admin_keyword_user,ogcapi.admin.keyword,ogcapi.model_ogcapi_keyword,base_geoengine.group_geoengine_admin,1,1,1,1
+access_ogcapi_user_crs_user,ogcapi.user.crs,ogcapi.model_ogcapi_crs,base_geoengine.group_geoengine_user,1,0,0,0
+access_ogcapi_admin_crs_user,ogcapi.admin.crs,ogcapi.model_ogcapi_crs,base_geoengine.group_geoengine_admin,1,1,1,1

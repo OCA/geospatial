@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+        id="menu_ogcapi_root"
+        name="OGC API"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_ogcapi_api"
+        name="APIs"
+        parent="menu_ogcapi_root"
+        sequence="20"
+        action="action_ogcapi_api"
+    />
+    <menuitem
+        id="menu_ogcapi_collection"
+        name="Collections"
+        parent="menu_ogcapi_root"
+        sequence="30"
+        action="action_ogcapi_collection"
+    />
+    <menuitem 
+        id="menu_ogcapi_keyword" 
+        name="Keywords" 
+        parent="menu_ogcapi_root"
+        action="action_ogcapi_keyword"
+        sequence="40"
+    />
+    <menuitem 
+        id="menu_ogcapi_crs" 
+        name="CRS Definitions" 
+        parent="menu_ogcapi_root" 
+        action="action_ogcapi_crs" 
+        sequence="50"
+    />
+</odoo>

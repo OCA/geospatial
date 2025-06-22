@@ -1,0 +1,31 @@
+<odoo>
+    <record id="view_ogcapi_keyword_tree" model="ir.ui.view">
+        <field name="name">ogcapi.keyword.tree</field>
+        <field name="model">ogcapi.keyword</field>
+        <field name="arch" type="xml">
+            <tree string="OGC API Keywords">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ogcapi_keyword_form" model="ir.ui.view">
+        <field name="name">ogcapi.keyword.form</field>
+        <field name="model">ogcapi.keyword</field>
+        <field name="arch" type="xml">
+            <form string="OGC API Keyword">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ogcapi_keyword" model="ir.actions.act_window">
+        <field name="name">OGC API Keywords</field>
+        <field name="res_model">ogcapi.keyword</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

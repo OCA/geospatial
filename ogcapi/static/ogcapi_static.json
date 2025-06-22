@@ -1,0 +1,375 @@
+{
+  "Geometry": {
+    "type": "object",
+    "oneOf": [
+      {
+        "$ref": "#/components/schemas/Point"
+      },
+      {
+        "$ref": "#/components/schemas/LineString"
+      },
+      {
+        "$ref": "#/components/schemas/Polygon"
+      },
+      {
+        "$ref": "#/components/schemas/MultiPoint"
+      },
+      {
+        "$ref": "#/components/schemas/MultiLineString"
+      },
+      {
+        "$ref": "#/components/schemas/MultiPolygon"
+      },
+      {
+        "$ref": "#/components/schemas/GeometryCollection"
+      }
+    ]
+  },
+  "Point": {
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": [
+          "Point"
+        ]
+      },
+      "coordinates": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 2
+      }
+    },
+    "required": [
+      "type",
+      "coordinates"
+    ]
+  },
+  "LineString": {
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": [
+          "LineString"
+        ]
+      },
+      "coordinates": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "minItems": 2
+      }
+    },
+    "required": [
+      "type",
+      "coordinates"
+    ]
+  },
+  "Polygon": {
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": [
+          "Polygon"
+        ]
+      },
+      "coordinates": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "required": [
+      "type",
+      "coordinates"
+    ]
+  },
+  "MultiPoint": {
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": [
+          "MultiPoint"
+        ]
+      },
+      "coordinates": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "required": [
+      "type",
+      "coordinates"
+    ]
+  },
+  "MultiLineString": {
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": [
+          "MultiLineString"
+        ]
+      },
+      "coordinates": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          }
+        }
+      }
+    },
+    "required": [
+      "type",
+      "coordinates"
+    ]
+  },
+  "MultiPolygon": {
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": [
+          "MultiPolygon"
+        ]
+      },
+      "coordinates": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          }
+        }
+      }
+    },
+    "required": [
+      "type",
+      "coordinates"
+    ]
+  },
+  "GeometryCollection": {
+    "type": "object",
+    "properties": {
+      "type": {
+        "type": "string",
+        "enum": [
+          "GeometryCollection"
+        ]
+      },
+      "geometries": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Geometry"
+        }
+      }
+    },
+    "required": [
+      "type",
+      "geometries"
+    ]
+  },
+  "Collection": {
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "title": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "extent": {
+        "$ref": "#/components/schemas/Extent"
+      },
+      "links": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Link"
+        }
+      },
+      "keywords": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "required": [
+      "id",
+      "title",
+      "links"
+    ]
+  },
+  "Collections": {
+    "type": "object",
+    "required": [
+      "collections"
+    ],
+    "properties": {
+      "links": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Link"
+        }
+      },
+      "collections": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Collection"
+        }
+      }
+    }
+  },
+  "Extent": {
+    "type": "object",
+    "properties": {
+      "spatial": {
+        "type": "object",
+        "properties": {
+          "bbox": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              }
+            }
+          },
+          "crs": {
+            "type": "string"
+          }
+        }
+      },
+      "temporal": {
+        "type": "object",
+        "properties": {
+          "interval": {
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "trs": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "Link": {
+    "type": "object",
+    "required": [
+      "href",
+      "rel"
+    ],
+    "properties": {
+      "href": {
+        "type": "string",
+        "format": "uri"
+      },
+      "rel": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      },
+      "title": {
+        "type": "string"
+      }
+    }
+  },
+  "Error": {
+    "type": "object",
+    "properties": {
+      "code": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "status": {
+        "type": "integer"
+      }
+    }
+  },
+  "LandingPage": {
+    "type": "object",
+    "properties": {
+      "title": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "links": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Link"
+        }
+      }
+    },
+    "required": [
+      "title",
+      "links"
+    ]
+  },
+  "Conformance": {
+    "type": "object",
+    "properties": {
+      "conformsTo": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "links": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Link"
+        }
+      }
+    },
+    "required": [
+      "conformsTo"
+    ]
+  }
+}

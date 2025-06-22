@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ogcapi_api_tree" model="ir.ui.view">
+        <field name="name">ogcapi.api.tree</field>
+        <field name="model">ogcapi.api</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="description"/>                
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ogcapi_api_form" model="ir.ui.view">
+        <field name="name">ogcapi.api.form</field>
+        <field name="model">ogcapi.api</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_api_collections"
+                            icon="fa-building-o" string="Collections" />
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <field name="title"/>
+                        <field name="description"/>
+                        <field name="contact_id"/>
+                        <field name="keywords"  widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ogcapi_api" model="ir.actions.act_window">
+        <field name="name">OGC API</field>
+        <field name="res_model">ogcapi.api</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>You can manage OGC API records from here.</p>
+        </field>
+    </record>
+</odoo>

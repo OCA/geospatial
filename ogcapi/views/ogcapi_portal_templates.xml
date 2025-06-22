@@ -1,0 +1,88 @@
+<odoo>
+    <template
+        id="portal_my_home_ogcapi"
+        name="Portal My Home : ogcapi entries"
+        inherit_id="portal.portal_my_home"
+        priority="30"
+    >
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">OGC API</t>
+                <t t-set="url" t-value="'/my/ogcapi'" />
+                <t t-set="placeholder_count" t-value="'ogcapi_api_count'" />
+            </t>
+        </xpath>
+    </template>
+    <template
+        id="portal_my_ogcapi_breadcrumbs"
+        name="My OGCAPI: Breadcrumbs"
+        inherit_id="portal.portal_breadcrumbs"
+    >
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <t t-if="page_name == 'ogcapi_list'">
+                <li class="breadcrumb-item active">
+                    <span>OGC API</span>
+                </li>
+            </t>
+            <t t-if="page_name == 'openapi_page'">
+                <li class="breadcrumb-item"><a href="/my/ogcapi">OGC API</a></li>
+                <li class="breadcrumb-item active">
+                    <span><t t-esc="api_name"/></span>
+                </li>
+            </t>
+        </xpath>
+    </template>
+    <template id="portal_my_api" name="My API">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+            <t t-call="portal.portal_searchbar" />
+            <t t-call="portal.portal_table">
+                <thead>
+                    <tr class="active">
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="result" t-as="ogcapi_api">
+                        <tr class="tr_dms_directory">
+                            <td>
+                                <a
+                                    t-attf-href="/my/ogcapi/#{ogcapi_api.name}/api?f=html"
+                                    t-attf-class="tr_dms_directory_link"
+                                    t-att-title="ogcapi_api.name"
+                                >
+                                    <span t-esc="ogcapi_api.title" />
+                                </a>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </t>
+        </t>
+    </template>
+    <template id="swagger_ui_template" name="Swagger UI">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True" />
+            <t t-call="portal.portal_searchbar" />
+            <link rel="stylesheet" href="/ogcapi/static/swagger-ui/swagger-ui.css" />
+            <script src="/ogcapi/static/swagger-ui/swagger-ui-bundle.js"></script>
+            <script src="/ogcapi/static/swagger-ui/swagger-ui-standalone-preset.js"></script>
+            <div id="swagger-ui"></div>
+            <pre id="swagger-spec" style="display:none"><t t-esc="openapi"/></pre>
+            <script>
+                window.onload = function() {
+                    const spec = JSON.parse(document.getElementById('swagger-spec').textContent);
+                    const ui = SwaggerUIBundle({
+                        spec: spec,
+                        dom_id: '#swagger-ui',
+                        presets: [
+                            SwaggerUIBundle.presets.apis,
+                            SwaggerUIStandalonePreset
+                        ],
+                        layout: "BaseLayout"
+                    });
+                }
+            </script>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,636 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ogcapi
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0-20250218\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-06-22 18:13+0000\n"
+"PO-Revision-Date: 2025-06-22 18:13+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.portal_my_ogcapi_breadcrumbs
+msgid "<span>OGC API</span>"
+msgstr "<span>OGC API</span>"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "A bounding box to filter features spatially (minX,minY,maxX,maxY)."
+msgstr "Un riquadro di delimitazione per filtrare le entità spazialmente (minX,minY,maxX,maxY)."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "API conformance definition"
+msgstr "Definizione di conformità dell'API"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/controllers/main.py:0
+#: code:addons/ogcapi/controllers/main.py:0
+#: code:addons/ogcapi/controllers/main.py:0
+#: code:addons/ogcapi/controllers/main.py:0
+#: code:addons/ogcapi/controllers/main.py:0
+#: code:addons/ogcapi/controllers/main.py:0
+#: code:addons/ogcapi/controllers/main.py:0
+#: code:addons/ogcapi/controllers/main.py:0
+#, python-format
+msgid "API with name '%s' not found."
+msgstr "API con nome '%s' non trovata."
+
+#. module: ogcapi
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_api
+msgid "APIs"
+msgstr "API"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "Additional 'free-form' parameters that are not explicitly defined."
+msgstr "Parametri aggiuntivi 'liberi' non esplicitamente definiti."
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__crs_ids
+msgid "Available CRSs"
+msgstr "CRS disponibili"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__crs_ids
+msgid ""
+"Available Coordinate Reference Systems (CRS) for this collection. If empty, "
+"only CRS84 is available."
+msgstr ""
+"Sistemi di riferimento di coordinate (CRS) disponibili per questa collezione. Se vuoto, è disponibile solo CRS84."
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_crs__authority
+msgid "CRS Authority"
+msgstr "Autorità CRS"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_crs_form
+msgid "CRS Definition"
+msgstr "Definizione CRS"
+
+#. module: ogcapi
+#: model:ir.actions.act_window,name:ogcapi.action_ogcapi_crs
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_crs
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_crs_tree
+msgid "CRS Definitions"
+msgstr "Definizioni CRS"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_crs__crs_uri
+msgid "CRS URI"
+msgstr "URI CRS"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+msgid "Calculate Extent"
+msgstr "Calcola estensione"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_crs__code
+msgid "Code"
+msgstr "Codice"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "Collection"
+msgstr "Collezione"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/controllers/main.py:0
+#: code:addons/ogcapi/controllers/main.py:0
+#: code:addons/ogcapi/controllers/main.py:0
+#: code:addons/ogcapi/controllers/main.py:0
+#, python-format
+msgid "Collection with name '%s' not found."
+msgstr "Collezione con nome '%s' non trovata."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_api.py:0
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_collection
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_api_form
+#, python-format
+msgid "Collections"
+msgstr "Collezioni"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/controllers/main.py:0
+#, python-format
+msgid "Could not select database '%s'"
+msgstr "Impossibile selezionare il database '%s'"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__create_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__create_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_crs__create_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_keyword__create_uid
+msgid "Created by"
+msgstr "Creato da"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__create_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__create_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_crs__create_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_keyword__create_date
+msgid "Created on"
+msgstr "Creato il"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__crs_default
+msgid "Default CRS"
+msgstr "CRS predefinito"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__crs_default
+msgid ""
+"Default Coordinate Reference System (CRS) for this collection. If empty, "
+"CRS84 is used as default."
+msgstr ""
+"Sistema di riferimento di coordinate (CRS) predefinito per questa collezione. Se vuoto, viene utilizzato CRS84 come predefinito."
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__description
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__description
+msgid "Description"
+msgstr "Descrizione"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__geo_dimension
+msgid "Dimension of the geometry field (2 for 2D, 3 for 3D geometries)"
+msgstr "Dimensione del campo geometrico (2 per 2D, 3 per geometrie 3D)"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__display_name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__display_name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_crs__display_name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_keyword__display_name
+msgid "Display Name"
+msgstr "Nome visualizzato"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_crs__authority__epsg
+msgid "EPSG"
+msgstr "EPSG"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__extent
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+msgid "Extent"
+msgstr "Estensione"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_collection.py:0
+#, python-format
+msgid "Feature schema for  %s"
+msgstr "Schema delle entità per %s"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/controllers/main.py:0
+#, python-format
+msgid "Feature with ID: '%s' not found."
+msgstr "Entità con ID '%s' non trovata."
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_view_fields
+msgid "Geoengine View Fields"
+msgstr "Campi vista Geoengine"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_dimension
+msgid "Geometry Dimension"
+msgstr "Dimensione geometria"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_field_id
+msgid "Geometry Field"
+msgstr "Campo geometria"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_field_name
+msgid "Geometry Field Name"
+msgstr "Nome campo geometria"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+msgid "Geometry Properties"
+msgstr "Proprietà geometria"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_type
+msgid "Geometry Type"
+msgstr "Tipo di geometria"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "Get Schema from %s"
+msgstr "Ottieni schema da %s"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "Get feature from %s"
+msgstr "Ottieni entità da %s"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "Get features from %s"
+msgstr "Ottieni entità da %s"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__id
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__id
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_crs__id
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_keyword__id
+msgid "ID"
+msgstr "ID"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "If true, the geometry will be omitted from the response."
+msgstr "Se vero, la geometria verrà omessa dalla risposta."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_collection.py:0
+#: code:addons/ogcapi/models/ogcapi_collection.py:0
+#, python-format
+msgid "Invalid CRS type or value: %s"
+msgstr "Tipo o valore CRS non valido: %s"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_collection.py:0
+#, python-format
+msgid "Invalid bbox or CRS: %s, %s"
+msgstr "Bbox o CRS non valido: %s, %s"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_collection.py:0
+#, python-format
+msgid "Invalid bbox parameter."
+msgstr "Parametro bbox non valido."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_collection.py:0
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+#, python-format
+msgid "Items"
+msgstr "Elementi"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_keyword__name
+msgid "Keyword"
+msgstr "Parola chiave"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__keywords
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__keywords
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_keyword
+msgid "Keywords"
+msgstr "Parole chiave"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "Landing page"
+msgstr "Pagina iniziale"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api____last_update
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection____last_update
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_crs____last_update
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_keyword____last_update
+msgid "Last Modified on"
+msgstr "Ultima modifica il"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__write_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__write_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_crs__write_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_keyword__write_uid
+msgid "Last Updated by"
+msgstr "Ultimo aggiornamento di"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__write_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__write_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_crs__write_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_keyword__write_date
+msgid "Last Updated on"
+msgstr "Ultimo aggiornamento il"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_collection__geo_type__linestring
+msgid "LineString"
+msgstr "LineString"
+
+#. module: ogcapi
+#: model_terms:ir.actions.act_window,help:ogcapi.action_ogcapi_crs
+msgid "Manage OGC API CRS definitions here."
+msgstr "Gestisci qui le definizioni CRS dell'API OGC."
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__max_features
+msgid "Max Features"
+msgstr "Numero massimo di entità"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__max_features
+msgid "Maximum number of features that can be retrieved from this collection."
+msgstr "Numero massimo di entità che possono essere recuperate da questa collezione."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/controllers/main.py:0
+#: code:addons/ogcapi/controllers/main.py:0
+#: code:addons/ogcapi/controllers/main.py:0
+#, python-format
+msgid "Missing api_name or collection_name."
+msgstr "api_name o collection_name mancante."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/controllers/main.py:0
+#, python-format
+msgid "Missing api_name, collection_name or feature_id."
+msgstr "api_name, collection_name o feature_id mancante."
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_collection__geo_type__multilinestring
+msgid "MultiLineString"
+msgstr "MultiLineString"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_collection__geo_type__multipoint
+msgid "MultiPoint"
+msgstr "MultiPoint"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_collection__geo_type__multipolygon
+msgid "MultiPolygon"
+msgstr "MultiPolygon"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_crs__name
+#: model_terms:ir.ui.view,arch_db:ogcapi.portal_my_api
+msgid "Name"
+msgstr "Nome"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_crs__authority__ogc
+msgid "OGC"
+msgstr "OGC"
+
+#. module: ogcapi
+#: model:ir.actions.act_window,name:ogcapi.action_ogcapi_api
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_root
+#: model_terms:ir.ui.view,arch_db:ogcapi.portal_my_home_ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.portal_my_ogcapi_breadcrumbs
+msgid "OGC API"
+msgstr "OGC API"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_crs
+msgid "OGC API CRS Definitions Model"
+msgstr "Modello definizioni CRS OGC API"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+msgid "OGC API Collection"
+msgstr "Collezione OGC API"
+
+#. module: ogcapi
+#: model:ir.actions.act_window,name:ogcapi.action_ogcapi_collection
+#: model:ir.model,name:ogcapi.model_ogcapi_collection
+msgid "OGC API Collections"
+msgstr "Collezioni OGC API"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_keyword
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_keyword_form
+msgid "OGC API Keyword"
+msgstr "Parola chiave OGC API"
+
+#. module: ogcapi
+#: model:ir.actions.act_window,name:ogcapi.action_ogcapi_keyword
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_keyword_tree
+msgid "OGC API Keywords"
+msgstr "Parole chiave OGC API"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_api
+msgid "OGC API Model"
+msgstr "Modello OGC API"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_openapi_mixin
+msgid "OGC API Openapi Mixin"
+msgstr "Mixin Openapi OGC API"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "OpenAPI 3.0 document"
+msgstr "Documento OpenAPI 3.0"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_collection__geo_type__point
+msgid "Point"
+msgstr "Punto"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_collection__geo_type__polygon
+msgid "Polygon"
+msgstr "Poligono"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__api_id
+msgid "Related API"
+msgstr "API correlata"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__model_id
+msgid "Related Model"
+msgstr "Modello correlato"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_collection.py:0
+#, python-format
+msgid "SRID %s is not defined in PostGIS spatial_ref_sys table!"
+msgstr "SRID %s non è definito nella tabella spatial_ref_sys di PostGIS!"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__geo_field_id
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__geo_field_name
+msgid "Select the geometry field for this collection."
+msgstr "Seleziona il campo geometria per questa collezione."
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__contact_id
+msgid "Service Contact"
+msgstr "Contatto servizio"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__geo_srid
+msgid "Spatial Reference Identifier (SRID) for the storage of geometries."
+msgstr "Identificatore di riferimento spaziale (SRID) per la memorizzazione delle geometrie."
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__extent
+msgid ""
+"Spatial extent of the collection in GeoJSON format [minX, minY, maxX, maxY] "
+"with EPSG:4326 (longitude, latitude)"
+msgstr "Estensione spaziale della collezione in formato GeoJSON [minX, minY, maxX, maxY] con EPSG:4326 (longitudine, latitudine)"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_srid
+msgid "Storage SRID"
+msgstr "SRID di memorizzazione"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "The CRS used for the bounding box coordinates."
+msgstr "Il CRS utilizzato per le coordinate del riquadro di delimitazione."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "The Coordinate Reference System to be used for the response."
+msgstr "Il sistema di riferimento di coordinate da utilizzare per la risposta."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "The EPSG code for the bounding box CRS."
+msgstr "Il codice EPSG per il CRS del riquadro di delimitazione."
+
+#. module: ogcapi
+#: model:ir.model.constraint,message:ogcapi.constraint_ogcapi_collection_unique_name_api_id
+msgid "The combination of Name and Related API must be unique!"
+msgstr "La combinazione di Nome e API correlata deve essere univoca!"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "The language for the response (e.g., en, tr)."
+msgstr "La lingua per la risposta (ad es., en, it)."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "The maximum number of features to return in the response."
+msgstr "Il numero massimo di entità da restituire nella risposta."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "The number of features to skip before starting to return results."
+msgstr "Il numero di entità da saltare prima di iniziare a restituire i risultati."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "The response format (e.g., json, html)."
+msgstr "Il formato della risposta (ad es., json, html)."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid ""
+"The unique identifier of a feature. Used as a path parameter to retrieve a "
+"single feature by its ID. (Type: string, Required: Yes)"
+msgstr "L'identificatore univoco di un'entità. Utilizzato come parametro di percorso per recuperare una singola entità tramite il suo ID. (Tipo: stringa, Obbligatorio: Sì)"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#: code:addons/ogcapi/models/ogcapi_openapi_mixin.py:0
+#, python-format
+msgid "This document"
+msgstr "Questo documento"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__title
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__title
+msgid "Title"
+msgstr "Titolo"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__geo_type
+msgid ""
+"Type of the geometry field (e.g., Point, LineString, Polygon, MultiPoint, "
+"MultiLineString, MultiPolygon)"
+msgstr "Tipo di campo geometrico (ad es., Punto, LineString, Poligono, MultiPoint, MultiLineString, MultiPolygon)"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_crs__version
+msgid "Version"
+msgstr "Versione"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+msgid "View Fields"
+msgstr "Visualizza campi"
+
+#. module: ogcapi
+#: model_terms:ir.actions.act_window,help:ogcapi.action_ogcapi_collection
+msgid "You can manage OGC API collections here."
+msgstr "Puoi gestire qui le collezioni OGC API."
+
+#. module: ogcapi
+#: model_terms:ir.actions.act_window,help:ogcapi.action_ogcapi_api
+msgid "You can manage OGC API records from here."
+msgstr "Puoi gestire i record OGC API da qui."

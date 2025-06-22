@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_ogcapi_crs_tree" model="ir.ui.view">
+        <field name="name">ogcapi.crs.tree</field>
+        <field name="model">ogcapi.crs</field>
+        <field name="arch" type="xml">
+            <tree string="CRS Definitions">
+                <field name="name"/>
+                <field name="authority"/>
+                <field name="version"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_ogcapi_crs_form" model="ir.ui.view">
+        <field name="name">ogcapi.crs.form</field>
+        <field name="model">ogcapi.crs</field>
+        <field name="arch" type="xml">
+            <form string="CRS Definition">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="authority"/>
+                        <field name="version"/>
+                        <field name="code"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ogcapi_crs" model="ir.actions.act_window">
+        <field name="name">CRS Definitions</field>
+        <field name="res_model">ogcapi.crs</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Manage OGC API CRS definitions here.</p>
+        </field>
+    </record>
+
+</odoo>
