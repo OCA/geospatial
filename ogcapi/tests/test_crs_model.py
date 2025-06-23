@@ -55,3 +55,66 @@ class TestOgcapiCrsModel(TransactionCase):
         crs.authority = None
         crs._compute_crs_uri()
         self.assertFalse(crs.crs_uri)
+
+    def test_crs_uri_with_partial_fields(self):
+        # Coverage: Sadece bazı alanlar doluysa crs_uri False olmalı
+        crs = self.env['ogcapi.crs'].create({
+            'name': 'Partial CRS',
+            'authority': 'EPSG',
+            'version': False,
+            'code': '4326'
+        })
+        crs._compute_crs_uri()
+        self.assertFalse(crs.crs_uri)
+        crs.version = '0'
+        crs.code = False
+        crs._compute_crs_uri()
+        self.assertFalse(crs.crs_uri)
+        crs.version = False
+        crs.code = '3857'
+        crs._compute_crs_uri()
+        self.assertFalse(crs.crs_uri)
+
+    def test_crs_uri_with_empty_fields(self):
+        # Coverage: Tüm alanlar boşsa crs_uri False olmalı
+        crs = self.env['ogcapi.crs'].create({
+            'name': 'Empty CRS',
+            'authority': False,
+            'version': False,
+            'code': False
+        })
+        crs._compute_crs_uri()
+        self.assertFalse(crs.crs_uri)
+
+    def test_crs_uri_with_authority_only(self):
+        # Coverage: Sadece authority doluysa crs_uri False olmalı
+        crs = self.env['ogcapi.crs'].create({
+            'name': 'Authority Only',
+            'authority': 'EPSG',
+            'version': False,
+            'code': False
+        })
+        crs._compute_crs_uri()
+        self.assertFalse(crs.crs_uri)
+
+    def test_crs_uri_with_version_only(self):
+        # Coverage: Sadece version doluysa crs_uri False olmalı
+        crs = self.env['ogcapi.crs'].create({
+            'name': 'Version Only',
+            'authority': False,
+            'version': '0',
+            'code': False
+        })
+        crs._compute_crs_uri()
+        self.assertFalse(crs.crs_uri)
+
+    def test_crs_uri_with_code_only(self):
+        # Coverage: Sadece code doluysa crs_uri False olmalı
+        crs = self.env['ogcapi.crs'].create({
+            'name': 'Code Only',
+            'authority': False,
+            'version': False,
+            'code': '3857'
+        })
+        crs._compute_crs_uri()
+        self.assertFalse(crs.crs_uri)

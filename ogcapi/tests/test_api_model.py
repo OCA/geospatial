@@ -111,3 +111,54 @@ class TestOgcapiApiModel(TransactionCase):
         self.assertEqual(result['collections'][0]['id'], self.collection.name)
         # extent alanı eklenmemeli (parse edilemediği için)
         self.assertNotIn('extent', result['collections'][0])
+
+    def test_get_collections_with_keywords(self):
+        # Coverage: keywords alanı boşsa eklenmemeli, doluysa eklenmeli
+        self.collection.keywords = [(5, 0, 0)]
+        result = self.api.get_collections()
+        self.assertIn('collections', result)
+        self.assertNotIn('keywords', result['collections'][0])
+        self.collection.keywords = [(6, 0, [self.keyword1.id])]
+        result = self.api.get_collections()
+        self.assertIn('keywords', result['collections'][0])
+
+    def test_get_collections_with_extent(self):
+        # Coverage: extent alanı doğru formatta ise eklenmeli
+        self.collection.extent = '[10,20,30,40]'
+        result = self.api.get_collections()
+        self.assertIn('extent', result['collections'][0])
+        self.assertIn('spatial', result['collections'][0]['extent'])
+
+    def test_get_collections_with_invalid_bbox(self):
+        # Coverage: bbox parse edilemiyorsa except branch'ı çalışır
+        self.collection.extent = 'invalid'
+        result = self.api.get_collections()
+        self.assertIn('collections', result)
+        self.assertNotIn('extent', result['collections'][0])
+
+    def test_get_collections_keywords_and_extent_none(self):
+        # Coverage: hem keywords hem extent yoksa
+        self.collection.keywords = [(5, 0, 0)]
+        self.collection.extent = None
+        result = self.api.get_collections()
+        self.assertIn('collections', result)
+        self.assertNotIn('keywords', result['collections'][0])
+        self.assertNotIn('extent', result['collections'][0])
+
+    def test_get_collections_keywords_and_extent_empty(self):
+        # Coverage: hem keywords hem extent boş string
+        self.collection.keywords = [(5, 0, 0)]
+        self.collection.extent = ''
+        result = self.api.get_collections()
+        self.assertIn('collections', result)
+        self.assertNotIn('keywords', result['collections'][0])
+        self.assertNotIn('extent', result['collections'][0])
+
+    def test_get_collections_keywords_and_extent_invalid(self):
+        # Coverage: hem keywords hem extent bozuk json
+        self.collection.keywords = [(5, 0, 0)]
+        self.collection.extent = 'invalid'
+        result = self.api.get_collections()
+        self.assertIn('collections', result)
+        self.assertNotIn('keywords', result['collections'][0])
+        self.assertNotIn('extent', result['collections'][0])

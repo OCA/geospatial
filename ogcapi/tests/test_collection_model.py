@@ -43,6 +43,11 @@ class TestOgcapiCollectionModel(TransactionCase):
         self.collection.name = False
         self.collection.title = False
         self.collection.description = False
+        self.collection.geo_field_id = 123
+        self.collection.geo_view_fields = "test"
+        self.collection.geo_type = "Point"
+        self.collection.geo_srid = 4326
+        self.collection.geo_dimension = 2
         self.collection._onchange_model_id()
         self.assertTrue(self.collection.name)
         self.assertTrue(self.collection.title)
@@ -57,8 +62,16 @@ class TestOgcapiCollectionModel(TransactionCase):
         self.collection.geo_field_id = False
         self.collection._onchange_geo_field_id()
         self.assertFalse(self.collection.geo_field_name)
-        # coverage için: geo_field_id varsa (mock)
-        # Bu test gerçek geoengine alanı gerektirir, burada sadece coverage için tetikleniyor
+        # coverage: geo_field_id varsa (mock)
+        field = self.env['ir.model.fields'].create({
+            'name': 'x_fake_geo',
+            'model_id': self.model.id,
+            'ttype': 'geo_point',
+            'field_description': 'Fake Geo',
+        })
+        self.collection.geo_field_id = field
+        self.collection._onchange_geo_field_id()
+        self.assertEqual(self.collection.geo_field_name, 'x_fake_geo')
 
     def test_check_geo_srid(self):
         self.collection.geo_srid = False
@@ -75,6 +88,9 @@ class TestOgcapiCollectionModel(TransactionCase):
         action = self.collection.action_api_collection_items()
         self.assertEqual(action['res_model'], self.model.model)
         self.assertIn('tree', action['view_mode'])
+        # coverage: model_id yoksa None dönmeli
+        self.collection.model_id = False
+        self.assertIsNone(self.collection.action_api_collection_items())
 
     def test_action_calculate_extent(self):
         self.collection.model_id = False
@@ -170,3 +186,127 @@ class TestOgcapiCollectionModel(TransactionCase):
         # Coverage: feature_id olarak geçersiz bir değer verildiğinde None dönmeli
         feature = self.collection.get_item('notanumber')
         self.assertIsNone(feature)
+
+    def test_get_collection_extent_invalid_json(self):
+        # coverage: extent alanı bozuksa except branch'ı çalışır
+        self.collection.extent = 'notjson'
+        meta = self.collection.get_collection()
+        self.assertIsNone(meta['extent'])
+
+    def test_get_collection_keywords_empty(self):
+        # coverage: keywords alanı boşsa anahtar eklenmemeli
+        self.collection.keywords = [(5, 0, 0)]
+        meta = self.collection.get_collection()
+        self.assertNotIn('keywords', meta)
+
+    def test_get_items_with_all_params(self):
+        # coverage: tüm parametreler ile get_items çağrısı
+        items = self.collection.get_items(
+            offset=0,
+            limit=1,
+            crs=None,
+            bbox=None,
+            bbox_crs=None,
+            bbox_crs_epsg=None,
+            skip_geometry=True
+        )
+        self.assertEqual(items['type'], 'FeatureCollection')
+
+    def test_get_items_with_bbox_crs_epsg(self):
+        # coverage: bbox_crs_epsg ile get_items çağrısı
+        items = self.collection.get_items(
+            bbox=[1,2,3,4],
+            bbox_crs_epsg='4326'
+        )
+        self.assertIn('type', items)
+
+    def test_get_items_with_bbox_crs(self):
+        # coverage: bbox_crs ile get_items çağrısı
+        items = self.collection.get_items(
+            bbox=[1,2,3,4],
+            bbox_crs='http://www.opengis.net/def/crs/OGC/1.3/CRS84'
+        )
+        self.assertIn('type', items)
+
+    def test_get_items_with_limit_offset_types(self):
+        # coverage: limit ve offset string verilirse int'e çevrilir mi
+        items = self.collection.get_items(limit='1', offset='0')
+        self.assertIn('type', items)
+        items = self.collection.get_items(limit='-1', offset='notanint')
+        self.assertIn('type', items)
+
+    def test_get_items_with_large_limit(self):
+        # coverage: limit büyük verilirse default ile sınırlandırılır
+        items = self.collection.get_items(limit=100000)
+        self.assertIn('type', items)
+
+    def test_get_items_with_zero_limit(self):
+        # coverage: limit sıfır verilirse default ile sınırlandırılır
+        items = self.collection.get_items(limit=0)
+        self.assertIn('type', items)
+
+    def test_get_items_with_negative_limit(self):
+        # coverage: limit negatif verilirse default ile sınırlandırılır
+        items = self.collection.get_items(limit=-5)
+        self.assertIn('type', items)
+
+    def test_get_items_with_none_limit(self):
+        # coverage: limit None verilirse default ile sınırlandırılır
+        items = self.collection.get_items(limit=None)
+        self.assertIn('type', items)
+
+    def test_get_items_with_none_offset(self):
+        # coverage: offset None verilirse sıfır olur
+        items = self.collection.get_items(offset=None)
+        self.assertIn('type', items)
+
+    def test_get_items_with_invalid_bbox_type(self):
+        # coverage: bbox yanlış tipte verilirse except branch'ı çalışır
+        items = self.collection.get_items(bbox={'a': 1})
+        self.assertIn('error', items)
+        self.assertEqual(items['error']['code'], 400)
+
+    def test_get_items_with_invalid_bbox_str(self):
+        # Coverage: bbox parametresi string ama parse edilemiyor
+        items = self.collection.get_items(bbox='1,2,3')
+        self.assertIn('error', items)
+        self.assertEqual(items['error']['code'], 400)
+
+    def test_get_items_with_invalid_bbox_list(self):
+        # Coverage: bbox parametresi list ama uzunluğu yanlış
+        items = self.collection.get_items(bbox=[1, 2, 3])
+        self.assertIn('error', items)
+        self.assertEqual(items['error']['code'], 400)
+
+    def test_get_items_with_invalid_bbox_value(self):
+        # Coverage: bbox parametresi list ama float'a çevrilemiyor
+        items = self.collection.get_items(bbox=['a', 'b', 'c', 'd'])
+        self.assertIn('error', items)
+        self.assertEqual(items['error']['code'], 400)
+
+    def test_get_items_with_bbox_and_invalid_crs(self):
+        # Coverage: bbox ile birlikte geçersiz bbox_crs
+        items = self.collection.get_items(bbox=[1,2,3,4], bbox_crs='invalid_crs')
+        self.assertIn('error', items)
+        self.assertEqual(items['error']['code'], 400)
+
+    def test_get_items_with_bbox_and_invalid_bbox_crs_epsg(self):
+        # Coverage: bbox ile birlikte geçersiz bbox_crs_epsg
+        items = self.collection.get_items(bbox=[1,2,3,4], bbox_crs_epsg='notanint')
+        self.assertIn('type', items)  # fallback 4326 ile çalışır, error dönmez
+
+    def test_get_items_with_bbox_and_valid_bbox_crs_epsg(self):
+        # Coverage: bbox ile birlikte geçerli bbox_crs_epsg
+        items = self.collection.get_items(bbox=[1,2,3,4], bbox_crs_epsg='4326')
+        self.assertIn('type', items)
+
+    def test_get_items_with_bbox_and_valid_bbox_crs(self):
+        # Coverage: bbox ile birlikte geçerli bbox_crs
+        items = self.collection.get_items(bbox=[1,2,3,4], bbox_crs='http://www.opengis.net/def/crs/OGC/1.3/CRS84')
+        self.assertIn('type', items)
+
+    def test_get_items_with_bbox_and_storage_srid(self):
+        # Coverage: bbox ile birlikte storage_srid farklıysa
+        self.collection.geo_srid = 3857
+        items = self.collection.get_items(bbox=[1,2,3,4], bbox_crs='http://www.opengis.net/def/crs/OGC/1.3/CRS84')
+        self.assertIn('type', items)
