@@ -39,3 +39,19 @@ class TestOgcapiCrsModel(TransactionCase):
             crs.crs_uri,
             'http://www.opengis.net/def/crs/OGC/1.3/CRS84'
         )
+
+    def test_crs_uri_recompute_on_change(self):
+        # Coverage: crs_uri değişimi ve recompute
+        crs = self.env['ogcapi.crs'].create({
+            'name': 'Dynamic CRS',
+            'authority': 'EPSG',
+            'version': '0',
+            'code': '4326'
+        })
+        self.assertEqual(crs.crs_uri, 'http://www.opengis.net/def/crs/EPSG/0/4326')
+        crs.code = '3857'
+        crs._compute_crs_uri()
+        self.assertEqual(crs.crs_uri, 'http://www.opengis.net/def/crs/EPSG/0/3857')
+        crs.authority = None
+        crs._compute_crs_uri()
+        self.assertFalse(crs.crs_uri)

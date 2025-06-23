@@ -5,26 +5,21 @@ class TestOgcapiCollectionModel(TransactionCase):
 
     def setUp(self):
         super().setUp()
-        # Create a partner for contact_id
         self.partner = self.env['res.partner'].create({
             'name': 'Test Contact',
             'email': 'test@example.com',
             'website': 'https://test.com',
             'phone': '+900000000'
         })
-        # Create API
         self.api = self.env['ogcapi.api'].create({
             'name': 'testapi',
             'title': 'Test API',
             'description': 'Test API Description',
             'contact_id': self.partner.id,
         })
-        # Create keywords
         self.keyword1 = self.env['ogcapi.keyword'].create({'name': 'kw1'})
         self.keyword2 = self.env['ogcapi.keyword'].create({'name': 'kw2'})
-        # Create a dummy model for collection (use res.partner for test)
         self.model = self.env['ir.model'].search([('model', '=', 'res.partner')], limit=1)
-        # Create collection
         self.collection = self.env['ogcapi.collection'].create({
             'name': 'testcoll',
             'title': 'Test Collection',
@@ -59,18 +54,15 @@ class TestOgcapiCollectionModel(TransactionCase):
         self.assertFalse(self.collection.geo_dimension)
 
     def test_onchange_geo_field_id(self):
-        # geo_field_id yoksa
         self.collection.geo_field_id = False
         self.collection._onchange_geo_field_id()
         self.assertFalse(self.collection.geo_field_name)
-        # geo_field_id varsa (mock)
+        # coverage için: geo_field_id varsa (mock)
         # Bu test gerçek geoengine alanı gerektirir, burada sadece coverage için tetikleniyor
 
     def test_check_geo_srid(self):
-        # SRID yoksa hata vermez
         self.collection.geo_srid = False
         self.collection._check_geo_srid()
-        # Geçersiz SRID ile hata beklenir
         self.collection.geo_srid = 999999
         with self.assertRaises(ValidationError):
             self.collection._check_geo_srid()
@@ -85,7 +77,6 @@ class TestOgcapiCollectionModel(TransactionCase):
         self.assertIn('tree', action['view_mode'])
 
     def test_action_calculate_extent(self):
-        # Gerekli alanlar yoksa extent False olur
         self.collection.model_id = False
         self.collection.geo_field_name = False
         self.collection.geo_srid = False
@@ -93,7 +84,6 @@ class TestOgcapiCollectionModel(TransactionCase):
         self.assertFalse(self.collection.extent)
 
     def test_get_geo_field_props(self):
-        # geo_field_name yoksa False döner
         self.collection.geo_field_name = False
         self.assertFalse(self.collection._get_geo_field_props())
 
@@ -115,14 +105,11 @@ class TestOgcapiCollectionModel(TransactionCase):
         self.assertEqual(self.collection._get_srid_from_crs('http://www.opengis.net/def/crs/OGC/1.3/CRS84'), 4326)
 
     def test_get_geojson_geometry(self):
-        # geo_field_name yoksa None döner
         self.collection.geo_field_name = False
         self.assertIsNone(self.collection._get_geojson_geometry(1))
 
     def test_get_geojson_feature(self):
-        # record yoksa None döner
         self.assertIsNone(self.collection._get_geojson_feature(None))
-        # geo_view_fields bozuksa
         self.collection.geo_view_fields = 'invalid_json'
         record = self.env[self.model.model].create({'name': 'Test'})
         feature = self.collection._get_geojson_feature(record, skip_geometry=True)
@@ -153,7 +140,6 @@ class TestOgcapiCollectionModel(TransactionCase):
         self.assertIsInstance(crs['crs'], list)
 
     def test_get_items_empty(self):
-        # Hiç kayıt yoksa boş FeatureCollection döner
         items = self.collection.get_items()
         self.assertEqual(items['type'], 'FeatureCollection')
         self.assertEqual(items['numberMatched'], 0)
@@ -179,3 +165,8 @@ class TestOgcapiCollectionModel(TransactionCase):
         feature = self.collection.get_item(1, crs='invalid')
         self.assertIn('error', feature)
         self.assertEqual(feature['error']['code'], 400)
+
+    def test_get_item_invalid_feature_id(self):
+        # Coverage: feature_id olarak geçersiz bir değer verildiğinde None dönmeli
+        feature = self.collection.get_item('notanumber')
+        self.assertIsNone(feature)

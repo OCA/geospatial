@@ -1,5 +1,4 @@
 from odoo.tests.common import TransactionCase
-from odoo.exceptions import ValidationError
 
 class TestOgcapiApiModel(TransactionCase):
 
@@ -83,6 +82,8 @@ class TestOgcapiApiModel(TransactionCase):
         self.assertIn('schemas', openapi['components'])
         self.assertIn('parameters', openapi['components'])
         self.assertIn('responses', openapi['components'])
+        self.assertIn('servers', openapi)
+        self.assertIn('tags', openapi)
 
     def test_get_collections(self):
         result = self.api.get_collections()
@@ -97,8 +98,16 @@ class TestOgcapiApiModel(TransactionCase):
         self.assertTrue(any(l['rel'] == 'self' for l in result['links']))
 
     def test_get_collections_empty(self):
-        # Remove all collections for this API
         self.collection.unlink()
         result = self.api.get_collections()
         self.assertEqual(result['collections'], [])
         self.assertIn('links', result)
+
+    def test_get_collections_invalid_extent(self):
+        # Coverage: extent alanı bozuk JSON ise except branch'ı çalışır
+        self.collection.extent = 'notjson'
+        result = self.api.get_collections()
+        self.assertIn('collections', result)
+        self.assertEqual(result['collections'][0]['id'], self.collection.name)
+        # extent alanı eklenmemeli (parse edilemediği için)
+        self.assertNotIn('extent', result['collections'][0])
