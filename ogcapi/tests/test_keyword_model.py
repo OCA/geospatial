@@ -50,7 +50,22 @@ class TestOgcapiKeywordModel(TransactionCase):
         self.assertNotEqual(kw1.name, kw2.name)
         self.assertNotEqual(kw1.id, kw2.id)
 
-    def test_keyword_repr(self):
-        # Coverage: __repr__ fonksiyonu (varsayılan Odoo davranışı)
+    def test_keyword_name_required_constraint(self):
+        # Coverage: name alanı None, boş string ve sadece whitespace için ValidationError
+        for val in [None, '', '   ']:
+            with self.assertRaises(ValidationError):
+                self.env['ogcapi.keyword'].create({'name': val})
+
+    def test_keyword_name_strip_and_uniqueness(self):
+        # Coverage: name alanı başında/sonunda boşluk varsa strip edilmeli ve benzersiz olmalı
+        kw1 = self.env['ogcapi.keyword'].create({'name': '  unique-key  '})
+        self.assertEqual(kw1.name, 'unique-key')
+        with self.assertRaises(ValidationError):
+            self.env['ogcapi.keyword'].create({'name': 'unique-key'})
+
+    def test_keyword_display_name_and_repr(self):
+        # Coverage: display_name ve __repr__ fonksiyonları
         kw = self.env['ogcapi.keyword'].create({'name': 'repr-keyword'})
+        self.assertTrue(isinstance(kw.display_name, str))
+        self.assertIn('repr-keyword', kw.display_name)
         self.assertIn('repr-keyword', repr(kw))

@@ -73,6 +73,22 @@ class TestOgcapiCollectionModel(TransactionCase):
         self.collection._onchange_geo_field_id()
         self.assertEqual(self.collection.geo_field_name, 'x_fake_geo')
 
+    def test_onchange_geo_field_id_with_exception(self):
+        # Coverage: _get_geo_field_props exception branch
+        field = self.env['ir.model.fields'].create({
+            'name': 'x_fake_geo2',
+            'model_id': self.model.id,
+            'ttype': 'geo_point',
+            'field_description': 'Fake Geo2',
+        })
+        self.collection.geo_field_id = field
+        # Patch fields_get to raise Exception
+        from unittest.mock import patch
+        with patch.object(type(self.env[self.model.model]), 'fields_get', side_effect=Exception("fail")):
+            self.collection.geo_field_name = 'x_fake_geo2'
+            result = self.collection._get_geo_field_props()
+            self.assertFalse(result)
+
     def test_check_geo_srid(self):
         self.collection.geo_srid = False
         self.collection._check_geo_srid()
@@ -107,6 +123,22 @@ class TestOgcapiCollectionModel(TransactionCase):
         self.collection.geo_field_name = False
         self.assertFalse(self.collection._get_geo_view_fields())
 
+    def test_get_geo_view_fields_with_invalid_xml(self):
+        # Coverage: _get_geo_view_fields XML parse exception branch
+        view = self.env['ir.ui.view'].create({
+            'name': 'geoengine_view',
+            'model': self.model.model,
+            'type': 'geoengine',
+            'arch': '<geoengine><field name="name"></field><field name="active"></field><field></geoengine'  # invalid XML
+        })
+        self.collection.geo_field_name = 'name'
+        self.collection.model_id = self.model
+        # Patch ET.fromstring to raise Exception
+        import xml.etree.ElementTree as ET
+        with patch.object(ET, 'fromstring', side_effect=Exception("fail")):
+            result = self.collection._get_geo_view_fields()
+            self.assertFalse(result)
+
     def test_get_crs_uri(self):
         self.assertIn('CRS84', self.collection._get_crs_uri(4326))
         self.assertIn('3857', self.collection._get_crs_uri(3857))
@@ -131,12 +163,52 @@ class TestOgcapiCollectionModel(TransactionCase):
         feature = self.collection._get_geojson_feature(record, skip_geometry=True)
         self.assertEqual(feature['type'], 'Feature')
 
+    def test_get_geojson_feature_with_invalid_geo_view_fields(self):
+        # Coverage: _get_geojson_feature geo_view_fields parse exception branch
+        record = self.env[self.model.model].create({'name': 'Test'})
+        self.collection.geo_view_fields = 'notjson'
+        feature = self.collection._get_geojson_feature(record, skip_geometry=True)
+        self.assertEqual(feature['type'], 'Feature')
+        self.assertEqual(feature['properties'], {})
+
+    def test_get_geojson_feature_with_skip_geometry_false(self):
+        # Coverage: _get_geojson_feature skip_geometry False branch
+        record = self.env[self.model.model].create({'name': 'Test'})
+        self.collection.geo_view_fields = '["name"]'
+        self.collection.geo_field_name = None  # geometry olmayacak
+        feature = self.collection._get_geojson_feature(record, skip_geometry=False)
+        self.assertEqual(feature['type'], 'Feature')
+        self.assertIsNone(feature['geometry'])
+
+    def test_get_geojson_feature_with_skip_geometry_true(self):
+        # Coverage: _get_geojson_feature skip_geometry True branch
+        record = self.env[self.model.model].create({'name': 'Test'})
+        self.collection.geo_view_fields = '["name"]'
+        self.collection.geo_field_name = 'name'
+        feature = self.collection._get_geojson_feature(record, skip_geometry=True)
+        self.assertEqual(feature['type'], 'Feature')
+        self.assertIsNone(feature['geometry'])
+
     def test_get_feature_fields(self):
         self.collection.geo_view_fields = '["name"]'
         fields = self.collection._get_feature_fields()
         self.assertIsInstance(fields, dict)
 
+    def test_get_feature_fields_with_invalid_geo_view_fields(self):
+        # Coverage: _get_feature_fields geo_view_fields parse exception branch
+        self.collection.geo_view_fields = 'notjson'
+        fields = self.collection._get_feature_fields()
+        self.assertIsInstance(fields, dict)
+        self.assertEqual(fields, {})
+
     def test_get_collection_schema(self):
+        schema = self.collection.get_collection_schema()
+        self.assertIn('properties', schema)
+        self.assertIn('geometry', schema['properties'])
+
+    def test_get_collection_schema_with_no_geo_type(self):
+        # Coverage: get_collection_schema geo_type None branch
+        self.collection.geo_type = None
         schema = self.collection.get_collection_schema()
         self.assertIn('properties', schema)
         self.assertIn('geometry', schema['properties'])

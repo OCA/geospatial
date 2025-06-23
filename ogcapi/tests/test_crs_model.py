@@ -28,17 +28,25 @@ class TestOgcapiCrsModel(TransactionCase):
         crs._compute_crs_uri()
         self.assertFalse(crs.crs_uri)
 
-    def test_compute_crs_uri_ogc(self):
+    def test_crs_uri_epsg(self):
+        # Coverage: EPSG authority, default version, numeric code
+        crs = self.env['ogcapi.crs'].create({
+            'name': 'EPSG CRS',
+            'authority': 'EPSG',
+            'version': '0',
+            'code': '4326'
+        })
+        self.assertEqual(crs.crs_uri, 'http://www.opengis.net/def/crs/EPSG/0/4326')
+
+    def test_crs_uri_ogc(self):
+        # Coverage: OGC authority, version, string code
         crs = self.env['ogcapi.crs'].create({
             'name': 'OGC CRS',
             'authority': 'OGC',
             'version': '1.3',
             'code': 'CRS84'
         })
-        self.assertEqual(
-            crs.crs_uri,
-            'http://www.opengis.net/def/crs/OGC/1.3/CRS84'
-        )
+        self.assertEqual(crs.crs_uri, 'http://www.opengis.net/def/crs/OGC/1.3/CRS84')
 
     def test_crs_uri_recompute_on_change(self):
         # Coverage: crs_uri değişimi ve recompute
@@ -115,6 +123,39 @@ class TestOgcapiCrsModel(TransactionCase):
             'authority': False,
             'version': False,
             'code': '3857'
+        })
+        crs._compute_crs_uri()
+        self.assertFalse(crs.crs_uri)
+
+    def test_crs_uri_missing_authority(self):
+        # Coverage: authority yoksa crs_uri False
+        crs = self.env['ogcapi.crs'].create({
+            'name': 'No Authority',
+            'authority': False,
+            'version': '0',
+            'code': '4326'
+        })
+        crs._compute_crs_uri()
+        self.assertFalse(crs.crs_uri)
+
+    def test_crs_uri_missing_version(self):
+        # Coverage: version yoksa crs_uri False
+        crs = self.env['ogcapi.crs'].create({
+            'name': 'No Version',
+            'authority': 'EPSG',
+            'version': False,
+            'code': '4326'
+        })
+        crs._compute_crs_uri()
+        self.assertFalse(crs.crs_uri)
+
+    def test_crs_uri_missing_code(self):
+        # Coverage: code yoksa crs_uri False
+        crs = self.env['ogcapi.crs'].create({
+            'name': 'No Code',
+            'authority': 'EPSG',
+            'version': '0',
+            'code': False
         })
         crs._compute_crs_uri()
         self.assertFalse(crs.crs_uri)

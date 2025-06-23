@@ -162,3 +162,29 @@ class TestOgcapiApiModel(TransactionCase):
         self.assertIn('collections', result)
         self.assertNotIn('keywords', result['collections'][0])
         self.assertNotIn('extent', result['collections'][0])
+
+    def test_get_collections_extent_json_error(self):
+        # Coverage: coll.extent var ama json.loads hata fırlatır (try/except branch)
+        self.collection.extent = 'notjson'
+        result = self.api.get_collections()
+        self.assertIn('collections', result)
+        self.assertNotIn('extent', result['collections'][0])
+
+    def test_get_collections_no_extent_no_keywords(self):
+        # Coverage: extent ve keywords yoksa
+        self.collection.extent = None
+        self.collection.keywords = [(5, 0, 0)]
+        result = self.api.get_collections()
+        self.assertIn('collections', result)
+        self.assertNotIn('extent', result['collections'][0])
+        self.assertNotIn('keywords', result['collections'][0])
+
+    def test_get_collections_with_extent_and_keywords(self):
+        # Coverage: extent ve keywords varsa
+        self.collection.extent = '[1,2,3,4]'
+        self.collection.keywords = [(6, 0, [self.keyword1.id, self.keyword2.id])]
+        result = self.api.get_collections()
+        self.assertIn('collections', result)
+        self.assertIn('extent', result['collections'][0])
+        self.assertIn('keywords', result['collections'][0])
+        self.assertEqual(result['collections'][0]['keywords'], ['kw1', 'kw2'])

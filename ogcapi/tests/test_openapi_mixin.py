@@ -307,3 +307,55 @@ class TestOgcapiOpenapiMixin(TransactionCase):
         self.assertIn('x_unknown_type', props['properties'])
         # type anahtarı olmayabilir, bu da coverage sağlar
         self.assertTrue(isinstance(props['properties']['x_unknown_type'], dict))
+
+    def test_get_oas_parameters_all_variants(self):
+        # Coverage: _get_oas_parameters tüm parametre anahtarları ve tipleri
+        keys = [
+            'f', 'lang', 'skipGeometry', 'crs', 'bbox', 'bbox-crs', 'bbox-crs-epsg',
+            'offset', 'vendorSpecificParameters', 'limit', 'feature_id'
+        ]
+        for key in keys:
+            param = self.api._get_oas_parameters(key)
+            self.assertIsInstance(param, dict)
+            # Her parametre için tip ve anahtarlar kontrolü
+            if key == 'f':
+                self.assertEqual(param['name'], 'f')
+                self.assertEqual(param['schema']['type'], 'string')
+            if key == 'lang':
+                self.assertEqual(param['name'], 'lang')
+                self.assertIn('enum', param['schema'])
+            if key == 'skipGeometry':
+                self.assertEqual(param['name'], 'skipGeometry')
+                self.assertEqual(param['schema']['type'], 'boolean')
+            if key == 'crs':
+                self.assertEqual(param['name'], 'crs')
+                self.assertEqual(param['schema']['type'], 'string')
+            if key == 'bbox':
+                self.assertEqual(param['name'], 'bbox')
+                self.assertEqual(param['schema']['type'], 'array')
+            if key == 'bbox-crs':
+                self.assertEqual(param['name'], 'bbox-crs')
+                self.assertEqual(param['schema']['type'], 'string')
+            if key == 'bbox-crs-epsg':
+                self.assertEqual(param['name'], 'bbox-crs')
+                self.assertEqual(param['schema']['type'], 'integer')
+            if key == 'offset':
+                self.assertEqual(param['name'], 'offset')
+                self.assertEqual(param['schema']['type'], 'integer')
+            if key == 'vendorSpecificParameters':
+                self.assertEqual(param['name'], 'vendorSpecificParameters')
+                self.assertEqual(param['schema']['type'], 'object')
+            if key == 'limit':
+                self.assertEqual(param['name'], 'limit')
+                self.assertEqual(param['schema']['type'], 'integer')
+            if key == 'feature_id':
+                self.assertEqual(param['name'], 'feature_id')
+                self.assertEqual(param['schema']['type'], 'string')
+
+    def test_get_oas_parameters_none(self):
+        # Coverage: _get_oas_parameters param_key=None dönerse tüm parametreler gelir
+        params = self.api._get_oas_parameters(None)
+        self.assertIsInstance(params, dict)
+        self.assertIn('f', params)
+        self.assertIn('lang', params)
+        self.assertIn('feature_id', params)
