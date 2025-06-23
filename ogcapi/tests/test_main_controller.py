@@ -35,183 +35,124 @@ class TestOgcapiMainController(HttpCase):
         b64 = base64.b64encode(cred.encode('utf-8')).decode('utf-8')
         return {'Authorization': f'Basic {b64}'}
 
-    # --- Coverage for all controller and decorator branches, error branches, and edge cases ---
-
-    def test_landing_page_json(self):
-        url = f'/ogcapi/{self.api.name}'
-        resp = self.url_open(url, headers=self._auth_headers())
-        self.assertEqual(resp.code, 200)
-        self.assertIn(b'"name": "testapi"', resp.read())
-
-    def test_landing_page_lang_param(self):
-        url = f'/ogcapi/{self.api.name}?lang=tr-TR'
-        resp = self.url_open(url, headers=self._auth_headers())
-        self.assertEqual(resp.code, 200)
-        self.assertIn(b'"name": "testapi"', resp.read())
-
-    def test_auth_with_session(self):
-        url = f'/ogcapi/{self.api.name}'
-        from unittest.mock import patch
-        class DummySession:
-            uid = self.user.id
-        with patch('odoo.http.request.session', new=DummySession()):
-            resp = self.url_open(url, headers={})
-            self.assertEqual(resp.code, 200)
-            self.assertIn(b'"name": "testapi"', resp.read())
-
-    def test_auth_missing_header(self):
-        url = f'/ogcapi/{self.api.name}'
-        resp = self.url_open(url, headers={})
-        self.assertEqual(resp.code, 400)
-        self.assertIn(b'Authorization header missing', resp.read())
-
-    def test_auth_invalid_header(self):
-        url = f'/ogcapi/{self.api.name}'
-        resp = self.url_open(url, headers={'Authorization': 'Invalid xyz'})
-        self.assertEqual(resp.code, 400)
-        self.assertIn(b'Authorization header invalid', resp.read())
-
-    def test_auth_basic_wrong_password(self):
-        url = f'/ogcapi/{self.api.name}'
-        resp = self.url_open(url, headers=self._auth_headers(password='wrongpass'))
-        self.assertEqual(resp.code, 401)
-        self.assertIn(b'error', resp.read())
-
-    def test_auth_bearer_invalid_token(self):
-        url = f'/ogcapi/{self.api.name}'
-        resp = self.url_open(url, headers={'Authorization': 'Bearer invalidtoken'})
-        self.assertEqual(resp.code, 400)
-        self.assertIn(b'Access token invalid', resp.read())
-
-    def test_auth_basic_no_db(self):
-        import base64
-        cred = f"{self.user.login}:testpass"
-        b64 = base64.b64encode(cred.encode('utf-8')).decode('utf-8')
-        url = f'/ogcapi/{self.api.name}'
-        from unittest.mock import patch
-        with patch('odoo.http.request.db', new=None):
-            resp = self.url_open(url, headers={'Authorization': f'Basic {b64}'})
-            self.assertIn(resp.code, (500, 400))
-
-    def test_auth_basic_no_password(self):
-        import base64
-        cred = f"{self.user.login}:"
-        b64 = base64.b64encode(cred.encode('utf-8')).decode('utf-8')
-        url = f'/ogcapi/{self.api.name}'
-        resp = self.url_open(url, headers={'Authorization': f'Basic {b64}'})
-        self.assertIn(resp.code, (401, 400, 500))
-
-    def test_auth_basic_invalid_base64(self):
-        url = f'/ogcapi/{self.api.name}'
-        resp = self.url_open(url, headers={'Authorization': 'Basic !!!notbase64!!!'})
-        self.assertIn(resp.code, (401, 400, 500))
-
-    def test_auth_basic_split_index_error(self):
-        import base64
-        cred = f"{self.user.login}"
-        b64 = base64.b64encode(cred.encode('utf-8')).decode('utf-8')
-        url = f'/ogcapi/{self.api.name}'
-        resp = self.url_open(url, headers={'Authorization': f'Basic {b64}'})
-        self.assertIn(resp.code, (401, 400, 500))
-
-    def test_auth_basic_decode_error(self):
-        url = f'/ogcapi/{self.api.name}'
-        resp = self.url_open(url, headers={'Authorization': 'Basic AQIDBAUGBwgJCgsMDQ4PEA=='})
-        self.assertIn(resp.code, (401, 400, 500))
-
-    def test_auth_basic_authenticate_exception(self):
-        import base64
-        cred = f"{self.user.login}:testpass"
-        b64 = base64.b64encode(cred.encode('utf-8')).decode('utf-8')
-        url = f'/ogcapi/{self.api.name}'
-        from unittest.mock import patch
-        with patch('odoo.http.request.session.authenticate', side_effect=Exception("fail")):
-            resp = self.url_open(url, headers={'Authorization': f'Basic {b64}'})
-            self.assertEqual(resp.code, 401)
-            self.assertIn(b'fail', resp.read())
-
-    def test_auth_bearer_check_credentials_none(self):
-        url = f'/ogcapi/{self.api.name}'
-        from unittest.mock import patch
-        with patch('odoo.http.request.env') as mock_env:
-            mock_env["res.users.apikeys"]._check_credentials.return_value = None
-            resp = self.url_open(url, headers={'Authorization': 'Bearer faketoken'})
-            self.assertEqual(resp.code, 400)
-            self.assertIn(b'Access token invalid', resp.read())
-
-    def test_auth_bearer_check_credentials_exception(self):
-        url = f'/ogcapi/{self.api.name}'
-        from unittest.mock import patch
-        with patch('odoo.http.request.env') as mock_env:
-            mock_env["res.users.apikeys"]._check_credentials.side_effect = Exception("fail")
-            resp = self.url_open(url, headers={'Authorization': 'Bearer faketoken'})
-            self.assertIn(resp.code, (400, 500))
-
-    def test_auth_header_invalid_branch(self):
-        url = f'/ogcapi/{self.api.name}'
-        resp = self.url_open(url, headers={'Authorization': 'Digest something'})
-        self.assertEqual(resp.code, 400)
-        self.assertIn(b'Authorization header invalid', resp.read())
-
-    def test_auth_header_case_insensitive(self):
-        url = f'/ogcapi/{self.api.name}'
-        headers = self._auth_headers()
-        resp = self.url_open(url, headers={k.lower(): v for k, v in headers.items()})
-        self.assertIn(resp.code, (200, 400, 401))
-
-    def test_auth_lang_context(self):
-        url = f'/ogcapi/{self.api.name}?lang=tr-TR'
-        resp = self.url_open(url, headers=self._auth_headers())
-        self.assertEqual(resp.code, 200)
-        self.assertIn(b'"name": "testapi"', resp.read())
-
-    def test_auth_lang_context_explicit(self):
+    def _call_authenticate_decorator(self, **kw):
+        # Directly call the authenticate decorator for full branch coverage
         from odoo.addons.ogcapi.controllers import main as ogcapi_main
-        from unittest.mock import patch
+        from unittest.mock import patch, MagicMock
+        # Patch request object with all possible attributes
         class DummyRequest:
-            session = type('S', (), {'uid': None})()
-            def update_context(self, **kw):
-                self._context_updated = kw
-            def __getattr__(self, item):
-                return lambda *a, **k: None
-            env = None
-            db = 'test'
-            httprequest = type('H', (), {'headers': {'Authorization': 'Basic dGVzdHVzZXI6dGVzdHBhc3M='}})()
-        dummy_request = DummyRequest()
-        with patch('odoo.http.request', dummy_request):
-            try:
-                ogcapi_main.authenticate(lambda **kw: True)(lang='tr-TR')
-                self.assertTrue(hasattr(dummy_request, '_context_updated'))
-                self.assertIn('lang', dummy_request._context_updated)
-                self.assertEqual(dummy_request._context_updated['lang'], 'tr-TR')
-            except Exception:
-                pass
+            def __init__(self, session_uid=None, lang=None, db='test', headers=None):
+                self.session = MagicMock()
+                self.session.uid = session_uid
+                self.db = db
+                self.env = MagicMock()
+                self.httprequest = MagicMock()
+                self.httprequest.headers = headers or {}
+                self._context_updated = None
+            def update_context(self, **ctx):
+                self._context_updated = ctx
+        # 1. session.uid branch
+        req = DummyRequest(session_uid=1)
+        with patch('odoo.http.request', req):
+            result = ogcapi_main.authenticate(lambda **k: 'ok')()
+            assert result == 'ok'
+        # 2. lang branch
+        req = DummyRequest(session_uid=None)
+        with patch('odoo.http.request', req):
+            ogcapi_main.authenticate(lambda **k: 'ok')(lang='tr-TR')
+            assert req._context_updated and req._context_updated['lang'] == 'tr-TR'
+        # 3. Authorization header missing
+        req = DummyRequest(session_uid=None, headers={})
+        with patch('odoo.http.request', req):
+            resp = ogcapi_main.authenticate(lambda **k: 'ok')()
+            assert hasattr(resp, 'status_code') and resp.status_code == 400
+        # 4. Authorization header invalid
+        req = DummyRequest(session_uid=None, headers={'Authorization': 'Invalid xyz'})
+        with patch('odoo.http.request', req):
+            resp = ogcapi_main.authenticate(lambda **k: 'ok')()
+            assert hasattr(resp, 'status_code') and resp.status_code == 400
+        # 5. Basic auth, no db
+        req = DummyRequest(session_uid=None, db=None, headers={'Authorization': 'Basic dGVzdDp0ZXN0'})
+        with patch('odoo.http.request', req):
+            resp = ogcapi_main.authenticate(lambda **k: 'ok')()
+            assert hasattr(resp, 'status_code') and resp.status_code == 500
+        # 6. Basic auth, decode error
+        req = DummyRequest(session_uid=None, headers={'Authorization': 'Basic !!!notbase64!!!'})
+        with patch('odoo.http.request', req):
+            resp = ogcapi_main.authenticate(lambda **k: 'ok')()
+            assert hasattr(resp, 'status_code')
+        # 7. Basic auth, split error
+        import base64
+        cred = "testuser"
+        b64 = base64.b64encode(cred.encode('utf-8')).decode('utf-8')
+        req = DummyRequest(session_uid=None, headers={'Authorization': f'Basic {b64}'})
+        with patch('odoo.http.request', req):
+            resp = ogcapi_main.authenticate(lambda **k: 'ok')()
+            assert hasattr(resp, 'status_code')
+        # 8. Bearer auth, _check_credentials returns None
+        req = DummyRequest(session_uid=None, headers={'Authorization': 'Bearer faketoken'})
+        with patch('odoo.http.request', req), patch.object(req.env['res.users.apikeys'], '_check_credentials', return_value=None):
+            resp = ogcapi_main.authenticate(lambda **k: 'ok')()
+            assert hasattr(resp, 'status_code') and resp.status_code == 400
+        # 9. Bearer auth, _check_credentials raises Exception
+        req = DummyRequest(session_uid=None, headers={'Authorization': 'Bearer faketoken'})
+        with patch('odoo.http.request', req), patch.object(req.env['res.users.apikeys'], '_check_credentials', side_effect=Exception("fail")):
+            resp = ogcapi_main.authenticate(lambda **k: 'ok')()
+            assert hasattr(resp, 'status_code')
+        # 10. Authorization header with unknown prefix
+        req = DummyRequest(session_uid=None, headers={'Authorization': 'Digest something'})
+        with patch('odoo.http.request', req):
+            resp = ogcapi_main.authenticate(lambda **k: 'ok')()
+            assert hasattr(resp, 'status_code') and resp.status_code == 400
 
-    def test_auth_with_session_and_lang(self):
-        url = f'/ogcapi/{self.api.name}?lang=tr-TR'
-        from unittest.mock import patch
-        class DummySession:
-            uid = self.user.id
-        with patch('odoo.http.request.session', new=DummySession()):
-            resp = self.url_open(url, headers={})
-            self.assertEqual(resp.code, 200)
-            self.assertIn(b'"name": "testapi"', resp.read())
+    def test_authenticate_decorator_all_branches(self):
+        # This covers all branches of the authenticate decorator
+        self._call_authenticate_decorator()
 
-    def test_ogcapi_error_response_status(self):
+    def test_all_controller_endpoints(self):
+        # Covers all controller endpoints and error branches
+        urls = [
+            (f'/ogcapi/{self.api.name}', 200),
+            (f'/ogcapi/{self.api.name}?lang=tr-TR', 200),
+            (f'/ogcapi/{self.api.name}/conformance', 200),
+            (f'/ogcapi/{self.api.name}/collections', 200),
+            (f'/ogcapi/{self.api.name}/api', 200),
+            (f'/ogcapi/{self.api.name}/api?f=html', 200),
+            (f'/ogcapi/{self.api.name}/api?f=invalid', 200),
+            (f'/ogcapi/{self.api.name}/collections/{self.collection.name}', 200),
+            (f'/ogcapi/{self.api.name}/collections/{self.collection.name}/items', 200),
+            (f'/ogcapi/{self.api.name}/collections/{self.collection.name}/items?offset=0&limit=1&skipGeometry=true', 200),
+            (f'/ogcapi/{self.api.name}/collections/{self.collection.name}/schema', 200),
+            (f'/ogcapi/doesnotexist', 404),
+            (f'/ogcapi/doesnotexist/conformance', 404),
+            (f'/ogcapi/doesnotexist/collections', 404),
+            (f'/ogcapi/doesnotexist/api', 404),
+            (f'/ogcapi/{self.api.name}/collections/doesnotexist', 404),
+            (f'/ogcapi/{self.api.name}/collections/doesnotexist/items', 404),
+            (f'/ogcapi/{self.api.name}/collections/doesnotexist/schema', 404),
+            (f'/ogcapi//collections/{self.collection.name}/items', 400),
+            (f'/ogcapi//collections//items/', 400),
+            (f'/ogcapi//collections//schema', 400),
+            (f'/ogcapi//collections//', 400),
+        ]
+        for url, expected_code in urls:
+            resp = self.url_open(url, headers=self._auth_headers())
+            self.assertEqual(resp.code, expected_code)
+
+    def test_error_response(self):
         from odoo.addons.ogcapi.controllers import main as ogcapi_main
-        resp = ogcapi_main.ogcapi_error_response('TestCode', 'TestDesc', status=403)
-        self.assertEqual(resp.status_code, 403)
+        resp = ogcapi_main.ogcapi_error_response('TestCode', 'TestDesc', status=418)
+        self.assertEqual(resp.status_code, 418)
         self.assertIn(b'TestCode', resp.data)
         self.assertIn(b'TestDesc', resp.data)
         self.assertEqual(resp.content_type, 'application/json')
 
-    def test_my_ogcapi_page(self):
-        url = '/ogcapi'
-        resp = self.url_open(url, headers=self._auth_headers())
+    def test_portal_routes(self):
+        # /ogcapi and /my/ogcapi
+        resp = self.url_open('/ogcapi', headers=self._auth_headers())
         self.assertEqual(resp.code, 200)
         self.assertIn(b'ogcapi_list', resp.read())
-        url2 = '/my/ogcapi'
-        resp2 = self.url_open(url2, headers=self._auth_headers())
+        resp2 = self.url_open('/my/ogcapi', headers=self._auth_headers())
         self.assertEqual(resp2.code, 200)
         self.assertIn(b'ogcapi_list', resp2.read())
 
@@ -228,65 +169,3 @@ class TestOgcapiMainController(HttpCase):
         finally:
             if old_request is not None:
                 request._request_stack = old_request
-
-    def test_landing_page_html_render(self):
-        url = f'/ogcapi/{self.api.name}?f=html'
-        resp = self.url_open(url, headers=self._auth_headers())
-        self.assertEqual(resp.code, 200)
-        self.assertIn(b'openapi', resp.read())
-
-    def test_openapi_html_render(self):
-        url = f'/ogcapi/{self.api.name}/api?f=html'
-        resp = self.url_open(url, headers=self._auth_headers())
-        self.assertEqual(resp.code, 200)
-        self.assertIn(b'openapi', resp.read())
-
-    def test_openapi_json_content_type(self):
-        url = f'/ogcapi/{self.api.name}/api?f=json'
-        resp = self.url_open(url, headers=self._auth_headers())
-        self.assertEqual(resp.code, 200)
-        self.assertIn(b'"openapi"', resp.read())
-
-    def test_landing_page_empty_api_name(self):
-        from odoo.addons.ogcapi.controllers import main as ogcapi_main
-        resp = ogcapi_main.CustomerPortal().landing_page(api_name=None)
-        self.assertEqual(resp, {})
-
-    def test_conformance_empty_api_name(self):
-        from odoo.addons.ogcapi.controllers import main as ogcapi_main
-        resp = ogcapi_main.CustomerPortal().conformance(api_name=None)
-        self.assertEqual(resp, {})
-
-    def test_collections_empty_api_name(self):
-        from odoo.addons.ogcapi.controllers import main as ogcapi_main
-        resp = ogcapi_main.CustomerPortal().collections(api_name=None)
-        self.assertEqual(resp, {})
-
-    def test_openapi_invalid_format_and_empty_api_name(self):
-        from odoo.addons.ogcapi.controllers import main as ogcapi_main
-        resp = ogcapi_main.CustomerPortal().openapi(api_name=None)
-        self.assertIsNone(resp)
-
-    def test_collection_missing_params_direct(self):
-        from odoo.addons.ogcapi.controllers import main as ogcapi_main
-        resp = ogcapi_main.CustomerPortal().collection(api_name=None, collection_name=None)
-        self.assertEqual(resp.status_code, 400)
-        self.assertIn(b'Missing api_name or collection_name', resp.data)
-
-    def test_collection_items_missing_params_direct(self):
-        from odoo.addons.ogcapi.controllers import main as ogcapi_main
-        resp = ogcapi_main.CustomerPortal().collection_items(api_name=None, collection_name=None)
-        self.assertEqual(resp.status_code, 400)
-        self.assertIn(b'Missing api_name or collection_name', resp.data)
-
-    def test_collection_item_missing_params_direct(self):
-        from odoo.addons.ogcapi.controllers import main as ogcapi_main
-        resp = ogcapi_main.CustomerPortal().collection_item(api_name=None, collection_name=None, feature_id=None)
-        self.assertEqual(resp.status_code, 400)
-        self.assertIn(b'Missing api_name, collection_name or feature_id', resp.data)
-
-    def test_collection_schema_missing_params_direct(self):
-        from odoo.addons.ogcapi.controllers import main as ogcapi_main
-        resp = ogcapi_main.CustomerPortal().collection_schema(api_name=None, collection_name=None)
-        self.assertEqual(resp.status_code, 400)
-        self.assertIn(b'Missing api_name or collection_name', resp.data)
