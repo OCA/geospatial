@@ -1,0 +1,181 @@
+from odoo.tests.common import TransactionCase
+from odoo.exceptions import ValidationError
+
+class TestOgcapiCollectionModel(TransactionCase):
+
+    def setUp(self):
+        super().setUp()
+        # Create a partner for contact_id
+        self.partner = self.env['res.partner'].create({
+            'name': 'Test Contact',
+            'email': 'test@example.com',
+            'website': 'https://test.com',
+            'phone': '+900000000'
+        })
+        # Create API
+        self.api = self.env['ogcapi.api'].create({
+            'name': 'testapi',
+            'title': 'Test API',
+            'description': 'Test API Description',
+            'contact_id': self.partner.id,
+        })
+        # Create keywords
+        self.keyword1 = self.env['ogcapi.keyword'].create({'name': 'kw1'})
+        self.keyword2 = self.env['ogcapi.keyword'].create({'name': 'kw2'})
+        # Create a dummy model for collection (use res.partner for test)
+        self.model = self.env['ir.model'].search([('model', '=', 'res.partner')], limit=1)
+        # Create collection
+        self.collection = self.env['ogcapi.collection'].create({
+            'name': 'testcoll',
+            'title': 'Test Collection',
+            'description': 'Test Collection Desc',
+            'api_id': self.api.id,
+            'model_id': self.model.id,
+            'keywords': [(6, 0, [self.keyword1.id, self.keyword2.id])],
+            'extent': '[1,2,3,4]',
+        })
+
+    def test_fields(self):
+        self.assertEqual(self.collection.name, 'testcoll')
+        self.assertEqual(self.collection.title, 'Test Collection')
+        self.assertEqual(self.collection.api_id, self.api)
+        self.assertEqual(self.collection.model_id, self.model)
+        self.assertIn(self.keyword1, self.collection.keywords)
+        self.assertIn(self.keyword2, self.collection.keywords)
+        self.assertEqual(self.collection.extent, '[1,2,3,4]')
+
+    def test_onchange_model_id(self):
+        self.collection.name = False
+        self.collection.title = False
+        self.collection.description = False
+        self.collection._onchange_model_id()
+        self.assertTrue(self.collection.name)
+        self.assertTrue(self.collection.title)
+        self.assertTrue(self.collection.description)
+        self.assertFalse(self.collection.geo_field_id)
+        self.assertFalse(self.collection.geo_view_fields)
+        self.assertFalse(self.collection.geo_type)
+        self.assertFalse(self.collection.geo_srid)
+        self.assertFalse(self.collection.geo_dimension)
+
+    def test_onchange_geo_field_id(self):
+        # geo_field_id yoksa
+        self.collection.geo_field_id = False
+        self.collection._onchange_geo_field_id()
+        self.assertFalse(self.collection.geo_field_name)
+        # geo_field_id varsa (mock)
+        # Bu test gerçek geoengine alanı gerektirir, burada sadece coverage için tetikleniyor
+
+    def test_check_geo_srid(self):
+        # SRID yoksa hata vermez
+        self.collection.geo_srid = False
+        self.collection._check_geo_srid()
+        # Geçersiz SRID ile hata beklenir
+        self.collection.geo_srid = 999999
+        with self.assertRaises(ValidationError):
+            self.collection._check_geo_srid()
+
+    def test_geoengine_model_domain(self):
+        domain = self.collection._geoengine_model_domain()
+        self.assertIsInstance(domain, list)
+
+    def test_action_api_collection_items(self):
+        action = self.collection.action_api_collection_items()
+        self.assertEqual(action['res_model'], self.model.model)
+        self.assertIn('tree', action['view_mode'])
+
+    def test_action_calculate_extent(self):
+        # Gerekli alanlar yoksa extent False olur
+        self.collection.model_id = False
+        self.collection.geo_field_name = False
+        self.collection.geo_srid = False
+        self.collection.action_calculate_extent()
+        self.assertFalse(self.collection.extent)
+
+    def test_get_geo_field_props(self):
+        # geo_field_name yoksa False döner
+        self.collection.geo_field_name = False
+        self.assertFalse(self.collection._get_geo_field_props())
+
+    def test_get_geo_view_fields(self):
+        self.collection.geo_field_name = False
+        self.assertFalse(self.collection._get_geo_view_fields())
+
+    def test_get_crs_uri(self):
+        self.assertIn('CRS84', self.collection._get_crs_uri(4326))
+        self.assertIn('3857', self.collection._get_crs_uri(3857))
+
+    def test_get_available_crs_list(self):
+        crs_list = self.collection._get_available_crs_list()
+        self.assertIsInstance(crs_list, list)
+        self.assertIn('http://www.opengis.net/def/crs/OGC/1.3/CRS84', crs_list)
+
+    def test_get_srid_from_crs(self):
+        self.assertEqual(self.collection._get_srid_from_crs('http://www.opengis.net/def/crs/EPSG/0/3857'), 3857)
+        self.assertEqual(self.collection._get_srid_from_crs('http://www.opengis.net/def/crs/OGC/1.3/CRS84'), 4326)
+
+    def test_get_geojson_geometry(self):
+        # geo_field_name yoksa None döner
+        self.collection.geo_field_name = False
+        self.assertIsNone(self.collection._get_geojson_geometry(1))
+
+    def test_get_geojson_feature(self):
+        # record yoksa None döner
+        self.assertIsNone(self.collection._get_geojson_feature(None))
+        # geo_view_fields bozuksa
+        self.collection.geo_view_fields = 'invalid_json'
+        record = self.env[self.model.model].create({'name': 'Test'})
+        feature = self.collection._get_geojson_feature(record, skip_geometry=True)
+        self.assertEqual(feature['type'], 'Feature')
+
+    def test_get_feature_fields(self):
+        self.collection.geo_view_fields = '["name"]'
+        fields = self.collection._get_feature_fields()
+        self.assertIsInstance(fields, dict)
+
+    def test_get_collection_schema(self):
+        schema = self.collection.get_collection_schema()
+        self.assertIn('properties', schema)
+        self.assertIn('geometry', schema['properties'])
+
+    def test_get_collection(self):
+        meta = self.collection.get_collection()
+        self.assertEqual(meta['id'], self.collection.name)
+        self.assertIn('links', meta)
+        self.assertIn('extent', meta)
+        self.assertIn('crs', meta)
+        self.assertIn('storageCrs', meta)
+        self.assertIn('keywords', meta)
+
+    def test_get_collection_crs(self):
+        crs = self.collection.get_collection_crs()
+        self.assertIn('crs', crs)
+        self.assertIsInstance(crs['crs'], list)
+
+    def test_get_items_empty(self):
+        # Hiç kayıt yoksa boş FeatureCollection döner
+        items = self.collection.get_items()
+        self.assertEqual(items['type'], 'FeatureCollection')
+        self.assertEqual(items['numberMatched'], 0)
+        self.assertEqual(items['numberReturned'], 0)
+        self.assertIn('features', items)
+        self.assertEqual(len(items['features']), 0)
+
+    def test_get_items_invalid_bbox(self):
+        items = self.collection.get_items(bbox='invalid')
+        self.assertIn('error', items)
+        self.assertEqual(items['error']['code'], 400)
+
+    def test_get_items_invalid_crs(self):
+        items = self.collection.get_items(crs='invalid')
+        self.assertIn('error', items)
+        self.assertEqual(items['error']['code'], 400)
+
+    def test_get_item_not_found(self):
+        feature = self.collection.get_item(999999)
+        self.assertIsNone(feature)
+
+    def test_get_item_invalid_crs(self):
+        feature = self.collection.get_item(1, crs='invalid')
+        self.assertIn('error', feature)
+        self.assertEqual(feature['error']['code'], 400)
