@@ -1,0 +1,11 @@
+[project]
+name = "odoo-addons-oca-geospatial"
+version = "18.0.20250717.0"
+dependencies = [
+    "odoo-addon-base_geoengine==18.0.*",
+]
+classifiers=[
+    "Programming Language :: Python",
+    "Framework :: Odoo",
+    "Framework :: Odoo :: 18.0",
+]
