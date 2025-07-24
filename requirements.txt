@@ -2,3 +2,4 @@
 geojson
 requests
 shapely
+odoo-addon-partner_store @ git+https://github.com/OCA/partner_contact.git@refs/pull/2089/head#subdirectory=setup/partner_store
