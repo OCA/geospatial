@@ -5,6 +5,8 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
  */
 
+/* global ol*/
+
 /**
  * Create a standard symbol for a POI
  * @param {Number} height the height of the circle center

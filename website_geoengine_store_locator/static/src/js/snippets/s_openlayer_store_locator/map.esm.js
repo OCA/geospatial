@@ -5,6 +5,8 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
  */
 
+/* global ol*/
+
 import Popover from "./popover.esm";
 import Search from "./search.esm";
 
