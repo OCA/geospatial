@@ -45,12 +45,12 @@
         <field name="name">dummy.zip.form</field>
         <field name="model">dummy.zip</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="city" />
                 <field name="priority" />
                 <field name="total_sales" />
-            </tree>
+            </list>
         </field>
     </record>
     <record model="ir.ui.view" id="dummy_zip_search">
@@ -66,7 +66,7 @@
     <record id="action_zip_tree" model="ir.actions.act_window">
         <field name="name">ZIP Management</field>
         <field name="res_model">dummy.zip</field>
-        <field name="view_mode">tree,form,geoengine</field>
+        <field name="view_mode">list,form,geoengine</field>
         <field ref="dummy_zip_tree" name="view_id" />
     </record>
 
@@ -93,9 +93,9 @@
                         <field name="city" widget="badge" />
                         <ul>
                             <li>ZIP : <field name="name" />
-              </li>
+                            </li>
                             <li>Total Sales: <field name="total_sales" />
-              </li>
+                            </li>
                         </ul>
                     </t>
                 </templates>

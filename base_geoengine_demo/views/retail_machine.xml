@@ -44,22 +44,22 @@
     </record>
 
     <record model="ir.ui.view" id="geo_retail_machine_view_tree">
-        <field name="name">geoengine.demo.retail.machine.tree</field>
+        <field name="name">geoengine.demo.retail.machine.list</field>
         <field name="model">geoengine.demo.automatic.retailing.machine</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="name" />
                 <field name="total_sales" />
                 <field name="money_level" />
                 <field name="state" />
-            </tree>
+            </list>
         </field>
     </record>
     <record id="geoengine_view_retail_machine_action" model="ir.actions.act_window">
         <field name="name">Retail Machines</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">geoengine.demo.automatic.retailing.machine</field>
-        <field name="view_mode">tree,form,geoengine</field>
+        <field name="view_mode">list,form,geoengine</field>
         <field name="view_id" ref="geo_retail_machine_view_tree" />
     </record>
 
