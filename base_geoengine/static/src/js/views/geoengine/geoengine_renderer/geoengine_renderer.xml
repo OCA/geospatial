@@ -18,6 +18,11 @@
         </div>
         <div id="popup" class="ol-popup text-start">
             <div
+                id="popup-editor"
+                class="ol-popup-editor text-primary"
+                t-on-click="onEditButtonClicked"
+            />
+            <div
                 id="popup-closer"
                 class="ol-popup-closer text-primary"
                 t-on-click="clickToHidePopup"

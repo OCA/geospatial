@@ -35,6 +35,7 @@
                 data="model.root"
                 editable="editable"
                 openRecord.bind="openRecord"
+                editRecord.bind="editRecord"
                 updateRecord.bind="updateRecord"
                 onClickDiscard.bind="onClickDiscard"
                 createRecord.bind="createRecord"

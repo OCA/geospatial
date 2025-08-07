@@ -1,4 +1,5 @@
 /** @odoo-module */
+/* globals window */
 
 /**
  * Copyright 2023 ACSONE SA/NV
@@ -126,6 +127,22 @@ export class GeoengineController extends Component {
             res_id: resId,
             target: "new",
             context: {edit: false, create: false},
+        });
+    }
+
+    /**
+     * Allow you to edit form view for the filled-in model
+     * from new tab in the browser window.
+     * @param {*} resModel
+     * @param {*} resId
+     */
+    async editRecord(resModel, resId) {
+        const url = window.location.href;
+        const action_url = url.split("?")[0] + "/" + resId;
+        this.actionService.doAction({
+            type: "ir.actions.act_url",
+            target: "_blank",
+            url: action_url,
         });
     }
 
