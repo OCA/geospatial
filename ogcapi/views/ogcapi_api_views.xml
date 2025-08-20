@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- OGC API Configuration form view -->
+    <record id="view_ogcapi_api_form" model="ir.ui.view">
+        <field name="name">ogcapi.api.form</field>
+        <field name="model">ogcapi.api</field>
+        <field name="arch" type="xml">
+            <form string="OGC API Configuration">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="description" />
+                        <field name="path_id" />
+                        <field name="http_method" />
+                        <field name="parameter_ids" widget="many2many_tags" />
+                        <field name="response_ids" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_ogcapi_api" model="ir.actions.act_window">
+        <field name="name">OGC API Configurations</field>
+        <field name="res_model">ogcapi.api</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Manage OGC API configurations here.</p>
+        </field>
+    </record>
+</odoo>

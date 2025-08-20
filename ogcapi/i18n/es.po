@@ -1,0 +1,1449 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ogcapi
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0-20250218\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-18 01:25+0000\n"
+"PO-Revision-Date: 2025-08-18 01:25+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__code__200
+msgid "200 OK"
+msgstr "200 OK"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__code__201
+msgid "201 Created"
+msgstr "201 Creado"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__code__204
+msgid "204 No Content"
+msgstr "204 Sin contenido"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__code__400
+msgid "400 Bad Request"
+msgstr "400 Solicitud incorrecta"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__code__404
+msgid "404 Not Found"
+msgstr "404 No encontrado"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__code__500
+msgid "500 Internal Server Error"
+msgstr "500 Error interno del servidor"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_exceptions.py:0
+#, python-format
+msgid "Access forbidden"
+msgstr "Acceso prohibido"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__active
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_component_schema.py:0
+#, python-format
+msgid "All $ref references must be selected in parent_ids!"
+msgstr "¡Todas las referencias $ref deben seleccionarse en parent_ids!"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_exceptions.py:0
+#, python-format
+msgid "An internal server error occurred"
+msgstr "Ocurrió un error interno del servidor"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__api_id
+msgid "Api"
+msgstr "Api"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__type__array
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_schema__type__array
+msgid "Array"
+msgstr "Array"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_core_mixin.py:0
+#, python-format
+msgid "Bad request"
+msgstr "Solicitud incorrecta"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_openapi_400
+msgid "Bad request response for OpenAPI"
+msgstr "Respuesta de solicitud incorrecta para OpenAPI"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_collection_400
+msgid "Bad request response for a specific collection"
+msgstr "Respuesta de solicitud incorrecta para una colección específica"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_item_json_400
+msgid "Bad request response for a specific item"
+msgstr "Respuesta de solicitud incorrecta para un elemento específico"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_collections_400
+msgid "Bad request response for collections"
+msgstr "Respuesta de solicitud incorrecta para colecciones"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_conformance_400
+msgid "Bad request response for conformance"
+msgstr "Respuesta de solicitud incorrecta para conformidad"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_items_json_400
+msgid "Bad request response for items in a collection"
+msgstr "Respuesta de solicitud incorrecta para elementos en una colección"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_landing_400
+msgid "Bad request response for landing page"
+msgstr "Respuesta de solicitud incorrecta para la página de inicio"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_schema_400
+msgid "Bad request response for schema"
+msgstr "Respuesta de solicitud incorrecta para el esquema"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__items_type__boolean
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__type__boolean
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_schema__type__boolean
+msgid "Boolean"
+msgstr "Booleano"
+
+#. module: ogcapi
+#: model:ogcapi.component.parameter,description:ogcapi.ogcapi_component_param_bbox
+msgid "Bounding box to filter features spatially."
+msgstr "Caja delimitadora para filtrar elementos espacialmente."
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+msgid "Calculate Extent"
+msgstr "Calcular extensión"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__child_ids
+msgid "Children"
+msgstr "Hijos"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__code
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__code
+msgid "Code"
+msgstr "Código"
+
+#. module: ogcapi
+#: model:ir.model.constraint,message:ogcapi.constraint_ogcapi_component_parameter_code_unique
+msgid "Code must be unique per configuration type."
+msgstr "El código debe ser único por tipo de configuración."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_component_parameter.py:0
+#, python-format
+msgid ""
+"Code must only contain letters, numbers, underscores or dashes (no spaces or"
+" special characters)."
+msgstr "El código solo debe contener letras, números, guiones bajos o guiones (sin espacios ni caracteres especiales)."
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api_path__code__collection
+#: model:ogcapi.api.path,name:ogcapi.ogcapi_api_path_collection
+msgid "Collection"
+msgstr "Colección"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_api.py:0
+#, python-format
+msgid "Collection not found: {collection_slug} in workspace {workspace_slug}"
+msgstr "Colección no encontrada: {collection_slug} en el espacio de trabajo {workspace_slug}"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_workspace.py:0
+#: model:ir.actions.act_window,name:ogcapi.action_ogcapi_collection
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace__collection_ids
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api_path__code__collections
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_collection
+#: model:ogcapi.api.path,name:ogcapi.ogcapi_api_path_collections
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_workspace_form
+#, python-format
+msgid "Collections"
+msgstr "Colecciones"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__complete_name
+msgid "Complete Name"
+msgstr "Nombre completo"
+
+#. module: ogcapi
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_configuration
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__code
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__code
+msgid "Configuration Code"
+msgstr "Código de configuración"
+
+#. module: ogcapi
+#: model:ir.model.constraint,message:ogcapi.constraint_ogcapi_api_code_uniq
+#: model:ir.model.constraint,message:ogcapi.constraint_ogcapi_api_path_code_uniq
+msgid "Configuration code must be unique!"
+msgstr "¡El código de configuración debe ser único!"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api_path__code__conformance
+#: model:ogcapi.api.path,name:ogcapi.ogcapi_api_path_conformance
+msgid "Conformance"
+msgstr "Conformidad"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__parameter_in__cookie
+msgid "Cookie"
+msgstr "Cookie"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__create_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__create_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__create_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__create_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__create_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__create_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__create_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__create_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__create_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__create_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__create_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__create_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__http_method__delete
+msgid "DELETE"
+msgstr "DELETE"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__is_default
+msgid "Default Response"
+msgstr "Respuesta predeterminada"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__default
+msgid "Default Value"
+msgstr "Valor predeterminado"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__description
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__description
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__description
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__description
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__description
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__description
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_component_response__description
+msgid "Description of the response"
+msgstr "Descripción de la respuesta"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_api__description
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_api_path__description
+msgid "Detailed description of the configuration"
+msgstr "Descripción detallada de la configuración"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_component_parameter__description
+msgid "Detailed description of the parameter"
+msgstr "Descripción detallada del parámetro"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_component_schema__description
+msgid "Detailed description of the schema"
+msgstr "Descripción detallada del esquema"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__geo_dimension
+msgid "Dimension of the geometry field (2 for 2D, 3 for 3D geometries)"
+msgstr "Dimensión del campo de geometría (2 para 2D, 3 para geometrías 3D)"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__display_name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__display_name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__display_name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__display_name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__display_name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__display_name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace__display_name
+msgid "Display Name"
+msgstr "Nombre para mostrar"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__enum
+msgid "Enum Values (comma separated)"
+msgstr "Valores enumerados (separados por comas)"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__extent
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+msgid "Extent"
+msgstr "Extensión"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__extent_json
+msgid "Extent GeoJSON"
+msgstr "Extensión GeoJSON"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__format
+msgid "Format"
+msgstr "Formato"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__http_method__get
+msgid "GET"
+msgstr "GET"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_view_fields_json
+msgid "Geo View Fields Json"
+msgstr "Campos de vista Geo Json"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__mime_type__application/geo+json
+msgid "GeoJSON"
+msgstr "GeoJSON"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_view_fields
+msgid "Geoengine View Fields"
+msgstr "Campos de vista Geoengine"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_dimension
+msgid "Geometry Dimension"
+msgstr "Dimensión de la geometría"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_field_id
+msgid "Geometry Field"
+msgstr "Campo de geometría"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_field_name
+msgid "Geometry Field Name"
+msgstr "Nombre del campo de geometría"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+msgid "Geometry Properties"
+msgstr "Propiedades de geometría"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_type
+msgid "Geometry Type"
+msgstr "Tipo de geometría"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__code__get_collection
+msgid "Get Collection"
+msgstr "Obtener colección"
+
+#. module: ogcapi
+#: model:ogcapi.api,description:ogcapi.ogcapi_api_collection_get
+msgid "Get Collection operation in the OGC API service."
+msgstr "Operación Obtener colección en el servicio OGC API."
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__code__get_collections
+msgid "Get Collections"
+msgstr "Obtener colecciones"
+
+#. module: ogcapi
+#: model:ogcapi.api,description:ogcapi.ogcapi_api_collections_get
+msgid "Get Collections operation in the OGC API service."
+msgstr "Operación Obtener colecciones en el servicio OGC API."
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__code__get_conformance
+msgid "Get Conformance"
+msgstr "Obtener conformidad"
+
+#. module: ogcapi
+#: model:ogcapi.api,description:ogcapi.ogcapi_api_conformance_get
+msgid "Get Conformance operation in the OGC API service."
+msgstr "Operación Obtener conformidad en el servicio OGC API."
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__code__get_item
+msgid "Get Item"
+msgstr "Obtener elemento"
+
+#. module: ogcapi
+#: model:ogcapi.api,description:ogcapi.ogcapi_api_item_get
+msgid "Get Item operation in the OGC API service."
+msgstr "Operación Obtener elemento en el servicio OGC API."
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__code__get_items
+msgid "Get Items"
+msgstr "Obtener elementos"
+
+#. module: ogcapi
+#: model:ogcapi.api,description:ogcapi.ogcapi_api_items_get
+msgid "Get Items operation in the OGC API service."
+msgstr "Operación Obtener elementos en el servicio OGC API."
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__code__get_landing
+msgid "Get Landing"
+msgstr "Obtener página de inicio"
+
+#. module: ogcapi
+#: model:ogcapi.api,description:ogcapi.ogcapi_api_landing_get
+msgid "Get Landing operation in the OGC API service."
+msgstr "Operación Obtener página de inicio en el servicio OGC API."
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__code__get_openapi
+msgid "Get OpenAPI"
+msgstr "Obtener OpenAPI"
+
+#. module: ogcapi
+#: model:ogcapi.api,description:ogcapi.ogcapi_api_openapi_get
+msgid "Get OpenAPI operation in the OGC API service."
+msgstr "Operación Obtener OpenAPI en el servicio OGC API."
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__code__get_schema
+msgid "Get Schema"
+msgstr "Obtener esquema"
+
+#. module: ogcapi
+#: model:ogcapi.api,description:ogcapi.ogcapi_api_schema_get
+msgid "Get Schema operation in the OGC API service."
+msgstr "Operación Obtener esquema en el servicio OGC API."
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__http_method__head
+msgid "HEAD"
+msgstr "HEAD"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__mime_type__text/html
+msgid "HTML"
+msgstr "HTML"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__http_method
+msgid "HTTP Method"
+msgstr "Método HTTP"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_api__http_method
+msgid "HTTP method for this API configuration"
+msgstr "Método HTTP para esta configuración de API"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__parameter_in__header
+msgid "Header"
+msgstr "Encabezado"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__id
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__id
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__id
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__id
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__id
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__id
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace__id
+msgid "ID"
+msgstr "ID"
+
+#. module: ogcapi
+#: model:ogcapi.component.parameter,description:ogcapi.ogcapi_component_param_collectionid
+msgid "Identifier of the collection."
+msgstr "Identificador de la colección."
+
+#. module: ogcapi
+#: model:ogcapi.component.parameter,description:ogcapi.ogcapi_component_param_featureid
+msgid "Identifier of the feature."
+msgstr "Identificador del elemento."
+
+#. module: ogcapi
+#: model:ogcapi.component.parameter,description:ogcapi.ogcapi_component_param_workspaceid
+msgid "Identifier of the workspace."
+msgstr "Identificador del espacio de trabajo."
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__parameter_in
+msgid "In"
+msgstr "En"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__items_type__integer
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__type__integer
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_schema__type__integer
+msgid "Integer"
+msgstr "Entero"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_core_mixin.py:0
+#, python-format
+msgid "Internal server error"
+msgstr "Error interno del servidor"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_openapi_500
+msgid "Internal server error response for OpenAPI"
+msgstr "Respuesta de error interno del servidor para OpenAPI"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_collection_500
+msgid "Internal server error response for a specific collection"
+msgstr "Respuesta de error interno del servidor para una colección específica"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_item_json_500
+msgid "Internal server error response for a specific item"
+msgstr "Respuesta de error interno del servidor para un elemento específico"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_collections_500
+msgid "Internal server error response for collections"
+msgstr "Respuesta de error interno del servidor para colecciones"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_conformance_500
+msgid "Internal server error response for conformance"
+msgstr "Respuesta de error interno del servidor para conformidad"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_items_json_500
+msgid "Internal server error response for items in a collection"
+msgstr "Respuesta de error interno del servidor para elementos en una colección"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_landing_500
+msgid "Internal server error response for landing page"
+msgstr "Respuesta de error interno del servidor para la página de inicio"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_schema_500
+msgid "Internal server error response for schema"
+msgstr "Respuesta de error interno del servidor para el esquema"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_api.py:0
+#, python-format
+msgid "Invalid format parameter: {f_param}"
+msgstr "Parámetro de formato inválido: {f_param}"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/controllers/main.py:0
+#, python-format
+msgid "Invalid language parameter: {lang_code}"
+msgstr "Parámetro de idioma inválido: {lang_code}"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_component_parameter.py:0
+#, python-format
+msgid "Invalid query parameters: {query_params_error}"
+msgstr "Parámetros de consulta inválidos: {query_params_error}"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api_path__code__item
+#: model:ogcapi.api.path,name:ogcapi.ogcapi_api_path_item
+msgid "Item"
+msgstr "Elemento"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api_path__code__schema
+msgid "Item Schema"
+msgstr "Esquema de elemento"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_collection.py:0
+#, python-format
+msgid "Item not found in collection."
+msgstr "Elemento no encontrado en la colección."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_collection.py:0
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api_path__code__items
+#: model:ogcapi.api.path,name:ogcapi.ogcapi_api_path_items
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+#, python-format
+msgid "Items"
+msgstr "Elementos"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__items_max
+msgid "Items Maximum"
+msgstr "Máximo de elementos"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__items_min
+msgid "Items Minimum"
+msgstr "Mínimo de elementos"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__items_type
+msgid "Items Type"
+msgstr "Tipo de elementos"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__mime_type__application/json
+msgid "JSON"
+msgstr "JSON"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_component_schema_form
+msgid "JSON Schema"
+msgstr "Esquema JSON"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__schema
+msgid "JSON schema for the properties of the features in this collection."
+msgstr "Esquema JSON para las propiedades de los elementos en esta colección."
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api_path__code__landing
+#: model:ogcapi.api.path,name:ogcapi.ogcapi_api_path_landing
+msgid "Landing Page"
+msgstr "Página de inicio"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api____last_update
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path____last_update
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection____last_update
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter____last_update
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response____last_update
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema____last_update
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__write_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__write_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__write_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__write_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__write_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__write_uid
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__write_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__write_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__write_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__write_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__write_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__write_date
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace__write_date
+msgid "Last Updated on"
+msgstr "Última actualización el"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_collection__geo_type__linestring
+msgid "LineString"
+msgstr "Línea"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_api_path__parameter_ids
+msgid "List of path parameters for this API path"
+msgstr "Lista de parámetros de ruta para este camino de API"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__mime_type
+msgid "MIME type"
+msgstr "Tipo MIME"
+
+#. module: ogcapi
+#: model_terms:ir.actions.act_window,help:ogcapi.action_ogcapi_api_path
+msgid "Manage OGC API Path configurations here."
+msgstr "Administre las configuraciones de ruta de OGC API aquí."
+
+#. module: ogcapi
+#: model_terms:ir.actions.act_window,help:ogcapi.action_ogcapi_api
+msgid "Manage OGC API configurations here."
+msgstr "Administre las configuraciones de OGC API aquí."
+
+#. module: ogcapi
+#: model_terms:ir.actions.act_window,help:ogcapi.action_ogcapi_component_parameter
+msgid "Manage OGC API parameter configurations here."
+msgstr "Administre las configuraciones de parámetros de OGC API aquí."
+
+#. module: ogcapi
+#: model_terms:ir.actions.act_window,help:ogcapi.action_ogcapi_component_response
+msgid "Manage OGC API response configurations here."
+msgstr "Administre las configuraciones de respuesta de OGC API aquí."
+
+#. module: ogcapi
+#: model_terms:ir.actions.act_window,help:ogcapi.action_ogcapi_component_schema
+msgid "Manage OGC API schema configurations here."
+msgstr "Administre las configuraciones de esquema de OGC API aquí."
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__maximum
+msgid "Maximum"
+msgstr "Máximo"
+
+#. module: ogcapi
+#: model:ogcapi.component.parameter,description:ogcapi.ogcapi_component_param_limit
+msgid "Maximum number of features to return."
+msgstr "Número máximo de elementos a devolver."
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_exceptions.py:0
+#, python-format
+msgid "Method not allowed"
+msgstr "Método no permitido"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__minimum
+msgid "Minimum"
+msgstr "Mínimo"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_api.py:0
+#, python-format
+msgid "Missing required parameter(s): {params}"
+msgstr "Faltan parámetros requeridos: {params}"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/controllers/main.py:0
+#, python-format
+msgid "Missing required parameter: {param_code}"
+msgstr "Falta el parámetro requerido: {param_code}"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__model_domain
+msgid "Model Domain"
+msgstr "Dominio del modelo"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__model_name
+msgid "Model Name"
+msgstr "Nombre del modelo"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_collection__geo_type__multilinestring
+msgid "MultiLineString"
+msgstr "MultiLínea"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_collection__geo_type__multipoint
+msgid "MultiPoint"
+msgstr "MultiPunto"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_collection__geo_type__multipolygon
+msgid "MultiPolygon"
+msgstr "MultiPolígono"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__name
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: ogcapi
+#: model:ir.model.constraint,message:ogcapi.constraint_ogcapi_component_parameter_name_unique
+msgid "Name must be unique per configuration type."
+msgstr "El nombre debe ser único por tipo de configuración."
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_api_path__name
+msgid "Name of the API path configuration"
+msgstr "Nombre de la configuración de ruta de API"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_openapi_404
+msgid "Not found response for OpenAPI"
+msgstr "Respuesta de no encontrado para OpenAPI"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_collection_404
+msgid "Not found response for a specific collection"
+msgstr "Respuesta de no encontrado para una colección específica"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_item_json_404
+msgid "Not found response for a specific item"
+msgstr "Respuesta de no encontrado para un elemento específico"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_collections_404
+msgid "Not found response for collections"
+msgstr "Respuesta de no encontrado para colecciones"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_conformance_404
+msgid "Not found response for conformance"
+msgstr "Respuesta de no encontrado para conformidad"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_items_json_404
+msgid "Not found response for items in a collection"
+msgstr "Respuesta de no encontrado para elementos en una colección"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_landing_404
+msgid "Not found response for landing page"
+msgstr "Respuesta de no encontrado para la página de inicio"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_schema_404
+msgid "Not found response for schema"
+msgstr "Respuesta de no encontrado para el esquema"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__items_type__number
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__type__number
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_schema__type__number
+msgid "Number"
+msgstr "Número"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_api.py:0
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_root
+#, python-format
+msgid "OGC API"
+msgstr "OGC API"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+msgid "OGC API Collection"
+msgstr "Colección OGC API"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_collection
+msgid "OGC API Collections"
+msgstr "Colecciones OGC API"
+
+#. module: ogcapi
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_component_parameter
+msgid "OGC API Config Parameters"
+msgstr "Parámetros de configuración OGC API"
+
+#. module: ogcapi
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_component_response
+msgid "OGC API Config Responses"
+msgstr "Respuestas de configuración OGC API"
+
+#. module: ogcapi
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_component_schema
+msgid "OGC API Config Schemas"
+msgstr "Esquemas de configuración OGC API"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_api
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_api_form
+msgid "OGC API Configuration"
+msgstr "Configuración OGC API"
+
+#. module: ogcapi
+#: model:ir.actions.act_window,name:ogcapi.action_ogcapi_api
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_api
+msgid "OGC API Configurations"
+msgstr "Configuraciones OGC API"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_core_mixin
+msgid "OGC API Core Mixin"
+msgstr "Mixin núcleo OGC API"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_feature_mixin
+msgid "OGC API Feature Mixin"
+msgstr "Mixin de características OGC API"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_component_schema
+msgid "OGC API JSON Schema"
+msgstr "Esquema JSON OGC API"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_component_parameter_form
+msgid "OGC API Parameter"
+msgstr "Parámetro OGC API"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_component_parameter
+msgid "OGC API Parameter Config Object Model"
+msgstr "Modelo de objeto de configuración de parámetro OGC API"
+
+#. module: ogcapi
+#: model:ir.actions.act_window,name:ogcapi.action_ogcapi_component_parameter
+msgid "OGC API Parameter Configurations"
+msgstr "Configuraciones de parámetros OGC API"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_api_path
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_api_path_form
+msgid "OGC API Path Configuration"
+msgstr "Configuración de ruta OGC API"
+
+#. module: ogcapi
+#: model:ir.actions.act_window,name:ogcapi.action_ogcapi_api_path
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_api_path
+msgid "OGC API Path Configurations"
+msgstr "Configuraciones de ruta OGC API"
+
+#. module: ogcapi
+#: model:ogcapi.api.path,name:ogcapi.ogcapi_api_path_ogcapi
+msgid "OGC API ROOT"
+msgstr "OGC API ROOT"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_component_response
+msgid "OGC API Response Config Object Model"
+msgstr "Modelo de objeto de configuración de respuesta OGC API"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_component_response_form
+msgid "OGC API Response Configuration"
+msgstr "Configuración de respuesta OGC API"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_component_response_tree
+msgid "OGC API Responses"
+msgstr "Respuestas OGC API"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api_path__code__ogcapi
+msgid "OGC API Root"
+msgstr "Raíz OGC API"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_component_schema_form
+msgid "OGC API Schema Configuration"
+msgstr "Configuración de esquema OGC API"
+
+#. module: ogcapi
+#: model:ir.actions.act_window,name:ogcapi.action_ogcapi_component_schema
+msgid "OGC API Schema Configurations"
+msgstr "Configuraciones de esquema OGC API"
+
+#. module: ogcapi
+#: model:ir.model,name:ogcapi.model_ogcapi_workspace
+msgid "OGC API Workspace Model"
+msgstr "Modelo de espacio de trabajo OGC API"
+
+#. module: ogcapi
+#: model:ir.actions.act_window,name:ogcapi.action_ogcapi_component_response
+msgid "OGC API response Configurations"
+msgstr "Configuraciones de respuesta OGC API"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__http_method__options
+msgid "OPTIONS"
+msgstr "OPTIONS"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__oas_ref
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__oas_ref
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__oas_ref
+msgid "Oas Ref"
+msgstr "Referencia Oas"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_schema__type__object
+msgid "Object"
+msgstr "Objeto"
+
+#. module: ogcapi
+#: model:ogcapi.component.parameter,description:ogcapi.ogcapi_component_param_offset
+msgid "Offset of the first item to return (for pagination)"
+msgstr "Desplazamiento del primer elemento a devolver (para paginación)"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api_path__code__api
+#: model:ogcapi.api.path,name:ogcapi.ogcapi_api_path_api
+msgid "OpenAPI"
+msgstr "OpenAPI"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__mime_type__application/vnd_oai_openapi+json;version=3_0
+msgid "OpenAPI 3.0"
+msgstr "OpenAPI 3.0"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_api.py:0
+#, python-format
+msgid "OpenAPI definitions for OGC API"
+msgstr "Definiciones OpenAPI para OGC API"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_component_schema__oas_ref
+msgid "OpenAPI reference for this schema"
+msgstr "Referencia OpenAPI para este esquema"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__api_id
+msgid "Operation"
+msgstr "Operación"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/controllers/main.py:0
+#, python-format
+msgid "Operation not allowed for path: {path_name}"
+msgstr "Operación no permitida para la ruta: {path_name}"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__api_ids
+msgid "Operations"
+msgstr "Operaciones"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__http_method__patch
+msgid "PATCH"
+msgstr "PATCH"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__http_method__post
+msgid "POST"
+msgstr "POST"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_api__http_method__put
+msgid "PUT"
+msgstr "PUT"
+
+#. module: ogcapi
+#: model:ogcapi.component.parameter,description:ogcapi.ogcapi_component_param_crs
+msgid ""
+"Parameter to specify the coordinate reference system for the OGC API "
+"service."
+msgstr "Parámetro para especificar el sistema de referencia de coordenadas para el servicio OGC API."
+
+#. module: ogcapi
+#: model:ogcapi.component.parameter,description:ogcapi.ogcapi_component_param_f
+msgid "Parameter to specify the format for the OGC API service."
+msgstr "Parámetro para especificar el formato para el servicio OGC API."
+
+#. module: ogcapi
+#: model:ogcapi.component.parameter,description:ogcapi.ogcapi_component_param_lang
+msgid "Parameter to specify the language for the OGC API service."
+msgstr "Parámetro para especificar el idioma para el servicio OGC API."
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__parent_id
+msgid "Parent"
+msgstr "Padre"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__schema_ids
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__parent_ids
+msgid "Parent Schemas"
+msgstr "Esquemas padre"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__path_id
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__parameter_in__path
+msgid "Path"
+msgstr "Ruta"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__parameter_id
+msgid "Path Parameter"
+msgstr "Parámetro de ruta"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api_path__parameter_ids
+msgid "Path Parameters"
+msgstr "Parámetros de ruta"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_api__path_id
+msgid "Path configuration for this API"
+msgstr "Configuración de ruta para esta API"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/controllers/main.py:0
+#, python-format
+msgid "Path configuration not found for code: {path_code}"
+msgstr "Configuración de ruta no encontrada para el código: {path_code}"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_collection__geo_type__point
+msgid "Point"
+msgstr "Punto"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_collection__geo_type__polygon
+msgid "Polygon"
+msgstr "Polígono"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__schema
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+msgid "Properties Schema"
+msgstr "Esquema de propiedades"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__parameter_in__query
+msgid "Query"
+msgstr "Consulta"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__parameter_ids
+msgid "Query Parameters"
+msgstr "Parámetros de consulta"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_api_path.py:0
+#, python-format
+msgid "Recursive parent relationship is not allowed!"
+msgstr "¡No se permite la relación padre recursiva!"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_component_parameter__oas_ref
+msgid "Reference to the schema used in this parameter"
+msgstr "Referencia al esquema utilizado en este parámetro"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_component_response__oas_ref
+msgid "Reference to the schema used in this response"
+msgstr "Referencia al esquema utilizado en esta respuesta"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__model_id
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__model_id
+msgid "Related Model"
+msgstr "Modelo relacionado"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__workspace_id
+msgid "Related Workspace"
+msgstr "Espacio de trabajo relacionado"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__required
+msgid "Required"
+msgstr "Requerido"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_core_mixin.py:0
+#: code:addons/ogcapi/models/ogcapi_exceptions.py:0
+#, python-format
+msgid "Resource not found"
+msgstr "Recurso no encontrado"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_api__response_ids
+msgid "Response"
+msgstr "Respuesta"
+
+#. module: ogcapi
+#: model:ir.model.constraint,message:ogcapi.constraint_ogcapi_component_response_name_unique
+msgid "Response name must be unique per operation!"
+msgstr "¡El nombre de la respuesta debe ser único por operación!"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__schema_id
+#: model:ogcapi.api.path,name:ogcapi.ogcapi_api_path_schema
+msgid "Schema"
+msgstr "Esquema"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__schema_text
+msgid "Schema (JSON)"
+msgstr "Esquema (JSON)"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__schema_json
+msgid "Schema (Parsed)"
+msgstr "Esquema (analizado)"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__geo_field_id
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__geo_field_name
+msgid "Select the geometry field for this collection."
+msgstr "Seleccione el campo de geometría para esta colección."
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__sequence
+msgid "Sequence"
+msgstr "Secuencia"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace__contact_id
+msgid "Service Contact"
+msgstr "Contacto de servicio"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__geo_srid
+msgid "Spatial Reference Identifier (SRID) for the storage of geometries."
+msgstr "Identificador de referencia espacial (SRID) para el almacenamiento de geometrías."
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__extent_json
+msgid ""
+"Spatial extent of the collection in GeoJSON format [minX, minY, maxX, maxY] "
+"with EPSG:4326 (longitude, latitude)"
+msgstr "Extensión espacial de la colección en formato GeoJSON [minX, minY, maxX, maxY] con EPSG:4326 (longitud, latitud)"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__extent
+msgid ""
+"Spatial extent of the collection in comma-separated values minX, minY, maxX,"
+" maxY with EPSG:4326 (longitude, latitude)"
+msgstr "Extensión espacial de la colección en valores separados por comas minX, minY, maxX, maxY con EPSG:4326 (longitud, latitud)"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_response__code
+msgid "Status Code"
+msgstr "Código de estado"
+
+#. module: ogcapi
+#: model:ir.model.constraint,message:ogcapi.constraint_ogcapi_component_response_code_format_unique
+msgid "Status code and format must be unique per operation!"
+msgstr "¡El código de estado y el formato deben ser únicos por operación!"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__geo_srid
+msgid "Storage SRID"
+msgstr "SRID de almacenamiento"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__items_type__string
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_parameter__type__string
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_schema__type__string
+msgid "String"
+msgstr "Cadena"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_openapi_200
+msgid "Successful response for OpenAPI"
+msgstr "Respuesta exitosa para OpenAPI"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_collection_200
+msgid "Successful response for a specific collection"
+msgstr "Respuesta exitosa para una colección específica"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_item_geojson_200
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_item_json_200
+msgid "Successful response for a specific item"
+msgstr "Respuesta exitosa para un elemento específico"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_collections_200
+msgid "Successful response for collections"
+msgstr "Respuesta exitosa para colecciones"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_conformance_200
+msgid "Successful response for conformance"
+msgstr "Respuesta exitosa para conformidad"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_items_geojson_200
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_items_json_200
+msgid "Successful response for items in a collection"
+msgstr "Respuesta exitosa para elementos en una colección"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_landing_200
+msgid "Successful response for landing page"
+msgstr "Respuesta exitosa para la página de inicio"
+
+#. module: ogcapi
+#: model:ogcapi.component.response,description:ogcapi.ogcapi_api_response_schema_200
+msgid "Successful response schema for items in a collection"
+msgstr "Esquema de respuesta exitosa para elementos en una colección"
+
+#. module: ogcapi
+#: model:ir.model.constraint,message:ogcapi.constraint_ogcapi_collection_unique_name_workspace_id
+msgid "The combination of Name and Related Workspace must be unique!"
+msgstr "¡La combinación de Nombre y Espacio de trabajo relacionado debe ser única!"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_exceptions.py:0
+#, python-format
+msgid "The request is invalid"
+msgstr "La solicitud es inválida"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__title
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace__title
+msgid "Title"
+msgstr "Título"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_parameter__type
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_component_schema__type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_collection__geo_type
+msgid ""
+"Type of the geometry field (e.g., Point, LineString, Polygon, MultiPoint, "
+"MultiLineString, MultiPolygon)"
+msgstr "Tipo de campo de geometría (por ejemplo, Punto, Línea, Polígono, MultiPunto, MultiLínea, MultiPolígono)"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_exceptions.py:0
+#, python-format
+msgid "Unauthorized access"
+msgstr "Acceso no autorizado"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_core_mixin.py:0
+#, python-format
+msgid "Unexpected error in {desc}: {error}"
+msgstr "Error inesperado en {desc}: {error}"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_component_parameter__code
+msgid "Unique code for the configuration"
+msgstr "Código único para la configuración"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_component_schema__code
+msgid "Unique code for the schema"
+msgstr "Código único para el esquema"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_api__code
+msgid "Unique code per configuration"
+msgstr "Código único por configuración"
+
+#. module: ogcapi
+#: model:ir.model.fields,help:ogcapi.field_ogcapi_api_path__code
+msgid "Unique code per path configuration"
+msgstr "Código único por configuración de ruta"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+msgid "Update Schema"
+msgstr "Actualizar esquema"
+
+#. module: ogcapi
+#: model_terms:ir.ui.view,arch_db:ogcapi.view_ogcapi_collection_form
+msgid "View Fields"
+msgstr "Ver campos"
+
+#. module: ogcapi
+#: model:ir.actions.act_window,name:ogcapi.action_ogcapi_workspace
+msgid "Workspace"
+msgstr "Espacio de trabajo"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace__name
+msgid "Workspace Name"
+msgstr "Nombre del espacio de trabajo"
+
+#. module: ogcapi
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_collection__slug
+#: model:ir.model.fields,field_description:ogcapi.field_ogcapi_workspace__slug
+msgid "Workspace Slug"
+msgstr "Slug del espacio de trabajo"
+
+#. module: ogcapi
+#: model:ir.model.constraint,message:ogcapi.constraint_ogcapi_workspace_name_uniq
+msgid "Workspace name must be unique!"
+msgstr "¡El nombre del espacio de trabajo debe ser único!"
+
+#. module: ogcapi
+#. odoo-python
+#: code:addons/ogcapi/models/ogcapi_api.py:0
+#, python-format
+msgid "Workspace not found: {workspace_slug}"
+msgstr "Espacio de trabajo no encontrado: {workspace_slug}"
+
+#. module: ogcapi
+#: model:ir.ui.menu,name:ogcapi.menu_ogcapi_workspace
+msgid "Workspaces"
+msgstr "Espacios de trabajo"
+
+#. module: ogcapi
+#: model_terms:ir.actions.act_window,help:ogcapi.action_ogcapi_workspace
+msgid "You can manage OGC API Workspace records from here."
+msgstr "Puede administrar los registros de espacio de trabajo OGC API desde aquí."
+
+#. module: ogcapi
+#: model_terms:ir.actions.act_window,help:ogcapi.action_ogcapi_collection
+msgid "You can manage OGC API collections here."
+msgstr "Puede administrar las colecciones OGC API aquí."
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__format__geojson
+msgid "application/geo+json"
+msgstr "application/geo+json"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__format__json
+msgid "application/json"
+msgstr "application/json"
+
+#. module: ogcapi
+#: model:ir.model.fields.selection,name:ogcapi.selection__ogcapi_component_response__format__html
+msgid "text/html"
+msgstr "text/html"

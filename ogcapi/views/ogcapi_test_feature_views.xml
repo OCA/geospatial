@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- GeoEngine specific views -->
+    <record id="ogcapi_test_feature_geoengine_view" model="ir.ui.view">
+        <field name="name">ogcapi.test.feature.geoengine</field>
+        <field name="model">ogcapi.test.feature</field>
+        <field name="arch" type="xml">
+            <geoengine>
+                <field name="name" />
+                <field name="the_geom" />
+            </geoengine>
+        </field>
+    </record>
+
+    <!-- Vector layer for points -->
+    <record id="ogcapi_test_feature_vector_layer" model="geoengine.vector.layer">
+        <field name="name">Test Points</field>
+        <field name="geo_field_id" ref="ogcapi.field_ogcapi_test_feature__the_geom" />
+        <field name="model_id" ref="ogcapi.model_ogcapi_test_feature" />
+        <field name="view_id" ref="ogcapi_test_feature_geoengine_view" />
+        <field name="sequence" eval="1" />
+        <field name="geo_repr">basic</field>
+    </record>
+
+    <!-- OSM Background layer -->
+    <record id="ogcapi_test_feature_osm_layer" model="geoengine.raster.layer">
+        <field name="name">OpenStreetMap</field>
+        <field name="raster_type">osm</field>
+        <field name="view_id" ref="ogcapi_test_feature_geoengine_view" />
+        <field name="sequence" eval="0" />
+        <field name="overlay" eval="False" />
+    </record>
+
+
+    <!-- Form View -->
+    <record id="ogcapi_test_feature_form_view" model="ir.ui.view">
+        <field name="name">ogcapi.test.feature.form</field>
+        <field name="model">ogcapi.test.feature</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="the_geom" widget="geo_edit_map" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree View -->
+    <record id="ogcapi_test_feature_tree_view" model="ir.ui.view">
+        <field name="name">ogcapi.test.feature.tree</field>
+        <field name="model">ogcapi.test.feature</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="ogcapi_test_feature_search_view" model="ir.ui.view">
+        <field name="name">ogcapi.test.feature.search</field>
+        <field name="model">ogcapi.test.feature</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_ogcapi_test_feature" model="ir.actions.act_window">
+        <field name="name">Test Features</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">ogcapi.test.feature</field>
+        <field name="view_mode">geoengine,form,tree</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first feature
+            </p>
+        </field>
+    </record>
+</odoo>

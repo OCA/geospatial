@@ -1,0 +1,1180 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- OGC API Config Data -->
+    <data noupdate="1">
+        <!-- Schemas -->
+        <record id="ogcapi_component_schema_success" model="ogcapi.component.schema">
+            <field name="name">Success</field>
+            <field name="description">Schema for OGC API</field>
+            <field name="code">Success</field>
+            <field name="schema_text"><![CDATA[{"type": "string"}]]></field>
+        </record>
+        <!-- Exception Schema -->
+        <record id="ogcapi_component_schema_exception" model="ogcapi.component.schema">
+            <field name="name">Exception</field>
+            <field name="description">Schema for OGC API exceptions</field>
+            <field name="code">Exception</field>
+            <field
+                name="schema_text"
+            ><![CDATA[{
+  "type": "object",
+  "required": ["success", "error", "code", "status"],
+  "properties": {
+    "success": {
+      "type": "boolean"
+    },
+    "error": {
+      "type": "object",
+      "required": ["code", "description", "status"],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "type": "integer"
+        }
+      }
+    },
+    "code": {
+      "type": "string"
+    },
+    "status": {
+      "type": "integer"
+    }
+  }
+}]]></field>
+        </record>
+
+        <!-- Point Schema -->
+        <record id="ogcapi_component_schema_point" model="ogcapi.component.schema">
+            <field name="name">Point</field>
+            <field name="description">Schema for a Point geometry in OGC API</field>
+            <field name="code">Point</field>
+            <field
+                name="schema_text"
+            ><![CDATA[
+{
+  "type": "object",
+  "required": [
+    "type",
+    "coordinates"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["Point"]
+    },
+    "coordinates": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2
+    }
+  }
+}]]></field>
+        </record>
+
+        <record id="ogcapi_component_schema_linestring" model="ogcapi.component.schema">
+            <field name="name">LineString</field>
+            <field
+                name="description"
+            >Schema for a LineString geometry in OGC API</field>
+            <field name="code">LineString</field>
+            <field
+                name="schema_text"
+            ><![CDATA[{
+  "type": "object",
+  "required": [
+    "type",
+    "coordinates"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["LineString"]
+    },
+    "coordinates": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2
+    }
+  }
+}]]></field>
+        </record>
+
+        <record id="ogcapi_component_schema_polygon" model="ogcapi.component.schema">
+            <field name="name">Polygon</field>
+            <field name="description">Schema for a Polygon geometry in OGC API</field>
+            <field name="code">Polygon</field>
+            <field
+                name="schema_text"
+            ><![CDATA[
+{
+  "type": "object",
+  "required": [
+    "type",
+    "coordinates"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["Polygon"]
+    },
+    "coordinates": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 2
+      },
+      "minItems": 1
+    }
+  }
+}]]></field>
+        </record>
+
+        <!-- MultiPoint Schema -->
+        <record id="ogcapi_component_schema_multipoint" model="ogcapi.component.schema">
+            <field name="name">MultiPoint</field>
+            <field
+                name="description"
+            >Schema for a MultiPoint geometry in OGC API</field>
+            <field name="code">MultiPoint</field>
+            <field
+                name="schema_text"
+            ><![CDATA[
+{
+  "type": "object",
+  "required": [
+    "type",
+    "coordinates"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["MultiPoint"]
+    },
+    "coordinates": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 2
+      },
+      "minItems": 1
+    }
+  }
+}]]></field>
+        </record>
+
+        <!-- MultiLineString Schema -->
+        <record
+            id="ogcapi_component_schema_multilinestring"
+            model="ogcapi.component.schema"
+        >
+            <field name="name">MultiLineString</field>
+            <field
+                name="description"
+            >Schema for a MultiLineString geometry in OGC API</field>
+            <field name="code">MultiLineString</field>
+            <field
+                name="schema_text"
+            ><![CDATA[
+{
+  "type": "object",
+  "required": [
+    "type",
+    "coordinates"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["MultiLineString"]
+    },
+    "coordinates": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "number"
+        },
+        "minItems": 2
+      },
+      "minItems": 1
+    }
+  }
+}]]></field>
+        </record>
+
+        <!-- MultiPolygon Schema -->
+        <record
+            id="ogcapi_component_schema_multipolygon"
+            model="ogcapi.component.schema"
+        >
+            <field name="name">MultiPolygon</field>
+            <field
+                name="description"
+            >Schema for a MultiPolygon geometry in OGC API</field>
+            <field name="code">MultiPolygon</field>
+            <field
+                name="schema_text"
+            ><![CDATA[
+{
+  "type": "object",
+  "required": [
+    "type",
+    "coordinates"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["MultiPolygon"]
+    },
+    "coordinates": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 2
+        },
+        "minItems": 1
+      }
+    }
+  }
+}]]></field>
+        </record>
+
+        <!-- Geometry Schema -->
+        <record id="ogcapi_component_schema_geometry" model="ogcapi.component.schema">
+            <field name="name">Geometry</field>
+            <field name="description">Schema for a Geometry object in OGC API</field>
+            <field name="code">Geometry</field>
+            <field
+                name="parent_ids"
+                eval="[(6, 0, [ref('ogcapi_component_schema_point'), ref('ogcapi_component_schema_linestring'), ref('ogcapi_component_schema_polygon'), ref('ogcapi_component_schema_multipoint'), ref('ogcapi_component_schema_multilinestring'), ref('ogcapi_component_schema_multipolygon')])]"
+            />
+            <field
+                name="schema_text"
+            ><![CDATA[{
+  "type": "object",
+  "oneOf": [
+    {
+      "$ref": "#/components/schemas/Point"
+    },
+    {
+      "$ref": "#/components/schemas/LineString"
+    },
+    {
+      "$ref": "#/components/schemas/Polygon"
+    },
+    {
+      "$ref": "#/components/schemas/MultiPoint"
+    },
+    {
+      "$ref": "#/components/schemas/MultiLineString"
+    },
+    {
+      "$ref": "#/components/schemas/MultiPolygon"
+    }
+  ]
+}]]></field>
+        </record>
+
+        <!-- Feature Schema -->
+        <record id="ogcapi_component_schema_feature" model="ogcapi.component.schema">
+            <field name="name">Feature</field>
+            <field name="description">Schema for a Feature object in OGC API</field>
+            <field name="code">Feature</field>
+            <field
+                name="parent_ids"
+                eval="[(6, 0, [ref('ogcapi_component_schema_geometry')])]"
+            />
+            <field
+                name="schema_text"
+            ><![CDATA[{
+  "type": "object",
+  "required": [
+    "type",
+    "geometry"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["Feature"]
+    },
+    "geometry": {
+      "$ref": "#/components/schemas/Geometry"
+    },
+    "properties": {
+      "type": "object",
+      "additionalProperties": {}
+    }
+  }
+}]]></field>
+        </record>
+
+        <!-- FeatureCollection Schema -->
+        <record
+            id="ogcapi_component_schema_featurecollection"
+            model="ogcapi.component.schema"
+        >
+            <field name="name">FeatureCollection</field>
+            <field
+                name="description"
+            >Schema for a FeatureCollection object in OGC API</field>
+            <field name="code">FeatureCollection</field>
+            <field
+                name="parent_ids"
+                eval="[(6, 0, [ref('ogcapi_component_schema_feature')])]"
+            />
+            <field
+                name="schema_text"
+            ><![CDATA[{
+  "type": "object",
+  "required": [
+    "type",
+    "features"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "enum": ["FeatureCollection"]
+    },
+    "features": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Feature"
+      }
+    }
+  }
+}]]></field>
+        </record>
+
+        <!-- Link Schema -->
+        <record id="ogcapi_component_schema_link" model="ogcapi.component.schema">
+            <field name="name">Link</field>
+            <field name="description">Schema for a Link object in OGC API</field>
+            <field name="code">Link</field>
+            <field
+                name="schema_text"
+            ><![CDATA[{
+  "type": "object",
+  "required": [
+    "href",
+    "rel"
+  ],
+  "properties": {
+    "href": {
+      "type": "string",
+      "format": "uri"
+    },
+    "rel": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    }
+  }
+}]]></field>
+        </record>
+        <!-- LandingPage Schema -->
+        <record id="ogcapi_component_schema_landing" model="ogcapi.component.schema">
+            <field name="name">Landing</field>
+            <field name="description">Schema for the Landing Page in OGC API</field>
+            <field name="code">Landing</field>
+            <field
+                name="parent_ids"
+                eval="[(6, 0, [ref('ogcapi_component_schema_link')])]"
+            />
+            <field
+                name="schema_text"
+            ><![CDATA[{
+  "type": "object",
+  "required": ["links"],
+  "properties": {
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Link"
+      }
+    }
+  }
+}]]></field>
+        </record>
+
+        <!-- Conformance -->
+        <record
+            id="ogcapi_component_schema_conformance"
+            model="ogcapi.component.schema"
+        >
+            <field name="name">Conformance</field>
+            <field name="description">Schema for Conformance classes in OGC API</field>
+            <field name="code">Conformance</field>
+            <field
+                name="schema_text"
+            ><![CDATA[{
+  "type": "object",
+  "required": [
+    "conformsTo"
+  ],
+  "properties": {
+    "conformsTo": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  }
+}]]></field>
+        </record>
+
+        <!-- Collection Schema -->
+        <record id="ogcapi_component_schema_collection" model="ogcapi.component.schema">
+            <field name="name">Collection</field>
+            <field name="description">Schema for a Collection object in OGC API</field>
+            <field name="code">Collection</field>
+            <field
+                name="parent_ids"
+                eval="[(6, 0, [ref('ogcapi_component_schema_link')])]"
+            />
+            <field
+                name="schema_text"
+            ><![CDATA[{
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "links"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Link"
+      }
+    },
+    "extent": {
+      "type": "object",
+      "required": ["spatial"],
+      "properties": {
+        "spatial": {
+          "type": "object",
+          "required": ["bbox"],
+          "properties": {
+            "bbox": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 4,
+              "maxItems": 4
+            }
+          }
+        }
+      }
+    }
+  }
+}]]></field>
+        </record>
+
+        <!-- Collections Schema -->
+        <record
+            id="ogcapi_component_schema_collections"
+            model="ogcapi.component.schema"
+        >
+            <field name="name">Collections</field>
+            <field name="description">Schema for a Collections object in OGC API</field>
+            <field name="code">Collections</field>
+            <field
+                name="parent_ids"
+                eval="[(6, 0, [ref('ogcapi_component_schema_collection'), ref('ogcapi_component_schema_link')])]"
+            />
+            <field
+                name="schema_text"
+            ><![CDATA[{
+  "type": "object",
+  "required": [
+    "collections",
+    "links"
+  ],
+  "properties": {
+    "collections": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Collection"
+      }
+    },
+    "links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/Link"
+      }
+    }
+  }
+}]]></field>
+        </record>
+
+        <!-- Parameters -->
+        <record id="ogcapi_component_param_lang" model="ogcapi.component.parameter">
+            <field name="name">Language</field>
+            <field name="code">lang</field>
+            <field
+                name="description"
+            >Parameter to specify the language for the OGC API service.</field>
+            <field name="parameter_in">query</field>
+            <field name="required">false</field>
+            <field name="parameter_type">string</field>
+            <field name="enum">en,tr</field>
+            <field name="default">tr</field>
+        </record>
+        <record id="ogcapi_component_param_f" model="ogcapi.component.parameter">
+            <field name="name">Format</field>
+            <field name="code">f</field>
+            <field
+                name="description"
+            >Parameter to specify the format for the OGC API service.</field>
+            <field name="parameter_in">query</field>
+            <field name="required">false</field>
+            <field name="parameter_type">string</field>
+            <field name="enum">json,geojson,html</field>
+            <field name="default">json</field>
+
+          </record>
+        <record id="ogcapi_component_param_crs" model="ogcapi.component.parameter">
+            <field name="name">CRS</field>
+            <field name="code">crs</field>
+            <field
+                name="description"
+            >Parameter to specify the coordinate reference system for the OGC API service.</field>
+            <field name="parameter_in">query</field>
+            <field name="required">false</field>
+            <field name="parameter_type">string</field>
+            <field name="enum">http://www.opengis.net/def/crs/OGC/1.3/CRS84</field>
+            <field name="default">http://www.opengis.net/def/crs/OGC/1.3/CRS84</field>
+        </record>
+
+        <record id="ogcapi_component_param_limit" model="ogcapi.component.parameter">
+            <field name="name">Limit</field>
+            <field name="code">limit</field>
+            <field name="description">Maximum number of features to return.</field>
+            <field name="parameter_in">query</field>
+            <field name="required">false</field>
+            <field name="parameter_type">integer</field>
+            <field name="default">100</field>
+            <field name="minimum">1</field>
+            <field name="maximum">1000</field>
+        </record>
+        <record id="ogcapi_component_param_offset" model="ogcapi.component.parameter">
+            <field name="name">Offset</field>
+            <field name="code">offset</field>
+            <field
+                name="description"
+            >Offset of the first item to return (for pagination)</field>
+            <field name="parameter_in">query</field>
+            <field name="required">false</field>
+            <field name="parameter_type">integer</field>
+            <field name="default">0</field>
+            <field name="minimum">0</field>
+            <field name="maximum">10000</field>
+        </record>
+        <record id="ogcapi_component_param_bbox" model="ogcapi.component.parameter">
+            <field name="name">Bounding Box</field>
+            <field name="code">bbox</field>
+            <field name="description">Bounding box to filter features spatially.</field>
+            <field name="parameter_in">query</field>
+            <field name="required">false</field>
+            <field name="parameter_type">array</field>
+            <field name="items_type">number</field>
+            <field name="items_min">4</field>
+            <field name="items_max">4</field>
+        </record>
+        <record
+            id="ogcapi_component_param_workspaceid"
+            model="ogcapi.component.parameter"
+        >
+            <field name="name">Workspace ID</field>
+            <field name="code">workspaceId</field>
+            <field name="description">Identifier of the workspace.</field>
+            <field name="parameter_in">path</field>
+            <field name="parameter_type">string</field>
+            <field name="required">true</field>
+            <field name="sequence">10</field>
+        </record>
+        <record
+            id="ogcapi_component_param_collectionid"
+            model="ogcapi.component.parameter"
+        >
+            <field name="name">Collection ID</field>
+            <field name="code">collectionId</field>
+            <field name="description">Identifier of the collection.</field>
+            <field name="parameter_in">path</field>
+            <field name="parameter_type">string</field>
+            <field name="required">true</field>
+            <field name="sequence">20</field>
+        </record>
+        <record
+            id="ogcapi_component_param_featureid"
+            model="ogcapi.component.parameter"
+        >
+            <field name="name">Feature ID</field>
+            <field name="code">featureId</field>
+            <field name="description">Identifier of the feature.</field>
+            <field name="parameter_in">path</field>
+            <field name="parameter_type">string</field>
+            <field name="required">true</field>
+            <field name="sequence">30</field>
+        </record>
+
+        <!-- Paths -->
+        <record id="ogcapi_api_path_ogcapi" model="ogcapi.api.path">
+            <field name="name">OGC API ROOT</field>
+            <field name="code">ogcapi</field>
+            <field
+                name="description"
+            >This configuration contains default settings for OGC API services.</field>
+        </record>
+        <record id="ogcapi_api_path_landing" model="ogcapi.api.path">
+            <field name="name">Landing Page</field>
+            <field name="code">landing</field>
+            <field
+                name="description"
+            >Configuration settings for the landing page of the OGC API service.</field>
+            <field name="parent_id" ref="ogcapi_api_path_ogcapi" />
+            <field name="parameter_id" ref="ogcapi_component_param_workspaceid" />
+        </record>
+        <record id="ogcapi_api_path_conformance" model="ogcapi.api.path">
+            <field name="name">Conformance</field>
+            <field name="code">conformance</field>
+            <field
+                name="description"
+            >Configuration settings for conformance in the OGC API service.</field>
+            <field name="parent_id" ref="ogcapi_api_path_landing" />
+        </record>
+        <record id="ogcapi_api_path_api" model="ogcapi.api.path">
+            <field name="name">OpenAPI</field>
+            <field name="code">api</field>
+            <field
+                name="description"
+            >Configuration settings for OpenAPI in the OGC API service.</field>
+            <field name="parent_id" ref="ogcapi_api_path_landing" />
+        </record>
+        <record id="ogcapi_api_path_collections" model="ogcapi.api.path">
+            <field name="name">Collections</field>
+            <field name="code">collections</field>
+            <field
+                name="description"
+            >Configuration settings for collections in the OGC API service.</field>
+            <field name="parent_id" ref="ogcapi_api_path_landing" />
+        </record>
+        <record id="ogcapi_api_path_collection" model="ogcapi.api.path">
+            <field name="name">Collection</field>
+            <field name="code">collection</field>
+            <field
+                name="description"
+            >Configuration settings for a specific collection in the OGC API service.</field>
+            <field name="parent_id" ref="ogcapi_api_path_collections" />
+            <field name="parameter_id" ref="ogcapi_component_param_collectionid" />
+        </record>
+        <record id="ogcapi_api_path_schema" model="ogcapi.api.path">
+            <field name="name">Schema</field>
+            <field name="code">schema</field>
+            <field
+                name="description"
+            >Configuration settings for the schema in the OGC API service.</field>
+            <field name="parent_id" ref="ogcapi_api_path_collection" />
+        </record>
+        <record id="ogcapi_api_path_items" model="ogcapi.api.path">
+            <field name="name">Items</field>
+            <field name="code">items</field>
+            <field
+                name="description"
+            >Configuration settings for items in the OGC API service.</field>
+            <field name="parent_id" ref="ogcapi_api_path_collection" />
+        </record>
+        <record id="ogcapi_api_path_item" model="ogcapi.api.path">
+            <field name="name">Item</field>
+            <field name="code">item</field>
+            <field
+                name="description"
+            >Configuration settings for a specific item in the OGC API service.</field>
+            <field name="parent_id" ref="ogcapi_api_path_items" />
+            <field name="parameter_id" ref="ogcapi_component_param_featureid" />
+        </record>
+
+        <!-- Operations -->
+        <record id="ogcapi_api_landing_get" model="ogcapi.api">
+            <field name="name">Get Landing</field>
+            <field name="code">get_landing</field>
+            <field
+                name="description"
+            >Get Landing operation in the OGC API service.</field>
+            <field name="path_id" ref="ogcapi_api_path_landing" />
+        </record>
+        <record id="ogcapi_api_conformance_get" model="ogcapi.api">
+            <field name="name">Get Conformance</field>
+            <field name="code">get_conformance</field>
+            <field
+                name="description"
+            >Get Conformance operation in the OGC API service.</field>
+            <field name="path_id" ref="ogcapi_api_path_conformance" />
+        </record>
+        <record id="ogcapi_api_openapi_get" model="ogcapi.api">
+            <field name="name">Get OpenAPI</field>
+            <field name="code">get_openapi</field>
+            <field
+                name="description"
+            >Get OpenAPI operation in the OGC API service.</field>
+            <field name="path_id" ref="ogcapi_api_path_api" />
+        </record>
+        <record id="ogcapi_api_collections_get" model="ogcapi.api">
+            <field name="name">Get Collections</field>
+            <field name="code">get_collections</field>
+            <field
+                name="description"
+            >Get Collections operation in the OGC API service.</field>
+            <field name="path_id" ref="ogcapi_api_path_collections" />
+        </record>
+        <record id="ogcapi_api_collection_get" model="ogcapi.api">
+            <field name="name">Get Collection</field>
+            <field name="code">get_collection</field>
+            <field
+                name="description"
+            >Get Collection operation in the OGC API service.</field>
+            <field name="path_id" ref="ogcapi_api_path_collection" />
+        </record>
+        <record id="ogcapi_api_schema_get" model="ogcapi.api">
+            <field name="name">Get Schema</field>
+            <field name="code">get_schema</field>
+            <field
+                name="description"
+            >Get Schema operation in the OGC API service.</field>
+            <field name="path_id" ref="ogcapi_api_path_schema" />
+        </record>
+        <record id="ogcapi_api_items_get" model="ogcapi.api">
+            <field name="name">Get Items</field>
+            <field name="code">get_items</field>
+            <field
+                name="description"
+            >Get Items operation in the OGC API service.</field>
+            <field name="path_id" ref="ogcapi_api_path_items" />
+        </record>
+        <record id="ogcapi_api_item_get" model="ogcapi.api">
+            <field name="name">Get Item</field>
+            <field name="code">get_item</field>
+            <field name="description">Get Item operation in the OGC API service.</field>
+            <field name="path_id" ref="ogcapi_api_path_item" />
+        </record>
+
+        <!-- Responses -->
+        <record id="ogcapi_api_response_landing_200" model="ogcapi.component.response">
+            <field name="name">200 OK - Landing</field>
+            <field name="code">200</field>
+            <field name="description">Successful response for landing page</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_landing_get" />
+            <field name="is_default">true</field>
+            <field name="schema_id" ref="ogcapi_component_schema_landing" />
+        </record>
+        <!-- landing Page 400 -->
+        <record id="ogcapi_api_response_landing_400" model="ogcapi.component.response">
+            <field name="name">400 Bad Request - Landing</field>
+            <field name="code">400</field>
+            <field name="description">Bad request response for landing page</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_landing_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <!-- Landing Page 404 -->
+        <record id="ogcapi_api_response_landing_404" model="ogcapi.component.response">
+            <field name="name">404 Not Found - Landing</field>
+            <field name="code">404</field>
+            <field name="description">Not found response for landing page</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_landing_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <!-- Landing Page 500 -->
+        <record id="ogcapi_api_response_landing_500" model="ogcapi.component.response">
+            <field name="name">500 Internal Server Error - Landing</field>
+            <field name="code">500</field>
+            <field
+                name="description"
+            >Internal server error response for landing page</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_landing_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_conformance_200"
+            model="ogcapi.component.response"
+        >
+            <field name="name">200 OK - Conformance</field>
+            <field name="code">200</field>
+            <field name="description">Successful response for conformance</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_conformance_get" />
+            <field name="is_default">true</field>
+            <field name="schema_id" ref="ogcapi_component_schema_conformance" />
+        </record>
+        <record
+            id="ogcapi_api_response_conformance_400"
+            model="ogcapi.component.response"
+        >
+            <field name="name">400 Bad Request - Conformance</field>
+            <field name="code">400</field>
+            <field name="description">Bad request response for conformance</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_conformance_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_conformance_404"
+            model="ogcapi.component.response"
+        >
+            <field name="name">404 Not Found - Conformance</field>
+            <field name="code">404</field>
+            <field name="description">Not found response for conformance</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_conformance_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_conformance_500"
+            model="ogcapi.component.response"
+        >
+            <field name="name">500 Internal Server Error - Conformance</field>
+            <field name="code">500</field>
+            <field
+                name="description"
+            >Internal server error response for conformance</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_conformance_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record id="ogcapi_api_response_openapi_200" model="ogcapi.component.response">
+            <field name="name">200 OK - OpenAPI</field>
+            <field name="code">200</field>
+            <field name="description">Successful response for OpenAPI</field>
+            <field name="mime_type">application/vnd.oai.openapi+json;version=3.0</field>
+            <field name="api_id" ref="ogcapi_api_openapi_get" />
+            <field name="is_default">true</field>
+            <field name="schema_id" ref="ogcapi_component_schema_success" />
+        </record>
+        <record id="ogcapi_api_response_openapi_400" model="ogcapi.component.response">
+            <field name="name">400 Bad Request - OpenAPI</field>
+            <field name="code">400</field>
+            <field name="description">Bad request response for OpenAPI</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_openapi_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record id="ogcapi_api_response_openapi_404" model="ogcapi.component.response">
+            <field name="name">404 Not Found - OpenAPI</field>
+            <field name="code">404</field>
+            <field name="description">Not found response for OpenAPI</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_openapi_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record id="ogcapi_api_response_openapi_500" model="ogcapi.component.response">
+            <field name="name">500 Internal Server Error - OpenAPI</field>
+            <field name="code">500</field>
+            <field name="description">Internal server error response for OpenAPI</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_openapi_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_collections_200"
+            model="ogcapi.component.response"
+        >
+            <field name="name">200 OK - Collections</field>
+            <field name="code">200</field>
+            <field name="description">Successful response for collections</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_collections_get" />
+            <field name="is_default">true</field>
+            <field name="schema_id" ref="ogcapi_component_schema_collections" />
+        </record>
+        <record
+            id="ogcapi_api_response_collections_400"
+            model="ogcapi.component.response"
+        >
+            <field name="name">400 Bad Request - Collections</field>
+            <field name="code">400</field>
+            <field name="description">Bad request response for collections</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_collections_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_collections_404"
+            model="ogcapi.component.response"
+        >
+            <field name="name">404 Not Found - Collections</field>
+            <field name="code">404</field>
+            <field name="description">Not found response for collections</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_collections_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_collections_500"
+            model="ogcapi.component.response"
+        >
+            <field name="name">500 Internal Server Error - Collections</field>
+            <field name="code">500</field>
+            <field
+                name="description"
+            >Internal server error response for collections</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_collections_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_collection_200"
+            model="ogcapi.component.response"
+        >
+            <field name="name">200 OK - Collection</field>
+            <field name="code">200</field>
+            <field
+                name="description"
+            >Successful response for a specific collection</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_collection_get" />
+            <field name="is_default">true</field>
+            <field name="schema_id" ref="ogcapi_component_schema_collection" />
+        </record>
+        <record
+            id="ogcapi_api_response_collection_400"
+            model="ogcapi.component.response"
+        >
+            <field name="name">400 Bad Request - Collection</field>
+            <field name="code">400</field>
+            <field
+                name="description"
+            >Bad request response for a specific collection</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_collection_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_collection_404"
+            model="ogcapi.component.response"
+        >
+            <field name="name">404 Not Found - Collection</field>
+            <field name="code">404</field>
+            <field
+                name="description"
+            >Not found response for a specific collection</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_collection_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_collection_500"
+            model="ogcapi.component.response"
+        >
+            <field name="name">500 Internal Server Error - Collection</field>
+            <field name="code">500</field>
+            <field
+                name="description"
+            >Internal server error response for a specific collection</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_collection_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record id="ogcapi_api_response_schema_200" model="ogcapi.component.response">
+            <field name="name">200 OK - Schema</field>
+            <field name="code">200</field>
+            <field
+                name="description"
+            >Successful response schema for items in a collection</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_schema_get" />
+            <field name="is_default">true</field>
+            <field name="schema_id" ref="ogcapi_component_schema_success" />
+        </record>
+        <record id="ogcapi_api_response_schema_400" model="ogcapi.component.response">
+            <field name="name">400 Bad Request - Schema</field>
+            <field name="code">400</field>
+            <field name="description">Bad request response for schema</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_schema_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record id="ogcapi_api_response_schema_404" model="ogcapi.component.response">
+            <field name="name">404 Not Found - Schema</field>
+            <field name="code">404</field>
+            <field name="description">Not found response for schema</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_schema_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record id="ogcapi_api_response_schema_500" model="ogcapi.component.response">
+            <field name="name">500 Internal Server Error - Schema</field>
+            <field name="code">500</field>
+            <field name="description">Internal server error response for schema</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_schema_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_items_json_200"
+            model="ogcapi.component.response"
+        >
+            <field name="name">200 OK - Items JSON</field>
+            <field name="code">200</field>
+            <field
+                name="description"
+            >Successful response for items in a collection</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_items_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_featurecollection" />
+        </record>
+        <record
+            id="ogcapi_api_response_items_json_400"
+            model="ogcapi.component.response"
+        >
+            <field name="name">400 Bad Request - Items JSON</field>
+            <field name="code">400</field>
+            <field
+                name="description"
+            >Bad request response for items in a collection</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_items_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_items_json_404"
+            model="ogcapi.component.response"
+        >
+            <field name="name">404 Not Found - Items JSON</field>
+            <field name="code">404</field>
+            <field
+                name="description"
+            >Not found response for items in a collection</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_items_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_items_json_500"
+            model="ogcapi.component.response"
+        >
+            <field name="name">500 Internal Server Error - Items JSON</field>
+            <field name="code">500</field>
+            <field
+                name="description"
+            >Internal server error response for items in a collection</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_items_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_items_geojson_200"
+            model="ogcapi.component.response"
+        >
+            <field name="name">200 OK - Items GEOJSON</field>
+            <field name="code">200</field>
+            <field
+                name="description"
+            >Successful response for items in a collection</field>
+            <field name="mime_type">application/geo+json</field>
+            <field name="is_default">true</field>
+            <field name="api_id" ref="ogcapi_api_items_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_featurecollection" />
+        </record>
+        <record
+            id="ogcapi_api_response_item_json_200"
+            model="ogcapi.component.response"
+        >
+            <field name="name">200 OK - Item JSON</field>
+            <field name="code">200</field>
+            <field name="description">Successful response for a specific item</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_item_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_feature" />
+        </record>
+        <record
+            id="ogcapi_api_response_item_json_400"
+            model="ogcapi.component.response"
+        >
+            <field name="name">400 Bad Request - Item JSON</field>
+            <field name="code">400</field>
+            <field name="description">Bad request response for a specific item</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_item_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_item_json_404"
+            model="ogcapi.component.response"
+        >
+            <field name="name">404 Not Found - Item JSON</field>
+            <field name="code">404</field>
+            <field name="description">Not found response for a specific item</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_item_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_item_json_500"
+            model="ogcapi.component.response"
+        >
+            <field name="name">500 Internal Server Error - Item JSON</field>
+            <field name="code">500</field>
+            <field
+                name="description"
+            >Internal server error response for a specific item</field>
+            <field name="mime_type">application/json</field>
+            <field name="api_id" ref="ogcapi_api_item_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_exception" />
+        </record>
+        <record
+            id="ogcapi_api_response_item_geojson_200"
+            model="ogcapi.component.response"
+        >
+            <field name="name">200 OK - Item GEOJSON</field>
+            <field name="code">200</field>
+            <field name="description">Successful response for a specific item</field>
+            <field name="mime_type">application/geo+json</field>
+            <field name="is_default">true</field>
+            <field name="api_id" ref="ogcapi_api_item_get" />
+            <field name="schema_id" ref="ogcapi_component_schema_feature" />
+        </record>
+    </data>
+</odoo>

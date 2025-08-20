@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- OGC API Response form view -->
+    <record id="view_ogcapi_component_response_form" model="ir.ui.view">
+        <field name="name">ogcapi.component.response.form</field>
+        <field name="model">ogcapi.component.response</field>
+        <field name="arch" type="xml">
+            <form string="OGC API Response Configuration">
+                <sheet>
+                    <group>
+                        <field name="name" />
+                        <field name="code" />
+                        <field name="description" />
+                        <field name="mime_type" />
+                        <field name="is_default" />
+                        <field name="schema_id" />
+                        <field name="api_id" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_ogcapi_component_response_tree" model="ir.ui.view">
+        <field name="name">ogcapi.component.response.tree</field>
+        <field name="model">ogcapi.component.response</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="api_id" />
+                <field name="code" />
+                <field name="response_format" />
+                <field name="mime_type" />
+                <field name="is_default" />
+                <field name="schema_id" />
+                <field name="description" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_ogcapi_component_response" model="ir.actions.act_window">
+        <field name="name">OGC API response Configurations</field>
+        <field name="res_model">ogcapi.component.response</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p>Manage OGC API response configurations here.</p>
+        </field>
+    </record>
+</odoo>

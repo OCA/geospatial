@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem id="menu_ogcapi_root" name="OGC API" sequence="10" />
+
+    <menuitem
+        id="menu_ogcapi_workspace"
+        name="Workspaces"
+        parent="menu_ogcapi_root"
+        sequence="20"
+        action="action_ogcapi_workspace"
+    />
+    <menuitem
+        id="menu_ogcapi_collection"
+        name="Collections"
+        parent="menu_ogcapi_root"
+        sequence="30"
+        action="action_ogcapi_collection"
+    />
+    <menuitem
+        id="menu_ogcapi_configuration"
+        name="Configuration"
+        parent="menu_ogcapi_root"
+        sequence="40"
+    />
+    <menuitem
+        id="menu_ogcapi_api_path"
+        name="OGC API Path Configurations"
+        parent="menu_ogcapi_configuration"
+        action="action_ogcapi_api_path"
+        sequence="50"
+    />
+    <menuitem
+        id="menu_ogcapi_api"
+        name="OGC API Configurations"
+        parent="menu_ogcapi_configuration"
+        action="action_ogcapi_api"
+        sequence="60"
+    />
+    <menuitem
+        id="menu_ogcapi_component_parameter"
+        name="OGC API Config Parameters"
+        parent="menu_ogcapi_configuration"
+        action="action_ogcapi_component_parameter"
+        sequence="70"
+    />
+    <menuitem
+        id="menu_ogcapi_component_schema"
+        name="OGC API Config Schemas"
+        parent="menu_ogcapi_configuration"
+        action="action_ogcapi_component_schema"
+        sequence="80"
+    />
+    <menuitem
+        id="menu_ogcapi_component_response"
+        name="OGC API Config Responses"
+        parent="menu_ogcapi_configuration"
+        action="action_ogcapi_component_response"
+        sequence="90"
+    />
+</odoo>
