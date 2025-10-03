@@ -18,9 +18,9 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "web_view_leaflet_map/static/src/js/map-component/map_view.js",
-            "web_view_leaflet_map/static/src/js/map-component/map_view.xml",
-            "web_view_leaflet_map/static/src/js/map-component/web_view_leaflet_map.css"
+            "web_view_leaflet_map/static/src/components/map-component/map_view.esm.js",
+            "web_view_leaflet_map/static/src/components/map-component/map_view.xml",
+            "web_view_leaflet_map/static/src/components/map-component/web_view_leaflet_map.css",
         ],
     },
     "installable": True,
