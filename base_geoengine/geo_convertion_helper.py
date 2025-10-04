@@ -4,6 +4,8 @@ import logging
 
 from odoo import _
 
+logger = logging.getLogger(__name__)
+
 try:
     import geojson
     from shapely import wkb, wkt
@@ -11,7 +13,7 @@ try:
     from shapely.geometry.base import BaseGeometry
 except ImportError:
     logger = logging.getLogger(__name__)
-    logger.warning(_("Shapely or geojson are not available in the sys path"))
+    logger.warning(_("Shapely or geojson are not available in the sys path"))  # pylint: disable=prefer-env-translation
 
 
 def value_to_shape(value, use_wkb=False):
@@ -35,7 +37,7 @@ def value_to_shape(value, use_wkb=False):
             return wkt.loads(value.wkt)
     else:
         raise TypeError(
-            _(
+            _(  # pylint: disable=prefer-env-translation
                 "Write/create/search geo type must be wkt/geojson "
                 "string or must respond to wkt"
             )

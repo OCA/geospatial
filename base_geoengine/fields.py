@@ -1,12 +1,16 @@
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
 # Copyright 2011-2012 Nicolas Bessi (Camptocamp SA)
 # Copyright 2016 Yannick Payot (Camptocamp SA)
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
+
+from __future__ import annotations
+
 import json
 import logging
 from operator import attrgetter
 
-from odoo import _, fields
+from odoo import fields
 from odoo.tools import sql
 
 from . import geo_convertion_helper as convert
@@ -110,7 +114,7 @@ class GeoField(fields.Field):
         shape = convert.value_to_shape(value)
         if same_type and not shape.is_empty:
             if shape.geom_type.lower() != self.geo_type.lower():
-                msg = _(
+                msg = self.env._(
                     "Geo Value %(geom_type)s must be of the same type %(geo_type)s \
                         as fields",
                     geom_type=shape.geom_type.lower(),
@@ -121,7 +125,7 @@ class GeoField(fields.Field):
 
     def update_geo_db_column(self, model):
         """Update the column type in the database."""
-        cr = model._cr
+        cr = model.env.cr
         query = """SELECT srid, type, coord_dimension
                  FROM geometry_columns
                  WHERE f_table_name = %s
@@ -130,14 +134,14 @@ class GeoField(fields.Field):
         check_data = cr.fetchone()
         if not check_data:
             raise TypeError(
-                _(
+                self.env._(
                     "geometry_columns table seems to be corrupted."
                     " SRID check is not possible"
                 )
             )
         if check_data[0] != self.srid:
             raise TypeError(
-                _(
+                self.env._(
                     "Reprojection of column is not implemented."
                     " We can not change srid %(srid)s to %(data)s",
                     srid=self.srid,
@@ -146,7 +150,7 @@ class GeoField(fields.Field):
             )
         elif check_data[1] != self.geo_type.upper():
             raise TypeError(
-                _(
+                self.env._(
                     "Geo type modification is not implemented."
                     " We can not change type %(data)s to %(geo_type)s",
                     data=check_data[1],
@@ -155,7 +159,7 @@ class GeoField(fields.Field):
             )
         elif check_data[2] != self.dim:
             raise TypeError(
-                _(
+                self.env._(
                     "Geo dimention modification is not implemented."
                     " We can not change dimention %(data)s to %(dim)s",
                     data=check_data[2],
@@ -179,7 +183,7 @@ class GeoField(fields.Field):
 
         if not column:
             create_geo_column(
-                model._cr,
+                model.env.cr,
                 model._table,
                 self.name,
                 self.geo_type.upper(),
@@ -188,28 +192,30 @@ class GeoField(fields.Field):
                 self.string,
             )
             if self.gist_index:
-                create_geo_index(model._cr, self.name, model._table)
+                create_geo_index(model.env.cr, self.name, model._table)
             return
 
         if column["udt_name"] == self.column_type[0]:
             if self.gist_index:
-                create_geo_index(model._cr, self.name, model._table)
+                create_geo_index(model.env.cr, self.name, model._table)
             return
 
         self.update_geo_db_column(model)
 
         if column["udt_name"] in self.column_cast_from:
-            sql.convert_column(model._cr, model._table, self.name, self.column_type[1])
+            sql.convert_column(
+                model.env.cr, model._table, self.name, self.column_type[1]
+            )
         else:
             newname = (self.name + "_moved{}").format
             i = 0
-            while sql.column_exists(model._cr, model._table, newname(i)):
+            while sql.column_exists(model.env.cr, model._table, newname(i)):
                 i += 1
             if column["is_nullable"] == "NO":
-                sql.drop_not_null(model._cr, model._table, self.name)
-            sql.rename_column(model._cr, model._table, self.name, newname(i))
+                sql.drop_not_null(model.env.cr, model._table, self.name)
+            sql.rename_column(model.env.cr, model._table, self.name, newname(i))
             sql.create_column(
-                model._cr, model._table, self.name, self.column_type[1], self.string
+                model.env.cr, model._table, self.name, self.column_type[1], self.string
             )
 
 

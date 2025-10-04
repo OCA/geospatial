@@ -1,10 +1,10 @@
 # Copyright 2023 ACSONE SA/NV
 
 import geojson
-from odoo_test_helper import FakeModelLoader
 from shapely import wkt
 from shapely.geometry import shape
 
+from odoo.orm.model_classes import add_to_registry
 from odoo.tests.common import TransactionCase
 
 from ..fields import GeoPoint
@@ -14,12 +14,24 @@ class TestModel(TransactionCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.loader = FakeModelLoader(cls.env, cls.__module__)
-        cls.loader.backup_registry()
-
         from .models import DummyZip, GeoModelTest, RetailMachine
 
-        cls.loader.update_registry((GeoModelTest, DummyZip, RetailMachine))
+        add_to_registry(cls.registry, GeoModelTest)
+        cls.registry._setup_models__(cls.env.cr, ["geo.model.test"])
+        cls.registry.init_models(
+            cls.env.cr, ["geo.model.test"], {"models_to_check": True}
+        )
+
+        add_to_registry(cls.registry, DummyZip)
+        cls.registry._setup_models__(cls.env.cr, ["dummy.zip"])
+        cls.registry.init_models(cls.env.cr, ["dummy.zip"], {"models_to_check": True})
+
+        add_to_registry(cls.registry, RetailMachine)
+        cls.registry._setup_models__(cls.env.cr, ["retail.machine"])
+        cls.registry.init_models(
+            cls.env.cr, ["retail.machine"], {"models_to_check": True}
+        )
+
         cls.geo_model = cls.env["geo.model.test"].create({})
         cls.env["dummy.zip"].create(
             {
@@ -145,7 +157,10 @@ class TestModel(TransactionCase):
 
     @classmethod
     def tearDownClass(cls):
-        cls.loader.restore_registry()
+        cls.addClassCleanup(cls.registry.__delitem__, "geo.model.test")
+        cls.addClassCleanup(cls.registry.__delitem__, "retail.machine")
+        cls.addClassCleanup(cls.registry.__delitem__, "dummy.zip")
+
         super().tearDownClass()
 
     def test_create_multipolygon_wkt_format(self):

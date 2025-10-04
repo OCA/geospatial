@@ -4,7 +4,6 @@
 
 import logging
 
-from odoo import _
 from odoo.exceptions import MissingError
 from odoo.tools import sql
 
@@ -41,7 +40,7 @@ def init_postgis(env):
         )
     except Exception as exc:
         raise MissingError(
-            _(
+            env._(
                 "Error, can not automatically initialize spatial postgis"
                 " support. Database user may have to be superuser and"
                 " postgres/postgis extensions with their devel header have"

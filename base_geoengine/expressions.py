@@ -1,18 +1,21 @@
 # Copyright 2023 ACSONE SA/NV
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
+import logging
 import random
 import string
 
+from odoo import fields
+from odoo.fields import Domain
 from odoo.models import BaseModel
-from odoo.osv import expression
-from odoo.osv.expression import TERM_OPERATORS
 from odoo.tools import SQL, Query
 
 from .fields import GeoField
 from .geo_operators import GeoOperator
 
-original___condition_to_sql = BaseModel._condition_to_sql
+logger = logging.getLogger(__name__)
+
+original___condition_to_sql = fields.Field._condition_to_sql
 
 GEO_OPERATORS = {
     "geo_greater": ">",
@@ -23,6 +26,7 @@ GEO_OPERATORS = {
     "geo_contains": "ST_Contains",
     "geo_intersect": "ST_Intersects",
 }
+
 GEO_SQL_OPERATORS = {
     "geo_greater": SQL(">"),
     "geo_lesser": SQL("<"),
@@ -32,23 +36,23 @@ GEO_SQL_OPERATORS = {
     "geo_contains": SQL("ST_Contains"),
     "geo_intersect": SQL("ST_Intersects"),
 }
-term_operators_list = list(TERM_OPERATORS)
-for op in GEO_OPERATORS:
-    term_operators_list.append(op)
-
-expression.TERM_OPERATORS = tuple(term_operators_list)
-expression.SQL_OPERATORS.update(GEO_SQL_OPERATORS)
 
 
 def _condition_to_sql(
-    self, alias: str, fname: str, operator: str, value, query: Query
+    self,
+    field_expr: str,
+    operator: str,
+    value,
+    model: BaseModel,
+    alias: str,
+    query: Query,
 ) -> SQL:
     """
     This method has been monkey patched in order to be able to include
     geo_operators into the Odoo search method.
     """
     if operator in GEO_OPERATORS.keys():
-        current_field = self._fields.get(fname)
+        current_field = model._fields.get(field_expr)
         current_operator = GeoOperator(current_field)
         if current_field and isinstance(current_field, GeoField):
             params = []
@@ -59,9 +63,9 @@ def _condition_to_sql(
                 sub_queries = []
                 for key in ref_search:
                     i = key.rfind(".")
-                    rel_model = key[0:i]
+                    rel_model_name = key[0:i]
                     rel_col = key[i + 1 :]
-                    rel_model = self.env[rel_model]
+                    rel_model = model.env[rel_model_name]
                     # we compute the attributes search on spatial rel
                     if ref_search[key]:
                         rel_alias = (
@@ -75,40 +79,50 @@ def _condition_to_sql(
                             active_test=True,
                             alias=rel_alias,
                         )
-                        self._apply_ir_rules(rel_query, "read")
+                        model._check_field_access(current_field, "read")
                         if operator == "geo_equal":
                             rel_query.add_where(
-                                f'"{alias}"."{fname}" {GEO_OPERATORS[operator]} '
+                                f'"{alias}"."{field_expr}" {GEO_OPERATORS[operator]} '
                                 f"{rel_alias}.{rel_col}"
                             )
                         elif operator in ("geo_greater", "geo_lesser"):
                             rel_query.add_where(
-                                f"ST_Area({alias}.{fname}) {GEO_OPERATORS[operator]} "
+                                f"ST_Area({alias}.{field_expr}) "
+                                f"{GEO_OPERATORS[operator]} "
                                 f"ST_Area({rel_alias}.{rel_col})"
                             )
                         else:
                             rel_query.add_where(
-                                f'{GEO_OPERATORS[operator]}("{alias}"."{fname}", '
+                                f'{GEO_OPERATORS[operator]}("{alias}"."{field_expr}", '
                                 f"{rel_alias}.{rel_col})"
                             )
 
-                        subquery, subparams = rel_query.subselect("1")
+                        subquery_sql = rel_query.subselect("1")
                         sub_query_mogrified = (
-                            self.env.cr.mogrify(subquery, subparams)
+                            model.env.cr.mogrify(subquery_sql.code, subquery_sql.params)
                             .decode("utf-8")
                             .replace(f"'{rel_model._table}'", f'"{rel_model._table}"')
                             .replace("%", "%%")
                         )
                         sub_queries.append(f"EXISTS({sub_query_mogrified})")
-                query = " AND ".join(sub_queries)
+                query_str = " AND ".join(sub_queries)
             else:
-                query = get_geo_func(
-                    current_operator, operator, fname, value, params, self._table
+                query_str = get_geo_func(
+                    current_operator, operator, field_expr, value, params, model._table
                 )
-            return SQL(query, *params)
+            return SQL(query_str, *params)
     return original___condition_to_sql(
-        self, alias=alias, fname=fname, operator=operator, value=value, query=query
+        self,
+        field_expr=field_expr,
+        operator=operator,
+        value=value,
+        model=model,
+        alias=alias,
+        query=query,
     )
+
+
+fields.Field._condition_to_sql = _condition_to_sql
 
 
 def get_geo_func(current_operator, operator, left, value, params, table):
@@ -149,8 +163,12 @@ def where_calc(model, domain, active_test=True, alias=None):
 
     query = Query(model.env, alias, model._table)
     if domain:
-        return expression.expression(domain, model, alias=alias, query=query).query
+        # In Odoo 19, create Domain object and use its _to_sql method
+        domain_obj = Domain(domain)
+        optimized_domain = domain_obj.optimize_full(model)
+        sql_condition = optimized_domain._to_sql(model, alias, query)
+        query.add_where(sql_condition)
+
+        return query
+
     return query
-
-
-BaseModel._condition_to_sql = _condition_to_sql

@@ -985,7 +985,7 @@ export class GeoengineRenderer extends Component {
             openGroupsByDefault: true,
             domain: [],
             orderBy: [],
-            groupBy: {},
+            groupBy: [],
             resModel: model,
             fields: fields,
         };
