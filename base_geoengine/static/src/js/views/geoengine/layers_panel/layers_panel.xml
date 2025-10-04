@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="base_geoengine.LayersPanel">
+        <div
+            class="menu border-end"
+            t-attf-class="{{ state.isFolded ? 'o_layer_panel_fold ' : 'o_layer_panel bg-view' }}"
+        >
+            <div
+                class="w-100 d-flex"
+                t-attf-class="{{ state.isFolded ? 'justify-content-center' : 'justify-content-end'}}"
+            >
+                <button
+                    class="btn"
+                    t-attf-class="{{state.isFolded ? 'unfold text-900': 'fold'}}"
+                    t-on-click="fold"
+                >
+                    <i class="fa fa-arrows-h" role="img" />
+                </button>
+            </div>
+            <div t-if="!state.isFolded">
+                <section class="o_search_panel_section">
+                    <header
+                        class="o_search_panel_section_header text-uppercase cursor-default"
+                    >
+                        <span class="fs-6 fw-bold">Vectors</span>
+                    </header>
+                    <div t-ref="root" class="root">
+                        <ul class="list p-0">
+                            <li
+                                t-foreach="state.geoengineLayers.actives"
+                                t-as="vector"
+                                t-key="vector.resId"
+                                class="item d-flex align-items-center"
+                                t-att-data-id="vector.id"
+                            >
+                                <i class="fa fa-sort m-3" />
+                                <div
+                                    class="d-flex justify-content-between align-items-center"
+                                >
+                                    <CheckBox
+                                        value="vector.isVisible"
+                                        t-on-change="() => this.onVectorChange(vector, 'onVisibleChanged', !vector.isVisible)"
+                                    >
+                                        <t t-esc="vector.name" />
+                                    </CheckBox>
+                                    <button
+                                        t-if="vector.model_id !== false"
+                                        class="btn btn-edit"
+                                        t-on-click.prevent="() => this.onEditFilterButtonSelected(vector)"
+                                    >
+                                        <i class="fa fa-filter text-primary" />
+                                    </button>
+                                    <button
+                                        t-if="isGeoengineAdmin"
+                                        class="btn btn-edit"
+                                        t-on-click.prevent="() => this.onEditButtonSelected(vector)"
+                                    >
+                                        <i class="fa fa-edit text-primary" />
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <section class="o_search_panel_section">
+                    <header
+                        class="o_search_panel_section_header pt-4 pb-2 text-uppercase cursor-default"
+                    >
+                        <span class="fs-6 fw-bold">Rasters</span>
+
+                        <button
+                            t-if="isGeoengineAdmin"
+                            class="btn btn-edit"
+                            t-on-click="openNewRaster"
+                        >
+                            <i class="fa fa-plus text-primary" />
+                        </button>
+                    </header>
+                    <ul class="raster list-group d-block o_search_panel_field">
+                        <li
+                            t-foreach="state.geoengineLayers.backgrounds"
+                            t-as="layer"
+                            t-key="layer.id"
+                        >
+                            <div class="form-check o_radio_item" aria-atomic="true">
+                                <input
+                                    type="radio"
+                                    t-att-checked="layer.isVisible"
+                                    class="form-check-input o_radio_input"
+                                    t-att-id="layer.name"
+                                    name="raster"
+                                    t-att-value="layer.id"
+                                    t-on-change="() => this.onRasterChange(layer)"
+                                />
+                                <label
+                                    class="form-check-label o_form_label"
+                                    t-att-for="layer.name"
+                                    t-esc="layer.name"
+                                />
+                                <button
+                                    t-if="isGeoengineAdmin"
+                                    class="btn btn-edit"
+                                    t-on-click.prevent="() => this.onEditRasterButtonSelected(layer)"
+                                >
+                                    <i class="fa fa-edit text-primary" />
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+            <div t-else="" class="d-flex justify-content-center text-900">
+                <span class="title-panel">Layers (<t t-esc="numberOfLayers" />)</span>
+            </div>
+        </div>
+    </t>
+</templates>
