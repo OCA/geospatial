@@ -14,7 +14,7 @@ export class MapRenderer extends Component {
      * Initializes the MapRenderer component, setting up services, references, and configuration.
      */
     setup() {
-        console.log(this.props)
+        console.log(this.props);
         this.orm = useService("orm");
         this.action = useService("action");
         this.mapRef = useRef("mapContainer");
@@ -291,19 +291,17 @@ export class MapController extends Component {
 MapController.template = "web_view_leaflet_map.MapView";
 MapController.components = {Layout, MapRenderer};
 
-
 /**
  * Helper function that normalize the architecture input to ensure it is an HTMLElement.
  * @param arch
  * @returns {HTMLElement|*}
  */
 function normalizeArch(arch) {
-    if (arch && typeof arch !== "string") return arch; // ya es Element
+    if (arch && typeof arch !== "string") return arch;
     const xml = String(arch || "");
     const doc = new DOMParser().parseFromString(xml, "text/xml");
     return doc.documentElement;
 }
-
 
 /**
  * Definition of the map view for Odoo, including its properties and components.
