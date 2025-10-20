@@ -21,7 +21,6 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="partner_longitude">-79.33115</field>
     </record>
 
-
     <record id="base.res_partner_3" model="res.partner">
         <!-- Gemini Furniture
             1128 Lunetta Street Tampa Florida, 33634
@@ -69,5 +68,4 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
         <field name="partner_latitude">41.40869</field>
         <field name="partner_longitude">-75.66213</field>
     </record>
-
 </odoo>
