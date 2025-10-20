@@ -9,8 +9,7 @@
                 field_title="display_name"
                 field_address="display_address"
                 field_marker_icon_image="avatar_128"
-            >
-            </leaflet_map>
+            />
         </field>
     </record>
 
@@ -24,5 +23,4 @@
         <field name="view_id" ref="view_res_partner_map" />
         <field name="act_window_id" ref="contacts.action_contacts" />
     </record>
-
 </odoo>
