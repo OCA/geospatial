@@ -48,7 +48,7 @@ Map options :
 **Library Update**
 
 For the time being, the module embed the lealflet.js library version
-1.8.0 ( released on April 18, 2022.)
+1.9.4 ( released on May 18, 2023.)
 
 If a new release is out:
 

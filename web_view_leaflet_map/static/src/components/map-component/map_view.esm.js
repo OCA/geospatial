@@ -1,11 +1,9 @@
-/** @odoo-module */
-
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 import {Layout} from "@web/search/layout";
 import {session} from "@web/session";
 
-/* global L */
+/* global L, console, document, DOMParser */
 
 const {Component, useSubEnv, onWillStart, onMounted, onPatched, useRef} = owl;
 
