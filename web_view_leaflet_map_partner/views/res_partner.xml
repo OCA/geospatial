@@ -14,7 +14,7 @@
     </record>
 
     <record id="contacts.action_contacts" model="ir.actions.act_window">
-        <field name="view_mode">kanban,tree,form,activity,leaflet_map</field>
+        <field name="view_mode">kanban,list,form,activity,leaflet_map</field>
     </record>
 
     <record id="action_contacts_view_map" model="ir.actions.act_window.view">
