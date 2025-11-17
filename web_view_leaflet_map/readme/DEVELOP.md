@@ -45,19 +45,6 @@ Map options :
 </record>
 ```
 
-**Library Update**
-
-For the time being, the module embed the lealflet.js library version
-1.9.4 ( released on May 18, 2023.)
-
-If a new release is out:
-
-- please download it here <https://leafletjs.com/download.html>
-- update the javascript, css and images, present in the folder
-  `static/lib/leaflet`
-- test the features
-- make a Pull Request
-
 **Default position in the map**
 
 By default, the position of the map is defined by the user, in the
