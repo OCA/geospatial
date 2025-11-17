@@ -27,3 +27,16 @@ non-profit body and cannot supply tiles for large-scale commercial use.
   <https://switch2osm.org/providers/>
 - You can also install yourself your own tiles servers. See
   documentation : <https://switch2osm.org/serving-tiles/>
+
+**Library Update**
+
+For the time being, the module embed the lealflet.js library version
+1.9.4 ( released on May 18, 2023.)
+
+If a new release is out:
+
+- please download it here <https://leafletjs.com/download.html>
+- update the javascript, css and images, present in the folder
+  `static/lib/leaflet`
+- test the features
+- make a Pull Request
