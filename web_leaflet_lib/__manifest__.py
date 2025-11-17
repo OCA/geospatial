@@ -5,7 +5,7 @@
 {
     "name": "Leaflet Javascript Library",
     "summary": "Bring leaflet.js librairy in odoo.",
-    "version": "18.0.1.0.1",
+    "version": "18.0.1.0.2",
     "author": "GRAP, Odoo Community Association (OCA)",
     "maintainers": ["legalsylvain"],
     "website": "https://github.com/OCA/geospatial",
