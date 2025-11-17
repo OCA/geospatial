@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -25,13 +25,6 @@ msgid "Leaflet Map"
 msgstr ""
 
 #. module: web_view_leaflet_map
-#. odoo-javascript
-#: code:addons/web_view_leaflet_map/static/src/js/view/map/map_view.js:0
-#, python-format
-msgid "Map"
-msgstr ""
-
-#. module: web_view_leaflet_map
 #: model:ir.model,name:web_view_leaflet_map.model_res_users
 msgid "User"
 msgstr ""
@@ -44,6 +37,5 @@ msgstr ""
 #. module: web_view_leaflet_map
 #: model:ir.model.fields,field_description:web_view_leaflet_map.field_ir_actions_act_window_view__view_mode
 #: model:ir.model.fields,field_description:web_view_leaflet_map.field_ir_ui_view__type
-#: model:ir.model.fields,field_description:web_view_leaflet_map.field_website_page__type
 msgid "View Type"
 msgstr ""
