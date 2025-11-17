@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==========================
 Leaflet Javascript Library
 ==========================
@@ -17,7 +13,7 @@ Leaflet Javascript Library
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github
@@ -61,6 +57,19 @@ non-profit body and cannot supply tiles for large-scale commercial use.
   https://switch2osm.org/providers/
 - You can also install yourself your own tiles servers. See
   documentation : https://switch2osm.org/serving-tiles/
+
+**Library Update**
+
+For the time being, the module embed the lealflet.js library version
+1.9.4 ( released on May 18, 2023.)
+
+If a new release is out:
+
+- please download it here https://leafletjs.com/download.html
+- update the javascript, css and images, present in the folder
+  ``static/lib/leaflet``
+- test the features
+- make a Pull Request
 
 **Table of contents**
 
