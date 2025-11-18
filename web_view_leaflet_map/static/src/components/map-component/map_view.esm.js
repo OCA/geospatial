@@ -161,8 +161,10 @@ export class MapRenderer extends Component {
                 marker.addTo(this.leafletFeatureGroup);
             }
         }
-
-        this.leafletMap.fitBounds(this.leafletFeatureGroup.getBounds().pad(0.1));
+        const bounds = this.leafletFeatureGroup.getBounds();
+        if (bounds.isValid()) {
+            this.leafletMap.fitBounds(bounds.pad(0.1));
+        }
     }
 
     /**
