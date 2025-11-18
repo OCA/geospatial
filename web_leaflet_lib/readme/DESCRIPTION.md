@@ -5,7 +5,10 @@ This module is used by `web_view_leaflet_map`.
 **Important Note**
 
 The javascript library is opensource and distributed under BSD 2
-Licence. See : <https://github.com/Leaflet/Leaflet/blob/main/LICENSE>
+Licence. See : <https://github.com/Leaflet/Leaflet/blob/main/LICENSE>.
+The plugin library is opensource and distributed under MIT
+Licence. See : <https://github.com/Leaflet/Leaflet.markercluster/blob/master/MIT-LICENCE.txt>.
+
 You can so use it freely.
 
 However, display maps requires to display layers provided by tiles
@@ -38,5 +41,6 @@ If a new release is out:
 - please download it here <https://leafletjs.com/download.html>
 - update the javascript, css and images, present in the folder
   `static/lib/leaflet`
+- update the plugins
 - test the features
 - make a Pull Request

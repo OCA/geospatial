@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ==========================
 Leaflet Javascript Library
 ==========================
@@ -17,7 +13,7 @@ Leaflet Javascript Library
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github
@@ -39,8 +35,11 @@ This module is used by ``web_view_leaflet_map``.
 **Important Note**
 
 The javascript library is opensource and distributed under BSD 2
-Licence. See : https://github.com/Leaflet/Leaflet/blob/main/LICENSE You
-can so use it freely.
+Licence. See : https://github.com/Leaflet/Leaflet/blob/main/LICENSE. The
+plugin library is opensource and distributed under MIT Licence. See :
+https://github.com/Leaflet/Leaflet.markercluster/blob/master/MIT-LICENCE.txt.
+
+You can so use it freely.
 
 However, display maps requires to display layers provided by tiles
 servers, that requires ressources.
@@ -72,6 +71,7 @@ If a new release is out:
 - please download it here https://leafletjs.com/download.html
 - update the javascript, css and images, present in the folder
   ``static/lib/leaflet``
+- update the plugins
 - test the features
 - make a Pull Request
 
@@ -114,7 +114,11 @@ Contributors
 Other credits
 -------------
 
-The module embed the Leaflet.js library.
+The module embed:
+
+- the Leaflet.js library. (https://github.com/Leaflet/Leaflet)
+- the markercluster plugin.
+  (https://github.com/Leaflet/Leaflet.markercluster)
 
 Maintainers
 -----------

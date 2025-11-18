@@ -15,8 +15,8 @@
     "data": ["data/ir_config_parameter.xml"],
     "assets": {
         "web.assets_backend": [
-            "/web_leaflet_lib/static/lib/leaflet/leaflet.css",
-            "/web_leaflet_lib/static/lib/leaflet/leaflet.js",
+            "/web_leaflet_lib/static/lib/leaflet/*",
+            "/web_leaflet_lib/static/lib/leaflet_markercluster/*",
         ],
     },
     "installable": True,

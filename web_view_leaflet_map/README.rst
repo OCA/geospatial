@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ================================
 Leaflet Map View (OpenStreetMap)
 ================================
@@ -17,7 +13,7 @@ Leaflet Map View (OpenStreetMap)
 .. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
     :alt: Alpha
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github
@@ -43,12 +39,20 @@ displays your contact in a map, if latitude and longitude are defined.
 (To define latitude and longitude, refer to the Odoo module
 ``base_geolocalize``)
 
+A marker will be displayed for each item that has a localization.
+
 |image1|
+
+If user zooms out, the markers will overlap, which won't be very
+visible.
+
+In that case, nearby markers are grouped together, thanks to
+``Leaflet.markercluster`` plugin.
 
 |image2|
 
-.. |image1| image:: https://raw.githubusercontent.com/OCA/geospatial/18.0/web_view_leaflet_map/static/description/view_res_partner_map_1.png
-.. |image2| image:: https://raw.githubusercontent.com/OCA/geospatial/18.0/web_view_leaflet_map/static/description/view_res_partner_map_2.png
+.. |image1| image:: https://raw.githubusercontent.com/OCA/geospatial/18.0/web_view_leaflet_map/static/description/view_res_partner_map_precise.png
+.. |image2| image:: https://raw.githubusercontent.com/OCA/geospatial/18.0/web_view_leaflet_map/static/description/view_res_partner_map_large.png
 
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.

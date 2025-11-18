@@ -8,6 +8,16 @@ in the same OCA repository that displays your contact in a map, if
 latitude and longitude are defined. (To define latitude and longitude,
 refer to the Odoo module `base_geolocalize`)
 
-![](../static/description/view_res_partner_map_1.png)
+A marker will be displayed for each item that has a localization.
 
-![](../static/description/view_res_partner_map_2.png)
+![](../static/description/view_res_partner_map_precise.png)
+
+If user zooms out, the markers will overlap, which won't be very visible.
+
+In that case, nearby markers are grouped together, thanks to
+`Leaflet.markercluster` plugin.
+
+![](../static/description/view_res_partner_map_large.png)
+
+
+

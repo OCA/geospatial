@@ -40,7 +40,7 @@ export class MapRenderer extends Component {
             parseInt(archAttrs.marker_popup_anchor_y?.value, 10) || -32;
 
         this.leafletMap = null;
-        this.leafletFeatureGroup = null;
+        this.mainLayer = null;
 
         onWillStart(async () => {
             await this.initDefaultPosition();
@@ -149,22 +149,24 @@ export class MapRenderer extends Component {
             return;
         }
 
-        if (this.leafletFeatureGroup) {
-            this.leafletMap.removeLayer(this.leafletFeatureGroup);
+        if (this.mainLayer) {
+            this.leafletMap.removeLayer(this.mainLayer);
         }
 
-        this.leafletFeatureGroup = L.featureGroup().addTo(this.leafletMap);
-
+        this.mainLayer = L.markerClusterGroup();
         for (const record of this.records) {
             const marker = this.prepareMarker(record);
             if (marker) {
-                marker.addTo(this.leafletFeatureGroup);
+                this.mainLayer.addLayer(marker);
             }
         }
-        const bounds = this.leafletFeatureGroup.getBounds();
+        const bounds = this.mainLayer.getBounds();
         if (bounds.isValid()) {
+            // Adapt the map's position based on the map's points
             this.leafletMap.fitBounds(bounds.pad(0.1));
         }
+
+        this.leafletMap.addLayer(this.mainLayer);
     }
 
     /**
