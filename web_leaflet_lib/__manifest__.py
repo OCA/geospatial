@@ -13,7 +13,6 @@
     "category": "Extra Tools",
     "depends": ["base"],
     "data": ["data/ir_config_parameter.xml"],
-    "demo": ["demo/ir_config_parameter.xml"],
     "assets": {
         "web.assets_backend": [
             "/web_leaflet_lib/static/lib/leaflet/leaflet.css",
@@ -21,4 +20,5 @@
         ],
     },
     "installable": True,
+    "post_init_hook": "post_init_hook",
 }
