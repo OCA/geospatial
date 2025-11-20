@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ================================
 Leaflet Map View (OpenStreetMap)
 ================================
@@ -14,10 +10,10 @@ Leaflet Map View (OpenStreetMap)
    !! source digest: sha256:c37e50e22d31d4d0b0f78e0c83ab7bdd875299727d4b10e6183b66499a1fed47
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Alpha
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+    :alt: Beta
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github
@@ -57,11 +53,6 @@ In that case, nearby markers are grouped together, thanks to
 
 .. |image1| image:: https://raw.githubusercontent.com/OCA/geospatial/18.0/web_view_leaflet_map/static/description/view_res_partner_map_precise.png
 .. |image2| image:: https://raw.githubusercontent.com/OCA/geospatial/18.0/web_view_leaflet_map/static/description/view_res_partner_map_large.png
-
-.. IMPORTANT::
-   This is an alpha version, the data model and design can change at any time without warning.
-   Only for development or testing purpose, do not use in production.
-   `More details on development status <https://odoo-community.org/page/development-status>`_
 
 **Table of contents**
 

@@ -1,8 +1,7 @@
 {
     "name": "Leaflet Map View for Partners (OpenStreetMap)",
-    "summary": "TODO",
+    "summary": "Add a leaflet map view for partners model",
     "version": "18.0.1.0.0",
-    "development_status": "Alpha",
     "author": "GRAP, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/geospatial",
     "license": "AGPL-3",
