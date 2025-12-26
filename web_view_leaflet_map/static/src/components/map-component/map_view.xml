@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_view_leaflet_map.MapView" owl="1">
+        <Layout display="props.display" className="'h-100'">
+            <t t-set-slot="control-panel-bottom-right">
+                <div />
+            </t>
+            <MapRenderer t-props="props" />
+        </Layout>
+    </t>
+
+    <t t-name="web_view_leaflet_map.MapRenderer" owl="1">
+        <div class="o_leaflet_main_container h-100">
+            <div t-ref="mapContainer" class="o_leaflet_map_container h-100" />
+        </div>
+    </t>
+
+</templates>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Enhanced Map View for Partners with Rich Popup -->
+    <record id="view_res_partner_map" model="ir.ui.view">
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <leaflet_map
+                field_latitude="partner_latitude"
+                field_longitude="partner_longitude"
+                field_title="display_name"
+                field_address="map_popup_info"
+                field_marker_icon_image="avatar_128"
+                marker_icon_size_x="48"
+                marker_icon_size_y="48"
+                marker_popup_anchor_x="0"
+                marker_popup_anchor_y="-24"
+                default_zoom="10"
+            />
+        </field>
+    </record>
+
+    <!-- Add map view to contacts action -->
+    <record id="contacts.action_contacts" model="ir.actions.act_window">
+        <field name="view_mode">kanban,list,form,activity,leaflet_map</field>
+    </record>
+
+    <record id="action_contacts_view_map" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3" />
+        <field name="view_mode">leaflet_map</field>
+        <field name="view_id" ref="view_res_partner_map" />
+        <field name="act_window_id" ref="contacts.action_contacts" />
+    </record>
+</odoo>
