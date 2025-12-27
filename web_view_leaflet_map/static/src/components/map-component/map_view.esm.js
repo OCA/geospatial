@@ -341,7 +341,6 @@ export class MapRenderer extends Component {
             res_model: this.resModel,
             res_id: record.id,
             views: [[false, "form"]],
-            target: "current",
         });
     }
 }
