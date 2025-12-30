@@ -1,8 +1,8 @@
+/* global L */
+
 import {registry} from "@web/core/registry";
 import {useService} from "@web/core/utils/hooks";
 import {Layout} from "@web/search/layout";
-
-/* global L, document, DOMParser */
 
 const {Component, useSubEnv, onWillStart, onMounted, onPatched, useRef} = owl;
 
@@ -11,12 +11,32 @@ export class MapRenderer extends Component {
      * Initializes the MapRenderer component, setting up services, references, and configuration.
      */
     setup() {
+        this.initializeServices();
+        this.initializeReferences();
+        this.initializeConfiguration();
+        this.initializeState();
+        this.setupLifecycleHooks();
+    }
+
+    /**
+     * Initializes ORM and action services.
+     */
+    initializeServices() {
         this.orm = useService("orm");
         this.action = useService("action");
-        this.mapRef = useRef("mapContainer");
-        this.leafletTileUrl = "";
-        this.leafletCopyright = "";
+    }
 
+    /**
+     * Initializes component references.
+     */
+    initializeReferences() {
+        this.mapRef = useRef("mapContainer");
+    }
+
+    /**
+     * Initializes configuration from architecture attributes.
+     */
+    initializeConfiguration() {
         const archAttrs = this.props.archInfo.arch.attributes;
 
         this.resModel = this.props.resModel;
@@ -36,10 +56,22 @@ export class MapRenderer extends Component {
             parseInt(archAttrs.marker_popup_anchor_x?.value, 10) || 0;
         this.markerPopupAnchorY =
             parseInt(archAttrs.marker_popup_anchor_y?.value, 10) || -32;
+    }
 
+    /**
+     * Initializes state properties.
+     */
+    initializeState() {
+        this.leafletTileUrl = "";
+        this.leafletCopyright = "";
         this.leafletMap = null;
         this.mainLayer = null;
+    }
 
+    /**
+     * Sets up lifecycle hooks for component initialization and updates.
+     */
+    setupLifecycleHooks() {
         onWillStart(async () => {
             await this.loadLeafletConfig();
             await this.initDefaultPosition();
