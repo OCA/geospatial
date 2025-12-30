@@ -234,7 +234,7 @@ export class MapRenderer extends Component {
                 if (selector) {
                     selector.addEventListener("click", (ev) => {
                         // Check if click was on a link or inside a link
-                       const clickedLink = ev.target.closest("a");
+                        const clickedLink = ev.target.closest("a");
                         if (clickedLink) {
                             // Let the link work normally (open in new tab, mailto, tel, etc.)
                             ev.stopPropagation();
@@ -299,7 +299,7 @@ export class MapRenderer extends Component {
         const address = record[this.fieldAddress] || "";
 
         // Check if address contains HTML (starts with < or contains common HTML tags)
-       const isHtmlContent =
+        const isHtmlContent =
             address &&
             (address.trim().startsWith("<") ||
                 /<(div|span|a|br|p|i|b|strong|em|ul|li|img)\b/i.test(address));
