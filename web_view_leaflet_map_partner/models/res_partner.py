@@ -1,8 +1,7 @@
 # Copyright (C) 2019, Open Source Integrators
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
-from odoo import api, fields, models
 from markupsafe import Markup
-
+from odoo import api, fields, models
 
 class ResPartner(models.Model):
     _inherit = "res.partner"
@@ -38,7 +37,7 @@ class ResPartner(models.Model):
                 labels.append("🏢 Company")
             else:
                 labels.append("👤 Individual")
-            # customer_rank and supplier_rank are from sale module - use getattr for safety
+            # customer_rank and supplier_rank are from sale module
             if getattr(partner, "customer_rank", 0) > 0:
                 labels.append("🛒 Customer")
             if getattr(partner, "supplier_rank", 0) > 0:
@@ -69,7 +68,7 @@ class ResPartner(models.Model):
                 badges.append('<span class="badge bg-primary me-1">Company</span>')
             else:
                 badges.append('<span class="badge bg-secondary me-1">Individual</span>')
-            # customer_rank and supplier_rank are from sale module - use getattr for safety
+            # customer_rank and supplier_rank are from sale module
             if getattr(partner, "customer_rank", 0) > 0:
                 badges.append('<span class="badge bg-success me-1">Customer</span>')
             if getattr(partner, "supplier_rank", 0) > 0:
@@ -91,7 +90,7 @@ class ResPartner(models.Model):
             # Address
             if partner.display_address:
                 html_parts.append(
-                    f'<div class="mb-2"><i class="fa fa-map-marker text-danger"></i> '
+                    f'<div class="mb-2"><i class="fa fa-map-marker text-danger"></i>'
                     f"{partner.display_address}</div>"
                 )
 
