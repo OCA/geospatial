@@ -164,7 +164,7 @@ export class MapRenderer extends Component {
         // Prevent wheel events from propagating to the page
         mapDiv.addEventListener(
             "wheel",
-            (e) => {
+            function (e) {
                 e.preventDefault();
                 e.stopPropagation();
             },
@@ -172,11 +172,11 @@ export class MapRenderer extends Component {
         );
 
         // Also handle when mouse enters/leaves the map
-        mapDiv.addEventListener("mouseenter", () => {
+        mapDiv.addEventListener("mouseenter", function () {
             document.body.style.overflow = "hidden";
-         });
+        });
 
-        mapDiv.addEventListener("mouseleave", () => {
+        mapDiv.addEventListener("mouseleave", function () {
             document.body.style.overflow = "";
         });
     }
