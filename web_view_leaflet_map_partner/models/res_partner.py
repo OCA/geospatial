@@ -136,7 +136,7 @@ class ResPartner(models.Model):
                 html_parts.append(
                     f'<div class="mb-2 text-muted small">'
                     f'<i class="fa fa-user"></i> Salesperson: '
-                    f'{partner.user_id.name}</div>'
+                    f"{partner.user_id.name}</div>"
                 )
 
             # Total invoiced (if customer and account module installed)
