@@ -162,22 +162,22 @@ export class MapRenderer extends Component {
      */
     setupScrollPrevention(mapDiv) {
         // Prevent wheel events from propagating to the page
-+        mapDiv.addEventListener(
-+            "wheel",
-+            (e) => {
-+                e.preventDefault();
-+                e.stopPropagation();
-+            },
-+            {passive: false}
-+        );
+        mapDiv.addEventListener(
+            "wheel",
+            (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+            },
+            {passive: false}
+        );
 
         // Also handle when mouse enters/leaves the map
-+        mapDiv.addEventListener("mouseenter", () => {
-+            document.body.style.overflow = "hidden";
+        mapDiv.addEventListener("mouseenter", () => {
+            document.body.style.overflow = "hidden";
          });
 
-+        mapDiv.addEventListener("mouseleave", () => {
-+            document.body.style.overflow = "";
+        mapDiv.addEventListener("mouseleave", () => {
+            document.body.style.overflow = "";
         });
     }
 
@@ -234,7 +234,7 @@ export class MapRenderer extends Component {
                 if (selector) {
                     selector.addEventListener("click", (ev) => {
                         // Check if click was on a link or inside a link
-+                       const clickedLink = ev.target.closest("a");
+                       const clickedLink = ev.target.closest("a");
                         if (clickedLink) {
                             // Let the link work normally (open in new tab, mailto, tel, etc.)
                             ev.stopPropagation();
@@ -299,10 +299,10 @@ export class MapRenderer extends Component {
         const address = record[this.fieldAddress] || "";
 
         // Check if address contains HTML (starts with < or contains common HTML tags)
-+       const isHtmlContent =
-+            address &&
-+            (address.trim().startsWith("<") ||
-+                /<(div|span|a|br|p|i|b|strong|em|ul|li|img)\b/i.test(address));
+       const isHtmlContent =
+            address &&
+            (address.trim().startsWith("<") ||
+                /<(div|span|a|br|p|i|b|strong|em|ul|li|img)\b/i.test(address));
 
         if (isHtmlContent) {
             // Render HTML content directly (for rich popup info)
