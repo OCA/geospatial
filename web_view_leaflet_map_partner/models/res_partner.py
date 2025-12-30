@@ -121,7 +121,8 @@ class ResPartner(models.Model):
                     else f"https://{partner.website}"
                 )
                 contact_parts.append(
-                    f'<a href="{website_url}" target="_blank" class="text-decoration-none">'
+                    f'<a href="{website_url}" target="_blank" '
+                    f'class="text-decoration-none">'
                     f'<i class="fa fa-globe text-info"></i> Website</a>'
                 )
 
@@ -134,7 +135,8 @@ class ResPartner(models.Model):
             if partner.user_id:
                 html_parts.append(
                     f'<div class="mb-2 text-muted small">'
-                    f'<i class="fa fa-user"></i> Salesperson: {partner.user_id.name}</div>'
+                    f'<i class="fa fa-user"></i> Salesperson: '
+                    f'{partner.user_id.name}</div>'
                 )
 
             # Total invoiced (if customer and account module installed)
