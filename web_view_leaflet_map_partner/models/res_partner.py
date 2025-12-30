@@ -29,7 +29,7 @@ class ResPartner(models.Model):
                 parts.append(f"✉️ {partner.email}")
             partner.contact_summary = " | ".join(parts) if parts else ""
 
-    @api.depends('is_company', 'customer_rank', 'supplier_rank', 'category_id')
+    @api.depends('is_company', 'category_id')
     def _compute_partner_type_label(self):
         """Compute partner type label for display"""
         for partner in self:
@@ -38,17 +38,17 @@ class ResPartner(models.Model):
                 labels.append("🏢 Company")
             else:
                 labels.append("👤 Individual")
-            if partner.customer_rank > 0:
+            # customer_rank and supplier_rank are from sale module - use getattr for safety
+            if getattr(partner, 'customer_rank', 0) > 0:
                 labels.append("🛒 Customer")
-            if partner.supplier_rank > 0:
+            if getattr(partner, 'supplier_rank', 0) > 0:
                 labels.append("📦 Vendor")
             partner.partner_type_label = " | ".join(labels)
 
     @api.depends(
         'display_name', 'display_address', 'phone', 'email',
-        'website', 'is_company', 'customer_rank', 'supplier_rank',
-        'category_id', 'partner_latitude', 'partner_longitude',
-        'user_id'
+        'website', 'is_company', 'category_id',
+        'partner_latitude', 'partner_longitude', 'user_id'
     )
     def _compute_map_popup_info(self):
         """Compute rich HTML content for map popup"""
@@ -62,9 +62,10 @@ class ResPartner(models.Model):
                 badges.append('<span class="badge bg-primary me-1">Company</span>')
             else:
                 badges.append('<span class="badge bg-secondary me-1">Individual</span>')
-            if partner.customer_rank > 0:
+            # customer_rank and supplier_rank are from sale module - use getattr for safety
+            if getattr(partner, 'customer_rank', 0) > 0:
                 badges.append('<span class="badge bg-success me-1">Customer</span>')
-            if partner.supplier_rank > 0:
+            if getattr(partner, 'supplier_rank', 0) > 0:
                 badges.append('<span class="badge bg-warning me-1">Vendor</span>')
 
             if badges:
@@ -124,7 +125,7 @@ class ResPartner(models.Model):
 
             # Total invoiced (if customer and account module installed)
             total_invoiced = getattr(partner, 'total_invoiced', 0)
-            if partner.customer_rank > 0 and total_invoiced:
+            if getattr(partner, 'customer_rank', 0) > 0 and total_invoiced:
                 currency = getattr(partner, 'currency_id', None) or partner.env.company.currency_id
                 html_parts.append(
                     f'<div class="mb-2 text-muted small">'

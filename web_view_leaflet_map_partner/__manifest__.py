@@ -26,7 +26,7 @@ This module adds an interactive Leaflet map view for partners (contacts) with:
 The map view is accessible from the Contacts menu.
     """,
     "version": "19.0.1.1.0",
-    "author": "GRAP, Odoo Community Association (OCA), OSOOL",
+    "author": "GRAP, Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/geospatial",
     "license": "AGPL-3",
     "category": "Extra Tools",
