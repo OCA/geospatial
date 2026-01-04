@@ -1,18 +1,19 @@
-import {registry} from "@web/core/registry";
-import {useService} from "@web/core/utils/hooks";
-import {Layout} from "@web/search/layout";
 import {session} from "@web/session";
+import {useService} from "@web/core/utils/hooks";
 
-/* global L, console, document, DOMParser */
+/* global L, console, document */
 
-const {Component, useSubEnv, onWillStart, onMounted, onPatched, useRef} = owl;
+const {Component, onWillStart, onMounted, onPatched, useRef} = owl;
 
 export class MapRenderer extends Component {
+    static template = "web_view_leaflet_map.MapRenderer";
+    static components = {};
+
     /**
      * Initializes the MapRenderer component, setting up services, references, and configuration.
      */
+    // eslint-disable-next-line complexity
     setup() {
-        console.log(this.props);
         this.orm = useService("orm");
         this.action = useService("action");
         this.mapRef = useRef("mapContainer");
@@ -53,7 +54,6 @@ export class MapRenderer extends Component {
         });
 
         onPatched(() => {
-            console.log("onPatched");
             if (this.leafletMap) {
                 this.renderMarkers();
             }
@@ -179,7 +179,7 @@ export class MapRenderer extends Component {
         const lng = record[this.fieldLongitude];
         let marker = null;
         if (!lat || !lng) {
-            console.log(`Record ${record.id} has no coordinates`);
+            console.debug(`Record ${record.id} has no coordinates`);
             return;
         }
 
@@ -273,61 +273,3 @@ export class MapRenderer extends Component {
         });
     }
 }
-
-MapRenderer.template = "web_view_leaflet_map.MapRenderer";
-MapRenderer.components = {};
-
-/**
- * Controller class for the Map view, setting up the environment configuration.
- */
-export class MapController extends Component {
-    setup() {
-        useSubEnv({
-            config: {
-                ...this.env.config,
-            },
-        });
-    }
-}
-
-MapController.template = "web_view_leaflet_map.MapView";
-MapController.components = {Layout, MapRenderer};
-
-/**
- * Helper function that normalize the architecture input to ensure it is an HTMLElement.
- * @param arch
- * @returns {HTMLElement|*}
- */
-function normalizeArch(arch) {
-    if (arch && typeof arch !== "string") return arch;
-    const xml = String(arch || "");
-    const doc = new DOMParser().parseFromString(xml, "text/xml");
-    return doc.documentElement;
-}
-
-/**
- * Definition of the map view for Odoo, including its properties and components.
- * @type {{searchMenuTypes: string[], icon: string, Renderer: MapRenderer, multiRecord: boolean, type: string, display_name: string, Controller: MapController, props: (function(*, *): *&{archInfo: {arch: *}, Renderer: MapRenderer})}}
- */
-export const mapView = {
-    type: "leaflet_map",
-    display_name: "Map",
-    icon: "fa fa-map-o",
-    multiRecord: true,
-    Controller: MapController,
-    Renderer: MapRenderer,
-    searchMenuTypes: ["filter", "favorite"],
-
-    props: (genericProps) => {
-        const archEl = normalizeArch(genericProps.arch);
-        return {
-            ...genericProps,
-            Renderer: MapRenderer,
-            archInfo: {
-                arch: archEl,
-            },
-        };
-    },
-};
-
-registry.category("views").add("leaflet_map", mapView);

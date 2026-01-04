@@ -17,9 +17,12 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "web_view_leaflet_map/static/src/components/map-component/map_view.esm.js",
-            "web_view_leaflet_map/static/src/components/map-component/map_view.xml",
-            "web_view_leaflet_map/static/src/components/map-component/web_view_leaflet_map.css",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_renderer.esm.js",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_renderer.xml",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_renderer.css",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_controller.esm.js",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_controller.xml",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_view.esm.js",
         ],
     },
     "installable": True,

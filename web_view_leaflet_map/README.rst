@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ================================
 Leaflet Map View (OpenStreetMap)
 ================================
@@ -17,7 +13,7 @@ Leaflet Map View (OpenStreetMap)
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github
@@ -137,6 +133,14 @@ Known issues / Roadmap
   items if longitude and latitude are available. We could imagine other
   kind of usages, with Polylines, Polygons, etc... See all the leaflet
   options : https://leafletjs.com/reference.html
+- Search bar is not implemented in this view. All records are displayed
+  for now. We should:
+
+  - implement records refresh, when adding / removing domain in the
+    search bar.
+  - implement a custom search based on the displayed map. (no need to
+    load records that are out of the scope of the current displayed
+    map).
 
 Bug Tracker
 ===========
