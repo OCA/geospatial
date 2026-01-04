@@ -25,6 +25,12 @@ msgid "Leaflet Map"
 msgstr ""
 
 #. module: web_view_leaflet_map
+#. odoo-javascript
+#: code:addons/web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_controller.xml:0
+msgid "New"
+msgstr ""
+
+#. module: web_view_leaflet_map
 #: model:ir.model,name:web_view_leaflet_map.model_res_users
 msgid "User"
 msgstr ""

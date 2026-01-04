@@ -5,7 +5,7 @@
 {
     "name": "Leaflet Map View (OpenStreetMap)",
     "summary": "Add new 'leaflet_map' view, to display markers.",
-    "version": "18.0.1.1.1",
+    "version": "18.0.1.1.2",
     "author": "GRAP, Odoo Community Association (OCA)",
     "maintainers": ["legalsylvain"],
     "website": "https://github.com/OCA/geospatial",
@@ -17,9 +17,12 @@
     ],
     "assets": {
         "web.assets_backend": [
-            "web_view_leaflet_map/static/src/components/map-component/map_view.esm.js",
-            "web_view_leaflet_map/static/src/components/map-component/map_view.xml",
-            "web_view_leaflet_map/static/src/components/map-component/web_view_leaflet_map.css",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_renderer.esm.js",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_renderer.xml",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_renderer.css",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_controller.esm.js",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_controller.xml",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_view.esm.js",
         ],
     },
     "installable": True,

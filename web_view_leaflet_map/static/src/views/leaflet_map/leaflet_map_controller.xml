@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_view_leaflet_map.MapView" owl="1">
+        <div class="h-100 overflow-auto" t-ref="root">
+            <Layout display="props.display" className="'h-100 overflow-auto'">
+                <t t-set-slot="control-panel-create-button">
+                    <button
+                        type="button"
+                        class="btn btn-primary o_list_button_add"
+                        data-hotkey="c"
+                        t-on-click="onClickCreate"
+                        data-bounce-button=""
+                    >
+                        New
+                    </button>
+                </t>
+
+                <MapRenderer t-props="props" />
+            </Layout>
+        </div>
+    </t>
+
+</templates>

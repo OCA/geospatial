@@ -6,3 +6,8 @@
   items if longitude and latitude are available. We could imagine other
   kind of usages, with Polylines, Polygons, etc... See all the leaflet
   options : <https://leafletjs.com/reference.html>
+- Search bar is not implemented in this view. All records are displayed for now.
+  We should:
+  - implement records refresh, when adding / removing domain in the search bar.
+  - implement a custom search based on the displayed map. (no need to load records
+  that are out of the scope of the current displayed map). 
