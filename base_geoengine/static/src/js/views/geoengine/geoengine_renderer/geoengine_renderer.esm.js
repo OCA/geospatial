@@ -30,7 +30,7 @@ import {
     extractFieldsFromArchInfo,
 } from "@web/model/relational_model/utils";
 import {evaluateExpr} from "@web/core/py_js/py";
-import {loadBundle} from "@web/core/assets";
+import {loadBundle, loadJS} from "@web/core/assets";
 import {getTemplate} from "@web/core/templates";
 import {parseXML} from "@web/core/utils/xml";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
@@ -77,6 +77,7 @@ export class GeoengineRenderer extends Component {
         onWillStart(async () =>
             Promise.all([
                 loadBundle("base_geoengine.assets_jsLibs_geoengine"),
+                loadJS("/base_geoengine/static/lib/ol-10.5.0/ol.js"),
                 this.loadVectorModel(),
                 (this.isGeoengineAdmin = await user.hasGroup(
                     "base_geoengine.group_geoengine_admin"
