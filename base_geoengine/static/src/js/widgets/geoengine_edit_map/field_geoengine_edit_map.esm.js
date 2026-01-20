@@ -9,7 +9,7 @@
  */
 
 import {Component, onMounted, onRendered, onWillStart, useEffect} from "@odoo/owl";
-import {loadBundle} from "@web/core/assets";
+import {loadBundle, loadJS} from "@web/core/assets";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {useService} from "@web/core/utils/hooks";
@@ -20,9 +20,10 @@ export class FieldGeoEngineEditMap extends Component {
         this.id = `map_${this.props.id}`;
         this.orm = useService("orm");
 
-        onWillStart(() =>
-            Promise.all([loadBundle("base_geoengine.assets_jsLibs_geoengine")])
-        );
+        onWillStart(() => Promise.all([
+            loadBundle("base_geoengine.assets_jsLibs_geoengine"),
+            loadJS("/base_geoengine/static/lib/ol-10.5.0/ol.js"),
+        ]));
 
         // Is executed when component is mounted.
         onMounted(async () => {
