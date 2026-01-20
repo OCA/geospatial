@@ -20,10 +20,12 @@ export class FieldGeoEngineEditMap extends Component {
         this.id = `map_${this.props.id}`;
         this.orm = useService("orm");
 
-        onWillStart(() => Promise.all([
-            loadBundle("base_geoengine.assets_jsLibs_geoengine"),
-            loadJS("/base_geoengine/static/lib/ol-10.5.0/ol.js"),
-        ]));
+        onWillStart(() =>
+            Promise.all([
+                loadBundle("base_geoengine.assets_jsLibs_geoengine"),
+                loadJS("/base_geoengine/static/lib/ol-10.5.0/ol.js"),
+            ])
+        );
 
         // Is executed when component is mounted.
         onMounted(async () => {
