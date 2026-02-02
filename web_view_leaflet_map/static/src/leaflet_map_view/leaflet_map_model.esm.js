@@ -195,14 +195,16 @@ export class LeafletMapModel {
         }
 
         // Update group field if moving between groups
-        if (this.archInfo.groupField && targetGroupId !== null) {
+        if (this.archInfo.groupField) {
             const currentGroupValue = record[this.archInfo.groupField];
             const currentGroupId = Array.isArray(currentGroupValue)
                 ? currentGroupValue[0]
                 : currentGroupValue;
 
             if (currentGroupId !== targetGroupId) {
-                updates[this.archInfo.groupField] = targetGroupId;
+                // Use false to clear Many2one field when moving to unassigned group
+                updates[this.archInfo.groupField] =
+                    targetGroupId === null ? false : targetGroupId;
             }
         }
 
