@@ -1,1 +1,3 @@
 - Sylvain LE GAL (<https://www.twitter.com/legalsylvain>)
+- [KMEE](https://kmee.com.br/):
+  - Luis Felipe Mileo \<<mileo@kmee.com.br>\>

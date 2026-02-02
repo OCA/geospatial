@@ -2,27 +2,53 @@
 <!--
 Copyright (C) 2022 - Today: GRAP (http://www.grap.coop)
 @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
+Copyright (C) 2025 KMEE (https://kmee.com.br)
 License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 -->
 <odoo noupdate="1">
-    <record
-        id="config_parameter_leaflet_copyright"
-        model="ir.config_parameter"
-        forcecreate="True"
-    >
+    <!-- Display Configuration -->
+    <record id="config_parameter_leaflet_copyright" model="ir.config_parameter">
         <field name="key">leaflet.copyright</field>
         <field
             name="value"
-        ><![CDATA[
-            &copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>]]>
-        </field>
+        ><![CDATA[&copy; <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>]]></field>
     </record>
-    <record
-        id="config_parameter_leaflet_tile_url"
-        model="ir.config_parameter"
-        forcecreate="True"
-    >
+    <record id="config_parameter_leaflet_tile_url" model="ir.config_parameter">
         <field name="key">leaflet.tile_url</field>
         <field name="value">False</field>
+    </record>
+
+    <!-- Geocoding Configuration -->
+    <record
+        id="config_parameter_leaflet_geocoding_provider"
+        model="ir.config_parameter"
+    >
+        <field name="key">leaflet.geocoding_provider</field>
+        <field name="value">nominatim</field>
+    </record>
+    <record id="config_parameter_leaflet_nominatim_url" model="ir.config_parameter">
+        <field name="key">leaflet.nominatim_url</field>
+        <field name="value">https://nominatim.openstreetmap.org</field>
+    </record>
+    <record
+        id="config_parameter_leaflet_geocoding_throttle"
+        model="ir.config_parameter"
+    >
+        <field name="key">leaflet.geocoding_throttle_ms</field>
+        <field name="value">1000</field>
+    </record>
+
+    <!-- Routing Configuration -->
+    <record id="config_parameter_leaflet_routing_provider" model="ir.config_parameter">
+        <field name="key">leaflet.routing_provider</field>
+        <field name="value">osrm</field>
+    </record>
+    <record id="config_parameter_leaflet_osrm_url" model="ir.config_parameter">
+        <field name="key">leaflet.osrm_url</field>
+        <field name="value">https://router.project-osrm.org</field>
+    </record>
+    <record id="config_parameter_leaflet_max_waypoints" model="ir.config_parameter">
+        <field name="key">leaflet.max_waypoints</field>
+        <field name="value">25</field>
     </record>
 </odoo>

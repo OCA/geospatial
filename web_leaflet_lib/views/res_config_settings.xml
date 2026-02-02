@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2025 KMEE (https://kmee.com.br)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<odoo>
+    <record id="res_config_settings_view_form_leaflet" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.leaflet</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="50" />
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app
+                    data-string="Leaflet Maps"
+                    string="Leaflet Maps"
+                    name="web_leaflet_lib"
+                    groups="base.group_system"
+                >
+                    <block title="Geocoding Configuration" name="geocoding_settings">
+                        <setting
+                            id="leaflet_geocoding_provider"
+                            help="Choose the provider for converting addresses to coordinates"
+                        >
+                            <field name="leaflet_geocoding_provider" />
+                        </setting>
+                        <setting
+                            id="leaflet_mapbox_token"
+                            help="Required for MapBox geocoding and routing"
+                        >
+                            <field
+                                name="leaflet_mapbox_token"
+                                placeholder="pk.eyJ1..."
+                                password="True"
+                            />
+                        </setting>
+                        <setting
+                            id="leaflet_nominatim_url"
+                            help="URL for Nominatim server (self-hosted or public)"
+                        >
+                            <field
+                                name="leaflet_nominatim_url"
+                                placeholder="https://nominatim.openstreetmap.org"
+                            />
+                        </setting>
+                    </block>
+                    <block title="Routing Configuration" name="routing_settings">
+                        <setting
+                            id="leaflet_routing_provider"
+                            help="Choose the provider for calculating routes"
+                        >
+                            <field name="leaflet_routing_provider" />
+                        </setting>
+                        <setting
+                            id="leaflet_osrm_url"
+                            help="URL for OSRM routing server"
+                        >
+                            <field
+                                name="leaflet_osrm_url"
+                                placeholder="https://router.project-osrm.org"
+                            />
+                        </setting>
+                    </block>
+                    <block title="Map Display" name="display_settings">
+                        <setting
+                            id="leaflet_tile_url"
+                            help="Custom tile server URL (leave empty for default OSM)"
+                        >
+                            <field
+                                name="leaflet_tile_url"
+                                placeholder="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                            />
+                        </setting>
+                        <setting
+                            id="leaflet_copyright"
+                            help="Attribution text displayed on the map"
+                        >
+                            <field name="leaflet_copyright" />
+                        </setting>
+                    </block>
+                    <block title="Performance Settings" name="performance_settings">
+                        <setting
+                            id="leaflet_geocoding_throttle"
+                            help="Minimum delay between geocoding requests"
+                        >
+                            <field name="leaflet_geocoding_throttle_ms" /> ms
+                        </setting>
+                        <setting
+                            id="leaflet_max_waypoints"
+                            help="Maximum waypoints for routing (OSRM/MapBox limit: 25)"
+                        >
+                            <field name="leaflet_max_waypoints" />
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>
