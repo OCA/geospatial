@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2025 KMEE (https://kmee.com.br)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+
+DraggablePinList template - extends PinList with drag-and-drop support.
+This is a generic component for any model that supports resequencing.
+-->
+<templates xml:space="preserve">
+
+    <t t-name="web_view_leaflet_map.DraggablePinList" owl="1">
+        <div
+            t-ref="root"
+            t-attf-class="o_leaflet_pin_list {{ state.collapsed ? 'o_collapsed' : '' }}"
+        >
+            <!-- Header -->
+            <div class="o_pin_list_header">
+                <button
+                    class="o_pin_list_toggle btn btn-link"
+                    t-on-click="toggleSidebar"
+                    t-att-title="state.collapsed ? 'Expand' : 'Collapse'"
+                >
+                    <i
+                        t-attf-class="fa {{ state.collapsed ? 'fa-chevron-right' : 'fa-chevron-left' }}"
+                    />
+                </button>
+                <t t-if="!state.collapsed">
+                    <span class="o_pin_list_title">
+                        <t t-esc="props.panelTitle" />
+                    </span>
+                    <span class="o_pin_list_count badge bg-primary ms-2">
+                        <t t-esc="locatedCount" />
+                    </span>
+                </t>
+            </div>
+
+            <!-- Content (hidden when collapsed) -->
+            <t t-if="!state.collapsed">
+                <!-- Search -->
+                <div class="o_pin_list_search p-2">
+                    <div class="input-group input-group-sm">
+                        <span class="input-group-text">
+                            <i class="fa fa-search" />
+                        </span>
+                        <input
+                            type="text"
+                            class="form-control"
+                            placeholder="Search..."
+                            t-att-value="state.searchQuery"
+                            t-on-input="onSearchInput"
+                        />
+                        <t t-if="state.searchQuery">
+                            <button
+                                class="btn btn-outline-secondary"
+                                type="button"
+                                t-on-click="clearSearch"
+                            >
+                                <i class="fa fa-times" />
+                            </button>
+                        </t>
+                    </div>
+                </div>
+
+                <!-- Stats -->
+                <div class="o_pin_list_stats px-2 pb-2">
+                    <small class="text-muted">
+                        <i class="fa fa-map-marker text-success" />
+                        <t t-esc="locatedCount" /> located
+                        <t t-if="unlocatedCount > 0">
+                        <span class="ms-2">
+                                <i class="fa fa-question-circle text-warning" />
+                                <t t-esc="unlocatedCount" /> not located
+                            </span>
+                    </t>
+                    </small>
+                </div>
+
+                <!-- Groups -->
+                <div class="o_pin_list_groups">
+                    <t t-foreach="groupedRecords" t-as="group" t-key="group.name">
+                        <div
+                            t-attf-class="o_pin_group {{ group.isUnassigned ? 'o_pin_group_unassigned' : '' }}"
+                            t-att-data-group-id="group.records.length > 0 ? getRecordGroupId(group.records[0]) : ''"
+                        >
+                            <!-- Group header (only if grouped) -->
+                            <t t-if="group.name !== null">
+                                <div
+                                    t-attf-class="o_pin_group_header {{ group.isUnassigned ? 'o_unassigned_header' : '' }}"
+                                    t-on-click="() => this.toggleGroup(group.name)"
+                                >
+                                    <i
+                                        t-attf-class="fa {{ isGroupCollapsed(group.name) ? 'fa-caret-right' : 'fa-caret-down' }}"
+                                    />
+                                    <t t-if="group.isUnassigned">
+                                        <i
+                                            class="fa fa-inbox text-warning me-1"
+                                            title="Stops not assigned to any trip"
+                                        />
+                                    </t>
+                                    <span
+                                        class="o_pin_group_color"
+                                        t-attf-style="background-color: {{ group.color }}"
+                                    />
+                                    <span class="o_pin_group_name">
+                                        <t t-esc="group.name" />
+                                    </span>
+                                    <span
+                                        t-attf-class="o_pin_group_count badge {{ group.isUnassigned ? 'bg-warning' : 'bg-secondary' }} ms-auto"
+                                    >
+                                        <t t-esc="group.records.length" />
+                                    </span>
+                                    <!-- Navigate All button (not for unassigned) -->
+                                    <t
+                                        t-if="!group.isUnassigned and getGroupGoogleMapsUrl(group)"
+                                    >
+                                        <a
+                                            class="o_group_navigate_all btn btn-sm btn-outline-primary ms-2"
+                                            t-att-href="getGroupGoogleMapsUrl(group)"
+                                            t-att-title="'Navigate all in ' + group.name"
+                                            target="_blank"
+                                            t-on-click.stop="(ev) => this.onGroupNavigateClick(ev, group)"
+                                        >
+                                            <i class="fa fa-car" />
+                                        </a>
+                                    </t>
+                                </div>
+                            </t>
+
+                            <!-- Group items -->
+                            <div
+                                t-attf-class="o_pin_group_items {{ (group.name !== null and isGroupCollapsed(group.name)) ? 'd-none' : '' }}"
+                            >
+                                <t
+                                    t-foreach="group.records"
+                                    t-as="record"
+                                    t-key="record.id"
+                                >
+                                    <div
+                                        t-attf-class="o_pin_item o_pin_item_draggable {{ hasValidCoordinates(record) ? '' : 'o_pin_item_unlocated' }}"
+                                        t-att-data-id="record.id"
+                                        t-on-click="() => this.onPinItemClick(record)"
+                                    >
+                                        <!-- Drag handle -->
+                                        <span
+                                            class="o_drag_handle me-2"
+                                            title="Drag to reorder"
+                                        >
+                                            <i class="fa fa-bars text-muted" />
+                                        </span>
+
+                                        <!-- Pin number -->
+                                        <span class="o_pin_number">
+                                            <t t-esc="record_index + 1" />
+                                        </span>
+
+                                        <!-- Pin content -->
+                                        <div class="o_pin_content">
+                                            <div
+                                                class="o_pin_title"
+                                                t-att-title="getRecordTitle(record)"
+                                            >
+                                                <t t-esc="getRecordTitle(record)" />
+                                            </div>
+                                            <t t-if="getRecordAddress(record)">
+                                                <div
+                                                    class="o_pin_address text-muted small"
+                                                >
+                                                    <t
+                                                        t-esc="getRecordAddress(record)"
+                                                    />
+                                                </div>
+                                            </t>
+                                        </div>
+
+                                        <!-- Navigation button -->
+                                        <t t-if="hasValidCoordinates(record)">
+                                            <a
+                                                class="o_pin_navigate btn btn-sm btn-outline-primary"
+                                                t-att-href="getGoogleMapsUrl(record)"
+                                                target="_blank"
+                                                t-on-click.stop=""
+                                                title="Navigate with Google Maps"
+                                            >
+                                                <i class="fa fa-location-arrow" />
+                                            </a>
+                                        </t>
+                                        <t t-else="">
+                                            <span
+                                                class="o_pin_status text-warning"
+                                                title="Location not set"
+                                            >
+                                                <i class="fa fa-exclamation-triangle" />
+                                            </span>
+                                        </t>
+                                    </div>
+                                </t>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </t>
+        </div>
+    </t>
+
+</templates>

@@ -1,23 +1,44 @@
-This module extends odoo views, to add a new kind of view, named
-`leaflet_map` that is using the Leaflet javascript library to use maps.
-(<https://leafletjs.com/>) This library is for exemple, used in the
-OpenStreetMap project. (<https://www.openstreetmap.org/>)
+This module extends Odoo views to add a new kind of view named
+`leaflet_map` that uses the Leaflet javascript library for interactive maps.
+(https://leafletjs.com/) This library is used by projects like
+OpenStreetMap. (https://www.openstreetmap.org/)
 
-You can see a simple usage in the module `web_view_leaflet_map_partner`
-in the same OCA repository that displays your contact in a map, if
-latitude and longitude are defined. (To define latitude and longitude,
-refer to the Odoo module `base_geolocalize`)
+**Core Map View:**
 
-A marker will be displayed for each item that has a localization.
+- Display records as markers on an interactive map
+- Automatic marker clustering for better visibility when zoomed out
+- Custom marker icons from image fields
+- Click markers to open popups with record details
+- Click popup to navigate to record form view
 
-![](../static/description/view_res_partner_map_precise.png)
+**Sidebar/Pin List (NEW):**
 
-If user zooms out, the markers will overlap, which won't be very visible.
+- Collapsible sidebar showing all map markers in a list
+- Search and filter within the sidebar
+- Click items to center map on marker
+- Visual grouping by field (e.g., category)
+- Show located/unlocated record counts
 
-In that case, nearby markers are grouped together, thanks to
+**Enhanced Markers (NEW):**
+
+- Numbered markers showing sequence
+- Color coding by group
+- Google Maps navigation buttons in popups
+- Coordinate validation (lat: -90..90, lng: -180..180)
+
+**Routing Support (NEW - requires web_leaflet_routing):**
+
+- Route polylines between markers
+- OSRM integration for real road routes
+- Route distance and duration display
+
+See `web_view_leaflet_map_partner` module for a complete example
+that displays contacts on a map with avatar markers, grouped sidebar,
+auto-geocoding, and Google Maps navigation.
+
+![Precise Map View](../static/description/view_res_partner_map_precise.png)
+
+If user zooms out, nearby markers are grouped together thanks to
 `Leaflet.markercluster` plugin.
 
-![](../static/description/view_res_partner_map_large.png)
-
-
-
+![Large Map View](../static/description/view_res_partner_map_large.png)

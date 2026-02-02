@@ -2,19 +2,44 @@
     Custom CSS for the elements introduced by web_view_leaflet_map module
 */
 
+/* Main container with flex layout for sidebar + map */
 .o_leaflet_main_container {
     display: flex;
+    flex-direction: row;
     align-content: stretch;
-    overflow-x: visible;
+    overflow: hidden;
     height: 100%;
     width: 100%;
 }
 
+/* Map wrapper for positioning */
+.o_leaflet_map_wrapper {
+    flex: 1;
+    position: relative;
+    min-width: 0;
+}
+
+/* Map container */
 .o_leaflet_map_container {
     height: 100%;
     width: 100%;
 }
 
+/* Loading overlay */
+.o_leaflet_loading_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Popup selector styling */
 .o_map_selector {
     cursor: pointer;
 }
@@ -23,10 +48,38 @@
     background-color: #eee;
 }
 
+/* Popup styling */
+.o_map_popup {
+    min-width: 150px;
+}
+
+.o_map_popup .o_popup_number {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.o_map_popup .o_popup_address {
+    color: #6c757d;
+    font-size: 0.9em;
+    margin-top: 4px;
+}
+
+.o_map_popup .o_popup_actions {
+    border-top: 1px solid #dee2e6;
+    padding-top: 8px;
+}
+
+/* Marker icon styling */
 .leaflet_marker_icon {
     background-color: white;
     border: 1px black solid;
     border-radius: 50% !important;
+}
+
+/* Numbered marker styling */
+.o_leaflet_numbered_marker {
+    background: transparent !important;
+    border: none !important;
 }
 
 /*
@@ -57,4 +110,11 @@
 .leaflet-container [aria-hidden="true"],
 [aria-hidden="1"] {
     display: inline !important;
+}
+
+/* Responsive: Stack sidebar above map on mobile */
+@media (max-width: 768px) {
+    .o_leaflet_main_container {
+        flex-direction: column;
+    }
 }

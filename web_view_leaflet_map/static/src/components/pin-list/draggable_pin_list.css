@@ -1,0 +1,121 @@
+/*
+ * Copyright (C) 2025 KMEE (https://kmee.com.br)
+ * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+ *
+ * Styles for DraggablePinList component - drag-and-drop functionality
+ */
+
+/* ======================================
+   Drag Handle
+   ====================================== */
+
+.o_drag_handle {
+    cursor: grab;
+    opacity: 0.4;
+    transition: opacity 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    flex-shrink: 0;
+}
+
+.o_pin_item_draggable:hover .o_drag_handle {
+    opacity: 1;
+}
+
+.o_drag_handle:active {
+    cursor: grabbing;
+}
+
+/* ======================================
+   Drag States
+   ====================================== */
+
+/* During drag - element being dragged */
+.o_pin_item_draggable.o_dragging {
+    opacity: 0.5;
+    background: var(--o-gray-200, #e9ecef);
+    border: 2px dashed var(--o-primary, #007bff);
+    border-radius: 4px;
+}
+
+/* Dragged element class (from sortable system) */
+.o_pin_item_draggable.o_dragged {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background: white;
+    z-index: 1000;
+}
+
+/* ======================================
+   Drop Target
+   ====================================== */
+
+/* Drop target (group receiving the dragged element) */
+.o_pin_group.o_drop_target {
+    background: rgba(0, 123, 255, 0.08);
+    border: 2px dashed var(--o-primary, #007bff);
+    border-radius: 6px;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.o_pin_group.o_drop_target .o_pin_group_header {
+    background: rgba(0, 123, 255, 0.1);
+}
+
+/* ======================================
+   Draggable Item Layout
+   ====================================== */
+
+.o_pin_item_draggable {
+    display: flex;
+    align-items: center;
+    transition:
+        background-color 0.15s ease,
+        opacity 0.15s ease;
+}
+
+/* Placeholder for drop position */
+.o_pin_item_draggable.o_sortable_placeholder {
+    background: rgba(0, 123, 255, 0.15);
+    border: 2px dashed var(--o-primary, #007bff);
+    border-radius: 4px;
+    min-height: 40px;
+}
+
+/* ======================================
+   Navigate All Button
+   ====================================== */
+
+.o_group_navigate_all {
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.o_group_navigate_all:hover {
+    background: var(--o-primary, #007bff);
+    color: white;
+    border-color: var(--o-primary, #007bff);
+}
+
+/* ======================================
+   Mobile/Touch Enhancements
+   ====================================== */
+
+@media (max-width: 768px) {
+    .o_drag_handle {
+        width: 30px;
+        opacity: 0.6;
+        padding: 8px 4px;
+    }
+
+    .o_group_navigate_all {
+        padding: 4px 10px;
+        font-size: 0.85rem;
+    }
+}

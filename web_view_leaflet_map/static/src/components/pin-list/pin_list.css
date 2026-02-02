@@ -1,0 +1,303 @@
+/*
+    Pin List Component Styles
+    Sidebar component for displaying map markers in a list format
+*/
+
+/* Main container */
+.o_leaflet_pin_list {
+    display: flex;
+    flex-direction: column;
+    width: 320px;
+    min-width: 320px;
+    background-color: #fff;
+    border-right: 1px solid #dee2e6;
+    overflow: hidden;
+    transition:
+        width 0.2s ease-in-out,
+        min-width 0.2s ease-in-out;
+}
+
+.o_leaflet_pin_list.o_collapsed {
+    width: 48px;
+    min-width: 48px;
+}
+
+/* Header */
+.o_pin_list_header {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    min-height: 48px;
+}
+
+.o_pin_list_toggle {
+    padding: 4px 8px;
+    margin-right: 8px;
+    color: #495057;
+}
+
+.o_collapsed .o_pin_list_toggle {
+    margin-right: 0;
+}
+
+.o_pin_list_title {
+    font-weight: 600;
+    font-size: 14px;
+    color: #212529;
+}
+
+.o_pin_list_count {
+    font-size: 12px;
+}
+
+/* Search */
+.o_pin_list_search .input-group-text {
+    background-color: transparent;
+    border-right: none;
+}
+
+.o_pin_list_search .form-control {
+    border-left: none;
+}
+
+.o_pin_list_search .form-control:focus {
+    border-color: #ced4da;
+    box-shadow: none;
+}
+
+/* Stats */
+.o_pin_list_stats {
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Groups container */
+.o_pin_list_groups {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Group */
+.o_pin_group {
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.o_pin_group:last-child {
+    border-bottom: none;
+}
+
+/* Group header */
+.o_pin_group_header {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    user-select: none;
+    gap: 8px;
+}
+
+.o_pin_group_header:hover {
+    background-color: #e9ecef;
+}
+
+.o_pin_group_header i {
+    width: 12px;
+    color: #6c757d;
+}
+
+.o_pin_group_color {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.o_pin_group_name {
+    font-weight: 500;
+    font-size: 13px;
+    color: #495057;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.o_pin_group_count {
+    flex-shrink: 0;
+}
+
+/* Unassigned group styling */
+.o_pin_group.o_pin_group_unassigned {
+    border-left: 3px solid #fd7e14;
+}
+
+.o_pin_group_header.o_unassigned_header {
+    background-color: #fff8f0;
+}
+
+.o_pin_group_header.o_unassigned_header:hover {
+    background-color: #ffe8d6;
+}
+
+/* Group items */
+.o_pin_group_items {
+    /* No padding - items handle their own */
+}
+
+/* Pin item */
+.o_pin_item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid #f5f5f5;
+    transition: background-color 0.15s ease;
+    gap: 10px;
+}
+
+.o_pin_item:hover {
+    background-color: #f0f7ff;
+}
+
+.o_pin_item:last-child {
+    border-bottom: none;
+}
+
+.o_pin_item.o_pin_item_unlocated {
+    opacity: 0.6;
+    cursor: default;
+}
+
+.o_pin_item.o_pin_item_unlocated:hover {
+    background-color: #fff3cd;
+}
+
+/* Pin number */
+.o_pin_number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.o_pin_item_unlocated .o_pin_number {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+/* Pin content */
+.o_pin_content {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.o_pin_title {
+    font-size: 13px;
+    font-weight: 500;
+    color: #212529;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.o_pin_address {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 11px;
+}
+
+/* Navigate button */
+.o_pin_navigate {
+    flex-shrink: 0;
+    padding: 4px 8px;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+.o_pin_item:hover .o_pin_navigate {
+    opacity: 1;
+}
+
+/* Status icon for unlocated items */
+.o_pin_status {
+    flex-shrink: 0;
+    font-size: 14px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .o_leaflet_pin_list {
+        width: 100%;
+        min-width: 100%;
+        max-height: 40vh;
+        border-right: none;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .o_leaflet_pin_list.o_collapsed {
+        width: 100%;
+        min-width: 100%;
+        max-height: 48px;
+    }
+
+    .o_pin_navigate {
+        opacity: 1;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .o_leaflet_pin_list {
+        background-color: #212529;
+        border-color: #495057;
+    }
+
+    .o_pin_list_header {
+        background-color: #343a40;
+        border-color: #495057;
+    }
+
+    .o_pin_list_title {
+        color: #f8f9fa;
+    }
+
+    .o_pin_list_toggle {
+        color: #adb5bd;
+    }
+
+    .o_pin_group_header {
+        background-color: #343a40;
+    }
+
+    .o_pin_group_header:hover {
+        background-color: #495057;
+    }
+
+    .o_pin_group_name {
+        color: #e9ecef;
+    }
+
+    .o_pin_item {
+        border-color: #343a40;
+    }
+
+    .o_pin_item:hover {
+        background-color: #495057;
+    }
+
+    .o_pin_title {
+        color: #f8f9fa;
+    }
+}

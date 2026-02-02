@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2022 - Today: GRAP (http://www.grap.coop)
+Copyright (C) 2025 KMEE (https://kmee.com.br)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
+<templates xml:space="preserve">
+
+    <!--
+        LeafletMapController template
+        Main view controller with Layout wrapper
+    -->
+    <t t-name="web_view_leaflet_map.LeafletMapController" owl="1">
+        <Layout display="props.display" className="'h-100'">
+            <t t-set-slot="control-panel-bottom-right">
+                <div />
+            </t>
+            <t t-component="RendererComponent" t-props="rendererProps" />
+        </Layout>
+    </t>
+
+    <!--
+        LeafletMapRenderer template
+        Map renderer with sidebar and map container
+    -->
+    <t t-name="web_view_leaflet_map.LeafletMapRenderer" owl="1">
+        <div class="o_leaflet_main_container h-100">
+            <!-- Sidebar Pin List -->
+            <t t-if="showPinList">
+                <t
+                    t-component="PinListComponent"
+                    records="records"
+                    groupBy="groupBy"
+                    groupColors="groupColors"
+                    panelTitle="panelTitle"
+                    onPinClick.bind="onPinClick"
+                    onNavigateClick.bind="onNavigateClick"
+                    onResequence.bind="onResequence"
+                    fieldTitle="fieldTitle"
+                    fieldAddress="fieldAddress"
+                    fieldLatitude="fieldLatitude"
+                    fieldLongitude="fieldLongitude"
+                    groupField="groupField"
+                    unassignedGroupName="unassignedGroupName"
+                />
+            </t>
+            <!-- Map Container -->
+            <div class="o_leaflet_map_wrapper h-100">
+                <div t-ref="mapContainer" class="o_leaflet_map_container h-100" />
+                <!-- Loading Overlay -->
+                <t t-if="loading">
+                    <div class="o_leaflet_loading_overlay">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </t>
+            </div>
+        </div>
+    </t>
+
+</templates>
