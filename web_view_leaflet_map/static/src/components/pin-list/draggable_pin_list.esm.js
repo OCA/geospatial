@@ -5,7 +5,7 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
  */
 
-/* global console, document, window */
+/* global document, window */
 
 import {useRef} from "@odoo/owl";
 import {useService} from "@web/core/utils/hooks";
@@ -98,15 +98,11 @@ export class DraggablePinList extends PinList {
      */
     async _handleDrop(element, parent, previous) {
         const recordId = parseInt(element.dataset.id, 10);
-        let targetGroupId = parent ? this._getGroupId(parent) : this._sourceGroupId;
 
-        // Fallback to source group if target group ID couldn't be determined
-        if (targetGroupId === null && this._sourceGroupId !== null) {
-            console.warn(
-                "DraggablePinList: Could not determine target group, using source group"
-            );
-            targetGroupId = this._sourceGroupId;
-        }
+        // Determine target group ID
+        // If parent is provided, use its group ID (null for unassigned group is valid)
+        // If parent is null/undefined, keep the source group
+        const targetGroupId = parent ? this._getGroupId(parent) : this._sourceGroupId;
 
         // Find reference record (previous element after drop)
         let previousRecordId = null;
