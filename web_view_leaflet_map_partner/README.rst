@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 =============================================
 Leaflet Map View for Partners (OpenStreetMap)
 =============================================
@@ -17,7 +13,7 @@ Leaflet Map View for Partners (OpenStreetMap)
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github
@@ -79,11 +75,16 @@ Authors
 -------
 
 * GRAP
+* KMEE
 
 Contributors
 ------------
 
 - Sylvain LE GAL (https://www.twitter.com/legalsylvain)
+
+- `KMEE <https://kmee.com.br/>`__:
+
+  - Luis Felipe Mileo <mileo@kmee.com.br>
 
 Maintainers
 -----------
@@ -101,10 +102,13 @@ promote its widespread use.
 .. |maintainer-legalsylvain| image:: https://github.com/legalsylvain.png?size=40px
     :target: https://github.com/legalsylvain
     :alt: legalsylvain
+.. |maintainer-mileo| image:: https://github.com/mileo.png?size=40px
+    :target: https://github.com/mileo
+    :alt: mileo
 
-Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+Current `maintainers <https://odoo-community.org/page/maintainer-role>`__:
 
-|maintainer-legalsylvain| 
+|maintainer-legalsylvain| |maintainer-mileo| 
 
 This module is part of the `OCA/geospatial <https://github.com/OCA/geospatial/tree/18.0/web_view_leaflet_map_partner>`_ project on GitHub.
 

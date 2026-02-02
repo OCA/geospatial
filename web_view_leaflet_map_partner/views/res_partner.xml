@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+Copyright (C) 2022 - Today: GRAP (http://www.grap.coop)
+Copyright (C) 2025 KMEE (https://kmee.com.br)
+License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
+-->
 <odoo>
+    <!-- Enhanced Leaflet Map View for Partners -->
     <record id="view_res_partner_map" model="ir.ui.view">
         <field name="model">res.partner</field>
         <field name="arch" type="xml">
@@ -9,18 +15,89 @@
                 field_title="display_name"
                 field_address="display_address"
                 field_marker_icon_image="avatar_128"
-            />
+                show_pin_list="1"
+                enable_navigation="1"
+                panel_title="Contacts"
+            >
+                <field name="display_name" />
+                <field name="partner_latitude" />
+                <field name="partner_longitude" />
+                <field name="display_address" />
+                <field name="avatar_128" />
+                <field name="phone" />
+                <field name="email" />
+            </leaflet_map>
         </field>
     </record>
 
+    <!-- Add leaflet_map to Contacts action -->
     <record id="contacts.action_contacts" model="ir.actions.act_window">
         <field name="view_mode">kanban,list,form,activity,leaflet_map</field>
     </record>
 
+    <!-- Register leaflet_map view for Contacts action -->
     <record id="action_contacts_view_map" model="ir.actions.act_window.view">
         <field name="sequence" eval="3" />
         <field name="view_mode">leaflet_map</field>
         <field name="view_id" ref="view_res_partner_map" />
         <field name="act_window_id" ref="contacts.action_contacts" />
+    </record>
+
+    <!-- Add geocoding buttons to Partner form -->
+    <record id="view_partner_form_geocoding" model="ir.ui.view">
+        <field name="name">res.partner.form.geocoding</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <!-- Add geocoding fields to address group -->
+            <xpath expr="//field[@name='city']/.." position="after">
+                <group string="Geolocation" name="geolocation">
+                    <field name="partner_latitude" />
+                    <field name="partner_longitude" />
+                    <field name="auto_geocode" />
+                    <field name="geocoding_date" readonly="1" />
+                    <field name="geocoding_provider" readonly="1" />
+                </group>
+            </xpath>
+
+            <!-- Add geocoding action buttons -->
+            <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                <button
+                    name="action_open_in_map"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-map-marker"
+                    invisible="not partner_latitude"
+                >
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">View on Map</span>
+                    </div>
+                </button>
+                <button
+                    name="action_geocode_address"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-crosshairs"
+                    invisible="partner_latitude"
+                >
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Geocode</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Server action for batch geocoding -->
+    <record id="action_batch_geocode_partners" model="ir.actions.server">
+        <field name="name">Geocode Selected Partners</field>
+        <field name="model_id" ref="base.model_res_partner" />
+        <field name="binding_model_id" ref="base.model_res_partner" />
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    records.filtered(lambda p: not p.partner_latitude)._auto_geocode_address()
+        </field>
     </record>
 </odoo>
