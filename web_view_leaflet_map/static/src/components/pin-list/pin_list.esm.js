@@ -39,22 +39,6 @@ export class PinList extends Component {
         this.state = useState({
             collapsed: false,
             collapsedGroups: {},
-            searchQuery: "",
-        });
-    }
-
-    /**
-     * Get filtered records based on search query
-     */
-    get filteredRecords() {
-        if (!this.state.searchQuery) {
-            return this.props.records;
-        }
-        const query = this.state.searchQuery.toLowerCase();
-        return this.props.records.filter((record) => {
-            const title = this.getRecordTitle(record).toLowerCase();
-            const address = this.getRecordAddress(record).toLowerCase();
-            return title.includes(query) || address.includes(query);
         });
     }
 
@@ -63,7 +47,7 @@ export class PinList extends Component {
      * Records without a groupBy value are placed in the unassigned group.
      */
     get groupedRecords() {
-        const records = this.filteredRecords;
+        const records = this.props.records;
         const UNASSIGNED_GROUP_NAME = this.props.unassignedGroupName;
         // Orange color for unassigned group
         const UNASSIGNED_COLOR = "#fd7e14";
@@ -111,7 +95,7 @@ export class PinList extends Component {
      * Get total count of located records
      */
     get locatedCount() {
-        return this.filteredRecords.filter(
+        return this.props.records.filter(
             (r) =>
                 r[this.props.fieldLatitude] &&
                 r[this.props.fieldLongitude] &&
@@ -126,7 +110,7 @@ export class PinList extends Component {
      * Get count of records without valid coordinates
      */
     get unlocatedCount() {
-        return this.filteredRecords.length - this.locatedCount;
+        return this.props.records.length - this.locatedCount;
     }
 
     /**
@@ -238,20 +222,6 @@ export class PinList extends Component {
         if (this.props.onNavigateClick && this.hasValidCoordinates(record)) {
             this.props.onNavigateClick(record);
         }
-    }
-
-    /**
-     * Update search query
-     */
-    onSearchInput(ev) {
-        this.state.searchQuery = ev.target.value;
-    }
-
-    /**
-     * Clear search
-     */
-    clearSearch() {
-        this.state.searchQuery = "";
     }
 
     /**

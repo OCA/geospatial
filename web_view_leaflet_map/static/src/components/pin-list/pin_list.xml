@@ -25,31 +25,6 @@
 
             <!-- Content (hidden when collapsed) -->
             <t t-if="!state.collapsed">
-                <!-- Search -->
-                <div class="o_pin_list_search p-2">
-                    <div class="input-group input-group-sm">
-                        <span class="input-group-text">
-                            <i class="fa fa-search" />
-                        </span>
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Search..."
-                            t-att-value="state.searchQuery"
-                            t-on-input="onSearchInput"
-                        />
-                        <t t-if="state.searchQuery">
-                            <button
-                                class="btn btn-outline-secondary"
-                                type="button"
-                                t-on-click="clearSearch"
-                            >
-                                <i class="fa fa-times" />
-                            </button>
-                        </t>
-                    </div>
-                </div>
-
                 <!-- Stats -->
                 <div class="o_pin_list_stats px-2 pb-2">
                     <small class="text-muted">

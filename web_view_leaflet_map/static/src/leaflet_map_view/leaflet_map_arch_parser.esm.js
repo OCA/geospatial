@@ -14,11 +14,13 @@ import {visitXML} from "@web/core/utils/xml";
 export class LeafletMapArchParser {
     /**
      * Parse the arch XML and extract view configuration.
+     * Follows the standard Odoo pattern with (arch, fields) signature.
      *
      * @param {Element} arch - The XML arch element
+     * @param {Object} fields - Field definitions from the model (optional)
      * @returns {Object} Parsed arch information
      */
-    parse(arch) {
+    parse(arch, fields = {}) {
         const archInfo = {
             // Required fields that are always loaded
             fieldNames: ["id", "display_name"],
@@ -26,6 +28,8 @@ export class LeafletMapArchParser {
             fieldNamesMarkerPopup: [],
             // Field metadata from arch
             fieldNodes: {},
+            // Store fields reference for validation
+            fields,
         };
 
         visitXML(arch, (node) => {
@@ -34,7 +38,7 @@ export class LeafletMapArchParser {
             }
 
             if (node.tagName === "field") {
-                this._parseFieldNode(node, archInfo);
+                this._parseFieldNode(node, archInfo, fields);
             }
         });
 
@@ -105,7 +109,7 @@ export class LeafletMapArchParser {
             archInfo.fieldNames.push(archInfo.groupBy);
         }
 
-        // Drag-and-drop configuration (NEW)
+        // Drag-and-drop configuration
         archInfo.draggable = getAttr("draggable") === "1";
         archInfo.groupField = getAttr("group_field");
         archInfo.defaultOrder = getAttr("default_order");
@@ -131,22 +135,29 @@ export class LeafletMapArchParser {
      *
      * @param {Element} node - The field XML element
      * @param {Object} archInfo - The arch info object to populate
+     * @param {Object} fields - Field definitions from the model
      */
-    _parseFieldNode(node, archInfo) {
+    _parseFieldNode(node, archInfo, fields) {
         const fieldName = node.getAttribute("name");
         if (!fieldName) {
             return;
         }
 
         archInfo.fieldNames.push(fieldName);
+
+        // Get field info from model definition if available
+        const fieldDef = fields[fieldName] || {};
+
         archInfo.fieldNodes[fieldName] = {
             name: fieldName,
-            string: node.getAttribute("string"),
+            string: node.getAttribute("string") || fieldDef.string || fieldName,
             invisible: node.getAttribute("invisible") === "1",
+            type: fieldDef.type,
         };
+
         archInfo.fieldNamesMarkerPopup.push({
             fieldName,
-            string: node.getAttribute("string"),
+            string: node.getAttribute("string") || fieldDef.string || fieldName,
         });
     }
 }

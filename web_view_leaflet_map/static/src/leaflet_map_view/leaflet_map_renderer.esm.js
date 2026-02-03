@@ -43,14 +43,8 @@ export class LeafletMapRenderer extends Component {
     static components = {PinList};
 
     static props = {
-        resModel: {type: String},
-        archInfo: {type: Object},
-        fields: {type: Object, optional: true},
-        context: {type: Object, optional: true},
         model: {type: Object},
         onResequence: {type: Function, optional: true},
-        // DataVersion changes when data is reloaded, triggering re-render
-        dataVersion: {type: Number, optional: true},
         // Accept additional props from extending modules for extensibility
         "*": true,
     };
@@ -67,9 +61,11 @@ export class LeafletMapRenderer extends Component {
         this.leafletTileUrl = session["leaflet.tile_url"];
         this.leafletCopyright = session["leaflet.copyright"];
 
-        // Extract configuration from archInfo
-        const archInfo = this.props.archInfo;
-        this.resModel = this.props.resModel;
+        // Extract configuration from model.metaData.archInfo
+        const metaData = this.props.model.metaData || {};
+        const archInfo = metaData.archInfo || {};
+
+        this.resModel = metaData.resModel;
         this.fieldLatitude = archInfo.fieldLatitude;
         this.fieldLongitude = archInfo.fieldLongitude;
         this.fieldTitle = archInfo.fieldTitle;
@@ -136,14 +132,14 @@ export class LeafletMapRenderer extends Component {
      * Get records from the model.
      */
     get records() {
-        return this.props.model.data.records || [];
+        return this.props.model.data?.records || [];
     }
 
     /**
      * Get loading state from the model.
      */
     get loading() {
-        return this.props.model.data.loading;
+        return this.props.model.data?.loading || false;
     }
 
     /**

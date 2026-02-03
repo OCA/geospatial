@@ -7,16 +7,52 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 <templates xml:space="preserve">
 
     <!--
+        Empty button template for control panel
+        Can be extended by custom views to add buttons
+    -->
+    <t t-name="web_view_leaflet_map.LeafletMapView.Buttons" owl="1" />
+
+    <!--
         LeafletMapController template
-        Main view controller with Layout wrapper
+        Main view controller with Layout wrapper and search components
+        Follows the pattern from graphView in Odoo core
     -->
     <t t-name="web_view_leaflet_map.LeafletMapController" owl="1">
-        <Layout display="props.display" className="'h-100'">
-            <t t-set-slot="control-panel-bottom-right">
-                <div />
-            </t>
-            <t t-component="RendererComponent" t-props="rendererProps" />
-        </Layout>
+        <div t-att-class="props.className" t-ref="root">
+            <Layout
+                className="model.useSampleModel ? 'o_view_sample_data' : ''"
+                display="props.display"
+            >
+                <!-- Cog Menu (settings/export) in control panel -->
+                <t t-set-slot="control-panel-additional-actions">
+                    <CogMenu />
+                </t>
+
+                <!-- Search Bar in layout actions -->
+                <t t-set-slot="layout-actions">
+                    <SearchBar toggler="searchBarToggler" />
+                </t>
+
+                <!-- Search Bar Toggler for mobile -->
+                <t t-set-slot="control-panel-navigation-additional">
+                    <t
+                        t-component="searchBarToggler.component"
+                        t-props="searchBarToggler.props"
+                    />
+                </t>
+
+                <!-- Main content: Renderer or NoContent helper -->
+                <t t-if="model.data">
+                    <t
+                        t-if="!model.hasData() and props.info and props.info.noContentHelp"
+                        t-call="web.ActionHelper"
+                    >
+                        <t t-set="noContentHelp" t-value="props.info.noContentHelp" />
+                    </t>
+                    <t t-component="props.Renderer" t-props="rendererProps" />
+                </t>
+            </Layout>
+        </div>
     </t>
 
     <!--

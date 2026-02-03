@@ -5,118 +5,48 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
  */
 
-import {Component, onWillStart, useState, useSubEnv} from "@odoo/owl";
+import {Component, useRef} from "@odoo/owl";
 import {useService} from "@web/core/utils/hooks";
+import {useModelWithSampleData} from "@web/model/model";
+import {standardViewProps} from "@web/views/standard_view_props";
+import {useSetupAction} from "@web/search/action_hook";
 import {Layout} from "@web/search/layout";
-
-import {LeafletMapModel} from "./leaflet_map_model.esm";
-import {LeafletMapRenderer} from "./leaflet_map_renderer.esm";
+import {SearchBar} from "@web/search/search_bar/search_bar";
+import {useSearchBarToggler} from "@web/search/search_bar/search_bar_toggler";
+import {CogMenu} from "@web/search/cog_menu/cog_menu";
 
 /**
  * LeafletMapController is the main controller for the leaflet map view.
  * It manages the model lifecycle and coordinates between the search panel
- * and the renderer.
+ * and the renderer. Follows the standard Odoo view controller pattern.
  */
 export class LeafletMapController extends Component {
     static template = "web_view_leaflet_map.LeafletMapController";
-    static components = {Layout, LeafletMapRenderer};
+    static components = {Layout, SearchBar, CogMenu};
 
     static props = {
-        resModel: {type: String},
-        arch: {type: Object, optional: true},
-        archInfo: {type: Object},
-        domain: {type: Array, optional: true},
-        context: {type: Object, optional: true},
-        fields: {type: Object, optional: true},
-        limit: {type: Number, optional: true},
-        display: {type: Object, optional: true},
-        // Model and Renderer classes to use (allows overriding)
-        Model: {type: Function, optional: true},
-        Renderer: {type: Function, optional: true},
-        // Standard view controller props passed by Odoo framework (WithSearch)
-        // Using wildcard to accept all standard props without explicit declaration
-        "*": true,
-    };
-
-    static defaultProps = {
-        domain: [],
-        context: {},
-        fields: {},
+        ...standardViewProps,
+        Model: Function,
+        modelParams: Object,
+        Renderer: Function,
+        buttonTemplate: {type: String, optional: true},
     };
 
     setup() {
-        this.orm = useService("orm");
         this.action = useService("action");
         this.notification = useService("notification");
 
-        // State for reactive updates
-        // dataVersion is incremented after each data reload to force re-render
-        this.state = useState({
-            loading: true,
-            dataVersion: 0,
+        // Use the standard model hook that integrates with WithSearch
+        this.model = useModelWithSampleData(this.props.Model, this.props.modelParams);
+
+        // Setup action hook for state management
+        useSetupAction({
+            rootRef: useRef("root"),
+            getLocalState: () => ({metaData: this.model.metaData}),
         });
 
-        // Set up sub-environment for child components
-        useSubEnv({
-            config: {
-                ...this.env.config,
-            },
-        });
-
-        // Create model instance
-        const ModelClass = this.props.Model || LeafletMapModel;
-        this.model = new ModelClass(
-            this.env,
-            {
-                resModel: this.props.resModel,
-                archInfo: this.props.archInfo,
-                fields: this.props.fields,
-                context: this.props.context,
-            },
-            {orm: this.orm}
-        );
-
-        // Initial data load
-        onWillStart(async () => {
-            await this.loadData();
-        });
-    }
-
-    /**
-     * Get the Renderer component class to use.
-     */
-    get RendererComponent() {
-        return this.props.Renderer || LeafletMapRenderer;
-    }
-
-    /**
-     * Load data from the model.
-     */
-    async loadData() {
-        this.state.loading = true;
-        try {
-            await this.model.load({
-                domain: this.props.domain,
-                limit: this.props.limit,
-                context: this.props.context,
-            });
-        } finally {
-            this.state.loading = false;
-        }
-    }
-
-    /**
-     * Reload data (called after resequencing or domain changes).
-     */
-    async reloadData() {
-        this.state.loading = true;
-        try {
-            await this.model.reload();
-        } finally {
-            this.state.loading = false;
-            // Increment dataVersion to force re-render of child components
-            this.state.dataVersion++;
-        }
+        // Setup search bar toggler for mobile responsiveness
+        this.searchBarToggler = useSearchBarToggler();
     }
 
     /**
@@ -134,9 +64,7 @@ export class LeafletMapController extends Component {
                 previousRecordId
             );
 
-            if (result.success) {
-                await this.reloadData();
-            } else {
+            if (!result.success) {
                 this.notification.add(result.error || "Failed to reorder item", {
                     type: "danger",
                 });
@@ -155,14 +83,8 @@ export class LeafletMapController extends Component {
      */
     get rendererProps() {
         return {
-            resModel: this.props.resModel,
-            archInfo: this.props.archInfo,
-            fields: this.props.fields,
-            context: this.props.context,
             model: this.model,
             onResequence: this.onResequence.bind(this),
-            // DataVersion triggers re-render when data changes
-            dataVersion: this.state.dataVersion,
         };
     }
 }
