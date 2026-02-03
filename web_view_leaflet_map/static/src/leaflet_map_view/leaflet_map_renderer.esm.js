@@ -307,15 +307,7 @@ export class LeafletMapRenderer extends Component {
             });
         }
 
-        // Draw lines for each group
-        const colors = [
-            "#007bff",
-            "#28a745",
-            "#dc3545",
-            "#ffc107",
-            "#17a2b8",
-            "#6f42c1",
-        ];
+        // Draw lines for each group using GROUP_COLORS for consistency with markers
         let colorIndex = 0;
 
         for (const groupKey in groups) {
@@ -326,7 +318,7 @@ export class LeafletMapRenderer extends Component {
             }
 
             const waypoints = stops.map((s) => [s.lat, s.lng]);
-            const color = colors[colorIndex % colors.length];
+            const color = GROUP_COLORS[colorIndex % GROUP_COLORS.length];
 
             const polyline = L.polyline(waypoints, {
                 color: color,

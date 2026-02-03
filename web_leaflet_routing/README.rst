@@ -46,6 +46,269 @@ routing functionality into their map views.
 .. contents::
    :local:
 
+Configuration
+=============
+
+Configure routing providers through System Parameters (Settings >
+Technical > Parameters > System Parameters).
+
+System Parameters
+-----------------
+
++------------------------------+-------------------------------------+----------------------+
+| Key                          | Default                             | Description          |
++==============================+=====================================+======================+
+| ``leaflet.routing_provider`` | ``osrm``                            | Routing provider:    |
+|                              |                                     | ``osrm``,            |
+|                              |                                     | ``mapbox``, or       |
+|                              |                                     | ``auto``             |
++------------------------------+-------------------------------------+----------------------+
+| ``leaflet.osrm_url``         | ``https://router.project-osrm.org`` | OSRM server URL      |
++------------------------------+-------------------------------------+----------------------+
+| ``leaflet.mapbox_token``     | (empty)                             | MapBox API access    |
+|                              |                                     | token                |
++------------------------------+-------------------------------------+----------------------+
+| ``leaflet.max_waypoints``    | ``25``                              | Maximum waypoints    |
+|                              |                                     | per route request    |
++------------------------------+-------------------------------------+----------------------+
+
+Provider Selection
+------------------
+
+- **osrm**: Always use OSRM (free, no API key required)
+- **mapbox**: Always use MapBox (requires API token)
+- **auto**: Try MapBox first if token configured, fallback to OSRM
+
+OSRM Configuration (Recommended)
+--------------------------------
+
+OSRM (Open Source Routing Machine) is free and can be self-hosted.
+
+**Using public server (default):**
+
+No configuration needed. The default URL
+``https://router.project-osrm.org`` provides free routing with
+reasonable rate limits.
+
+**Self-hosted OSRM:**
+
+For production use with high volumes, deploy your own OSRM server:
+
+1. Download OSM data for your region
+2. Run OSRM backend with Docker or native installation
+3. Set ``leaflet.osrm_url`` to your server address
+
+::
+
+   leaflet.osrm_url = http://your-osrm-server:5000
+
+See https://github.com/Project-OSRM/osrm-backend for setup instructions.
+
+MapBox Configuration (Premium)
+------------------------------
+
+MapBox offers premium routing with additional features.
+
+1. Create account at https://www.mapbox.com/
+2. Generate an access token with Directions API scope
+3. Set the system parameters:
+
+::
+
+   leaflet.routing_provider = mapbox
+   leaflet.mapbox_token = pk.your_mapbox_token_here
+
+Rate Limiting
+-------------
+
+**OSRM Public Server:**
+
+- Shared instance with usage limits
+- Suitable for development and low-volume production
+- Consider self-hosting for high-volume usage
+
+**MapBox:**
+
+- Free tier: 100,000 requests/month
+- Pay-as-you-go pricing beyond free tier
+- See https://www.mapbox.com/pricing for details
+
+Routing Profiles
+----------------
+
+Both providers support these profiles:
+
+=========== =====================
+Profile     Description
+=========== =====================
+``driving`` Car routing (default)
+``walking`` Pedestrian routing
+``cycling`` Bicycle routing
+=========== =====================
+
+Troubleshooting
+---------------
+
+**Routes not calculating:**
+
+1. Verify coordinates are valid (lat: -90 to 90, lng: -180 to 180)
+2. Check browser console for API errors
+3. Verify ``leaflet.osrm_url`` is accessible
+
+**MapBox authentication errors:**
+
+1. Verify token is correctly set in System Parameters
+2. Check token has Directions API scope enabled
+3. Verify account has available quota
+
+Usage
+=====
+
+This module provides routing services that can be used both in Python
+(server-side) and JavaScript (client-side).
+
+Enabling Routing in Views
+-------------------------
+
+To enable routing visualization in a leaflet_map view, add the
+``routing`` attribute:
+
+.. code:: xml
+
+   <leaflet_map
+       field_latitude="partner_latitude"
+       field_longitude="partner_longitude"
+       routing="1"
+       group_by="driver_id"
+   >
+       <field name="display_name"/>
+       <field name="partner_latitude"/>
+       <field name="partner_longitude"/>
+       <field name="driver_id"/>
+       <field name="sequence"/>
+   </leaflet_map>
+
+When routing is enabled, the map will draw polylines connecting markers
+in sequence order, grouped by the ``group_by`` field if configured.
+
+Python Mixin Usage
+------------------
+
+The ``leaflet.routing.mixin`` provides routing capabilities for your
+models:
+
+.. code:: python
+
+   from odoo import models
+
+   class DeliveryRoute(models.Model):
+       _name = 'delivery.route'
+       _inherit = ['leaflet.routing.mixin']
+
+       def compute_route_distance(self):
+           """Calculate total route distance and duration."""
+           for route in self:
+               waypoints = [
+                   [stop.partner_latitude, stop.partner_longitude]
+                   for stop in route.stop_ids.sorted('sequence')
+                   if stop.partner_latitude and stop.partner_longitude
+               ]
+
+               if len(waypoints) >= 2:
+                   result = self.get_route(waypoints, profile='driving')
+                   if result:
+                       route.distance = result.get('distance', 0)  # meters
+                       route.duration = result.get('duration', 0)  # seconds
+
+Available Methods
+~~~~~~~~~~~~~~~~~
+
+**``get_route(waypoints, profile='driving')``**
+
+Get a route between waypoints.
+
+- ``waypoints``: List of ``[lat, lng]`` coordinate pairs
+- ``profile``: Routing profile (``driving``, ``walking``, ``cycling``)
+- Returns: ``dict`` with ``geometry``, ``distance``, ``duration``,
+  ``legs``
+
+**``get_optimized_route(waypoints, profile='driving', roundtrip=False)``**
+
+Get an optimized route (TSP - Traveling Salesman Problem).
+
+- ``waypoints``: List of ``[lat, lng]`` coordinate pairs
+- ``profile``: Routing profile
+- ``roundtrip``: Whether to return to starting point
+- Returns: ``dict`` with route data and ``waypoint_order``
+
+**``get_distance_matrix(origins, destinations=None)``**
+
+Get distances and durations between multiple points.
+
+- ``origins``: List of ``[lat, lng]`` pairs
+- ``destinations``: List of ``[lat, lng]`` pairs (defaults to origins)
+- Returns: ``dict`` with ``distances`` and ``durations`` matrices
+
+JavaScript Service Usage
+------------------------
+
+For client-side routing, import the ``RoutingService``:
+
+.. code:: javascript
+
+   import { RoutingService } from "@web_leaflet_routing/routing_service.esm";
+
+   const routingService = new RoutingService();
+
+   // Get a simple route
+   const waypoints = [
+       [-23.550520, -46.633308],  // Sao Paulo
+       [-22.906847, -43.172896],  // Rio de Janeiro
+   ];
+
+   const route = await routingService.getRoute(waypoints, 'driving');
+   if (route) {
+       console.log(`Distance: ${routingService.formatDistance(route.distance)}`);
+       console.log(`Duration: ${routingService.formatDuration(route.duration)}`);
+
+       // route.geometry contains [lat, lng] pairs for drawing polylines
+       L.polyline(route.geometry, {color: 'blue'}).addTo(map);
+   }
+
+   // Get optimized route
+   const optimized = await routingService.getOptimizedRoute(waypoints, 'driving', false);
+   if (optimized) {
+       console.log('Optimal order:', optimized.waypointOrder);
+   }
+
+Route Response Structure
+------------------------
+
+Both Python and JavaScript methods return similar structures:
+
+.. code:: javascript
+
+   {
+       geometry: [[lat, lng], ...],  // Polyline coordinates
+       distance: 450000,             // Total distance in meters
+       duration: 18000,              // Total duration in seconds
+       legs: [                       // Segments between waypoints
+           {
+               distance: 225000,
+               duration: 9000,
+               steps: [
+                   {
+                       distance: 1500,
+                       duration: 120,
+                       instruction: "Turn right",
+                       name: "Main Street"
+                   }
+               ]
+           }
+       ],
+       provider: "osrm"              // Which provider was used
+   }
+
 Bug Tracker
 ===========
 

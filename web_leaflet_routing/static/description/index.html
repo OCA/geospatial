@@ -384,17 +384,312 @@ routing functionality into their map views.</p>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
-<li><a class="reference internal" href="#bug-tracker" id="toc-entry-1">Bug Tracker</a></li>
-<li><a class="reference internal" href="#credits" id="toc-entry-2">Credits</a><ul>
-<li><a class="reference internal" href="#authors" id="toc-entry-3">Authors</a></li>
-<li><a class="reference internal" href="#contributors" id="toc-entry-4">Contributors</a></li>
-<li><a class="reference internal" href="#maintainers" id="toc-entry-5">Maintainers</a></li>
+<li><a class="reference internal" href="#configuration" id="toc-entry-1">Configuration</a><ul>
+<li><a class="reference internal" href="#system-parameters" id="toc-entry-2">System Parameters</a></li>
+<li><a class="reference internal" href="#provider-selection" id="toc-entry-3">Provider Selection</a></li>
+<li><a class="reference internal" href="#osrm-configuration-recommended" id="toc-entry-4">OSRM Configuration (Recommended)</a></li>
+<li><a class="reference internal" href="#mapbox-configuration-premium" id="toc-entry-5">MapBox Configuration (Premium)</a></li>
+<li><a class="reference internal" href="#rate-limiting" id="toc-entry-6">Rate Limiting</a></li>
+<li><a class="reference internal" href="#routing-profiles" id="toc-entry-7">Routing Profiles</a></li>
+<li><a class="reference internal" href="#troubleshooting" id="toc-entry-8">Troubleshooting</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#usage" id="toc-entry-9">Usage</a><ul>
+<li><a class="reference internal" href="#enabling-routing-in-views" id="toc-entry-10">Enabling Routing in Views</a></li>
+<li><a class="reference internal" href="#python-mixin-usage" id="toc-entry-11">Python Mixin Usage</a><ul>
+<li><a class="reference internal" href="#available-methods" id="toc-entry-12">Available Methods</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#javascript-service-usage" id="toc-entry-13">JavaScript Service Usage</a></li>
+<li><a class="reference internal" href="#route-response-structure" id="toc-entry-14">Route Response Structure</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bug-tracker" id="toc-entry-15">Bug Tracker</a></li>
+<li><a class="reference internal" href="#credits" id="toc-entry-16">Credits</a><ul>
+<li><a class="reference internal" href="#authors" id="toc-entry-17">Authors</a></li>
+<li><a class="reference internal" href="#contributors" id="toc-entry-18">Contributors</a></li>
+<li><a class="reference internal" href="#maintainers" id="toc-entry-19">Maintainers</a></li>
 </ul>
 </li>
 </ul>
 </div>
+<div class="section" id="configuration">
+<h1><a class="toc-backref" href="#toc-entry-1">Configuration</a></h1>
+<p>Configure routing providers through System Parameters (Settings &gt;
+Technical &gt; Parameters &gt; System Parameters).</p>
+<div class="section" id="system-parameters">
+<h2><a class="toc-backref" href="#toc-entry-2">System Parameters</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="42%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Key</th>
+<th class="head">Default</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal">leaflet.routing_provider</tt></td>
+<td><tt class="docutils literal">osrm</tt></td>
+<td>Routing provider:
+<tt class="docutils literal">osrm</tt>,
+<tt class="docutils literal">mapbox</tt>, or
+<tt class="docutils literal">auto</tt></td>
+</tr>
+<tr><td><tt class="docutils literal">leaflet.osrm_url</tt></td>
+<td><tt class="docutils literal"><span class="pre">https://router.project-osrm.org</span></tt></td>
+<td>OSRM server URL</td>
+</tr>
+<tr><td><tt class="docutils literal">leaflet.mapbox_token</tt></td>
+<td>(empty)</td>
+<td>MapBox API access
+token</td>
+</tr>
+<tr><td><tt class="docutils literal">leaflet.max_waypoints</tt></td>
+<td><tt class="docutils literal">25</tt></td>
+<td>Maximum waypoints
+per route request</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="provider-selection">
+<h2><a class="toc-backref" href="#toc-entry-3">Provider Selection</a></h2>
+<ul class="simple">
+<li><strong>osrm</strong>: Always use OSRM (free, no API key required)</li>
+<li><strong>mapbox</strong>: Always use MapBox (requires API token)</li>
+<li><strong>auto</strong>: Try MapBox first if token configured, fallback to OSRM</li>
+</ul>
+</div>
+<div class="section" id="osrm-configuration-recommended">
+<h2><a class="toc-backref" href="#toc-entry-4">OSRM Configuration (Recommended)</a></h2>
+<p>OSRM (Open Source Routing Machine) is free and can be self-hosted.</p>
+<p><strong>Using public server (default):</strong></p>
+<p>No configuration needed. The default URL
+<tt class="docutils literal"><span class="pre">https://router.project-osrm.org</span></tt> provides free routing with
+reasonable rate limits.</p>
+<p><strong>Self-hosted OSRM:</strong></p>
+<p>For production use with high volumes, deploy your own OSRM server:</p>
+<ol class="arabic simple">
+<li>Download OSM data for your region</li>
+<li>Run OSRM backend with Docker or native installation</li>
+<li>Set <tt class="docutils literal">leaflet.osrm_url</tt> to your server address</li>
+</ol>
+<pre class="literal-block">
+leaflet.osrm_url = http://your-osrm-server:5000
+</pre>
+<p>See <a class="reference external" href="https://github.com/Project-OSRM/osrm-backend">https://github.com/Project-OSRM/osrm-backend</a> for setup instructions.</p>
+</div>
+<div class="section" id="mapbox-configuration-premium">
+<h2><a class="toc-backref" href="#toc-entry-5">MapBox Configuration (Premium)</a></h2>
+<p>MapBox offers premium routing with additional features.</p>
+<ol class="arabic simple">
+<li>Create account at <a class="reference external" href="https://www.mapbox.com/">https://www.mapbox.com/</a></li>
+<li>Generate an access token with Directions API scope</li>
+<li>Set the system parameters:</li>
+</ol>
+<pre class="literal-block">
+leaflet.routing_provider = mapbox
+leaflet.mapbox_token = pk.your_mapbox_token_here
+</pre>
+</div>
+<div class="section" id="rate-limiting">
+<h2><a class="toc-backref" href="#toc-entry-6">Rate Limiting</a></h2>
+<p><strong>OSRM Public Server:</strong></p>
+<ul class="simple">
+<li>Shared instance with usage limits</li>
+<li>Suitable for development and low-volume production</li>
+<li>Consider self-hosting for high-volume usage</li>
+</ul>
+<p><strong>MapBox:</strong></p>
+<ul class="simple">
+<li>Free tier: 100,000 requests/month</li>
+<li>Pay-as-you-go pricing beyond free tier</li>
+<li>See <a class="reference external" href="https://www.mapbox.com/pricing">https://www.mapbox.com/pricing</a> for details</li>
+</ul>
+</div>
+<div class="section" id="routing-profiles">
+<h2><a class="toc-backref" href="#toc-entry-7">Routing Profiles</a></h2>
+<p>Both providers support these profiles:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="66%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Profile</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td><tt class="docutils literal">driving</tt></td>
+<td>Car routing (default)</td>
+</tr>
+<tr><td><tt class="docutils literal">walking</tt></td>
+<td>Pedestrian routing</td>
+</tr>
+<tr><td><tt class="docutils literal">cycling</tt></td>
+<td>Bicycle routing</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="troubleshooting">
+<h2><a class="toc-backref" href="#toc-entry-8">Troubleshooting</a></h2>
+<p><strong>Routes not calculating:</strong></p>
+<ol class="arabic simple">
+<li>Verify coordinates are valid (lat: -90 to 90, lng: -180 to 180)</li>
+<li>Check browser console for API errors</li>
+<li>Verify <tt class="docutils literal">leaflet.osrm_url</tt> is accessible</li>
+</ol>
+<p><strong>MapBox authentication errors:</strong></p>
+<ol class="arabic simple">
+<li>Verify token is correctly set in System Parameters</li>
+<li>Check token has Directions API scope enabled</li>
+<li>Verify account has available quota</li>
+</ol>
+</div>
+</div>
+<div class="section" id="usage">
+<h1><a class="toc-backref" href="#toc-entry-9">Usage</a></h1>
+<p>This module provides routing services that can be used both in Python
+(server-side) and JavaScript (client-side).</p>
+<div class="section" id="enabling-routing-in-views">
+<h2><a class="toc-backref" href="#toc-entry-10">Enabling Routing in Views</a></h2>
+<p>To enable routing visualization in a leaflet_map view, add the
+<tt class="docutils literal">routing</tt> attribute:</p>
+<pre class="code xml literal-block">
+<span class="nt">&lt;leaflet_map</span><span class="w">
+    </span><span class="na">field_latitude=</span><span class="s">&quot;partner_latitude&quot;</span><span class="w">
+    </span><span class="na">field_longitude=</span><span class="s">&quot;partner_longitude&quot;</span><span class="w">
+    </span><span class="na">routing=</span><span class="s">&quot;1&quot;</span><span class="w">
+    </span><span class="na">group_by=</span><span class="s">&quot;driver_id&quot;</span><span class="w">
+</span><span class="nt">&gt;</span><span class="w">
+    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;display_name&quot;</span><span class="nt">/&gt;</span><span class="w">
+    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;partner_latitude&quot;</span><span class="nt">/&gt;</span><span class="w">
+    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;partner_longitude&quot;</span><span class="nt">/&gt;</span><span class="w">
+    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;driver_id&quot;</span><span class="nt">/&gt;</span><span class="w">
+    </span><span class="nt">&lt;field</span><span class="w"> </span><span class="na">name=</span><span class="s">&quot;sequence&quot;</span><span class="nt">/&gt;</span><span class="w">
+</span><span class="nt">&lt;/leaflet_map&gt;</span>
+</pre>
+<p>When routing is enabled, the map will draw polylines connecting markers
+in sequence order, grouped by the <tt class="docutils literal">group_by</tt> field if configured.</p>
+</div>
+<div class="section" id="python-mixin-usage">
+<h2><a class="toc-backref" href="#toc-entry-11">Python Mixin Usage</a></h2>
+<p>The <tt class="docutils literal">leaflet.routing.mixin</tt> provides routing capabilities for your
+models:</p>
+<pre class="code python literal-block">
+<span class="kn">from</span><span class="w"> </span><span class="nn">odoo</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span><span class="w">
+
+</span><span class="k">class</span><span class="w"> </span><span class="nc">DeliveryRoute</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span><span class="w">
+</span>    <span class="n">_name</span> <span class="o">=</span> <span class="s1">'delivery.route'</span><span class="w">
+</span>    <span class="n">_inherit</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'leaflet.routing.mixin'</span><span class="p">]</span><span class="w">
+
+</span>    <span class="k">def</span><span class="w"> </span><span class="nf">compute_route_distance</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span><span class="w">
+        </span><span class="sd">&quot;&quot;&quot;Calculate total route distance and duration.&quot;&quot;&quot;</span><span class="w">
+</span>        <span class="k">for</span> <span class="n">route</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span><span class="w">
+</span>            <span class="n">waypoints</span> <span class="o">=</span> <span class="p">[</span><span class="w">
+</span>                <span class="p">[</span><span class="n">stop</span><span class="o">.</span><span class="n">partner_latitude</span><span class="p">,</span> <span class="n">stop</span><span class="o">.</span><span class="n">partner_longitude</span><span class="p">]</span><span class="w">
+</span>                <span class="k">for</span> <span class="n">stop</span> <span class="ow">in</span> <span class="n">route</span><span class="o">.</span><span class="n">stop_ids</span><span class="o">.</span><span class="n">sorted</span><span class="p">(</span><span class="s1">'sequence'</span><span class="p">)</span><span class="w">
+</span>                <span class="k">if</span> <span class="n">stop</span><span class="o">.</span><span class="n">partner_latitude</span> <span class="ow">and</span> <span class="n">stop</span><span class="o">.</span><span class="n">partner_longitude</span><span class="w">
+</span>            <span class="p">]</span><span class="w">
+
+</span>            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">waypoints</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span><span class="w">
+</span>                <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_route</span><span class="p">(</span><span class="n">waypoints</span><span class="p">,</span> <span class="n">profile</span><span class="o">=</span><span class="s1">'driving'</span><span class="p">)</span><span class="w">
+</span>                <span class="k">if</span> <span class="n">result</span><span class="p">:</span><span class="w">
+</span>                    <span class="n">route</span><span class="o">.</span><span class="n">distance</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'distance'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># meters</span><span class="w">
+</span>                    <span class="n">route</span><span class="o">.</span><span class="n">duration</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'duration'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># seconds</span>
+</pre>
+<div class="section" id="available-methods">
+<h3><a class="toc-backref" href="#toc-entry-12">Available Methods</a></h3>
+<p><strong>``get_route(waypoints, profile=’driving’)``</strong></p>
+<p>Get a route between waypoints.</p>
+<ul class="simple">
+<li><tt class="docutils literal">waypoints</tt>: List of <tt class="docutils literal">[lat, lng]</tt> coordinate pairs</li>
+<li><tt class="docutils literal">profile</tt>: Routing profile (<tt class="docutils literal">driving</tt>, <tt class="docutils literal">walking</tt>, <tt class="docutils literal">cycling</tt>)</li>
+<li>Returns: <tt class="docutils literal">dict</tt> with <tt class="docutils literal">geometry</tt>, <tt class="docutils literal">distance</tt>, <tt class="docutils literal">duration</tt>,
+<tt class="docutils literal">legs</tt></li>
+</ul>
+<p><strong>``get_optimized_route(waypoints, profile=’driving’, roundtrip=False)``</strong></p>
+<p>Get an optimized route (TSP - Traveling Salesman Problem).</p>
+<ul class="simple">
+<li><tt class="docutils literal">waypoints</tt>: List of <tt class="docutils literal">[lat, lng]</tt> coordinate pairs</li>
+<li><tt class="docutils literal">profile</tt>: Routing profile</li>
+<li><tt class="docutils literal">roundtrip</tt>: Whether to return to starting point</li>
+<li>Returns: <tt class="docutils literal">dict</tt> with route data and <tt class="docutils literal">waypoint_order</tt></li>
+</ul>
+<p><strong>``get_distance_matrix(origins, destinations=None)``</strong></p>
+<p>Get distances and durations between multiple points.</p>
+<ul class="simple">
+<li><tt class="docutils literal">origins</tt>: List of <tt class="docutils literal">[lat, lng]</tt> pairs</li>
+<li><tt class="docutils literal">destinations</tt>: List of <tt class="docutils literal">[lat, lng]</tt> pairs (defaults to origins)</li>
+<li>Returns: <tt class="docutils literal">dict</tt> with <tt class="docutils literal">distances</tt> and <tt class="docutils literal">durations</tt> matrices</li>
+</ul>
+</div>
+</div>
+<div class="section" id="javascript-service-usage">
+<h2><a class="toc-backref" href="#toc-entry-13">JavaScript Service Usage</a></h2>
+<p>For client-side routing, import the <tt class="docutils literal">RoutingService</tt>:</p>
+<pre class="code javascript literal-block">
+<span class="k">import</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">RoutingService</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="kr">from</span><span class="w"> </span><span class="s2">&quot;&#64;web_leaflet_routing/routing_service.esm&quot;</span><span class="p">;</span><span class="w">
+
+</span><span class="kd">const</span><span class="w"> </span><span class="nx">routingService</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ow">new</span><span class="w"> </span><span class="nx">RoutingService</span><span class="p">();</span><span class="w">
+
+</span><span class="c1">// Get a simple route</span><span class="w">
+</span><span class="kd">const</span><span class="w"> </span><span class="nx">waypoints</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">[</span><span class="o">-</span><span class="mf">23.550520</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">46.633308</span><span class="p">],</span><span class="w">  </span><span class="c1">// Sao Paulo</span><span class="w">
+    </span><span class="p">[</span><span class="o">-</span><span class="mf">22.906847</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">43.172896</span><span class="p">],</span><span class="w">  </span><span class="c1">// Rio de Janeiro</span><span class="w">
+</span><span class="p">];</span><span class="w">
+
+</span><span class="kd">const</span><span class="w"> </span><span class="nx">route</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">routingService</span><span class="p">.</span><span class="nx">getRoute</span><span class="p">(</span><span class="nx">waypoints</span><span class="p">,</span><span class="w"> </span><span class="s1">'driving'</span><span class="p">);</span><span class="w">
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">route</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Distance: </span><span class="si">${</span><span class="nx">routingService</span><span class="p">.</span><span class="nx">formatDistance</span><span class="p">(</span><span class="nx">route</span><span class="p">.</span><span class="nx">distance</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w">
+    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`Duration: </span><span class="si">${</span><span class="nx">routingService</span><span class="p">.</span><span class="nx">formatDuration</span><span class="p">(</span><span class="nx">route</span><span class="p">.</span><span class="nx">duration</span><span class="p">)</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span><span class="w">
+
+    </span><span class="c1">// route.geometry contains [lat, lng] pairs for drawing polylines</span><span class="w">
+    </span><span class="nx">L</span><span class="p">.</span><span class="nx">polyline</span><span class="p">(</span><span class="nx">route</span><span class="p">.</span><span class="nx">geometry</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="nx">color</span><span class="o">:</span><span class="w"> </span><span class="s1">'blue'</span><span class="p">}).</span><span class="nx">addTo</span><span class="p">(</span><span class="nx">map</span><span class="p">);</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="c1">// Get optimized route</span><span class="w">
+</span><span class="kd">const</span><span class="w"> </span><span class="nx">optimized</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">await</span><span class="w"> </span><span class="nx">routingService</span><span class="p">.</span><span class="nx">getOptimizedRoute</span><span class="p">(</span><span class="nx">waypoints</span><span class="p">,</span><span class="w"> </span><span class="s1">'driving'</span><span class="p">,</span><span class="w"> </span><span class="kc">false</span><span class="p">);</span><span class="w">
+</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nx">optimized</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Optimal order:'</span><span class="p">,</span><span class="w"> </span><span class="nx">optimized</span><span class="p">.</span><span class="nx">waypointOrder</span><span class="p">);</span><span class="w">
+</span><span class="p">}</span>
+</pre>
+</div>
+<div class="section" id="route-response-structure">
+<h2><a class="toc-backref" href="#toc-entry-14">Route Response Structure</a></h2>
+<p>Both Python and JavaScript methods return similar structures:</p>
+<pre class="code javascript literal-block">
+<span class="p">{</span><span class="w">
+    </span><span class="nx">geometry</span><span class="o">:</span><span class="w"> </span><span class="p">[[</span><span class="nx">lat</span><span class="p">,</span><span class="w"> </span><span class="nx">lng</span><span class="p">],</span><span class="w"> </span><span class="p">...],</span><span class="w">  </span><span class="c1">// Polyline coordinates</span><span class="w">
+    </span><span class="nx">distance</span><span class="o">:</span><span class="w"> </span><span class="mf">450000</span><span class="p">,</span><span class="w">             </span><span class="c1">// Total distance in meters</span><span class="w">
+    </span><span class="nx">duration</span><span class="o">:</span><span class="w"> </span><span class="mf">18000</span><span class="p">,</span><span class="w">              </span><span class="c1">// Total duration in seconds</span><span class="w">
+    </span><span class="nx">legs</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w">                       </span><span class="c1">// Segments between waypoints</span><span class="w">
+        </span><span class="p">{</span><span class="w">
+            </span><span class="nx">distance</span><span class="o">:</span><span class="w"> </span><span class="mf">225000</span><span class="p">,</span><span class="w">
+            </span><span class="nx">duration</span><span class="o">:</span><span class="w"> </span><span class="mf">9000</span><span class="p">,</span><span class="w">
+            </span><span class="nx">steps</span><span class="o">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+                </span><span class="p">{</span><span class="w">
+                    </span><span class="nx">distance</span><span class="o">:</span><span class="w"> </span><span class="mf">1500</span><span class="p">,</span><span class="w">
+                    </span><span class="nx">duration</span><span class="o">:</span><span class="w"> </span><span class="mf">120</span><span class="p">,</span><span class="w">
+                    </span><span class="nx">instruction</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Turn right&quot;</span><span class="p">,</span><span class="w">
+                    </span><span class="nx">name</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;Main Street&quot;</span><span class="w">
+                </span><span class="p">}</span><span class="w">
+            </span><span class="p">]</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">],</span><span class="w">
+    </span><span class="nx">provider</span><span class="o">:</span><span class="w"> </span><span class="s2">&quot;osrm&quot;</span><span class="w">              </span><span class="c1">// Which provider was used</span><span class="w">
+</span><span class="p">}</span>
+</pre>
+</div>
+</div>
 <div class="section" id="bug-tracker">
-<h1><a class="toc-backref" href="#toc-entry-1">Bug Tracker</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-15">Bug Tracker</a></h1>
 <p>Bugs are tracked on <a class="reference external" href="https://github.com/OCA/geospatial/issues">GitHub Issues</a>.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
@@ -402,21 +697,21 @@ If you spotted it first, help us to smash it by providing a detailed and welcome
 <p>Do not contact contributors directly about support or help with technical issues.</p>
 </div>
 <div class="section" id="credits">
-<h1><a class="toc-backref" href="#toc-entry-2">Credits</a></h1>
+<h1><a class="toc-backref" href="#toc-entry-16">Credits</a></h1>
 <div class="section" id="authors">
-<h2><a class="toc-backref" href="#toc-entry-3">Authors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-17">Authors</a></h2>
 <ul class="simple">
 <li>KMEE</li>
 </ul>
 </div>
 <div class="section" id="contributors">
-<h2><a class="toc-backref" href="#toc-entry-4">Contributors</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-18">Contributors</a></h2>
 <ul class="simple">
 <li>Luis Felipe Mileo <a class="reference external" href="mailto:mileo&#64;kmee.com.br">mileo&#64;kmee.com.br</a></li>
 </ul>
 </div>
 <div class="section" id="maintainers">
-<h2><a class="toc-backref" href="#toc-entry-5">Maintainers</a></h2>
+<h2><a class="toc-backref" href="#toc-entry-19">Maintainers</a></h2>
 <p>This module is maintained by the OCA.</p>
 <a class="reference external image-reference" href="https://odoo-community.org">
 <img alt="Odoo Community Association" src="https://odoo-community.org/logo.png" />
