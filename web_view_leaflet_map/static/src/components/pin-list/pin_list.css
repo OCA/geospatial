@@ -222,7 +222,7 @@
     flex-shrink: 0;
     padding: 4px 8px;
     font-size: 12px;
-    opacity: 0;
+    opacity: 0.6;
     transition: opacity 0.15s ease;
 }
 

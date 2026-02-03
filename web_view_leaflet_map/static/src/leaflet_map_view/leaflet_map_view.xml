@@ -23,6 +23,19 @@ License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
                 className="model.useSampleModel ? 'o_view_sample_data' : ''"
                 display="props.display"
             >
+                <!-- Create button in control panel -->
+                <t t-set-slot="control-panel-create-button">
+                    <button
+                        type="button"
+                        class="btn btn-primary o_list_button_add"
+                        data-hotkey="c"
+                        t-on-click="onClickCreate"
+                        data-bounce-button=""
+                    >
+                        New
+                    </button>
+                </t>
+
                 <!-- Cog Menu (settings/export) in control panel -->
                 <t t-set-slot="control-panel-additional-actions">
                     <CogMenu />

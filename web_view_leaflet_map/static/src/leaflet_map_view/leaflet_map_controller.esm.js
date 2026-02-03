@@ -14,6 +14,7 @@ import {Layout} from "@web/search/layout";
 import {SearchBar} from "@web/search/search_bar/search_bar";
 import {useSearchBarToggler} from "@web/search/search_bar/search_bar_toggler";
 import {CogMenu} from "@web/search/cog_menu/cog_menu";
+import {executeButtonCallback} from "@web/views/view_button/view_button_hook";
 
 /**
  * LeafletMapController is the main controller for the leaflet map view.
@@ -36,17 +37,35 @@ export class LeafletMapController extends Component {
         this.action = useService("action");
         this.notification = useService("notification");
 
+        // Root ref for button callbacks and action state management
+        this.rootRef = useRef("root");
+
         // Use the standard model hook that integrates with WithSearch
         this.model = useModelWithSampleData(this.props.Model, this.props.modelParams);
 
         // Setup action hook for state management
         useSetupAction({
-            rootRef: useRef("root"),
+            rootRef: this.rootRef,
             getLocalState: () => ({metaData: this.model.metaData}),
         });
 
         // Setup search bar toggler for mobile responsiveness
         this.searchBarToggler = useSearchBarToggler();
+    }
+
+    /**
+     * Handle click on Create button.
+     * Uses executeButtonCallback for proper button state management.
+     */
+    async onClickCreate() {
+        return executeButtonCallback(this.rootRef.el, () => this.createRecord());
+    }
+
+    /**
+     * Create a new record using the view's createRecord prop.
+     */
+    async createRecord() {
+        await this.props.createRecord();
     }
 
     /**
