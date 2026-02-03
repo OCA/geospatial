@@ -69,6 +69,18 @@
     padding-top: 8px;
 }
 
+.o_map_popup .o_popup_actions .btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.o_map_popup .o_popup_actions .btn-primary:hover {
+    color: #fff;
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
 /* Marker icon styling */
 .leaflet_marker_icon {
     background-color: white;
