@@ -28,9 +28,6 @@ This is a generic component for any model that supports resequencing.
                     <span class="o_pin_list_title">
                         <t t-esc="props.panelTitle" />
                     </span>
-                    <span class="o_pin_list_count badge bg-primary ms-2">
-                        <t t-esc="locatedCount" />
-                    </span>
                 </t>
             </div>
 
