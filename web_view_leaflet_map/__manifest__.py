@@ -34,7 +34,7 @@
             "web_view_leaflet_map/static/src/leaflet_map_view/leaflet_map_view.esm.js",
             "web_view_leaflet_map/static/src/leaflet_map_view/leaflet_map_view.xml",
             # Shared styles
-            "web_view_leaflet_map/static/src/components/map-component/web_view_leaflet_map.css",
+            "web_view_leaflet_map/static/src/views/leaflet_map/leaflet_map_renderer.css",
         ],
     },
     "installable": True,
