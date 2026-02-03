@@ -161,6 +161,7 @@ This is a generic component for any model that supports resequencing.
                                             <t t-if="getRecordAddress(record)">
                                                 <div
                                                     class="o_pin_address text-muted small"
+                                                    t-att-title="getRecordAddress(record)"
                                                 >
                                                     <t
                                                         t-esc="getRecordAddress(record)"
