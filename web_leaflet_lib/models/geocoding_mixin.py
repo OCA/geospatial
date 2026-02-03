@@ -9,6 +9,8 @@ import requests
 
 from odoo import api, models
 
+from .routing_service import RoutingServiceFactory
+
 _logger = logging.getLogger(__name__)
 
 # Throttling for Nominatim API (OSM requirement: max 1 request per second)
@@ -50,8 +52,7 @@ class GeocodingMixin(models.AbstractModel):
     @api.model
     def _get_mapbox_token(self):
         """Get MapBox API token if configured."""
-        config = self.env["ir.config_parameter"].sudo()
-        return config.get_param("leaflet.mapbox_token", "")
+        return RoutingServiceFactory(self.env).get_mapbox_token()
 
     @api.model
     def _get_nominatim_url(self):
