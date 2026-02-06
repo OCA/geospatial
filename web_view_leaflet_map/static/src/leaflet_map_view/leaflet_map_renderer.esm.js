@@ -144,12 +144,17 @@ export class LeafletMapRenderer extends Component {
 
     /**
      * Validates that coordinates are within valid ranges.
+     * Accepts 0.0 as valid (equator/prime meridian), rejects null/undefined.
      * @param {Number} lat - Latitude
      * @param {Number} lng - Longitude
      * @returns {Boolean}
      */
     validateCoordinates(lat, lng) {
         try {
+            // Reject null, undefined, empty string
+            if (lat === null || lat === undefined || lat === "") return false;
+            if (lng === null || lng === undefined || lng === "") return false;
+
             const parsedLat = parseFloat(lat);
             const parsedLng = parseFloat(lng);
             return (
@@ -342,7 +347,8 @@ export class LeafletMapRenderer extends Component {
         const lat = record[this.fieldLatitude];
         const lng = record[this.fieldLongitude];
 
-        if (!lat || !lng || !this.validateCoordinates(lat, lng)) {
+        // Use validateCoordinates for proper check (0.0 is valid)
+        if (!this.validateCoordinates(lat, lng)) {
             return null;
         }
 

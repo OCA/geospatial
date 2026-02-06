@@ -38,6 +38,8 @@ export class RoutingRenderer {
      * @param {Object} config - Configuration options
      * @param {String} config.groupBy - Field name to group records by
      * @param {String} config.sequenceField - Field name for sequencing (default: "sequence")
+     * @param {String} config.stopTypeField - Field name for stop type (default: null)
+     * @param {String} config.stopTypeOrderField - Field name for stop type order (default: null)
      * @param {String} config.latitudeField - Field name for latitude (default: "latitude")
      * @param {String} config.longitudeField - Field name for longitude (default: "longitude")
      * @param {Boolean} config.useRealRouting - Use OSRM routing (default: true)
@@ -50,6 +52,8 @@ export class RoutingRenderer {
         const {
             groupBy = null,
             sequenceField = "sequence",
+            stopTypeField = null,
+            stopTypeOrderField = "stop_type_order",
             latitudeField = "latitude",
             longitudeField = "longitude",
             useRealRouting = true,
@@ -67,6 +71,8 @@ export class RoutingRenderer {
             latitudeField,
             longitudeField,
             sequenceField,
+            stopTypeField,
+            stopTypeOrderField,
             unassignedGroupName,
             validateCoordinates,
         });
@@ -80,9 +86,24 @@ export class RoutingRenderer {
                 continue;
             }
 
-            // Sort records by sequence
-            const sorted = [...group.records].sort(
-                (a, b) => (a.sequence || 0) - (b.sequence || 0)
+            // Sort records by stop_type_order (0=origin, 1=delivery, 2=destination) then by sequence
+            const sorted = [...group.records].sort((a, b) => {
+                // Primary sort by stopTypeOrder (already computed as number in _groupRecords)
+                if (a.stopTypeOrder !== b.stopTypeOrder) {
+                    return a.stopTypeOrder - b.stopTypeOrder;
+                }
+                // Secondary sort by sequence
+                return (a.sequence || 0) - (b.sequence || 0);
+            });
+
+            // Debug logging for route order
+            console.debug(
+                `[RoutingRenderer] Group ${groupKey} route order (${sorted.length} stops):`,
+                sorted.map((r) => ({
+                    stopType: r.stopType,
+                    stopTypeOrder: r.stopTypeOrder,
+                    sequence: r.sequence,
+                }))
             );
 
             const waypoints = sorted.map((r) => [r.lat, r.lng]);
@@ -151,6 +172,8 @@ export class RoutingRenderer {
             latitudeField,
             longitudeField,
             sequenceField,
+            stopTypeField,
+            stopTypeOrderField,
             unassignedGroupName,
             validateCoordinates,
         } = options;
@@ -182,10 +205,44 @@ export class RoutingRenderer {
                 };
             }
 
+            // Extract stop type order - handle 0 as valid value
+            // First try the explicit stopTypeOrderField
+            let stopTypeOrderValue = 1; // Default to delivery
+            if (
+                stopTypeOrderField &&
+                record[stopTypeOrderField] !== undefined &&
+                record[stopTypeOrderField] !== null
+            ) {
+                stopTypeOrderValue = Number(record[stopTypeOrderField]);
+                if (isNaN(stopTypeOrderValue)) {
+                    stopTypeOrderValue = 1;
+                }
+            } else if (stopTypeField) {
+                // Fallback: derive from stop_type field
+                const stopType = record[stopTypeField];
+                if (stopType === "origin") {
+                    stopTypeOrderValue = 0;
+                } else if (stopType === "destination") {
+                    stopTypeOrderValue = 2;
+                }
+            }
+
+            const stopTypeValue = stopTypeField ? record[stopTypeField] : null;
+
+            // Debug: log raw field values
+            console.debug(`[RoutingRenderer] Record ${record.id}:`, {
+                stopType: stopTypeValue,
+                rawStopTypeOrder: record[stopTypeOrderField],
+                computedStopTypeOrder: stopTypeOrderValue,
+                sequence: record[sequenceField],
+            });
+
             groups[groupKey].records.push({
                 lat,
                 lng,
                 sequence: record[sequenceField] || 0,
+                stopType: stopTypeValue,
+                stopTypeOrder: stopTypeOrderValue,
                 record,
             });
         }
