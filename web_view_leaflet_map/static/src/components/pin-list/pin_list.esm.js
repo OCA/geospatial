@@ -189,7 +189,7 @@ export class PinList extends Component {
      * Toggle group collapse state
      */
     toggleGroup(groupName) {
-        this.state.collapsedGroups[groupName] = !this.state.collapsedGroups[groupName];
+        this.state.collapsedGroups[groupName] = !this.isGroupCollapsed(groupName);
     }
 
     /**

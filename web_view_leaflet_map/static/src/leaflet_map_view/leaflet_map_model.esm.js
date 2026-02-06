@@ -299,10 +299,25 @@ export class LeafletMapModel extends Model {
 
         try {
             await this.orm.write(this.metaData.resModel, [recordId], updates);
+            // Reload data to reflect server-side changes
+            this.data = await this._fetchData(this.metaData);
+            this.notify();
             return {success: true};
         } catch (error) {
-            return {success: false, error: error.message};
+            return {success: false, error: this._extractErrorMessage(error)};
         }
+    }
+
+    /**
+     * Extract a user-friendly error message from an RPC error.
+     * Odoo RPCError stores the actual message in error.data.message,
+     * while error.message is the generic "Odoo Server Error".
+     *
+     * @param {Error} error - The caught error
+     * @returns {String} User-friendly error message
+     */
+    _extractErrorMessage(error) {
+        return error.data?.message || error.message || String(error);
     }
 
     /**
