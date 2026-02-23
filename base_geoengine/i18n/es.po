@@ -19,7 +19,6 @@ msgstr ""
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/models/base.py:0
-#, python-format
 msgid "%s column does not exists or is not a geo field"
 msgstr "La columna %s no existe o no es un campo geográfico"
 
@@ -31,15 +30,18 @@ msgstr "Activo en el arranque"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
-#, python-format
 msgid "Add new value"
 msgstr ""
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
-#, python-format
 msgid "Add tag"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__attribute_field_id_domain
+msgid "Attribute Field Id Domain"
 msgstr ""
 
 #. module: base_geoengine
@@ -142,7 +144,6 @@ msgstr "Dimensiones"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.xml:0
-#, python-format
 msgid "Discard"
 msgstr "Descartar"
 
@@ -166,21 +167,18 @@ msgstr "Sistema de gestión de almacenes (SGA) a distancia"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.esm.js:0
-#, python-format
 msgid "Domain editing"
 msgstr "Editando Dominio"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.esm.js:0
-#, python-format
 msgid "Editing Raster Layer"
 msgstr ""
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.esm.js:0
-#, python-format
 msgid "Editing vector layer"
 msgstr "Edición de capas vectoriales"
 
@@ -192,7 +190,6 @@ msgstr "Fin de la clase de color"
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/geo_db.py:0
-#, python-format
 msgid ""
 "Error, can not automatically initialize spatial postgis support. Database "
 "user may have to be superuser and postgres/postgis extensions with their "
@@ -236,19 +233,17 @@ msgstr "General"
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/fields.py:0
-#, python-format
 msgid ""
-"Geo Value %(geom_type)s must be of the same type "
-"%(geo_type)s                         as fields"
+"Geo Value %(geom_type)s must be of the same type %"
+"(geo_type)s                         as fields"
 msgstr ""
 
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/fields.py:0
-#, python-format
 msgid ""
-"Geo dimention modification is not implemented. We can not change dimention "
-"%(data)s to %(dim)s"
+"Geo dimention modification is not implemented. We can not change dimention %"
+"(data)s to %(dim)s"
 msgstr ""
 "La modificación de la dimensión geográfica no está implementada. No podemos "
 "cambiar la dimensión %(data)s a %(dim)s"
@@ -261,7 +256,6 @@ msgstr "Campo geográfico"
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/fields.py:0
-#, python-format
 msgid ""
 "Geo type modification is not implemented. We can not change type %(data)s to "
 "%(geo_type)s"
@@ -287,7 +281,6 @@ msgstr "Fecha de Geoingeniería"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_view.esm.js:0
-#, python-format
 msgid "Geoengine"
 msgstr "Geoingeniería"
 
@@ -396,7 +389,6 @@ msgstr "La capa se mostrará al inicio si está marcada."
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.xml:0
-#, python-format
 msgid "Layers ("
 msgstr "Capas ("
 
@@ -423,7 +415,6 @@ msgstr "Extensión máxima"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_arch_parser.esm.js:0
-#, python-format
 msgid "Missing ${INFO_BOX_ATTRIBUTE} template."
 msgstr "Falta la plantilla ${INFO_BOX_ATTRIBUTE}."
 
@@ -475,14 +466,12 @@ msgstr "Necesidad de proporcionar al menos un parámetro de CAPAS"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.esm.js:0
-#, python-format
 msgid "New record"
 msgstr "Nuevo récord"
 
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/models/base.py:0
-#, python-format
 msgid ""
 "No GeoEngine view defined for the model %s.                         Please "
 "create a view or modify view mode"
@@ -491,7 +480,6 @@ msgstr ""
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/models/base.py:0
-#, python-format
 msgid "No raster layer for view %s"
 msgstr "No hay capa ráster para la vista %s"
 
@@ -503,7 +491,6 @@ msgstr "Número de clase"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_renderer/geoengine_renderer.xml:0
-#, python-format
 msgid "OPEN"
 msgstr "ABRIR"
 
@@ -540,7 +527,7 @@ msgstr "Parámetros"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params_wms
-msgid "Params Wms"
+msgid "Params WMS"
 msgstr ""
 
 #. module: base_geoengine
@@ -619,14 +606,12 @@ msgstr "Capas Ráster"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.xml:0
-#, python-format
 msgid "Rasters"
 msgstr "Rásteres"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/records_panel.xml:0
-#, python-format
 msgid "Records ("
 msgstr "Registros ("
 
@@ -644,7 +629,6 @@ msgstr "Vista relacionada"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
-#, python-format
 msgid "Remove tag"
 msgstr ""
 
@@ -662,13 +646,12 @@ msgstr "Modo de representación"
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/fields.py:0
-#, python-format
 msgid ""
 "Reprojection of column is not implemented. We can not change srid %(srid)s "
 "to %(data)s"
 msgstr ""
-"La reproyección de columna no está implementada. No podemos cambiar srid "
-"%(srid)s por %(data)s"
+"La reproyección de columna no está implementada. No podemos cambiar srid %"
+"(srid)s por %(data)s"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__request_encoding
@@ -688,14 +671,12 @@ msgstr "Extensión de mapa restringida"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.xml:0
-#, python-format
 msgid "Save"
 msgstr "Guardar"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
-#, python-format
 msgid "Search..."
 msgstr "Buscar..."
 
@@ -717,21 +698,18 @@ msgstr "URL de servicio"
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/geo_convertion_helper.py:0
-#, python-format
 msgid "Shapely or geojson are not available in the sys path"
 msgstr "Shapely o geojson no están disponibles en la ruta del sistema"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field_input/domain_selector_geo_field_input.esm.js:0
-#, python-format
 msgid "Subdomain"
 msgstr "Subdominio"
 
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/models/geo_vector_layer.py:0
-#, python-format
 msgid "The geo_field_id must be a field in %s model"
 msgstr "El geo_field_id debe ser un campo del modelo %s"
 
@@ -787,7 +765,6 @@ msgstr "Capas vectoriales"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.xml:0
-#, python-format
 msgid "Vectors"
 msgstr "Vectores"
 
@@ -829,14 +806,12 @@ msgstr "Opciones WMTS"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.esm.js:0
-#, python-format
 msgid "Warning"
 msgstr "Aviso"
 
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/geo_convertion_helper.py:0
-#, python-format
 msgid ""
 "Write/create/search geo type must be wkt/geojson string or must respond to "
 "wkt"
@@ -847,7 +822,6 @@ msgstr ""
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.esm.js:0
-#, python-format
 msgid ""
 "You are about to create a new record without having displayed all the "
 "others. A risk of overlap could occur. Would you like to continue ?"
@@ -858,21 +832,18 @@ msgstr ""
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/models/base.py:0
-#, python-format
 msgid "You must at least provide one of domain or geo_domain"
 msgstr "Debe proporcionar al menos uno de los dominios o geo_domain"
 
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/models/geo_vector_layer.py:0
-#, python-format
 msgid "You need to provide an attribute that exists in %s model"
 msgstr "Necesita proporcionar un atributo que existe en el modelo %s"
 
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/models/geo_vector_layer.py:0
-#, python-format
 msgid "You need to select a numeric field"
 msgstr "Debe seleccionar un campo numérico"
 
@@ -899,35 +870,30 @@ msgstr "ej. png"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
-#, python-format
 msgid "geo_contains"
 msgstr "geo_contains (geo_contenedores)"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
-#, python-format
 msgid "geo_equal"
 msgstr "geo_equal (geo_igual)"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
-#, python-format
 msgid "geo_greater"
 msgstr "geo_greater (geo_mayor)"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
-#, python-format
 msgid "geo_intersect"
 msgstr "geo_intersect (geo_intersección)"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
-#, python-format
 msgid "geo_lesser"
 msgstr "geo_lesser (geo_menor)"
 
@@ -964,7 +930,6 @@ msgstr "geo_polygon (geo_polígono)"
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/models/base.py:0
-#, python-format
 msgid "geo_search is deprecated: uses search method defined on base model"
 msgstr ""
 "geo_search está obsoleto: utiliza el método de búsqueda definido en el "
@@ -973,21 +938,18 @@ msgstr ""
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
-#, python-format
 msgid "geo_touch"
 msgstr "geo_touch (geo_táctil)"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
-#, python-format
 msgid "geo_within"
 msgstr "geo_within (geo_interior)"
 
 #. module: base_geoengine
 #. odoo-python
 #: code:addons/base_geoengine/fields.py:0
-#, python-format
 msgid ""
 "geometry_columns table seems to be corrupted. SRID check is not possible"
 msgstr ""
@@ -1003,14 +965,12 @@ msgstr "valor hexadecimal"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_number_field/domain_selector_number_field.esm.js:0
-#, python-format
 msgid "in active_ids"
 msgstr "En active_ids"
 
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_number_field/domain_selector_number_field.esm.js:0
-#, python-format
 msgid "not in active_ids"
 msgstr "No en active_ids"
 
