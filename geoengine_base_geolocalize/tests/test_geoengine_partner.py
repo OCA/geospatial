@@ -1,20 +1,59 @@
 # Copyright 2015-2017 ACSONE SA/NV (<http://acsone.eu>)
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
-import requests
+import re
+
+from requests import PreparedRequest, Response, Session
 
 from odoo.tests.common import TransactionCase
+
+PAYLOAD = [
+    {
+        "place_id": 108312997,
+        "licence": "Data © OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+        "osm_type": "way",
+        "osm_id": 318222295,
+        "lat": "49.9549071",
+        "lon": "5.4085830",
+        "class": "highway",
+        "type": "unclassified",
+        "place_rank": 26,
+        "importance": 0.053386585030899485,
+        "addresstype": "road",
+        "name": "Rue Au Bois la Dame",
+        "display_name": (
+            "Rue Au Bois la Dame, Séviscourt, Bras, Libramont-Chevigny,"
+            "Neufchâteau, Luxembourg, Wallonia, 6800, Belgium"
+        ),
+        "boundingbox": ["49.9535323", "49.9566288", "5.4053940", "5.4115772"],
+    }
+]
+
+TEST_URL = "https://nominatim.openstreetmap.org/search?format=json&q=Rue+au+bois+la+dame%2C+6800%2C+Belgium"
 
 
 class TestGeoenginePartner(TransactionCase):
     @classmethod
     def setUpClass(cls):
-        cls._super_send = requests.Session.send
         super().setUpClass()
 
+        cls.nominatim_osm_request_re = re.compile(
+            r"https://nominatim.openstreetmap.org/search\?format=json&q=(.*)"
+        )
+
     @classmethod
-    def _request_handler(cls, s, r, /, **kw):
-        """Don't block external requests."""
-        return cls._super_send(s, r, **kw)
+    def _request_handler(cls, session: Session, request: PreparedRequest, /, **kwargs):
+        response = Response()
+        response.status_code = 200
+        url = request.url.lower()
+        matching = cls.nominatim_osm_request_re.match(url)
+        if matching:
+            response = Response()
+            response.status_code = 200
+            query = matching.group(1)
+            if query == "rue+au+bois+la+dame%2c+6800%2c+belgium":
+                response.json = lambda: PAYLOAD
+                return response
+        return super()._request_handler(session, request, **kwargs)
 
     def test_get_geo_point(self):
         partner_id = self.env.ref("base.user_root").partner_id
