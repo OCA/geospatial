@@ -42,8 +42,6 @@ class TestGeoenginePartner(TransactionCase):
 
     @classmethod
     def _request_handler(cls, session: Session, request: PreparedRequest, /, **kwargs):
-        response = Response()
-        response.status_code = 200
         url = request.url.lower()
         matching = cls.nominatim_osm_request_re.match(url)
         if matching:
