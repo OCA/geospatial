@@ -28,8 +28,6 @@ PAYLOAD = [
     }
 ]
 
-TEST_URL = "https://nominatim.openstreetmap.org/search?format=json&q=Rue+au+bois+la+dame%2C+6800%2C+Belgium"
-
 
 class TestGeoenginePartner(TransactionCase):
     @classmethod
