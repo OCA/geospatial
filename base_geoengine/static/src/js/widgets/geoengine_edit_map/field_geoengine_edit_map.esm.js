@@ -1,15 +1,16 @@
 /** @odoo-module **/
 
 /* global document */
-/* global ol */
-/* global chroma */
+
+// Libraries loaded dynamically via geoengine_libs.esm.js
+let ol, chroma;
 
 /**
  * Copyright 2023 ACSONE SA/NV
  */
 
 import {Component, onMounted, onRendered, onWillStart, useEffect} from "@odoo/owl";
-import {loadBundle} from "@web/core/assets";
+import {loadMapLibs} from "../../geoengine_libs.esm";
 import {registry} from "@web/core/registry";
 import {standardFieldProps} from "@web/views/fields/standard_field_props";
 import {useService} from "@web/core/utils/hooks";
@@ -20,9 +21,12 @@ export class FieldGeoEngineEditMap extends Component {
         this.id = `map_${this.props.id}`;
         this.orm = useService("orm");
 
-        onWillStart(() =>
-            Promise.all([loadBundle("base_geoengine.assets_jsLibs_geoengine")])
-        );
+        // Load libraries via shared loader
+        onWillStart(async () => {
+            const libs = await loadMapLibs();
+            ol = libs.ol;
+            chroma = libs.chroma;
+        });
 
         // Is executed when component is mounted.
         onMounted(async () => {

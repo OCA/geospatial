@@ -23,18 +23,10 @@
         "web.assets_backend": [
             "base_geoengine/static/src/js/**/*",
             "base_geoengine/static/src/css/style.css",
-            "web/static/src/libs/fontawesome/css/font-awesome.css",
-            ("include", "web._assets_helpers"),
-            "web/static/src/scss/pre_variables.scss",
-            "web/static/lib/bootstrap/scss/_variables.scss",
-            ("include", "web._assets_bootstrap"),
+            "base_geoengine/static/lib/geostats-2.1.0/geostats.css",
         ],
-        "base_geoengine.assets_jsLibs_geoengine": [
-            "/base_geoengine/static/lib/ol-10.5.0/ol.js",
-            "/base_geoengine/static/lib/chromajs-3.1.2/chroma.js",
-            "/base_geoengine/static/lib/geostats-2.1.0/geostats.js",
-            "/base_geoengine/static/lib/geostats-2.1.0/geostats.css",
-        ],
+        # Note: Third-party libraries (ol.js, chroma.js, geostats.js) are loaded
+        # dynamically via loadJS() in geoengine_libs.esm.js to avoid bundler issues
     },
     "external_dependencies": {"python": ["shapely", "geojson"]},
     "installable": True,

@@ -1,11 +1,11 @@
 /** @odoo-module */
 
 /* global document */
-/* global ol */
 /* global localStorage */
-/* global chroma */
-/* global geostats */
 /* global console */
+
+// Libraries loaded dynamically via geoengine_libs.esm.js
+let ol, chroma, geostats;
 
 /**
  * Copyright 2023 ACSONE SA/NV
@@ -30,8 +30,9 @@ import {
     extractFieldsFromArchInfo,
 } from "@web/model/relational_model/utils";
 import {evaluateExpr} from "@web/core/py_js/py";
-import {loadBundle} from "@web/core/assets";
+import {loadGeoengineLibs} from "../../../geoengine_libs.esm";
 import {getTemplate} from "@web/core/templates";
+import {customDirectives} from "@web/env";
 import {parseXML} from "@web/core/utils/xml";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {registry} from "@web/core/registry";
@@ -74,15 +75,20 @@ export class GeoengineRenderer extends Component {
             this.services[key] = useService(key);
         }
 
-        onWillStart(async () =>
-            Promise.all([
-                loadBundle("base_geoengine.assets_jsLibs_geoengine"),
+        onWillStart(async () => {
+            // Load third-party libraries via shared loader
+            const libs = await loadGeoengineLibs();
+            ol = libs.ol;
+            chroma = libs.chroma;
+            geostats = libs.geostats;
+
+            await Promise.all([
                 this.loadVectorModel(),
                 (this.isGeoengineAdmin = await user.hasGroup(
                     "base_geoengine.group_geoengine_admin"
                 )),
-            ])
-        );
+            ]);
+        });
 
         onMounted(() => {
             // Retrives all vector layers in the store.
@@ -566,6 +572,7 @@ export class GeoengineRenderer extends Component {
                 templates: templateDocs,
             },
             getTemplate,
+            customDirectives,
         });
         app.mount(popup);
     }
