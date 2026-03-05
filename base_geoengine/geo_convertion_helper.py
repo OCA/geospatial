@@ -29,7 +29,11 @@ def value_to_shape(value, use_wkb=False):
         elif use_wkb:
             return wkb.loads(value, hex=True)
         else:
-            return wkt.loads(value)
+            try:
+                int(value, 16)
+                return wkb.loads(value, hex=True)
+            except Exception:
+                return wkt.loads(value)
     elif hasattr(value, "wkt"):
         if isinstance(value, BaseGeometry):
             return value
