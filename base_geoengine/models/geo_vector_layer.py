@@ -63,7 +63,10 @@ class GeoVectorLayer(models.Model):
     )
 
     attribute_field_id_domain = fields.Binary(
-        compute="_compute_attribute_field_id_domain", readonly=True, store=False
+        compute="_compute_attribute_field_id_domain",
+        compute_sudo=True,
+        readonly=True,
+        store=False,
     )
     attribute_field_id = fields.Many2one("ir.model.fields", "Attribute field")
 
@@ -73,6 +76,7 @@ class GeoVectorLayer(models.Model):
         store=True,
         readonly=False,
         compute="_compute_model_id",
+        compute_sudo=True,
     )
     model_name = fields.Char(related="model_id.model", readonly=True)
 
@@ -92,13 +96,14 @@ class GeoVectorLayer(models.Model):
         "Model view",
         domain=[("type", "=", "geoengine")],
         compute="_compute_model_view_id",
+        compute_sudo=True,
         readonly=False,
     )
     layer_transparent = fields.Boolean()
 
     @api.constrains("geo_field_id", "model_id")
     def _check_geo_field_id(self):
-        for rec in self:
+        for rec in self.sudo():
             if rec.model_id:
                 if not rec.geo_field_id.model_id == rec.model_id:
                     raise ValidationError(
@@ -110,7 +115,7 @@ class GeoVectorLayer(models.Model):
 
     @api.constrains("geo_repr", "attribute_field_id")
     def _check_geo_repr(self):
-        for rec in self:
+        for rec in self.sudo():
             if (
                 rec.attribute_field_id
                 and rec.attribute_field_id.ttype not in NUMBER_ATT
@@ -128,7 +133,7 @@ class GeoVectorLayer(models.Model):
 
     @api.constrains("attribute_field_id", "geo_field_id")
     def _check_if_attribute_in_geo_field(self):
-        for rec in self:
+        for rec in self.sudo():
             if rec.attribute_field_id and rec.geo_field_id:
                 if rec.attribute_field_id.model != rec.geo_field_id.model:
                     raise ValidationError(
