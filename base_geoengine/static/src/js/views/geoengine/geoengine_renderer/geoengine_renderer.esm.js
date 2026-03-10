@@ -127,12 +127,6 @@ export class GeoengineRenderer extends Component {
                 ],
                 overlays: [this.overlay],
             });
-            this.map.on("moveend", () => {
-                const newZoom = this.map.getView().getZoom();
-                if (newZoom !== localStorage.getItem("ol-zoom")) {
-                    localStorage.setItem("ol-zoom", newZoom);
-                }
-            });
             this.addMoveEndListenerToMap();
             this.format = new ol.format.GeoJSON({
                 dataProjection: this.map.getView().getProjection(),
@@ -646,6 +640,14 @@ export class GeoengineRenderer extends Component {
     }
 
     /**
+     * When you click on the edit button, it calls the controller's
+     * editRecord method.
+     */
+    onEditButtonClicked() {
+        this.props.editRecord(this.record.resModel, this.record.resId);
+    }
+
+    /**
      * Allows you to change the visibility of layers. This method is called
      * when the user changes raster layers.
      */
@@ -1120,7 +1122,6 @@ export class GeoengineRenderer extends Component {
                 if (label_text === false) {
                     label_text = "";
                 }
-                console.log(feature.get("attributes").id);
                 styles_map[colors[color_idx]][0].text_.text_ = label_text.toString();
                 return styles_map[colors[color_idx]];
             },
@@ -1306,6 +1307,7 @@ GeoengineRenderer.props = {
     archInfo: {type: Object},
     data: {type: Object},
     openRecord: {type: Function},
+    editRecord: {type: Function},
     editable: {type: Boolean, optional: true},
     updateRecord: {type: Function},
     onClickDiscard: {type: Function},

@@ -11,9 +11,11 @@
                         <field name="name" />
                         <field name="view_id" />
                         <field name="geo_field_id" />
+                        <field name="attribute_field_id_domain" invisible="1" />
                         <field
                             name="attribute_field_id"
                             required="geo_repr in ['choropleth', 'proportion', 'colored']"
+                            domain="attribute_field_id_domain"
                         />
                         <field name="active_on_startup" />
                         <field name="display_polygon_labels" />
@@ -82,9 +84,11 @@
                     <group string="General" col="4">
                         <field name="name" />
                         <field name="geo_field_id" />
+                        <field name="attribute_field_id_domain" invisible="1" />
                         <field
                             name="attribute_field_id"
                             required="geo_repr in ['choropleth', 'proportion', 'colored']"
+                            domain="attribute_field_id_domain"
                         />
                         <field name="display_polygon_labels" />
                         <field name="sequence" readonly="1" />

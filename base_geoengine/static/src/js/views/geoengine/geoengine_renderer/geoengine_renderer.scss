@@ -8,11 +8,6 @@
     height: 100%;
 }
 
-.view {
-    max-height: 90%;
-    height: 100% !important;
-}
-
 .menu {
     z-index: 2;
     flex-grow: 0;
@@ -64,4 +59,15 @@
 }
 .ol-popup-closer:after {
     content: "✖";
+}
+.ol-popup-editor {
+    text-decoration: none;
+    position: absolute;
+    top: 1px;
+    right: 25px;
+}
+.ol-popup-editor:after {
+    font-family: FontAwesome;
+    content: "\f040";
+    cursor: pointer;
 }

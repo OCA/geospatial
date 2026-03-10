@@ -43,6 +43,11 @@ msgid "Add tag"
 msgstr ""
 
 #. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__attribute_field_id_domain
+msgid "Attribute Field Id Domain"
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__attribute_field_id
 msgid "Attribute field"
 msgstr "Attribut"
@@ -541,7 +546,7 @@ msgstr "Paramètres"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params_wms
-msgid "Params Wms"
+msgid "Params WMS"
 msgstr ""
 
 #. module: base_geoengine

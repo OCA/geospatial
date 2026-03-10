@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2024-09-27 15:06+0000\n"
+"PO-Revision-Date: 2026-03-02 18:45+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: base_geoengine
 #. odoo-python
@@ -41,6 +41,11 @@ msgstr "Aggiungi nuovo valore"
 #, python-format
 msgid "Add tag"
 msgstr "Aggiungi etichetta"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__attribute_field_id_domain
+msgid "Attribute Field Id Domain"
+msgstr "Dominio ID campo attributo"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__attribute_field_id
@@ -241,8 +246,8 @@ msgid ""
 "Geo Value %(geom_type)s must be of the same type "
 "%(geo_type)s                         as fields"
 msgstr ""
-"Il valore geografico %(geom_type)s deve essere dello stesso tipo %(geo_type)"
-"s                         come campo"
+"Il valore geografico %(geom_type)s deve essere dello stesso tipo "
+"%(geo_type)s                         come campo"
 
 #. module: base_geoengine
 #. odoo-python
@@ -544,7 +549,7 @@ msgstr "Parametri"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params_wms
-msgid "Params Wms"
+msgid "Params WMS"
 msgstr "Parametri WMS"
 
 #. module: base_geoengine
@@ -1022,6 +1027,9 @@ msgstr "not in active_ids"
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__srid
 msgid "srid"
 msgstr "srid"
+
+#~ msgid "Params Wms"
+#~ msgstr "Parametri WMS"
 
 #, python-format
 #~ msgid ""

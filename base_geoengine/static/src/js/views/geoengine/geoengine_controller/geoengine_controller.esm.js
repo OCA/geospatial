@@ -130,6 +130,26 @@ export class GeoengineController extends Component {
     }
 
     /**
+     * Allow you to edit form view for the filled-in model
+     * from new tab in the browser window.
+     * @param {*} resModel
+     * @param {*} resId
+     */
+    async editRecord(resModel, resId) {
+        const url = window.location.href;
+        const searchParams = new URLSearchParams(url.split("#")[1]);
+        searchParams.set("view_type", "form");
+        searchParams.set("id", resId);
+        searchParams.set("menu_id", searchParams.get("menu_id"));
+        const action_url = url.split("#")[0] + "#" + searchParams.toString();
+        this.actionService.doAction({
+            type: "ir.actions.act_url",
+            target: "_blank",
+            url: action_url,
+        });
+    }
+
+    /**
      * When you finished drawing a new shape, this method is called to open form view and create the record.
      * @param {*} resModel
      * @param {*} field

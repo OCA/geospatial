@@ -3,16 +3,10 @@
 /**
  * Copyright 2023 ACSONE SA/NV
  */
+import {Component, onWillStart, onWillUpdateProps, useState} from "@odoo/owl";
+
 import {SearchBarRecords} from "./search_bar_records/search_bar_records.esm";
 import {useService} from "@web/core/utils/hooks";
-
-import {
-    Component,
-    onWillRender,
-    onWillStart,
-    onWillUpdateProps,
-    useState,
-} from "@odoo/owl";
 
 export class RecordsPanel extends Component {
     setup() {
@@ -23,15 +17,16 @@ export class RecordsPanel extends Component {
             records: [],
         });
         this.orm = useService("orm");
-        onWillStart(() => (this.state.records = this.props.list.records));
-        onWillUpdateProps((nextProps) => (this.state.records = nextProps.list.records));
-        onWillRender(async () => {
+        onWillStart(() => {
+            this.state.records = this.props.list.records;
             // Retrieves the name of the current model
-            const result = await this.orm.call("ir.model", "display_name_for", [
-                [this.props.list.resModel],
-            ]);
-            this.state.modelDescription = result[0].display_name;
+            this.orm
+                .call("ir.model", "display_name_for", [[this.props.list.resModel]])
+                .then(
+                    (result) => (this.state.modelDescription = result[0].display_name)
+                );
         });
+        onWillUpdateProps((nextProps) => (this.state.records = nextProps.list.records));
     }
 
     /**

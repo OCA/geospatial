@@ -38,10 +38,14 @@ msgstr "添加新值"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
-#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
 #, python-format
 msgid "Add tag"
 msgstr "添加标签"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__attribute_field_id_domain
+msgid "Attribute Field Id Domain"
+msgstr ""
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__attribute_field_id
@@ -195,16 +199,18 @@ msgstr "结束颜色类别"
 #: code:addons/base_geoengine/geo_db.py:0
 #, python-format
 msgid ""
-"Error, can not automatically initialize spatial postgis support. Database user may have to be superuser and postgres/postgis extensions with their devel header have to be installed. If you do not want Odoo to connect with a super user you can manually prepare your database. To do this, open a client to your database using a super user and run:\n"
+"Error, can not automatically initialize spatial postgis support. Database "
+"user may have to be superuser and postgres/postgis extensions with their "
+"devel header have to be installed. If you do not want Odoo to connect with a "
+"super user you can manually prepare your database. To do this, open a client "
+"to your database using a super user and run:\n"
 "CREATE EXTENSION postgis;\n"
 "CREATE EXTENSION postgis_topology;\n"
 msgstr ""
 "错误，无法自动初始化空间postgis支持。数据库用户可能需要是超级用户，并且必须安"
 "装postgres/postgis扩展及其开发头文件。如果您不希望Odoo与超级用户连接，您可以"
-"手动准备数据库。为此，请使用超级用户打开数据库客户端并运行：\\n"
-"CREATE EXTENSION postgis;\\n"
-"CREATE EXTENSION postgis_topology;\\n"
-"\n"
+"手动准备数据库。为此，请使用超级用户打开数据库客户端并运行：\\nCREATE "
+"EXTENSION postgis;\\nCREATE EXTENSION postgis_topology;\\n\n"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__ttype
@@ -233,8 +239,8 @@ msgstr "通用"
 #: code:addons/base_geoengine/fields.py:0
 #, python-format
 msgid ""
-"Geo Value %(geom_type)s must be of the same type %(geo_type)s"
-"                         as fields"
+"Geo Value %(geom_type)s must be of the same type "
+"%(geo_type)s                         as fields"
 msgstr "地理值%(geom_type)s必须与字段的类型%(geo_type)s相同"
 
 #. module: base_geoengine
@@ -256,8 +262,8 @@ msgstr "地理字段"
 #: code:addons/base_geoengine/fields.py:0
 #, python-format
 msgid ""
-"Geo type modification is not implemented. We can not change type %(data)s to"
-" %(geo_type)s"
+"Geo type modification is not implemented. We can not change type %(data)s to "
+"%(geo_type)s"
 msgstr "地理类型修改未实现。我们无法将类型%(data)s更改为%(geo_type)s"
 
 #. module: base_geoengine
@@ -531,8 +537,8 @@ msgstr "参数"
 
 #. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params_wms
-msgid "Params Wms"
-msgstr "Wms 参数"
+msgid "Params WMS"
+msgstr ""
 
 #. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__point
@@ -635,7 +641,6 @@ msgstr "相关视图"
 #. module: base_geoengine
 #. odoo-javascript
 #: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
-#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
 #, python-format
 msgid "Remove tag"
 msgstr "移除标签"
@@ -684,8 +689,6 @@ msgstr "保存"
 
 #. module: base_geoengine
 #. odoo-javascript
-#: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
-#: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
 #: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
 #, python-format
 msgid "Search..."
@@ -841,7 +844,8 @@ msgstr "写入/创建/搜索地理类型必须是 wkt/geojson 字符串或必须
 msgid ""
 "You are about to create a new record without having displayed all the "
 "others. A risk of overlap could occur. Would you like to continue ?"
-msgstr "您即将创建一条新记录，而没有显示所有其他记录。可能会发生重叠的风险。您想要继"
+msgstr ""
+"您即将创建一条新记录，而没有显示所有其他记录。可能会发生重叠的风险。您想要继"
 "续吗？"
 
 #. module: base_geoengine
@@ -1003,3 +1007,6 @@ msgstr "不在 active_ids 中"
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__srid
 msgid "srid"
 msgstr "空间参考系统标识符"
+
+#~ msgid "Params Wms"
+#~ msgstr "Wms 参数"
