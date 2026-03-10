@@ -5,7 +5,7 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
  */
 
-import session from "web.session";
+/* global ol*/
 
 /**
  * Create a standard symbol for a POI
@@ -170,7 +170,7 @@ function buildIcon(
 }
 
 class Search {
-    constructor(element, map, mapElement, stores, maxResults = 200, mapZoom = -1) {
+    constructor(element, map, mapElement, stores, rpc, maxResults = 200, mapZoom = -1) {
         /**
          * The search input element
          * @type {HTMLInputElement}
@@ -198,6 +198,11 @@ class Search {
          * @type {string}
          */
         this.last_search_text = "";
+        /**
+         * RPC service binding
+         *
+         */
+        this.rpc = rpc;
 
         /**
          * The search input element
@@ -308,8 +313,7 @@ class Search {
             lang: this.lang,
             maxResults: this.maxResults,
         };
-
-        session.rpc("/website-geoengine/partners", args).then(
+        this.rpc("/website-geoengine/partners", args).then(
             (result) => {
                 const storesSource = this.stores.getSource();
                 storesSource.clear();
@@ -377,7 +381,7 @@ class Search {
             tags: text,
             lang: this.lang,
         };
-        session.rpc("/website-geoengine/tags", args).then(
+        this.rpc("/website-geoengine/tags", args).then(
             (result) => {
                 const data = [];
                 for (const item of result) {

@@ -1,10 +1,13 @@
 /** @odoo-module **/
-import options from "web_editor.snippets.options";
 
 /**
  * Copyright 2011-2024 Camptocamp SA
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
  */
+
+/* global ol*/
+
+import options from "@web_editor/js/editor/snippets.options";
 
 options.registry.OpenLayerStoreLocator = options.Class.extend({
     jsLibs: [

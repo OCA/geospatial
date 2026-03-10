@@ -5,6 +5,8 @@
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
  */
 
+/* global ol*/
+
 import Popover from "./popover.esm";
 import Search from "./search.esm";
 
@@ -12,7 +14,7 @@ import Search from "./search.esm";
  * The base class that manage all the map
  */
 class OpenLayerMap {
-    constructor(element, mapType = "mapnik") {
+    constructor(element, mapType = "mapnik", rpc) {
         const dataset = element.dataset;
         const storesSource = new ol.source.Vector();
         const stores = new ol.layer.Vector({
@@ -54,6 +56,7 @@ class OpenLayerMap {
                 map,
                 mapElement,
                 stores,
+                rpc,
                 dataset.maxResults,
                 dataset.mapZoom
             );

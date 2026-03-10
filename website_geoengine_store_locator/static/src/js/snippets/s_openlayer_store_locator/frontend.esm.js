@@ -6,7 +6,7 @@
  */
 
 import OpenLayerMap from "./map.esm";
-import publicWidget from "web.public.widget";
+import publicWidget from "@web/legacy/js/public/public_widget";
 
 publicWidget.registry.OpenLayerStoreLocator = publicWidget.Widget.extend({
     selector: ".s_openlayer_store_locator",
@@ -19,12 +19,20 @@ publicWidget.registry.OpenLayerStoreLocator = publicWidget.Widget.extend({
     /**
      * @override
      */
+
+    init: function () {
+        this._super.apply(this, arguments);
+        this.rpc = this.bindService("rpc");
+    },
+
+    /**
+     * @override
+     */
     start() {
-        console.log("start");
         if (!this.el.querySelector(".ol-viewport")) {
             const dataset = this.el.dataset;
             this.element = this.el;
-            this.map = new OpenLayerMap(this.element, dataset.mapType);
+            this.map = new OpenLayerMap(this.element, dataset.mapType, this.rpc);
         }
         return this._super(...arguments);
     },
