@@ -59,7 +59,9 @@ class ResPartner(models.Model):
                 WHERE
                     res_partner_res_partner_category_rel.partner_id = res_partner.id
                     AND
-                    res_partner_res_partner_category_rel.category_id = res_partner_category.id
+                        res_partner_res_partner_category_rel.category_id
+                        =
+                        res_partner_category.id
                     AND res_partner.type='store'
             ),
             all_tags as (
@@ -117,4 +119,5 @@ class ResPartner(models.Model):
                     },
                 }
             )
+
         return features
