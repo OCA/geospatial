@@ -13,6 +13,7 @@
                 list="props.data"
                 onDisplayPopupRecord.bind="onDisplayPopupRecord"
                 zoomOnFeature.bind="zoomOnFeature"
+                drawOnRecord.bind="drawOnRecord"
                 zoomOutOnFeature.bind="getOriginalZoom"
             />
         </div>
