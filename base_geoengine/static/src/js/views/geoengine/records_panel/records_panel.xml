@@ -54,6 +54,14 @@
                                     </button>
                                     <button
                                         class="btn btn-search p-0"
+                                        t-on-click="() => this.props.drawOnRecord(record)"
+                                    >
+                                        <i
+                                            class="fa fa-pencil me-2 text-primary"
+                                        />
+                                    </button>
+                                    <button
+                                        class="btn btn-search p-0"
                                         t-on-click="() => this.props.zoomOutOnFeature(record)"
                                     >
                                         <i
