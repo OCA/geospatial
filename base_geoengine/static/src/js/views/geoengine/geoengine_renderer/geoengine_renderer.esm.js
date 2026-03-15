@@ -344,27 +344,16 @@ export class GeoengineRenderer extends Component {
             if (this.props.data.editedRecord !== undefined) {
                 this.props.onClickDiscard();
             }
-            if (this.drawInteraction === undefined) {
-                const key = Object.keys(this.props.data.fields).find(
-                    (el) => this.props.data.fields[el].geo_type !== undefined
-                );
-                this.drawInteraction = new ol.interaction.Draw({
-                    type: this.props.data.fields[key].geo_type.geo_type,
-                    source: new ol.source.Vector(),
-                });
-                this.map.addInteraction(this.drawInteraction);
-                this.drawInteraction.on("drawstart", () => {
-                    this.props.onDrawStart();
-                });
-
-                this.drawInteraction.on("drawend", (ev) => {
+            this.startDrawInteraction({
+                onDrawStart: () => this.props.onDrawStart(),
+                onDrawEnd: (ev, key) => {
                     this.props.createRecord(
                         this.props.data.resModel,
                         key,
                         new ol.format.GeoJSON().writeGeometry(ev.feature.getGeometry())
                     );
-                });
-            }
+                },
+            });
         });
 
         const DrawControl = new ol.control.Control({
@@ -431,6 +420,36 @@ export class GeoengineRenderer extends Component {
             this.selectClick = undefined;
             this.selectPointerMove = undefined;
         }
+    }
+
+    getGeometryFieldName() {
+        return Object.keys(this.props.data.fields).find(
+            (el) => this.props.data.fields[el].geo_type !== undefined
+        );
+    }
+
+    startDrawInteraction({onDrawStart, onDrawEnd}) {
+        if (this.drawInteraction !== undefined) {
+            return;
+        }
+        const key = this.getGeometryFieldName();
+        if (!key) {
+            return;
+        }
+        this.drawInteraction = new ol.interaction.Draw({
+            type: this.props.data.fields[key].geo_type.geo_type,
+            source: new ol.source.Vector(),
+        });
+        this.map.addInteraction(this.drawInteraction);
+        this.drawInteraction.on("drawstart", () => {
+            if (onDrawStart) {
+                onDrawStart();
+            }
+        });
+        this.drawInteraction.on("drawend", async (ev) => {
+            this.removeDrawInteraction();
+            await onDrawEnd(ev, key);
+        });
     }
 
     createHtmlControl(innerHTML, className) {
@@ -575,33 +594,78 @@ export class GeoengineRenderer extends Component {
      * @param {*} record
      */
     onDisplayPopupRecord(record) {
+        const feature = this.getFeatureForRecord(record);
+        if (!feature) {
+            return;
+        }
         const popup = this.getPopup();
-        const feature = this.vectorSource.getFeatureById(record.resId);
-        if (feature) {
-            this.mountGeoengineRecord({
-                popup,
-                archInfo: this.props.archInfo,
-                templateDocs: this.props.archInfo.templateDocs,
-                record,
+        this.mountGeoengineRecord({
+            popup,
+            archInfo: this.props.archInfo,
+            templateDocs: this.props.archInfo.templateDocs,
+            record,
+        });
+        var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
+        this.overlay.setPosition(coord);
+        var map_view = this.map.getView();
+        if (map_view) {
+            map_view.animate({
+                center: feature.getGeometry().getFirstCoordinate(),
+                duration: 500,
             });
-            var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
-            this.overlay.setPosition(coord);
-            var map_view = this.map.getView();
-            if (map_view) {
-                map_view.animate({
-                    center: feature.getGeometry().getFirstCoordinate(),
-                    duration: 500,
-                });
-            }
         }
     }
 
     zoomOnFeature(record) {
-        const feature = this.vectorSource.getFeatureById(record.resId);
+        const feature = this.getFeatureForRecord(record);
+        if (!feature) {
+            return;
+        }
         var map_view = this.map.getView();
         if (map_view) {
             map_view.fit(feature.getGeometry(), {maxZoom: 14});
         }
+    }
+
+    getFeatureForRecord(record) {
+        if (!record || !this.vectorSource) {
+            return null;
+        }
+        const feature = this.vectorSource.getFeatureById(record.resId);
+        if (!feature || !feature.getGeometry()) {
+            return null;
+        }
+        return feature;
+    }
+
+    async drawOnRecord(record) {
+        const rec =
+            this.props.data.records.find((val) => val.resId === record.resId) || record;
+        if (!rec) {
+            return;
+        }
+        this.hidePopup();
+        this.removeDrawInteraction();
+        this.removeModifyInteraction();
+        this.removeSelectInteraction();
+        if (this.props.data.editedRecord !== undefined) {
+            await this.props.onClickDiscard();
+        }
+        await rec.switchMode("edit");
+        const fieldName = this.getGeometryFieldName();
+        if (!fieldName) {
+            return;
+        }
+        this.startDrawInteraction({
+            onDrawStart: () => this.props.onDrawStart(),
+            onDrawEnd: async (ev) => {
+                this.state.isModified = true;
+                const value = this.format.writeGeometry(ev.feature.getGeometry());
+                await rec.update({[fieldName]: value});
+                await rec.save();
+                this.state.isModified = false;
+            },
+        });
     }
 
     getOriginalZoom() {
