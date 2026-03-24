@@ -23,3 +23,4 @@
   - Miquel Alzanillas \<<malzanillas@apsl.net>\>
 - Red Butay  \<\>
 - Sergio Sancho \<<sersanchus@gmail.com>\>
+- Jose Zambudio \<<zamberjo@gmail.com>\>

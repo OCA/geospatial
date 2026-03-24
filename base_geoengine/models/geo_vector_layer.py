@@ -50,6 +50,11 @@ class GeoVectorLayer(models.Model):
     )
     name = fields.Char("Layer Name", translate=True, required=True)
     begin_color = fields.Char("Begin color class", required=False, help="hex value")
+    intermediate_colors = fields.Char(
+        "Intermediate colors",
+        required=False,
+        help="Comma-separated hex values for intermediate gradient stops",
+    )
     end_color = fields.Char(
         "End color class", required=False, help="hex value", default="#FF680A"
     )

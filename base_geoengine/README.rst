@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ===========================
 Geospatial support for Odoo
 ===========================
@@ -17,7 +13,7 @@ Geospatial support for Odoo
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github
@@ -174,6 +170,15 @@ Known issues / Roadmap
 
 Changelog
 =========
+
+17.0.1.3.0 (2026-03-24)
+-----------------------
+
+- Added ``intermediate_colors`` field to ``geoengine.vector.layer``.
+  Accepts comma-separated hex color values (e.g. ``#FF0000,#00FF00``) to
+  define intermediate gradient stops in the colored representation. The
+  gradient is built as: begin → intermediate(s) → end. The field is
+  optional; existing behavior is unchanged when left empty.
 
 16.0.1.0.0 (2023-03-20)
 -----------------------
@@ -349,6 +354,7 @@ Contributors
 
 - Red Butay <>
 - Sergio Sancho <sersanchus@gmail.com>
+- Jose Zambudio <zamberjo@gmail.com>
 
 Maintainers
 -----------
