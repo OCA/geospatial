@@ -1083,9 +1083,17 @@ export class GeoengineRenderer extends Component {
         var end_color_hex = cfg.end_color || DEFAULT_END_COLOR;
         var begin_color = chroma(begin_color_hex).alpha(opacity).css();
         var end_color = chroma(end_color_hex).alpha(opacity).css();
-        // Function that maps numeric values to a color palette.
-        // This scale function is only used when geo_repr is basic
-        var scale = chroma.scale([begin_color, end_color]);
+        var gradient_colors = [begin_color];
+        if (cfg.intermediate_colors) {
+            cfg.intermediate_colors.split(",").forEach((hex) => {
+                var trimmed = hex.trim();
+                if (trimmed) {
+                    gradient_colors.push(chroma(trimmed).alpha(opacity).css());
+                }
+            });
+        }
+        gradient_colors.push(end_color);
+        var scale = chroma.scale(gradient_colors);
         var serie = new geostats(values);
         var vals = null;
         switch (cfg.classification) {
