@@ -80,6 +80,7 @@ RecordsPanel.props = {
     list: {type: Object},
     onDisplayPopupRecord: {type: Function},
     zoomOnFeature: {type: Function},
+    drawOnRecord: {type: Function},
     zoomOutOnFeature: {type: Function},
 };
 RecordsPanel.components = {SearchBarRecords};

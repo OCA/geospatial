@@ -21,6 +21,5 @@
 - [APSL-Nagarro](https://www.apsl.tech):
   - Antoni Marroig \<<amarroig@apsl.net>\>
   - Miquel Alzanillas \<<malzanillas@apsl.net>\>
-- Red Butay  \<\>
+- Red Butay
 - Sergio Sancho \<<sersanchus@gmail.com>\>
-- Jose Zambudio \<<zamberjo@gmail.com>\>

@@ -4,15 +4,13 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 import logging
 
-from odoo import _, api, models
+from odoo import api, models
 from odoo.exceptions import MissingError, UserError
-from odoo.osv.expression import AND
+from odoo.fields import Domain
 
 from .. import fields as geo_fields
 
-DEFAULT_EXTENT = (
-    "-123164.85222423, 5574694.9538936, " "1578017.6490538, 6186191.1800898"
-)
+DEFAULT_EXTENT = "-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898"
 
 _logger = logging.getLogger(__name__)
 
@@ -55,12 +53,12 @@ class Base(models.AbstractModel):
             limit=1,
         )
         if not geo_view:
-            raise UserError(
-                _(
-                    "No GeoEngine view defined for the model %s. \
+            message = self.env._(
+                "No GeoEngine view defined for the model %s. \
                         Please create a view or modify view mode"
-                )
-                % self._name,
+            )
+            raise UserError(
+                message % self._name,
             )
         return geo_view
 
@@ -69,9 +67,33 @@ class Base(models.AbstractModel):
         field_obj = self.env["ir.model.fields"]
         if not in_tuple:
             return in_tuple
-        name = field_obj.browse(in_tuple[0]).name
-        out = (in_tuple[0], name, in_tuple[1])
-        return out
+        field_id = None
+        display_name = None
+
+        # Odoo may serialize many2one values as:
+        # - [id, display_name]
+        # - {"id": id, "display_name": "..."} (newer formats)
+        # - id
+        if isinstance(in_tuple, (list, tuple)):
+            if in_tuple:
+                field_id = in_tuple[0]
+            if len(in_tuple) > 1:
+                display_name = in_tuple[1]
+        elif isinstance(in_tuple, dict):
+            field_id = in_tuple.get("id")
+            display_name = in_tuple.get("display_name") or in_tuple.get("name")
+        elif isinstance(in_tuple, int):
+            field_id = in_tuple
+
+        if not field_id:
+            return in_tuple
+
+        field = field_obj.browse(field_id).exists()
+        technical_name = field.name if field else False
+        if display_name is None:
+            display_name = technical_name
+
+        return (field_id, technical_name, display_name)
 
     @api.model
     def get_geoengine_layers(self, view_id=None, view_type="geoengine", **options):
@@ -113,9 +135,8 @@ class Base(models.AbstractModel):
 
         field = self._fields.get(column)
         if not field or not isinstance(field, geo_fields.GeoField):
-            raise ValueError(
-                _("%s column does not exists or is not a geo field") % column
-            )
+            message = self.env._("%s column does not exists or is not a geo field")
+            raise ValueError(message % column)
         view = self._get_geo_view()
         raster = raster_obj.search(
             [("view_id", "=", view.id), ("use_to_edit", "=", True)], limit=1
@@ -123,7 +144,8 @@ class Base(models.AbstractModel):
         if not raster:
             raster = raster_obj.search([("view_id", "=", view.id)], limit=1)
         if not raster:
-            raise MissingError(_("No raster layer for view %s") % (view.name,))
+            message = self.env._("No raster layer for view %s")
+            raise MissingError(message % (view.name,))
         return {
             "edit_raster": raster.read()[0],
             "srid": field.srid,
@@ -159,17 +181,21 @@ class Base(models.AbstractModel):
         # Limit and offset are managed after, we may loose a lot of performance
         # here
         _logger.debug(
-            _("geo_search is deprecated: uses search method defined on base model")
+            self.env._(
+                "geo_search is deprecated: uses search method defined on base model"
+            )
         )
         domain = domain or []
         geo_domain = geo_domain or []
         search_domain = domain or []
         if domain and geo_domain:
-            search_domain = AND([domain, geo_domain])
+            search_domain = Domain.AND([domain, geo_domain])
         elif geo_domain:
             search_domain = geo_domain
 
         if not search_domain:
-            raise ValueError(_("You must at least provide one of domain or geo_domain"))
+            raise ValueError(
+                self.env._("You must at least provide one of domain or geo_domain")
+            )
 
         return self.search(search_domain, limit=limit, offset=offset, order=order)

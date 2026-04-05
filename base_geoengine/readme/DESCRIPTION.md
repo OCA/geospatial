@@ -7,7 +7,7 @@ It will allow you to :
 - Extend Odoo models with spatial columns
 
 GeoEngine relies on [OpenLayers](http://openlayers.org) and
-[PostgGIS](http://postgis.refractions.net/) technologies.
+[PostGIS](http://postgis.refractions.net/) technologies.
 
 Postgis is used to store spatial information in databases. OpenLayer is
 used to represent spatial data in other words to show maps and the

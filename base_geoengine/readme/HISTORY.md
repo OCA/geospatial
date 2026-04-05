@@ -1,10 +1,10 @@
-## 17.0.1.3.0 (2026-03-24)
+## 19.0.1.0.1
 
-- Added `intermediate_colors` field to `geoengine.vector.layer`. Accepts
-  comma-separated hex color values (e.g. `#FF0000,#00FF00`) to define
-  intermediate gradient stops in the colored representation. The gradient
-  is built as: begin → intermediate(s) → end. The field is optional;
-  existing behavior is unchanged when left empty.
+- Migration to Odoo 19.0.
+- Migrated JavaScript frontend to OWL/ESM architecture.
+- Updated OpenLayers to version 10.5.0.
+- Updated Chroma.js to version 3.1.2.
+- Refactored domain handling for Odoo 19 ORM compatibility.
 
 ## 16.0.1.0.0 (2023-03-20)
 
