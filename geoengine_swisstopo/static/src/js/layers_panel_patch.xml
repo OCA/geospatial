@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t
+        t-name="geoengine_swisstopo.LayersPanelSwisstopo"
+        t-inherit="base_geoengine.LayersPanel"
+        t-inherit-mode="extension"
+    >
+        <xpath expr="//ul[contains(@class, 'raster')]" position="after">
+            <div
+                t-if="state.geoengineLayers.swisstopo_compatible and !state.geoengineLayers.has_swisstopo_layers"
+                class="px-3 pt-2"
+            >
+                <a
+                    href="#"
+                    class="text-primary small"
+                    t-on-click.prevent="onAddSwisstopo"
+                >
+                    <i class="fa fa-plus-circle me-1" />Ajouter Swisstopo
+                </a>
+            </div>
+        </xpath>
+    </t>
+</templates>

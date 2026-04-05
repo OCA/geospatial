@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="geo_raster_view_form_swisstopo">
+        <field name="name">geoengine.raster.layer.form.swisstopo</field>
+        <field name="model">geoengine.raster.layer</field>
+        <field name="inherit_id" ref="base_geoengine.geo_raster_view_form" />
+        <field name="arch" type="xml">
+            <field name="has_type" position="before">
+                <field name="is_swisstopo" invisible="1" />
+                <group string="Swisstopo" invisible="not is_swisstopo" colspan="4">
+                    <field name="swisstopo_layer_name" required="is_swisstopo" />
+                </group>
+            </field>
+        </field>
+    </record>
+</odoo>
