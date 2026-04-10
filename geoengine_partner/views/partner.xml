@@ -30,19 +30,19 @@
                 <field name="country_id" />
                 <field name="geo_point" />
                 <templates>
-                  <t t-name="info_box">
-                    <b>
+                    <t t-name="info_box">
+                        <b>
                       Name: <field name="name" />
                     </b>
-                    <ul>
-                      <li>Title: <field name="title" /> </li>
-                      <li>Function: <field name="function" /> </li>
-                      <li>Website: <field name="website" /> </li>
-                      <li>ZIP: <field name="zip" /> </li>
-                      <li>City: <field name="city" /> </li>
-                      <li>Country: <field name="country_id" /> </li>
-                    </ul>
-                  </t>
+                        <ul>
+                            <li>Title: <field name="title" /> </li>
+                            <li>Function: <field name="function" /> </li>
+                            <li>Website: <field name="website" /> </li>
+                            <li>ZIP: <field name="zip" /> </li>
+                            <li>City: <field name="city" /> </li>
+                            <li>Country: <field name="country_id" /> </li>
+                        </ul>
+                    </t>
                 </templates>
             </geoengine>
         </field>
@@ -70,5 +70,4 @@
         <field name="view_id" ref="ir_ui_view_geo_partner" />
         <field eval="0" name="overlay" />
     </record>
-
 </odoo>
