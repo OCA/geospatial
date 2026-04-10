@@ -22,7 +22,6 @@
         <field name="arch" type="xml">
             <geoengine editable="1">
                 <field name="name" select="1" />
-                <field name="title" />
                 <field name="function" />
                 <field name="website" />
                 <field name="zip" />
@@ -31,16 +30,19 @@
                 <field name="geo_point" />
                 <templates>
                     <t t-name="info_box">
-                        <b>
-                      Name: <field name="name" />
-                    </b>
+                        <b> Name: <field name="name" />
+                        </b>
                         <ul>
-                            <li>Title: <field name="title" /> </li>
-                            <li>Function: <field name="function" /> </li>
-                            <li>Website: <field name="website" /> </li>
-                            <li>ZIP: <field name="zip" /> </li>
-                            <li>City: <field name="city" /> </li>
-                            <li>Country: <field name="country_id" /> </li>
+                            <li>Function: <field name="function" />
+                            </li>
+                            <li>Website: <field name="website" />
+                            </li>
+                            <li>ZIP: <field name="zip" />
+                            </li>
+                            <li>City: <field name="city" />
+                            </li>
+                            <li>Country: <field name="country_id" />
+                            </li>
                         </ul>
                     </t>
                 </templates>

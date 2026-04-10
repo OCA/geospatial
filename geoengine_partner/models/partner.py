@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResPartner(models.Model):
-    """Add geo_point to partner using a function filed"""
+    """Add geo_point to partner using a function field"""
 
     _inherit = "res.partner"
 
