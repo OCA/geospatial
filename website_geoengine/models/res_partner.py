@@ -1,8 +1,9 @@
 # Copyright 2011-2024 Camptocamp SA
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.fields import Domain
 
 
 class ResPartner(models.Model):
@@ -74,18 +75,20 @@ class ResPartner(models.Model):
 
         SELECT * FROM all_tags WHERE value ILIKE %s;
         """
-        self._cr.execute(sql, (lang, f"%{search}%"))
-        results = self._cr.fetchall()
+        self.env.cr.execute(sql, (lang, f"%{search}%"))
+        results = self.env.cr.fetchall()
         return results
 
     @api.model
     def fetch_partner_geoengine(self, tags, lang, maxResults):
-        domain = [("type", "=", "store")]
+        domain = Domain("type", "=", "store")
         for tag in tags:
             field, value = tag.values()
             if field not in self.AUTHORIZED_FIELDS:
-                raise ValidationError(_("Unauthorized field"))
-            domain.append((field.replace("tag", "category_id.name"), "ilike", value))
+                raise ValidationError(self.env._("Unauthorized field"))
+            domain = domain & Domain(
+                field.replace("tag", "category_id.name"), "ilike", value
+            )
 
         partners = self.sudo().search(domain)
         features = []
