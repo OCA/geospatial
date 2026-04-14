@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 {
     "name": "Geospatial Website store locator",
-    "version": "17.0.1.0.0",
+    "version": "19.0.1.0.0",
     "category": "GeoBI",
     "author": "Camptocamp, Odoo Community Association (OCA)",
     "license": "AGPL-3",
@@ -15,6 +15,10 @@
     "assets": {
         "web.assets_frontend": [
             "website_geoengine_store_locator/static/lib/node_modules/ol/dist/ol.js",
+            "website_geoengine_store_locator/static/src/js/snippets/s_openlayer_store_locator/frontend.edit.esm.js",
+            "website_geoengine_store_locator/static/styles.css",
+            "website_geoengine_store_locator/static/lib/node_modules/ol/ol.css",
+            "website_geoengine_store_locator/static/lib/node_modules/jquery-flexdatalist/jquery.flexdatalist.css",
             (
                 "website_geoengine_store_locator/static/lib/node_modules/"
                 "jquery-flexdatalist/jquery.flexdatalist.js"
@@ -41,11 +45,9 @@
             ),
             "/web/static/lib/stacktracejs/stacktrace.js",
         ],
-        "website.assets_wysiwyg": [
-            (
-                "website_geoengine_store_locator/static/src/js/snippets/"
-                "s_openlayer_store_locator/snippet.options.esm.js"
-            )
+        "website.website_builder_assets": [
+            "website_geoengine_store_locator/static/src/xml/s_openlayer_store_locator/s_openlayer_store_locator_option.xml",
+            "website_geoengine_store_locator/static/src/js/snippets/s_openlayer_store_locator/snippet.options.esm.js",
         ],
     },
     "maintainers": ["Wouitmil"],

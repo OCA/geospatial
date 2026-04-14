@@ -51,6 +51,7 @@ class OpenLayerMap {
 
         if (mapElement) {
             new Popover(element.querySelector("#popup"), map);
+
             new Search(
                 element.querySelector("#search"),
                 map,

@@ -22,26 +22,4 @@
             </div>
         </section>
     </template>
-
-    <!-- Snippet's Options -->
-    <template
-        id="s_openlayer_store_locator_options"
-        inherit_id="website.snippet_options"
-    >
-        <xpath expr="//div[@data-js='Box']" position="before">
-            <div
-                data-js="OpenLayerStoreLocator"
-                data-selector=".s_openlayer_store_locator"
-            >
-                <we-input
-                    class="o_we_large"
-                    string="Max number of results"
-                    data-select-data-attribute=""
-                    data-no-preview="true"
-                    data-attribute-name="maxResults"
-                    placeholder="200"
-                />
-            </div>
-        </xpath>
-    </template>
 </odoo>

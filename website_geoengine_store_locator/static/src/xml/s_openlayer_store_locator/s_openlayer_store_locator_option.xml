@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+    <t t-name="website_geoengine_store_locator.OpenLayerStoreLocatorOption">
+        <BuilderRow label.translate="Options">
+            <BuilderNumberInput
+                dataAttributeAction="max-results"
+                default="200"
+                min="0"
+                step="1"
+                preview="false"
+            />
+        </BuilderRow>
+    </t>
+</templates>

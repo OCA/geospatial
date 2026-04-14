@@ -1,5 +1,5 @@
 You should configure first a web site. Then drag n drop the Store
-Locator widget from the OCA/Geopspatial section.
+Locator widget from the Social section.
 
 ![](./static/description/snippet.png)
 

@@ -1,11 +1,11 @@
-/** @odoo-module **/
-
 /**
  * Copyright 2011-2024 Camptocamp SA
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
  */
 
 /* global ol*/
+
+import {rpc} from "@web/core/network/rpc";
 
 /**
  * Create a standard symbol for a POI
@@ -32,26 +32,26 @@ function buildCanvas(
     centerStrokeColor
 ) {
     const negateHeight = height < 0;
-    height = Math.abs(height);
+    const absHeight = Math.abs(height);
 
     const canvas = document.createElement("canvas");
     canvas.width = Math.ceil(radius * 2 + strokeWidth);
     canvas.height = Math.ceil(
-        height < radius ? radius * 2 + strokeWidth : radius + height + strokeWidth
+        absHeight < radius ? radius * 2 + strokeWidth : radius + absHeight + strokeWidth
     );
     const context = canvas.getContext("2d");
     if (negateHeight) {
         context.setTransform(1, 0, 0, -1, 0, canvas.height);
     }
 
-    const alpha = radius < height ? Math.acos(radius / height) : 0;
+    const alpha = radius < absHeight ? Math.acos(radius / absHeight) : 0;
     const circleCenter = [
         canvas.width / 2,
         alpha === 0 ? canvas.width / 2 : radius + strokeWidth / 2,
     ];
-    const linesStart = [canvas.width / 2, radius + height + strokeWidth / 2];
+    const linesStart = [canvas.width / 2, radius + absHeight + strokeWidth / 2];
     const linesWeight = Math.sin(alpha) * radius;
-    const linesHeight = height - Math.cos(alpha) * radius;
+    const linesHeight = absHeight - Math.cos(alpha) * radius;
     const line1End = [canvas.width / 2 - linesWeight, linesStart[1] - linesHeight];
     const line2End = [canvas.width / 2 + linesWeight, linesStart[1] - linesHeight];
 
@@ -170,7 +170,7 @@ function buildIcon(
 }
 
 class Search {
-    constructor(element, map, mapElement, stores, rpc, maxResults = 200, mapZoom = -1) {
+    constructor(element, map, mapElement, stores, maxResults = 200, mapZoom = -1) {
         /**
          * The search input element
          * @type {HTMLInputElement}
@@ -198,11 +198,6 @@ class Search {
          * @type {String}
          */
         this.last_search_text = "";
-        /**
-         * RPC service binding
-         *
-         */
-        this.rpc = rpc;
 
         /**
          * The search input element
@@ -313,7 +308,7 @@ class Search {
             lang: this.lang,
             maxResults: this.maxResults,
         };
-        this.rpc("/website-geoengine/partners", args).then(
+        rpc("/website-geoengine/partners", args).then(
             (result) => {
                 const storesSource = this.stores.getSource();
                 storesSource.clear();
@@ -381,7 +376,7 @@ class Search {
             tags: text,
             lang: this.lang,
         };
-        this.rpc("/website-geoengine/tags", args).then(
+        rpc("/website-geoengine/tags", args).then(
             (result) => {
                 const data = [];
                 for (const item of result) {

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 /**
  * Copyright 2011-2024 Camptocamp SA
  * License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl)
@@ -48,7 +46,6 @@ class Popover {
      * Dispose the popover
      */
     disposePopover() {
-        console.log("disposePopover");
         if (this.popover) {
             this.popover.popover("dispose");
             this.popover = undefined;
@@ -75,7 +72,6 @@ class Popover {
         if (!this.feature) {
             return;
         }
-
         this.popup.setPosition(this.feature.getGeometry().getFirstCoordinate());
         if (!this.popover) {
             this.popover = $(this.element).popover({
