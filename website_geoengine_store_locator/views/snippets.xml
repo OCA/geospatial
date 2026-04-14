@@ -6,16 +6,16 @@
         priority="8"
     >
         <xpath expr="//div[@id='snippet_structure']" position="before">
-                <div class="o_panel_header">OCA/Geospatial</div>
-                <div class="o_panel_body">
-                    <t
+            <div class="o_panel_header">OCA/Geospatial</div>
+            <div class="o_panel_body">
+                <t
                     t-snippet="website_geoengine_store_locator.s_openlayer_store_locator"
                     t-thumbnail="/website_geoengine_store_locator/static/src/img/snippets_thumbs/s_openlayer_store_locator.png"
                     string="Store Locator"
                 >
-                        <keywords>map, store</keywords>
-                    </t>
-                </div>
-         </xpath>
-      </template>
+                    <keywords>map, store</keywords>
+                </t>
+            </div>
+        </xpath>
+    </template>
 </odoo>
