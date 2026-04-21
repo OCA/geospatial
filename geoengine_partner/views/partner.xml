@@ -20,7 +20,10 @@
     <record id="ir_ui_view_geo_partner" model="ir.ui.view">
         <field name="name">Partner view</field>
         <field name="arch" type="xml">
-            <geoengine editable="1">
+            <geoengine>
+                <!-- display_name field is necessary to display records
+                in the GeoEngine view RecordPanel -->
+                <field name="display_name" />
                 <field name="name" select="1" />
                 <field name="title" />
                 <field name="function" />
@@ -32,15 +35,27 @@
                 <templates>
                   <t t-name="info_box">
                     <b>
-                      Name: <field name="name" />
+                      Name: <field name="name" widget="badge" />
                     </b>
                     <ul>
-                      <li>Title: <field name="title" /> </li>
-                      <li>Function: <field name="function" /> </li>
-                      <li>Website: <field name="website" /> </li>
-                      <li>ZIP: <field name="zip" /> </li>
-                      <li>City: <field name="city" /> </li>
-                      <li>Country: <field name="country_id" /> </li>
+                      <t t-if="record.title.value">
+                         <li>Title: <field name="title" /> </li>
+                      </t>
+                      <t t-if="record.function.value">
+                         <li>Function: <field name="function" /> </li>
+                      </t>
+                      <t t-if="record.website.value">
+                         <li>Website: <field name="website" /> </li>
+                      </t>
+                      <t t-if="record.zip.value">
+                         <li>ZIP: <field name="zip" /> </li>
+                      </t>
+                      <t t-if="record.city.value">
+                         <li>City: <field name="city" /> </li>
+                      </t>
+                      <t t-if="record.country_id.value">
+                         <li>Country: <field name="country_id" /> </li>
+                      </t>
                     </ul>
                   </t>
                 </templates>
