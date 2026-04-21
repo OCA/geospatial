@@ -579,6 +579,19 @@ export class GeoengineRenderer extends Component {
      * @param {*} record
      */
     onDisplayPopupRecord(record) {
+        if (record.data && record.data.shape === false) {
+            this.notification.add(
+                sprintf(
+                    _t('Please update latitude and longitude details for: "%s"'),
+                    record.data.display_name
+                ),
+                {
+                    type: "warning",
+                }
+            );
+            this.clickToHidePopup();
+            return false;
+        }
         const popup = this.getPopup();
         const feature = this.vectorSource.getFeatureById(record.resId);
         if (feature) {
