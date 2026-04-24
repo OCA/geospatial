@@ -32,6 +32,7 @@
                 <field name="city" />
                 <field name="country_id" />
                 <field name="geo_point" />
+                <field name="color" />
                 <templates>
                   <t t-name="info_box">
                     <b>
@@ -75,6 +76,7 @@
         <field name="view_id" ref="ir_ui_view_geo_partner" />
         <field name="geo_repr">basic</field>
         <field name="active_on_startup" eval="True" />
+        <field name="attribute_field_id" ref="base.field_res_partner__color" />
         <field name="layer_opacity">0.8</field>
         <field eval="1" name="nb_class" />
         <field name="begin_color">#FF680A</field>
