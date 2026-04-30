@@ -770,7 +770,10 @@ export class GeoengineRenderer extends Component {
             this.styleVectorLayerAndLegend(vector, data, layer);
             this.useRelatedModel(vector, layer, data);
         } else {
-            const data = this.props.data.records;
+            // Filter records with coordinates for styling vector layers & legends
+            const data = this.props.data.records.filter(
+                (record) => record.data[vector.geo_field_id[1]] !== false
+            );
             this.styleVectorLayerAndLegend(vector, data, layer);
             this.addSourceToLayer(data, vector, layer);
         }
@@ -863,7 +866,10 @@ export class GeoengineRenderer extends Component {
             this.styleVectorLayerAndLegend(cfg, data, lv);
             this.useRelatedModel(cfg, lv, data);
         } else {
-            const data = this.props.data.records;
+            const geo_field_id_name = cfg.geo_field_id[1];
+            const data = this.props.data.records.filter(
+                (record) => record.data[geo_field_id_name] !== false
+            );
             if (!data.length) {
                 return new ol.layer.Vector({
                     source: new ol.source.Vector(),
@@ -890,10 +896,13 @@ export class GeoengineRenderer extends Component {
 
     async getModelData(cfg, fields_to_read) {
         const domain = this.evalModelDomain(cfg);
+        const geo_field_id_name = cfg.geo_field_id[1];
         let data = await this.orm.searchRead(cfg.model, [domain][0], fields_to_read);
         const modelsRecords = this.models.find((e) => e.model.resModel === cfg.model)
             .model.records;
-        data = data.map((dat) => modelsRecords.find((rec) => rec.resId === dat.id));
+        data = data
+            .map((dat) => modelsRecords.find((rec) => rec.resId === dat.id))
+            .filter((rec) => rec.data[geo_field_id_name] !== false);
         return data;
     }
 
