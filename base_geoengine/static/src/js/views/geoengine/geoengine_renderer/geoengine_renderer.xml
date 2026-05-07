@@ -19,6 +19,7 @@
         <div id="popup" class="ol-popup text-start">
             <div
                 id="popup-editor"
+                t-if="props.archInfo.activeActions.edit"
                 class="ol-popup-editor text-primary"
                 t-on-click="onEditButtonClicked"
             />
