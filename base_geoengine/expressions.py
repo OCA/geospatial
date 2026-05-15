@@ -4,6 +4,7 @@
 import random
 import string
 
+from odoo import models
 from odoo.osv import expression
 from odoo.osv.expression import TERM_OPERATORS
 from odoo.tools import SQL, Query
@@ -27,6 +28,31 @@ for op in GEO_OPERATORS:
     term_operators_list.append(op)
 
 expression.TERM_OPERATORS = tuple(term_operators_list)
+_original_filtered_domain = models.BaseModel.filtered_domain
+
+
+def _filtered_domain_geo(self, domain):
+    """Patch filtered_domain to support geo operators.
+
+    The original method evaluates domains in Python and raises ValueError
+    for unknown operators. Geo operators can only be resolved via SQL
+    (PostGIS), so we fall back to a search() call — the same strategy Odoo
+    uses for child_of / parent_of.
+    """
+    if not domain or not self:
+        return _original_filtered_domain(self, domain)
+
+    has_geo = any(
+        isinstance(leaf, (list | tuple)) and len(leaf) == 3 and leaf[1] in GEO_OPERATORS
+        for leaf in domain
+    )
+    if not has_geo:
+        return _original_filtered_domain(self, domain)
+
+    return self.search([("id", "in", self.ids)] + domain, order="id")
+
+
+models.BaseModel.filtered_domain = _filtered_domain_geo
 
 
 def __leaf_to_sql(self, leaf, model, alias):
