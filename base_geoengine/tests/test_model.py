@@ -703,3 +703,86 @@ class TestModel(TransactionCase):
             ]
         )
         self.assertEqual(len(result), 2)
+
+    def test_filtered_domain_with_geo_within(self):
+        """filtered_domain must not raise ValueError for geo_within."""
+        retails = self.env["retail.machine"].search([])
+        zip_yens = self.env["dummy.zip"].search([("city", "ilike", "Yens")])
+        domain = [
+            (
+                "the_point",
+                "geo_within",
+                {"dummy.zip.the_geom": [("id", "=", zip_yens.id)]},
+            )
+        ]
+        result = retails.filtered_domain(domain)
+        self.assertEqual(len(result), 2)
+        self.assertEqual(set(result.mapped("name")), {"34", "33"})
+
+    def test_filtered_domain_with_geo_intersect(self):
+        """filtered_domain must not raise ValueError for geo_intersect."""
+        retails = self.env["retail.machine"].search([])
+        zip_mollens = self.env["dummy.zip"].search([("city", "ilike", "Mollens (VD))")])
+        domain = [("the_point", "geo_intersect", zip_mollens.the_geom)]
+        result = retails.filtered_domain(domain)
+        self.assertEqual(len(result), 3)
+
+    def test_filtered_domain_geo_with_negation(self):
+        """filtered_domain handles negated geo operators via SQL fallback."""
+        retails = self.env["retail.machine"].search([])
+        zip_yens = self.env["dummy.zip"].search([("city", "ilike", "Yens")])
+        domain = [
+            "!",
+            (
+                "the_point",
+                "geo_within",
+                {"dummy.zip.the_geom": [("id", "=", zip_yens.id)]},
+            ),
+        ]
+        result = retails.filtered_domain(domain)
+        self.assertEqual(len(result), 3)
+        self.assertFalse(set(result.mapped("name")) & {"34", "33"})
+
+    def test_filtered_domain_non_geo_unchanged(self):
+        """Non-geo domains still use the original Python evaluation."""
+        retails = self.env["retail.machine"].search([])
+        domain = [("name", "=", "34")]
+        result = retails.filtered_domain(domain)
+        self.assertEqual(len(result), 1)
+        self.assertEqual(result.name, "34")
+
+    def test_filtered_domain_empty_domain(self):
+        """Empty domain returns self unchanged."""
+        retails = self.env["retail.machine"].search([])
+        result = retails.filtered_domain([])
+        self.assertEqual(result, retails)
+
+    def test_filtered_domain_empty_recordset(self):
+        """Empty recordset returns empty regardless of geo domain."""
+        retails = self.env["retail.machine"].browse()
+        zip_yens = self.env["dummy.zip"].search([("city", "ilike", "Yens")])
+        domain = [
+            (
+                "the_point",
+                "geo_within",
+                {"dummy.zip.the_geom": [("id", "=", zip_yens.id)]},
+            )
+        ]
+        result = retails.filtered_domain(domain)
+        self.assertFalse(result)
+
+    def test_filtered_domain_mixed_geo_and_standard(self):
+        """Domain combining geo and standard operators works correctly."""
+        retails = self.env["retail.machine"].search([])
+        zip_yens = self.env["dummy.zip"].search([("city", "ilike", "Yens")])
+        domain = [
+            ("money_level", "=", "low"),
+            (
+                "the_point",
+                "geo_within",
+                {"dummy.zip.the_geom": [("id", "=", zip_yens.id)]},
+            ),
+        ]
+        result = retails.filtered_domain(domain)
+        self.assertEqual(len(result), 2)
+        self.assertTrue(all(r.money_level == "low" for r in result))
