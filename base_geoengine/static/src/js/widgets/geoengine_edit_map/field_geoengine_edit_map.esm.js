@@ -20,9 +20,7 @@ export class FieldGeoEngineEditMap extends Component {
         this.id = `map_${this.props.id}`;
         this.orm = useService("orm");
 
-        onWillStart(() =>
-            loadMapLibs()
-        );
+        onWillStart(() => loadMapLibs());
 
         // Is executed when component is mounted.
         onMounted(async () => {
