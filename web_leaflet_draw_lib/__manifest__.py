@@ -4,7 +4,7 @@
 {
     "name": "Leaflet Draw Javascript Library",
     "summary": "Bring leaflet.draw.js library in odoo.",
-    "version": "18.0.1.0.0",
+    "version": "19.0.1.0.0",
     "author": "Advance Insight, Odoo Community Association (OCA)",
     "maintainers": ["NL66278'"],
     "website": "https://github.com/OCA/geospatial",

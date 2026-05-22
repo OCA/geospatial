@@ -6,7 +6,7 @@ import logging
 
 from odoo import _, api, models
 from odoo.exceptions import MissingError, UserError
-from odoo.osv.expression import AND
+from odoo.fields import Domain
 
 from .. import fields as geo_fields
 
@@ -165,7 +165,7 @@ class Base(models.AbstractModel):
         geo_domain = geo_domain or []
         search_domain = domain or []
         if domain and geo_domain:
-            search_domain = AND([domain, geo_domain])
+            search_domain = Domain.AND([domain, geo_domain])
         elif geo_domain:
             search_domain = geo_domain
 
