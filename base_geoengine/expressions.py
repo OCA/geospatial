@@ -39,96 +39,69 @@ def _optimize_geo_condition(condition, model):
             condition.field_expr,
             condition.operator,
             condition.value,
-            query,
         )
     )
 
 
 def _geo_condition_to_sql(
-    model, alias: str, fname: str, operator: str, value, query
+    model, alias: str, fname: str, operator: str, value
 ) -> SQL:
-    """
-    Return SQL for custom geo operators used in Odoo domains.
-    """
-    if operator in GEO_OPERATORS.keys():
-        current_field = model._fields.get(fname)
-        current_operator = GeoOperator(current_field)
-        if current_field and isinstance(current_field, GeoField):
-            model._check_field_access(current_field, "read")
-            params = []
-            if isinstance(value, dict):
-                # We are having indirect geo_operator like (?geom?, ?geo_...?,
-                # {?res.zip.poly?: [?id?, ?in?, [1,2,3]] })
-                ref_search = value
-                sub_queries = []
-                for key in ref_search:
-                    i = key.rfind(".")
-                    rel_model = key[0:i]
-                    rel_col = key[i + 1 :]
-                    rel_model = model.env[rel_model]
-                    # we compute the attributes search on spatial rel
-                    if ref_search[key]:
-                        rel_query = where_calc(
-                            rel_model,
-                            ref_search[key],
-                            active_test=True,
-                        )
-                        rel_alias = rel_query.table
-                        left = SQL.identifier(alias, fname)
-                        right = SQL.identifier(rel_alias, rel_col)
-                        if operator == "geo_equal":
-                            rel_query.add_where(SQL("%s = %s", left, right))
-                        elif operator in ("geo_greater", "geo_lesser"):
-                            rel_query.add_where(
-                                SQL(
-                                    "ST_Area(%s) %s ST_Area(%s)",
-                                    left,
-                                    GEO_SQL_OPERATORS[operator],
-                                    right,
-                                )
-                            )
-                        else:
-                            rel_query.add_where(
-                                SQL(
-                                    "%s(%s, %s)",
-                                    GEO_SQL_OPERATORS[operator],
-                                    left,
-                                    right,
-                                )
-                            )
-
-                        sub_queries.append(SQL("EXISTS%s", rel_query.subselect("1")))
-                return SQL(" AND ").join(sub_queries) if sub_queries else SQL("TRUE")
-            else:
-                query = get_geo_func(
-                    current_operator, operator, fname, value, params, alias
+    """Return SQL for custom geo operators used in Odoo domains."""
+    current_field = model._fields[fname]
+    model._check_field_access(current_field, "read")
+    current_operator = GeoOperator(current_field)
+    if isinstance(value, dict):
+        # Indirect geo_operator like
+        #   (geom, geo_..., {"res.zip.poly": [("id", "in", [1,2,3])]})
+        sub_queries = []
+        for key, sub_domain in value.items():
+            if not sub_domain:
+                continue
+            i = key.rfind(".")
+            rel_model = model.env[key[:i]]
+            rel_col = key[i + 1 :]
+            rel_query = where_calc(rel_model, sub_domain, active_test=True)
+            left = SQL.identifier(alias, fname)
+            right = SQL.identifier(rel_query.table, rel_col)
+            if operator == "geo_equal":
+                rel_query.add_where(SQL("%s = %s", left, right))
+            elif operator in ("geo_greater", "geo_lesser"):
+                rel_query.add_where(
+                    SQL(
+                        "ST_Area(%s) %s ST_Area(%s)",
+                        left,
+                        GEO_SQL_OPERATORS[operator],
+                        right,
+                    )
                 )
-            return SQL(query, *params)
-    raise NotImplementedError(f"The operator {operator} is not supported")
+            else:
+                rel_query.add_where(
+                    SQL("%s(%s, %s)", GEO_SQL_OPERATORS[operator], left, right)
+                )
+            sub_queries.append(SQL("EXISTS%s", rel_query.subselect("1")))
+        return SQL(" AND ").join(sub_queries) if sub_queries else SQL("TRUE")
+    return get_geo_func(current_operator, operator, fname, value, alias)
 
 
-def get_geo_func(current_operator, operator, left, value, params, table):
-    """
-    This method will call the SQL query corresponding to the requested geo operator
-    """
+def get_geo_func(current_operator, operator, fname, value, alias) -> SQL:
+    """Dispatch the SQL builder for the requested geo operator."""
     match operator:
         case "geo_greater":
-            query = current_operator.get_geo_greater_sql(table, left, value, params)
+            return current_operator.get_geo_greater_sql(alias, fname, value)
         case "geo_lesser":
-            query = current_operator.get_geo_lesser_sql(table, left, value, params)
+            return current_operator.get_geo_lesser_sql(alias, fname, value)
         case "geo_equal":
-            query = current_operator.get_geo_equal_sql(table, left, value, params)
+            return current_operator.get_geo_equal_sql(alias, fname, value)
         case "geo_touch":
-            query = current_operator.get_geo_touch_sql(table, left, value, params)
+            return current_operator.get_geo_touch_sql(alias, fname, value)
         case "geo_within":
-            query = current_operator.get_geo_within_sql(table, left, value, params)
+            return current_operator.get_geo_within_sql(alias, fname, value)
         case "geo_contains":
-            query = current_operator.get_geo_contains_sql(table, left, value, params)
+            return current_operator.get_geo_contains_sql(alias, fname, value)
         case "geo_intersect":
-            query = current_operator.get_geo_intersect_sql(table, left, value, params)
+            return current_operator.get_geo_intersect_sql(alias, fname, value)
         case _:
             raise NotImplementedError(f"The operator {operator} is not supported")
-    return query
 
 
 def where_calc(model, domain, active_test=True):
