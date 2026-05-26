@@ -43,9 +43,7 @@ def _optimize_geo_condition(condition, model):
     )
 
 
-def _geo_condition_to_sql(
-    model, alias: str, fname: str, operator: str, value
-) -> SQL:
+def _geo_condition_to_sql(model, alias: str, fname: str, operator: str, value) -> SQL:
     """Return SQL for custom geo operators used in Odoo domains."""
     current_field = model._fields[fname]
     model._check_field_access(current_field, "read")

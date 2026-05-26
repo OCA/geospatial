@@ -10,9 +10,7 @@ from odoo.fields import Domain
 
 from .. import fields as geo_fields
 
-DEFAULT_EXTENT = (
-    "-123164.85222423, 5574694.9538936, " "1578017.6490538, 6186191.1800898"
-)
+DEFAULT_EXTENT = "-123164.85222423, 5574694.9538936, 1578017.6490538, 6186191.1800898"
 
 _logger = logging.getLogger(__name__)
 
