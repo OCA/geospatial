@@ -6,7 +6,7 @@ import json
 import logging
 from operator import attrgetter
 
-from odoo import _, fields
+from odoo import fields
 from odoo.tools import sql
 
 from . import geo_convertion_helper as convert
@@ -110,11 +110,9 @@ class GeoField(fields.Field):
         shape = convert.value_to_shape(value)
         if same_type and not shape.is_empty:
             if shape.geom_type.lower() != self.geo_type.lower():
-                msg = _(
-                    "Geo Value %(geom_type)s must be of the same type %(geo_type)s \
-                        as fields",
-                    geom_type=shape.geom_type.lower(),
-                    geo_type=self.geo_type.lower(),
+                msg = (
+                    f"Geo Value {shape.geom_type.lower()} must be of the same type "
+                    f"{self.geo_type.lower()} as fields"
                 )
                 raise TypeError(msg)
         return shape
@@ -130,14 +128,14 @@ class GeoField(fields.Field):
         check_data = cr.fetchone()
         if not check_data:
             raise TypeError(
-                _(
-                    "geometry_columns table seems to be corrupted."
-                    " SRID check is not possible"
-                )
+                model.env._(
+                    "geometry_columns table seems to be corrupted. "
+                    "SRID check is not possible"
+                ),
             )
         if check_data[0] != self.srid:
             raise TypeError(
-                _(
+                model.env._(
                     "Reprojection of column is not implemented."
                     " We can not change srid %(srid)s to %(data)s",
                     srid=self.srid,
@@ -146,7 +144,7 @@ class GeoField(fields.Field):
             )
         elif check_data[1] != self.geo_type.upper():
             raise TypeError(
-                _(
+                model.env._(
                     "Geo type modification is not implemented."
                     " We can not change type %(data)s to %(geo_type)s",
                     data=check_data[1],
@@ -155,7 +153,7 @@ class GeoField(fields.Field):
             )
         elif check_data[2] != self.dim:
             raise TypeError(
-                _(
+                model.env._(
                     "Geo dimention modification is not implemented."
                     " We can not change dimention %(data)s to %(dim)s",
                     data=check_data[2],
