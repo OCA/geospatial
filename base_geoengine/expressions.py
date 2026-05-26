@@ -3,7 +3,7 @@
 
 from odoo.fields import Domain
 from odoo.orm.domains import operator_optimization
-from odoo.tools import SQL
+from odoo.tools import SQL, Query
 
 from .fields import GeoField
 from .geo_operators import GeoOperator
@@ -58,7 +58,10 @@ def _geo_condition_to_sql(model, alias: str, fname: str, operator: str, value) -
             i = key.rfind(".")
             rel_model = model.env[key[:i]]
             rel_col = key[i + 1 :]
-            rel_query = where_calc(rel_model, sub_domain, active_test=True)
+            rel_alias = Query.make_alias(alias, key.replace(".", "_"))
+            rel_query = where_calc(
+                rel_model, sub_domain, active_test=True, alias=rel_alias
+            )
             left = SQL.identifier(alias, fname)
             right = SQL.identifier(rel_query.table, rel_col)
             if operator == "geo_equal":
@@ -102,8 +105,44 @@ def get_geo_func(current_operator, operator, fname, value, alias) -> SQL:
             raise NotImplementedError(f"The operator {operator} is not supported")
 
 
-def where_calc(model, domain, active_test=True):
+def where_calc(model, domain, active_test=True, alias=None):
     """
     Build a query for a related model while preserving the Odoo 19 domain flow.
     """
-    return model._search(domain, active_test=active_test)
+    if alias is None:
+        return model._search(domain, active_test=active_test)
+
+    check_access = not model.env.su
+    if check_access:
+        model.browse().check_access("read")
+
+    domain = Domain(domain)
+    if (
+        model._active_name
+        and active_test
+        and model.env.context.get("active_test", True)
+        and not any(
+            leaf.field_expr == model._active_name for leaf in domain.iter_conditions()
+        )
+    ):
+        domain &= Domain(model._active_name, "=", True)
+
+    domain = domain.optimize_full(model)
+    query = Query(model.env, alias, model._table_sql)
+    if domain.is_false():
+        query.add_where(SQL("FALSE"))
+        return query
+    if not domain.is_true():
+        query.add_where(domain._to_sql(model, alias, query))
+
+    if check_access:
+        model_sudo = model.sudo().with_context(active_test=False)
+        sec_domain = model.env["ir.rule"]._compute_domain(model._name, "read")
+        sec_domain = sec_domain.optimize_full(model_sudo)
+        if sec_domain.is_false():
+            query.add_where(SQL("FALSE"))
+            return query
+        if not sec_domain.is_true():
+            query.add_where(sec_domain._to_sql(model_sudo, alias, query))
+
+    return query

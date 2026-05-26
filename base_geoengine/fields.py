@@ -119,7 +119,7 @@ class GeoField(fields.Field):
 
     def update_geo_db_column(self, model):
         """Update the column type in the database."""
-        cr = model._cr
+        cr = model.env.cr
         query = """SELECT srid, type, coord_dimension
                  FROM geometry_columns
                  WHERE f_table_name = %s
@@ -177,7 +177,7 @@ class GeoField(fields.Field):
 
         if not column:
             create_geo_column(
-                model._cr,
+                model.env.cr,
                 model._table,
                 self.name,
                 self.geo_type.upper(),
@@ -186,28 +186,30 @@ class GeoField(fields.Field):
                 self.string,
             )
             if self.gist_index:
-                create_geo_index(model._cr, self.name, model._table)
+                create_geo_index(model.env.cr, self.name, model._table)
             return
 
         if column["udt_name"] == self.column_type[0]:
             if self.gist_index:
-                create_geo_index(model._cr, self.name, model._table)
+                create_geo_index(model.env.cr, self.name, model._table)
             return
 
         self.update_geo_db_column(model)
 
         if column["udt_name"] in self.column_cast_from:
-            sql.convert_column(model._cr, model._table, self.name, self.column_type[1])
+            sql.convert_column(
+                model.env.cr, model._table, self.name, self.column_type[1]
+            )
         else:
             newname = (self.name + "_moved{}").format
             i = 0
-            while sql.column_exists(model._cr, model._table, newname(i)):
+            while sql.column_exists(model.env.cr, model._table, newname(i)):
                 i += 1
             if column["is_nullable"] == "NO":
-                sql.drop_not_null(model._cr, model._table, self.name)
-            sql.rename_column(model._cr, model._table, self.name, newname(i))
+                sql.drop_not_null(model.env.cr, model._table, self.name)
+            sql.rename_column(model.env.cr, model._table, self.name, newname(i))
             sql.create_column(
-                model._cr, model._table, self.name, self.column_type[1], self.string
+                model.env.cr, model._table, self.name, self.column_type[1], self.string
             )
 
 
