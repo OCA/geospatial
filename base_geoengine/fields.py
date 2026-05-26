@@ -46,10 +46,22 @@ class GeoField(fields.Field):
     def convert_to_column(self, value, record, values=None, validate=True):
         """Convert value to database format
 
-        value can be geojson, wkt, shapely geometry object.
+        value can be geojson, wkt, hex-encoded WKB (the form stored by
+        ``convert_to_cache``), or a shapely geometry object.
         If geo_direct_write in context you can pass diretly WKT"""
         if not value:
             return None
+        # The ORM cache holds geometries as hex-encoded WKB
+        # (``convert_to_cache`` stores ``value.wkb_hex``). Decode it back
+        # into a geometry before forwarding to ``entry_to_shape``, which
+        # would otherwise call ``wkt.loads`` on the hex string and fail.
+        if isinstance(value, str):
+            try:
+                int(value, 16)
+            except (TypeError, ValueError):
+                pass
+            else:
+                value = self.load_geo(value)
         shape_to_write = self.entry_to_shape(value, same_type=True)
         if shape_to_write.is_empty:
             return None
