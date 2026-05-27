@@ -59,8 +59,10 @@ class GeoField(fields.Field):
             try:
                 int(value, 16)
             except (TypeError, ValueError):
-                pass
+                value_is_hex_wkb = False
             else:
+                value_is_hex_wkb = True
+            if value_is_hex_wkb:
                 value = self.load_geo(value)
         shape_to_write = self.entry_to_shape(value, same_type=True)
         if shape_to_write.is_empty:
