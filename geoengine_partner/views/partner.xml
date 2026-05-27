@@ -30,19 +30,19 @@
                 <field name="country_id" />
                 <field name="geo_point" />
                 <templates>
-                  <t t-name="info_box">
-                    <b>
+                    <t t-name="info_box">
+                        <b>
                       Name: <field name="name" />
                     </b>
-                    <ul>
-                      <li>Title: <field name="title" /> </li>
-                      <li>Function: <field name="function" /> </li>
-                      <li>Website: <field name="website" /> </li>
-                      <li>ZIP: <field name="zip" /> </li>
-                      <li>City: <field name="city" /> </li>
-                      <li>Country: <field name="country_id" /> </li>
-                    </ul>
-                  </t>
+                        <ul>
+                            <li>Title: <field name="title" /> </li>
+                            <li>Function: <field name="function" /> </li>
+                            <li>Website: <field name="website" /> </li>
+                            <li>ZIP: <field name="zip" /> </li>
+                            <li>City: <field name="city" /> </li>
+                            <li>Country: <field name="country_id" /> </li>
+                        </ul>
+                    </t>
                 </templates>
             </geoengine>
         </field>
@@ -71,4 +71,17 @@
         <field eval="0" name="overlay" />
     </record>
 
+    <record id="contacts.action_contacts" model="ir.actions.act_window">
+        <field name="view_mode">geoengine,kanban,list,form,activity</field>
+    </record>
+
+    <record
+        id="action_contacts_view_geoengine_partner"
+        model="ir.actions.act_window.view"
+    >
+        <field name="sequence" eval="4" />
+        <field name="view_mode">geoengine</field>
+        <field name="view_id" ref="ir_ui_view_geo_partner" />
+        <field name="act_window_id" ref="contacts.action_contacts" />
+    </record>
 </odoo>
