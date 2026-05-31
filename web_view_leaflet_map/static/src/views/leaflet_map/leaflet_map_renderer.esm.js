@@ -3,7 +3,7 @@ import {useService} from "@web/core/utils/hooks";
 
 /* global L, console, document */
 
-const {Component, onWillStart, onMounted, onPatched, useRef} = owl;
+const {Component, onWillStart, onMounted, onPatched, onWillUpdateProps, useRef} = owl;
 
 export class MapRenderer extends Component {
     static template = "web_view_leaflet_map.MapRenderer";
@@ -58,24 +58,30 @@ export class MapRenderer extends Component {
                 this.renderMarkers();
             }
         });
+
+        // Reload the records when the search domain/context changes (filters,
+        // favorites, ...) so the markers reflect the active search.
+        onWillUpdateProps(async (nextProps) => {
+            await this.loadRecords(nextProps.domain, nextProps.context);
+        });
     }
 
     /**
      * Loads records from the server based on the provided domain and fields.
      * @returns {Promise<void>}
      */
-    async loadRecords() {
+    async loadRecords(domain, context) {
         const fields = this.getFields();
 
         try {
             // Cargar registros usando searchRead
             const records = await this.orm.searchRead(
                 this.resModel,
-                this.props.domain || [],
+                domain === undefined ? this.props.domain || [] : domain,
                 fields,
                 {
                     limit: this.props.limit || 80,
-                    context: this.props.context || {},
+                    context: context === undefined ? this.props.context || {} : context,
                 }
             );
             this.records = records;
