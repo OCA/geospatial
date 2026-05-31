@@ -15,6 +15,15 @@
                         New
                     </button>
                 </t>
+                <t t-set-slot="layout-actions">
+                    <SearchBar toggler="searchBarToggler" />
+                </t>
+                <t t-set-slot="control-panel-navigation-additional">
+                    <t
+                        t-component="searchBarToggler.component"
+                        t-props="searchBarToggler.props"
+                    />
+                </t>
 
                 <MapRenderer t-props="props" />
             </Layout>
