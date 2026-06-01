@@ -21,22 +21,22 @@ import {
     reactive,
     useState,
 } from "@odoo/owl";
-import {GeoengineRecord} from "../geoengine_record/geoengine_record.esm";
-import {LayersPanel} from "../layers_panel/layers_panel.esm";
-import {RecordsPanel} from "../records_panel/records_panel.esm";
-import {RelationalModel} from "@web/model/relational_model/relational_model";
 import {
     addFieldDependencies,
     extractFieldsFromArchInfo,
 } from "@web/model/relational_model/utils";
-import {evaluateExpr} from "@web/core/py_js/py";
 import {loadBundle, loadJS} from "@web/core/assets";
+import {GeoengineRecord} from "../geoengine_record/geoengine_record.esm";
+import {LayersPanel} from "../layers_panel/layers_panel.esm";
+import {RecordsPanel} from "../records_panel/records_panel.esm";
+import {RelationalModel} from "@web/model/relational_model/relational_model";
+import {evaluateExpr} from "@web/core/py_js/py";
 import {getTemplate} from "@web/core/templates";
 import {parseXML} from "@web/core/utils/xml";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {registry} from "@web/core/registry";
-import {user} from "@web/core/user";
 import {useService} from "@web/core/utils/hooks";
+import {user} from "@web/core/user";
 import {vectorLayersStore} from "../../../vector_layers_store.esm";
 
 /* CONSTANTS */
@@ -503,37 +503,35 @@ export class GeoengineRenderer extends Component {
      */
     updateInfoBox(features) {
         const feature = features.item(0);
-        if (feature !== undefined) {
-            const popup = this.getPopup();
-            if (feature !== undefined) {
-                var attributes = feature.get("attributes");
-
-                if (this.cfg_models.includes(feature.get("model"))) {
-                    const model = this.models.find(
-                        (el) => el.model.resModel === feature.get("model")
-                    );
-                    this.mountGeoengineRecord({
-                        popup,
-                        archInfo: model.archInfo,
-                        templateDocs: model.archInfo.templateDocs,
-                        model: model.model,
-                        attributes,
-                    });
-                } else {
-                    this.mountGeoengineRecord({
-                        popup,
-                        archInfo: this.props.archInfo,
-                        templateDocs: this.props.archInfo.templateDocs,
-                        model: this.props.data,
-                        attributes,
-                    });
-                }
-
-                var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
-                this.overlay.setPosition(coord);
-            }
-        } else {
+        if (feature === undefined) {
             this.hidePopup();
+        } else {
+            const popup = this.getPopup();
+            var attributes = feature.get("attributes");
+
+            if (this.cfg_models.includes(feature.get("model"))) {
+                const model = this.models.find(
+                    (el) => el.model.resModel === feature.get("model")
+                );
+                this.mountGeoengineRecord({
+                    popup,
+                    archInfo: model.archInfo,
+                    templateDocs: model.archInfo.templateDocs,
+                    model: model.model,
+                    attributes,
+                });
+            } else {
+                this.mountGeoengineRecord({
+                    popup,
+                    archInfo: this.props.archInfo,
+                    templateDocs: this.props.archInfo.templateDocs,
+                    model: this.props.data,
+                    attributes,
+                });
+            }
+
+            var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
+            this.overlay.setPosition(coord);
         }
     }
 
@@ -697,9 +695,9 @@ export class GeoengineRenderer extends Component {
                                 `legend-${vector.resId}`
                             );
                             if (legend !== null) {
-                                void (vector.isVisible
-                                    ? (legend.style.display = "block")
-                                    : (legend.style.display = "none"));
+                                legend.style.display = vector.isVisible
+                                    ? "block"
+                                    : "none";
                             }
                         }
                         if (vector.onDomainChanged) {
@@ -1112,6 +1110,7 @@ export class GeoengineRenderer extends Component {
                 if (val) {
                     return chroma(val).alpha(opacity).css();
                 }
+                return undefined;
             });
         } else {
             colors = scale

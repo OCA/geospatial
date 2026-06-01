@@ -3,9 +3,6 @@
 /**
  * Copyright 2023 ACSONE SA/NV
  */
-import {SearchBarRecords} from "./search_bar_records/search_bar_records.esm";
-import {useService} from "@web/core/utils/hooks";
-
 import {
     Component,
     onWillRender,
@@ -13,6 +10,8 @@ import {
     onWillUpdateProps,
     useState,
 } from "@odoo/owl";
+import {SearchBarRecords} from "./search_bar_records/search_bar_records.esm";
+import {useService} from "@web/core/utils/hooks";
 
 export class RecordsPanel extends Component {
     setup() {
@@ -70,7 +69,7 @@ export class RecordsPanel extends Component {
     filterItems(value, items) {
         const lowerValue = value.toLowerCase();
         return items.filter(
-            (item) => item.data.display_name.toLowerCase().indexOf(lowerValue) >= 0
+            (item) => item.data.name.toLowerCase().indexOf(lowerValue) >= 0
         );
     }
 }
