@@ -718,3 +718,66 @@ class TestModel(TransactionCase):
             ]
         )
         self.assertEqual(len(result), 2)
+
+    def test_geo_search_indirect_respects_record_rules(self):
+        """Indirect geo-operator sub-queries must enforce ir.rule security.
+
+        Regression test: the 19.0 migration replaced ``_apply_ir_rules`` (removed
+        in 19.0) by ``_check_field_access``, which no longer applied record rules
+        to the spatial sub-query. A restricted user could therefore match related
+        records they are not allowed to read.
+        """
+        model_zip = self.env["ir.model"]._get("dummy.zip")
+        model_retail = self.env["ir.model"]._get("retail.machine")
+        # Test models have no ACL: grant model-level read so the access check
+        # fails on the *record rule*, not on model access.
+        self.env["ir.model.access"].create(
+            [
+                {
+                    "name": "dummy.zip read (test)",
+                    "model_id": model_zip.id,
+                    "group_id": self.env.ref("base.group_user").id,
+                    "perm_read": True,
+                },
+                {
+                    "name": "retail.machine read (test)",
+                    "model_id": model_retail.id,
+                    "group_id": self.env.ref("base.group_user").id,
+                    "perm_read": True,
+                },
+            ]
+        )
+        # Restricted user may only see the "Mollens" zip, not "Yens" (zip 1169).
+        group = self.env["res.groups"].create({"name": "Geo Restricted (test)"})
+        self.env["ir.rule"].create(
+            {
+                "name": "Only Mollens zips (test)",
+                "model_id": model_zip.id,
+                "groups": [(6, 0, [group.id])],
+                "domain_force": "[('city', '=', 'Mollens (VD))')]",
+                "perm_read": True,
+            }
+        )
+        user = self.env["res.users"].create(
+            {
+                "name": "Geo Restricted (test)",
+                "login": "geo_restricted_test",
+                "groups_id": [
+                    (6, 0, [self.env.ref("base.group_user").id, group.id])
+                ],
+            }
+        )
+        domain = [
+            (
+                "the_point",
+                "geo_intersect",
+                {"dummy.zip.the_geom": [("name", "=", "1169")]},
+            )
+        ]
+        # Admin sees the Yens zip -> the 2 intersecting retails match.
+        self.assertEqual(len(self.env["retail.machine"].search(domain)), 2)
+        # Restricted user: the rule hides the Yens zip, so the sub-query is empty.
+        self.assertFalse(
+            self.env["retail.machine"].with_user(user).search(domain),
+            "Record rule must be enforced on the indirect geo sub-query",
+        )
