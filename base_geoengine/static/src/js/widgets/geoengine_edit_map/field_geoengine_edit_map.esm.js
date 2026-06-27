@@ -3,7 +3,8 @@
 /* global document */
 
 // Libraries loaded dynamically via geoengine_libs.esm.js
-let ol, chroma;
+let ol = null;
+let chroma = null;
 
 /**
  * Copyright 2023 ACSONE SA/NV

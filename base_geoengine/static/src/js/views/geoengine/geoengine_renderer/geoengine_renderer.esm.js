@@ -5,7 +5,9 @@
 /* global console */
 
 // Libraries loaded dynamically via geoengine_libs.esm.js
-let ol, chroma, geostats;
+let ol = null;
+let chroma = null;
+let geostats = null;
 
 /**
  * Copyright 2023 ACSONE SA/NV
