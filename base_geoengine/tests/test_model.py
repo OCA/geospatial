@@ -762,7 +762,7 @@ class TestModel(TransactionCase):
             {
                 "name": "Geo Restricted (test)",
                 "login": "geo_restricted_test",
-                "groups_id": [
+                "group_ids": [
                     (6, 0, [self.env.ref("base.group_user").id, group.id])
                 ],
             }
