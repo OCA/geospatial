@@ -1,1 +1,2 @@
 odoo-test-helper
+odoo-addon-base_geoengine @ git+https://github.com/OCA/geospatial.git@refs/pull/417/head#subdirectory=setup/base_geoengine
