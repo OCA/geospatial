@@ -13,7 +13,7 @@ class ResPartner(http.Controller):
     def partners(self, **kw):
         tags = kw.get("tags", {})
         lang = kw.get("lang", "en_US")
-        maxResults = kw.get("maxResults", "200")
+        max_results = kw.get("max_results", "200")
         return http.request.env["res.partner"].fetch_partner_geoengine(
-            tags, lang, maxResults
+            tags, lang, max_results
         )
