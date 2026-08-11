@@ -59,9 +59,9 @@ contacts and add them some tags.
 Usage
 =====
 
-|image1|
+|screencast|
 
-.. |image1| image:: https://raw.githubusercontent.com/OCA/geospatial/18.0/website_geoengine_store_locator/static/description/screencast.gif
+.. |screencast| image:: https://raw.githubusercontent.com/OCA/geospatial/18.0/website_geoengine_store_locator/static/description/screencast.gif
 
 Bug Tracker
 ===========

@@ -5,17 +5,24 @@
         inherit_id="website.snippets"
         priority="8"
     >
-        <xpath expr="//div[@id='snippet_structure']" position="before">
-            <div class="o_panel_header">OCA/Geospatial</div>
-            <div class="o_panel_body">
+        <xpath expr="//snippets[@id='snippet_groups']" position="before">
+            <snippets id="geoengine_snippet_groups" string="OCA/Geospatial">
+                <t
+                    snippet-group="geoengine"
+                    string="GeoEngine"
+                    t-thumbnail="/website_geoengine_store_locator/static/src/img/snippets_thumbs/s_map.svg"
+                />
+            </snippets>
+            <snippets id="geoengine_snippet_structure" string="OCA/Geospatial">
                 <t
                     t-snippet="website_geoengine_store_locator.s_openlayer_store_locator"
+                    group="geoengine"
                     t-thumbnail="/website_geoengine_store_locator/static/src/img/snippets_thumbs/s_openlayer_store_locator.png"
                     string="Store Locator"
                 >
                     <keywords>map, store</keywords>
                 </t>
-            </div>
+            </snippets>
         </xpath>
     </template>
 </odoo>
