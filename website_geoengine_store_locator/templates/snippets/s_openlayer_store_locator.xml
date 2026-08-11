@@ -35,7 +35,7 @@
             >
                 <we-input
                     class="o_we_large"
-                    string="Max number of results"
+                    string="Max No of Results"
                     data-select-data-attribute=""
                     data-no-preview="true"
                     data-attribute-name="maxResults"

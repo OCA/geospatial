@@ -1,1 +1,1 @@
-![](./static/description/screencast.gif)
+![screencast](../static/description/screencast.gif)
