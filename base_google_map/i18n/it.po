@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2026-07-25 23:25+0000\n"
-"PO-Revision-Date: 2025-05-20 17:26+0000\n"
+"PO-Revision-Date: 2026-08-11 14:46+0000\n"
 "Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.10.4\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: base_google_map
 #: model_terms:ir.ui.view,arch_db:base_google_map.res_config_settings_view_form
@@ -25,12 +25,12 @@ msgstr "Chiave API"
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__af
 msgid "Afrikaans"
-msgstr ""
+msgstr "Afrikaans"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__sq
 msgid "Albanian"
-msgstr ""
+msgstr "Albanese"
 
 #. module: base_google_map
 #: model_terms:ir.ui.view,arch_db:base_google_map.res_config_settings_view_form
@@ -57,167 +57,167 @@ msgstr "Consenti selettore icona marker Google"
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__am
 msgid "Amharic"
-msgstr ""
+msgstr "Amarico"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ar
 msgid "Armenian"
-msgstr ""
+msgstr "Armeno"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_theme__aubergine
 msgid "Aubergine"
-msgstr ""
+msgstr "Aubergine"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__az
 msgid "Azerbaijani"
-msgstr ""
+msgstr "Azerbaigiano"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__eu
 msgid "Basque"
-msgstr ""
+msgstr "Basco"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__be
 msgid "Belarusian"
-msgstr ""
+msgstr "Bielorusso"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__bn
 msgid "Bengali"
-msgstr ""
+msgstr "Bengalese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__bs
 msgid "Bosnian"
-msgstr ""
+msgstr "Bosniaco"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__bg
 msgid "Bulgarian"
-msgstr ""
+msgstr "Bulgaro"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__my
 msgid "Burmese"
-msgstr ""
+msgstr "Burmese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ca
 msgid "Catalan"
-msgstr ""
+msgstr "Catalano"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__zh
 msgid "Chinese"
-msgstr ""
+msgstr "Cinese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__zh-hk
 msgid "Chinese (Hong Kong)"
-msgstr ""
+msgstr "Cinese (Hong Kong)"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__zh-cn
 msgid "Chinese (Simplified)"
-msgstr ""
+msgstr "Cinese (semplificato)"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__zh-tw
 msgid "Chinese (Traditional)"
-msgstr ""
+msgstr "Cinese (tradizionale)"
 
 #. module: base_google_map
 #: model:ir.model,name:base_google_map.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Impostazioni configurazione"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__hr
 msgid "Croatian"
-msgstr ""
+msgstr "Croato"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__cs
 msgid "Czech"
-msgstr ""
+msgstr "Ceco"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__da
 msgid "Danish"
-msgstr ""
+msgstr "Danese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_theme__dark
 msgid "Dark"
-msgstr ""
+msgstr "Scuro"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_theme__default
 msgid "Default"
-msgstr ""
+msgstr "Predefinito"
 
 #. module: base_google_map
 #: model:ir.model.fields,field_description:base_google_map.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__nl
 msgid "Dutch"
-msgstr ""
+msgstr "Olandese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__en
 msgid "English"
-msgstr ""
+msgstr "Inglese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__en-au
 msgid "English (Australian)"
-msgstr ""
+msgstr "Inglese (australiano)"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__en-gb
 msgid "English (Great Britain)"
-msgstr ""
+msgstr "Inglese (Gran Bretagna)"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__et
 msgid "Estonian"
-msgstr ""
+msgstr "Estone"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__fa
 msgid "Farsi"
-msgstr ""
+msgstr "Farsi"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__fil
 msgid "Filipino"
-msgstr ""
+msgstr "Filippino"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__fi
 msgid "Finnish"
-msgstr ""
+msgstr "Finlandese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__fr
 msgid "French"
-msgstr ""
+msgstr "Francese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__fr-ca
 msgid "French (Canada)"
-msgstr ""
+msgstr "Francese (Canada)"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__gl
 msgid "Galician"
-msgstr ""
+msgstr "Galiziano"
 
 #. module: base_google_map
 #: model:ir.model.fields,field_description:base_google_map.field_res_config_settings__google_maps_geometry
@@ -235,12 +235,12 @@ msgstr "Geometry include funzioni di utilità per calcolare valori geometrici sc
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ka
 msgid "Georgian"
-msgstr ""
+msgstr "Georgiano"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__de
 msgid "German"
-msgstr ""
+msgstr "Tedesco"
 
 #. module: base_google_map
 #: model:ir.model.fields,field_description:base_google_map.field_res_config_settings__google_maps_lang_localization
@@ -270,27 +270,27 @@ msgstr "Chiave API vista Google Maps"
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__el
 msgid "Greek"
-msgstr ""
+msgstr "Greco"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__gu
 msgid "Gujarati"
-msgstr ""
+msgstr "Gujarati"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__iw
 msgid "Hebrew"
-msgstr ""
+msgstr "Ebraico"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__hi
 msgid "Hindi"
-msgstr ""
+msgstr "Hindi"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__hu
 msgid "Hungarian"
-msgstr ""
+msgstr "Ungherese"
 
 #. module: base_google_map
 #: model:ir.model.fields,field_description:base_google_map.field_res_config_settings__id
@@ -300,12 +300,12 @@ msgstr "ID"
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__is
 msgid "Icelandic"
-msgstr ""
+msgstr "Islandese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__id
 msgid "Indonesian"
-msgstr ""
+msgstr "Indonesiano"
 
 #. module: base_google_map
 #: model_terms:ir.ui.view,arch_db:base_google_map.res_config_settings_view_form
@@ -325,37 +325,37 @@ msgstr "Installa il modulo Google Marker Icon Picker"
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__it
 msgid "Italian"
-msgstr ""
+msgstr "Italiano"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ja
 msgid "Japanese"
-msgstr ""
+msgstr "Giapponese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__kn
 msgid "Kannada"
-msgstr ""
+msgstr "Canarese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__kk
 msgid "Kazakh"
-msgstr ""
+msgstr "Kazako"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__km
 msgid "Khmer"
-msgstr ""
+msgstr "Khmer"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ko
 msgid "Korean"
-msgstr ""
+msgstr "Coreano"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ky
 msgid "Kyrgyz"
-msgstr ""
+msgstr "Kirghizi"
 
 #. module: base_google_map
 #: model_terms:ir.ui.view,arch_db:base_google_map.res_config_settings_view_form
@@ -365,32 +365,32 @@ msgstr "Lingua"
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__lo
 msgid "Lao"
-msgstr ""
+msgstr "Laotiano"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__lv
 msgid "Latvian"
-msgstr ""
+msgstr "Lettone"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__lt
 msgid "Lithuanian"
-msgstr ""
+msgstr "Lituano"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__mk
 msgid "Macedonian"
-msgstr ""
+msgstr "Macedone"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ms
 msgid "Malay"
-msgstr ""
+msgstr "Malese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ml
 msgid "Malayalam"
-msgstr ""
+msgstr "Malayalam"
 
 #. module: base_google_map
 #: model:ir.model.fields,field_description:base_google_map.field_res_config_settings__google_maps_theme
@@ -400,27 +400,27 @@ msgstr "Tema mappa"
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__mr
 msgid "Marathi"
-msgstr ""
+msgstr "Marathi"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__mn
 msgid "Mongolian"
-msgstr ""
+msgstr "Mongolo"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ne
 msgid "Nepali"
-msgstr ""
+msgstr "Nepalese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_theme__night
 msgid "Night"
-msgstr ""
+msgstr "Notte"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__no
 msgid "Norwegian"
-msgstr ""
+msgstr "Norvegese"
 
 #. module: base_google_map
 #: model:ir.model.fields,field_description:base_google_map.field_res_config_settings__google_maps_places
@@ -438,27 +438,27 @@ msgstr "Places consente all'applicazione di cercare luoghi come esercizi, posizi
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__pl
 msgid "Polish"
-msgstr ""
+msgstr "Polacco"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__pt
 msgid "Portuguese"
-msgstr ""
+msgstr "Portoghese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__pt-br
 msgid "Portuguese (Brazil)"
-msgstr ""
+msgstr "Portoghese (Brasile)"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__pt-pt
 msgid "Portuguese (Portugal)"
-msgstr ""
+msgstr "Portoghese (Portogallo)"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__pa
 msgid "Punjabi"
-msgstr ""
+msgstr "Punjabi"
 
 #. module: base_google_map
 #: model_terms:ir.ui.view,arch_db:base_google_map.res_config_settings_view_form
@@ -468,17 +468,17 @@ msgstr "Regione"
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_theme__retro
 msgid "Retro"
-msgstr ""
+msgstr "Retro"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ro
 msgid "Romanian"
-msgstr ""
+msgstr "Rumeno"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ru
 msgid "Russian"
-msgstr ""
+msgstr "Russo"
 
 #. module: base_google_map
 #: model_terms:ir.ui.view,arch_db:base_google_map.res_config_settings_view_form
@@ -488,7 +488,7 @@ msgstr "Seleziona il tema mappa di Google Maps"
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__sr
 msgid "Serbian"
-msgstr ""
+msgstr "Serbo"
 
 #. module: base_google_map
 #: model_terms:ir.ui.view,arch_db:base_google_map.res_config_settings_view_form
@@ -512,57 +512,57 @@ msgstr "Imposta la regione della mappa"
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_theme__silver
 msgid "Silver"
-msgstr ""
+msgstr "Argento"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__si
 msgid "Sinhalese"
-msgstr ""
+msgstr "Singalese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__sk
 msgid "Slovak"
-msgstr ""
+msgstr "Slovacco"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__sl
 msgid "Slovenian"
-msgstr ""
+msgstr "Sloveno"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__es
 msgid "Spanish"
-msgstr ""
+msgstr "Spagnolo"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__es-419
 msgid "Spanish (Latin America)"
-msgstr ""
+msgstr "Spagnolo (Latino americano)"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__sw
 msgid "Swahili"
-msgstr ""
+msgstr "Swahili"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__sv
 msgid "Swedish"
-msgstr ""
+msgstr "Svedese"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ta
 msgid "Tamil"
-msgstr ""
+msgstr "Tamil"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__te
 msgid "Telugu"
-msgstr ""
+msgstr "Tèlugu"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__th
 msgid "Thai"
-msgstr ""
+msgstr "Tailandese"
 
 #. module: base_google_map
 #: model_terms:ir.ui.view,arch_db:base_google_map.res_config_settings_view_form
@@ -572,30 +572,29 @@ msgstr "Tema"
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__tr
 msgid "Turkish"
-msgstr ""
+msgstr "Turco"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__uk
 msgid "Ukrainian"
-msgstr ""
+msgstr "Ucraino"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__ur
 msgid "Urdu"
-msgstr ""
+msgstr "Urdu"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__uz
 msgid "Uzbek"
-msgstr ""
+msgstr "Uzbeco"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__vi
 msgid "Vietnamese"
-msgstr ""
+msgstr "Vietnamita"
 
 #. module: base_google_map
 #: model:ir.model.fields.selection,name:base_google_map.selection__res_config_settings__google_maps_lang_localization__zu
 msgid "Zulu"
-msgstr ""
-
+msgstr "Zulu"
