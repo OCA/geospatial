@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates>
+    <t t-name="base_geoengine.SearchBarRecords">
+        <div class="o_cp_searchview d-flex input-group" role="search">
+            <div
+                class="o_searchview form-control d-print-contents d-flex align-items-center py-1"
+                role="search"
+            >
+                <i
+                    class="o_searchview_icon d-print-none oi oi-search me-2"
+                    role="img"
+                    aria-label="Search..."
+                    title="Search..."
+                />
+                <div class="o_searchview_input_container">
+                    <input
+                        t-ref="searchComponent"
+                        type="text"
+                        class="o_searchview_input o_input d-print-none flex-grow-1 w-auto border-0"
+                        placeholder="Search..."
+                        t-on-keyup="onInputKeyup"
+                    />
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>
