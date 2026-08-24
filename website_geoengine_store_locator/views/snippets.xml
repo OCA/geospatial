@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template
+        id="website_geoengine_store_locator_snipet"
+        inherit_id="website.snippets"
+        priority="8"
+    >
+        <xpath expr="//snippets[@id='snippet_structure']/*[1]" position="before">
+            <t
+                t-snippet="website_geoengine_store_locator.s_openlayer_store_locator"
+                t-thumbnail="/website_geoengine_store_locator/static/src/img/snippets_thumbs/s_openlayer_store_locator.png"
+                t-image-preview="/website_geoengine_store_locator/static/src/img/snippets_thumbs/s_openlayer_store_locator.png"
+                string="Store Locator"
+                group="social"
+            >
+                <keywords>map, store</keywords>
+            </t>
+        </xpath>
+    </template>
+</odoo>
