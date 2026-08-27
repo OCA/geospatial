@@ -111,6 +111,13 @@ msgid "Custom"
 msgstr "Anpassad"
 
 #. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_renderer/geoengine_renderer.esm.js:0
+#, python-format
+msgid "Customize view to use Attribute Field: \"%s\""
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__default_extent
 #: model:ir.model.fields,field_description:base_geoengine.field_website_page__default_extent
 msgid "Default map extent"
