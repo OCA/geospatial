@@ -1,0 +1,3 @@
+- Clustering, drawing, routing, and GeoJSON polygons are not in scope.
+- The widget does not add, delete, or geocode markers in the UI.
+- Website and portal assets are not loaded; this is a backend form widget.
