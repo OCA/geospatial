@@ -1,0 +1,27 @@
+/* Field widgets default to inline-block (web/static/src/views/fields/fields.scss). */
+.o_field_mapbox {
+    display: block;
+    width: 100%;
+    min-height: 400px;
+}
+
+.o_mapbox_container {
+    width: 100%;
+    height: 400px;
+}
+
+.o_mapbox_placeholder {
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+}
+
+.o_mapbox_marker_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.o_mapbox_style_switch button {
+    min-width: 4.5rem;
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Cetmix OÜ
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="res_partner_view_form_mapbox" model="ir.ui.view">
+        <field name="name">res.partner.view.form.inherit.web_widget_mapbox_demo</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook[last()]" position="inside">
+                <page name="mapbox" string="Mapbox">
+                    <field name="map_data" widget="mapbox" />
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>
