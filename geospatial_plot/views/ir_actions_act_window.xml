@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="geospatial_plot_action" model="ir.actions.act_window">
+        <field name="name">Geospatial Plots</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">geospatial.plot</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

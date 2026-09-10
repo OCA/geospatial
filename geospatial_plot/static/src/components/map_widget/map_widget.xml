@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates>
+    <t t-name="MapWidget">
+        <div t-att-id="props.id" class="map_widget" />
+    </t>
+</templates>

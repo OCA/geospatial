@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<odoo noupdate="1">
+    <record id="partner_demo_geospatial_1" model="res.partner">
+        <field name="name">Esther Njeri</field>
+        <field name="phone">2549999234567</field>
+        <field name="country_id" ref="base.ke" />
+    </record>
+    <record id="partner_demo_geospatial_2" model="res.partner">
+        <field name="name">Ruth Wanjiku</field>
+        <field name="phone">2549999234578</field>
+        <field name="country_id" ref="base.ke" />
+    </record>
+    <record id="partner_demo_geospatial_3" model="res.partner">
+        <field name="name">Beatrice Awino</field>
+        <field name="phone">2549999234578</field>
+        <field name="country_id" ref="base.ke" />
+    </record>
+    <record id="partner_demo_geospatial_4" model="res.partner">
+        <field name="name">Veronica Anyango</field>
+        <field name="phone">2549999234578</field>
+        <field name="country_id" ref="base.ke" />
+    </record>
+    <record id="partner_demo_geospatial_5" model="res.partner">
+        <field name="name">Jackline Jelimo</field>
+        <field name="phone">2549999234578</field>
+        <field name="country_id" ref="base.ke" />
+    </record>
+    <record id="partner_demo_geospatial_6" model="res.partner">
+        <field name="name">Sheila Jerotich</field>
+        <field name="phone">2549999234578</field>
+        <field name="country_id" ref="base.ke" />
+    </record>
+    <record id="partner_demo_geospatial_7" model="res.partner">
+        <field name="name">Nancy Jepkosgei</field>
+        <field name="phone">2549999234578</field>
+        <field name="country_id" ref="base.ke" />
+    </record>
+    <record id="partner_demo_geospatial_8" model="res.partner">
+        <field name="name">Esther Chepngetich</field>
+        <field name="phone">2549999234578</field>
+        <field name="country_id" ref="base.ke" />
+    </record>
+    <record id="partner_demo_geospatial_9" model="res.partner">
+        <field name="name">Eunice Jepkorir</field>
+        <field name="phone">2549999234578</field>
+        <field name="country_id" ref="base.ke" />
+    </record>
+    <record id="partner_demo_geospatial_10" model="res.partner">
+        <field name="name">Lilian Chepkoech</field>
+        <field name="phone">2549999234578</field>
+        <field name="country_id" ref="base.ke" />
+    </record>
+</odoo>

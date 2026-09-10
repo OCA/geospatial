@@ -1,0 +1,12 @@
+.map_widget {
+    height: 450px;
+}
+
+.map_widget .leaflet-marker-icon {
+    width: 10px !important;
+    height: 10px !important;
+}
+
+.o_readonly_modifier .map_widget .leaflet-draw {
+    visibility: hidden;
+}

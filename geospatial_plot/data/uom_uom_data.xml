@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="1">
+    <record id="uom_surface_acre" model="uom.uom">
+        <field name="name">Acres</field>
+        <field name="category_id" ref="uom.uom_categ_surface" />
+        <field name="uom_type">bigger</field>
+        <field name="ratio">4046.86</field>
+        <field name="rounding">0.01</field>
+    </record>
+
+    <record id="uom_surface_hectare" model="uom.uom">
+        <field name="name">Hectares</field>
+        <field name="category_id" ref="uom.uom_categ_surface" />
+        <field name="uom_type">bigger</field>
+        <field name="ratio">10000</field>
+        <field name="rounding">0.01</field>
+    </record>
+</odoo>

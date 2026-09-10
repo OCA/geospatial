@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_read_geospatial_plot,access_read geospatial.plot,model_geospatial_plot,base.group_user,1,0,0,0
+access_crud_geospatial_plot,acces_crud geospatial.plot,model_geospatial_plot,base.group_partner_manager,1,1,1,0
+access_admin_geospatial_plot,access_admin geospatial.plot,model_geospatial_plot,group_plot_manager,1,1,1,1
