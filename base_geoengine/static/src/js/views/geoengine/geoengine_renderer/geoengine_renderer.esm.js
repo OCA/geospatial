@@ -599,6 +599,10 @@ export class GeoengineRenderer extends Component {
 
     zoomOnFeature(record) {
         const feature = this.vectorSource.getFeatureById(record.resId);
+        // Records without geometry have no feature to zoom on.
+        if (!feature) {
+            return;
+        }
         var map_view = this.map.getView();
         if (map_view) {
             map_view.fit(feature.getGeometry(), {maxZoom: 14});
@@ -606,10 +610,14 @@ export class GeoengineRenderer extends Component {
     }
 
     getOriginalZoom() {
-        var extent = this.vectorLayersResult
-            .find((res) => res.values_.visible === true)
-            .getSource()
-            .getExtent();
+        const visibleLayer = this.vectorLayersResult.find(
+            (res) => res.values_.visible === true
+        );
+        // No visible vector layer means there is nothing to fit the view to.
+        if (!visibleLayer) {
+            return;
+        }
+        var extent = visibleLayer.getSource().getExtent();
         var infinite_extent = [Infinity, Infinity, -Infinity, -Infinity];
         if (JSON.stringify(extent) === JSON.stringify(infinite_extent)) {
             extent = [-13360714.671289, 5314503.622, 8284735.328607, 7099727.320865];
