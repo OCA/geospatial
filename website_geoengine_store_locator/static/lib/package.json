@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "ol": "8.2.0",
+    "jquery-flexdatalist": "2.3.0"
+  }
+}
