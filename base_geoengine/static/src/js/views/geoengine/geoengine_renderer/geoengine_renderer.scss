@@ -59,20 +59,38 @@
 .ol-popup-closer {
     text-decoration: none;
     position: absolute;
-    top: 2px;
+    top: 8px;
     right: 8px;
 }
 .ol-popup-closer:after {
-    content: "✖";
+    font-family: FontAwesome;
+    content: "\f00d";
+    display: inline-block;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 18px;
+    transition: background-color 0.15s ease;
+    cursor: pointer;
+}
+.ol-popup-closer:hover:after {
+    background-color: rgba(0, 0, 0, 0.06);
 }
 .ol-popup-editor {
     text-decoration: none;
     position: absolute;
-    top: 1px;
-    right: 25px;
+    top: 8px;
+    right: 40px;
 }
 .ol-popup-editor:after {
     font-family: FontAwesome;
     content: "\f040";
+    display: inline-block;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 18px;
+    transition: background-color 0.15s ease;
     cursor: pointer;
+}
+.ol-popup-editor:hover:after {
+    background-color: rgba(0, 0, 0, 0.06);
 }

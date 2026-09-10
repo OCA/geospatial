@@ -4,16 +4,16 @@
  * Copyright 2023 ACSONE SA/NV
  */
 
-import {CheckBox} from "@web/core/checkbox/checkbox";
 import {Component, onWillStart, useRef, useState} from "@odoo/owl";
+import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
+import {CheckBox} from "@web/core/checkbox/checkbox";
 import {DomainSelectorGeoFieldDialog} from "../../../widgets/domain_selector_geo_field/domain_selector_geo_field_dialog/domain_selector_geo_field_dialog.esm";
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
 import {_t} from "@web/core/l10n/translation";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {rpc} from "@web/core/network/rpc";
-import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
-import {user} from "@web/core/user";
 import {useSortable} from "@web/core/utils/sortable_owl";
+import {user} from "@web/core/user";
 import {vectorLayersStore} from "../../../vector_layers_store.esm";
 
 export class LayersPanel extends Component {
