@@ -549,6 +549,14 @@ msgid "Please create a view or modify view mode"
 msgstr "Creare una vista o modificare la modalità di visualizzazione"
 
 #. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_renderer/geoengine_renderer.esm.js:0
+#, python-format
+msgid "Please update latitude and longitude details for: \"%s\""
+msgstr ""
+"Si prega di aggiornare le coordinate di latitudine e longitudine per: \"%s\""
+
+#. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__dim
 msgid "PostGIs Dimension"
 msgstr "Dimensione PostGIs"
