@@ -24,9 +24,11 @@ import {
 } from "@web/model/relational_model/utils";
 import {evaluateExpr} from "@web/core/py_js/py";
 import {loadBundle, templates} from "@web/core/assets";
+import {_t} from "@web/core/l10n/translation";
 import {parseXML} from "@web/core/utils/xml";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {registry} from "@web/core/registry";
+import {sprintf} from "@web/core/utils/strings";
 import {useService} from "@web/core/utils/hooks";
 import {vectorLayersStore} from "../../../vector_layers_store.esm";
 
@@ -59,6 +61,7 @@ export class GeoengineRenderer extends Component {
         this.view = useService("view");
         this.user = useService("user");
         this.fields = useService("field");
+        this.notification = useService("notification");
 
         // For related model we need to load all the service needed by RelationalModel
         this.services = {};
@@ -766,8 +769,12 @@ export class GeoengineRenderer extends Component {
         const fields_to_read = this.getFieldsToRead(vector);
         const data = await this.getModelData(vector, fields_to_read);
         this.useRelatedModel(vector, layer, data);
-        const styleInfo = this.styleVectorLayer(vector, data);
-        this.initLegend(styleInfo, vector);
+        if (this.checkAttributeFieldUsage(vector, data)) {
+            const styleInfo = this.styleVectorLayer(vector, data);
+            if (styleInfo) {
+                this.initLegend(styleInfo, vector);
+            }
+        }
     }
 
     async renderVectorLayers() {
@@ -861,9 +868,13 @@ export class GeoengineRenderer extends Component {
     }
 
     styleVectorLayerAndLegend(cfg, data, lv) {
-        const styleInfo = this.styleVectorLayer(cfg, data);
-        this.initLegend(styleInfo, cfg);
-        lv.setStyle(styleInfo.style);
+        if (this.checkAttributeFieldUsage(cfg, data)) {
+            const styleInfo = this.styleVectorLayer(cfg, data);
+            if (styleInfo) {
+                this.initLegend(styleInfo, cfg);
+                lv.setStyle(styleInfo.style);
+            }
+        }
     }
 
     initLegend(styleInfo, cfg) {
@@ -1306,6 +1317,27 @@ export class GeoengineRenderer extends Component {
     extractLayerValues(cfg, data) {
         var indicator = cfg.attribute_field_id[1];
         return data.map((item) => item._values[indicator]);
+    }
+
+    /**
+     * Check vector Layer Attribute Field is defined
+     * by view to display proper legends
+     */
+    checkAttributeFieldUsage(cfg, data) {
+        const indicator_values = this.extractLayerValues(cfg, data);
+        if (indicator_values.some((item) => typeof item === "undefined")) {
+            this.notification.add(
+                sprintf(
+                    _t('Customize view to use Attribute Field: "%s"'),
+                    cfg.attribute_field_id[1]
+                ),
+                {
+                    type: "warning",
+                }
+            );
+            return false;
+        }
+        return true;
     }
 }
 
