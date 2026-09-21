@@ -24,9 +24,11 @@ import {
 } from "@web/model/relational_model/utils";
 import {evaluateExpr} from "@web/core/py_js/py";
 import {loadBundle, templates} from "@web/core/assets";
+import {_t} from "@web/core/l10n/translation";
 import {parseXML} from "@web/core/utils/xml";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {registry} from "@web/core/registry";
+import {sprintf} from "@web/core/utils/strings";
 import {useService} from "@web/core/utils/hooks";
 import {vectorLayersStore} from "../../../vector_layers_store.esm";
 
@@ -59,6 +61,7 @@ export class GeoengineRenderer extends Component {
         this.view = useService("view");
         this.user = useService("user");
         this.fields = useService("field");
+        this.notification = useService("notification");
 
         // For related model we need to load all the service needed by RelationalModel
         this.services = {};
@@ -565,8 +568,22 @@ export class GeoengineRenderer extends Component {
     /**
      * When you click on a record in the RecordsPanel, this method is called to display the popup.
      * @param {*} record
+     * @returns {false} when records does not coordinate details in it
      */
     onDisplayPopupRecord(record) {
+        if (record.data && record.data.shape === false) {
+            this.notification.add(
+                sprintf(
+                    _t('Please update latitude and longitude details for: "%s"'),
+                    record.data.display_name
+                ),
+                {
+                    type: "warning",
+                }
+            );
+            this.clickToHidePopup();
+            return false;
+        }
         const popup = this.getPopup();
         const feature = this.vectorSource.getFeatureById(record.resId);
         if (feature) {
@@ -737,7 +754,10 @@ export class GeoengineRenderer extends Component {
             this.styleVectorLayerAndLegend(vector, data, layer);
             this.useRelatedModel(vector, layer, data);
         } else {
-            const data = this.props.data.records;
+            // Filter records with coordinates for styling vector layers & legends
+            const data = this.props.data.records.filter(
+                (record) => record.data[vector.geo_field_id[1]] !== false
+            );
             this.styleVectorLayerAndLegend(vector, data, layer);
             this.addSourceToLayer(data, vector, layer);
         }
@@ -826,7 +846,10 @@ export class GeoengineRenderer extends Component {
             this.styleVectorLayerAndLegend(cfg, data, lv);
             this.useRelatedModel(cfg, lv, data);
         } else {
-            const data = this.props.data.records;
+            const geo_field_id_name = cfg.geo_field_id[1];
+            const data = this.props.data.records.filter(
+                (record) => record.data[geo_field_id_name] !== false
+            );
             if (!data.length) {
                 return new ol.layer.Vector({
                     source: new ol.source.Vector(),
@@ -853,10 +876,13 @@ export class GeoengineRenderer extends Component {
 
     async getModelData(cfg, fields_to_read) {
         const domain = this.evalModelDomain(cfg);
+        const geo_field_id_name = cfg.geo_field_id[1];
         let data = await this.orm.searchRead(cfg.model, [domain][0], fields_to_read);
         const modelsRecords = this.models.find((e) => e.model.resModel === cfg.model)
             .model.records;
-        data = data.map((dat) => modelsRecords.find((rec) => rec.resId === dat.id));
+        data = data
+            .map((dat) => modelsRecords.find((rec) => rec.resId === dat.id))
+            .filter((rec) => rec.data[geo_field_id_name] !== false);
         return data;
     }
 
