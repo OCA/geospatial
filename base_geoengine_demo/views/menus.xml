@@ -1,5 +1,4 @@
 <odoo>
-
     <menuitem
         name="GeoEngine Demo"
         id="geoengine_demo_menu"
@@ -12,5 +11,4 @@
         parent="geoengine_demo_menu"
         groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"
     />
-
 </odoo>
