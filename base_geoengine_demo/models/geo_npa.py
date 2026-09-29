@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class NPA(models.Model):
-
     """GEO OSV SAMPLE"""
 
     _name = "dummy.zip"
