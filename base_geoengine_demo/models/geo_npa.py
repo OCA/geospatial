@@ -48,11 +48,7 @@ class NPA(models.Model):
                     "where id in %s;",
                     (tuple(res.ids),),
                 )
-                res = cursor.fetchone()
-                if res:
-                    rec.total_sales = res[0] or 0.0
-                else:
-                    rec.total_sales = 0.0
+                rec.total_sales = cursor.fetchone()[0] or 0.0
             else:
                 rec.total_sales = 0.0
 
