@@ -1,1 +1,2 @@
 - Sylvain LE GAL (<https://www.twitter.com/legalsylvain>)
+- Nils Coenen <nils.coenen@nico-solutions.de>
