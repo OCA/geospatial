@@ -22,6 +22,7 @@ Available addons
 addon | version | maintainers | summary
 --- | --- | --- | ---
 [base_google_map](base_google_map/) | 19.0.1.0.0 | <a href='https://github.com/gityopie'><img src='https://github.com/gityopie.png' width='32' height='32' style='border-radius:50%;' alt='gityopie'/></a> <a href='https://github.com/wolfhall'><img src='https://github.com/wolfhall.png' width='32' height='32' style='border-radius:50%;' alt='wolfhall'/></a> | View modes and widgets to integrate Google Maps in your UI
+[web_leaflet_lib](web_leaflet_lib/) | 19.0.1.0.0 | <a href='https://github.com/legalsylvain'><img src='https://github.com/legalsylvain.png' width='32' height='32' style='border-radius:50%;' alt='legalsylvain'/></a> | Bring leaflet.js librairy in odoo.
 [web_view_google_map](web_view_google_map/) | 19.0.1.0.2 | <a href='https://github.com/gityopie'><img src='https://github.com/gityopie.png' width='32' height='32' style='border-radius:50%;' alt='gityopie'/></a> <a href='https://github.com/wolfhall'><img src='https://github.com/wolfhall.png' width='32' height='32' style='border-radius:50%;' alt='wolfhall'/></a> | Add a Google Map view type to the Odoo web client
 
 [//]: # (end addons)
