@@ -2,8 +2,6 @@ import {MapController} from "./leaflet_map_controller.esm";
 import {MapRenderer} from "./leaflet_map_renderer.esm";
 import {registry} from "@web/core/registry";
 
-/* global DOMParser */
-
 /**
  * Helper function that normalize the architecture input to ensure it is an HTMLElement.
  * @param arch
@@ -44,6 +42,7 @@ export const leafletMapView = {
             ...genericProps,
             Renderer: MapRenderer,
             archInfo: {
+                ...genericProps.archInfo,
                 arch: archEl,
             },
         };

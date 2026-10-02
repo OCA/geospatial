@@ -1,9 +1,9 @@
 import {session} from "@web/session";
 import {useService} from "@web/core/utils/hooks";
 
-/* global L, console, document */
+/* global L */
 
-const {Component, onWillStart, onMounted, onPatched, useRef} = owl;
+const {Component, onWillStart, onMounted, onWillUpdateProps, useRef} = owl;
 
 export class MapRenderer extends Component {
     static template = "web_view_leaflet_map.MapRenderer";
@@ -53,8 +53,12 @@ export class MapRenderer extends Component {
             this.renderMarkers();
         });
 
-        onPatched(() => {
-            if (this.leafletMap) {
+        onWillUpdateProps(async (nextProps) => {
+            const oldDomain = JSON.stringify(this.props.domain || []);
+            const newDomain = JSON.stringify(nextProps.domain || []);
+
+            if (oldDomain !== newDomain) {
+                await this.loadRecords(nextProps.domain);
                 this.renderMarkers();
             }
         });
@@ -64,14 +68,14 @@ export class MapRenderer extends Component {
      * Loads records from the server based on the provided domain and fields.
      * @returns {Promise<void>}
      */
-    async loadRecords() {
+    async loadRecords(domain = this.props.domain) {
         const fields = this.getFields();
 
         try {
             // Cargar registros usando searchRead
             const records = await this.orm.searchRead(
                 this.resModel,
-                this.props.domain || [],
+                domain || [],
                 fields,
                 {
                     limit: this.props.limit || 80,

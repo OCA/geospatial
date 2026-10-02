@@ -21,13 +21,13 @@ Leaflet Map View (OpenStreetMap)
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Fgeospatial-lightgray.png?logo=github
-    :target: https://github.com/OCA/geospatial/tree/18.0/web_view_leaflet_map
+    :target: https://github.com/OCA/geospatial/tree/19.0/web_view_leaflet_map
     :alt: OCA/geospatial
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/geospatial-18-0/geospatial-18-0-web_view_leaflet_map
+    :target: https://translation.odoo-community.org/projects/geospatial-19-0/geospatial-19-0-web_view_leaflet_map
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/geospatial&target_branch=18.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/geospatial&target_branch=19.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
@@ -55,8 +55,8 @@ In that case, nearby markers are grouped together, thanks to
 
 |image2|
 
-.. |image1| image:: https://raw.githubusercontent.com/OCA/geospatial/18.0/web_view_leaflet_map/static/description/view_res_partner_map_precise.png
-.. |image2| image:: https://raw.githubusercontent.com/OCA/geospatial/18.0/web_view_leaflet_map/static/description/view_res_partner_map_large.png
+.. |image1| image:: https://raw.githubusercontent.com/OCA/geospatial/19.0/web_view_leaflet_map/static/description/view_res_partner_map_precise.png
+.. |image2| image:: https://raw.githubusercontent.com/OCA/geospatial/19.0/web_view_leaflet_map/static/description/view_res_partner_map_large.png
 
 **Table of contents**
 
@@ -66,7 +66,7 @@ In that case, nearby markers are grouped together, thanks to
 Configuration
 =============
 
-- See configuration of the module ``web_leaflet_lib``.
+-  See configuration of the module ``web_leaflet_lib``.
 
 Development
 ===========
@@ -107,11 +107,11 @@ Create a new view :
 
 Map options :
 
-- ``default_zoom`` : define the default zoom value. (7 if not defined)
-- ``max_zoom`` : define the max zoom value. (19 if not defined)
-- ``zoom_snap`` : define the zoom level in each change. (1 if not
-  defined)
-- Create or update an action for the model
+-  ``default_zoom`` : define the default zoom value. (7 if not defined)
+-  ``max_zoom`` : define the max zoom value. (19 if not defined)
+-  ``zoom_snap`` : define the zoom level in each change. (1 if not
+   defined)
+-  Create or update an action for the model
 
 .. code:: xml
 
@@ -129,22 +129,22 @@ globally, or per model.
 Known issues / Roadmap
 ======================
 
-- For the time being, at the start of the map loading, the call of
-  ``invalidateSize()`` is required. We should investigate why and try to
-  remove that call. see
-  https://github.com/Leaflet/Leaflet/issues/3002#issuecomment-93836022
-- For the time being, the map has "Markers" and allow to display odoo
-  items if longitude and latitude are available. We could imagine other
-  kind of usages, with Polylines, Polygons, etc... See all the leaflet
-  options : https://leafletjs.com/reference.html
-- Search bar is not implemented in this view. All records are displayed
-  for now. We should:
+-  For the time being, at the start of the map loading, the call of
+   ``invalidateSize()`` is required. We should investigate why and try
+   to remove that call. see
+   https://github.com/Leaflet/Leaflet/issues/3002#issuecomment-93836022
+-  For the time being, the map has "Markers" and allow to display odoo
+   items if longitude and latitude are available. We could imagine other
+   kind of usages, with Polylines, Polygons, etc... See all the leaflet
+   options : https://leafletjs.com/reference.html
+-  Search bar is not implemented in this view. All records are displayed
+   for now. We should:
 
-  - implement records refresh, when adding / removing domain in the
-    search bar.
-  - implement a custom search based on the displayed map. (no need to
-    load records that are out of the scope of the current displayed
-    map).
+   -  implement records refresh, when adding / removing domain in the
+      search bar.
+   -  implement a custom search based on the displayed map. (no need to
+      load records that are out of the scope of the current displayed
+      map).
 
 Bug Tracker
 ===========
@@ -152,7 +152,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/geospatial/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/geospatial/issues/new?body=module:%20web_view_leaflet_map%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/geospatial/issues/new?body=module:%20web_view_leaflet_map%0Aversion:%2019.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -167,7 +167,8 @@ Authors
 Contributors
 ------------
 
-- Sylvain LE GAL (https://www.twitter.com/legalsylvain)
+-  Sylvain LE GAL (https://www.twitter.com/legalsylvain)
+-  Nils Coenen nils.coenen@nico-solutions.de
 
 Maintainers
 -----------
@@ -190,6 +191,6 @@ Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
 
 |maintainer-legalsylvain| 
 
-This module is part of the `OCA/geospatial <https://github.com/OCA/geospatial/tree/18.0/web_view_leaflet_map>`_ project on GitHub.
+This module is part of the `OCA/geospatial <https://github.com/OCA/geospatial/tree/19.0/web_view_leaflet_map>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.
