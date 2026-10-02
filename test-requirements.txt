@@ -1,0 +1,1 @@
+odoo-addon-web_view_leaflet_map @ git+https://github.com/OCA/geospatial.git@refs/pull/485/head#subdirectory=web_view_leaflet_map
