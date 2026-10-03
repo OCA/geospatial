@@ -1,0 +1,1044 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* base_geoengine
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2023-08-08 11:10+0000\n"
+"Last-Translator: Ivorra78 <informatica@totmaterial.es>\n"
+"Language-Team: none\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/base.py:0
+#, python-format
+msgid "%s column does not exists or is not a geo field"
+msgstr "La columna %s no existe o no es un campo geográfico"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__active_on_startup
+msgid "Active On Startup"
+msgstr "Activo en el arranque"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
+#, python-format
+msgid "Add new value"
+msgstr ""
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
+#, python-format
+msgid "Add tag"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__attribute_field_id
+msgid "Attribute field"
+msgstr "Campo de atributo"
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_base
+msgid "Base"
+msgstr "Base/Fuente"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__geo_repr__basic
+msgid "Basic"
+msgstr "Básico"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__begin_color
+msgid "Begin color class"
+msgstr "Iniciar clase de color"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_geoengine_view_form
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Classification"
+msgstr "Clasificación"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__classification
+msgid "Classification mode"
+msgstr "Modo de clasificación"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__type
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__code
+msgid "Code"
+msgstr "Código"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__geo_repr__colored
+msgid "Colored range/Chroma.js"
+msgstr "Gama de colores/Chroma.js"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_geoengine_view_form
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Colors"
+msgstr "Colores"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_base_view_menu
+msgid "Configuration"
+msgstr "Configuración"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__gist_index
+msgid "Create gist index"
+msgstr "Crear un índice gist"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__create_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__create_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__create_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__create_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__create_date
+msgid "Created on"
+msgstr "Creado el"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__classification__custom
+msgid "Custom"
+msgstr "Personalizar"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__default_extent
+msgid "Default map extent"
+msgstr "Extensión predeterminada del mapa"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__default_zoom
+msgid "Default map zoom"
+msgstr "Zoom predeterminado del mapa"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__params
+msgid "Dictiorary of values for dimensions as JSON"
+msgstr "Diccionario de valores de las dimensiones en formato JSON"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__dimensions
+msgid "Dimensions"
+msgstr "Dimensiones"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.xml:0
+#, python-format
+msgid "Discard"
+msgstr "Descartar"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__display_polygon_labels
+msgid "Display Labels on Polygon"
+msgstr "Mostrar etiquetas en el polígono"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__display_name
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__display_name
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__display_name
+msgid "Display Name"
+msgstr "Mostrar Nombre"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__d_wms
+msgid "Distant WMS"
+msgstr "Sistema de gestión de almacenes (SGA) a distancia"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.esm.js:0
+#, python-format
+msgid "Domain editing"
+msgstr "Editando Dominio"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.esm.js:0
+#, python-format
+msgid "Editing Raster Layer"
+msgstr ""
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.esm.js:0
+#, python-format
+msgid "Editing vector layer"
+msgstr "Edición de capas vectoriales"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__end_color
+msgid "End color class"
+msgstr "Fin de la clase de color"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/geo_db.py:0
+#, python-format
+msgid ""
+"Error, can not automatically initialize spatial postgis support. Database "
+"user may have to be superuser and postgres/postgis extensions with their "
+"devel header have to be installed. If you do not want Odoo to connect with a "
+"super user you can manually prepare your database. To do this, open a client "
+"to your database using a super user and run:\n"
+"CREATE EXTENSION postgis;\n"
+"CREATE EXTENSION postgis_topology;\n"
+msgstr ""
+"Error, no se puede inicializar automáticamente el soporte espacial postgis. "
+"El usuario de la base de datos debe ser superusuario y las extensiones "
+"postgres/postgis con su cabecera devel deben estar instaladas. Si no quieres "
+"que Odoo se conecte con un superusuario puedes preparar manualmente tu base "
+"de datos. Para hacer esto, abre un cliente a tu base de datos usando un "
+"superusuario y ejecuta\n"
+"CREAR EXTENSIÓN postgis;\n"
+"CREAR EXTENSIÓN postgis_topología;\n"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__ttype
+msgid "Field Type"
+msgstr "Tipo de campo"
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_ir_model_fields
+msgid "Fields"
+msgstr "Campos"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__format_suffix
+msgid "Format"
+msgstr "Formato"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_geoengine_view_form
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "General"
+msgstr "General"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/fields.py:0
+#, python-format
+msgid ""
+"Geo Value %(geom_type)s must be of the same type "
+"%(geo_type)s                         as fields"
+msgstr ""
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/fields.py:0
+#, python-format
+msgid ""
+"Geo dimention modification is not implemented. We can not change dimention "
+"%(data)s to %(dim)s"
+msgstr ""
+"La modificación de la dimensión geográfica no está implementada. No podemos "
+"cambiar la dimensión %(data)s a %(dim)s"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__geo_field_id
+msgid "Geo field"
+msgstr "Campo geográfico"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/fields.py:0
+#, python-format
+msgid ""
+"Geo type modification is not implemented. We can not change type %(data)s to "
+"%(geo_type)s"
+msgstr ""
+"La modificación del geotipo no está implementada. No podemos cambiar el tipo "
+"%(data)s a %(geo_type)s"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_ui_view__type__geoengine
+msgid "GeoEngine"
+msgstr "GeoIngeniería"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_base_menu
+msgid "GeoEngine Backend"
+msgstr "Servidor de Geoingeniería"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geoengine_view_form
+msgid "GeoEngine Data"
+msgstr "Fecha de Geoingeniería"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_view.esm.js:0
+#, python-format
+msgid "Geoengine"
+msgstr "Geoingeniería"
+
+#. module: base_geoengine
+#: model:res.groups,name:base_geoengine.group_geoengine_admin
+msgid "Geoengine Admin"
+msgstr "Administración de Geoingeniería"
+
+#. module: base_geoengine
+#: model:res.groups,name:base_geoengine.group_geoengine_user
+msgid "Geoengine User"
+msgstr "Usuario de Geoingeniería"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__has_type
+msgid "Has Type"
+msgstr "Tiene Tipo"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__id
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__id
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__id
+msgid "ID"
+msgstr "ID (identificación)"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__classification__interval
+msgid "Interval"
+msgstr "Intervalo"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__is_wms
+msgid "Is Wms"
+msgstr "Es Wms"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__is_wmts
+msgid "Is Wmts"
+msgstr "Es Wmts"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__overlay
+msgid "Is overlay layer?"
+msgstr "¿Es una capa de superposición?"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__write_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__write_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__write_uid
+msgid "Last Updated by"
+msgstr "Última actualización por"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__write_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__write_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__write_date
+msgid "Last Updated on"
+msgstr "Última Actualización el"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__type_id
+msgid "Layer"
+msgstr "Capa"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__name
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__name
+msgid "Layer Name"
+msgstr "nombre de Capa"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__layer_opacity
+msgid "Layer Opacity"
+msgstr "Opacidad de la capa"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__sequence
+msgid "Layer Priority"
+msgstr "Prioridad de Capa"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__layer_transparent
+msgid "Layer Transparent"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "Layer data"
+msgstr "Fecha de Capa"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__readonly
+msgid "Layer is read only"
+msgstr "La capa es de sólo lectura"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__sequence
+msgid "Layer priority"
+msgstr "Prioridad de Capa"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_layer__active_on_startup
+msgid "Layer will be shown on startup if checked."
+msgstr "La capa se mostrará al inicio si está marcada."
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.xml:0
+#, python-format
+msgid "Layers ("
+msgstr "Capas ("
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__linestring
+msgid "LineString"
+msgstr "Secuencia de líneas"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__dimensions
+msgid "List of dimensions separated by ','"
+msgstr "Lista de dimensiones separadas por ','"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__matrix_set
+msgid "Matrix set"
+msgstr "Conjunto matriz"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__max_extent
+msgid "Max extent"
+msgstr "Extensión máxima"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_arch_parser.esm.js:0
+#, python-format
+msgid "Missing ${INFO_BOX_ATTRIBUTE} template."
+msgstr "Falta la plantilla ${INFO_BOX_ATTRIBUTE}."
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__model_name
+msgid "Model"
+msgstr "Modelo"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__model_domain
+msgid "Model Domain"
+msgstr "Dominio del modelo"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__model_id
+msgid "Model to use"
+msgstr "Modelo a utilizar"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__model_view_id
+msgid "Model view"
+msgstr "Vista del modelo"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multilinestring
+msgid "MultiLineString"
+msgstr "Cadena multilínea"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multipoint
+msgid "MultiPoint"
+msgstr "Punto Múltiple"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multipolygon
+msgid "MultiPolygon"
+msgstr "Multipolígono"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__params_wms
+msgid "Need to provide at least a LAYERS param"
+msgstr "Necesidad de proporcionar al menos un parámetro de CAPAS"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.esm.js:0
+#, python-format
+msgid "New record"
+msgstr "Nuevo récord"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/base.py:0
+#, python-format
+msgid ""
+"No GeoEngine view defined for the model %s.                         Please "
+"create a view or modify view mode"
+msgstr ""
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/base.py:0
+#, python-format
+msgid "No raster layer for view %s"
+msgstr "No hay capa ráster para la vista %s"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__nb_class
+msgid "Number of class"
+msgstr "Número de clase"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_renderer/geoengine_renderer.xml:0
+#, python-format
+msgid "OPEN"
+msgstr "ABRIR"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__odoo
+msgid "Odoo field"
+msgstr "Campo de odoo"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "Odoo layer data (Not implemented)"
+msgstr "Datos de la capa Odoo (No implementado)"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__field_id
+msgid "Odoo layer field to use"
+msgstr "Campo de capa de Odoo a utilizar"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__opacity
+msgid "Opacity"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__osm
+msgid "OpenStreetMap"
+msgstr "OpenStreetMap"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "Params"
+msgstr "Parámetros"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params_wms
+msgid "Params Wms"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__point
+msgid "Point"
+msgstr "Punto"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__polygon
+msgid "Polygon"
+msgstr "Polígono"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__dim
+msgid "PostGIs Dimension"
+msgstr "Dimensión PostGIs"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__geo_type
+msgid "PostGIs type"
+msgstr "Tipo PostGIs"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__projection
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__projection
+msgid "Projection"
+msgstr "Proyección"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__geo_repr__proportion
+msgid "Proportional Symbol"
+msgstr "Símbolo proporcional"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__classification__quantile
+msgid "Quantile"
+msgstr "Cuantil"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geoengine_view_form
+msgid "Raster (Background layers)"
+msgstr "Ráster (capas de fondo)"
+
+#. module: base_geoengine
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_form_view_raster_action
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_rater_action
+#: model:ir.model,name:base_geoengine.model_geoengine_raster_layer
+msgid "Raster Layer"
+msgstr "Capa Ráster"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_raster_layer_menu
+msgid "Raster Layer Management"
+msgstr "Gestión de capas rasterizadas"
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_geoengine_raster_layer_type
+msgid "Raster Layer Type"
+msgstr "Tipo de capa rasterizada"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "Raster Layer View"
+msgstr "Vista de capa rasterizada"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__raster_type
+msgid "Raster layer type"
+msgstr "Tipo de capa rasterizada"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__raster_layer_ids
+msgid "Raster layers"
+msgstr "Capas Ráster"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.xml:0
+#, python-format
+msgid "Rasters"
+msgstr "Rásteres"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/records_panel.xml:0
+#, python-format
+msgid "Records ("
+msgstr "Registros ("
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Related Model"
+msgstr "Modelo relacionado"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__view_id
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__view_id
+msgid "Related View"
+msgstr "Vista relacionada"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
+#, python-format
+msgid "Remove tag"
+msgstr ""
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_geoengine_view_form
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Representation"
+msgstr "Representación"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__geo_repr
+msgid "Representation mode"
+msgstr "Modo de representación"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/fields.py:0
+#, python-format
+msgid ""
+"Reprojection of column is not implemented. We can not change srid %(srid)s "
+"to %(data)s"
+msgstr ""
+"La reproyección de columna no está implementada. No podemos cambiar srid "
+"%(srid)s por %(data)s"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__request_encoding
+msgid "Request encoding"
+msgstr "Solicitar codificación"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__resolutions
+msgid "Resolutions"
+msgstr "Resoluciones"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__restricted_extent
+msgid "Restricted map extent"
+msgstr "Extensión de mapa restringida"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.xml:0
+#, python-format
+msgid "Save"
+msgstr "Guardar"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
+#, python-format
+msgid "Search..."
+msgstr "Buscar..."
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__server_type
+msgid "Server Type"
+msgstr "Tipo de servidor"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__service
+msgid "Service"
+msgstr "Servicio"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__url
+msgid "Service URL"
+msgstr "URL de servicio"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/geo_convertion_helper.py:0
+#, python-format
+msgid "Shapely or geojson are not available in the sys path"
+msgstr "Shapely o geojson no están disponibles en la ruta del sistema"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field_input/domain_selector_geo_field_input.esm.js:0
+#, python-format
+msgid "Subdomain"
+msgstr "Subdominio"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/geo_vector_layer.py:0
+#, python-format
+msgid "The geo_field_id must be a field in %s model"
+msgstr "El geo_field_id debe ser un campo del modelo %s"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__server_type
+msgid ""
+"The type of the remote WMS server: mapserver,             geoserver, "
+"carmentaserver, or qgis"
+msgstr ""
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__classification__unique
+msgid "Unique value"
+msgstr "Valor único"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__units
+msgid "Units"
+msgstr "Unidades"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__use_to_edit
+msgid "Use to edit"
+msgstr "Utilizar para editar"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Vector"
+msgstr "Vector"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geoengine_view_form
+msgid "Vector (Active layers)"
+msgstr "Vector (capas activas)"
+
+#. module: base_geoengine
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_raster_action
+#: model:ir.actions.act_window,name:base_geoengine.geo_vector_geoengine_view_action
+#: model:ir.model,name:base_geoengine.model_geoengine_vector_layer
+msgid "Vector Layer"
+msgstr "Capa vectorial"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_vector_layer_menu
+msgid "Vector Layer Management"
+msgstr "Gestión de capas vectoriales"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__vector_layer_ids
+msgid "Vector layers"
+msgstr "Capas vectoriales"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.xml:0
+#, python-format
+msgid "Vectors"
+msgstr "Vectores"
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_ir_ui_view
+msgid "View"
+msgstr "Vista"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_view_menu
+msgid "View Management"
+msgstr "Gestión de visualización"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__type
+msgid "View Type"
+msgstr "Tipo de vista"
+
+#. module: base_geoengine
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_action
+msgid "Views"
+msgstr "Vistas"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "WMS options"
+msgstr "Opciones WMS"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__wmts
+msgid "WMTS"
+msgstr "WMTS"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "WMTS options"
+msgstr "Opciones WMTS"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.esm.js:0
+#, python-format
+msgid "Warning"
+msgstr "Aviso"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/geo_convertion_helper.py:0
+#, python-format
+msgid ""
+"Write/create/search geo type must be wkt/geojson string or must respond to "
+"wkt"
+msgstr ""
+"Write/create/search geo type debe ser wkt/geojson string o debe responder a "
+"wkt"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.esm.js:0
+#, python-format
+msgid ""
+"You are about to create a new record without having displayed all the "
+"others. A risk of overlap could occur. Would you like to continue ?"
+msgstr ""
+"Está a punto de crear un nuevo registro sin haber visualizado todos los "
+"demás. Podría producirse un riesgo de solapamiento. ¿Desea continuar?"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/base.py:0
+#, python-format
+msgid "You must at least provide one of domain or geo_domain"
+msgstr "Debe proporcionar al menos uno de los dominios o geo_domain"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/geo_vector_layer.py:0
+#, python-format
+msgid "You need to provide an attribute that exists in %s model"
+msgstr "Necesita proporcionar un atributo que existe en el modelo %s"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/geo_vector_layer.py:0
+#, python-format
+msgid "You need to select a numeric field"
+msgstr "Debe seleccionar un campo numérico"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__projection
+msgid "eg. EPSG:21781"
+msgstr "ej. EPSG:21781"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__request_encoding
+msgid "eg. REST"
+msgstr "ej. REST"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__units
+msgid "eg. m"
+msgstr "ej. m"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__format_suffix
+msgid "eg. png"
+msgstr "ej. png"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_contains"
+msgstr "geo_contains (geo_contenedores)"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_equal"
+msgstr "geo_equal (geo_igual)"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_greater"
+msgstr "geo_greater (geo_mayor)"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_intersect"
+msgstr "geo_intersect (geo_intersección)"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_lesser"
+msgstr "geo_lesser (geo_menor)"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_line
+msgid "geo_line"
+msgstr "geo_line (geo_línea)"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_multi_line
+msgid "geo_multi_line"
+msgstr "geo_multi_line (geo_multi_línea)"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_multi_point
+msgid "geo_multi_point"
+msgstr "geo_multi_point (geo_multi_punto)"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_multi_polygon
+msgid "geo_multi_polygon"
+msgstr "geo_multi_polygon (geo_multi_polígono)"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_point
+msgid "geo_point"
+msgstr "geo_point (geo_punto)"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_polygon
+msgid "geo_polygon"
+msgstr "geo_polygon (geo_polígono)"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/base.py:0
+#, python-format
+msgid "geo_search is deprecated: uses search method defined on base model"
+msgstr ""
+"geo_search está obsoleto: utiliza el método de búsqueda definido en el "
+"modelo base"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_touch"
+msgstr "geo_touch (geo_táctil)"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_within"
+msgstr "geo_within (geo_interior)"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/fields.py:0
+#, python-format
+msgid ""
+"geometry_columns table seems to be corrupted. SRID check is not possible"
+msgstr ""
+"La tabla geometry_columns parece estar dañada. No es posible comprobar el "
+"SRID"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_layer__begin_color
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_layer__end_color
+msgid "hex value"
+msgstr "valor hexadecimal"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_number_field/domain_selector_number_field.esm.js:0
+#, python-format
+msgid "in active_ids"
+msgstr "En active_ids"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_number_field/domain_selector_number_field.esm.js:0
+#, python-format
+msgid "not in active_ids"
+msgstr "No en active_ids"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__srid
+msgid "srid"
+msgstr "srid"
+
+#, python-format
+#~ msgid ""
+#~ "Geo Value %(geom_type)s must be of the same type %(geo_type)s as fields"
+#~ msgstr ""
+#~ "Los valores geográficos %(geom_type)s deben ser del mismo tipo "
+#~ "%(geo_type)s que los campos"
+
+#~ msgid "Last Modified on"
+#~ msgstr "Última Modificación el"
+
+#, python-format
+#~ msgid "No GeoEngine view defined for the model %s"
+#~ msgstr "No se definió una vista de GeoIngeniería para el modelo %s"
+
+#, python-format
+#~ msgid "Please create a view or modify view mode"
+#~ msgstr "Por favor, cree una vista o modifique el modo de vista"
+
+#~ msgid ""
+#~ "The type of the remote WMS server: mapserver, geoserver, carmentaserver, "
+#~ "or qgis"
+#~ msgstr ""
+#~ "Tipo de servidor WMS remoto: mapserver, geoserver, carmentaserver o qgis"

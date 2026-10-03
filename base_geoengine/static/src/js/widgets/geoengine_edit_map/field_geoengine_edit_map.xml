@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+    <t t-name="base_geoengine.FieldGeoEngineEditMap">
+        <div class="ol_map" t-att-id="id" />
+    </t>
+</templates>
