@@ -23,10 +23,36 @@
     background-color: #eee;
 }
 
+.leaflet_marker_wrapper {
+    position: relative;
+    background: transparent;
+    border: none;
+}
+
 .leaflet_marker_icon {
     background-color: white;
     border: 1px black solid;
     border-radius: 50% !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
+    z-index: 2;
+}
+
+.leaflet_marker_triangle {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 15px;
+    height: 15px;
+    transform: translateX(-50%);
+    background: black;
+    clip-path: polygon(50% 100%, 0 0, 100% 0);
+    z-index: 1;
 }
 
 /*
@@ -57,4 +83,12 @@
 .leaflet-container [aria-hidden="true"],
 [aria-hidden="1"] {
     display: inline !important;
+}
+
+.leaflet_marker_spiderfied .leaflet_marker_triangle {
+    display: none !important;
+}
+
+.leaflet_marker_spiderfied .leaflet_marker_icon {
+    top: 10px;
 }

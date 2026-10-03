@@ -158,15 +158,38 @@ export class MapRenderer extends Component {
         }
 
         this.mainLayer = L.markerClusterGroup();
+
+        this.mainLayer.on("spiderfied", (event) => {
+            for (const marker of event.markers) {
+                const element = marker.getElement();
+
+                if (element) {
+                    element.classList.add("leaflet_marker_spiderfied");
+                }
+            }
+        });
+
+        this.mainLayer.on("unspiderfied", (event) => {
+            for (const marker of event.markers) {
+                const element = marker.getElement();
+
+                if (element) {
+                    element.classList.remove("leaflet_marker_spiderfied");
+                }
+            }
+        });
+
         for (const record of this.records) {
             const marker = this.prepareMarker(record);
+
             if (marker) {
                 this.mainLayer.addLayer(marker);
             }
         }
+
         const bounds = this.mainLayer.getBounds();
+
         if (bounds.isValid()) {
-            // Adapt the map's position based on the map's points
             this.leafletMap.fitBounds(bounds.pad(0.1));
         }
 
@@ -218,10 +241,31 @@ export class MapRenderer extends Component {
         const unique = lastUpdate.replace(/[^0-9]/g, "");
         const iconUrl = `/web/image?model=${this.resModel}&id=${record.id}&field=${this.fieldMarkerIconImage}&unique=${unique}`;
 
-        return L.icon({
-            iconUrl: iconUrl,
-            className: "leaflet_marker_icon",
-            iconSize: [this.markerIconSizeX, this.markerIconSizeY],
+        const triangleHeight = 10;
+
+        return L.divIcon({
+            className: "leaflet_marker_wrapper",
+
+            html: `
+                <div
+                    class="leaflet_marker_icon"
+                    style="
+                        width: ${this.markerIconSizeX}px;
+                        height: ${this.markerIconSizeY}px;
+                        background-image: url('${iconUrl}');
+                    "
+                ></div>
+
+                <div class="leaflet_marker_triangle"></div>
+            `,
+
+            iconSize: [this.markerIconSizeX, this.markerIconSizeY + triangleHeight],
+
+            iconAnchor: [
+                this.markerIconSizeX / 2,
+                this.markerIconSizeY + triangleHeight,
+            ],
+
             popupAnchor: [this.markerPopupAnchorX, this.markerPopupAnchorY],
         });
     }
