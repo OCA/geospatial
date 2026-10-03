@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="web_view_leaflet_map.MapView" owl="1">
+        <div class="h-100 d-flex flex-column" t-ref="root">
+            <Layout display="display" className="'flex-grow-1 d-flex flex-column'">
+                <t t-set-slot="control-panel-create-button">
+                    <button
+                        type="button"
+                        class="btn btn-primary o_list_button_add"
+                        data-hotkey="c"
+                        t-on-click="onClickCreate"
+                        data-bounce-button=""
+                    >
+                        New
+                    </button>
+                </t>
+
+                <t t-set-slot="layout-actions">
+                    <SearchBar toggler="searchBarToggler" autofocus="firstLoad" />
+                </t>
+
+                <t t-set-slot="control-panel-navigation-additional">
+                    <t
+                        t-component="searchBarToggler.component"
+                        t-props="searchBarToggler.props"
+                    />
+                </t>
+
+                <MapRenderer t-props="props" />
+            </Layout>
+        </div>
+    </t>
+
+</templates>
