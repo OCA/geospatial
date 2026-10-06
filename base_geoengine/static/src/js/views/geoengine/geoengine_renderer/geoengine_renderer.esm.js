@@ -1334,6 +1334,9 @@ export class GeoengineRenderer extends Component {
      * by view to display proper legends
      */
     checkAttributeFieldUsage(cfg, data) {
+        if (!cfg.attribute_field_id) {
+            return true;
+        }
         const indicator_values = this.extractLayerValues(cfg, data);
         if (indicator_values.some((item) => typeof item === "undefined")) {
             this.notification.add(
