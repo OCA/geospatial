@@ -37,6 +37,7 @@ import {sprintf} from "@web/core/utils/strings";
 import {parseXML} from "@web/core/utils/xml";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {registry} from "@web/core/registry";
+import {sprintf} from "@web/core/utils/strings";
 import {user} from "@web/core/user";
 import {useService} from "@web/core/utils/hooks";
 import {vectorLayersStore} from "../../../vector_layers_store.esm";
@@ -579,6 +580,19 @@ export class GeoengineRenderer extends Component {
      * @param {*} record
      */
     onDisplayPopupRecord(record) {
+        if (record.data && record.data.shape === false) {
+            this.notification.add(
+                sprintf(
+                    _t('Please update latitude and longitude details for: "%s"'),
+                    record.data.display_name
+                ),
+                {
+                    type: "warning",
+                }
+            );
+            this.clickToHidePopup();
+            return false;
+        }
         const popup = this.getPopup();
         const feature = this.vectorSource.getFeatureById(record.resId);
         if (feature) {
@@ -757,7 +771,10 @@ export class GeoengineRenderer extends Component {
             this.styleVectorLayerAndLegend(vector, data, layer);
             this.useRelatedModel(vector, layer, data);
         } else {
-            const data = this.props.data.records;
+            // Filter records with coordinates for styling vector layers & legends
+            const data = this.props.data.records.filter(
+                (record) => record.data[vector.geo_field_id[1]] !== false
+            );
             this.styleVectorLayerAndLegend(vector, data, layer);
             this.addSourceToLayer(data, vector, layer);
         }
@@ -850,7 +867,10 @@ export class GeoengineRenderer extends Component {
             this.styleVectorLayerAndLegend(cfg, data, lv);
             this.useRelatedModel(cfg, lv, data);
         } else {
-            const data = this.props.data.records;
+            const geo_field_id_name = cfg.geo_field_id[1];
+            const data = this.props.data.records.filter(
+                (record) => record.data[geo_field_id_name] !== false
+            );
             if (!data.length) {
                 return new ol.layer.Vector({
                     source: new ol.source.Vector(),
@@ -877,10 +897,13 @@ export class GeoengineRenderer extends Component {
 
     async getModelData(cfg, fields_to_read) {
         const domain = this.evalModelDomain(cfg);
+        const geo_field_id_name = cfg.geo_field_id[1];
         let data = await this.orm.searchRead(cfg.model, [domain][0], fields_to_read);
         const modelsRecords = this.models.find((e) => e.model.resModel === cfg.model)
             .model.records;
-        data = data.map((dat) => modelsRecords.find((rec) => rec.resId === dat.id));
+        data = data
+            .map((dat) => modelsRecords.find((rec) => rec.resId === dat.id))
+            .filter((rec) => rec.data[geo_field_id_name] !== false);
         return data;
     }
 
