@@ -20,7 +20,7 @@ class IrUIView(models.Model):
         "geoengine.vector.layer", "view_id", "Vector layers", required=True
     )
 
-    projection = fields.Char(default="EPSG:3857", required=True)
+    projection = fields.Char(default="EPSG:3857")
     default_extent = fields.Char(
         "Default map extent",
         default="-123164.85222423, 5574694.9538936, 1578017.6490538,"
@@ -28,6 +28,14 @@ class IrUIView(models.Model):
     )
     default_zoom = fields.Integer("Default map zoom")
     restricted_extent = fields.Char("Restricted map extent")
+
+    _sql_constraints = [
+        (
+            "geoengine_projection_required",
+            "CHECK(type <> 'geoengine' OR COALESCE(projection, '') <> '')",
+            "A GeoEngine view must have a Projection.",
+        ),
+    ]
 
     def _is_qweb_based_view(self, view_type):
         if view_type == "geoengine":
