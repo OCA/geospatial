@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="web_widget_mapbox.MapboxField">
+        <div>
+            <div
+                t-if="state.placeholder"
+                class="o_mapbox_placeholder alert alert-warning mb-0"
+                role="status"
+            >
+                <t t-esc="placeholderMessage" />
+            </div>
+            <div t-else="" class="o_mapbox_container" t-ref="map" />
+        </div>
+    </t>
+</templates>

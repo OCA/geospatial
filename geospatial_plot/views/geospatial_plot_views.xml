@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="geospatial_plot_search" model="ir.ui.view">
+        <field name="name">geospatial.plot.search</field>
+        <field name="model">geospatial.plot</field>
+        <field name="arch" type="xml">
+            <search string="Plots">
+                <field name="name" />
+                <field name="partner_id" />
+                <field name="owner_id" />
+                <field name="country_id" />
+                <separator />
+                <filter
+                    string="Archived"
+                    name="inactive"
+                    domain="[('active','=',False)]"
+                />
+                <separator />
+                <group expand="0" name="group_by" string="Group By">
+                    <filter
+                        string="Partner"
+                        name="groupby_partner_id"
+                        context="{'group_by': 'partner_id'}"
+                    />
+                    <filter
+                        string="Owner"
+                        name="groupby_owner_id"
+                        context="{'group_by': 'owner_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="geospatial_plot_tree" model="ir.ui.view">
+        <field name="name">geospatial.plot.tree</field>
+        <field name="model">geospatial.plot</field>
+        <field name="arch" type="xml">
+            <list string="Plots">
+                <field name="partner_id" />
+                <field name="owner_id" optional="hide" />
+                <field name="name" optional="show" />
+                <field name="plot_size" sum="Total" optional="show" />
+                <field name="plot_description" optional="hide" />
+            </list>
+        </field>
+    </record>
+
+    <record id="geospatial_plot_form" model="ir.ui.view">
+        <field name="name">geospatial.plot.form</field>
+        <field name="model">geospatial.plot</field>
+        <field name="arch" type="xml">
+            <form string="Plot">
+                <!-- Need fields in view to use in map widget. -->
+                <field name="plot_size_sqm" invisible="True" />
+                <field name="country_id" invisible="True" />
+                <field name="country_code" invisible="1" />
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" required="1" placeholder="Name" />
+                            <field
+                                name="partner_id"
+                                options="{'no_open': True,'no_quick_create': True,'no_create': True}"
+                                readonly="context.get('plot_partner_readonly')"
+                                force_save="1"
+                            />
+                            <field
+                                name="owner_id"
+                                options="{'no_open': True,'no_quick_create': True,'no_create': True}"
+                                force_save="1"
+                            />
+                            <label for="plot_size" />
+                            <div class="o_row">
+                                <field name="plot_size" class="oe_inline" nolabel="1" />
+                                <field
+                                    name="plot_uom_id"
+                                    force_save="1"
+                                    options="{'no_open': True}"
+                                />
+                            </div>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="plot_map_page" string="Plot Map">
+                            <group>
+                                <field
+                                    name="plot_polygon"
+                                    widget="map"
+                                    nolabel="1"
+                                    colspan="2"
+                                    options="{'polyline_inactive': True, 'rectangle_inactive': True,
+                                    'circle_inactive': True, 'marker_inactive': True,
+                                    'area_field': 'plot_size_sqm'}"
+                                />
+                            </group>
+                        </page>
+                        <page name="desc_page" string="Plot Description">
+                            <field
+                                name="plot_description"
+                                placeholder="Internal description of the plot..."
+                            />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+</odoo>

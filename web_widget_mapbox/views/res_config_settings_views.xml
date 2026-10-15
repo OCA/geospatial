@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Cetmix OÜ
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field
+            name="name"
+        >res.config.settings.view.form.inherit.web_widget_mapbox</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//setting[@id='base_geolocalize']" position="after">
+                <setting
+                    id="web_widget_mapbox_token"
+                    string="Mapbox Token"
+                    help="Public Mapbox token for the Mapbox form widget. This is not the Enterprise Map view token."
+                    documentation="https://account.mapbox.com/"
+                >
+                    <field name="mapbox_token" />
+                </setting>
+            </xpath>
+        </field>
+    </record>
+</odoo>

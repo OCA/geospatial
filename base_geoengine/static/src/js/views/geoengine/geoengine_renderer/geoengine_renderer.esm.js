@@ -31,7 +31,9 @@ import {LayersPanel} from "../layers_panel/layers_panel.esm";
 import {RecordsPanel} from "../records_panel/records_panel.esm";
 import {RelationalModel} from "@web/model/relational_model/relational_model";
 import {evaluateExpr} from "@web/core/py_js/py";
+import {_t} from "@web/core/l10n/translation";
 import {getTemplate} from "@web/core/templates";
+import {sprintf} from "@web/core/utils/strings";
 import {parseXML} from "@web/core/utils/xml";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {registry} from "@web/core/registry";
@@ -67,6 +69,7 @@ export class GeoengineRenderer extends Component {
         this.orm = useService("orm");
         this.view = useService("view");
         this.fields = useService("field");
+        this.notification = useService("notification");
 
         // For related model we need to load all the service needed by RelationalModel
         this.services = {};
@@ -597,6 +600,10 @@ export class GeoengineRenderer extends Component {
 
     zoomOnFeature(record) {
         const feature = this.vectorSource.getFeatureById(record.resId);
+        // Records without geometry have no feature to zoom on.
+        if (!feature) {
+            return;
+        }
         var map_view = this.map.getView();
         if (map_view) {
             map_view.fit(feature.getGeometry(), {maxZoom: 14});
@@ -604,10 +611,14 @@ export class GeoengineRenderer extends Component {
     }
 
     getOriginalZoom() {
-        var extent = this.vectorLayersResult
-            .find((res) => res.values_.visible === true)
-            .getSource()
-            .getExtent();
+        const visibleLayer = this.vectorLayersResult.find(
+            (res) => res.values_.visible === true
+        );
+        // No visible vector layer means there is nothing to fit the view to.
+        if (!visibleLayer) {
+            return;
+        }
+        var extent = visibleLayer.getSource().getExtent();
         var infinite_extent = [Infinity, Infinity, -Infinity, -Infinity];
         if (JSON.stringify(extent) === JSON.stringify(infinite_extent)) {
             extent = [-13360714.671289, 5314503.622, 8284735.328607, 7099727.320865];
@@ -773,8 +784,12 @@ export class GeoengineRenderer extends Component {
         const fields_to_read = this.getFieldsToRead(vector);
         const data = await this.getModelData(vector, fields_to_read);
         this.useRelatedModel(vector, layer, data);
-        const styleInfo = this.styleVectorLayer(vector, data);
-        this.initLegend(styleInfo, vector);
+        if (this.checkAttributeFieldUsage(vector, data)) {
+            const styleInfo = this.styleVectorLayer(vector, data);
+            if (styleInfo) {
+                this.initLegend(styleInfo, vector);
+            }
+        }
     }
 
     async renderVectorLayers() {
@@ -868,9 +883,13 @@ export class GeoengineRenderer extends Component {
     }
 
     styleVectorLayerAndLegend(cfg, data, lv) {
-        const styleInfo = this.styleVectorLayer(cfg, data);
-        this.initLegend(styleInfo, cfg);
-        lv.setStyle(styleInfo.style);
+        if (this.checkAttributeFieldUsage(cfg, data)) {
+            const styleInfo = this.styleVectorLayer(cfg, data);
+            if (styleInfo) {
+                this.initLegend(styleInfo, cfg);
+                lv.setStyle(styleInfo.style);
+            }
+        }
     }
 
     initLegend(styleInfo, cfg) {
@@ -1307,6 +1326,30 @@ export class GeoengineRenderer extends Component {
     extractLayerValues(cfg, data) {
         var indicator = cfg.attribute_field_id[1];
         return data.map((item) => item._values[indicator]);
+    }
+
+    /**
+     * Check vector Layer Attribute Field is defined
+     * by view to display proper legends
+     */
+    checkAttributeFieldUsage(cfg, data) {
+        if (!cfg.attribute_field_id) {
+            return true;
+        }
+        const indicator_values = this.extractLayerValues(cfg, data);
+        if (indicator_values.some((item) => typeof item === "undefined")) {
+            this.notification.add(
+                sprintf(
+                    _t('Customize view to use Attribute Field: "%s"'),
+                    cfg.attribute_field_id[1]
+                ),
+                {
+                    type: "warning",
+                }
+            );
+            return false;
+        }
+        return true;
     }
 }
 

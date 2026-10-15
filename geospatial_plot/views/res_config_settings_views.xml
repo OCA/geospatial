@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">view.res.config.settings.form - geospatial_plot</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app data-string="Geospatial" string="Geospatial" name="geospatial">
+                    <block title="Plots and areas" name="block_plots_areas">
+                        <setting
+                            id="plot_uom_id"
+                            string="Land Size UoM"
+                            help="Set the unit of measure that the area of farms are measured."
+                        >
+                            <div class="content-group">
+                                <field
+                                    name="plot_uom_id"
+                                    options="{'no_create': True}"
+                                    readonly="plot_uom_id == True"
+                                    class="o_light_label"
+                                />
+                            </div>
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+</odoo>

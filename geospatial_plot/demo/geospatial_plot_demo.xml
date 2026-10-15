@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="plot_demo_1" model="geospatial.plot">
+        <field name="name">FARM - Esther Njeri</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">17</field>
+        <field name="plot_size_sqm">68793.56</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[-0.52786123456789, 36.98765432101234], [-0.52876123456789, 36.98675432101234], [-0.52966123456789, 36.98725432101234], [-0.52906123456789, 36.98815432101234], [-0.52816123456789, 36.98785432101234], [-0.52746123456789, 36.98855432101234], [-0.52686123456789, 36.98775432101234]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_1" />
+    </record>
+    <record id="plot_demo_2" model="geospatial.plot">
+        <field name="name">FARM - Elizabeth Mutua</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">24</field>
+        <field name="plot_size_sqm">97124.64</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[-2.34567890123456, 37.89012345678901], [-2.34657890123456, 37.88922345678901], [-2.34747890123456, 37.88972345678901], [-2.34687890123456, 37.89062345678901], [-2.34597890123456, 37.89032345678901], [-2.34527890123456, 37.89102345678901], [-2.34467890123456, 37.89022345678901]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_1" />
+    </record>
+    <record id="plot_demo_3" model="geospatial.plot">
+        <field name="name">FARM - Bridget Mukai Benjamin</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">6</field>
+        <field name="plot_size_sqm">24281.16</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[1.12345678901234, 35.67890123456789], [1.12255678901234, 35.67800123456789], [1.12335678901234, 35.67750123456789], [1.12395678901234, 35.67840123456789], [1.12315678901234, 35.67870123456789], [1.12245678901234, 35.67940123456789], [1.12185678901234, 35.67860123456789]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_2" />
+    </record>
+    <record id="plot_demo_4" model="geospatial.plot">
+        <field name="name">FARM - Francis K. Muthini</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">26</field>
+        <field name="plot_size_sqm">53218.36</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[-3.01234567890123, 38.76543210987654], [-3.01324567890123, 38.76453210987654], [-3.01414567890123, 38.76503210987654], [-3.01354567890123, 38.76593210987654], [-3.01264567890123, 38.76563210987654], [-3.01194567890123, 38.76633210987654], [-3.01134567890123, 38.76553210987654]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_2" />
+    </record>
+    <record id="plot_demo_5" model="geospatial.plot">
+        <field name="name">FARM - Benedetah Musyoka</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">6</field>
+        <field name="plot_size_sqm">24281.16</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[0.98765432101234, 36.54321098765432], [0.98675432101234, 36.54231098765432], [0.98755432101234, 36.54181098765432], [0.98815432101234, 36.54271098765432], [0.98735432101234, 36.54301098765432], [0.98665432101234, 36.54371098765432], [0.98605432101234, 36.54291098765432]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_3" />
+    </record>
+    <record id="plot_demo_6" model="geospatial.plot">
+        <field name="name">FARM - Damaris Maulo</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">20</field>
+        <field name="plot_size_sqm">80937.2</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[-1.87654321098765, 37.43210987654321], [-1.87744321098765, 37.43120987654321], [-1.87834321098765, 37.43170987654321], [-1.87774321098765, 37.43260987654321], [-1.87684321098765, 37.43230987654321], [-1.87614321098765, 37.43300987654321], [-1.87554321098765, 37.43220987654321]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_4" />
+    </record>
+    <record id="plot_demo_7" model="geospatial.plot">
+        <field name="name">FARM - Felix K. Mwongela</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">10</field>
+        <field name="plot_size_sqm">40468.6</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[-0.76543210987654, 35.3210987654321], [-0.76633210987654, 35.3201987654321], [-0.76723210987654, 35.3206987654321], [-0.76663210987654, 35.3215987654321], [-0.76573210987654, 35.3212987654321], [-0.76503210987654, 35.3219987654321], [-0.76443210987654, 35.3211987654321]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_5" />
+    </record>
+    <record id="plot_demo_8" model="geospatial.plot">
+        <field name="name">FARM - Jennifer Nzau</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">25</field>
+        <field name="plot_size_sqm">101171.5</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[2.10987654321098, 37.65432109876543], [2.10897654321098, 37.65342109876543], [2.10977654321098, 37.65292109876543], [2.11037654321098, 37.65382109876543], [2.10957654321098, 37.65412109876543], [2.10887654321098, 37.65482109876543], [2.10827654321098, 37.65402109876543]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_5" />
+    </record>
+    <record id="plot_demo_9" model="geospatial.plot">
+        <field name="name">FARM - Angeline Mulinge Mangula</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">2</field>
+        <field name="plot_size_sqm">8093.72</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[-2.98765432101234, 38.10987654321098], [-2.98855432101234, 38.10897654321098], [-2.98945432101234, 38.10947654321098], [-2.98885432101234, 38.11037654321098], [-2.98795432101234, 38.11007654321098], [-2.98725432101234, 38.11077654321098], [-2.98665432101234, 38.10997654321098]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_6" />
+    </record>
+    <record id="plot_demo_10" model="geospatial.plot">
+        <field name="name">FARM - Christine K. Mwongela</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">27</field>
+        <field name="plot_size_sqm">109265.22</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[0.65432109876543, 38.98765432101234], [0.65342109876543, 38.98675432101234], [0.65422109876543, 38.98625432101234], [0.65482109876543, 38.98715432101234], [0.65402109876543, 38.98745432101234], [0.65332109876543, 38.98815432101234], [0.65272109876543, 38.98735432101234]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_6" />
+    </record>
+    <record id="plot_demo_11" model="geospatial.plot">
+        <field name="name">FARM - Daniel Kitili</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">3</field>
+        <field name="plot_size_sqm">12140.58</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[-1.23456789012345, 37.12345678901234], [-1.23546789012345, 37.12255678901234], [-1.23636789012345, 37.12305678901234], [-1.23576789012345, 37.12395678901234], [-1.23486789012345, 37.12365678901234], [-1.23416789012345, 37.12435678901234], [-1.23356789012345, 37.12355678901234]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_7" />
+    </record>
+    <record id="plot_demo_12" model="geospatial.plot">
+        <field name="name">FARM - Agnest Mumbua</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">11</field>
+        <field name="plot_size_sqm">44515.46</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[-0.12345678901234, 36.23456789012345], [-0.12435678901234, 36.23366789012345], [-0.12525678901234, 36.23416789012345], [-0.12465678901234, 36.23506789012345], [-0.12375678901234, 36.23476789012345], [-0.12305678901234, 36.23546789012345], [-0.12245678901234, 36.23466789012345]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_7" />
+    </record>
+    <record id="plot_demo_13" model="geospatial.plot">
+        <field name="name">FARM - Faith Mutua</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">3</field>
+        <field name="plot_size_sqm">12140.58</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[1.23456789012345, 36.34567890123456], [1.23366789012345, 36.34477890123456], [1.23446789012345, 36.34427890123456], [1.23506789012345, 36.34517890123456], [1.23426789012345, 36.34547890123456], [1.23356789012345, 36.34617890123456], [1.23296789012345, 36.34537890123456]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_8" />
+    </record>
+    <record id="plot_demo_14" model="geospatial.plot">
+        <field name="name">FARM - Festus Munywauvoo</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">19</field>
+        <field name="plot_size_sqm">76890.34</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[-1.34567890123456, 37.45678901234567], [-1.34657890123456, 37.45588901234567], [-1.34747890123456, 37.45638901234567], [-1.34687890123456, 37.45728901234567], [-1.34597890123456, 37.45698901234567], [-1.34527890123456, 37.45768901234567], [-1.34467890123456, 37.45688901234567]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_8" />
+    </record>
+    <record id="plot_demo_15" model="geospatial.plot">
+        <field name="name">FARM - David Muthama</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">3</field>
+        <field name="plot_size_sqm">12140.58</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[0.45678901234567, 37.56789012345678], [0.45588901234567, 37.56699012345678], [0.45668901234567, 37.56649012345678], [0.45728901234567, 37.56739012345678], [0.45648901234567, 37.56769012345678], [0.45578901234567, 37.56839012345678], [0.45518901234567, 37.56759012345678]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_9" />
+    </record>
+    <record id="plot_demo_16" model="geospatial.plot">
+        <field name="name">FARM - Annie John</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">12</field>
+        <field name="plot_size_sqm">48562.32</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[-2.45678901234567, 38.67890123456789], [-2.45768901234567, 38.67800123456789], [-2.45858901234567, 38.67850123456789], [-2.45798901234567, 38.67940123456789], [-2.45708901234567, 38.67910123456789], [-2.45638901234567, 38.67980123456789], [-2.45578901234567, 38.67900123456789]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_9" />
+    </record>
+    <record id="plot_demo_17" model="geospatial.plot">
+        <field name="name">FARM - Felistar Mbuva</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">29</field>
+        <field name="plot_size_sqm">117358.94</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[-0.56789012345678, 35.7890123456789], [-0.56879012345678, 35.7881123456789], [-0.56969012345678, 35.7886123456789], [-0.56909012345678, 35.7895123456789], [-0.56819012345678, 35.7892123456789], [-0.56749012345678, 35.7899123456789], [-0.56689012345678, 35.7891123456789]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_10" />
+    </record>
+    <record id="plot_demo_18" model="geospatial.plot">
+        <field name="name">FARM - Benard Kimuli</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">18</field>
+        <field name="plot_size_sqm">72843.48</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[1.56789012345678, 36.89012345678901], [1.56699012345678, 36.88922345678901], [1.56779012345678, 36.88872345678901], [1.56839012345678, 36.88962345678901], [1.56759012345678, 36.88992345678901], [1.56689012345678, 36.89062345678901], [1.56629012345678, 36.88982345678901]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_10" />
+    </record>
+    <record id="plot_demo_19" model="geospatial.plot">
+        <field name="name">FARM - Cyrus N. Wambua</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">23</field>
+        <field name="plot_size_sqm">93077.78</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[-1.67890123456789, 37.90123456789012], [-1.67980123456789, 37.90033456789012], [-1.68070123456789, 37.90083456789012], [-1.68010123456789, 37.90173456789012], [-1.67920123456789, 37.90143456789012], [-1.67850123456789, 37.90213456789012], [-1.67790123456789, 37.90133456789012]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_7" />
+    </record>
+    <record id="plot_demo_20" model="geospatial.plot">
+        <field name="name">FARM - Alphonse Wambua Ndua</field>
+        <field name="plot_uom_id" ref="uom_surface_acre" />
+        <field name="plot_size">12</field>
+        <field name="plot_size_sqm">48562.32</field>
+        <field
+            name="plot_polygon"
+            eval="[{'type': 'polygon', 'points': [[0.67890123456789, 38.01234567890123], [0.67800123456789, 38.01144567890123], [0.67880123456789, 38.01094567890123], [0.67940123456789, 38.01184567890123], [0.67860123456789, 38.01214567890123], [0.67790123456789, 38.01284567890123], [0.67730123456789, 38.01204567890123]]}]"
+        />
+        <field name="partner_id" ref="partner_demo_geospatial_6" />
+    </record>
+</odoo>

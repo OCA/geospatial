@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright 2026 Cetmix OÜ
+     License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl-3.0) -->
+<odoo>
+    <!-- Memmingen city center. Child offsets: ~300 m east, ~900 m north,
+         ~1300 m south. Coordinates are written after create: XML load
+         copies the company address onto type=contact children, and
+         base_geolocalize then resets lat/lon to 0.0. Demo XML is
+         noupdate; the coordinate writes sit in noupdate="0" so they
+         also run on module update. -->
+    <record id="res_partner_memes_llc_demo" model="res.partner">
+        <field name="name">Memes LLC</field>
+        <field name="is_company" eval="True" />
+        <field name="street">Marktplatz 1</field>
+        <field name="city">Memmingen</field>
+        <field name="zip">87700</field>
+        <field name="state_id" ref="base.state_de_by" />
+        <field name="country_id" ref="base.de" />
+        <field name="partner_latitude">47.986667</field>
+        <field name="partner_longitude">10.181111</field>
+    </record>
+    <record id="res_partner_doge_much_demo" model="res.partner">
+        <field name="name">Doge Much</field>
+        <field name="parent_id" ref="res_partner_memes_llc_demo" />
+    </record>
+    <record id="res_partner_pepe_frog_demo" model="res.partner">
+        <field name="name">Pepe Frog</field>
+        <field name="parent_id" ref="res_partner_memes_llc_demo" />
+    </record>
+    <record id="res_partner_chad_demo" model="res.partner">
+        <field name="name">Chad</field>
+        <field name="parent_id" ref="res_partner_memes_llc_demo" />
+    </record>
+    <data noupdate="0">
+        <function model="res.partner" name="write">
+            <value eval="[ref('res_partner_doge_much_demo')]" />
+            <value
+                eval="{'partner_latitude': 47.986667, 'partner_longitude': 10.1851375}"
+            />
+        </function>
+        <function model="res.partner" name="write">
+            <value eval="[ref('res_partner_pepe_frog_demo')]" />
+            <value
+                eval="{'partner_latitude': 47.9947518, 'partner_longitude': 10.181111}"
+            />
+        </function>
+        <function model="res.partner" name="write">
+            <value eval="[ref('res_partner_chad_demo')]" />
+            <value
+                eval="{'partner_latitude': 47.974989, 'partner_longitude': 10.181111}"
+            />
+        </function>
+    </data>
+</odoo>

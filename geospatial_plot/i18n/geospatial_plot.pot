@@ -1,0 +1,450 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* geospatial_plot
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: geospatial_plot
+#. odoo-python
+#: code:addons/geospatial_plot/models/res_partner.py:0
+msgid "%(display_name)s Plot #%(plot_count)d"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:uom.uom,name:geospatial_plot.uom_surface_acre
+msgid "Acres"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_needaction
+msgid "Action Needed"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__active
+msgid "Active"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_search
+msgid "Archived"
+msgstr ""
+
+#. module: geospatial_plot
+#. odoo-javascript
+#: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
+msgid "Area Field"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_res_partner__plot_ids
+#: model:ir.model.fields,field_description:geospatial_plot.field_res_users__plot_ids
+msgid "Area in use"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_attachment_count
+msgid "Attachment Count"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields.selection,name:geospatial_plot.selection__geospatial_plot__plot_shape_type__circle
+msgid "Circle"
+msgstr ""
+
+#. module: geospatial_plot
+#. odoo-javascript
+#: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
+msgid "Circle draw inactive"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model,name:geospatial_plot.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model,name:geospatial_plot.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__country_id
+msgid "Country"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__country_code
+msgid "Country Code"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.view_partner_form
+msgid "Create Plot"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_res_config_settings__plot_uom_id
+msgid "Default Plot Unit of Measure"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__plot_description
+msgid "Description"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_follower_ids
+msgid "Followers"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_partner_ids
+msgid "Followers (Partners)"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:res.groups,name:geospatial_plot.group_plot_manager
+msgid "GeoSpatial - Plot Manager"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.res_config_settings_view_form
+msgid "Geospatial"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model,name:geospatial_plot.model_geospatial_plot
+msgid "Geospatial Plot"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.actions.act_window,name:geospatial_plot.geospatial_plot_action
+#: model:ir.ui.menu,name:geospatial_plot.menu_geospatial_plot_plots
+msgid "Geospatial Plots"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_search
+msgid "Group By"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__has_message
+msgid "Has Message"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:uom.uom,name:geospatial_plot.uom_surface_hectare
+msgid "Hectares"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__id
+msgid "ID"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__message_needaction
+msgid "If checked, new messages require your attention."
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__message_has_error
+msgid "If checked, some messages have a delivery error."
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__partner_address_id
+msgid "If the plot has its own address, separate from the using partner"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_form
+msgid "Internal description of the plot..."
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_is_follower
+msgid "Is Follower"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_res_partner__plot_uom_id
+#: model:ir.model.fields,field_description:geospatial_plot.field_res_users__plot_uom_id
+msgid "Land Area Unit of Measure"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.view_partner_form
+msgid "Land Plots"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.res_config_settings_view_form
+msgid "Land Size UoM"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_res_partner__leased_acreage
+#: model:ir.model.fields,field_description:geospatial_plot.field_res_users__leased_acreage
+msgid "Leased Plot Acreage"
+msgstr ""
+
+#. module: geospatial_plot
+#. odoo-javascript
+#: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
+msgid "Map"
+msgstr ""
+
+#. module: geospatial_plot
+#. odoo-javascript
+#: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
+msgid "Marker draw inactive"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_has_error
+msgid "Message Delivery error"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_ids
+msgid "Messages"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__name
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_form
+msgid "Name"
+msgstr ""
+
+#. module: geospatial_plot
+#. odoo-python
+#: code:addons/geospatial_plot/models/res_partner.py:0
+msgid "New Plot Of %s"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_needaction_counter
+msgid "Number of Actions"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_has_error_counter
+msgid "Number of errors"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__message_needaction_counter
+msgid "Number of messages requiring action"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__message_has_error_counter
+msgid "Number of messages with delivery error"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_res_partner__own_acreage
+#: model:ir.model.fields,field_description:geospatial_plot.field_res_users__own_acreage
+msgid "Own Plot Acreage"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__owner_id
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_search
+msgid "Owner"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__partner_id
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_search
+msgid "Partner"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_form
+msgid "Plot"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_form
+msgid "Plot Description"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_form
+msgid "Plot Map"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__plot_polygon
+msgid "Plot Polygon"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__plot_shape_type
+msgid "Plot Shape Type"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__plot_size
+msgid "Plot Size"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__plot_uom_id
+msgid "Plot Uom"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__partner_address_id
+msgid "Plot address"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__plot_size
+msgid "Plot size in selected unit of measurement"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__plot_size_sqm
+msgid "Plot size in square meter"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.ui.menu,name:geospatial_plot.menu_geospatial_plot_main
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_search
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_tree
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.view_partner_form
+msgid "Plots"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.res_config_settings_view_form
+msgid "Plots and areas"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields.selection,name:geospatial_plot.selection__geospatial_plot__plot_shape_type__polygon
+msgid "Polygon"
+msgstr ""
+
+#. module: geospatial_plot
+#. odoo-javascript
+#: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
+msgid "Polygone draw inactive"
+msgstr ""
+
+#. module: geospatial_plot
+#. odoo-javascript
+#: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
+msgid "Polyline draw inactive"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields.selection,name:geospatial_plot.selection__geospatial_plot__plot_shape_type__rectangle
+msgid "Rectangle"
+msgstr ""
+
+#. module: geospatial_plot
+#. odoo-javascript
+#: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
+msgid "Rectangle draw inactive"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.res_config_settings_view_form
+msgid "Set the unit of measure that the area of farms are measured."
+msgstr ""
+
+#. module: geospatial_plot
+#. odoo-python
+#: code:addons/geospatial_plot/models/geospatial_plot.py:0
+msgid "Size of plot needs to be higher than 0."
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__country_code
+msgid ""
+"The ISO country code in two chars. \n"
+"You can use this field for quick search."
+msgstr ""
+
+#. module: geospatial_plot
+#. odoo-javascript
+#: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
+msgid "The field which will have the area calculated"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__owner_id
+msgid "The partner owning the plot"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__partner_id
+msgid "The partner using the plot"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__plot_polygon
+msgid "This field contains the actual plot coordinates"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__plot_size_sqm
+msgid "This field will be set by drawing the plot"
+msgstr ""
+
+#. module: geospatial_plot
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_tree
+#: model_terms:ir.ui.view,arch_db:geospatial_plot.view_partner_form
+msgid "Total"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,field_description:geospatial_plot.field_res_partner__total_acreage
+#: model:ir.model.fields,field_description:geospatial_plot.field_res_users__total_acreage
+msgid "Total Plot Acreage"
+msgstr ""
+
+#. module: geospatial_plot
+#: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__country_id
+msgid "Used to set map to draw plot on"
+msgstr ""

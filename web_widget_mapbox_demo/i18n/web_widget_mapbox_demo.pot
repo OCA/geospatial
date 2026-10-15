@@ -1,0 +1,36 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_widget_mapbox_demo
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_widget_mapbox_demo
+#: model:ir.model,name:web_widget_mapbox_demo.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: web_widget_mapbox_demo
+#: model:ir.model.fields,field_description:web_widget_mapbox_demo.field_res_partner__map_data
+#: model:ir.model.fields,field_description:web_widget_mapbox_demo.field_res_users__map_data
+msgid "Map Data"
+msgstr ""
+
+#. module: web_widget_mapbox_demo
+#: model_terms:ir.ui.view,arch_db:web_widget_mapbox_demo.res_partner_view_form_mapbox
+msgid "Mapbox"
+msgstr ""
+
+#. module: web_widget_mapbox_demo
+#. odoo-python
+#: code:addons/web_widget_mapbox_demo/models/res_partner.py:0
+msgid "The dropped map pin has invalid coordinates."
+msgstr ""

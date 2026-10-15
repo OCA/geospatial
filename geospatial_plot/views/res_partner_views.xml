@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">res.partner.form - geospatial_plot</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form" />
+        <field name="priority" eval="128" />
+        <field name="arch" type="xml">
+            <!--Header-->
+            <xpath expr="//sheet" position="before">
+                <header />
+            </xpath>
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page name="page_plots" string="Plots">
+                    <group name="group_plot_acreage" colspan="6" col="6">
+                        <group name="group_create_plot" colspan="2" col="2">
+                            <button
+                                string="Create Plot"
+                                name="action_create_plot"
+                                type="object"
+                                class="oe_highlight"
+                            />
+                        </group>
+                        <group name="group_plot_uom" colspan="4" col="4">
+                            <label for="plot_uom_id" colspan="2" />
+                            <field
+                                name="plot_uom_id"
+                                options="{'no_create': True}"
+                                nolabel="1"
+                            />
+                        </group>
+                        <group name="group_land_acreage" colspan="6" col="6">
+                            <field name="own_acreage" />
+                            <field name="leased_acreage" />
+                            <field name="total_acreage" />
+                        </group>
+                    </group>
+                    <group name="group_land_plots" string="Land Plots">
+                        <field
+                            name="plot_ids"
+                            context="{'plot_partner_invisible': True}"
+                            nolabel="1"
+                            colspan="2"
+                        >
+                            <list create="false">
+                                <field name="name" />
+                                <field name="owner_id" optional="show" />
+                                <field name="plot_size" sum="Total" optional="show" />
+                                <field name="plot_description" optional="hide" />
+                            </list>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

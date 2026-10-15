@@ -1,0 +1,84 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* web_widget_mapbox
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: web_widget_mapbox
+#: model:ir.model,name:web_widget_mapbox.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: web_widget_mapbox
+#: model:ir.model,name:web_widget_mapbox.model_ir_http
+msgid "HTTP Routing"
+msgstr ""
+
+#. module: web_widget_mapbox
+#. odoo-javascript
+#: code:addons/web_widget_mapbox/static/src/mapbox_field.esm.js:0
+msgid "Map"
+msgstr ""
+
+#. module: web_widget_mapbox
+#. odoo-javascript
+#: code:addons/web_widget_mapbox/static/src/mapbox_field.esm.js:0
+msgid "Mapbox Map"
+msgstr ""
+
+#. module: web_widget_mapbox
+#: model:ir.model.fields,field_description:web_widget_mapbox.field_res_config_settings__mapbox_token
+#: model_terms:ir.ui.view,arch_db:web_widget_mapbox.res_config_settings_view_form
+msgid "Mapbox Token"
+msgstr ""
+
+#. module: web_widget_mapbox
+#. odoo-javascript
+#: code:addons/web_widget_mapbox/static/src/mapbox_field.esm.js:0
+msgid "No map data to display."
+msgstr ""
+
+#. module: web_widget_mapbox
+#: model:ir.model.fields,help:web_widget_mapbox.field_res_config_settings__mapbox_token
+msgid ""
+"Public Mapbox access token used by the Mapbox form widget. Create a token at"
+" https://account.mapbox.com/."
+msgstr ""
+
+#. module: web_widget_mapbox
+#: model_terms:ir.ui.view,arch_db:web_widget_mapbox.res_config_settings_view_form
+msgid ""
+"Public Mapbox token for the Mapbox form widget. This is not the Enterprise "
+"Map view token."
+msgstr ""
+
+#. module: web_widget_mapbox
+#. odoo-javascript
+#: code:addons/web_widget_mapbox/static/src/mapbox_field.esm.js:0
+msgid "Satellite"
+msgstr ""
+
+#. module: web_widget_mapbox
+#. odoo-javascript
+#: code:addons/web_widget_mapbox/static/src/mapbox_field.esm.js:0
+msgid ""
+"Set a Mapbox Token under Settings → General Settings → Integrations → Mapbox"
+" Token to display this map."
+msgstr ""
+
+#. module: web_widget_mapbox
+#. odoo-javascript
+#: code:addons/web_widget_mapbox/static/src/mapbox_field.esm.js:0
+msgid ""
+"The Mapbox library could not be loaded. Check that this browser can reach "
+"api.mapbox.com."
+msgstr ""

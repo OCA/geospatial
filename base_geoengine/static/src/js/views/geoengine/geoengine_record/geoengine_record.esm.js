@@ -55,7 +55,19 @@ export class GeoengineRecord extends Component {
         return {
             context: this.props.record.context,
             JSON,
-            record: this.props.record,
+            // The info-box template reads fields as `record.<field>.value`.
+            // `this.record` (built by createRecord) exposes every loaded field
+            // as `{value}`. Wrap it in a Proxy so fields referenced in the
+            // template but not loaded in the view resolve to
+            // `{value: undefined}` instead of throwing while rendering.
+            record: new Proxy(this.record, {
+                get(target, prop) {
+                    if (typeof prop === "symbol" || prop in target) {
+                        return target[prop];
+                    }
+                    return {value: undefined};
+                },
+            }),
             read_only_mode: this.props.readonly,
             selection_mode: this.props.forceGlobalClick,
             user_context: user.context,

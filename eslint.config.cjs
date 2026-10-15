@@ -11,6 +11,7 @@ const config = [{
             $: "readonly",
             fuzzy: "readonly",
             jQuery: "readonly",
+            L: "readonly",
             moment: "readonly",
             odoo: "readonly",
             openerp: "readonly",

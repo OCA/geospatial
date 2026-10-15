@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Plot menu's -->
+
+    <menuitem
+        id="menu_geospatial_plot_main"
+        name="Plots"
+        parent="contacts.menu_contacts"
+        action="geospatial_plot_action"
+        sequence="25"
+    />
+    <menuitem
+        id="menu_geospatial_plot_plots"
+        name="Geospatial Plots"
+        parent="menu_geospatial_plot_main"
+        action="geospatial_plot_action"
+        sequence="10"
+    />
+</odoo>
