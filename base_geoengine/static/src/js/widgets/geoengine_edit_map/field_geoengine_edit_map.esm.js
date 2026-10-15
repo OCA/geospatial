@@ -170,29 +170,10 @@ export class FieldGeoEngineEditMap extends Component {
      * Allow you to setup the trash button and the draw interaction.
      */
     setupControls() {
-        if (!this.props.record.data[this.props.name]) {
-            void (
-                this.selectInteraction !== undefined &&
-                this.map.removeInteraction(this.selectInteraction)
-            );
-            void (
-                this.modifyInteraction !== undefined &&
-                this.map.removeInteraction(this.modifyInteraction)
-            );
-            this.drawInteraction = new ol.interaction.Draw({
-                type: this.geoType,
-                source: this.source,
-            });
-            this.map.addInteraction(this.drawInteraction);
-
-            this.drawInteraction.on("drawend", (e) => {
-                this.onUIChange(e.feature.getGeometry());
-            });
-        } else {
-            void (
-                this.drawInteraction !== undefined &&
-                this.map.removeInteraction(this.drawInteraction)
-            );
+        if (this.props.record.data[this.props.name]) {
+            if (this.drawInteraction !== undefined) {
+                this.map.removeInteraction(this.drawInteraction);
+            }
             this.selectInteraction = new ol.interaction.Select();
             this.modifyInteraction = new ol.interaction.Modify({
                 features: this.selectInteraction.getFeatures(),
@@ -204,6 +185,22 @@ export class FieldGeoEngineEditMap extends Component {
                 e.features.getArray().forEach((item) => {
                     this.onUIChange(item.getGeometry());
                 });
+            });
+        } else {
+            if (this.selectInteraction !== undefined) {
+                this.map.removeInteraction(this.selectInteraction);
+            }
+            if (this.modifyInteraction !== undefined) {
+                this.map.removeInteraction(this.modifyInteraction);
+            }
+            this.drawInteraction = new ol.interaction.Draw({
+                type: this.geoType,
+                source: this.source,
+            });
+            this.map.addInteraction(this.drawInteraction);
+
+            this.drawInteraction.on("drawend", (e) => {
+                this.onUIChange(e.feature.getGeometry());
             });
         }
 

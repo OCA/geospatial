@@ -6,6 +6,7 @@
  */
 
 import {Component, useState} from "@odoo/owl";
+import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
 import {FormViewDialog} from "@web/views/view_dialogs/form_view_dialog";
 import {Layout} from "@web/search/layout";
 import {SearchBar} from "@web/search/search_bar/search_bar";
@@ -15,7 +16,6 @@ import {extractFieldsFromArchInfo} from "@web/model/relational_model/utils";
 import {session} from "@web/session";
 import {standardViewProps} from "@web/views/standard_view_props";
 import {useModelWithSampleData} from "@web/model/model";
-import {useOwnedDialogs, useService} from "@web/core/utils/hooks";
 import {usePager} from "@web/search/pager_hook";
 import {useSearchBarToggler} from "@web/search/search_bar/search_bar_toggler";
 
@@ -40,11 +40,10 @@ export class GeoengineController extends Component {
          */
         usePager(() => {
             const list = this.model.root;
-            const {count, limit, offset} = list;
             return {
-                offset: offset,
-                limit: limit,
-                total: count,
+                offset: list.offset,
+                limit: list.limit,
+                total: list.count,
                 onUpdate: async ({offset, limit}) => {
                     await list.load({limit, offset});
                     this.render(true);
