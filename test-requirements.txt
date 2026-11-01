@@ -1,0 +1,1 @@
+odoo-addon-base_geoengine @ git+https://github.com/OCA/geospatial@refs/pull/465/head#subdirectory=base_geoengine
