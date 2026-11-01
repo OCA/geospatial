@@ -62,7 +62,7 @@ class GeoVectorLayer(models.Model):
         domain=[("ttype", "ilike", "geo_")],
     )
 
-    attribute_field_id_domain = fields.Binary(
+    attribute_field_id_domain = fields.Json(
         compute="_compute_attribute_field_id_domain", readonly=True, store=False
     )
     attribute_field_id = fields.Many2one("ir.model.fields", "Attribute field")
@@ -99,14 +99,13 @@ class GeoVectorLayer(models.Model):
     @api.constrains("geo_field_id", "model_id")
     def _check_geo_field_id(self):
         for rec in self:
-            if rec.model_id:
-                if not rec.geo_field_id.model_id == rec.model_id:
-                    raise ValidationError(
-                        self.env._(
-                            "The geo_field_id must be a field in %s model",
-                            rec.model_id.display_name,
-                        )
+            if rec.model_id and rec.geo_field_id.model_id != rec.model_id:
+                raise ValidationError(
+                    self.env._(
+                        "The geo_field_id must be a field in %s model",
+                        rec.model_id.display_name,
                     )
+                )
 
     @api.constrains("geo_repr", "attribute_field_id")
     def _check_geo_repr(self):
@@ -114,29 +113,32 @@ class GeoVectorLayer(models.Model):
             if (
                 rec.attribute_field_id
                 and rec.attribute_field_id.ttype not in NUMBER_ATT
-            ):
-                if (
+                and (
                     rec.geo_repr == "colored"
                     and rec.classification != "unique"
                     or rec.geo_repr == "proportion"
-                ):
-                    raise ValidationError(
-                        self.env._(
-                            "You need to select a numeric field",
-                        )
+                )
+            ):
+                raise ValidationError(
+                    self.env._(
+                        "You need to select a numeric field",
                     )
+                )
 
     @api.constrains("attribute_field_id", "geo_field_id")
     def _check_if_attribute_in_geo_field(self):
         for rec in self:
-            if rec.attribute_field_id and rec.geo_field_id:
-                if rec.attribute_field_id.model != rec.geo_field_id.model:
-                    raise ValidationError(
-                        self.env._(
-                            "You need to provide an attribute that exists in %s model",
-                            rec.geo_field_id.model_id.display_name,
-                        )
+            if (
+                rec.attribute_field_id
+                and rec.geo_field_id
+                and rec.attribute_field_id.model != rec.geo_field_id.model
+            ):
+                raise ValidationError(
+                    self.env._(
+                        "You need to provide an attribute that exists in %s model",
+                        rec.geo_field_id.model_id.display_name,
                     )
+                )
 
     @api.depends("model_id")
     def _compute_model_view_id(self):

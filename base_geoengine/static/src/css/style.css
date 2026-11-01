@@ -176,8 +176,14 @@
 .legend {
     margin-bottom: 15px;
     display: none;
-    background-color: #f5f5f5;
+    /* theme colors: readable in light and dark mode */
+    background-color: var(--tertiary-bg, #f8f9fa);
+    color: var(--body-color, #212529);
     border-radius: 5px;
+}
+
+.legend .geostats-legend-counter {
+    color: var(--secondary-color, #6c757d);
 }
 
 .selected-control > i {

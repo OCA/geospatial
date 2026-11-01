@@ -442,6 +442,78 @@ class TestModel(TransactionCase):
         )
         self.assertEqual(len(result.ids), 5)
 
+    def test_search_indirect_value_equal_to_table_name(self):
+        """A sub-domain value equal to the related table name is a plain value."""
+        result = self.env["retail.machine"].search(
+            [
+                (
+                    "the_point",
+                    "geo_intersect",
+                    {"dummy.zip.the_geom": [("name", "=", "dummy_zip")]},
+                )
+            ]
+        )
+        self.assertFalse(result)
+
+    def test_search_indirect_with_geo_sub_condition(self):
+        """A direct geo condition inside an indirect sub-domain uses its alias."""
+        retails = self.env["retail.machine"]
+        zip_item = self.env["dummy.zip"].search([("name", "ilike", "1169")])
+        expected = retails.search(
+            [
+                (
+                    "the_point",
+                    "geo_intersect",
+                    {"dummy.zip.the_geom": [("id", "=", zip_item.id)]},
+                )
+            ]
+        )
+        result = retails.search(
+            [
+                (
+                    "the_point",
+                    "geo_intersect",
+                    {
+                        "dummy.zip.the_geom": [
+                            ("the_geom", "geo_contains", expected[0].the_point.wkt)
+                        ]
+                    },
+                )
+            ]
+        )
+        self.assertEqual(result, expected)
+
+    def test_search_indirect_empty_sub_domain(self):
+        """An empty sub-domain matches against all the related records."""
+        retails = self.env["retail.machine"]
+        zip_ids = self.env["dummy.zip"].search([]).ids
+        result = retails.search(
+            [("the_point", "geo_intersect", {"dummy.zip.the_geom": []})]
+        )
+        expected = retails.search(
+            [
+                (
+                    "the_point",
+                    "geo_intersect",
+                    {"dummy.zip.the_geom": [("id", "in", zip_ids)]},
+                )
+            ]
+        )
+        self.assertTrue(result)
+        self.assertEqual(result, expected)
+
+    def test_search_invalid_geo_value(self):
+        """Invalid geo values are reported as ValueError, not as SQL errors."""
+        retails = self.env["retail.machine"]
+        for value in ({}, {"no.such.model.field": []}, "not a geometry"):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                retails.search([("the_point", "geo_intersect", value)])
+
+    def test_search_operator_stays_case_sensitive(self):
+        """Adding the geo operators keeps the core operator validation."""
+        with self.assertRaises(ValueError):
+            self.env["retail.machine"].search([("name", "ILIKE", "21")])
+
     def test_search_intersect_for_zip_1169_with_multiple_domain(self):
         retails = self.env["retail.machine"]
         result = retails.search(
@@ -720,7 +792,7 @@ class TestModel(TransactionCase):
         self.assertEqual(len(result), 2)
 
     def test_geo_search_indirect_respects_record_rules(self):
-        """Indirect geo-operator sub-queries must enforce ir.rule security.
+        """Indirect geo-operator sub-queries must enforce ir.access security.
 
         Regression test: the 19.0 migration replaced ``_apply_ir_rules`` (removed
         in 19.0) by ``_check_field_access``, which no longer applied record rules
@@ -729,33 +801,29 @@ class TestModel(TransactionCase):
         """
         model_zip = self.env["ir.model"]._get("dummy.zip")
         model_retail = self.env["ir.model"]._get("retail.machine")
-        # Test models have no ACL: grant model-level read so the access check
-        # fails on the *record rule*, not on model access.
-        self.env["ir.model.access"].create(
-            [
-                {
-                    "name": "dummy.zip read (test)",
-                    "model_id": model_zip.id,
-                    "group_id": self.env.ref("base.group_user").id,
-                    "perm_read": True,
-                },
-                {
-                    "name": "retail.machine read (test)",
-                    "model_id": model_retail.id,
-                    "group_id": self.env.ref("base.group_user").id,
-                    "perm_read": True,
-                },
-            ]
+        # Test models have no ACL: grant unconditional read on retail.machine so
+        # the access check fails on the *record rule* applied to dummy.zip, not
+        # on model access.
+        self.env["ir.access"].create(
+            {
+                "name": "retail.machine read (test)",
+                "model_id": model_retail.id,
+                "group_id": self.env.ref("base.group_user").id,
+                "operation": "r",
+            }
         )
         # Restricted user may only see the "Mollens" zip, not "Yens" (zip 1169).
+        # A single group-scoped ir.access record grants read on dummy.zip to
+        # this group, restricted to the Mollens domain (ir.model.access and
+        # ir.rule are unified into ir.access since 20.0).
         group = self.env["res.groups"].create({"name": "Geo Restricted (test)"})
-        self.env["ir.rule"].create(
+        self.env["ir.access"].create(
             {
                 "name": "Only Mollens zips (test)",
                 "model_id": model_zip.id,
-                "groups": [(6, 0, [group.id])],
-                "domain_force": "[('city', '=', 'Mollens (VD))')]",
-                "perm_read": True,
+                "group_id": group.id,
+                "operation": "r",
+                "domain": "[('city', '=', 'Mollens (VD))')]",
             }
         )
         user = self.env["res.users"].create(

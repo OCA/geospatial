@@ -5,18 +5,20 @@
  */
 import {SearchBarRecords} from "./search_bar_records/search_bar_records.esm";
 import {useService} from "@web/core/utils/hooks";
+import {onWillRender} from "@web/owl2/utils";
 
-import {
-    Component,
-    onWillRender,
-    onWillStart,
-    onWillUpdateProps,
-    useState,
-} from "@odoo/owl";
+import {Component, onWillStart, onWillUpdateProps, proxy, t, useProps} from "@odoo/owl";
 
 export class RecordsPanel extends Component {
+    props = useProps({
+        list: t.object(),
+        onDisplayPopupRecord: t.function(),
+        zoomOnFeature: t.function(),
+        zoomOutOnFeature: t.function(),
+    });
+
     setup() {
-        this.state = useState({
+        this.state = proxy({
             isFolded: false,
             isClicked: 0,
             modelDescription: "",
@@ -76,10 +78,4 @@ export class RecordsPanel extends Component {
 }
 
 RecordsPanel.template = "base_geoengine.RecordsPanel";
-RecordsPanel.props = {
-    list: {type: Object},
-    onDisplayPopupRecord: {type: Function},
-    zoomOnFeature: {type: Function},
-    zoomOutOnFeature: {type: Function},
-};
 RecordsPanel.components = {SearchBarRecords};

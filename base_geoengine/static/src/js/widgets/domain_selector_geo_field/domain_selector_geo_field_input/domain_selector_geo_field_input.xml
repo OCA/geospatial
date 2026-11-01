@@ -1,23 +1,89 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates xml:space="preserve">
     <t t-name="base_geoengine.DomainSelectorGeoFieldInput">
-        <div class="d-flex align-items-center">
-            <ModelSelector
-                value="state.resModel"
-                onModelSelected.bind="onModelChange"
-            />
-            <div t-if="state.resModel.length > 0" class="col-5">
-                <ModelFieldSelector
-                    fieldName="state.fieldName"
-                    resModel="state.resModel"
-                    readonly="false"
-                    update="(name) => this.onFieldModelChange(name)"
-                    isDebugMode="false"
-                />
+        <t t-set="geoValue" t-value="this.getGeoValue()" />
+        <div class="d-flex flex-column gap-1 o_geo_value_editor">
+            <div
+                t-if="!this.state.isReferenceFolded"
+                class="d-flex align-items-center gap-2 o_geo_reference"
+            >
+                <div class="flex-shrink-0">
+                    <Select
+                        value="geoValue.mode"
+                        update="(mode) => this.onModeChange(mode)"
+                        options="this.modeOptions"
+                    />
+                </div>
+                <t t-if="geoValue.mode === 'records'">
+                    <div class="flex-grow-1 overflow-hidden">
+                        <Select
+                            value="geoValue.resModel"
+                            update="(resModel) => this.onModelChange(resModel)"
+                            options="this.getModelOptions()"
+                            addBlankOption="!geoValue.resModel"
+                            placeholder="this.getModelPlaceholder()"
+                        />
+                    </div>
+                    <div t-if="geoValue.resModel" class="flex-grow-1 overflow-hidden">
+                        <Select
+                            value="geoValue.fieldName"
+                            update="(fieldName) => this.onFieldChange(fieldName)"
+                            options="this.getFieldOptions(geoValue)"
+                        />
+                    </div>
+                </t>
             </div>
-            <button class="btn btn-link col-1" t-on-click.prevent="display">
-                <i class="fa fa-pencil-square" />
-            </button>
+            <div class="d-flex align-items-center gap-2">
+                <button
+                    type="button"
+                    class="btn btn-sm btn-light flex-shrink-1 text-truncate o_geo_reference_toggle"
+                    style="max-width: 45%;"
+                    t-att-title="this.getReferenceSummary(geoValue)"
+                    t-on-click="() => this.toggleReference()"
+                >
+                    <i
+                        class="oi oi-fw"
+                        t-att-data-icon="this.state.isReferenceFolded ? 'chevron_right' : 'expand_more'"
+                    />
+                    <t t-out="this.getReferenceSummary(geoValue)" />
+                </button>
+                <div class="flex-grow-1 o_geo_value_main">
+                    <t t-if="geoValue.mode === 'geometry'">
+                        <input
+                            class="o_input w-100"
+                            t-att-value="geoValue.geometry"
+                            placeholder="POINT(1490000 6110000)"
+                            t-on-change="(ev) => this.onGeometryChange(ev)"
+                        />
+                    </t>
+                    <t t-elif="geoValue.resModel">
+                        <t t-set="recordIds" t-value="this.getRecordIds(geoValue)" />
+                        <MultiRecordSelector
+                            t-if="recordIds"
+                            resModel="geoValue.resModel"
+                            resIds="recordIds"
+                            update="(ids) => this.onRecordsChange(ids)"
+                            placeholder="this.getRecordsPlaceholder(geoValue)"
+                        />
+                        <button
+                            t-else=""
+                            type="button"
+                            class="btn btn-link p-0 text-start text-wrap"
+                            t-on-click="() => this.openDomainDialog()"
+                            t-out="this.state.domainDescription"
+                        />
+                    </t>
+                </div>
+                <button
+                    t-if="geoValue.mode === 'records' and geoValue.resModel"
+                    type="button"
+                    class="btn btn-link p-0 flex-shrink-0"
+                    title="Filter the records with a domain"
+                    t-on-click="() => this.openDomainDialog()"
+                >
+                    <i class="oi oi-fw" data-icon="filter_alt" />
+                </button>
+            </div>
         </div>
     </t>
 </templates>

@@ -35,5 +35,5 @@ class IrUIView(models.Model):
 
     def _get_view_info(self):
         res = super()._get_view_info()
-        res.update({"geoengine": {"icon": "fa fa-globe"}})
+        res.update({"geoengine": {"icon": "map"}})
         return res

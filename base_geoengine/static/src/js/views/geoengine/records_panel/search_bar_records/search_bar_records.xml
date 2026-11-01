@@ -14,11 +14,11 @@
                 />
                 <div class="o_searchview_input_container">
                     <input
-                        t-ref="searchComponent"
+                        t-ref="this.searchComponentRef"
                         type="text"
                         class="o_searchview_input o_input d-print-none flex-grow-1 w-auto border-0"
                         placeholder="Search..."
-                        t-on-keyup="onInputKeyup"
+                        t-on-keyup="this.onInputKeyup"
                     />
                 </div>
             </div>

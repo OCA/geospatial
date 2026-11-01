@@ -5,7 +5,7 @@
 import logging
 
 from odoo.exceptions import MissingError
-from odoo.tools import sql
+from odoo.tools import SQL, sql
 
 logger = logging.getLogger("geoengine.sql")
 _schema = logging.getLogger("odoo.schema")
@@ -84,6 +84,12 @@ def create_geo_index(cr, columnname, tablename):
     indexname = _postgis_index_name(tablename, columnname)
     if sql.index_exists(cr, indexname):
         return
-    # pylint: disable=E8103
-    cr.execute(f"CREATE INDEX {indexname} ON {tablename} USING GIST ( {columnname} )")
+    cr.execute(
+        SQL(
+            "CREATE INDEX %s ON %s USING GIST (%s)",
+            SQL.identifier(indexname),
+            SQL.identifier(tablename),
+            SQL.identifier(columnname),
+        )
+    )
     _schema.debug("Table %r: created index %r", tablename, indexname)

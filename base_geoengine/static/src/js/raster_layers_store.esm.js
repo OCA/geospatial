@@ -1,6 +1,6 @@
 /** @odoo-module */
 
-import {reactive} from "@odoo/owl";
+import {proxy} from "@odoo/owl";
 
 class RasterLayersStore {
     /**
@@ -39,4 +39,4 @@ class RasterLayersStore {
         return this.rasters.length;
     }
 }
-export const rasterLayersStore = reactive(new RasterLayersStore());
+export const rasterLayersStore = proxy(new RasterLayersStore());

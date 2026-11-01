@@ -1,5 +1,5 @@
 /** @odoo-module */
-import {reactive} from "@odoo/owl";
+import {proxy} from "@odoo/owl";
 
 class VectorLayersStore {
     /**
@@ -33,4 +33,4 @@ class VectorLayersStore {
     }
 }
 
-export const vectorLayersStore = reactive(new VectorLayersStore());
+export const vectorLayersStore = proxy(new VectorLayersStore());

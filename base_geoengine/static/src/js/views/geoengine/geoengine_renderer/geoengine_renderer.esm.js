@@ -14,14 +14,16 @@ let geostats = null;
  */
 
 import {
-    App,
     Component,
     onMounted,
     onPatched,
     onWillStart,
     onWillUpdateProps,
-    reactive,
-    useState,
+    proxy,
+    t,
+    useEffect,
+    useProps,
+    useScope,
 } from "@odoo/owl";
 import {GeoengineRecord} from "../geoengine_record/geoengine_record.esm";
 import {LayersPanel} from "../layers_panel/layers_panel.esm";
@@ -33,8 +35,6 @@ import {
 } from "@web/model/relational_model/utils";
 import {evaluateExpr} from "@web/core/py_js/py";
 import {loadGeoengineLibs} from "../../../geoengine_libs.esm";
-import {getTemplate} from "@web/core/templates";
-import {customDirectives} from "@web/env";
 import {parseXML} from "@web/core/utils/xml";
 import {rasterLayersStore} from "../../../raster_layers_store.esm";
 import {registry} from "@web/core/registry";
@@ -52,19 +52,48 @@ const DEFAULT_NUM_CLASSES = 5;
 const LEGEND_MAX_ITEMS = 10;
 
 export class GeoengineRenderer extends Component {
+    props = useProps({
+        isSavedOrDiscarded: t.boolean(),
+        archInfo: t.object(),
+        data: t.object(),
+        openRecord: t.function(),
+        editable: t.boolean().optional(),
+        updateRecord: t.function(),
+        onClickDiscard: t.function(),
+        createRecord: t.function(),
+        onDrawStart: t.function(),
+    });
+
     setup() {
-        this.state = useState({selectedFeatures: [], isModified: false, isFit: false});
+        // Captured so `loadView()` can construct RelationalModel instances from
+        // deep inside an async callback: its constructor calls Owl hooks
+        // (usePlugin), which require an active scope, no longer implicitly
+        // available past the first `await` of an onWillStart callback.
+        this.scope = useScope();
+        this.state = proxy({
+            selectedFeatures: [],
+            isModified: false,
+            isFit: false,
+            popupRecord: null,
+        });
         this.models = [];
         this.cfg_models = [];
         this.vectorModel = {};
         this.legends = [];
 
-        // When a change is issued in the rasterLayersStore or the vectorLayersStore the LayerChanged method is called.
-        this.rasterLayersStore = reactive(rasterLayersStore, () =>
-            this.onRasterLayerChanged()
+        this.rasterLayersStore = rasterLayersStore;
+        this.vectorLayersStore = vectorLayersStore;
+        // When a change is issued in the rasterLayersStore or the vectorLayersStore the
+        // LayerChanged method is called. `useEffect` auto-tracks the reactive reads
+        // performed while it runs (here, inside `onRasterLayerChanged`/
+        // `onVectorLayerChanged`) and re-runs whenever they change; the store read is
+        // passed in explicitly so it is always tracked, even before `this.map` exists
+        // (the methods themselves no-op until the map is mounted).
+        useEffect(() =>
+            this.onRasterLayerChanged(this.rasterLayersStore.rastersLayers)
         );
-        this.vectorLayersStore = reactive(vectorLayersStore, () =>
-            this.onVectorLayerChanged()
+        useEffect(() =>
+            this.onVectorLayerChanged(this.vectorLayersStore.vectorsLayers)
         );
 
         this.orm = useService("orm");
@@ -295,7 +324,7 @@ export class GeoengineRenderer extends Component {
 
     createEditControl() {
         const {element, button} = this.createHtmlControl(
-            '<i class="fa fa-magic"></i>',
+            '<i class="oi oi-fw" data-icon="auto_fix_high"></i>',
             "edit-control ol-unselectable ol-control"
         );
 
@@ -341,7 +370,7 @@ export class GeoengineRenderer extends Component {
 
     createDrawControl() {
         const {element, button} = this.createHtmlControl(
-            '<i class="fa fa-pencil"></i>',
+            '<i class="oi oi-fw" data-icon="draw"></i>',
             "draw-control ol-unselectable ol-control"
         );
         button.addEventListener("click", () => {
@@ -383,7 +412,7 @@ export class GeoengineRenderer extends Component {
 
     createSelectControl() {
         const {element, button} = this.createHtmlControl(
-            '<i class="fa fa-mouse-pointer"></i>',
+            '<i class="oi oi-fw" data-icon="arrow_selector_tool"></i>',
             "select-control ol-unselectable ol-control"
         );
         this.addSelectedClassToButton(button);
@@ -497,7 +526,9 @@ export class GeoengineRenderer extends Component {
             case "MultiPolygon":
                 return new ol.style.Style({
                     fill: new ol.style.Fill({
-                        color: chroma(feature.values_.attributes.color)
+                        color: chroma(
+                            feature.values_.attributes.color || DEFAULT_BEGIN_COLOR
+                        )
                             .alpha(0.4)
                             .css(),
                     }),
@@ -511,72 +542,61 @@ export class GeoengineRenderer extends Component {
     updateInfoBox(features) {
         const feature = features.item(0);
         if (feature !== undefined) {
-            const popup = this.getPopup();
-            if (feature !== undefined) {
-                var attributes = feature.get("attributes");
+            var attributes = feature.get("attributes");
 
-                if (this.cfg_models.includes(feature.get("model"))) {
-                    const model = this.models.find(
-                        (el) => el.model.resModel === feature.get("model")
-                    );
-                    this.mountGeoengineRecord({
-                        popup,
-                        archInfo: model.archInfo,
-                        templateDocs: model.archInfo.templateDocs,
-                        model: model.model,
-                        attributes,
-                    });
-                } else {
-                    this.mountGeoengineRecord({
-                        popup,
-                        archInfo: this.props.archInfo,
-                        templateDocs: this.props.archInfo.templateDocs,
-                        model: this.props.data,
-                        attributes,
-                    });
-                }
-
-                var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
-                this.overlay.setPosition(coord);
+            if (this.cfg_models.includes(feature.get("model"))) {
+                const model = this.models.find(
+                    (el) => el.model.resModel === feature.get("model")
+                );
+                this.mountGeoengineRecord({
+                    archInfo: model.archInfo,
+                    templateDocs: model.archInfo.templateDocs,
+                    model: model.model,
+                    attributes,
+                });
+            } else {
+                this.mountGeoengineRecord({
+                    archInfo: this.props.archInfo,
+                    templateDocs: this.props.archInfo.templateDocs,
+                    model: this.props.data,
+                    attributes,
+                });
             }
+
+            var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
+            this.overlay.setPosition(coord);
         } else {
             this.hidePopup();
         }
     }
 
-    getPopup() {
-        const popup = document.getElementById("popup-content");
-        if (popup.firstChild !== null) {
-            popup.removeChild(popup.firstChild);
-        }
-        return popup;
-    }
-
     /**
-     * Allow you to mount geoengine record. This displays the record in the info box template.
-     * @param {*} popup
+     * Allow you to display the record in the info box template.
+     *
+     * The info box's content is a normal child component (GeoengineRecord),
+     * portaled into the `#popup-content` DOM node with `t-custom-portal`
+     * rather than mounted as a separate Owl App: a separate App would need
+     * its own full plugin set (core widgets like <field/> use several
+     * plugins internally) and starting a second one alongside the
+     * already-running app causes duplicate service/plugin registration
+     * errors. Being part of the same component tree means it shares the
+     * existing env/services/plugins for free.
      * @param {*} archInfo
      * @param {*} templateDocs
      * @param {*} model
      * @param {*} attributes
      * @param {*} record
      */
-    mountGeoengineRecord({popup, archInfo, templateDocs, model, attributes, record}) {
+    mountGeoengineRecord({archInfo, templateDocs, model, attributes, record}) {
         this.record =
             record === undefined
                 ? model.records.find((element) => element._values.id === attributes.id)
                 : record;
-        const app = new App(GeoengineRecord, {
-            env: this.env,
-            props: {
-                archInfo,
-                record: this.record,
-                templates: templateDocs,
-            },
-            getTemplate,
-            customDirectives,
-        });
-        app.mount(popup);
+        this.state.popupRecord = {
+            archInfo,
+            record: this.record,
+            templates: templateDocs,
+        };
     }
 
     /**
@@ -584,11 +604,9 @@ export class GeoengineRenderer extends Component {
      * @param {*} record
      */
     onDisplayPopupRecord(record) {
-        const popup = this.getPopup();
         const feature = this.vectorSource.getFeatureById(record.resId);
         if (feature) {
             this.mountGeoengineRecord({
-                popup,
                 archInfo: this.props.archInfo,
                 templateDocs: this.props.archInfo.templateDocs,
                 record,
@@ -640,6 +658,7 @@ export class GeoengineRenderer extends Component {
 
     hidePopup() {
         this.overlay.setPosition(undefined);
+        this.state.popupRecord = null;
     }
 
     /**
@@ -660,7 +679,21 @@ export class GeoengineRenderer extends Component {
      * Allows you to change the visibility of layers. This method is called
      * when the user changes raster layers.
      */
-    onRasterLayerChanged() {
+    onRasterLayerChanged(rasters) {
+        // Read every raster's mutable properties unconditionally so this effect
+        // keeps depending on them even on runs that return early below (e.g. the
+        // very first run, before `this.map` exists): Owl's reactivity only
+        // re-runs an effect for properties it actually read on a previous run,
+        // so skipping this on the early runs would mean a later mutation (like
+        // toggling a raster's visibility) is never noticed again.
+        this.primedRasters = (rasters || []).map((raster) => [
+            raster.name,
+            raster.isVisible,
+            raster.opacity,
+        ]);
+        if (!this.map || !rasters) {
+            return;
+        }
         this.map
             .getLayers()
             .getArray()
@@ -668,7 +701,7 @@ export class GeoengineRenderer extends Component {
             .getLayers()
             .getArray()
             .forEach((layer) => {
-                this.rasterLayersStore.rastersLayers.forEach((raster) => {
+                rasters.forEach((raster) => {
                     if (raster.name === layer.get("title")) {
                         layer.setVisible(raster.isVisible);
                         layer.setOpacity(raster.opacity);
@@ -681,7 +714,24 @@ export class GeoengineRenderer extends Component {
      * Allows you to change the visibility of layers. This method is called
      * when the user changes vector layers.
      */
-    async onVectorLayerChanged() {
+    async onVectorLayerChanged(vectors) {
+        // Read every vector's mutable properties unconditionally so this effect
+        // keeps depending on them even on runs that return early below (e.g. the
+        // very first run, before `this.map` exists): Owl's reactivity only
+        // re-runs an effect for properties it actually read on a previous run,
+        // so skipping this on the early runs would mean a later mutation (like
+        // toggling a layer's visibility) is never noticed again.
+        this.primedVectors = (vectors || []).map((vector) => [
+            vector.name,
+            vector.isVisible,
+            vector.onVisibleChanged,
+            vector.onDomainChanged,
+            vector.onLayerChanged,
+            vector.onSequenceChanged,
+        ]);
+        if (!this.map || !vectors) {
+            return;
+        }
         await this.map
             .getLayers()
             .getArray()
@@ -689,7 +739,7 @@ export class GeoengineRenderer extends Component {
             .getLayers()
             .getArray()
             .forEach((layer) => {
-                this.vectorLayersStore.vectorsLayers.forEach(async (vector) => {
+                vectors.forEach(async (vector) => {
                     if (vector.name === layer.get("title")) {
                         if (vector.onVisibleChanged) {
                             this.onVisibleChanged(vector, layer);
@@ -1009,10 +1059,14 @@ export class GeoengineRenderer extends Component {
         };
 
         if (model === "geoengine.vector.layer") {
-            this.vectorModel = new Model(this.env, searchParams, this.services);
+            this.vectorModel = this.scope.run(
+                () => new Model(this.env, searchParams, this.services)
+            );
             await this.vectorModel.load(searchParams);
         } else if (this.models.find((e) => e.model.resModel === model) === undefined) {
-            const toLoadModel = new Model(this.env, searchParams, this.services);
+            const toLoadModel = this.scope.run(
+                () => new Model(this.env, searchParams, this.services)
+            );
             await toLoadModel.load().then(() => {
                 this.models.push({model: toLoadModel.root, archInfo});
             });
@@ -1077,8 +1131,24 @@ export class GeoengineRenderer extends Component {
     styleVectorLayerColored(cfg, data) {
         var indicator = cfg.attribute_field_id[1];
         var values = this.extractLayerValues(cfg, data);
-        var nb_class = cfg.nb_class || DEFAULT_NUM_CLASSES;
+        if (
+            ["quantile", "interval"].includes(cfg.classification) &&
+            values.length < 2
+        ) {
+            // Ranges need at least two values (e.g. a search that finds a
+            // single record): fall back to one flat color.
+            return this.styleVectorLayerDefault(cfg);
+        }
+        // Geostats requires strictly fewer classes than the number of values
+        // in the serie (`pop()`), otherwise `_classificationCheck` throws a
+        // TypeError. Clamp the requested number of classes so quantile/interval
+        // classifications never exceed what the current serie can support.
+        var nb_class = Math.max(
+            1,
+            Math.min(cfg.nb_class || DEFAULT_NUM_CLASSES, values.length - 1)
+        );
         var opacity = cfg.layer_opacity;
+
         var begin_color_hex = cfg.begin_color || DEFAULT_BEGIN_COLOR;
         var end_color_hex = cfg.end_color || DEFAULT_END_COLOR;
         var begin_color = chroma(begin_color_hex).alpha(opacity).css();
@@ -1312,15 +1382,4 @@ export class GeoengineRenderer extends Component {
 }
 
 GeoengineRenderer.template = "base_geoengine.GeoengineRenderer";
-GeoengineRenderer.props = {
-    isSavedOrDiscarded: {type: Boolean},
-    archInfo: {type: Object},
-    data: {type: Object},
-    openRecord: {type: Function},
-    editable: {type: Boolean, optional: true},
-    updateRecord: {type: Function},
-    onClickDiscard: {type: Function},
-    createRecord: {type: Function},
-    onDrawStart: {type: Function},
-};
 GeoengineRenderer.components = {LayersPanel, GeoengineRecord, RecordsPanel};

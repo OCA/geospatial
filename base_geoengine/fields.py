@@ -65,7 +65,7 @@ class GeoField(fields.Field):
         if isinstance(val, bytes | str):
             try:
                 int(val, 16)
-            except Exception:
+            except ValueError:
                 # not an hex value -> try to load from a sting
                 # representation of a geometry
                 value = convert.value_to_shape(value, use_wkb=False)
@@ -112,15 +112,18 @@ class GeoField(fields.Field):
     def entry_to_shape(self, value, same_type=False):
         """Transform input into an object"""
         shape = convert.value_to_shape(value)
-        if same_type and not shape.is_empty:
-            if shape.geom_type.lower() != self.geo_type.lower():
-                msg = self.env._(
-                    "Geo Value %(geom_type)s must be of the same type %(geo_type)s \
-                        as fields",
-                    geom_type=shape.geom_type.lower(),
-                    geo_type=self.geo_type.lower(),
-                )
-                raise TypeError(msg)
+        if (
+            same_type
+            and not shape.is_empty
+            and shape.geom_type.lower() != self.geo_type.lower()
+        ):
+            msg = self.env._(
+                "Geo Value %(geom_type)s must be of the same type %(geo_type)s \
+                    as fields",
+                geom_type=shape.geom_type.lower(),
+                geo_type=self.geo_type.lower(),
+            )
+            raise TypeError(msg)
         return shape
 
     def update_geo_db_column(self, model):

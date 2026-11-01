@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <templates>
     <t t-name="base_geoengine.GeoengineController">
-        <Layout display="props.display" className="'h-100'">
+        <Layout display="this.props.display" className="'h-100'">
             <t t-set-slot="layout-actions">
                 <SearchBar
-                    t-if="searchBarToggler.state.showSearchBar"
-                    autofocus="firstLoad"
+                    t-if="this.searchBarToggler.state.showSearchBar"
+                    autofocus="this.firstLoad"
                 />
             </t>
             <t t-set-slot="layout-buttons">
-                <t t-if="model.root.editedRecord">
+                <t t-if="this.model.root.editedRecord">
                     <button
                         type="button"
                         class="btn btn-primary o_list_button_save"
                         data-hotkey="s"
-                        t-on-click.stop="onClickSave"
+                        t-on-click.stop="this.onClickSave"
                     >
                         Save
                     </button>
@@ -22,23 +22,23 @@
                         type="button"
                         class="btn btn-secondary o_list_button_discard"
                         data-hotkey="j"
-                        t-on-click.stop="onClickDiscard"
+                        t-on-click.stop="this.onClickDiscard"
                     >
                         Discard
                     </button>
                 </t>
             </t>
             <t
-                t-component="props.Renderer"
-                isSavedOrDiscarded="state.isSavedOrDiscarded"
-                archInfo="props.archInfo"
-                data="model.root"
-                editable="editable"
-                openRecord.bind="openRecord"
-                updateRecord.bind="updateRecord"
-                onClickDiscard.bind="onClickDiscard"
-                createRecord.bind="createRecord"
-                onDrawStart.bind="onDrawStart"
+                t-component="this.props.Renderer"
+                isSavedOrDiscarded="this.state.isSavedOrDiscarded"
+                archInfo="this.props.archInfo"
+                data="this.model.root"
+                editable="this.editable"
+                openRecord.bind="this.openRecord"
+                updateRecord.bind="this.updateRecord"
+                onClickDiscard.bind="this.onClickDiscard"
+                createRecord.bind="this.createRecord"
+                onDrawStart.bind="this.onDrawStart"
             />
         </Layout>
     </t>

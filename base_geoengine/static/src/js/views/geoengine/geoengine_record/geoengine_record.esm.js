@@ -9,7 +9,7 @@ import {GeoengineCompiler} from "../geoengine_compiler.esm";
 import {INFO_BOX_ATTRIBUTE} from "../geoengine_arch_parser.esm";
 import {registry} from "@web/core/registry";
 import {useViewCompiler} from "@web/views/view_compiler";
-import {Component, onWillUpdateProps} from "@odoo/owl";
+import {Component, onWillUpdateProps, t, useProps} from "@odoo/owl";
 import {user} from "@web/core/user";
 
 const formatters = registry.category("formatters");
@@ -22,6 +22,15 @@ function getValue(record, fieldName) {
 }
 
 export class GeoengineRecord extends Component {
+    props = useProps({
+        archInfo: t.object(),
+        record: t.object(),
+        templates: t.object(),
+        Compiler: t.any().optional(),
+        readonly: t.boolean().optional(),
+        forceGlobalClick: t.boolean().optional(),
+    });
+
     /**
      * Setup the record by compiling the arch and the info-box template.
      */

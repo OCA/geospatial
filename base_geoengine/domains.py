@@ -1,21 +1,14 @@
 import contextlib
-import logging
-import warnings
 
 from odoo.fields import Domain
 from odoo.models import BaseModel
 from odoo.orm import domains
 from odoo.orm.domains import (
-    CONDITION_OPERATORS,
-    NEGATIVE_CONDITION_OPERATORS,
     SQL,
     DomainCondition,
     OptimizationLevel,
-    Query,
+    TableSQL,
 )
-from odoo.orm.identifiers import NewId
-
-_logger = logging.getLogger(__name__)
 
 GEO_OPERATORS = frozenset(
     [
@@ -30,76 +23,7 @@ GEO_OPERATORS = frozenset(
 )
 
 
-def checked(self) -> DomainCondition:
-    """Validate `self` and return it if correct, otherwise raise an exception."""
-    if not isinstance(self.field_expr, str) or not self.field_expr:
-        self._raise("Empty field name", error=TypeError)
-    operator = self.operator.lower()
-    if operator != self.operator:
-        warnings.warn(
-            (
-                f"Deprecated since 19.0, the domain condition "
-                f"{(self.field_expr, self.operator, self.value)!r} "
-                f"should have a lower-case operator"
-            ),
-            DeprecationWarning,
-            # <MOD>
-            stacklevel=2,
-            # </MOD>
-        )
-        return DomainCondition(self.field_expr, operator, self.value).checked()
-    if operator not in CONDITION_OPERATORS:
-        # <MOD>
-        if operator not in GEO_OPERATORS:
-            # </MOD>
-            self._raise("Invalid operator")
-
-    # check already the consistency for domain manipulation
-    # these are common mistakes and optimizations,
-    # do them here to avoid recreating the domain
-    # - NewId is not a value
-    # - records are not accepted, use values
-    # - Query and Domain values should be using a relational operator
-    # <MOD>
-    # from .models import BaseModel
-    # </MOD>
-
-    value = self.value
-    if value is None:
-        value = False
-    elif isinstance(value, NewId):
-        _logger.warning(
-            "Domains don't support NewId, use .ids instead, for %r",
-            (self.field_expr, self.operator, self.value),
-        )
-        operator = "not in" if operator in NEGATIVE_CONDITION_OPERATORS else "in"
-        value = []
-    elif isinstance(value, BaseModel):
-        _logger.warning(
-            "The domain condition %r should not have a value which is a model",
-            (self.field_expr, self.operator, self.value),
-        )
-        value = value.ids
-    elif isinstance(value, (Domain, Query, SQL)) and operator not in (
-        "any",
-        "not any",
-        "any!",
-        "not any!",
-        "in",
-        "not in",
-    ):
-        # accept SQL object in the right part for simple operators
-        # use case: compare 2 fields
-        _logger.warning(
-            "The domain condition %r should use the 'any' or 'not any' operator.",
-            (self.field_expr, self.operator, self.value),
-        )
-    if value is not self.value:
-        return DomainCondition(self.field_expr, operator, value)
-    return self
-
-
-def _to_sql(self, model: BaseModel, alias: str, query: Query) -> SQL:
+def _to_sql(self, table: TableSQL) -> SQL:
     """Enhanced _to_sql that handles geospatial operators."""
     field_expr, operator, value = self.field_expr, self.operator, self.value
 
@@ -111,12 +35,13 @@ def _to_sql(self, model: BaseModel, alias: str, query: Query) -> SQL:
             f"{(field_expr, operator, value)}"
         )
 
+        model: BaseModel = table._model
         field = self._field(model)
-        model._check_field_access(field, "read")
-        return field.condition_to_sql(field_expr, operator, value, model, alias, query)
+        model.check_field_access(field, "read")
+        return field.condition_to_sql(table, field_expr, operator, value)
 
     # For all other operators, use the original method
-    return original__to_sql(self, model, alias, query)
+    return original__to_sql(self, table)
 
 
 def _optimize_step(self, model: BaseModel, level: OptimizationLevel) -> Domain:
@@ -142,8 +67,8 @@ def _optimize_step(self, model: BaseModel, level: OptimizationLevel) -> Domain:
 original__optimize_step = DomainCondition._optimize_step
 original__to_sql = DomainCondition._to_sql
 
-DomainCondition.checked = checked
 DomainCondition._to_sql = _to_sql
 DomainCondition._optimize_step = _optimize_step
 
+# The core DomainCondition.checked() reads this global at call time
 domains.CONDITION_OPERATORS = domains.CONDITION_OPERATORS.union(GEO_OPERATORS)

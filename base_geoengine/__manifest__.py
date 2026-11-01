@@ -4,7 +4,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 {
     "name": "Geospatial support for Odoo",
-    "version": "19.0.1.0.2",
+    "version": "20.0.1.0.0",
     "category": "GeoBI",
     "author": "Camptocamp,ACSONE SA/NV,Odoo Community Association (OCA)",
     "license": "AGPL-3",
@@ -17,7 +17,7 @@
         "views/ir_view_view.xml",
         "views/geo_raster_layer_view.xml",
         "views/geo_vector_layer_view.xml",
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
     ],
     "assets": {
         "web.assets_backend": [

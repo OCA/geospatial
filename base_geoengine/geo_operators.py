@@ -10,11 +10,11 @@ class GeoOperator:
     def _get_direct_como_op_sql(self, table, col, value, params, op=""):
         """provide raw sql for geater and lesser operators"""
         if isinstance(value, int | float):
-            return f" ST_Area({table}.{col}) {op} {value}"
+            return f' ST_Area("{table}"."{col}") {op} {value}'
         else:
             base = self.geo_field.entry_to_shape(value, same_type=False)
             params.append(base.wkt)
-            return f" ST_Area({table}.{col}) {op} ST_Area(ST_GeomFromText(%s))"
+            return f' ST_Area("{table}"."{col}") {op} ST_Area(ST_GeomFromText(%s))'
 
     def _get_postgis_comp_sql(self, table, col, value, params, op=""):
         """return raw sql for all search based on St_**(a, b) posgis operator"""
@@ -22,7 +22,7 @@ class GeoOperator:
         srid = self.geo_field.srid
         params.append(base.wkt)
         params.append(srid)
-        return f"{op}({table}.{col}, ST_GeomFromText(%s, %s))"
+        return f'{op}("{table}"."{col}", ST_GeomFromText(%s, %s))'
 
     def get_geo_greater_sql(self, table, col, value, params):
         """Returns raw sql for geo_greater operator
@@ -48,7 +48,7 @@ class GeoOperator:
         base = self.geo_field.entry_to_shape(value, same_type=False)
         compare_to = "ST_GeomFromText(%s)"
         params.append(base.wkt)
-        return f" {table}.{col} = {compare_to}"
+        return f' "{table}"."{col}" = {compare_to}'
 
     def get_geo_intersect_sql(self, table, col, value, params):
         """Returns raw sql for geo_intersec operator

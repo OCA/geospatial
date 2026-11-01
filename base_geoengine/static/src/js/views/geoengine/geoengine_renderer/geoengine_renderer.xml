@@ -2,7 +2,10 @@
 <templates xml:space="preserve">
     <t t-name="base_geoengine.GeoengineRenderer">
         <div class="d-flex view w-100">
-            <LayersPanel model="props.data.resModel" vectorModel="vectorModel.root" />
+            <LayersPanel
+                model="this.props.data.resModel"
+                vectorModel="this.vectorModel.root"
+            />
             <div
                 class="map_container"
                 style="/*rtl:ignore*/ direction: ltr /*rtl:ignore*/;"
@@ -10,22 +13,29 @@
                 <div id="olmap" />
             </div>
             <RecordsPanel
-                list="props.data"
-                onDisplayPopupRecord.bind="onDisplayPopupRecord"
-                zoomOnFeature.bind="zoomOnFeature"
-                zoomOutOnFeature.bind="getOriginalZoom"
+                list="this.props.data"
+                onDisplayPopupRecord.bind="this.onDisplayPopupRecord"
+                zoomOnFeature.bind="this.zoomOnFeature"
+                zoomOutOnFeature.bind="this.getOriginalZoom"
             />
         </div>
         <div id="popup" class="ol-popup text-start">
             <div
                 id="popup-closer"
                 class="ol-popup-closer text-primary"
-                t-on-click="clickToHidePopup"
+                t-on-click="this.clickToHidePopup"
             />
             <div id="popup-content" />
+            <t t-if="this.state.popupRecord" t-custom-portal="'#popup-content'">
+                <GeoengineRecord
+                    archInfo="this.state.popupRecord.archInfo"
+                    record="this.state.popupRecord.record"
+                    templates="this.state.popupRecord.templates"
+                />
+            </t>
             <div class="row d-flex justify-content-center">
                 <button
-                    t-on-click="onInfoBoxClicked"
+                    t-on-click="this.onInfoBoxClicked"
                     class="btn btn-secondary border w-50"
                 >OPEN</button>
             </div>
