@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
 {
     "name": "Geo spatial support Demo",
-    "version": "19.0.1.0.0",
+    "version": "20.0.1.0.0",
     "category": "GeoBI",
     "author": "Camptocamp,Odoo Community Association (OCA)",
     "license": "AGPL-3",
@@ -14,7 +14,7 @@
         "views/retail_machine.xml",
         "data/npa_geom.xml",
         "data/retail_machine_geom.xml",
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
     ],
     "external_dependencies": {
         "python": [
