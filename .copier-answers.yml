@@ -16,7 +16,7 @@ odoo_test_flavor: Both
 odoo_version: 20.0
 org_name: Odoo Community Association (OCA)
 org_slug: OCA
-postgres_image: ''
+postgres_image: postgis/postgis:16-3.4
 rebel_module_groups: []
 repo_description: geospatial
 repo_name: geospatial
