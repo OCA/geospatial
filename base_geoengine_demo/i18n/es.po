@@ -269,9 +269,9 @@ msgstr "El punto"
 #: code:addons/base_geoengine_demo/models/retail_machine.py:0
 #, python-format
 msgid ""
-"The point must be placed in the corresponding area. (serial number: %s)."
+"The point must be placed in the corresponding area. (serial number: %(name)s)."
 msgstr ""
-"El punto debe colocarse en la zona correspondiente. (número de serie: %s)."
+"El punto debe colocarse en la zona correspondiente. (número de serie: %(name)s)."
 
 #. module: base_geoengine_demo
 #: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_resbetterzipgeoview0
