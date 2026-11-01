@@ -22,7 +22,6 @@
         <field name="arch" type="xml">
             <geoengine editable="1">
                 <field name="name" select="1" />
-                <field name="title" />
                 <field name="function" />
                 <field name="website" />
                 <field name="zip" />
@@ -35,7 +34,6 @@
                       Name: <field name="name" />
                     </b>
                         <ul>
-                            <li>Title: <field name="title" /> </li>
                             <li>Function: <field name="function" /> </li>
                             <li>Website: <field name="website" /> </li>
                             <li>ZIP: <field name="zip" /> </li>
@@ -72,7 +70,7 @@
     </record>
 
     <record id="contacts.action_contacts" model="ir.actions.act_window">
-        <field name="view_mode">geoengine,kanban,list,form,activity</field>
+        <field name="view_mode">geoengine,list,kanban,form,activity</field>
     </record>
 
     <record
