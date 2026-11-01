@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_1'>
+    <record id='machine_1' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>1</field>
         <field name='total_sales'>1057</field>
         <field name='money_level'>low</field>
@@ -7,7 +8,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_2'>
+    <record id='machine_2' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>2</field>
         <field name='total_sales'>793</field>
         <field name='money_level'>low</field>
@@ -15,7 +16,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_3'>
+    <record id='machine_3' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>3</field>
         <field name='total_sales'>602</field>
         <field name='money_level'>high</field>
@@ -23,7 +24,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_4'>
+    <record id='machine_4' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>4</field>
         <field name='total_sales'>1961</field>
         <field name='money_level'>high</field>
@@ -31,7 +32,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_5'>
+    <record id='machine_5' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>5</field>
         <field name='total_sales'>137</field>
         <field name='money_level'>normal</field>
@@ -39,7 +40,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_6'>
+    <record id='machine_6' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>6</field>
         <field name='total_sales'>1775</field>
         <field name='money_level'>normal</field>
@@ -47,7 +48,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_7'>
+    <record id='machine_7' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>7</field>
         <field name='total_sales'>1823</field>
         <field name='money_level'>low</field>
@@ -55,7 +56,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_8'>
+    <record id='machine_8' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>8</field>
         <field name='total_sales'>1495</field>
         <field name='money_level'>normal</field>
@@ -63,7 +64,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_9'>
+    <record id='machine_9' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>9</field>
         <field name='total_sales'>1726</field>
         <field name='money_level'>normal</field>
@@ -71,7 +72,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_10'>
+    <record id='machine_10' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>10</field>
         <field name='total_sales'>1163</field>
         <field name='money_level'>normal</field>
@@ -79,7 +80,7 @@
         <field name='state'>hs</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_11'>
+    <record id='machine_11' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>11</field>
         <field name='total_sales'>1436</field>
         <field name='money_level'>low</field>
@@ -87,7 +88,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_12'>
+    <record id='machine_12' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>12</field>
         <field name='total_sales'>1510</field>
         <field name='money_level'>normal</field>
@@ -95,7 +96,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_13'>
+    <record id='machine_13' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>13</field>
         <field name='total_sales'>825</field>
         <field name='money_level'>high</field>
@@ -103,7 +104,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_14'>
+    <record id='machine_14' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>14</field>
         <field name='total_sales'>1595</field>
         <field name='money_level'>low</field>
@@ -111,7 +112,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_15'>
+    <record id='machine_15' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>15</field>
         <field name='total_sales'>1844</field>
         <field name='money_level'>normal</field>
@@ -119,7 +120,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_16'>
+    <record id='machine_16' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>16</field>
         <field name='total_sales'>1631</field>
         <field name='money_level'>low</field>
@@ -127,7 +128,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_17'>
+    <record id='machine_17' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>17</field>
         <field name='total_sales'>1215</field>
         <field name='money_level'>low</field>
@@ -135,7 +136,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_18'>
+    <record id='machine_18' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>18</field>
         <field name='total_sales'>892</field>
         <field name='money_level'>high</field>
@@ -143,7 +144,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_19'>
+    <record id='machine_19' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>19</field>
         <field name='total_sales'>174</field>
         <field name='money_level'>normal</field>
@@ -151,7 +152,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_20'>
+    <record id='machine_20' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>20</field>
         <field name='total_sales'>1236</field>
         <field name='money_level'>high</field>
@@ -159,7 +160,7 @@
         <field name='state'>hs</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_21'>
+    <record id='machine_21' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>21</field>
         <field name='total_sales'>1533</field>
         <field name='money_level'>high</field>
@@ -167,7 +168,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_22'>
+    <record id='machine_22' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>22</field>
         <field name='total_sales'>1306</field>
         <field name='money_level'>low</field>
@@ -175,7 +176,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_23'>
+    <record id='machine_23' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>23</field>
         <field name='total_sales'>1781</field>
         <field name='money_level'>high</field>
@@ -183,7 +184,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_24'>
+    <record id='machine_24' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>24</field>
         <field name='total_sales'>422</field>
         <field name='money_level'>low</field>
@@ -191,7 +192,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_25'>
+    <record id='machine_25' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>25</field>
         <field name='total_sales'>1682</field>
         <field name='money_level'>low</field>
@@ -199,7 +200,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_26'>
+    <record id='machine_26' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>26</field>
         <field name='total_sales'>1190</field>
         <field name='money_level'>high</field>
@@ -207,7 +208,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_27'>
+    <record id='machine_27' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>27</field>
         <field name='total_sales'>1908</field>
         <field name='money_level'>normal</field>
@@ -215,7 +216,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_28'>
+    <record id='machine_28' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>28</field>
         <field name='total_sales'>1525</field>
         <field name='money_level'>high</field>
@@ -223,7 +224,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_29'>
+    <record id='machine_29' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>29</field>
         <field name='total_sales'>237</field>
         <field name='money_level'>high</field>
@@ -231,7 +232,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_30'>
+    <record id='machine_30' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>30</field>
         <field name='total_sales'>102</field>
         <field name='money_level'>high</field>
@@ -239,7 +240,7 @@
         <field name='state'>hs</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_31'>
+    <record id='machine_31' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>31</field>
         <field name='total_sales'>354</field>
         <field name='money_level'>high</field>
@@ -247,7 +248,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_32'>
+    <record id='machine_32' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>32</field>
         <field name='total_sales'>1</field>
         <field name='money_level'>normal</field>
@@ -255,7 +256,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_33'>
+    <record id='machine_33' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>33</field>
         <field name='total_sales'>492</field>
         <field name='money_level'>high</field>
@@ -263,7 +264,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_34'>
+    <record id='machine_34' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>34</field>
         <field name='total_sales'>734</field>
         <field name='money_level'>low</field>
@@ -271,7 +272,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_35'>
+    <record id='machine_35' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>35</field>
         <field name='total_sales'>1566</field>
         <field name='money_level'>high</field>
@@ -279,7 +280,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_36'>
+    <record id='machine_36' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>36</field>
         <field name='total_sales'>84</field>
         <field name='money_level'>low</field>
@@ -287,7 +288,7 @@
         <field name='state'>ok</field>
     </record>
 
-    <record model='geoengine.demo.automatic.retailing.machine' id='machine_37'>
+    <record id='machine_37' model='geoengine.demo.automatic.retailing.machine'>
         <field name='name'>37</field>
         <field name='total_sales'>1088</field>
         <field name='money_level'>normal</field>

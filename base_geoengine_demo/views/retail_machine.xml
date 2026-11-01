@@ -1,6 +1,6 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <odoo>
-    <record model="ir.ui.view" id="geo_retail_machine_view_form">
+    <record id="geo_retail_machine_view_form" model="ir.ui.view">
         <field name="name">geoengine.demo.retail.machine.form</field>
         <field name="model">geoengine.demo.automatic.retailing.machine</field>
         <field name="arch" type="xml">
@@ -30,7 +30,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="geo_retail_machine_view_search">
+    <record id="geo_retail_machine_view_search" model="ir.ui.view">
         <field name="name">geoengine.demo.retail.machine.search</field>
         <field name="model">geoengine.demo.automatic.retailing.machine</field>
         <field name="arch" type="xml">
@@ -43,7 +43,7 @@
         </field>
     </record>
 
-    <record model="ir.ui.view" id="geo_retail_machine_view_tree">
+    <record id="geo_retail_machine_view_tree" model="ir.ui.view">
         <field name="name">geoengine.demo.retail.machine.tree</field>
         <field name="model">geoengine.demo.automatic.retailing.machine</field>
         <field name="arch" type="xml">
@@ -64,8 +64,8 @@
     </record>
 
     <menuitem
-        name="Retail Machine"
         id="geoengine_retail_machine_menu"
+        name="Retail Machine"
         action="geoengine_view_retail_machine_action"
         parent="geoengine_demo_retail_menu"
         groups="base_geoengine.group_geoengine_user,base_geoengine.group_geoengine_admin"
