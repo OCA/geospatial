@@ -46,7 +46,7 @@ jobs:
             makepot: "true"
     services:
       postgres:
-        image: postgres:16
+        image: postgis/postgis:16-3.4
         env:
           POSTGRES_USER: odoo
           POSTGRES_PASSWORD: odoo
