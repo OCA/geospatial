@@ -6,347 +6,351 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2026-11-02 18:46+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.15.2\n"
 
 #. module: geospatial_plot
 #. odoo-python
 #: code:addons/geospatial_plot/models/res_partner.py:0
 msgid "%(display_name)s Plot #%(plot_count)d"
-msgstr ""
+msgstr "Appezzamento %(plot_count)d di %(display_name)s"
 
 #. module: geospatial_plot
 #: model:uom.uom,name:geospatial_plot.uom_surface_acre
 msgid "Acres"
-msgstr ""
+msgstr "Acri"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Richiede un'azione"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__active
 msgid "Active"
-msgstr ""
+msgstr "Attivo"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_search
 msgid "Archived"
-msgstr ""
+msgstr "In archivio"
 
 #. module: geospatial_plot
 #. odoo-javascript
 #: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
 msgid "Area Field"
-msgstr ""
+msgstr "Campo dell'area"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_res_partner__plot_ids
 #: model:ir.model.fields,field_description:geospatial_plot.field_res_users__plot_ids
 msgid "Area in use"
-msgstr ""
+msgstr "Area in uso"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Numero di allegati"
 
 #. module: geospatial_plot
 #: model:ir.model.fields.selection,name:geospatial_plot.selection__geospatial_plot__plot_shape_type__circle
 msgid "Circle"
-msgstr ""
+msgstr "Cerchio"
 
 #. module: geospatial_plot
 #. odoo-javascript
 #: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
 msgid "Circle draw inactive"
-msgstr ""
+msgstr "Disegno del cerchio non attivo"
 
 #. module: geospatial_plot
 #: model:ir.model,name:geospatial_plot.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Impostazioni configurazione"
 
 #. module: geospatial_plot
 #: model:ir.model,name:geospatial_plot.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contatto"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__country_id
 msgid "Country"
-msgstr ""
+msgstr "Nazione"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__country_code
 msgid "Country Code"
-msgstr ""
+msgstr "Codice nazione"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.view_partner_form
 msgid "Create Plot"
-msgstr ""
+msgstr "Crea appezzamento"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_res_config_settings__plot_uom_id
 msgid "Default Plot Unit of Measure"
-msgstr ""
+msgstr "Unità di misura predefinita gli appezzamenti"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__plot_description
 msgid "Description"
-msgstr ""
+msgstr "Descrizione"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Seguito da"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Seguito da (partner)"
 
 #. module: geospatial_plot
 #: model:res.groups,name:geospatial_plot.group_plot_manager
 msgid "GeoSpatial - Plot Manager"
-msgstr ""
+msgstr "Geospaziale - Gestione appezzamenti"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.res_config_settings_view_form
 msgid "Geospatial"
-msgstr ""
+msgstr "Geospaziale"
 
 #. module: geospatial_plot
 #: model:ir.model,name:geospatial_plot.model_geospatial_plot
 msgid "Geospatial Plot"
-msgstr ""
+msgstr "Appezzamento geospaziale"
 
 #. module: geospatial_plot
 #: model:ir.actions.act_window,name:geospatial_plot.geospatial_plot_action
 #: model:ir.ui.menu,name:geospatial_plot.menu_geospatial_plot_plots
 msgid "Geospatial Plots"
-msgstr ""
+msgstr "Appezzamenti geospaziali"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_search
 msgid "Group By"
-msgstr ""
+msgstr "Raggruppa per"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Contiene messaggi"
 
 #. module: geospatial_plot
 #: model:uom.uom,name:geospatial_plot.uom_surface_hectare
 msgid "Hectares"
-msgstr ""
+msgstr "Ettari"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Se selezionato, i nuovi messaggi richiedono la tua attenzione."
 
 #. module: geospatial_plot
 #: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Se selezionato, alcuni messaggi presentano un errore di consegna."
 
 #. module: geospatial_plot
 #: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__partner_address_id
 msgid "If the plot has its own address, separate from the using partner"
 msgstr ""
+"Se l'appezzamento ha un indirizzo proprio, distinto da quello del contatto "
+"che lo utilizza"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_form
 msgid "Internal description of the plot..."
-msgstr ""
+msgstr "Descrizione interna dell'appezzamento..."
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Segue"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_res_partner__plot_uom_id
 #: model:ir.model.fields,field_description:geospatial_plot.field_res_users__plot_uom_id
 msgid "Land Area Unit of Measure"
-msgstr ""
+msgstr "Unità di misura della superficie del terreno"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.view_partner_form
 msgid "Land Plots"
-msgstr ""
+msgstr "Appezzamenti di terreno"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.res_config_settings_view_form
 msgid "Land Size UoM"
-msgstr ""
+msgstr "Unità di misura della superficie del terreno"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_res_partner__leased_acreage
 #: model:ir.model.fields,field_description:geospatial_plot.field_res_users__leased_acreage
 msgid "Leased Plot Acreage"
-msgstr ""
+msgstr "Superficie degli appezzamenti in affitto"
 
 #. module: geospatial_plot
 #. odoo-javascript
 #: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
 msgid "Map"
-msgstr ""
+msgstr "Mappa"
 
 #. module: geospatial_plot
 #. odoo-javascript
 #: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
 msgid "Marker draw inactive"
-msgstr ""
+msgstr "Disegno del marcatore non attivo"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Errore di consegna del messaggio"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Messaggi"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__name
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_form
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: geospatial_plot
 #. odoo-python
 #: code:addons/geospatial_plot/models/res_partner.py:0
 msgid "New Plot Of %s"
-msgstr ""
+msgstr "Nuovo appezzamento di %s"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Numero di azioni"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Numero di errori"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Numero di messaggi che richiedono un'azione"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Numero di messaggi con errore di consegna"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_res_partner__own_acreage
 #: model:ir.model.fields,field_description:geospatial_plot.field_res_users__own_acreage
 msgid "Own Plot Acreage"
-msgstr ""
+msgstr "Superficie degli appezzamenti di proprietà"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__owner_id
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_search
 msgid "Owner"
-msgstr ""
+msgstr "Proprietario"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__partner_id
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_search
 msgid "Partner"
-msgstr ""
+msgstr "Contatto"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_form
 msgid "Plot"
-msgstr ""
+msgstr "Appezzamento"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_form
 msgid "Plot Description"
-msgstr ""
+msgstr "Descrizione dell'appezzamento"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_form
 msgid "Plot Map"
-msgstr ""
+msgstr "Mappa dell'appezzamento"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__plot_polygon
 msgid "Plot Polygon"
-msgstr ""
+msgstr "Poligono dell'appezzamento"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__plot_shape_type
 msgid "Plot Shape Type"
-msgstr ""
+msgstr "Tipo di forma dell'appezzamento"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__plot_size
 msgid "Plot Size"
-msgstr ""
+msgstr "Superficie dell'appezzamento"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__plot_uom_id
 msgid "Plot Uom"
-msgstr ""
+msgstr "Unità di misura dell'appezzamento"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__partner_address_id
 msgid "Plot address"
-msgstr ""
+msgstr "Indirizzo dell'appezzamento"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__plot_size
 msgid "Plot size in selected unit of measurement"
-msgstr ""
+msgstr "Superficie dell'appezzamento nell'unità di misura selezionata"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_geospatial_plot__plot_size_sqm
 msgid "Plot size in square meter"
-msgstr ""
+msgstr "Superficie dell'appezzamento in metri quadrati"
 
 #. module: geospatial_plot
 #: model:ir.ui.menu,name:geospatial_plot.menu_geospatial_plot_main
@@ -354,51 +358,53 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_tree
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.view_partner_form
 msgid "Plots"
-msgstr ""
+msgstr "Appezzamenti"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.res_config_settings_view_form
 msgid "Plots and areas"
-msgstr ""
+msgstr "Appezzamenti e superfici"
 
 #. module: geospatial_plot
 #: model:ir.model.fields.selection,name:geospatial_plot.selection__geospatial_plot__plot_shape_type__polygon
 msgid "Polygon"
-msgstr ""
+msgstr "Poligono"
 
 #. module: geospatial_plot
 #. odoo-javascript
 #: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
 msgid "Polygone draw inactive"
-msgstr ""
+msgstr "Disegno del poligono non attivo"
 
 #. module: geospatial_plot
 #. odoo-javascript
 #: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
 msgid "Polyline draw inactive"
-msgstr ""
+msgstr "Disegno della polilinea non attivo"
 
 #. module: geospatial_plot
 #: model:ir.model.fields.selection,name:geospatial_plot.selection__geospatial_plot__plot_shape_type__rectangle
 msgid "Rectangle"
-msgstr ""
+msgstr "Rettangolo"
 
 #. module: geospatial_plot
 #. odoo-javascript
 #: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
 msgid "Rectangle draw inactive"
-msgstr ""
+msgstr "Disegno del rettangolo non attivo"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.res_config_settings_view_form
 msgid "Set the unit of measure that the area of farms are measured."
 msgstr ""
+"Imposta l'unità di misura utilizzata per misurare la superficie delle "
+"aziende agricole."
 
 #. module: geospatial_plot
 #. odoo-python
 #: code:addons/geospatial_plot/models/geospatial_plot.py:0
 msgid "Size of plot needs to be higher than 0."
-msgstr ""
+msgstr "La superficie dell'appezzamento deve essere maggiore di 0."
 
 #. module: geospatial_plot
 #: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__country_code
@@ -406,46 +412,48 @@ msgid ""
 "The ISO country code in two chars. \n"
 "You can use this field for quick search."
 msgstr ""
+"Il codice paese ISO di due caratteri.\n"
+"Puoi usare questo campo per una ricerca rapida."
 
 #. module: geospatial_plot
 #. odoo-javascript
 #: code:addons/geospatial_plot/static/src/components/map_widget/map_widget.esm.js:0
 msgid "The field which will have the area calculated"
-msgstr ""
+msgstr "Il campo in cui verrà calcolata la superficie"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__owner_id
 msgid "The partner owning the plot"
-msgstr ""
+msgstr "Il contatto proprietario dell'appezzamento"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__partner_id
 msgid "The partner using the plot"
-msgstr ""
+msgstr "Il contatto che utilizza l'appezzamento"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__plot_polygon
 msgid "This field contains the actual plot coordinates"
-msgstr ""
+msgstr "Questo campo contiene le coordinate effettive dell'appezzamento"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__plot_size_sqm
 msgid "This field will be set by drawing the plot"
-msgstr ""
+msgstr "Questo campo viene valorizzato disegnando l'appezzamento"
 
 #. module: geospatial_plot
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.geospatial_plot_tree
 #: model_terms:ir.ui.view,arch_db:geospatial_plot.view_partner_form
 msgid "Total"
-msgstr ""
+msgstr "Totale"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,field_description:geospatial_plot.field_res_partner__total_acreage
 #: model:ir.model.fields,field_description:geospatial_plot.field_res_users__total_acreage
 msgid "Total Plot Acreage"
-msgstr ""
+msgstr "Superficie totale degli appezzamenti"
 
 #. module: geospatial_plot
 #: model:ir.model.fields,help:geospatial_plot.field_geospatial_plot__country_id
 msgid "Used to set map to draw plot on"
-msgstr ""
+msgstr "Utilizzato per impostare la mappa su cui disegnare l'appezzamento"
