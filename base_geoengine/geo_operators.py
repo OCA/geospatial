@@ -48,8 +48,9 @@ class GeoOperator(object):
         (used for equality comparison)
         """
         base = self.geo_field.entry_to_shape(value, same_type=False)
-        compare_to = "ST_GeomFromText(%s)"
+        compare_to = "ST_GeomFromText(%s, %s)"
         params.append(base.wkt)
+        params.append(self.geo_field.srid)
         return " {}.{} = {}".format(table, col, compare_to)
 
     def get_geo_intersect_sql(self, table, col, value, params):

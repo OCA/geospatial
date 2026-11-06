@@ -526,6 +526,15 @@ class TestModel(TransactionCase):
         self.assertEqual(1, len(result))
         self.assertEqual(result.city, "Mollens (VD))")
 
+    def test_search_equals_direct_value(self):
+        """geo_equal with a direct geometry value must match (SRID in literal)"""
+        zip_item = self.env["dummy.zip"].search([("name", "=", "1146")])
+        self.assertEqual(1, len(zip_item))
+
+        result = zip_item.search([("the_geom", "geo_equal", zip_item.the_geom)])
+
+        self.assertEqual(zip_item, result)
+
     def test_search_touch_polygon(self):
         zip_item = self.env["dummy.zip"]
 
