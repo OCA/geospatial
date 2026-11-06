@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<templates xml:space="preserve">
+    <t t-name="base_geoengine.GeoengineRecord">
+        <div
+            t-att-data-id="props.record.id"
+            t-att-tabindex="props.record.model.useSampleModel ? -1 : 0"
+        >
+            <t
+                t-call="{{ templates[this.constructor.INFO_BOX_ATTRIBUTE] }}"
+                t-call-context="this.renderingContext"
+            />
+        </div>
+    </t>
+</templates>

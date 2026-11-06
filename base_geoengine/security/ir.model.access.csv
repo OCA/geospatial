@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_geo_user_vector_user,geoengine.user.vector.layer,base_geoengine.model_geoengine_vector_layer,base_geoengine.group_geoengine_user,1,0,0,0
+access_geo_admin_vector_user,geoengine.admin.vector.layer,base_geoengine.model_geoengine_vector_layer,base_geoengine.group_geoengine_admin,1,1,1,1
+access_geo_user_raster_user,geoengine.user.raster.layer,base_geoengine.model_geoengine_raster_layer,base_geoengine.group_geoengine_user,1,0,0,0
+access_geo_admin_raster_user,geoengine.admin.raster.layer,base_geoengine.model_geoengine_raster_layer,base_geoengine.group_geoengine_admin,1,1,1,1
+access_geo_user_raster_type_user,geoengine.user.raster.layer.type,base_geoengine.model_geoengine_raster_layer_type,base_geoengine.group_geoengine_user,1,0,0,0
+access_geo_admin_raster_type_user,geoengine.admin.raster.layer.type,base_geoengine.model_geoengine_raster_layer_type,base_geoengine.group_geoengine_admin,1,1,1,1
+access_geo_user_allmodels,ir.model,base.model_ir_model,base_geoengine.group_geoengine_user,1,0,0,0
+access_geo_user_allviews,ir.ui.view,base.model_ir_ui_view,base_geoengine.group_geoengine_user,1,0,0,0

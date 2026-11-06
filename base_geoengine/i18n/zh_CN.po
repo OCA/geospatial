@@ -1,0 +1,1005 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* base_geoengine
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-11-25 09:06+0000\n"
+"Last-Translator: xtanuiha <feihu.zhang@live.com>\n"
+"Language-Team: none\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/base.py:0
+#, python-format
+msgid "%s column does not exists or is not a geo field"
+msgstr "%s 列不存在或不是地理字段"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__active_on_startup
+msgid "Active On Startup"
+msgstr "启动时激活"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
+#, python-format
+msgid "Add new value"
+msgstr "添加新值"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
+#, python-format
+msgid "Add tag"
+msgstr "添加标签"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__attribute_field_id
+msgid "Attribute field"
+msgstr "属性字段"
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_base
+msgid "Base"
+msgstr "基础"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__geo_repr__basic
+msgid "Basic"
+msgstr "基本"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__begin_color
+msgid "Begin color class"
+msgstr "开始颜色类别"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_geoengine_view_form
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Classification"
+msgstr "分类"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__classification
+msgid "Classification mode"
+msgstr "分类模式"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__type
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__code
+msgid "Code"
+msgstr "代码"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__geo_repr__colored
+msgid "Colored range/Chroma.js"
+msgstr "彩色范围/Chroma.js"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_geoengine_view_form
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Colors"
+msgstr "颜色"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_base_view_menu
+msgid "Configuration"
+msgstr "配置"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__gist_index
+msgid "Create gist index"
+msgstr "创建gist索引"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__create_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__create_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__create_uid
+msgid "Created by"
+msgstr "由...创建"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__create_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__create_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__create_date
+msgid "Created on"
+msgstr "创建于"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__classification__custom
+msgid "Custom"
+msgstr "自定义"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__default_extent
+msgid "Default map extent"
+msgstr "默认地图范围"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__default_zoom
+msgid "Default map zoom"
+msgstr "默认地图缩放"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__params
+msgid "Dictiorary of values for dimensions as JSON"
+msgstr "维度值的字典作为JSON"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__dimensions
+msgid "Dimensions"
+msgstr "维度"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.xml:0
+#, python-format
+msgid "Discard"
+msgstr "放弃"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__display_polygon_labels
+msgid "Display Labels on Polygon"
+msgstr "在多边形上显示标签"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__display_name
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__display_name
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__d_wms
+msgid "Distant WMS"
+msgstr "远程WMS"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.esm.js:0
+#, python-format
+msgid "Domain editing"
+msgstr "域编辑"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.esm.js:0
+#, python-format
+msgid "Editing Raster Layer"
+msgstr "编辑栅格层"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.esm.js:0
+#, python-format
+msgid "Editing vector layer"
+msgstr "编辑矢量层"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__end_color
+msgid "End color class"
+msgstr "结束颜色类别"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/geo_db.py:0
+#, python-format
+msgid ""
+"Error, can not automatically initialize spatial postgis support. Database user may have to be superuser and postgres/postgis extensions with their devel header have to be installed. If you do not want Odoo to connect with a super user you can manually prepare your database. To do this, open a client to your database using a super user and run:\n"
+"CREATE EXTENSION postgis;\n"
+"CREATE EXTENSION postgis_topology;\n"
+msgstr ""
+"错误，无法自动初始化空间postgis支持。数据库用户可能需要是超级用户，并且必须安"
+"装postgres/postgis扩展及其开发头文件。如果您不希望Odoo与超级用户连接，您可以"
+"手动准备数据库。为此，请使用超级用户打开数据库客户端并运行：\\n"
+"CREATE EXTENSION postgis;\\n"
+"CREATE EXTENSION postgis_topology;\\n"
+"\n"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__ttype
+msgid "Field Type"
+msgstr "字段类型"
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_ir_model_fields
+msgid "Fields"
+msgstr "字段"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__format_suffix
+msgid "Format"
+msgstr "格式"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_geoengine_view_form
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "General"
+msgstr "通用"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/fields.py:0
+#, python-format
+msgid ""
+"Geo Value %(geom_type)s must be of the same type %(geo_type)s"
+"                         as fields"
+msgstr "地理值%(geom_type)s必须与字段的类型%(geo_type)s相同"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/fields.py:0
+#, python-format
+msgid ""
+"Geo dimention modification is not implemented. We can not change dimention "
+"%(data)s to %(dim)s"
+msgstr "地理维度修改未实现。我们无法将维度%(data)s更改为%(dim)s"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__geo_field_id
+msgid "Geo field"
+msgstr "地理字段"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/fields.py:0
+#, python-format
+msgid ""
+"Geo type modification is not implemented. We can not change type %(data)s to"
+" %(geo_type)s"
+msgstr "地理类型修改未实现。我们无法将类型%(data)s更改为%(geo_type)s"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_ui_view__type__geoengine
+msgid "GeoEngine"
+msgstr "地理引擎"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_base_menu
+msgid "GeoEngine Backend"
+msgstr "地理引擎后端"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geoengine_view_form
+msgid "GeoEngine Data"
+msgstr "地理引擎数据"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_view.esm.js:0
+#, python-format
+msgid "Geoengine"
+msgstr "地理引擎"
+
+#. module: base_geoengine
+#: model:res.groups,name:base_geoengine.group_geoengine_admin
+msgid "Geoengine Admin"
+msgstr "地理引擎管理员"
+
+#. module: base_geoengine
+#: model:res.groups,name:base_geoengine.group_geoengine_user
+msgid "Geoengine User"
+msgstr "地理引擎用户"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__has_type
+msgid "Has Type"
+msgstr "具有类型"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__id
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__id
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__id
+msgid "ID"
+msgstr "ID"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__classification__interval
+msgid "Interval"
+msgstr "间隔"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__is_wms
+msgid "Is Wms"
+msgstr "是否为WMS"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__is_wmts
+msgid "Is Wmts"
+msgstr "是否为WMTS"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__overlay
+msgid "Is overlay layer?"
+msgstr "是否为叠加层？"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__write_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__write_uid
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__write_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__write_date
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__write_date
+msgid "Last Updated on"
+msgstr "最后更新时间"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__type_id
+msgid "Layer"
+msgstr "图层"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__name
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__name
+msgid "Layer Name"
+msgstr "图层名称"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__layer_opacity
+msgid "Layer Opacity"
+msgstr "图层不透明度"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__sequence
+msgid "Layer Priority"
+msgstr "图层优先级"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__layer_transparent
+msgid "Layer Transparent"
+msgstr "图层透明度"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "Layer data"
+msgstr "图层数据"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__readonly
+msgid "Layer is read only"
+msgstr "只读图层"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__sequence
+msgid "Layer priority"
+msgstr "图层优先级"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_layer__active_on_startup
+msgid "Layer will be shown on startup if checked."
+msgstr "如果选中，则图层将在启动时显示。"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.xml:0
+#, python-format
+msgid "Layers ("
+msgstr "图层 ("
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__linestring
+msgid "LineString"
+msgstr "线字符串"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__dimensions
+msgid "List of dimensions separated by ','"
+msgstr "用逗号分隔的维度列表"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__matrix_set
+msgid "Matrix set"
+msgstr "矩阵集"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__max_extent
+msgid "Max extent"
+msgstr "最大范围"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_arch_parser.esm.js:0
+#, python-format
+msgid "Missing ${INFO_BOX_ATTRIBUTE} template."
+msgstr "缺少 \\${INFO_BOX_ATTRIBUTE} 模板。"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__model_name
+msgid "Model"
+msgstr "模型"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__model_domain
+msgid "Model Domain"
+msgstr "模型域"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__model_id
+msgid "Model to use"
+msgstr "要使用的模型"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__model_view_id
+msgid "Model view"
+msgstr "模型视图"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multilinestring
+msgid "MultiLineString"
+msgstr "多线字符串"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multipoint
+msgid "MultiPoint"
+msgstr "多点"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__multipolygon
+msgid "MultiPolygon"
+msgstr "多边形"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__name
+msgid "Name"
+msgstr "名称"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__params_wms
+msgid "Need to provide at least a LAYERS param"
+msgstr "至少需要提供一个 LAYERS 参数"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.esm.js:0
+#, python-format
+msgid "New record"
+msgstr "新记录"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/base.py:0
+#, python-format
+msgid ""
+"No GeoEngine view defined for the model %s.                         Please "
+"create a view or modify view mode"
+msgstr "模型 %s 没有定义 GeoEngine 视图。请创建视图或修改视图模式"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/base.py:0
+#, python-format
+msgid "No raster layer for view %s"
+msgstr "视图 %s 没有栅格图层"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__nb_class
+msgid "Number of class"
+msgstr "类别数量"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_renderer/geoengine_renderer.xml:0
+#, python-format
+msgid "OPEN"
+msgstr "打开"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__odoo
+msgid "Odoo field"
+msgstr "Odoo 字段"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "Odoo layer data (Not implemented)"
+msgstr "Odoo 层数据（未实现）"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__field_id
+msgid "Odoo layer field to use"
+msgstr "要使用的 Odoo 层字段"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__opacity
+msgid "Opacity"
+msgstr "不透明度"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__osm
+msgid "OpenStreetMap"
+msgstr "开放街图"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "Params"
+msgstr "参数"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__params_wms
+msgid "Params Wms"
+msgstr "Wms 参数"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__point
+msgid "Point"
+msgstr "点"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__polygon
+msgid "Polygon"
+msgstr "多边形"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__dim
+msgid "PostGIs Dimension"
+msgstr "PostGIS 维度"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__geo_type
+msgid "PostGIs type"
+msgstr "PostGIS 类型"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__projection
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__projection
+msgid "Projection"
+msgstr "投影"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__geo_repr__proportion
+msgid "Proportional Symbol"
+msgstr "比例符号"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__classification__quantile
+msgid "Quantile"
+msgstr "分位数"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geoengine_view_form
+msgid "Raster (Background layers)"
+msgstr "栅格（背景图层）"
+
+#. module: base_geoengine
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_form_view_raster_action
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_rater_action
+#: model:ir.model,name:base_geoengine.model_geoengine_raster_layer
+msgid "Raster Layer"
+msgstr "栅格图层"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_raster_layer_menu
+msgid "Raster Layer Management"
+msgstr "栅格图层管理"
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_geoengine_raster_layer_type
+msgid "Raster Layer Type"
+msgstr "栅格图层类型"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "Raster Layer View"
+msgstr "栅格图层视图"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__raster_type
+msgid "Raster layer type"
+msgstr "栅格图层类型"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__raster_layer_ids
+msgid "Raster layers"
+msgstr "栅格图层"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.xml:0
+#, python-format
+msgid "Rasters"
+msgstr "栅格数据"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/records_panel.xml:0
+#, python-format
+msgid "Records ("
+msgstr "记录 ("
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Related Model"
+msgstr "相关模型"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__view_id
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__view_id
+msgid "Related View"
+msgstr "相关视图"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_field_input_with_tags/domain_selector_field_input_with_tags.xml:0
+#, python-format
+msgid "Remove tag"
+msgstr "移除标签"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_geoengine_view_form
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Representation"
+msgstr "表示"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__geo_repr
+msgid "Representation mode"
+msgstr "表示模式"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/fields.py:0
+#, python-format
+msgid ""
+"Reprojection of column is not implemented. We can not change srid %(srid)s "
+"to %(data)s"
+msgstr "列的重投影未实现。我们不能将srid %(srid)s更改为%(data)s"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__request_encoding
+msgid "Request encoding"
+msgstr "请求编码"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__resolutions
+msgid "Resolutions"
+msgstr "分辨率"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__restricted_extent
+msgid "Restricted map extent"
+msgstr "限制地图范围"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.xml:0
+#, python-format
+msgid "Save"
+msgstr "保存"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
+#: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
+#: code:addons/base_geoengine/static/src/js/views/geoengine/records_panel/search_bar_records/search_bar_records.xml:0
+#, python-format
+msgid "Search..."
+msgstr "搜索..."
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__server_type
+msgid "Server Type"
+msgstr "服务器类型"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer_type__service
+msgid "Service"
+msgstr "服务"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__url
+msgid "Service URL"
+msgstr "服务URL"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/geo_convertion_helper.py:0
+#, python-format
+msgid "Shapely or geojson are not available in the sys path"
+msgstr "sys路径中不可用Shapely或geojson"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field_input/domain_selector_geo_field_input.esm.js:0
+#, python-format
+msgid "Subdomain"
+msgstr "子域名"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/geo_vector_layer.py:0
+#, python-format
+msgid "The geo_field_id must be a field in %s model"
+msgstr "geo_field_id 必须是 %s 模型中的一个字段"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__server_type
+msgid ""
+"The type of the remote WMS server: mapserver,             geoserver, "
+"carmentaserver, or qgis"
+msgstr "远程 WMS 服务器的类型：mapserver、geoserver、carmentaserver 或 qgis"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_vector_layer__classification__unique
+msgid "Unique value"
+msgstr "唯一值"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__units
+msgid "Units"
+msgstr "单位"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_geoengine_raster_layer__use_to_edit
+msgid "Use to edit"
+msgstr "用于编辑"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_vector_view_form
+msgid "Vector"
+msgstr "矢量"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geoengine_view_form
+msgid "Vector (Active layers)"
+msgstr "矢量（活动图层）"
+
+#. module: base_geoengine
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_raster_action
+#: model:ir.actions.act_window,name:base_geoengine.geo_vector_geoengine_view_action
+#: model:ir.model,name:base_geoengine.model_geoengine_vector_layer
+msgid "Vector Layer"
+msgstr "矢量图层"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_vector_layer_menu
+msgid "Vector Layer Management"
+msgstr "矢量图层管理"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__vector_layer_ids
+msgid "Vector layers"
+msgstr "矢量图层"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/layers_panel/layers_panel.xml:0
+#, python-format
+msgid "Vectors"
+msgstr "矢量数据"
+
+#. module: base_geoengine
+#: model:ir.model,name:base_geoengine.model_ir_ui_view
+msgid "View"
+msgstr "视图"
+
+#. module: base_geoengine
+#: model:ir.ui.menu,name:base_geoengine.geoengine_view_menu
+msgid "View Management"
+msgstr "视图管理"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_ui_view__type
+msgid "View Type"
+msgstr "视图类型"
+
+#. module: base_geoengine
+#: model:ir.actions.act_window,name:base_geoengine.geo_engine_view_action
+msgid "Views"
+msgstr "视图"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "WMS options"
+msgstr "WMS 选项"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__geoengine_raster_layer__raster_type__wmts
+msgid "WMTS"
+msgstr "WMTS"
+
+#. module: base_geoengine
+#: model_terms:ir.ui.view,arch_db:base_geoengine.geo_raster_view_form
+msgid "WMTS options"
+msgstr "WMTS 选项"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.esm.js:0
+#, python-format
+msgid "Warning"
+msgstr "警告"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/geo_convertion_helper.py:0
+#, python-format
+msgid ""
+"Write/create/search geo type must be wkt/geojson string or must respond to "
+"wkt"
+msgstr "写入/创建/搜索地理类型必须是 wkt/geojson 字符串或必须响应 wkt"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_controller/geoengine_controller.esm.js:0
+#, python-format
+msgid ""
+"You are about to create a new record without having displayed all the "
+"others. A risk of overlap could occur. Would you like to continue ?"
+msgstr "您即将创建一条新记录，而没有显示所有其他记录。可能会发生重叠的风险。您想要继"
+"续吗？"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/base.py:0
+#, python-format
+msgid "You must at least provide one of domain or geo_domain"
+msgstr "您至少需要提供一个域名或地理域名"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/geo_vector_layer.py:0
+#, python-format
+msgid "You need to provide an attribute that exists in %s model"
+msgstr "您需要提供一个存在于 %s 模型中的属性"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/geo_vector_layer.py:0
+#, python-format
+msgid "You need to select a numeric field"
+msgstr "您需要选择一个数值字段"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__projection
+msgid "eg. EPSG:21781"
+msgstr "例如 EPSG:21781"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__request_encoding
+msgid "eg. REST"
+msgstr "例如 REST"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__units
+msgid "eg. m"
+msgstr "例如 m"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_raster_layer__format_suffix
+msgid "eg. png"
+msgstr "例如 png"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_contains"
+msgstr "地理包含"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_equal"
+msgstr "地理相等"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_greater"
+msgstr "地理大于"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_intersect"
+msgstr "地理相交"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_lesser"
+msgstr "地理小于"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_line
+msgid "geo_line"
+msgstr "地理线"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_multi_line
+msgid "geo_multi_line"
+msgstr "地理多线"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_multi_point
+msgid "geo_multi_point"
+msgstr "地理多点"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_multi_polygon
+msgid "geo_multi_polygon"
+msgstr "地理多边形"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_point
+msgid "geo_point"
+msgstr "地理点"
+
+#. module: base_geoengine
+#: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__ttype__geo_polygon
+msgid "geo_polygon"
+msgstr "地理多边形"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/models/base.py:0
+#, python-format
+msgid "geo_search is deprecated: uses search method defined on base model"
+msgstr "geo_search 已弃用：使用在基础模型上定义的搜索方法"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_touch"
+msgstr "地理接触"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_geo_field/domain_selector_geo_field.esm.js:0
+#, python-format
+msgid "geo_within"
+msgstr "地理包含"
+
+#. module: base_geoengine
+#. odoo-python
+#: code:addons/base_geoengine/fields.py:0
+#, python-format
+msgid ""
+"geometry_columns table seems to be corrupted. SRID check is not possible"
+msgstr "geometry_columns 表似乎已损坏。无法进行 SRID 检查"
+
+#. module: base_geoengine
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_layer__begin_color
+#: model:ir.model.fields,help:base_geoengine.field_geoengine_vector_layer__end_color
+msgid "hex value"
+msgstr "十六进制值"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_number_field/domain_selector_number_field.esm.js:0
+#, python-format
+msgid "in active_ids"
+msgstr "在 active_ids 中"
+
+#. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/widgets/domain_selector_geo_field/domain_selector_number_field/domain_selector_number_field.esm.js:0
+#, python-format
+msgid "not in active_ids"
+msgstr "不在 active_ids 中"
+
+#. module: base_geoengine
+#: model:ir.model.fields,field_description:base_geoengine.field_ir_model_fields__srid
+msgid "srid"
+msgstr "空间参考系统标识符"

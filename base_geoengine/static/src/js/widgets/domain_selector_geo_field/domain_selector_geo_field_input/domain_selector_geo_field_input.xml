@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <t t-name="base_geoengine.DomainSelectorGeoFieldInput">
+        <div class="d-flex align-items-center">
+            <ModelSelector
+                value="state.resModel"
+                onModelSelected.bind="onModelChange"
+            />
+            <div t-if="state.resModel.length > 0" class="col-5">
+                <ModelFieldSelector
+                    fieldName="state.fieldName"
+                    resModel="state.resModel"
+                    readonly="false"
+                    update="(name) => this.onFieldModelChange(name)"
+                    isDebugMode="false"
+                />
+            </div>
+            <button class="btn btn-link col-1" t-on-click.prevent="display">
+                <i class="fa fa-pencil-square" />
+            </button>
+        </div>
+    </t>
+</templates>
