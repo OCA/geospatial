@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+    <div
+        t-name="website_geoengine_store_locator.s_openlayer_store_locator_popover"
+        class="s_store_locator_popover"
+        role="group"
+    >
+        <div class="s_store_locator_popover_header">
+            <strong t-esc="name" />
+        </div>
+        <div class="s_store_locator_popover_address">
+            <t t-if="street">
+                <span t-esc="street" />
+                <br />
+            </t>
+            <t t-if="street2">
+                <span t-esc="street2" />
+                <br />
+            </t>
+            <span t-esc="zip" />
+            <t t-if="zip and city">
+                <span t-esc="' '" />
+            </t>
+            <span t-esc="city" />
+        </div>
+        <t t-if="tags">
+            <div class="s_store_locator_popover_meta s_store_locator_popover_meta_tags">
+                <span class="fa fa-tag" aria-hidden="true" />
+                <span class="p-1" t-esc="tags" />
+            </div>
+        </t>
+        <t t-if="opening_hours">
+            <div
+                class="s_store_locator_popover_meta s_store_locator_popover_meta_hours"
+            >
+                <span class="fa fa-clock-o" aria-hidden="true" />
+                <span class="p-1" t-esc="opening_hours" />
+            </div>
+        </t>
+    </div>
+</templates>
