@@ -4,12 +4,12 @@
  * Copyright 2023 ACSONE SA/NV
  */
 
+import {Component, onWillUpdateProps} from "@odoo/owl";
 import {Field} from "@web/views/fields/field";
 import {GeoengineCompiler} from "../geoengine_compiler.esm";
 import {INFO_BOX_ATTRIBUTE} from "../geoengine_arch_parser.esm";
 import {registry} from "@web/core/registry";
 import {useViewCompiler} from "@web/views/view_compiler";
-import {Component, onWillUpdateProps} from "@odoo/owl";
 import {user} from "@web/core/user";
 
 const formatters = registry.category("formatters");
