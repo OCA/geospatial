@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem
+        id="geoengine_base_menu"
+        name="GeoEngine Backend"
+        web_icon="base_geoengine,images/map.png"
+        groups="group_geoengine_admin"
+    />
+</odoo>

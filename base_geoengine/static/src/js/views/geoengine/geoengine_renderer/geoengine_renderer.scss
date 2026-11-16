@@ -1,0 +1,69 @@
+#olmap {
+    width: 100%;
+    height: 100%;
+}
+
+.map_container {
+    width: 100%;
+    height: 100%;
+}
+
+.view {
+    max-height: 90%;
+    height: 100% !important;
+}
+
+.menu {
+    z-index: 2;
+    flex-grow: 0;
+    flex-shrink: 0;
+    padding-right: 0.5rem;
+    padding-bottom: 3rem;
+    padding-left: 2.5rem;
+    height: 100%;
+}
+
+.ol-popup {
+    position: absolute;
+    /* theme colors: readable in light and dark mode */
+    background-color: var(--body-bg, #fff);
+    color: var(--body-color, #212529);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color, #dee2e6);
+    bottom: 12px;
+    left: -50px;
+    min-width: 280px;
+}
+.ol-popup:after,
+.ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+.ol-popup:after {
+    border-top-color: var(--body-bg, #fff);
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+}
+.ol-popup:before {
+    border-top-color: var(--border-color, #dee2e6);
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+}
+.ol-popup-closer {
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+}
+.ol-popup-closer:after {
+    content: "✖";
+}
