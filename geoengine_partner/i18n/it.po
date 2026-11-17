@@ -1,0 +1,78 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* geoengine_partner
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 16.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-04-04 11:40+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
+"Language-Team: none\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.17\n"
+
+#. module: geoengine_partner
+#: model:ir.model.fields,field_description:geoengine_partner.field_res_partner__geo_point
+#: model:ir.model.fields,field_description:geoengine_partner.field_res_users__geo_point
+msgid "Address coordinates"
+msgstr "Coordinate indirizzo"
+
+#. module: geoengine_partner
+#: model_terms:ir.ui.view,arch_db:geoengine_partner.ir_ui_view_geo_partner
+msgid "City:"
+msgstr "Città:"
+
+#. module: geoengine_partner
+#: model:ir.model,name:geoengine_partner.model_res_partner
+msgid "Contact"
+msgstr "Contatto"
+
+#. module: geoengine_partner
+#: model_terms:ir.ui.view,arch_db:geoengine_partner.ir_ui_view_geo_partner
+msgid "Country:"
+msgstr "Nazione:"
+
+#. module: geoengine_partner
+#: model_terms:ir.ui.view,arch_db:geoengine_partner.ir_ui_view_geo_partner
+msgid "Function:"
+msgstr "Funzione:"
+
+#. module: geoengine_partner
+#: model_terms:ir.ui.view,arch_db:geoengine_partner.geo_partner_view_form
+msgid "Geoengine Map"
+msgstr "Mappa Geoengine"
+
+#. module: geoengine_partner
+#: model_terms:ir.ui.view,arch_db:geoengine_partner.ir_ui_view_geo_partner
+msgid "Name:"
+msgstr "Nome:"
+
+#. module: geoengine_partner
+#: model:geoengine.raster.layer,name:geoengine_partner.geoengine_raster_layer_res_partner_osm
+msgid "Partner background"
+msgstr "Sfondo partner"
+
+#. module: geoengine_partner
+#: model:geoengine.vector.layer,name:geoengine_partner.geoengine_vector_layer_res_partner
+msgid "Partner location"
+msgstr "Posizione partner"
+
+#. module: geoengine_partner
+#: model_terms:ir.ui.view,arch_db:geoengine_partner.ir_ui_view_geo_partner
+msgid "Title:"
+msgstr "Titolo:"
+
+#. module: geoengine_partner
+#: model_terms:ir.ui.view,arch_db:geoengine_partner.ir_ui_view_geo_partner
+msgid "Website:"
+msgstr "Sito web:"
+
+#. module: geoengine_partner
+#: model_terms:ir.ui.view,arch_db:geoengine_partner.ir_ui_view_geo_partner
+msgid "ZIP:"
+msgstr "CAP:"
