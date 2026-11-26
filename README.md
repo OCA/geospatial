@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[base_geoengine](base_geoengine/) | 18.0.1.2.3 |  | Geospatial support for Odoo
+[base_geoengine](base_geoengine/) | 18.0.1.2.4 |  | Geospatial support for Odoo
 [geoengine_partner](geoengine_partner/) | 18.0.1.0.0 |  | Geospatial support of partners
 [geospatial_plot](geospatial_plot/) | 18.0.1.0.1 |  | Efficiently plots of land and agricultural data
 [web_leaflet_draw_lib](web_leaflet_draw_lib/) | 18.0.1.0.0 | <a href='https://github.com/NL66278''><img src='https://github.com/NL66278'.png' width='32' height='32' style='border-radius:50%;' alt='NL66278''/></a> | Bring leaflet.draw.js library in odoo.
