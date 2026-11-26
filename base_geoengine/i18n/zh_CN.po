@@ -551,6 +551,13 @@ msgid "Params WMS"
 msgstr ""
 
 #. module: base_geoengine
+#. odoo-javascript
+#: code:addons/base_geoengine/static/src/js/views/geoengine/geoengine_renderer/geoengine_renderer.esm.js:0
+#, python-format
+msgid "Please update latitude and longitude details for: \"%s\""
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.model.fields.selection,name:base_geoengine.selection__ir_model_fields__geo_type__point
 msgid "Point"
 msgstr "点"
