@@ -1,0 +1,320 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* base_geoengine_demo
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0\n"
+"Report-Msgid-Bugs-To: \n"
+"PO-Revision-Date: 2024-11-25 09:06+0000\n"
+"Last-Translator: xtanuiha <feihu.zhang@live.com>\n"
+"Language-Team: none\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.6.2\n"
+
+#. module: base_geoengine_demo
+#: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_ahocevar0
+msgid "Ahocevar"
+msgstr "阿霍塞瓦尔"
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.geo_retail_machine_view_form
+msgid "Attributes"
+msgstr "属性"
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_basictest0
+msgid "Basic ZIP"
+msgstr "基本邮政编码"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__city
+msgid "City"
+msgstr "城市"
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_coloredrangetest0
+msgid "Colored range ZIP (total_sales)"
+msgstr "彩色范围邮政编码（总销售额）"
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_coloredrangezipquantile0
+msgid "Colored range ZIP Eq Interval (total_sales)"
+msgstr "彩色范围邮政编码等间隔（总销售额）"
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinecontainsgeom
+msgid "Contains"
+msgstr "包含"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_point
+msgid "Coordinate"
+msgstr "坐标"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__create_uid
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__create_uid
+msgid "Created by"
+msgstr "创建者"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__create_date
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__create_date
+msgid "Created on"
+msgstr "创建日期"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__display_name
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__display_name
+msgid "Display Name"
+msgstr "显示名称"
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.dummy_zip_form
+msgid "Dummy"
+msgstr "虚拟"
+
+#. module: base_geoengine_demo
+#: model:ir.ui.menu,name:base_geoengine_demo.geoengine_demo_menu
+msgid "GeoEngine Demo"
+msgstr "地理引擎演示"
+
+#. module: base_geoengine_demo
+#: model:ir.ui.menu,name:base_geoengine_demo.geoengine_demo_retail_menu
+msgid "GeoEngine Samples"
+msgstr "地理引擎样本"
+
+#. module: base_geoengine_demo
+#: model:ir.model,name:base_geoengine_demo.model_dummy_zip
+msgid "Geoengine demo ZIP"
+msgstr "地理引擎演示邮政编码"
+
+#. module: base_geoengine_demo
+#: model:ir.model,name:base_geoengine_demo.model_geoengine_demo_automatic_retailing_machine
+msgid "Geoengine demo retailing machine"
+msgstr "地理引擎演示零售机器"
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.dummy_zip_form
+msgid "Geometry"
+msgstr "几何"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields.selection,name:base_geoengine_demo.selection__geoengine_demo_automatic_retailing_machine__state__hs
+msgid "HS"
+msgstr "高斯"
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_hs_retail_machines
+msgid "HS retail machines"
+msgstr "高斯零售机器"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__id
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__id
+msgid "ID"
+msgstr "ID"
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_retailmachineview0
+msgid "ID:"
+msgstr "ID："
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_intersect_active_ids
+msgid "Intersect point and geom"
+msgstr "交点和几何"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__write_uid
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__write_uid
+msgid "Last Updated by"
+msgstr "最后更新者"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__write_date
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__write_date
+msgid "Last Updated on"
+msgstr "最后更新日期"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__money_level
+msgid "Money Level"
+msgstr "金额等级"
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_retailmachineview0
+msgid "Money level:"
+msgstr "金额等级："
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__the_geom
+msgid "NPA Shape"
+msgstr "NPA形状"
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_not_intersect_active_ids
+msgid "Not intersect point and geom"
+msgstr "不相交点和几何"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields.selection,name:base_geoengine_demo.selection__geoengine_demo_automatic_retailing_machine__state__ok
+msgid "OK"
+msgstr "确定"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__the_line
+msgid "Power supply line"
+msgstr "供电线路"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__priority
+msgid "Priority"
+msgstr "优先级"
+
+#. module: base_geoengine_demo
+#: model:ir.ui.menu,name:base_geoengine_demo.geoengine_retail_machine_menu
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.geo_retail_machine_view_form
+msgid "Retail Machine"
+msgstr "零售机器"
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinebasicline0
+msgid "Retail Machine Basic Line"
+msgstr "零售机器 - 基础线"
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinebasicpoint0
+msgid "Retail Machine Basic point"
+msgstr "零售机器 - 基础点"
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinecoloredontotalsales1
+msgid "Retail Machine Colored on total sales proportion"
+msgstr "零售机器 - 按总销售额比例着色"
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinecoloredontotalsales0
+msgid "Retail Machine Colored on total sales quantile"
+msgstr "零售机器 - 按总销售额分位数着色"
+
+#. module: base_geoengine_demo
+#: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_retailmachineosm
+msgid "Retail Machine Open Street Map"
+msgstr "零售机器 - Open Street Map"
+
+#. module: base_geoengine_demo
+#: model:geoengine.vector.layer,name:base_geoengine_demo.geoengine_vector_layer_retailmachinestatecolored0
+msgid "Retail Machine State colored"
+msgstr "零售机器 - 按状态着色"
+
+#. module: base_geoengine_demo
+#: model:ir.actions.act_window,name:base_geoengine_demo.geoengine_view_retail_machine_action
+msgid "Retail Machines"
+msgstr "零售机器"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__retail_machine_ids
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.dummy_zip_form
+msgid "Retail machines"
+msgstr "零售机器"
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.dummy_zip_search
+msgid "Search ZIP"
+msgstr "搜索邮政编码"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__name
+msgid "Serial number"
+msgstr "序列号"
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_retailmachineview0
+msgid "Serial number :"
+msgstr "序列号："
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__total_sales
+msgid "Spatial! Total Sales"
+msgstr "空间！总销售额"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__state
+msgid "State"
+msgstr "状态"
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_retailmachineview0
+msgid "State:"
+msgstr "状态："
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.geo_retail_machine_view_form
+msgid "The line"
+msgstr "线条"
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.geo_retail_machine_view_form
+msgid "The point"
+msgstr "点"
+
+#. module: base_geoengine_demo
+#. odoo-python
+#: code:addons/base_geoengine_demo/models/retail_machine.py:0
+#, python-format
+msgid ""
+"The point must be placed in the corresponding area. (serial number: %s)."
+msgstr "点必须放置在相应的区域。（序列号：%s）。"
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_resbetterzipgeoview0
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_retailmachineview0
+msgid "Total Sales:"
+msgstr "总销售额："
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__total_sales
+msgid "Total sale"
+msgstr "总销售额"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_dummy_zip__name
+#: model:ir.ui.menu,name:base_geoengine_demo.zip_retail_machine
+msgid "ZIP"
+msgstr "邮政编码"
+
+#. module: base_geoengine_demo
+#: model_terms:ir.ui.view,arch_db:base_geoengine_demo.ir_ui_view_resbetterzipgeoview0
+msgid "ZIP :"
+msgstr "邮政编码："
+
+#. module: base_geoengine_demo
+#: model:ir.actions.act_window,name:base_geoengine_demo.action_zip_tree
+msgid "ZIP Management"
+msgstr "邮政编码管理"
+
+#. module: base_geoengine_demo
+#: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_test0
+msgid "ZIP OSM"
+msgstr "邮政编码OSM"
+
+#. module: base_geoengine_demo
+#: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_osm0
+msgid "ZIP OSM Light"
+msgstr "邮政编码OSM轻量版"
+
+#. module: base_geoengine_demo
+#: model:ir.model.fields,field_description:base_geoengine_demo.field_geoengine_demo_automatic_retailing_machine__zip_id
+msgid "Zip"
+msgstr "邮政编码"
+
+#. module: base_geoengine_demo
+#: model:geoengine.raster.layer,name:base_geoengine_demo.geoengine_raster_layer_wmts
+msgid "sgmc2"
+msgstr "sgmc2"
