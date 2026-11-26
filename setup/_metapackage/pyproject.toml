@@ -1,8 +1,9 @@
 [project]
 name = "odoo-addons-oca-geospatial"
-version = "18.0.20260917.0"
+version = "18.0.20261126.0"
 dependencies = [
     "odoo-addon-base_geoengine==18.0.*",
+    "odoo-addon-geoengine_partner==18.0.*",
     "odoo-addon-geospatial_plot==18.0.*",
     "odoo-addon-web_leaflet_draw_lib==18.0.*",
     "odoo-addon-web_leaflet_lib==18.0.*",
