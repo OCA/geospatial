@@ -425,6 +425,34 @@ class TestModel(TransactionCase):
         )
         self.assertEqual(len(result.ids), 5)
 
+    def test_search_indirect_rejects_non_geo_column(self):
+        """The column of an indirect geo domain key must be a GeoField"""
+        retails = self.env["retail.machine"]
+        with self.assertRaises(ValueError):
+            retails.search(
+                [
+                    (
+                        "the_point",
+                        "geo_intersect",
+                        {"dummy.zip.name": [("id", "!=", 0)]},
+                    )
+                ]
+            )
+
+    def test_search_indirect_rejects_sql_in_column(self):
+        """SQL injected through an indirect geo domain key must not run"""
+        retails = self.env["retail.machine"]
+        with self.assertRaises(ValueError):
+            retails.search(
+                [
+                    (
+                        "the_point",
+                        "geo_intersect",
+                        {"dummy.zip.the_geom) OR (1=1": [("id", "!=", 0)]},
+                    )
+                ]
+            )
+
     def test_search_intersect_for_zip_1169_with_multiple_domain(self):
         retails = self.env["retail.machine"]
         result = retails.search(

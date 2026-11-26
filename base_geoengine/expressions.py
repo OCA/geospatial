@@ -51,6 +51,13 @@ def __leaf_to_sql(self, leaf, model, alias):
                     rel_model = key[0:i]
                     rel_col = key[i + 1 :]
                     rel_model = model.env[rel_model]
+                    # rel_col is interpolated into the SQL below: only accept
+                    # the name of an actual GeoField of the related model
+                    if not isinstance(rel_model._fields.get(rel_col), GeoField):
+                        raise ValueError(
+                            f"Invalid geo field {rel_col!r} on model "
+                            f"{rel_model._name!r} in leaf {leaf!r}"
+                        )
                     # we compute the attributes search on spatial rel
                     if ref_search[key]:
                         rel_alias = (
