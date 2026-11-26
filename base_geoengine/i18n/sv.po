@@ -23,6 +23,11 @@ msgid "%s column does not exists or is not a geo field"
 msgstr "%s kolumnen finns inte eller är inte ett geofält"
 
 #. module: base_geoengine
+#: model:ir.model.constraint,message:base_geoengine.constraint_ir_ui_view_geoengine_projection_required
+msgid "A GeoEngine view must have a Projection."
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__active_on_startup
 msgid "Active On Startup"
 msgstr "Aktiv vid uppstart"
@@ -242,8 +247,8 @@ msgid ""
 "Geo Value %(geom_type)s must be of the same type %"
 "(geo_type)s                         as fields"
 msgstr ""
-"Geovärdet %(geom_type)s måste vara av samma typ %(geo_type)s"
-"                         som fälten"
+"Geovärdet %(geom_type)s måste vara av samma typ %"
+"(geo_type)s                         som fälten"
 
 #. module: base_geoengine
 #. odoo-python

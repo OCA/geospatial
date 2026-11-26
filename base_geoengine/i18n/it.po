@@ -23,6 +23,11 @@ msgid "%s column does not exists or is not a geo field"
 msgstr "La colonna %s non esiste, o non è un campo geo"
 
 #. module: base_geoengine
+#: model:ir.model.constraint,message:base_geoengine.constraint_ir_ui_view_geoengine_projection_required
+msgid "A GeoEngine view must have a Projection."
+msgstr ""
+
+#. module: base_geoengine
 #: model:ir.model.fields,field_description:base_geoengine.field_geoengine_vector_layer__active_on_startup
 msgid "Active On Startup"
 msgstr "Attivo all'avvio"
