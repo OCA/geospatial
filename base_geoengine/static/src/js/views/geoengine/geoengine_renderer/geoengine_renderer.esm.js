@@ -573,22 +573,35 @@ export class GeoengineRenderer extends Component {
     onDisplayPopupRecord(record) {
         const popup = this.getPopup();
         const feature = this.vectorSource.getFeatureById(record.resId);
-        if (feature !== undefined) {
-            this.mountGeoengineRecord({
-                popup,
-                archInfo: this.props.archInfo,
-                templateDocs: this.props.archInfo.templateDocs,
-                record,
+        if (feature === null) {
+            this.notification.add(
+                sprintf(
+                    this.env._t(
+                        'Please update latitude and longitude details for: "%s"'
+                    ),
+                    record.data.display_name
+                ),
+                {
+                    type: "warning",
+                }
+            );
+            this.clickToHidePopup();
+            return false;
+        }
+        this.mountGeoengineRecord({
+            popup,
+            archInfo: this.props.archInfo,
+            templateDocs: this.props.archInfo.templateDocs,
+            record,
+        });
+        var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
+        this.overlay.setPosition(coord);
+        var map_view = this.map.getView();
+        if (map_view) {
+            map_view.animate({
+                center: feature.getGeometry().getFirstCoordinate(),
+                duration: 500,
             });
-            var coord = ol.extent.getCenter(feature.getGeometry().getExtent());
-            this.overlay.setPosition(coord);
-            var map_view = this.map.getView();
-            if (map_view) {
-                map_view.animate({
-                    center: feature.getGeometry().getFirstCoordinate(),
-                    duration: 500,
-                });
-            }
         }
     }
 
