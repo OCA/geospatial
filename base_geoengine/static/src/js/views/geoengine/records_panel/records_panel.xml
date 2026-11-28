@@ -39,7 +39,7 @@
                                 t-on-click="() => this.onDisplayPopupRecord(record)"
                             >
                                 <span>
-                                    <t t-esc="record.data.display_name" />
+                                    <t t-esc="record.data.name" />
                                 </span>
                             </button>
                             <t t-if="state.isClicked === record.resId">

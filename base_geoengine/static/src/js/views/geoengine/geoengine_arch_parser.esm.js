@@ -7,8 +7,8 @@
 import {Field} from "@web/views/fields/field";
 import {Widget} from "@web/views/widgets/widget";
 import {_t} from "@web/core/l10n/translation";
-import {getActiveActions} from "@web/views/utils";
 import {exprToBoolean} from "@web/core/utils/strings";
+import {getActiveActions} from "@web/views/utils";
 import {visitXML} from "@web/core/utils/xml";
 
 export const INFO_BOX_ATTRIBUTE = "info_box";

@@ -1,9 +1,20 @@
 {
-    "globals": {
-      "$": false,
-      "_": false,
-      "ol": false,
-      "chroma": false,
-      "geostats": false
-    }
+  "globals": {
+    "$": false,
+    "_": false,
+    "ol": false,
+    "chroma": false,
+    "geostats": false
+  },
+  "plugins": [
+    "jsdoc"
+  ],
+  "rules": {
+    "jsdoc/check-tag-names": [
+      "warn",
+      {
+        "definedTags": ["odoo-module"]
+      }
+    ]
   }
+}
